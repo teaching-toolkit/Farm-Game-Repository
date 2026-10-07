@@ -61,6 +61,8 @@ var _look_sig := "-"
 
 func _ready() -> void:
 	G = get_node("/root/Game")
+	for a in OS.get_cmdline_user_args():      # screenshots and tests: --lang=de shows the whole game in German (not saved)
+		if a.begins_with("--lang=") and a.substr(7) != I18n.lang: G.set_language(a.substr(7), false)
 	_setup_theme()
 	_build()
 	G.changed.connect(_queue_refresh)
@@ -112,9 +114,6 @@ func _parse_args() -> void:
 			for _i in range(int(a.substr(7))): G.cheat_max()
 		elif a == "--quiz": call_deferred("_show_time_quiz")
 		elif a.begins_with("--qid="): call_deferred("_show_quiz_id", a.substr(6))     # screenshots: one Time Quiz question
-		elif a.begins_with("--lang="):                                               # screenshots: quiz texts in another language
-			G.settings["language"] = a.substr(7)
-			G.quiz_tr = G.quiz.load_texts("res://data/i18n/quiz-%s.json" % a.substr(7))
 		elif a == "--rest": call_deferred("_show_rest")
 		elif a == "--restgo": call_deferred("_rest_go")              # screenshots: past the Rest start page (after --rest)
 		elif a == "--menu": call_deferred("_show_menu")            # screenshots: ⚙️ Settings
@@ -138,7 +137,7 @@ func _parse_args() -> void:
 			G._dirty()
 			G.S["gift_pending"].clear()
 			G.S["postcards"] = []
-			G._offer_gift("your new bunny")
+			G._offer_gift(tr("your new bunny"))
 		elif a.begins_with("--perks="):            # screenshots: --perks=all or --perks=perk_rainbow,perk_breeze
 			for p in G.meta.get("perks", {}).get("list", []):
 				if a == "--perks=all" or a.substr(8).split(",").has(p["id"]): G.perks()[p["id"]] = true
@@ -187,7 +186,7 @@ func _build() -> void:
 	lbl_coins = UI.label("", 22); r1.add_child(lbl_coins)
 	var wp = UI.TapPanel.new()
 	wp.add_theme_stylebox_override("panel", UI.box(Color("dcecf6"), 10, Color("9fc3dc"), 1, 6))
-	wp.tooltip_text = "Water: tap to carry more from the pond or the well."
+	wp.tooltip_text = tr("Water: tap to carry more from the pond or the well.")
 	var wbox := UI.hbox(3)
 	wbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	wbox.add_child(UI.label("💧", 20))
@@ -199,7 +198,7 @@ func _build() -> void:
 	r1.add_child(wp)
 	var ep = UI.TapPanel.new()
 	ep.add_theme_stylebox_override("panel", UI.box(Color("dbe8f4"), 10, Color("9fbbd6"), 1, 6))
-	ep.tooltip_text = "Rest: answer sums to get energy back (sleep, food, a sip of water)."
+	ep.tooltip_text = tr("Rest: answer sums to get energy back (sleep, food, a sip of water).")
 	var ebox := UI.hbox(3)
 	ebox.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ebox.add_child(UI.label("⚡", 20))
@@ -211,7 +210,7 @@ func _build() -> void:
 	r1.add_child(ep)
 	r1.add_child(UI.spacer())
 	for pair in [["🎒", _open_pantry, "Pantry: what you have"], ["📖", _open_goals, "Quest book: everything you can do next"],
-			["🖼️", _open_album, "Album: pets, friends, postcards, perks, acorns"], ["⚙️", _show_menu, "Settings"]]:
+			["🖼️", _open_album, tr("Album: pets, friends, postcards, perks, acorns")], ["⚙️", _show_menu, tr("Settings")]]:
 		var b := UI.soft_button(pair[0], pair[1], true, 22)
 		b.custom_minimum_size = Vector2(50, 46)
 		b.tooltip_text = pair[2]
@@ -220,14 +219,14 @@ func _build() -> void:
 	hv.add_child(r2)
 	season_emoji = UI.label("", 18); r2.add_child(season_emoji)
 	season_bar = UI.SeasonBar.new(); r2.add_child(season_bar)
-	UI.explain(season_bar, "🗓️ The season: one mark per Time Quiz question. The number = questions until the next season.")
+	UI.explain(season_bar, tr("🗓️ The season: one mark per Time Quiz question. The number = questions until the next season."))
 	lbl_info = UI.label("", 15, UI.MUTED); r2.add_child(lbl_info)
 	lbl_status = UI.label("", 15, UI.MUTED); r2.add_child(lbl_status)
 	r2.add_child(UI.spacer())
 	if G.settings.get("showCheatButton", true):
-		var cb := UI.button("⏩ Cheat", _cheat, true, UI.AMBER, 14)
+		var cb := UI.button(tr("⏩ Cheat"), _cheat, true, UI.AMBER, 14)
 		cb.custom_minimum_size = Vector2(0, 30)
-		cb.tooltip_text = "Testing only: lets time pass until everything growing or cooking is done, then fills energy and water."
+		cb.tooltip_text = tr("Testing only: lets time pass until everything growing or cooking is done, then fills energy and water.")
 		r2.add_child(cb)
 		var cc := UI.button("🪙+100", func(): G.cheat_coins(100), true, UI.AMBER, 14)
 		cc.custom_minimum_size = Vector2(0, 30)
@@ -262,7 +261,7 @@ func _build() -> void:
 	qp.add_theme_stylebox_override("panel", UI.box(UI.GREEN, 40, Color(0, 0, 0, 0), 0, 4))
 	quiz_btn = UI.ClockButton.new()
 	quiz_btn.custom_minimum_size = Vector2(72, 72)
-	quiz_btn.tooltip_text = "Time Quiz: every right answer moves farm time one step."
+	quiz_btn.tooltip_text = tr("Time Quiz: every right answer moves farm time one step.")
 	quiz_btn.pressed.connect(_show_time_quiz)
 	qp.add_child(quiz_btn)
 	bh.add_child(qp)
@@ -351,15 +350,15 @@ func _refresh() -> void:
 	season_bar.set_state(G.season(), slen, slen - G.questions_left_in_season(), "→ " + nxt_emoji)
 	quiz_btn.show_time(float(slen - G.questions_left_in_season()) / float(slen))
 	var ch: Dictionary = G.D["chapters"][G.chapter() - 1]
-	lbl_info.text = "Chapter %d · %s · question %d%s" % [G.chapter(), ch["name"], S["step"], "  🌧️" if S.get("rain", false) else ""]
+	lbl_info.text = tr("Chapter %d · %s · question %d%s") % [G.chapter(), ch["name"], S["step"], "  🌧️" if S.get("rain", false) else ""]
 	# out of water: say so with a picture (once, when it runs out)
 	if _last_water >= 1.0 and float(S["water"]) < 1.0 and not modal.visible: call_deferred("_show_no_water")
 	_last_water = float(S["water"])
 	var st := []
-	if G.buff_mult() < 1.0: st.append("😋 −%d%% energy" % int(round((1.0 - G.buff_mult()) * 100)))
-	if S.get("cold", false): st.append("❄️🏠 cold house")
+	if G.buff_mult() < 1.0: st.append(tr("😋 −%d%% energy") % int(round((1.0 - G.buff_mult()) * 100)))
+	if S.get("cold", false): st.append(tr("❄️🏠 cold house"))
 	if G.luck() >= 0.2: st.append("🍀")
-	if G.S["reading"] != "": st.append("📖 reading")
+	if G.S["reading"] != "": st.append(tr("📖 reading"))
 	lbl_status.text = "  ".join(st)
 	bg.color = UI.SEASON_BG.get(G.season(), UI.BG)
 	map.set_season(G.season(), _fence_level())
@@ -416,8 +415,9 @@ func _headline(sid: String) -> String:
 func _spot_title(sid: String) -> String:
 	if sid == "field":
 		var names: Array = G.field_names()
-		return names[clampi(field_idx, 0, names.size() - 1)] if names.size() > 0 else "Field"
-	var info: Array = Spots.SPOTS.get(sid, [sid.capitalize(), "❔"])
+		return names[clampi(field_idx, 0, names.size() - 1)] if names.size() > 0 else tr("Field")
+	var info: Array = Spots.SPOTS.get(sid, [sid.capitalize(), "❔"]).duplicate()
+	info[0] = tr(str(info[0]))
 	var parent := Spots.parent_of(sid)
 	if parent != "" and _built(parent): return info[0]      # a corner inside a building: "Bed & home", "Kitchen" …
 	var head := _headline(sid)
@@ -686,9 +686,9 @@ func _update_goal_bar() -> void:
 		var c: Dictionary = G.node_cost(goal_id)
 		goal_btn.text = "%s %s %s   %s" % ["✅" if ok else "🎯", n.get("emoji", ""), n["name"], G.cost_text(c) if not c.is_empty() else ""]
 	elif _readable_card() != "":
-		goal_btn.text = "🎯 📚 Learn a new card in the library"
+		goal_btn.text = tr("🎯 📚 Learn a new card in the library")
 	else:
-		goal_btn.text = "🎯 Answer Time Quiz questions — things grow while you learn"
+		goal_btn.text = tr("🎯 Answer Time Quiz questions — things grow while you learn")
 
 func _goal_pressed() -> void:
 	if goal_id != "":
@@ -788,7 +788,8 @@ func _open_interior(parent: String) -> void:
 			key = _first_key("map", keys)
 			tex = Art.tex("map", key) if key != "" else null
 		var open := _is_open(m) or m in ["barn_build", "ws_build"]
-		var info2: Array = Spots.SPOTS.get(m, [m.capitalize(), "❔"])
+		var info2: Array = Spots.SPOTS.get(m, [m.capitalize(), "❔"]).duplicate()
+		info2[0] = tr(str(info2[0]))
 		s.set_state(info2[0], info2[1], tex, not open, _badge(m), key)
 		s.tapped.connect(_enter_corner.bind(parent))
 	if parent == "workshop" and G.nodes.has("tool_rack") and G.done("tool_rack"):
@@ -810,7 +811,7 @@ func _open_interior(parent: String) -> void:
 			tr2.position = Vector2((float(rack["x"]) - 0.12 + ti * 0.035) * w, (float(rack["y"]) - 0.22) * h)
 			tr2.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			room.add_child(tr2)
-	box.add_child(UI.label("Tap a corner to see what you can do there.", 15, UI.MUTED, true))
+	box.add_child(UI.label(tr("Tap a corner to see what you can do there."), 15, UI.MUTED, true))
 	_fit_modal()
 
 ## Placeholder inside (until assets/interiors/<name>.png exists): a floor diamond and two back walls.
@@ -904,15 +905,15 @@ func _rebuild_sheet() -> void:
 				sheet_title.text = "❔"
 				_part_mystery()
 			"goals":
-				sheet_title.text = "📖 Quest book"
+				sheet_title.text = tr("📖 Quest book")
 				content.add_child(UI.header(null, "📖", 80))
 				_sheet_goals()
 			"album":
-				sheet_title.text = "🖼️ Album"
+				sheet_title.text = tr("🖼️ Album")
 				content.add_child(UI.header(null, "🖼️", 80))
 				_sheet_album()
 			"log":
-				sheet_title.text = "📜 What happened"
+				sheet_title.text = tr("📜 What happened")
 				_sheet_log()
 
 ## A short note when a bar is tapped (what it shows); it goes away sooner than other notes and not into the log.
@@ -921,7 +922,9 @@ func _hint(t: String) -> void:
 
 func _toast(t: String, secs := 6.5) -> void:
 	# what flies to the store needs no words (it still goes into the log)
-	if t.begins_with("🧺 Harvested") or t.contains(" Collected: ") or (t.begins_with("✨ ") and t.contains(" ready: ")): return
+	# harvests, collections and finished recipes fly to the store instead of a toast (in any language: the message's
+	# translated wording without its %s parts)
+	if _like(t, tr("🧺 Harvested %s: %s")) or _like(t, tr("%s Collected: %s")) or _like(t, tr("✨ %s ready: %s")): return
 	var p := UI.card(Color(1, 0.98, 0.9, 0.97), UI.LINE)
 	p.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var l := UI.label(t, 22, UI.INK, true)
@@ -938,6 +941,16 @@ func _toast(t: String, secs := 6.5) -> void:
 	tw.tween_property(p, "modulate:a", 0.0, 1.0)
 	tw.tween_callback(_free_if_valid.bind(p))
 
+## Does message t come from this format (its fixed words in the same order)?
+func _like(t: String, fmt: String) -> bool:
+	var at := 0
+	for part in fmt.split("%s"):
+		if part.strip_edges() == "": continue
+		var k := t.find(part.strip_edges(), at)
+		if k < 0: return false
+		at = k + part.strip_edges().length()
+	return true
+
 func _place_toasts() -> void:
 	if toasts == null: return
 	var ts := toasts.get_combined_minimum_size()
@@ -945,7 +958,7 @@ func _place_toasts() -> void:
 	var floor_y: float = sheet.position.y if sheet.visible else bottom.global_position.y
 	toasts.position = Vector2((size.x - ts.x) / 2.0, floor_y - ts.y - 10.0)
 
-func _free_if_valid(n: Node) -> void:
+func _free_if_valid(n) -> void:      # untyped: the toast may be gone already (removed early when too many came)
 	if is_instance_valid(n): n.queue_free()
 
 # ------------------------------------------------------------------ pop-up helpers (quizzes, Rest, cards …)
@@ -1014,7 +1027,7 @@ func _show_celebration() -> void:
 	_sfx("chime")
 	var perk := id.begins_with("perk:")
 	var n: Dictionary = G.perk_def(id.substr(5)) if perk else G.nodes[id]
-	var box := _open_modal("✨ A new perk!" if perk else "✨ New!")
+	var box := _open_modal(tr("✨ A new perk!") if perk else tr("✨ New!"))
 	box.add_child(UI.header(null if perk else _node_picture(id), str(n.get("emoji", "✨")), 180, Color.WHITE, true))
 	var tl := UI.label("%s %s" % [n.get("emoji", ""), n["name"]], 30, UI.INK, true)
 	tl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -1024,8 +1037,8 @@ func _show_celebration() -> void:
 	if n.has("effects"):
 		var et := _effect_text(n["effects"])
 		if et != "": box.add_child(UI.label("✨ " + et, 18, UI.GREEN_DARK, true))
-	if perk: box.add_child(UI.label("It only makes the farm prettier or livelier. Switch it on or off in the album 🖼️.", 16, UI.MUTED, true))
-	var ok := UI.button("Hooray! 🎉", _close_modal, true, UI.GREEN, 24)
+	if perk: box.add_child(UI.label(tr("It only makes the farm prettier or livelier. Switch it on or off in the album 🖼️."), 16, UI.MUTED, true))
+	var ok := UI.button(tr("Hooray! 🎉"), _close_modal, true, UI.GREEN, 24)
 	ok.custom_minimum_size = Vector2(0, 62)
 	box.add_child(ok)
 	# a different effect every time: confetti, stars, fireworks, balloons, sun rays
@@ -1144,7 +1157,7 @@ func _answer_pressed(i: int, q: Dictionary, buttons: Array, feedback: Label, sta
 		var own := false     # the pack's own line already says "Yes!" / "Right!" …
 		for w in ["Yes", "Right", "Correct", "Exactly", "Ja", "Richtig", "Genau", "Stimmt"]:
 			if why.begins_with(w + "!"): own = true
-		feedback.text = "✅ " + ("" if own else "Right! ") + why
+		feedback.text = "✅ " + ("" if own else tr("Right! ")) + why
 		feedback.add_theme_color_override("font_color", UI.GREEN_DARK)
 		on_done.call(state["first"])
 		call_deferred("_fit_modal")
@@ -1154,8 +1167,8 @@ func _answer_pressed(i: int, q: Dictionary, buttons: Array, feedback: Label, sta
 		b.add_theme_stylebox_override("disabled", UI.box(Color("d9a89c"), 10, Color(0, 0, 0, 0), 0, 10))
 		if b.has_meta("pic"): b.get_meta("pic").modulate.a = 0.35
 		var hint := str(q.get("wrong_text", ""))
-		if hint == "": hint = "Not quite. " + str(q.get("why", ""))
-		feedback.text = "❌ " + hint + "  Try again!"
+		if hint == "": hint = tr("Not quite. ") + str(q.get("why", ""))
+		feedback.text = "❌ " + hint + tr("  Try again!")
 		feedback.add_theme_color_override("font_color", UI.RED)
 
 # ------------------------------------------------------------------ Time Quiz
@@ -1164,14 +1177,14 @@ func _show_quiz_id(id: String) -> void:
 		if str(G.pack_questions[i].get("id", "")) == id:
 			var q: Dictionary = G._shuffled_q(G.pack_questions[i], "", i, false)
 			q["wrong_text"] = q["wrong"]
-			q["source"] = "⏳ Time Quiz"
+			q["source"] = tr("⏳ Time Quiz")
 			_show_time_quiz(q)
 
 func _show_time_quiz(forced: Dictionary = {}) -> void:
 	var q: Dictionary = forced if not forced.is_empty() else G.next_time_question()
-	var box := _open_modal("❓ Time Quiz")
+	var box := _open_modal(tr("❓ Time Quiz"))
 	box.add_child(UI.header(null, "⏳", 64))
-	box.add_child(UI.label(str(q.get("source", "")) + "   ·   every right answer moves farm time one step", 15, UI.MUTED, true))
+	box.add_child(UI.label(str(q.get("source", "")) + tr("   ·   every right answer moves farm time one step"), 15, UI.MUTED, true))
 	var qbox := UI.vbox(8)
 	box.add_child(qbox)
 	var after := UI.vbox(8)
@@ -1182,22 +1195,22 @@ func _time_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> voi
 	if q.get("review", false): G.record_card_answer(q, first_try)
 	else: G.time_result(q, first_try)
 	var info: Dictionary = G.step_time()
-	var msg := "⏳ Time moves on: question %d." % G.S["step"]
+	var msg := tr("⏳ Time moves on: question %d.") % G.S["step"]
 	if info.get("rain_stopped", false) and G.perk_on("perk_rainbow"):
 		map.rainbow()
-		_after_close.append("🌈 The rain has stopped — look, a rainbow!")
+		_after_close.append(tr("🌈 The rain has stopped — look, a rainbow!"))
 	if info.get("rain", false):
-		msg += " 🌧️ It rained."
-		_after_close.append("🌧️ Rain! The fields are watered — planting costs no water until the next question.")
-	if int(info.get("removed", 0)) > 0: msg += " 🧍 The scarecrow chased off %d pest%s." % [int(info["removed"]), "" if int(info["removed"]) == 1 else "s"]
-	if float(info.get("eat_share", 0.0)) >= 0.005: msg += " 🐦 Pests ate %d%% of what is growing." % int(round(float(info["eat_share"]) * 100.0))
+		msg += tr(" 🌧️ It rained.")
+		_after_close.append(tr("🌧️ Rain! The fields are watered — planting costs no water until the next question."))
+	if int(info.get("removed", 0)) > 0: msg += tr(" 🧍 The scarecrow chased off %d pest%s.") % [int(info["removed"]), "" if int(info["removed"]) == 1 else "s"]
+	if float(info.get("eat_share", 0.0)) >= 0.005: msg += tr(" 🐦 Pests ate %d%% of what is growing.") % int(round(float(info["eat_share"]) * 100.0))
 	after.add_child(UI.label(msg, 17, UI.MUTED, true))
 	var row := UI.hbox(8)
-	var nb := UI.button("Next question ▶", _show_time_quiz, true, UI.GREEN, 21)
+	var nb := UI.button(tr("Next question ▶"), _show_time_quiz, true, UI.GREEN, 21)
 	nb.custom_minimum_size = Vector2(0, 56)
 	nb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(nb)
-	var back := UI.soft_button("⬅️ Back to the farm", _close_modal, true, 18)
+	var back := UI.soft_button(tr("⬅️ Back to the farm"), _close_modal, true, 18)
 	back.custom_minimum_size = Vector2(0, 56)
 	row.add_child(back)
 	after.add_child(row)
@@ -1208,30 +1221,30 @@ func _time_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> voi
 ## Rest: sums on the number pad (learnkit/number_pad_quiz.gd asks, checks and remembers). A right answer gives energy:
 ## all of it when quick (the level's time — 2.5 s for a sum learned by heart), half when slow.
 func _show_rest() -> void:
-	var box := _open_modal("😴 Rest")
+	var box := _open_modal(tr("😴 Rest"))
 	var beds: Array = Spots.HOTSPOT_ART.get("living", []).filter(func(id): return G.nodes.has(id) and G.done(id))
 	beds.reverse()
 	var bed: Texture2D = Art.first("interior", beds)
 	box.add_child(UI.header(bed if bed else Art.first("map", ["tent"]), "😴", 72))
-	if G.S.get("cold", false): box.add_child(UI.label("❄️ The house is cold — stack firewood to rest better.", 17, UI.RED, true))
+	if G.S.get("cold", false): box.add_child(UI.label(tr("❄️ The house is cold — stack firewood to rest better."), 17, UI.RED, true))
 	var er := UI.hbox(6)
 	er.alignment = BoxContainer.ALIGNMENT_CENTER
 	er.add_child(UI.label("⚡", 24))
 	var eb := UI.stock_bar(float(G.S["energy"]), G.energy_max(), UI.item_color("energy"), 420)
-	UI.explain(eb, "⚡ Your energy: right sums fill it up.")
+	UI.explain(eb, tr("⚡ Your energy: right sums fill it up."))
 	er.add_child(eb)
 	box.add_child(er)
 	G.math_record()
 	# first a start page: where the child stands, the medals so far and the next one to win; the sums start with the button
 	var start := _rest_start_page()
 	box.add_child(start)
-	var back := UI.soft_button("⬅️ Back to the farm", _close_modal, true, 17)
+	var back := UI.soft_button(tr("⬅️ Back to the farm"), _close_modal, true, 17)
 	box.add_child(back)
 	_rest = {"eb": eb, "box": box, "start": start, "back": back}
 	call_deferred("_fit_modal")
 
-const MEDAL_WORDS := {"bronze": "🥉 Bronze: answer %d of its sums quick and right, twice each.",
-	"silver": "🥈 Silver: know all its sums by heart, quick every time.", "gold": "🥇 Gold: still quick a week after silver."}
+const MEDAL_WORDS := {"bronze": "🥉 Bronze: answer %d of its sums quick and right, twice each.",   # i18n
+	"silver": "🥈 Silver: know all its sums by heart, quick every time.", "gold": "🥇 Gold: still quick a week after silver."}   # i18n
 
 ## The Rest start page: category and title, the level and how far along it is, the section's medals and an empty slot
 ## for the next medal (what it takes), and the "Ready, set, go!" button.
@@ -1245,7 +1258,7 @@ func _rest_start_page() -> Control:
 	var t := UI.label("%s %s — %s" % [li["category_emoji"], li["category"], li["rank"]], 20, UI.INK, true)
 	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	pv.add_child(t)
-	var lt := UI.label("%s %s · level %d of %d" % [li["section_emoji"], li["section"], li["pos"], li["count"]], 16, UI.MUTED, true)
+	var lt := UI.label(tr("%s %s · level %d of %d") % [li["section_emoji"], li["section"], li["pos"], li["count"]], 16, UI.MUTED, true)
 	lt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	pv.add_child(lt)
 	var big := UI.label("%s %s" % [li["emoji"], li["name"]], 30, UI.INK, true)
@@ -1278,18 +1291,18 @@ func _rest_start_page() -> Control:
 	md.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	md.modulate = Color(1, 1, 1, 0.3)
 	sv.add_child(md)
-	var nl := UI.label("Next: %s %s" % [li["emoji"], li["name"]], 13, UI.MUTED, true)
+	var nl := UI.label(tr("Next: %s %s") % [li["emoji"], li["name"]], 13, UI.MUTED, true)
 	nl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nl.custom_minimum_size = Vector2(112, 0)
 	sv.add_child(nl)
 	fl.add_child(slot)
 	pv.add_child(fl)
-	var how := str(MEDAL_WORDS[nxt])
+	var how := tr(str(MEDAL_WORDS[nxt]))
 	if nxt == "bronze": how = how % int(li["need"])
 	pv.add_child(UI.label(how, 16, UI.GREEN_DARK, true))
-	if int(li["best"]) > 0: pv.add_child(UI.label("🔥 Best streak so far: %d quick sums in a row" % int(li["best"]), 15, UI.MUTED, true))
+	if int(li["best"]) > 0: pv.add_child(UI.label(tr("🔥 Best streak so far: %d quick sums in a row") % int(li["best"]), 15, UI.MUTED, true))
 	v.add_child(pc)
-	var go := UI.button("🏁 Ready, set, go!", _rest_go, true, UI.GREEN, 26)
+	var go := UI.button(tr("🏁 Ready, set, go!"), _rest_go, true, UI.GREEN, 26)
 	go.custom_minimum_size = Vector2(0, 72)
 	v.add_child(go)
 	return v
@@ -1302,7 +1315,7 @@ func _rest_go() -> void:
 	var at := start.get_index()
 	start.queue_free()
 	_rest.erase("start")
-	var cd := UI.label("Ready…", 54, UI.GREEN_DARK)
+	var cd := UI.label(tr("Ready…"), 54, UI.GREEN_DARK)
 	cd.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	cd.custom_minimum_size = Vector2(0, 160)
 	cd.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -1331,7 +1344,7 @@ func _rest_go() -> void:
 
 func _rest_before_next() -> void:
 	if not _rest.has("pad"): return
-	if float(G.S["energy"]) >= G.energy_max() - 0.01: _rest["pad"].stop("Full of energy! Back to work.")
+	if float(G.S["energy"]) >= G.energy_max() - 0.01: _rest["pad"].stop(tr("Full of energy! Back to work."))
 	call_deferred("_fit_modal")
 
 ## After each answer: energy, perks (lightning, streak), stars and a fanfare for medals and new levels.
@@ -1340,7 +1353,7 @@ func _rest_answered(res: Dictionary) -> void:
 	var fb: Dictionary = res["fb"]
 	if res["right"]:
 		var gained: float = G.rest_correct(res["quick"])
-		var t := ("⚡ +%s  quick!" if res["quick"] else "⚡ +%s  (a bit slow: half)") % _num(gained)
+		var t := (tr("⚡ +%s  quick!") if res["quick"] else tr("⚡ +%s  (a bit slow: half)")) % _num(gained)
 		var txt := str(res["text"])
 		res["text"] = t + (txt.substr(txt.find("\n")) if txt.contains("\n") else "")
 		_rest["eb"].have = float(G.S["energy"])
@@ -1414,24 +1427,24 @@ func _card_page(cid: String) -> void:
 	box.add_child(UI.header(Art.first("cards", [cid]), str(n.get("emoji", "📖")), 84))
 	var page := str(n.get("page", n.get("desc", "")))
 	box.add_child(UI.label(page, 20, UI.INK, true))
-	box.add_child(UI.soft_button("🔊 Read aloud", _speak.bind(page), true, 17))
+	box.add_child(UI.soft_button(tr("🔊 Read aloud"), _speak.bind(page), true, 17))
 	var unl := []
 	for u in n.get("unlocks", []):
 		if G.nodes.has(u): unl.append(G.nodes[u].get("emoji", "") + " " + G.nodes[u]["name"])
 		elif G.recipes.has(u): unl.append("🍳 " + str(G.recipes[u].get("name", G.iname(G.recipes[u]["outputs"].keys()[0]))))
-	if unl.size() > 0: box.add_child(UI.label("Knowing this lets you: " + ", ".join(unl), 16, UI.MUTED, true))
+	if unl.size() > 0: box.add_child(UI.label(tr("Knowing this lets you: ") + ", ".join(unl), 16, UI.MUTED, true))
 	match G.card_status(cid):
 		"learned":
-			box.add_child(UI.label("✅ You already know this card.", 19, UI.GREEN_DARK))
+			box.add_child(UI.label(tr("✅ You already know this card."), 19, UI.GREEN_DARK))
 		"reading":
 			var left := maxi(1, G.up(G.read_needed(cid) - float(G.S["read_progress"])))
 			var rr := UI.hbox(8)
 			rr.add_child(UI.label("📖", 22))
-			rr.add_child(UI.explain(UI.stock_bar(float(G.S["read_progress"]), ceilf(G.read_needed(cid)), UI.BLUE, 160), "📖 Pages read: each Time Quiz question turns one."))
+			rr.add_child(UI.explain(UI.stock_bar(float(G.S["read_progress"]), ceilf(G.read_needed(cid)), UI.BLUE, 160), tr("📖 Pages read: each Time Quiz question turns one.")))
 			rr.add_child(UI.wait_button(left, _quiz_from_card))
 			box.add_child(rr)
 		"quiz":
-			var sb := UI.button("❓ Take the quiz ▶", _card_quiz_only.bind(cid), true, UI.GREEN, 20)
+			var sb := UI.button(tr("❓ Take the quiz ▶"), _card_quiz_only.bind(cid), true, UI.GREEN, 20)
 			sb.custom_minimum_size = Vector2(0, 56)
 			box.add_child(sb)
 
@@ -1454,12 +1467,12 @@ func _card_q(cid: String, qs: Array, idx: int, qbox: VBoxContainer, acc: Diction
 	_clear(qbox)
 	if idx >= qs.size():
 		G.finish_card(cid, acc["all_first"])
-		qbox.add_child(UI.label("🎓 You learned \"%s\"!" % G.nodes[cid]["name"], 24, UI.GREEN_DARK, true))
-		qbox.add_child(UI.soft_button("⬅️ Back to the farm", _close_modal, true, 18))
+		qbox.add_child(UI.label(tr("🎓 You learned \"%s\"!") % G.nodes[cid]["name"], 24, UI.GREEN_DARK, true))
+		qbox.add_child(UI.soft_button(tr("⬅️ Back to the farm"), _close_modal, true, 18))
 		call_deferred("_fit_modal")
 		return
 	var q: Dictionary = qs[idx]
-	qbox.add_child(UI.label(("📚 Review: " + G.nodes[q["card"]]["name"]) if q["review"] else "Question %d" % (idx + 1), 15, UI.MUTED))
+	qbox.add_child(UI.label((tr("📚 Review: ") + G.nodes[q["card"]]["name"]) if q["review"] else tr("Question %d") % (idx + 1), 15, UI.MUTED))
 	var inner := UI.vbox(8)
 	qbox.add_child(inner)
 	_question(inner, q, _card_answered.bind(cid, qs, idx, qbox, acc))
@@ -1467,7 +1480,7 @@ func _card_q(cid: String, qs: Array, idx: int, qbox: VBoxContainer, acc: Diction
 func _card_answered(first_try: bool, cid: String, qs: Array, idx: int, qbox: VBoxContainer, acc: Dictionary) -> void:
 	G.record_card_answer(qs[idx], first_try)
 	if not first_try and not qs[idx]["review"]: acc["all_first"] = false
-	var nb := UI.button("Next ▶" if idx + 1 < qs.size() else "Finish ▶", _card_q.bind(cid, qs, idx + 1, qbox, acc), true, UI.GREEN, 19)
+	var nb := UI.button(tr("Next ▶") if idx + 1 < qs.size() else tr("Finish ▶"), _card_q.bind(cid, qs, idx + 1, qbox, acc), true, UI.GREEN, 19)
 	nb.custom_minimum_size = Vector2(0, 52)
 	qbox.add_child(nb)
 	call_deferred("_fit_modal")
@@ -1502,15 +1515,15 @@ func _field_within_reach(f: int) -> bool:
 
 func _sheet_patch(a: String, i: int) -> void:
 	var p: Dictionary = G.area(a)[i]
-	sheet_title.text = ("🟫 Patch %d" % (i % 9 + 1)) if a == "field" else (("🌳 Tree spot %d" % (i + 1)) if a == "orchard" else ("🪴 Bed %d" % (i + 1)))
+	sheet_title.text = (tr("🟫 Patch %d") % (i % 9 + 1)) if a == "field" else ((tr("🌳 Tree spot %d") % (i + 1)) if a == "orchard" else (tr("🪴 Bed %d") % (i + 1)))
 	if p["crop"] == "":
 		content.add_child(UI.header(Art.tex("deco", "soil_heap"), "🟫", 80))
 		if float(p.get("quality", 1.0)) < 0.99:
-			content.add_child(UI.label("🚧 Not fully cleared yet: it gives %d%% of a full harvest. Finish clearing it at the 🪧 sign." % int(round(float(p["quality"]) * 100)), 16, UI.MUTED, true))
+			content.add_child(UI.label(tr("🚧 Not fully cleared yet: it gives %d%% of a full harvest. Finish clearing it at the 🪧 sign.") % int(round(float(p["quality"]) * 100)), 16, UI.MUTED, true))
 		var cap: int = G.plants_per_patch(a)
-		content.add_child(UI.label("🌱".repeat(cap) + "  fits here", 17, UI.MUTED, true))
+		content.add_child(UI.label("🌱".repeat(cap) + tr("  fits here"), 17, UI.MUTED, true))
 		var cs: Array = G.crops_for(a)
-		if cs.is_empty(): content.add_child(UI.label("No seeds you can plant here yet. Learn crop cards in the 📦 library.", 17, UI.MUTED, true))
+		if cs.is_empty(): content.add_child(UI.label(tr("No seeds you can plant here yet. Learn crop cards in the 📦 library."), 17, UI.MUTED, true))
 		# every crop that can go here is a tile: picture, plants and growing time, water and energy, seeds, Plant at the bottom
 		var grid := _grid()
 		for cid in cs:
@@ -1530,7 +1543,7 @@ func _sheet_patch(a: String, i: int) -> void:
 				for rk in plan["reasons"]: why.append(G.iemoji(rk) if rk != "seeds" else "🌰")
 				t.add_child(UI.label("fewer: " + " ".join(why), 14, UI.MUTED))
 			if G.seed_have(cid) < 1.0 and not n.has("seedItem"):
-				t.add_child(UI.soft_button("🛒 Buy seeds", _go_spot.bind("market"), true, 15))
+				t.add_child(UI.soft_button(tr("🛒 Buy seeds"), _go_spot.bind("market"), true, 15))
 			_tile_button(t, UI.action_button("plant", _do_plant.bind(a, i, cid), plants >= 1))
 			grid.add_child(t.get_meta("panel"))
 		if grid.get_child_count() > 0: content.add_child(grid)
@@ -1544,23 +1557,23 @@ func _sheet_patch(a: String, i: int) -> void:
 		var row2 := UI.hbox(8)
 		row2.add_child(UI.label(("🌱" if young else str(n2.get("emoji", ""))).repeat(shown), 24))
 		if not p["ready"]:
-			row2.add_child(UI.explain(UI.stock_bar(float(p["growth"]), ceilf(G.grow_target(p)), Color("8cc63f"), 160), "🌱 Growing: a bit more with every Time Quiz question. Full = ready to harvest."))
+			row2.add_child(UI.explain(UI.stock_bar(float(p["growth"]), ceilf(G.grow_target(p)), Color("8cc63f"), 160), tr("🌱 Growing: a bit more with every Time Quiz question. Full = ready to harvest.")))
 			row2.add_child(UI.wait_button(_grow_left(a, p), _show_time_quiz))
 		content.add_child(row2)
 		if n2.has("regrow") and G.crops_for(a).size() > 1:
 			# a tree stays for good, so one can be cut down to plant another kind
 			var cr2 := UI.hbox(8)
-			cr2.add_child(UI.label("Want another tree here?", 15, UI.MUTED, true))
+			cr2.add_child(UI.label(tr("Want another tree here?"), 15, UI.MUTED, true))
 			cr2.add_child(_costs({"energy": G.ecost("wood", 3.0)}, {"energy": 3.0}))
-			cr2.add_child(UI.action_button("wood", _do_cut_tree.bind(a, i), float(G.S["energy"]) + 0.001 >= G.ecost("wood", 3.0), UI.SOIL, "🪓", "Cut down"))
+			cr2.add_child(UI.action_button("wood", _do_cut_tree.bind(a, i), float(G.S["energy"]) + 0.001 >= G.ecost("wood", 3.0), UI.SOIL, "🪓", tr("Cut down")))
 			content.add_child(cr2)
-		if float(p.get("soil", 1.0)) < 0.99: content.add_child(UI.label("😴 Tired soil: the same crop as last time grows slower. Swap crops next time (beans and clover rest the soil).", 15, UI.MUTED, true))
-		elif float(p.get("soil", 1.0)) > 1.01: content.add_child(UI.label("💚 Rested soil after beans or clover: grows faster.", 15, UI.GREEN_DARK, true))
+		if float(p.get("soil", 1.0)) < 0.99: content.add_child(UI.label(tr("😴 Tired soil: the same crop as last time grows slower. Swap crops next time (beans and clover rest the soil)."), 15, UI.MUTED, true))
+		elif float(p.get("soil", 1.0)) > 1.01: content.add_child(UI.label(tr("💚 Rested soil after beans or clover: grows faster."), 15, UI.GREEN_DARK, true))
 		if p["ready"]:
 			var ys := ""
 			for k in n2.get("yields", {}): ys += G.iemoji(k).repeat(clampi(G.down(float(n2["yields"][k]) * float(p["plants"])), 1, 12))
 			var hr := UI.hbox(8)
-			var hb := UI.button("🧺 Harvest   " + ys, _do_harvest.bind(a, i), true, UI.GREEN, 20)
+			var hb := UI.button(tr("🧺 Harvest   ") + ys, _do_harvest.bind(a, i), true, UI.GREEN, 20)
 			hb.custom_minimum_size = Vector2(0, 56)
 			hb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			hr.add_child(hb)
@@ -1571,16 +1584,16 @@ func _sheet_patch(a: String, i: int) -> void:
 		# weeds and stones on the patch: a tile each, with how many there are and the button to clear them
 		var wg := _grid()
 		if float(p["weeds"]) >= 0.5:
-			var wt := _tile(Art.tex("deco", "weeds"), "🌿", "Weeds")
-			wt.add_child(UI.explain(UI.stock_bar(float(p["weeds"]), maxf(6.0, ceilf(float(p["weeds"]))), UI.item_color("fiber"), 150), "🌿 Weeds here: they make the harvest smaller. Pull them!"))
+			var wt := _tile(Art.tex("deco", "weeds"), "🌿", tr("Weeds"))
+			wt.add_child(UI.explain(UI.stock_bar(float(p["weeds"]), maxf(6.0, ceilf(float(p["weeds"]))), UI.item_color("fiber"), 150), tr("🌿 Weeds here: they make the harvest smaller. Pull them!")))
 			var pull := minf(3.0, float(p["weeds"]))
 			wt.add_child(_costs({"energy": G.ecost("weed", pull) * G.m("energy:field")}, {"energy": pull}))
-			_tile_button(wt, UI.action_button("weed", _do_weed.bind(i), true, UI.GREEN_DARK, "💪", "Pull"))
+			_tile_button(wt, UI.action_button("weed", _do_weed.bind(i), true, UI.GREEN_DARK, "💪", tr("Pull")))
 			wg.add_child(wt.get_meta("panel"))
 		if float(p["stones"]) >= 0.5:
-			var st := _tile(Art.tex("deco", "stone"), "🪨", "Stones")
-			st.add_child(UI.explain(UI.stock_bar(float(p["stones"]), maxf(6.0, ceilf(float(p["stones"]))), UI.item_color("stone"), 150), "🪨 Stones in the soil: they make the harvest smaller. Pick them out."))
-			_tile_button(st, UI.action_button("field", _do_stones.bind(i), true, UI.SOIL, "🤏", "Pick"))
+			var st := _tile(Art.tex("deco", "stone"), "🪨", tr("Stones"))
+			st.add_child(UI.explain(UI.stock_bar(float(p["stones"]), maxf(6.0, ceilf(float(p["stones"]))), UI.item_color("stone"), 150), tr("🪨 Stones in the soil: they make the harvest smaller. Pick them out.")))
+			_tile_button(st, UI.action_button("field", _do_stones.bind(i), true, UI.SOIL, "🤏", tr("Pick")))
 			wg.add_child(st.get_meta("panel"))
 		if wg.get_child_count() > 0: content.add_child(wg)
 
@@ -1596,7 +1609,7 @@ func _show_no_water() -> void:
 	if modal.visible: return
 	var box := _open_modal("💧")
 	box.add_child(UI.NoWater.new())
-	var l := UI.label("No water left!", 24, UI.RED, true)
+	var l := UI.label(tr("No water left!"), 24, UI.RED, true)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(l)
 	var fr := UI.hbox(8)
@@ -1606,7 +1619,7 @@ func _show_no_water() -> void:
 	fr.add_child(fb)
 	fr.add_child(_costs({"energy": G.fetch_cost()}, {"energy": float(G.meta.get("water", {}).get("fetchEnergy", 1.0))}))
 	box.add_child(fr)
-	box.add_child(UI.soft_button("⬅️ Back to the farm", _close_modal, true, 17))
+	box.add_child(UI.soft_button(tr("⬅️ Back to the farm"), _close_modal, true, 17))
 
 func _fetch_and_close() -> void:
 	if G.fetch_water() and float(G.S["water"]) + 0.5 >= G.water_cap(): _close_modal()
@@ -1645,10 +1658,10 @@ func _show_gift(_offer = null) -> void:
 	var pc: Dictionary = G.postcard_pending()
 	if pc.is_empty(): return
 	_sfx("chime")
-	var box := _open_modal("📬 A postcard!")
+	var box := _open_modal(tr("📬 A postcard!"))
 	box.add_child(_postcard(pc))
 	var offer: Array = pc.get("offer", [])
-	box.add_child(UI.label("Pick one gift:" if offer.size() > 1 else "A gift for you:", 18, UI.MUTED))
+	box.add_child(UI.label(tr("Pick one gift:") if offer.size() > 1 else tr("A gift for you:"), 18, UI.MUTED))
 	for gid in offer:
 		var c: Dictionary = G.gift_card(gid)
 		var b := UI.button("%s  %s\n%s" % [c.get("emoji", "🎁"), c["name"], c.get("desc", "")], _pick_gift.bind(gid), true, Color("7a9a4a"), 19)
@@ -1656,7 +1669,7 @@ func _show_gift(_offer = null) -> void:
 		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		box.add_child(b)
 	if G.friends().size() < 3:
-		box.add_child(UI.label("💡 More friends, more postcards — and more gifts to choose from. Help a neighbour (📖 Quest book)!", 15, UI.MUTED, true))
+		box.add_child(UI.label(tr("💡 More friends, more postcards — and more gifts to choose from. Help a neighbour (📖 Quest book)!"), 15, UI.MUTED, true))
 	modal_card.pivot_offset = modal_card.size / 2.0
 	modal_card.scale = Vector2(0.6, 0.6)
 	create_tween().tween_property(modal_card, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -1699,7 +1712,7 @@ func _postcard(pc: Dictionary, small := false) -> PanelContainer:
 		var se := UI.label(str(pc.get("emoji", "💌")), 26 if small else 44)
 		se.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		sv.add_child(se)
-	var sl := UI.label("FARM POST", 9 if small else 11, Color("b5562b"))
+	var sl := UI.label(tr("FARM POST"), 9 if small else 11, Color("b5562b"))
 	sl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	sv.add_child(sl)
 	h.add_child(st)
@@ -1710,14 +1723,14 @@ func _pick_gift(gid: String) -> void:
 	_close_modal()
 
 func _show_name(pet_id: String, default_name: String) -> void:
-	var box := _open_modal("%s A new friend!" % G.nodes[pet_id].get("emoji", "🐾"))
-	box.add_child(UI.label("What should we call your new pet?", 20))
+	var box := _open_modal(tr("%s A new friend!") % G.nodes[pet_id].get("emoji", "🐾"))
+	box.add_child(UI.label(tr("What should we call your new pet?"), 20))
 	var le := LineEdit.new()
 	le.text = default_name
 	le.custom_minimum_size = Vector2(0, 56)
 	le.add_theme_font_size_override("font_size", 24)
 	box.add_child(le)
-	var ok := UI.button("That's the name! ✔", _name_done.bind(pet_id, le), true, UI.GREEN, 20)
+	var ok := UI.button(tr("That's the name! ✔"), _name_done.bind(pet_id, le), true, UI.GREEN, 20)
 	ok.custom_minimum_size = Vector2(0, 56)
 	box.add_child(ok)
 
@@ -1727,8 +1740,8 @@ func _name_done(pet_id: String, le: LineEdit) -> void:
 
 ## Who is playing? Everyone has their own farm and their own record of sums and questions practised.
 func _ask_player() -> void:
-	var box := _open_modal("👋 Who is playing?")
-	box.add_child(UI.label("Your name keeps your own farm and remembers which sums and questions you have practised.", 18, UI.MUTED, true))
+	var box := _open_modal(tr("👋 Who is playing?"))
+	box.add_child(UI.label(tr("Your name keeps your own farm and remembers which sums and questions you have practised."), 18, UI.MUTED, true))
 	var known: Array = G.players()
 	if known.size() > 0:
 		var fl := HFlowContainer.new()
@@ -1739,13 +1752,13 @@ func _ask_player() -> void:
 			b.custom_minimum_size = Vector2(0, 58)
 			fl.add_child(b)
 		box.add_child(fl)
-		box.add_child(UI.label("Someone new?", 18))
+		box.add_child(UI.label(tr("Someone new?"), 18))
 	var le := LineEdit.new()
-	le.placeholder_text = "Your name"
+	le.placeholder_text = tr("Your name")
 	le.custom_minimum_size = Vector2(0, 58)
 	le.add_theme_font_size_override("font_size", 26)
 	box.add_child(le)
-	var ok := UI.button("That's me! ✔", _player_typed.bind(le), true, UI.GREEN, 22)
+	var ok := UI.button(tr("That's me! ✔"), _player_typed.bind(le), true, UI.GREEN, 22)
 	ok.custom_minimum_size = Vector2(0, 58)
 	box.add_child(ok)
 
@@ -1759,24 +1772,39 @@ func _player_chosen(name: String) -> void:
 	_close_sheet()
 	_close_modal()
 	_refresh()
-	_toast("👋 Hello, %s!" % name)
+	_toast(tr("👋 Hello, %s!") % name)
 	if G.S["step"] == 0 and not G.done("k_wheat"): _show_welcome()
 
 func _show_menu() -> void:
-	var box := _open_modal("⚙️ Settings")
-	if G.player != "": box.add_child(UI.soft_button("👤 %s — someone else is playing" % G.player, _ask_player, true, 18))
-	else: box.add_child(UI.soft_button("👤 Who is playing?", _ask_player, true, 18))
-	box.add_child(UI.soft_button("📜 What happened (log)", _open_log, true, 18))
+	var box := _open_modal(tr("⚙️ Settings"))
+	if G.player != "": box.add_child(UI.soft_button(tr("👤 %s — someone else is playing") % G.player, _ask_player, true, 18))
+	else: box.add_child(UI.soft_button(tr("👤 Who is playing?"), _ask_player, true, 18))
+	# the language of this iPad: the whole game (interface, farm, cards, quiz packs and sums) switches
+	var lr := HFlowContainer.new()
+	lr.add_theme_constant_override("h_separation", 8)
+	lr.add_child(UI.label("🌍", 24))
+	var langs: Dictionary = I18n.languages()
+	for code in langs:
+		var nm := "%s %s" % [langs[code].get("flag", ""), langs[code].get("name", code)]
+		if code == I18n.lang: lr.add_child(UI.button("✔ " + nm, Callable(), true, UI.GREEN, 17))
+		else: lr.add_child(UI.soft_button(nm, _set_language.bind(code), true, 17))
+	box.add_child(lr)
+	box.add_child(UI.soft_button(tr("📜 What happened (log)"), _open_log, true, 18))
 	if not _grownup_open():
-		box.add_child(UI.button("🔒 Grown-up settings", _ask_password, true, UI.BLUE, 18))
+		box.add_child(UI.button(tr("🔒 Grown-up settings"), _ask_password, true, UI.BLUE, 18))
 		return
-	box.add_child(UI.label("🔓 Grown-up settings (open for a few minutes)", 17, UI.MUTED, true))
+	box.add_child(UI.label(tr("🔓 Grown-up settings (open for a few minutes)"), 17, UI.MUTED, true))
 	_part_review_share(box)
-	box.add_child(UI.label("Question packs and the size of Rest sums are set in data/settings.json and data/quiz_packs/.", 15, UI.MUTED, true))
-	box.add_child(UI.soft_button("📊 Learning record (sums and questions)", _show_learning, true, 18))
-	box.add_child(UI.soft_button("%s 🎚️ Prices fit my farm (dynamic difficulty)" % ("✅" if G.flex_on() else "⬜"), _toggle_flex, true, 16))
-	box.add_child(UI.button("🗑️ Start a new game (deletes the save)", _reset, true, UI.RED, 17))
-	box.add_child(UI.soft_button("🔒 Lock again", _lock_grownup, true, 16))
+	box.add_child(UI.label(tr("Question packs and the size of Rest sums are set in data/settings.json and data/quiz_packs/."), 15, UI.MUTED, true))
+	box.add_child(UI.soft_button(tr("📊 Learning record (sums and questions)"), _show_learning, true, 18))
+	box.add_child(UI.soft_button(tr("%s 🎚️ Prices fit my farm (dynamic difficulty)") % ("✅" if G.flex_on() else "⬜"), _toggle_flex, true, 16))
+	box.add_child(UI.button(tr("🗑️ Start a new game (deletes the save)"), _reset, true, UI.RED, 17))
+	box.add_child(UI.soft_button(tr("🔒 Lock again"), _lock_grownup, true, 16))
+
+## Switches the language and builds the screen again in it (the farm stays as it is).
+func _set_language(code: String) -> void:
+	G.set_language(code)
+	get_tree().reload_current_scene()
 
 ## The grown-up part of Settings: opened with parentPassword (data/settings.json), stays open for GROWNUP_SECONDS.
 const GROWNUP_SECONDS := 300.0
@@ -1791,22 +1819,22 @@ func _lock_grownup() -> void:
 	_show_menu()
 
 func _ask_password() -> void:
-	var box := _open_modal("🔒 For grown-ups")
-	box.add_child(UI.label("Please type the password.", 18, UI.INK, true))
+	var box := _open_modal(tr("🔒 For grown-ups"))
+	box.add_child(UI.label(tr("Please type the password."), 18, UI.INK, true))
 	var le := LineEdit.new()
-	le.placeholder_text = "Password"
+	le.placeholder_text = tr("Password")
 	le.custom_minimum_size = Vector2(0, 58)
 	le.add_theme_font_size_override("font_size", 26)
 	box.add_child(le)
 	var hint := str(G.settings.get("parentHint", ""))
-	if hint != "": box.add_child(UI.label("Hint: " + hint, 16, UI.MUTED, true))
+	if hint != "": box.add_child(UI.label(tr("Hint: ") + hint, 16, UI.MUTED, true))
 	var msg := UI.label("", 16, UI.RED, true)
-	var ok := UI.button("Open 🔓", _check_password.bind(le, msg), true, UI.GREEN, 22)
+	var ok := UI.button(tr("Open 🔓"), _check_password.bind(le, msg), true, UI.GREEN, 22)
 	ok.custom_minimum_size = Vector2(0, 58)
 	le.text_submitted.connect(func(_t): _check_password(le, msg))
 	box.add_child(ok)
 	box.add_child(msg)
-	box.add_child(UI.soft_button("⬅️ Back", func(): _close_modal(); _show_menu(), true, 16))
+	box.add_child(UI.soft_button(tr("⬅️ Back"), func(): _close_modal(); _show_menu(), true, 16))
 	le.call_deferred("grab_focus")
 
 func _check_password(le: LineEdit, msg: Label) -> void:
@@ -1815,7 +1843,7 @@ func _check_password(le: LineEdit, msg: Label) -> void:
 		_close_modal()
 		_show_menu()
 	else:
-		msg.text = "That's not it. Try again."
+		msg.text = tr("That's not it. Try again.")
 		le.text = ""
 
 ## Not case-sensitive, spaces at the ends ignored (easy to type on an iPad).
@@ -1827,7 +1855,7 @@ func _part_review_share(box: Control) -> void:
 	var pc := UI.card(Color("f3f7ea"))
 	var v := UI.vbox(4)
 	pc.add_child(v)
-	v.add_child(UI.label("❓ Where the Time Quiz questions come from", 18, UI.INK, true))
+	v.add_child(UI.label(tr("❓ Where the Time Quiz questions come from"), 18, UI.INK, true))
 	var pct := int(round(G.review_share() * 100.0))
 	var row := UI.hbox(8)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -1837,8 +1865,8 @@ func _part_review_share(box: Control) -> void:
 	row.add_child(bar)
 	row.add_child(UI.soft_button("➕", _change_review_share.bind(0.05), pct < 100, 20))
 	v.add_child(row)
-	v.add_child(UI.label("📚 %d%% from the books read   ·   📦 %d%% from your question packs" % [pct, 100 - pct], 16, UI.INK, true))
-	v.add_child(UI.label("A book question only comes when a card is due for review; otherwise a pack question takes its place.", 14, UI.MUTED, true))
+	v.add_child(UI.label(tr("📚 %d%% from the books read   ·   📦 %d%% from your question packs") % [pct, 100 - pct], 16, UI.INK, true))
+	v.add_child(UI.label(tr("A book question only comes when a card is due for review; otherwise a pack question takes its place."), 14, UI.MUTED, true))
 	box.add_child(pc)
 
 func _change_review_share(d: float) -> void:
@@ -1849,27 +1877,27 @@ func _change_review_share(d: float) -> void:
 ## For parents: the player's learning record — a plain JSON file (learnkit/learner.gd) that can be opened, copied,
 ## edited (learnkit/tools/learning-editor.html) and pasted back; and which maths categories are practised.
 func _show_learning() -> void:
-	var box := _open_modal("📊 Learning record")
+	var box := _open_modal(tr("📊 Learning record"))
 	var L: Dictionary = G._learn()
 	var r: Dictionary = G.math_record()
 	var qs: Dictionary = G.quiz.stats(L)
-	box.add_child(UI.label("%s — Rest sums: %d answered, %d known by heart, %d medals.  Time Quiz: %d questions seen, %d known." % [
-		G.player if G.player != "" else "(no name yet)", int(r.get("n", 0)), G.math.known_count(L), G.math.medal_count(L), int(qs["seen"]), int(qs["known"])], 17, UI.INK, true))
+	box.add_child(UI.label(tr("%s — Rest sums: %d answered, %d known by heart, %d medals.  Time Quiz: %d questions seen, %d known.") % [
+		G.player if G.player != "" else tr("(no name yet)"), int(r.get("n", 0)), G.math.known_count(L), G.math.medal_count(L), int(qs["seen"]), int(qs["known"])], 17, UI.INK, true))
 	var folder: String = G.learner.folder()
 	if folder != "":
-		box.add_child(UI.label("The file: " + folder + "/learning.json", 14, UI.MUTED, true))
-		box.add_child(UI.soft_button("📂 Open the folder", func(): OS.shell_open(folder), true, 17))
-	box.add_child(UI.label("Copy it out to look at it or change it (learnkit/tools/learning-editor.html opens it), then paste it back in.", 15, UI.MUTED, true))
-	box.add_child(UI.soft_button("📋 Copy the record", _copy_learning, true, 17))
+		box.add_child(UI.label(tr("The file: ") + folder + "/learning.json", 14, UI.MUTED, true))
+		box.add_child(UI.soft_button(tr("📂 Open the folder"), func(): OS.shell_open(folder), true, 17))
+	box.add_child(UI.label(tr("Copy it out to look at it or change it (learnkit/tools/learning-editor.html opens it), then paste it back in."), 15, UI.MUTED, true))
+	box.add_child(UI.soft_button(tr("📋 Copy the record"), _copy_learning, true, 17))
 	var te := TextEdit.new()
-	te.placeholder_text = "Paste a learning record here …"
+	te.placeholder_text = tr("Paste a learning record here …")
 	te.custom_minimum_size = Vector2(0, 90)
 	box.add_child(te)
-	box.add_child(UI.soft_button("📥 Use the pasted record", _paste_learning.bind(te), true, 17))
-	_section_in(box, "➕ What the Rest sums practise")
+	box.add_child(UI.soft_button(tr("📥 Use the pasted record"), _paste_learning.bind(te), true, 17))
+	_section_in(box, tr("➕ What the Rest sums practise"))
 	for cat in G.math.C.get("categories", []):
 		var on: bool = r["active"].has(cat["id"])
-		var b := UI.soft_button("%s %s %s  (classes %s)" % ["✅" if on else "⬜", cat.get("emoji", ""), cat.get("name", ""), cat.get("classes", "")], _toggle_category.bind(str(cat["id"])), true, 17)
+		var b := UI.soft_button(tr("%s %s %s  (classes %s)") % ["✅" if on else "⬜", cat.get("emoji", ""), cat.get("name", ""), cat.get("classes", "")], _toggle_category.bind(str(cat["id"])), true, 17)
 		box.add_child(b)
 	call_deferred("_fit_modal")
 
@@ -1878,7 +1906,7 @@ func _rainbow_now() -> void:
 
 func _copy_learning() -> void:
 	DisplayServer.clipboard_set(G.learner.export_text())
-	_toast("📋 Copied.")
+	_toast(tr("📋 Copied."))
 
 func _section_in(box: VBoxContainer, title: String) -> void:
 	box.add_child(UI.label(title, 19, UI.INK, true))
@@ -1886,9 +1914,9 @@ func _section_in(box: VBoxContainer, title: String) -> void:
 func _paste_learning(te: TextEdit) -> void:
 	if G.learner.import_text(te.text):
 		G.L = G.learner.data
-		_toast("📥 Learning record loaded.")
+		_toast(tr("📥 Learning record loaded."))
 		_show_learning()
-	else: _toast("❌ That is not a learning record.")
+	else: _toast(tr("❌ That is not a learning record."))
 
 func _toggle_category(id: String) -> void:
 	var r: Dictionary = G.math_record()
@@ -1911,11 +1939,11 @@ func _reset() -> void:
 	_show_welcome()
 
 func _show_welcome() -> void:
-	var box := _open_modal("🔥 Ashes")
+	var box := _open_modal(tr("🔥 Ashes"))
 	box.add_child(UI.header(null, "🔥", 72))
-	box.add_child(UI.label("Your farm burned down. All that's left: a tent, an old bucket by a wild pond, a tin pot, a few sticks and stones, one wheat seed — and a box with a book in it.", 20, UI.INK, true))
-	box.add_child(UI.label("Tap places on the farm to see what you can do there. Every right answer in the ❓ Time Quiz moves farm time forward. When you're tired, tap ⚡ to rest.", 17, UI.MUTED, true))
-	var ob := UI.button("📗 Open the book", _open_first_book, true, UI.GREEN, 20)
+	box.add_child(UI.label(tr("Your farm burned down. All that's left: a tent, an old bucket by a wild pond, a tin pot, a few sticks and stones, one wheat seed — and a box with a book in it."), 20, UI.INK, true))
+	box.add_child(UI.label(tr("Tap places on the farm to see what you can do there. Every right answer in the ❓ Time Quiz moves farm time forward. When you're tired, tap ⚡ to rest."), 17, UI.MUTED, true))
+	var ob := UI.button(tr("📗 Open the book"), _open_first_book, true, UI.GREEN, 20)
 	ob.custom_minimum_size = Vector2(0, 56)
 	box.add_child(ob)
 
@@ -1924,9 +1952,9 @@ func _open_first_book() -> void:
 	_show_card("k_wheat")
 
 # ------------------------------------------------------------------ text helpers
-const CAT_LABEL := {"field": "Field work", "weed": "Weeding", "plant": "Planting", "harvest": "Harvesting", "gather": "Gathering", "wood": "Wood work",
-	"build": "Building", "craft": "Crafting", "smith": "Smithing", "kiln": "Kiln work", "cook": "Cooking", "prep": "Prep", "mill": "Milling",
-	"process": "Dairy & press", "textile": "Textiles", "animal": "Animal care", "errand": "Errands"}
+const CAT_LABEL := {"field": "Field work", "weed": "Weeding", "plant": "Planting", "harvest": "Harvesting", "gather": "Gathering", "wood": "Wood work",   # i18n
+	"build": "Building", "craft": "Crafting", "smith": "Smithing", "kiln": "Kiln work", "cook": "Cooking", "prep": "Prep", "mill": "Milling",   # i18n
+	"process": "Dairy & press", "textile": "Textiles", "animal": "Animal care", "errand": "Errands"}   # i18n
 
 ## Whole numbers for kids: 0.5 shows as ½, 1.5 as 1½, anything else is rounded.
 func _num(v: float) -> String:
@@ -1944,29 +1972,29 @@ func _effect_text(e: Dictionary) -> String:
 	for k in e.get("set", {}):
 		var v = e["set"][k]
 		match k:
-			"energyMax": out.append("energy max %d" % int(v))
-			"energyPerRest": out.append("%s ⚡ per Rest answer" % _num(float(v)))
-			"waterPerStep": out.append("+%s 💧 per question" % _num(float(v)))
-			"waterCap": out.append("holds %d 💧" % int(v))
-			"storageCap": out.append("holds %d of each item" % int(v))
-			"patchCap": out.append("%d plants per patch" % int(v))
-			"scare": out.append("chases %s pests per question" % _num(float(v)))
-			"pestBlock": out.append("%d%% fewer pests get in" % int(round(float(v) * 100)))
-			"bookSlots": out.append("holds %d books" % int(v))
-			"waterMult": out.append("plants need %d%% water" % int(round(float(v) * 100)))
+			"energyMax": out.append(tr("energy max %d") % int(v))
+			"energyPerRest": out.append(tr("%s ⚡ per Rest answer") % _num(float(v)))
+			"waterPerStep": out.append(tr("+%s 💧 per question") % _num(float(v)))
+			"waterCap": out.append(tr("holds %d 💧") % int(v))
+			"storageCap": out.append(tr("holds %d of each item") % int(v))
+			"patchCap": out.append(tr("%d plants per patch") % int(v))
+			"scare": out.append(tr("chases %s pests per question") % _num(float(v)))
+			"pestBlock": out.append(tr("%d%% fewer pests get in") % int(round(float(v) * 100)))
+			"bookSlots": out.append(tr("holds %d books") % int(v))
+			"waterMult": out.append(tr("plants need %d%% water") % int(round(float(v) * 100)))
 			_:
-				if k.begins_with("cap_"): out.append("room for %d %s" % [int(v), k.substr(4)])
+				if k.begins_with("cap_"): out.append(tr("room for %d %s") % [int(v), k.substr(4)])
 	for k in e.get("add", {}):
 		var v2 := float(e["add"][k])
-		if k == "energyPerRest": out.append("+%s ⚡ per Rest answer" % _num(v2))
-		elif k == "energyMax": out.append("energy max +%d" % int(v2))
-		elif k == "plots": out.append("+%d field patches" % int(v2))
-		elif k == "waterPerStep": out.append("+%s 💧 per question" % _num(v2))
-		elif k == "scare": out.append("chases %s more pests" % _num(v2))
-		elif k == "sellBonusPct": out.append("+%d%% when selling" % int(v2))
-		elif k.begins_with("slots:"): out.append("+%d batch at %s" % [int(v2), G.nodes.get(k.substr(6), {}).get("name", k.substr(6))])
-		elif k.begins_with("yield_"): out.append("+%d %s per harvest" % [int(v2), G.iname(k.substr(6))])
-		elif k == "shelfLife": out.append("food keeps %d season longer" % int(v2))
+		if k == "energyPerRest": out.append(tr("+%s ⚡ per Rest answer") % _num(v2))
+		elif k == "energyMax": out.append(tr("energy max +%d") % int(v2))
+		elif k == "plots": out.append(tr("+%d field patches") % int(v2))
+		elif k == "waterPerStep": out.append(tr("+%s 💧 per question") % _num(v2))
+		elif k == "scare": out.append(tr("chases %s more pests") % _num(v2))
+		elif k == "sellBonusPct": out.append(tr("+%d%% when selling") % int(v2))
+		elif k.begins_with("slots:"): out.append(tr("+%d batch at %s") % [int(v2), G.nodes.get(k.substr(6), {}).get("name", k.substr(6))])
+		elif k.begins_with("yield_"): out.append(tr("+%d %s per harvest") % [int(v2), G.iname(k.substr(6))])
+		elif k == "shelfLife": out.append(tr("food keeps %d season longer") % int(v2))
 		else: out.append("%s +%s" % [k, _num(v2)])
 	for k in e.get("mult", {}):
 		var v3 := float(e["mult"][k])
@@ -1974,21 +2002,21 @@ func _effect_text(e: Dictionary) -> String:
 		var kind: String = parts[0]
 		var a: String = parts[1] if parts.size() > 1 else ""
 		match kind:
-			"energy": out.append("%s %s" % [CAT_LABEL.get(a, a), _pct(v3)])
+			"energy": out.append("%s %s" % [tr(str(CAT_LABEL.get(a, a))), _pct(v3)])
 			"water": out.append("%s water %s" % ["field" if a == "field" else "animal", _pct(v3)])
 			"weeds": out.append("weeds %s" % _pct(v3))
-			"grow": out.append("growing time %s" % _pct(v3))
+			"grow": out.append(tr("growing time %s") % _pct(v3))
 			"pests": out.append("pests %s" % _pct(v3))
 			"stones": out.append("stones %s" % _pct(v3))
 			"fuel": out.append("firewood %s" % _pct(v3))
 			"muck": out.append("muck %s" % _pct(v3))
-			"read": out.append("reading time %s" % _pct(v3))
+			"read": out.append(tr("reading time %s") % _pct(v3))
 			"out": out.append("%s output %s" % [G.nodes.get(a, {}).get("name", a), _pct(v3)])
 			"feed": out.append("%s eat %s" % [G.nodes.get(a, {}).get("name", a), _pct(v3)])
 			"time": out.append("%s time %s" % [G.nodes.get(a, {}).get("name", a), _pct(v3)])
 			"in": out.append("%s needed %s" % [G.iname(parts[2]) if parts.size() > 2 else a, _pct(v3)])
 			_: out.append("%s %s" % [k, _pct(v3)])
-	for k in e.get("produces", {}): out.append("+1 %s every %d questions" % [G.iname(k), int(round(1.0 / maxf(0.01, float(e["produces"][k]))))])
+	for k in e.get("produces", {}): out.append(tr("+1 %s every %d questions") % [G.iname(k), int(round(1.0 / maxf(0.01, float(e["produces"][k]))))])
 	return ", ".join(out)
 
 func _cost_bb(c: Dictionary) -> String:
@@ -1998,7 +2026,7 @@ func _cost_bb(c: Dictionary) -> String:
 		var have: float = G.have(k)
 		var col := "#3b6a26" if have + 0.0001 >= need else "#b9472f"
 		var t := "%s%d" % [G.iemoji(k), G.up(need)]
-		if have + 0.0001 < need and k != "energy": t += " (have %d)" % G.down(have)
+		if have + 0.0001 < need and k != "energy": t += tr(" (have %d)") % G.down(have)
 		parts.append("[color=%s]%s[/color]" % [col, t])
 	return "  ".join(parts)
 
@@ -2041,7 +2069,7 @@ func _node_row(id: String, show_button := true, show_place := false, tile := fal
 	h.add_child(UI.label("%s %s" % [n.get("emoji", ""), n["name"]], 19, UI.INK, true))
 	if show_place:
 		var sid := Spots.spot_of(G, id)
-		var pb := UI.soft_button("📍 " + Spots.SPOTS.get(sid, [sid])[0], _go_spot.bind(sid), true, 15)
+		var pb := UI.soft_button("📍 " + tr(str(Spots.SPOTS.get(sid, [sid])[0])), _go_spot.bind(sid), true, 15)
 		h.add_child(pb)
 	var ck: Dictionary = G.can_unlock(id)
 	var steps: Array = G.steps_of(id)
@@ -2059,23 +2087,23 @@ func _node_row(id: String, show_button := true, show_place := false, tile := fal
 	if steps.size() > 0:
 		# done in steps: how far it is (cubes) and what the next step is
 		var sr := UI.hbox(6)
-		sr.add_child(UI.explain(UI.stock_bar(float(G.step_index(id)), float(steps.size()), Color("7cc04a"), 160), "🔨 Steps done so far."))
+		sr.add_child(UI.explain(UI.stock_bar(float(G.step_index(id)), float(steps.size()), Color("7cc04a"), 160), tr("🔨 Steps done so far.")))
 		var nx: Dictionary = steps[mini(G.step_index(id), steps.size() - 1)]
 		sr.add_child(UI.label("%s %s" % [nx.get("emoji", ""), nx.get("name", "")], 16, UI.INK, true))
 		var gv := ""
 		for k in nx.get("gives", {}): gv += G.iemoji(k).repeat(clampi(int(round(float(nx["gives"][k]))), 1, 5))
 		if gv != "": sr.add_child(UI.label("→ " + gv, 16))
-		if int(nx.get("wait", 0)) > 0 and G.step_index(id) < steps.size() - 1: sr.add_child(UI.label("then ⏳%d" % int(nx["wait"]), 15, UI.MUTED))
+		if int(nx.get("wait", 0)) > 0 and G.step_index(id) < steps.size() - 1: sr.add_child(UI.label(tr("then ⏳%d") % int(nx["wait"]), 15, UI.MUTED))
 		v.add_child(sr)
 	var c: Dictionary = G.node_cost(id)
 	if not c.is_empty():
-		if n.get("perPatch", false): v.add_child(UI.label("each patch:", 13, UI.MUTED))
+		if n.get("perPatch", false): v.add_child(UI.label(tr("each patch:"), 13, UI.MUTED))
 		v.add_child(_costs(c, G.node_cost_base(id)))
 	var d := str(n.get("desc", ""))
 	if d != "": v.add_child(UI.label(d, 15, UI.MUTED, true))
 	if G.flex_on() and not c.is_empty():
 		var tip: String = G.flex_tip(id)       # dynamic difficulty: the improvement that makes this quicker
-		if tip != "": v.add_child(UI.label("💡 Quicker with: %s %s" % [G.nodes[tip].get("emoji", ""), G.nodes[tip]["name"]], 15, UI.BLUE, true))
+		if tip != "": v.add_child(UI.label(tr("💡 Quicker with: %s %s") % [G.nodes[tip].get("emoji", ""), G.nodes[tip]["name"]], 15, UI.BLUE, true))
 	if n.has("effects"):
 		var et := _effect_text(n["effects"])
 		if et != "": v.add_child(UI.label("✨ " + et, 15, UI.GREEN_DARK, true))
@@ -2093,21 +2121,21 @@ func _node_word(id: String) -> String:
 	var n: Dictionary = G.nodes[id]
 	if n.has("verb"): return str(n["verb"])
 	var st: Array = G.steps_of(id)
-	if st.size() > 0: return str(st[mini(G.step_index(id), st.size() - 1)].get("name", "Go")).split(" ")[0]
+	if st.size() > 0: return str(st[mini(G.step_index(id), st.size() - 1)].get("name", tr("Go"))).split(" ")[0]
 	var first := str(n["name"]).split(" ")[0]
 	if first in ["Fill", "Dig", "Clear", "Clean", "Lay", "Plant", "Edge", "Mend", "Fix", "Feed", "Pull", "Root", "Oil", "Sharpen"]: return first
 	match str(n["type"]):
-		"building", "station", "helper", "patch": return "Build"
-		"tool": return {"smith": "Forge", "wood": "Carve"}.get(G.node_cat(id), "Craft")
-		"gear": return "Sew" if G.node_cat(id) == "textile" else "Craft"
-		"land": return "Clear"
-		"delivery": return "Give" if id.begins_with("present_") else "Deliver"
-		"pet": return "Welcome"
-		"sidequest": return "Help"
-		"book": return "Buy"
-		"knowledge": return "Learn"
-		"animal": return "Buy"
-	return "Go"
+		"building", "station", "helper", "patch": return tr("Build")
+		"tool": return {"smith": tr("Forge"), "wood": tr("Carve")}.get(G.node_cat(id), tr("Craft"))
+		"gear": return tr("Sew") if G.node_cat(id) == "textile" else tr("Craft")
+		"land": return tr("Clear")
+		"delivery": return tr("Give") if id.begins_with("present_") else tr("Deliver")
+		"pet": return tr("Welcome")
+		"sidequest": return tr("Help")
+		"book": return tr("Buy")
+		"knowledge": return tr("Learn")
+		"animal": return tr("Buy")
+	return tr("Go")
 
 func _go_spot(sid: String) -> void:
 	_open_sheet_for(sid)
@@ -2120,7 +2148,7 @@ func _do_unlock(id: String) -> void:
 ## A locked place with nothing within reach: only a weathered sign and a promise.
 func _part_mystery() -> void:
 	content.add_child(UI.header(Art.first("deco", ["mystery_sign", "signpost"]), "🪧", 130))
-	var l := UI.label("Something stood here once…\nYou will find out what belongs here later — when you have what it needs.", 19, UI.MUTED, true)
+	var l := UI.label(tr("Something stood here once…\nYou will find out what belongs here later — when you have what it needs."), 19, UI.MUTED, true)
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(l)
 
@@ -2146,7 +2174,7 @@ func _sheet_spot(sid: String) -> void:
 	if head != "" and str(G.nodes[head].get("desc", "")) != "" and not (sid in ["market", "board"]):
 		content.add_child(UI.label(str(G.nodes[head]["desc"]), 16, UI.MUTED, true))
 	elif not _is_open(sid):
-		content.add_child(UI.label("Build it to open this place.", 17, UI.MUTED, true))
+		content.add_child(UI.label(tr("Build it to open this place."), 17, UI.MUTED, true))
 	var lists := _goal_lists(sid)
 	if sid != "market": _part_main_goals(sid, lists[0])   # what to do here comes first (the market: selling first, orders at the bottom)
 	match sid:
@@ -2195,13 +2223,13 @@ func _goal_lists(sid: String) -> Array:
 
 func _part_main_goals(sid: String, main: Array) -> void:
 	if main.is_empty(): return
-	_section("🤝 Favours for neighbours" if sid == "board" else ("📦 Orders to deliver" if sid == "market" else "🔨 To do here"),
-		"Help someone: the reward is a picture for your album, and a bit of luck." if sid == "board" else "")
+	_section(tr("🤝 Favours for neighbours") if sid == "board" else (tr("📦 Orders to deliver") if sid == "market" else tr("🔨 To do here")),
+		tr("Help someone: the reward is a picture for your album, and a bit of luck.") if sid == "board" else "")
 	content.add_child(_node_grid(main))
 
 func _part_more_goals(sid: String, main: Array, opt: Array, soon: Array) -> void:
 	if not opt.is_empty():
-		_section("🧰 Upgrades (optional)", "Never required — they make work cheaper for good.")
+		_section(tr("🧰 Upgrades (optional)"), tr("Never required — they make work cheaper for good."))
 		content.add_child(_node_grid(opt))
 	# what comes later is not shown here: only what can be done now (the quest book has this chapter's next steps)
 
@@ -2210,7 +2238,7 @@ func _part_polish_here(sid: String) -> void:
 	for pid in G.polish_ids:
 		if Spots.in_spot(G, pid, sid) and G.polish_open(pid): ids.append(pid)
 	if ids.is_empty(): return
-	_section("✨ Polish", "Sharpen, oil, clean… The first time helps most; every next time adds half as much and costs more. Use wears it off slowly.")
+	_section(tr("✨ Polish"), tr("Sharpen, oil, clean… The first time helps most; every next time adds half as much and costs more. Use wears it off slowly."))
 	var g := _grid(2)
 	for pid in ids: g.add_child(_polish_card(pid))
 	content.add_child(g)
@@ -2224,10 +2252,10 @@ func _polish_card(pid: String) -> PanelContainer:
 	pc.add_child(v)
 	v.add_child(UI.label("%s %s" % [n.get("emoji", ""), n["name"]], 17, UI.INK, true))
 	var h := UI.hbox(6)
-	h.add_child(UI.explain(UI.bar(G.polish_gain(pid, p), 120, 10, UI.AMBER), "✨ How polished it is: the fuller, the stronger it works."))
+	h.add_child(UI.explain(UI.bar(G.polish_gain(pid, p), 120, 10, UI.AMBER), tr("✨ How polished it is: the fuller, the stronger it works.")))
 	h.add_child(UI.label("%d%%→%d%%" % [int(round(G.polish_gain(pid, p) * 100)), int(round(G.polish_gain(pid, floorf(p) + 1.0) * 100))], 14, UI.MUTED))
 	v.add_child(h)
-	v.add_child(UI.label("At full polish: " + _effect_text(n.get("effects", {})), 14, UI.GREEN_DARK, true))
+	v.add_child(UI.label(tr("At full polish: ") + _effect_text(n.get("effects", {})), 14, UI.GREEN_DARK, true))
 	var c: Dictionary = G.polish_cost(pid)
 	_tile_button(v, UI.button("✨ " + G.cost_text(c), G.do_polish.bind(pid), G.missing_cost(c).is_empty(), UI.AMBER, 16))
 	return pc
@@ -2236,7 +2264,7 @@ func _part_woodpile() -> void:
 	var wp := UI.card(Color("f6ecd8"))
 	var wv := UI.vbox(4)
 	wp.add_child(wv)
-	wv.add_child(UI.label("🪵 Woodpile: %d / %d fuel — ovens, kilns and the forge burn it; the house too in winter." % [G.down(G.S["woodpile"]), G.down(G.woodpile_cap())], 16, UI.INK, true))
+	wv.add_child(UI.label(tr("🪵 Woodpile: %d / %d fuel — ovens, kilns and the forge burn it; the house too in winter.") % [G.down(G.S["woodpile"]), G.down(G.woodpile_cap())], 16, UI.INK, true))
 	var wh := HFlowContainer.new()
 	wv.add_child(wh)
 	for k in G.meta.get("fuel", {}).get("values", {}):
@@ -2246,7 +2274,7 @@ func _part_woodpile() -> void:
 
 func _stack(k: String) -> void:
 	var n: float = G.stack_wood(k, G.count(k))
-	if n > 0.0: G.say("🪵 Stacked %d %s on the woodpile." % [int(n), G.iname(k)])
+	if n > 0.0: G.say(tr("🪵 Stacked %d %s on the woodpile.") % [int(n), G.iname(k)])
 	G.save_game(); _queue_refresh()
 
 func _station_card(root: String) -> PanelContainer:
@@ -2266,7 +2294,7 @@ func _station_card(root: String) -> PanelContainer:
 		if G.nodes[hid].has("attach") and G.chain_members(root).has(G.nodes[hid]["attach"]): att.append(hid)
 	if att.size() > 0:
 		var ah := HFlowContainer.new()
-		ah.add_child(UI.label("Choice slot: ", 14, UI.MUTED))
+		ah.add_child(UI.label(tr("Choice slot: "), 14, UI.MUTED))
 		for hid in att:
 			var hn: Dictionary = G.nodes[hid]
 			if G.done(hid):
@@ -2274,7 +2302,7 @@ func _station_card(root: String) -> PanelContainer:
 				if active: ah.add_child(UI.button("✔ " + hn.get("emoji", "") + " " + hn["name"], Callable(), true, UI.GREEN, 14))
 				else: ah.add_child(UI.soft_button("use " + hn.get("emoji", "") + " " + hn["name"], G.set_attach.bind(hn["attach"], hid), true, 14))
 			else:
-				ah.add_child(UI.label("(%s %s: build it below) " % [hn.get("emoji", ""), hn["name"]], 13, UI.MUTED))
+				ah.add_child(UI.label(tr("(%s %s: build it below) ") % [hn.get("emoji", ""), hn["name"]], 13, UI.MUTED))
 		v.add_child(ah)
 	# every open recipe is a tile in a grid (picture, name, what it gives, its cost, and its button at the bottom);
 	# recipes waiting for something of this chapter are listed below the grid
@@ -2291,7 +2319,7 @@ func _station_card(root: String) -> PanelContainer:
 				if not G.satisfied(q):
 					why.append(G.nodes[q].get("emoji", "") + " " + G.nodes[q]["name"])
 					if not _in_chapter(q) or not G.missing_reqs(q).is_empty(): later = true
-			if not later: locked.append("🔒 %s — needs %s" % [title, ", ".join(why)])
+			if not later: locked.append(tr("🔒 %s — needs %s") % [title, ", ".join(why)])
 			continue
 		var outs := []
 		var batch: int = G.recipe_batch(rid)     # carrying gear: a bigger load per tap (and more energy)
@@ -2324,8 +2352,8 @@ func _station_card(root: String) -> PanelContainer:
 			btn = UI.wait_button(soonest if soonest < 999 else 1, _show_time_quiz)    # busy: wait for a batch
 		elif stoke_now:
 			var can: bool = G.fuel_in_store() + float(G.S["woodpile"]) + 0.001 >= fuel
-			btn = UI.action_button("cook", _stoke.bind(fuel), can, UI.AMBER, "🪵", "Stoke" if can else "Need wood")
-			btn.tooltip_text = "Put wood on the woodpile first: %d fuel." % G.up(fuel)
+			btn = UI.action_button("cook", _stoke.bind(fuel), can, UI.AMBER, "🪵", tr("Stoke") if can else tr("Need wood"))
+			btn.tooltip_text = tr("Put wood on the woodpile first: %d fuel.") % G.up(fuel)
 		else:
 			btn = UI.action_button(G.recipe_cat(rid), G.start_recipe.bind(rid), have_all, UI.GREEN, "", str(r.get("verb", "")))
 		_tile_button(t, btn)
@@ -2356,25 +2384,25 @@ func _animal_card(aid: String) -> PanelContainer:
 	v.add_child(h)
 	h.add_child(UI.label("%s %s  %d / %d" % [n.get("emoji", ""), n["name"], int(a["count"]), G.animal_cap(aid)], 20, UI.INK, true))
 	var can_buy: bool = int(a["count"]) < G.animal_cap(aid) and G.missing_cost(G.animal_price(aid)).is_empty()
-	h.add_child(UI.button("Buy one  " + G.cost_text(G.animal_price(aid)), G.buy_animal.bind(aid), can_buy, UI.GREEN, 16))
+	h.add_child(UI.button(tr("Buy one  ") + G.cost_text(G.animal_price(aid)), G.buy_animal.bind(aid), can_buy, UI.GREEN, 16))
 	v.add_child(UI.label(str(n.get("desc", "")), 15, UI.MUTED, true))
-	if G.animal_cap(aid) <= 0: v.add_child(UI.label("No room yet: build them a home first.", 15, UI.RED, true))
+	if G.animal_cap(aid) <= 0: v.add_child(UI.label(tr("No room yet: build them a home first."), 15, UI.RED, true))
 	var ag := _grid(2)
 	if int(a["count"]) > 0:
 		var ready: bool = G.S["step"] >= int(a["ready"])
-		var ct := _tile(null, "🧺", "Collect · they need:")
+		var ct := _tile(null, "🧺", tr("Collect · they need:"))
 		ct.add_child(_costs(G.feed_needs(aid), _feed_base(aid)))
 		if ready: _tile_button(ct, UI.action_button("animal", G.collect_animal.bind(aid), true))
 		else: _tile_button(ct, UI.wait_button(int(a["ready"]) - G.S["step"], _show_time_quiz))
 		ag.add_child(ct.get_meta("panel"))
 		if n.get("needsFlowers", false):
-			v.add_child(UI.label("🌼 Flowers on the farm: %s" % ("yes" if G.has_flowers() else "none — plant clover, flax or sunflowers"), 15, UI.GREEN_DARK if G.has_flowers() else UI.RED, true))
+			v.add_child(UI.label(tr("🌼 Flowers on the farm: %s") % ("yes" if G.has_flowers() else tr("none — plant clover, flax or sunflowers")), 15, UI.GREEN_DARK if G.has_flowers() else UI.RED, true))
 		if float(n.get("muck", 0.0)) > 0.0:
 			var mf: float = G.muck_factor(aid)
-			var mt := _tile(null, "💩", "Muck %d" % G.down(a["muck"]))
-			if mf < 1.0: mt.add_child(UI.label("Animals give %d%% less!" % int(round((1.0 - mf) * 100)), 15, UI.RED, true))
+			var mt := _tile(null, "💩", tr("Muck %d") % G.down(a["muck"]))
+			if mf < 1.0: mt.add_child(UI.label(tr("Animals give %d%% less!") % int(round((1.0 - mf) * 100)), 15, UI.RED, true))
 			mt.add_child(_costs({"energy": G.ecost("animal", float(a["muck"]) * 0.5)}, {"energy": float(a["muck"]) * 0.5}))
-			_tile_button(mt, UI.action_button("animal", G.muck_out.bind(aid), float(a["muck"]) >= 0.5, UI.SOIL, "🧹", "Clean"))
+			_tile_button(mt, UI.action_button("animal", G.muck_out.bind(aid), float(a["muck"]) >= 0.5, UI.SOIL, "🧹", tr("Clean")))
 			ag.add_child(mt.get_meta("panel"))
 	if ag.get_child_count() > 0: v.add_child(ag)
 	return pc
@@ -2397,9 +2425,9 @@ func _part_home() -> void:
 	rc.add_child(rv)
 	var eh := UI.hbox(6)
 	eh.add_child(UI.label("⚡", 22))
-	eh.add_child(UI.explain(UI.stock_bar(float(G.S["energy"]), G.energy_max(), UI.item_color("energy")), "⚡ Your energy: work uses it, rest fills it."))
+	eh.add_child(UI.explain(UI.stock_bar(float(G.S["energy"]), G.energy_max(), UI.item_color("energy")), tr("⚡ Your energy: work uses it, rest fills it.")))
 	rv.add_child(eh)
-	var rb := UI.button("😴 Rest", _show_rest, true, UI.BLUE, 19)
+	var rb := UI.button(tr("😴 Rest"), _show_rest, true, UI.BLUE, 19)
 	rb.custom_minimum_size = Vector2(0, 50)
 	rv.add_child(rb)
 	content.add_child(rc)
@@ -2407,12 +2435,12 @@ func _part_home() -> void:
 	for k in G.S["inv"]:
 		if G.items.has(k) and G.items[k].has("buff") and G.count(k) >= 1.0: foods.append(k)
 	if foods.size() > 0:
-		_section("😋 Eat something", "A good meal makes work cheaper for the next few questions.")
+		_section(tr("😋 Eat something"), tr("A good meal makes work cheaper for the next few questions."))
 		for k in foods:
 			var it: Dictionary = G.items[k]
 			var row := UI.hbox(6)
 			row.add_child(UI.label("%s %s × %d" % [it.get("emoji", ""), it["name"], G.down(G.count(k))], 17, UI.INK, true))
-			row.add_child(UI.soft_button("😋 Eat (−%d%% ⚡ for %d)" % [int(round((1.0 - float(it["buff"]["energy"])) * 100)), int(it["buff"]["questions"])], G.eat.bind(k), true, 16))
+			row.add_child(UI.soft_button(tr("😋 Eat (−%d%% ⚡ for %d)") % [int(round((1.0 - float(it["buff"]["energy"])) * 100)), int(it["buff"]["questions"])], G.eat.bind(k), true, 16))
 			content.add_child(row)
 	var worn := []
 	for s in GEAR_SLOTS:
@@ -2420,11 +2448,11 @@ func _part_home() -> void:
 		for id in Spots.nodes_at(G, "living"):
 			if str(G.nodes[id].get("slot", "")) == "gear:" + s[0] and G.nodes[id]["type"] in ["gear", "helper"] and G.done(id): cur = id
 		worn.append("%s %s" % [s[1], G.nodes[cur]["name"] if cur != "" else "—"])
-	_section("👕 What you wear and sleep on")
+	_section(tr("👕 What you wear and sleep on"))
 	content.add_child(UI.label("   ".join(worn), 15, UI.INK, true))
 
-const WILD_WORDS := {"weeds": "overgrown with weeds", "rocks": "full of rocks", "stumps": "full of old tree stumps",
-	"scrub": "overgrown with scrub", "marsh": "a wet marsh"}
+const WILD_WORDS := {"weeds": "overgrown with weeds", "rocks": "full of rocks", "stumps": "full of old tree stumps",   # i18n
+	"scrub": "overgrown with scrub", "marsh": "a wet marsh"}   # i18n
 
 ## Which overgrown patch was tapped, why it can't be used yet and what clears it.
 func _part_patch_note(i: int) -> void:
@@ -2433,12 +2461,12 @@ func _part_patch_note(i: int) -> void:
 	var pc := UI.card(Color("fbf1e0"))
 	var v := UI.vbox(2)
 	pc.add_child(v)
-	v.add_child(UI.label("🟫 Patch %d is not ready yet: it is still %s." % [i % 9 + 1, WILD_WORDS.get(w[0], "overgrown")], 18, UI.INK, true))
+	v.add_child(UI.label(tr("🟫 Patch %d is not ready yet: it is still %s.") % [i % 9 + 1, tr(str(WILD_WORDS.get(w[0], "overgrown")))], 18, UI.INK, true))
 	var job: String = w[2]
 	if job != "":
 		var miss: Array = G.missing_reqs(job)
-		if miss.is_empty(): v.add_child(UI.label("%s %s below clears it." % [G.nodes[job]["emoji"], G.nodes[job]["name"]], 16, UI.MUTED, true))
-		else: v.add_child(UI.label("To clear it you need first: %s." % ", ".join(miss), 16, UI.MUTED, true))
+		if miss.is_empty(): v.add_child(UI.label(tr("%s %s below clears it.") % [G.nodes[job]["emoji"], G.nodes[job]["name"]], 16, UI.MUTED, true))
+		else: v.add_child(UI.label(tr("To clear it you need first: %s.") % ", ".join(miss), 16, UI.MUTED, true))
 	content.add_child(pc)
 
 func _part_field() -> void:
@@ -2448,20 +2476,20 @@ func _part_field() -> void:
 	var r1 := UI.hbox(8)
 	var n_p: int = G.down(float(G.S["pests"]) + 0.5)
 	r1.add_child(UI.label("🐦" if n_p > 0 else "🐦 0", 22))
-	if n_p > 0: r1.add_child(UI.explain(UI.stock_bar(float(G.S["pests"]), maxf(4.0, ceilf(float(G.S["pests"]))), Color("8a6f5f"), 200), "🐦 Pests on the farm: they nibble what grows."))
-	r1.add_child(UI.label("eat %d%% 🌾 each question" % int(round(G.pest_eat_share() * 100.0)), 17, UI.RED if G.pest_eat_share() >= 0.05 else UI.MUTED))
+	if n_p > 0: r1.add_child(UI.explain(UI.stock_bar(float(G.S["pests"]), maxf(4.0, ceilf(float(G.S["pests"]))), Color("8a6f5f"), 200), tr("🐦 Pests on the farm: they nibble what grows.")))
+	r1.add_child(UI.label(tr("eat %d%% 🌾 each question") % int(round(G.pest_eat_share() * 100.0)), 17, UI.RED if G.pest_eat_share() >= 0.05 else UI.MUTED))
 	pv.add_child(r1)
 	var r2 := UI.hbox(8)
 	r2.add_child(UI.label("🧍", 22))
-	if G.pest_scare() > 0.0: r2.add_child(UI.explain(UI.stock_bar(G.pest_scare(), G.pest_scare(), Color("c98a12"), 160), "🧍 Pests chased away every question."))
+	if G.pest_scare() > 0.0: r2.add_child(UI.explain(UI.stock_bar(G.pest_scare(), G.pest_scare(), Color("c98a12"), 160), tr("🧍 Pests chased away every question.")))
 	else: r2.add_child(UI.label("—", 18, UI.MUTED))
 	if G.pest_block() > 0.0:
 		r2.add_child(UI.label("🚧 %d%%" % int(round(G.pest_block() * 100)), 17))
 	pv.add_child(r2)
 	content.add_child(pc)
 	var qa := HFlowContainer.new()
-	qa.add_child(UI.soft_button("🌿 Weed all", func(): G.weed_field(field_idx), true, 17))
-	qa.add_child(UI.soft_button("🪨 Pick stones", _pick_all, true, 17))
+	qa.add_child(UI.soft_button(tr("🌿 Weed all"), func(): G.weed_field(field_idx), true, 17))
+	qa.add_child(UI.soft_button(tr("🪨 Pick stones"), _pick_all, true, 17))
 	content.add_child(qa)
 
 func _part_area(a: String) -> void:
@@ -2472,7 +2500,7 @@ func _part_area(a: String) -> void:
 	fv.custom_minimum_size = Vector2(0, 110 * int(ceil(arr.size() / 3.0)))
 	content.add_child(fv)
 	fv.patch_pressed.connect(_on_patch)
-	content.add_child(UI.button("🧺 Harvest all", _harvest_all.bind(a), _ready_count(a) > 0, UI.GREEN, 18))
+	content.add_child(UI.button(tr("🧺 Harvest all"), _harvest_all.bind(a), _ready_count(a) > 0, UI.GREEN, 18))
 
 ## Water: how much there is (cubes), and the bucket trips to the wild pond.
 func _part_water(sid: String) -> void:
@@ -2481,10 +2509,10 @@ func _part_water(sid: String) -> void:
 	wc.add_child(wv)
 	var wr := UI.hbox(8)
 	wr.add_child(UI.label("💧", 24))
-	wr.add_child(UI.explain(UI.stock_bar(float(G.S["water"]), G.water_cap(), UI.item_color("water"), 320), "💧 Water you carry: planting and cooking use it."))
+	wr.add_child(UI.explain(UI.stock_bar(float(G.S["water"]), G.water_cap(), UI.item_color("water"), 320), tr("💧 Water you carry: planting and cooking use it.")))
 	wv.add_child(wr)
-	wv.add_child(UI.label("🪣 Every trip brings %s 💧 · holds %s" % [_num(G.fetch_amount()), _num(G.water_cap())], 16, UI.INK, true))
-	if G.S.get("rain", false): wv.add_child(UI.label("🌧️ It rained: planting costs no water until the next question.", 15, UI.GREEN_DARK, true))
+	wv.add_child(UI.label(tr("🪣 Every trip brings %s 💧 · holds %s") % [_num(G.fetch_amount()), _num(G.water_cap())], 16, UI.INK, true))
+	if G.S.get("rain", false): wv.add_child(UI.label(tr("🌧️ It rained: planting costs no water until the next question."), 15, UI.GREEN_DARK, true))
 	var fr := UI.hbox(8)
 	var room: float = G.water_cap() - float(G.S["water"])
 	var fb := UI.button("🪣  %s" % "💧".repeat(clampi(int(round(minf(room, G.fetch_amount()))), 1, 8)), _fetch_water, room >= 0.5, UI.BLUE, 22)
@@ -2495,7 +2523,7 @@ func _part_water(sid: String) -> void:
 	wv.add_child(fr)
 	content.add_child(wc)
 	if sid == "pond" and not G.done("pond"):
-		content.add_child(UI.label("A wild pond, full of reeds. Someday it could be dug out again.", 15, UI.MUTED, true))
+		content.add_child(UI.label(tr("A wild pond, full of reeds. Someday it could be dug out again."), 15, UI.MUTED, true))
 
 func _fetch_water() -> void:
 	G.fetch_water()
@@ -2513,7 +2541,7 @@ func _part_road() -> void:
 	for mid in G.nodes:
 		var mn: Dictionary = G.nodes[mid]
 		if mn["type"] == "merchant" and G.done(mid): who.append(str(mn.get("emoji", "🧑")))
-	if who.size() > 0: rv.add_child(UI.label("Coming to your market:  " + " ".join(who), 17, UI.INK, true))
+	if who.size() > 0: rv.add_child(UI.label(tr("Coming to your market:  ") + " ".join(who), 17, UI.INK, true))
 	var blocked := 0
 	for mid in G.nodes:
 		var mn2: Dictionary = G.nodes[mid]
@@ -2525,7 +2553,7 @@ func _part_road() -> void:
 			if str(q).begins_with("road_"): road_only = true
 			else: other = true
 		if road_only and not other: blocked += 1
-	if blocked > 0: rv.add_child(UI.label("🚧 %s can't get through yet — a better road lets them come." % "🧑‍🌾".repeat(mini(blocked, 5)), 16, UI.RED, true))
+	if blocked > 0: rv.add_child(UI.label(tr("🚧 %s can't get through yet — a better road lets them come.") % "🧑‍🌾".repeat(mini(blocked, 5)), 16, UI.RED, true))
 	content.add_child(rc)
 
 func _part_pets() -> void:
@@ -2536,12 +2564,12 @@ func _part_pets() -> void:
 		var n: Dictionary = G.nodes[pid]
 		var row := UI.hbox(6)
 		row.add_child(UI.label("%s %s — %s" % [n.get("emoji", ""), G.S["pet_names"].get(pid, n.get("defaultName", "")), _effect_text(n.get("effects", {}))], 17, UI.INK, true))
-		row.add_child(UI.soft_button("✏️ Name", _show_name.bind(pid, str(G.S["pet_names"].get(pid, n.get("defaultName", "")))), true, 15))
+		row.add_child(UI.soft_button(tr("✏️ Name"), _show_name.bind(pid, str(G.S["pet_names"].get(pid, n.get("defaultName", "")))), true, 15))
 		content.add_child(row)
-	if not any: content.add_child(UI.label("Your first pet, a bunny, comes home at the end of chapter 1.", 16, UI.MUTED, true))
+	if not any: content.add_child(UI.label(tr("Your first pet, a bunny, comes home at the end of chapter 1."), 16, UI.MUTED, true))
 
 func _part_jobs() -> void:
-	_section("📋 Little jobs", "A few coins and a bit of luck for each.")
+	_section(tr("📋 Little jobs"), tr("A few coins and a bit of luck for each."))
 	for j in G.S["jobs"]:
 		var h := UI.hbox(6)
 		h.add_child(UI.label("• " + str(j["text"]), 17, UI.INK, true))
@@ -2592,10 +2620,10 @@ func _tile_button(t: VBoxContainer, btn: Button) -> void:
 
 func _part_pantry() -> void:
 	var ready_n := _ready_count("field") + _ready_count("orchard") + _ready_count("gh")
-	var hb := UI.button("🧺 Harvest all  (%d ready)" % ready_n if ready_n > 0 else "🧺 Harvest all — nothing is ready yet", _harvest_everything, ready_n > 0, UI.GREEN, 20)
+	var hb := UI.button(tr("🧺 Harvest all  (%d ready)") % ready_n if ready_n > 0 else tr("🧺 Harvest all — nothing is ready yet"), _harvest_everything, ready_n > 0, UI.GREEN, 20)
 	hb.custom_minimum_size = Vector2(0, 58)
 	content.add_child(hb)
-	_section("🧺 What you have", "🍂 = goes stale at the next change of season — sell it, eat it or cook it into something that keeps. 🪙 = what one sells for; ↓ = the market has had lots of it lately and pays less for a while.")
+	_section(tr("🧺 What you have"), tr("🍂 = goes stale at the next change of season — sell it, eat it or cook it into something that keeps. 🪙 = what one sells for; ↓ = the market has had lots of it lately and pays less for a while."))
 	var grid := _grid()
 	content.add_child(grid)
 	var cap: float = G.storage_cap()
@@ -2609,7 +2637,7 @@ func _part_pantry() -> void:
 		var v := _tile(Art.first("items", [k]), str(it.get("emoji", "")), str(it["name"]) + ("  🍂" if G.stale_soon(k) >= 1.0 else ""))
 		var keeper: bool = it.get("category", "") == "keeper"
 		v.add_child(UI.explain(UI.stock_bar(q, q if keeper else cap, UI.item_color(k, G.items), 190),
-			("%s %d %s" % [str(it.get("emoji", "")), G.down(q), str(it["name"])]) + ("" if keeper else " — your store holds %d of each." % G.down(cap))))
+			("%s %d %s" % [str(it.get("emoji", "")), G.down(q), str(it["name"])]) + ("" if keeper else tr(" — your store holds %d of each.") % G.down(cap))))
 		var row := HFlowContainer.new()
 		if it.has("buff"): row.add_child(UI.soft_button("😋", G.eat.bind(k), true, 20))
 		if G.fuel_value(k) > 0.0: row.add_child(UI.soft_button("🔥", _stack.bind(k), true, 20))
@@ -2619,19 +2647,19 @@ func _part_pantry() -> void:
 			var have: int = G.down(q)
 			row.add_child(UI.soft_button("1 %s = %d 🪙" % [em, G.down(G.sell_total(k, 1))], G.sell.bind(k, 1.0), true, 17))
 			if have > 1: row.add_child(UI.soft_button("%d %s = %d 🪙" % [have, em, G.down(G.sell_total(k, have))], G.sell.bind(k, 999.0), true, 17))
-			if G.demand_factor(k) < 0.999: v.add_child(UI.label("↓ lots sold lately — pays less for a while", 13, Color("b5562b"), true))
+			if G.demand_factor(k) < 0.999: v.add_child(UI.label(tr("↓ lots sold lately — pays less for a while"), 13, Color("b5562b"), true))
 		if row.get_child_count() > 0: v.add_child(row)
 		grid.add_child(v.get_meta("panel"))
 	var seeds := []
 	for cid in G.S["seeds"]:
 		if float(G.S["seeds"][cid]) >= 1.0: seeds.append(cid)
 	if seeds.size() > 0:
-		_section("🌱 Seeds")
+		_section(tr("🌱 Seeds"))
 		var sg := _grid()
 		content.add_child(sg)
 		for cid in seeds:
 			var sv := _tile(Art.tex("crops", cid), str(G.nodes[cid].get("emoji", "")), str(G.nodes[cid]["name"]))
-			sv.add_child(UI.explain(UI.stock_bar(float(G.S["seeds"][cid]), maxf(10.0, ceilf(float(G.S["seeds"][cid]))), Color("a3c26a"), 190), "🌰 Seeds you have to plant."))
+			sv.add_child(UI.explain(UI.stock_bar(float(G.S["seeds"][cid]), maxf(10.0, ceilf(float(G.S["seeds"][cid]))), Color("a3c26a"), 190), tr("🌰 Seeds you have to plant.")))
 			sg.add_child(sv.get_meta("panel"))
 
 func _harvest_everything() -> void:
@@ -2644,7 +2672,7 @@ func _harvest_everything() -> void:
 		fx.start("confetti", size / 2.0)
 
 func _part_market() -> void:
-	_section("🌱 Seed merchant", "Only seeds you have can be planted — buy them here.")
+	_section(tr("🌱 Seed merchant"), tr("Only seeds you have can be planted — buy them here."))
 	var sg := _grid()
 	content.add_child(sg)
 	for cid in G.nodes:
@@ -2682,9 +2710,9 @@ func _part_market() -> void:
 func _part_bookcart() -> void:
 	if not G.done("book_cart"):
 		var mr: Array = G.missing_reqs("book_cart")
-		content.add_child(UI.label("The book cart comes by once you have: " + ", ".join(mr), 17, UI.MUTED, true))
+		content.add_child(UI.label(tr("The book cart comes by once you have: ") + ", ".join(mr), 17, UI.MUTED, true))
 		return
-	content.add_child(UI.label("Books hold new cards. Your library holds %d books (%d now)." % [int(round(G.g("bookSlots", 1.0))), G.books_owned()], 16, UI.MUTED, true))
+	content.add_child(UI.label(tr("Books hold new cards. Your library holds %d books (%d now).") % [int(round(G.g("bookSlots", 1.0))), G.books_owned()], 16, UI.MUTED, true))
 	var books := []
 	for bid in G.nodes:
 		if G.nodes[bid]["type"] == "book" and not G.done(bid) and _in_chapter(bid): books.append(bid)
@@ -2697,23 +2725,23 @@ func _part_bookcart() -> void:
 		pc.add_child(v)
 		var row := UI.hbox(6)
 		row.add_child(UI.label("%s %s — %s" % [bn.get("emoji", ""), bn["name"], bn.get("desc", "")], 16, UI.INK if ck["ok"] else UI.MUTED, true))
-		row.add_child(UI.button("Buy", _do_unlock.bind(bid), ck["ok"], UI.GREEN, 16))
+		row.add_child(UI.button(tr("Buy"), _do_unlock.bind(bid), ck["ok"], UI.GREEN, 16))
 		v.add_child(row)
 		v.add_child(_costs(G.node_cost(bid)))
 		if not ck["ok"] and not G.missing_reqs(bid).is_empty(): v.add_child(UI.label(str(ck["why"]), 14, UI.MUTED, true))
 		content.add_child(pc)
 
 func _part_library() -> void:
-	content.add_child(UI.label("%d / %d books · %d of %d cards learned. Read a card (takes a few Time Quiz questions), then answer its quiz. Due reviews pop up in the Time Quiz." % [G.books_owned(), int(round(G.g("bookSlots", 1.0))), G.cards_learned(), G.card_ids.size()], 16, UI.MUTED, true))
+	content.add_child(UI.label(tr("%d / %d books · %d of %d cards learned. Read a card (takes a few Time Quiz questions), then answer its quiz. Due reviews pop up in the Time Quiz.") % [G.books_owned(), int(round(G.g("bookSlots", 1.0))), G.cards_learned(), G.card_ids.size()], 16, UI.MUTED, true))
 	if G.S["reading"] != "":
 		var rc: String = G.S["reading"]
 		var row := UI.hbox(8)
 		row.add_child(UI.label("📖 %s" % G.nodes[rc]["name"], 18))
-		row.add_child(UI.explain(UI.stock_bar(float(G.S["read_progress"]), ceilf(G.read_needed(rc)), UI.BLUE, 160), "📖 Pages read: each Time Quiz question turns one."))
+		row.add_child(UI.explain(UI.stock_bar(float(G.S["read_progress"]), ceilf(G.read_needed(rc)), UI.BLUE, 160), tr("📖 Pages read: each Time Quiz question turns one.")))
 		row.add_child(UI.wait_button(maxi(1, G.up(G.read_needed(rc) - float(G.S["read_progress"]))), _show_time_quiz))
 		content.add_child(row)
 	var due: int = G.due_cards().size()
-	if due > 0: content.add_child(UI.label("🔁 %d card%s due for a review — they'll show up in the Time Quiz." % [due, "" if due == 1 else "s"], 16, UI.BLUE, true))
+	if due > 0: content.add_child(UI.label(tr("🔁 %d card%s due for a review — they'll show up in the Time Quiz.") % [due, "" if due == 1 else "s"], 16, UI.BLUE, true))
 	for bid in G.nodes:
 		if G.nodes[bid]["type"] != "book" or not G.done(bid): continue
 		var bn2: Dictionary = G.nodes[bid]
@@ -2740,27 +2768,27 @@ func _card_tile(cid: String) -> PanelContainer:
 		"learned":
 			var box_n := int(G.S["cards"].get(cid, {}).get("box", 1))
 			t.add_child(UI.label("✅ " + "⭐".repeat(box_n), 16, UI.GREEN_DARK))
-			_tile_button(t, UI.soft_button("📖 Read again", _card_page.bind(cid), true, 16))
+			_tile_button(t, UI.soft_button(tr("📖 Read again"), _card_page.bind(cid), true, 16))
 		"quiz":
-			t.add_child(UI.label("Read! Now its quiz.", 15, UI.INK, true))
-			_tile_button(t, UI.button("❓ Quiz", _show_card.bind(cid), true, UI.GREEN, 20))
+			t.add_child(UI.label(tr("Read! Now its quiz."), 15, UI.INK, true))
+			_tile_button(t, UI.button(tr("❓ Quiz"), _show_card.bind(cid), true, UI.GREEN, 20))
 		"reading":
-			t.add_child(UI.explain(UI.stock_bar(float(G.S["read_progress"]), ceilf(G.read_needed(cid)), UI.BLUE, 120), "📖 Pages read: each Time Quiz question turns one."))
+			t.add_child(UI.explain(UI.stock_bar(float(G.S["read_progress"]), ceilf(G.read_needed(cid)), UI.BLUE, 120), tr("📖 Pages read: each Time Quiz question turns one.")))
 			_tile_button(t, UI.wait_button(maxi(1, G.up(G.read_needed(cid) - float(G.S["read_progress"]))), _show_time_quiz))
 		"readable":
 			var rq: int = G.up(G.read_needed(cid) * G.m("read"))
-			t.add_child(UI.label("Reading takes %d question%s" % [rq, "" if rq == 1 else "s"], 15, UI.MUTED, true))
-			_tile_button(t, UI.button("📖 Read", _start_reading.bind(cid), G.S["reading"] == "", UI.BLUE, 20))
+			t.add_child(UI.label(tr("Reading takes %d question%s") % [rq, "" if rq == 1 else "s"], 15, UI.MUTED, true))
+			_tile_button(t, UI.button(tr("📖 Read"), _start_reading.bind(cid), G.S["reading"] == "", UI.BLUE, 20))
 		"prereq":
 			var miss := []
 			for r in n["requires"]:
 				if not G.satisfied(r): miss.append(G.nodes[r]["name"])
-			t.add_child(UI.label("🔒 First: %s" % ", ".join(miss), 14, UI.MUTED, true))
+			t.add_child(UI.label(tr("🔒 First: %s") % ", ".join(miss), 14, UI.MUTED, true))
 		"discover":
 			var miss2 := []
 			for k in n.get("discover", []):
 				if not G.S["seen"].has(k): miss2.append(G.iemoji(k) + " " + G.iname(k))
-			t.add_child(UI.label("🔍 Find %s first" % ", ".join(miss2), 14, UI.MUTED, true))
+			t.add_child(UI.label(tr("🔍 Find %s first") % ", ".join(miss2), 14, UI.MUTED, true))
 		_:
 			t.add_child(UI.label("🔒", 15, UI.MUTED))
 	return t.get_meta("panel")
@@ -2788,27 +2816,27 @@ func _sheet_goals() -> void:
 	opt.sort_custom(func(a, b): return key.call(a) < key.call(b))
 	var few: bool = G.friends().size() < 2
 	if few and not side.is_empty():
-		_section("⭐ Recommended: help a neighbour", "People you help become your friends — and friends send postcards with a gift when they hear of your successes.")
+		_section(tr("⭐ Recommended: help a neighbour"), tr("People you help become your friends — and friends send postcards with a gift when they hear of your successes."))
 		for id in side: content.add_child(_node_row(id, true, true))
-	_section("🎯 Next goals", "Build, make and deliver these to move the story on. Green costs you have, red ones you still need. 📍 shows where.")
-	if main.is_empty(): content.add_child(UI.label("Nothing open right now — learn a new card in the 📦 library, or keep farming.", 16, UI.MUTED, true))
+	_section(tr("🎯 Next goals"), tr("Build, make and deliver these to move the story on. Green costs you have, red ones you still need. 📍 shows where."))
+	if main.is_empty(): content.add_child(UI.label(tr("Nothing open right now — learn a new card in the 📦 library, or keep farming."), 16, UI.MUTED, true))
 	for id in main: content.add_child(_node_row(id, true, true))
 	if not side.is_empty() and not few:
-		_section("🤝 Favours for neighbours", "Friends send postcards with gifts.")
+		_section(tr("🤝 Favours for neighbours"), tr("Friends send postcards with gifts."))
 		for id in side: content.add_child(_node_row(id, true, true))
 	if not opt.is_empty():
-		_section("🧰 Upgrades (optional)", "Never required — they make work cheaper for good.")
+		_section(tr("🧰 Upgrades (optional)"), tr("Never required — they make work cheaper for good."))
 		for id in opt: content.add_child(_node_row(id, true, true))
 	if not soon.is_empty():
-		_section("🔒 Coming up", "One thing missing for each of these.")
+		_section(tr("🔒 Coming up"), tr("One thing missing for each of these."))
 		for pair in soon.slice(0, 8):
 			var n2: Dictionary = G.nodes[pair[0]]
-			content.add_child(UI.label("%s %s — needs %s" % [n2.get("emoji", ""), n2["name"], pair[1]], 15, UI.MUTED, true))
+			content.add_child(UI.label(tr("%s %s — needs %s") % [n2.get("emoji", ""), n2["name"], pair[1]], 15, UI.MUTED, true))
 
 func _sheet_album() -> void:
-	_section("🐾 Pets")
+	_section(tr("🐾 Pets"))
 	_part_pets()
-	_section("🖼️ Pictures", "Every favour you do for a neighbour gives a picture.")
+	_section(tr("🖼️ Pictures"), tr("Every favour you do for a neighbour gives a picture."))
 	for a in G.S["album"]:
 		var pc := UI.card(Color("fff6e0"))
 		var av := UI.vbox(4)
@@ -2823,7 +2851,7 @@ func _sheet_album() -> void:
 			av.add_child(tr)
 		av.add_child(UI.label("%s  %s" % [a.get("emoji", "🖼️"), a["text"]], 17, UI.INK, true))
 		content.add_child(pc)
-	_section("🏅 Sum medals", "🥉 level passed · 🥈 every task quick · 🥇 still quick a week later · 🏆 a whole section silver · 👑 all gold")
+	_section(tr("🏅 Sum medals"), tr("🥉 level passed · 🥈 every task quick · 🥇 still quick a week later · 🏆 a whole section silver · 👑 all gold"))
 	for cs in G.math.overview(G._learn()):
 		if not cs["active"]: continue
 		content.add_child(UI.label("%s %s — %s" % [cs["emoji"], cs["name"], cs["rank"]], 19, UI.INK, true))
@@ -2842,16 +2870,16 @@ func _sheet_album() -> void:
 					next_shown = true
 			if fl.get_child_count() > 0: content.add_child(fl)
 	var acorns: Array = G.meta.get("acorns", {}).get("list", [])
-	_section("🌰 Golden acorns: %d / %d" % [G.S["acorns"].size(), acorns.size()], "Each one gives +3 energy max for good. They hide in different places.")
+	_section(tr("🌰 Golden acorns: %d / %d") % [G.S["acorns"].size(), acorns.size()], tr("Each one gives +3 energy max for good. They hide in different places."))
 	var hidden_shown := false
 	for a in acorns:
 		if G.S["acorns"].has(a["id"]): content.add_child(UI.label("🌰 " + str(a["name"]), 17))
 		elif not hidden_shown:
-			content.add_child(UI.label("❔ The next one is still hidden somewhere…", 17, UI.MUTED))
+			content.add_child(UI.label(tr("❔ The next one is still hidden somewhere…"), 17, UI.MUTED))
 			hidden_shown = true
 	var fr: Array = G.friends()
-	_section("🤝 Friends: %d" % fr.size(), "The people you helped. When they hear of your successes, they send postcards with a gift.")
-	if fr.is_empty(): content.add_child(UI.label("No friends yet — help a neighbour (📖 Quest book)!", 16, UI.MUTED, true))
+	_section(tr("🤝 Friends: %d") % fr.size(), tr("The people you helped. When they hear of your successes, they send postcards with a gift."))
+	if fr.is_empty(): content.add_child(UI.label(tr("No friends yet — help a neighbour (📖 Quest book)!"), 16, UI.MUTED, true))
 	else:
 		var ff := HFlowContainer.new()
 		ff.add_theme_constant_override("h_separation", 6)
@@ -2860,9 +2888,9 @@ func _sheet_album() -> void:
 		content.add_child(ff)
 	var pcs: Array = G.S.get("postcards", [])
 	if not pcs.is_empty():
-		_section("💌 Postcards: %d" % pcs.size())
+		_section(tr("💌 Postcards: %d") % pcs.size())
 		for i in range(pcs.size() - 1, -1, -1): content.add_child(_postcard(pcs[i], true))
-	_section("✨ Perks", "Little extras for favours and achievements. Tap to switch one on or off.")
+	_section(tr("✨ Perks"), tr("Little extras for favours and achievements. Tap to switch one on or off."))
 	var pg := _grid()
 	content.add_child(pg)
 	var next_perk := false      # only the next perk to earn is shown, as a surprise
@@ -2871,22 +2899,22 @@ func _sheet_album() -> void:
 		if G.perk_owned(pid):
 			var on: bool = G.perk_on(pid)
 			var pv := _tile(null, str(p.get("emoji", "✨")), "%s\n%s\n🏅 %s" % [p["name"], p.get("desc", ""), _perk_reason(p)], Color("eef6e4") if on else Color("f1ede4"))
-			if on: pv.add_child(UI.button("✅ On", G.toggle_perk.bind(pid), true, UI.GREEN, 16))
-			else: pv.add_child(UI.soft_button("💤 Off — switch on", G.toggle_perk.bind(pid), true, 15))
+			if on: pv.add_child(UI.button(tr("✅ On"), G.toggle_perk.bind(pid), true, UI.GREEN, 16))
+			else: pv.add_child(UI.soft_button(tr("💤 Off — switch on"), G.toggle_perk.bind(pid), true, 15))
 			pg.add_child(pv.get_meta("panel"))
 		elif not next_perk:
-			var lv := _tile(null, "❔", "Next perk\n" + _perk_hint(p), Color("f1ede4"))
+			var lv := _tile(null, "❔", tr("Next perk\n") + _perk_hint(p), Color("f1ede4"))
 			pg.add_child(lv.get_meta("panel"))
 			next_perk = true
-	_section("🎁 Gifts from postcards", "%d gifts can work at the same time; the others rest here until you swap them in." % G.gift_max())
+	_section(tr("🎁 Gifts from postcards"), tr("%d gifts can work at the same time; the others rest here until you swap them in.") % G.gift_max())
 	var gg := _grid()
 	content.add_child(gg)
 	for gid in G.S["gift_owned"]:
 		var c: Dictionary = G.gift_card(gid)
 		var on: bool = G.gift_is_active(gid)
 		var v := _tile(null, str(c.get("emoji", "🎁")), "%s\n%s" % [c["name"], c.get("desc", "")], Color("eef6e4") if on else Color("f1ede4"))
-		if on: v.add_child(UI.button("✅ Working", G.toggle_gift.bind(gid), true, UI.GREEN, 16))
-		else: v.add_child(UI.soft_button("💤 Resting — use it", G.toggle_gift.bind(gid), true, 15))
+		if on: v.add_child(UI.button(tr("✅ Working"), G.toggle_gift.bind(gid), true, UI.GREEN, 16))
+		else: v.add_child(UI.soft_button(tr("💤 Resting — use it"), G.toggle_gift.bind(gid), true, 15))
 		gg.add_child(v.get_meta("panel"))
 
 ## A big medal with the level's name under it; next = the medal still to win (faint).
@@ -2894,12 +2922,12 @@ func _medal_tile(md: String, lv: Dictionary, next: bool) -> Control:
 	var v := UI.vbox(0)
 	v.custom_minimum_size = Vector2(112, 0)
 	v.mouse_filter = Control.MOUSE_FILTER_PASS
-	v.tooltip_text = "%s · class %s" % [lv["example"], str(lv["class"])]
+	v.tooltip_text = tr("%s · class %s") % [lv["example"], str(lv["class"])]
 	var big := UI.label(md, 48)
 	big.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	if next: big.modulate = Color(1, 1, 1, 0.35)
 	v.add_child(big)
-	var nm := UI.label(("Next: " if next else "") + "%s %s" % [lv["emoji"], lv["name"]], 13, UI.MUTED if next else UI.INK, true)
+	var nm := UI.label((tr("Next: ") if next else "") + "%s %s" % [lv["emoji"], lv["name"]], 13, UI.MUTED if next else UI.INK, true)
 	nm.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	nm.custom_minimum_size = Vector2(112, 0)
 	v.add_child(nm)
@@ -2911,37 +2939,37 @@ func _perk_reason(p: Dictionary) -> String:
 	if w == "":
 		for id in G.nodes:
 			var q: Dictionary = G.nodes[id]
-			if str(q.get("perk", "")) == str(p["id"]): return "A thank-you for helping: %s %s." % [q.get("emoji", ""), q["name"]]
-		return "A thank-you from a neighbour you helped."
+			if str(q.get("perk", "")) == str(p["id"]): return tr("A thank-you for helping: %s %s.") % [q.get("emoji", ""), q["name"]]
+		return tr("A thank-you from a neighbour you helped.")
 	var parts := w.split(">=")
 	var n := parts[1] if parts.size() > 1 else ""
 	match parts[0]:
-		"rest_quick": return "You answered %s Rest sums quickly!" % n
-		"medals": return "You won %s medals with the Rest sums!" % n
-		"arith_level": return "You reached level %s of the Rest sums!" % n
-		"sold_kinds": return "You sold %s different things!" % n
-		"harvests": return "You harvested %s times!" % n
-		"seasons": return "You lived through %s seasons!" % n
-		"cards": return "You learned %s knowledge cards!" % n
-		"sidequests": return "You helped %s neighbours!" % n
-	return "You earned it by playing!"
+		"rest_quick": return tr("You answered %s Rest sums quickly!") % n
+		"medals": return tr("You won %s medals with the Rest sums!") % n
+		"arith_level": return tr("You reached level %s of the Rest sums!") % n
+		"sold_kinds": return tr("You sold %s different things!") % n
+		"harvests": return tr("You harvested %s times!") % n
+		"seasons": return tr("You lived through %s seasons!") % n
+		"cards": return tr("You learned %s knowledge cards!") % n
+		"sidequests": return tr("You helped %s neighbours!") % n
+	return tr("You earned it by playing!")
 
 ## How a perk not yet owned is earned (shown in the album).
 func _perk_hint(p: Dictionary) -> String:
 	var w := str(p.get("when", ""))
-	if w == "": return "A thank-you from a neighbour you help."
+	if w == "": return tr("A thank-you from a neighbour you help.")
 	var parts := w.split(">=")
 	var n := parts[1] if parts.size() > 1 else ""
 	match parts[0]:
-		"rest_quick": return "Answer %s Rest sums quickly." % n
-		"medals": return "Win %s medals with the Rest sums." % n
-		"arith_level": return "Reach level %s of the Rest sums." % n
-		"sold_kinds": return "Sell %s different things." % n
-		"harvests": return "Harvest %s times." % n
-		"seasons": return "Live through %s seasons." % n
-		"cards": return "Learn %s knowledge cards." % n
-		"sidequests": return "Help %s neighbours." % n
-	return "Keep playing!"
+		"rest_quick": return tr("Answer %s Rest sums quickly.") % n
+		"medals": return tr("Win %s medals with the Rest sums.") % n
+		"arith_level": return tr("Reach level %s of the Rest sums.") % n
+		"sold_kinds": return tr("Sell %s different things.") % n
+		"harvests": return tr("Harvest %s times.") % n
+		"seasons": return tr("Live through %s seasons.") % n
+		"cards": return tr("Learn %s knowledge cards.") % n
+		"sidequests": return tr("Help %s neighbours.") % n
+	return tr("Keep playing!")
 
 func _sheet_log() -> void:
 	var lines: Array = G.S["log"].duplicate()

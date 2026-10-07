@@ -145,7 +145,7 @@ func enter() -> void:
 	var text := ""
 	var wait := 0.7
 	if right:
-		text = "✅ quick!" if quick else "✅ right (a bit slow)"
+		text = tr("✅ quick!") if quick else tr("✅ right (a bit slow)")
 	else:
 		var shown := str(question["q"]).replace(" = ?", " =")
 		if shown.contains("?"): shown = shown.replace("? R ?", str(question["answer"]).replace("R", " R ")).replace("?", str(question["answer"]))

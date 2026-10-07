@@ -200,14 +200,15 @@ const ACTION := {"gather": "💪", "weed": "💪", "field": "💪", "plant": "�
 	"animal": "🧺", "errand": "🤝"}
 
 ## One word that says what the button does (the recipes and goals have their own word in the data: "verb").
-const WORD := {"gather": "Gather", "weed": "Pull", "field": "Clear", "plant": "Plant", "harvest": "Harvest", "wood": "Chop",
-	"craft": "Craft", "build": "Build", "smith": "Forge", "kiln": "Fire", "cook": "Cook", "prep": "Chop", "mill": "Grind",
-	"process": "Press", "textile": "Weave", "animal": "Collect", "errand": "Deliver"}
+const WORD := {"gather": "Gather", "weed": "Pull", "field": "Clear", "plant": "Plant", "harvest": "Harvest", "wood": "Chop",   # i18n
+	"craft": "Craft", "build": "Build", "smith": "Forge", "kiln": "Fire", "cook": "Cook", "prep": "Chop", "mill": "Grind",   # i18n
+	"process": "Press", "textile": "Weave", "animal": "Collect", "errand": "Deliver"}   # i18n
 
 ## A green button with a picture and one word: "💪 Gather", "🤏 Twist", "🍲 Cook" (word "-" = the picture only).
 static func action_button(cat: String, cb: Callable, enabled := true, color := GREEN, emoji := "", word := "") -> Button:
 	var pic := emoji if emoji != "" else str(ACTION.get(cat, "💪"))
 	if word == "": word = str(WORD.get(cat, ""))
+	word = TranslationServer.translate(word)
 	if word == "-": word = ""
 	var b := button(pic + ("  " + word if word != "" else ""), cb, enabled, color, 22 if word != "" else 26)
 	b.custom_minimum_size = Vector2(118 if word != "" else 72, 52)
@@ -216,7 +217,7 @@ static func action_button(cat: String, cb: Callable, enabled := true, color := G
 ## A grey button with an hourglass and the number of Time Quiz questions still to wait. Pressing it opens the quiz.
 static func wait_button(questions: int, cb: Callable, size := 17) -> Button:
 	var b := button("⏳ %d" % maxi(1, questions), cb, true, Color("a59c8a"), size)
-	b.tooltip_text = "Wait %d Time Quiz question%s" % [questions, "" if questions == 1 else "s"]
+	b.tooltip_text = TranslationServer.translate("Wait %d Time Quiz question%s") % [questions, "" if questions == 1 else "s"]
 	b.custom_minimum_size = Vector2(86, 48)
 	return b
 

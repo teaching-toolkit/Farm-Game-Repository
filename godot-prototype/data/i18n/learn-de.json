@@ -1,0 +1,486 @@
+{
+ "categories/0/name": {
+  "en": "Plus & minus",
+  "de": ""
+ },
+ "categories/0/sections/0/name": {
+  "en": "By heart",
+  "de": ""
+ },
+ "categories/0/sections/0/levels/0/name": {
+  "en": "Tiny sums",
+  "de": ""
+ },
+ "categories/0/sections/0/levels/1/name": {
+  "en": "Take away up to 5",
+  "de": ""
+ },
+ "categories/0/sections/0/levels/2/name": {
+  "en": "Sums up to 10",
+  "de": ""
+ },
+ "categories/0/sections/0/levels/3/name": {
+  "en": "Take away up to 10",
+  "de": ""
+ },
+ "categories/0/sections/0/levels/4/name": {
+  "en": "Doubles",
+  "de": ""
+ },
+ "categories/0/sections/0/levels/5/name": {
+  "en": "Make ten",
+  "de": ""
+ },
+ "categories/0/sections/0/levels/6/name": {
+  "en": "Ten and a bit",
+  "de": ""
+ },
+ "categories/0/sections/0/levels/7/name": {
+  "en": "Teens plus",
+  "de": ""
+ },
+ "categories/0/sections/0/levels/8/name": {
+  "en": "Teens minus",
+  "de": ""
+ },
+ "categories/0/sections/0/levels/9/name": {
+  "en": "Jump over ten (+)",
+  "de": ""
+ },
+ "categories/0/sections/0/levels/10/name": {
+  "en": "Jump over ten (-)",
+  "de": ""
+ },
+ "categories/0/sections/0/levels/11/name": {
+  "en": "Whole tens",
+  "de": ""
+ },
+ "categories/0/sections/0/levels/12/name": {
+  "en": "Tens to a hundred",
+  "de": ""
+ },
+ "categories/0/sections/1/name": {
+  "en": "Working it out",
+  "de": ""
+ },
+ "categories/0/sections/1/levels/0/name": {
+  "en": "Big number plus a small one",
+  "de": ""
+ },
+ "categories/0/sections/1/levels/1/name": {
+  "en": "Big number minus a small one",
+  "de": ""
+ },
+ "categories/0/sections/1/levels/2/name": {
+  "en": "Plus whole tens",
+  "de": ""
+ },
+ "categories/0/sections/1/levels/3/name": {
+  "en": "Over the next ten (+)",
+  "de": ""
+ },
+ "categories/0/sections/1/levels/4/name": {
+  "en": "Back over the ten (-)",
+  "de": ""
+ },
+ "categories/0/sections/1/levels/5/name": {
+  "en": "Two big numbers (+)",
+  "de": ""
+ },
+ "categories/0/sections/1/levels/6/name": {
+  "en": "Two big numbers (-)",
+  "de": ""
+ },
+ "categories/0/sections/1/levels/7/name": {
+  "en": "Big sums with a carry",
+  "de": ""
+ },
+ "categories/0/sections/1/levels/8/name": {
+  "en": "Big take-aways with borrowing",
+  "de": ""
+ },
+ "categories/0/sections/1/levels/9/name": {
+  "en": "Fill up to a hundred",
+  "de": ""
+ },
+ "categories/0/sections/1/levels/10/name": {
+  "en": "Whole hundreds",
+  "de": ""
+ },
+ "categories/0/sections/1/levels/11/name": {
+  "en": "Hundreds and a bit",
+  "de": ""
+ },
+ "categories/0/sections/1/levels/12/name": {
+  "en": "Three-digit numbers",
+  "de": ""
+ },
+ "categories/1/name": {
+  "en": "Times & divide",
+  "de": ""
+ },
+ "categories/1/sections/0/name": {
+  "en": "By heart",
+  "de": ""
+ },
+ "categories/1/sections/0/levels/0/name": {
+  "en": "Times 1 and times 10",
+  "de": ""
+ },
+ "categories/1/sections/0/levels/1/name": {
+  "en": "Times 2",
+  "de": ""
+ },
+ "categories/1/sections/0/levels/2/name": {
+  "en": "Times 5",
+  "de": ""
+ },
+ "categories/1/sections/0/levels/3/name": {
+  "en": "Squares",
+  "de": ""
+ },
+ "categories/1/sections/0/levels/4/name": {
+  "en": "Times 3 and 4",
+  "de": ""
+ },
+ "categories/1/sections/0/levels/5/name": {
+  "en": "Times 6 and 9",
+  "de": ""
+ },
+ "categories/1/sections/0/levels/6/name": {
+  "en": "Times 7 and 8",
+  "de": ""
+ },
+ "categories/1/sections/0/levels/7/name": {
+  "en": "All the times tables",
+  "de": ""
+ },
+ "categories/1/sections/0/levels/8/name": {
+  "en": "Divide by 2, 5 and 10",
+  "de": ""
+ },
+ "categories/1/sections/0/levels/9/name": {
+  "en": "Divide by 3 and 4",
+  "de": ""
+ },
+ "categories/1/sections/0/levels/10/name": {
+  "en": "Divide by 6 to 9",
+  "de": ""
+ },
+ "categories/1/sections/0/levels/11/name": {
+  "en": "All divisions",
+  "de": ""
+ },
+ "categories/1/sections/1/name": {
+  "en": "Working it out",
+  "de": ""
+ },
+ "categories/1/sections/1/levels/0/name": {
+  "en": "Tens times",
+  "de": ""
+ },
+ "categories/1/sections/1/levels/1/name": {
+  "en": "Times and divide by 10 and 100",
+  "de": ""
+ },
+ "categories/1/sections/1/levels/2/name": {
+  "en": "Big times small",
+  "de": ""
+ },
+ "categories/1/sections/1/levels/3/name": {
+  "en": "Share out big numbers",
+  "de": ""
+ },
+ "categories/1/sections/1/levels/4/name": {
+  "en": "Divide with a rest",
+  "de": ""
+ },
+ "categories/1/sections/1/levels/5/name": {
+  "en": "Two big numbers times",
+  "de": ""
+ },
+ "categories/1/sections/1/levels/6/name": {
+  "en": "Hundreds times small",
+  "de": ""
+ },
+ "categories/1/sections/1/levels/7/name": {
+  "en": "Share out hundreds",
+  "de": ""
+ },
+ "categories/2/name": {
+  "en": "Numbers",
+  "de": ""
+ },
+ "categories/2/sections/0/name": {
+  "en": "By heart",
+  "de": ""
+ },
+ "categories/2/sections/0/levels/0/name": {
+  "en": "Ten more, ten less",
+  "de": ""
+ },
+ "categories/2/sections/0/levels/1/name": {
+  "en": "Double and half",
+  "de": ""
+ },
+ "categories/2/sections/0/levels/2/name": {
+  "en": "A hundred more, a hundred less",
+  "de": ""
+ },
+ "categories/2/sections/1/name": {
+  "en": "Working it out",
+  "de": ""
+ },
+ "categories/2/sections/1/levels/0/name": {
+  "en": "Round to tens",
+  "de": ""
+ },
+ "categories/2/sections/1/levels/1/name": {
+  "en": "Round to hundreds",
+  "de": ""
+ },
+ "categories/2/sections/1/levels/2/name": {
+  "en": "Thousands",
+  "de": ""
+ },
+ "categories/2/sections/1/levels/3/name": {
+  "en": "Double and half of big numbers",
+  "de": ""
+ },
+ "categories/3/name": {
+  "en": "Fractions",
+  "de": ""
+ },
+ "categories/3/sections/0/name": {
+  "en": "By heart",
+  "de": ""
+ },
+ "categories/3/sections/0/levels/0/name": {
+  "en": "Half of",
+  "de": ""
+ },
+ "categories/3/sections/0/levels/1/name": {
+  "en": "Quarters, thirds and fifths of",
+  "de": ""
+ },
+ "categories/3/sections/0/levels/2/name": {
+  "en": "Make a whole",
+  "de": ""
+ },
+ "categories/3/sections/0/levels/3/name": {
+  "en": "Same amount, other pieces",
+  "de": ""
+ },
+ "categories/3/sections/0/levels/4/name": {
+  "en": "Fractions as decimals",
+  "de": ""
+ },
+ "categories/3/sections/1/name": {
+  "en": "Working it out",
+  "de": ""
+ },
+ "categories/3/sections/1/levels/0/name": {
+  "en": "Some pieces of a number",
+  "de": ""
+ },
+ "categories/3/sections/1/levels/1/name": {
+  "en": "Add pieces of the same size",
+  "de": ""
+ },
+ "categories/3/sections/1/levels/2/name": {
+  "en": "Make it simpler",
+  "de": ""
+ },
+ "categories/4/name": {
+  "en": "Decimals & percent",
+  "de": ""
+ },
+ "categories/4/sections/0/name": {
+  "en": "By heart",
+  "de": ""
+ },
+ "categories/4/sections/0/levels/0/name": {
+  "en": "Fill up to 1",
+  "de": ""
+ },
+ "categories/4/sections/0/levels/1/name": {
+  "en": "Decimals times and divided by 10 and 100",
+  "de": ""
+ },
+ "categories/4/sections/0/levels/2/name": {
+  "en": "Easy percent",
+  "de": ""
+ },
+ "categories/4/sections/1/name": {
+  "en": "Working it out",
+  "de": ""
+ },
+ "categories/4/sections/1/levels/0/name": {
+  "en": "Add and take away decimals",
+  "de": ""
+ },
+ "categories/4/sections/1/levels/1/name": {
+  "en": "Percent of amounts",
+  "de": ""
+ },
+ "categories/5/name": {
+  "en": "Measures",
+  "de": ""
+ },
+ "categories/5/sections/0/name": {
+  "en": "By heart",
+  "de": ""
+ },
+ "categories/5/sections/0/levels/0/name": {
+  "en": "Time",
+  "de": ""
+ },
+ "categories/5/sections/0/levels/1/name": {
+  "en": "Lengths",
+  "de": ""
+ },
+ "categories/5/sections/0/levels/2/name": {
+  "en": "Weights and liquids",
+  "de": ""
+ },
+ "categories/5/sections/1/name": {
+  "en": "Working it out",
+  "de": ""
+ },
+ "categories/5/sections/1/levels/0/name": {
+  "en": "Francs and Rappen",
+  "de": ""
+ },
+ "categories/5/sections/1/levels/1/name": {
+  "en": "Mixed units",
+  "de": ""
+ },
+ "categories/6/name": {
+  "en": "Powers & minus numbers",
+  "de": ""
+ },
+ "categories/6/sections/0/name": {
+  "en": "By heart",
+  "de": ""
+ },
+ "categories/6/sections/0/levels/0/name": {
+  "en": "Squares to 20",
+  "de": ""
+ },
+ "categories/6/sections/0/levels/1/name": {
+  "en": "Doubling up (powers of 2)",
+  "de": ""
+ },
+ "categories/6/sections/0/levels/2/name": {
+  "en": "Below zero",
+  "de": ""
+ },
+ "categories/6/sections/1/name": {
+  "en": "Working it out",
+  "de": ""
+ },
+ "categories/6/sections/1/levels/0/name": {
+  "en": "Square roots",
+  "de": ""
+ },
+ "categories/6/sections/1/levels/1/name": {
+  "en": "Bigger minus numbers",
+  "de": ""
+ },
+ "comments/booster/0": {
+  "en": "Here's an easy one! 💪",
+  "de": ""
+ },
+ "comments/booster/1": {
+  "en": "A quick one for you 😊",
+  "de": ""
+ },
+ "comments/booster/2": {
+  "en": "You know this one! ⭐",
+  "de": ""
+ },
+ "comments/struggling/0": {
+  "en": "Tricky ones today — take your time. 🙂",
+  "de": ""
+ },
+ "comments/struggling/1": {
+  "en": "Every try makes your brain stronger! 🧠",
+  "de": ""
+ },
+ "comments/struggling/2": {
+  "en": "Mistakes help you learn. Keep going! 🌱",
+  "de": ""
+ },
+ "comments/struggling/3": {
+  "en": "You're getting there! 🐢➡️🐇",
+  "de": ""
+ },
+ "comments/known/0": {
+  "en": "You know {task} by heart now! 🌟",
+  "de": ""
+ },
+ "comments/known/1": {
+  "en": "{task} — got it for good! ✅",
+  "de": ""
+ },
+ "comments/levelUp": {
+  "en": "⭐ New level: {emoji} {name}!",
+  "de": ""
+ },
+ "comments/fastTrack": {
+  "en": "You already know these — on to the next level! 🚀",
+  "de": ""
+ },
+ "comments/medal": {
+  "en": "{medal} {medalName} medal: {emoji} {name}!",
+  "de": ""
+ },
+ "comments/trophy": {
+  "en": "🏆 Trophy: {category} · {section}!",
+  "de": ""
+ },
+ "ranks/0/title": {
+  "en": "🌰 Seed",
+  "de": ""
+ },
+ "ranks/1/title": {
+  "en": "🌱 Sprout",
+  "de": ""
+ },
+ "ranks/2/title": {
+  "en": "🌿 Seedling",
+  "de": ""
+ },
+ "ranks/3/title": {
+  "en": "🌳 Young tree",
+  "de": ""
+ },
+ "ranks/4/title": {
+  "en": "🌲 Tall tree",
+  "de": ""
+ },
+ "ranks/5/title": {
+  "en": "🏔️ Mighty oak",
+  "de": ""
+ },
+ "medals/bronze/name": {
+  "en": "Bronze",
+  "de": ""
+ },
+ "medals/silver/name": {
+  "en": "Silver",
+  "de": ""
+ },
+ "medals/gold/name": {
+  "en": "Gold",
+  "de": ""
+ },
+ "medals/trophy/name": {
+  "en": "Trophy",
+  "de": ""
+ },
+ "medals/crown/name": {
+  "en": "Crown",
+  "de": ""
+ }
+}

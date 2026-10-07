@@ -193,7 +193,7 @@ func _load_layout() -> void:
 	var txt := FileAccess.get_file_as_string(LAYOUT_PATH)
 	var d = JSON.parse_string(txt) if txt != "" else null
 	if typeof(d) != TYPE_DICTIONARY or int(d.get("version", 1)) < 2:
-		push_warning("map_layout.json missing, broken or old — using an empty farm")
+		push_warning(tr("map_layout.json missing, broken or old — using an empty farm"))
 		d = {"version": 2, "size": {"w": 834, "h": 1000}, "tile": 88, "ground": {}, "fields": [{"x": 417, "y": 616}],
 			"places": {}, "deco": []}
 	L = d
@@ -386,7 +386,7 @@ func refresh_fields(G) -> void:
 	var any_growing := total > 0
 	pests_box.visible = any_growing and share >= 0.005
 	pest_lbl.text = "🐦 %d%%" % int(round(share * 100.0))
-	pests_box.tooltip_text = "Pests eat about this much of what is growing, every question."
+	pests_box.tooltip_text = tr("Pests eat about this much of what is growing, every question.")
 	_layout_pill()
 	var rl := snappedf(G.g("roadLevel", 1.0), 0.5)
 	if rl != road_level:

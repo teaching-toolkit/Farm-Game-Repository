@@ -41,6 +41,7 @@ var settings: Dictionary = {}
 var packs: Array = []
 var pack_questions: Array = []
 var pack_pools: Dictionary = {}      # pack code -> extra wrong answers of the same kind (fill questions up to quizOptions)
+var lang_override := ""                # a language for this run only (--lang=de for screenshots and tests)
 var quiz_tr: Dictionary = {}         # translations of the quiz texts by question id (data/i18n/quiz-<language>.json)
 var quiz_keys: Dictionary = {}       # old learning-record key (question text) -> question id
 var tags: Dictionary = {}
@@ -128,6 +129,13 @@ func _learn() -> Dictionary:
 	return L
 
 # ------------------------------------------------------------------ data
+## Switches the language of this device and reloads the texts (the farm and the learning record stay as they are).
+func set_language(l: String, save := true) -> void:
+	if save: I18n.save_device_language(l)
+	lang_override = "" if save else l
+	load_data()
+	changed.emit()
+
 func load_data() -> void:
 	var txt := FileAccess.get_file_as_string(DATA_PATH)
 	D = JSON.parse_string(txt)
@@ -151,9 +159,13 @@ func load_data() -> void:
 		var st2 = JSON.parse_string(FileAccess.get_file_as_string("res://data/settings.json"))
 		if typeof(st2) == TYPE_DICTIONARY:
 			for k in st2: settings[k] = st2[k]
-	math.load_curriculum(str(settings.get("mathCurriculum", "res://learnkit/curriculum/math.json")))
+	# the language of this device: interface texts, then the data's texts on top of the English ones (scripts/i18n.gd)
+	var lang := lang_override if lang_override != "" else I18n.device_language(str(settings.get("language", "en")))
+	settings["language"] = lang
+	I18n.apply(lang)
+	I18n.overlay(D, I18n.texts("data"))
+	math.load_curriculum(str(settings.get("mathCurriculum", "res://learnkit/curriculum/math.json")), I18n.texts("learn"))
 	packs.clear(); pack_questions.clear(); pack_pools.clear(); quiz_keys.clear()
-	var lang := str(settings.get("language", "en"))
 	quiz_tr = {} if lang == "en" else quiz.load_texts("res://data/i18n/quiz-%s.json" % lang)
 	var dir := DirAccess.open("res://data/quiz_packs")
 	if dir:
@@ -226,7 +238,7 @@ func load_game() -> bool:
 	# gift cards from before: offers waiting become postcards from "a friend"; the gift shop is gone
 	var gp := []
 	for x in S.get("gift_pending", []):
-		if typeof(x) == TYPE_ARRAY: gp.append({"from": "A friend", "emoji": "💌", "text": "A little something for your farm!", "offer": x, "step": S["step"]})
+		if typeof(x) == TYPE_ARRAY: gp.append({"from": tr("A friend"), "emoji": "💌", "text": tr("A little something for your farm!"), "offer": x, "step": S["step"]})
 		elif typeof(x) == TYPE_DICTIONARY: gp.append(x)
 	S["gift_pending"] = gp
 	S["gift_shop"] = []
@@ -395,7 +407,7 @@ func add_item(k: String, q: float, quiet := false) -> float:
 	var put := q if (items[k].get("category", "") in ["keeper"]) else minf(q, maxf(0.0, room))
 	if put < q - 0.001:
 		_overflow[k] = float(_overflow.get(k, 0.0)) + q - put
-		if not quiet: say("🧺 Storage full: %d %s didn't fit. (Bigger store = more room.)" % [up(q - put), iname(k)])
+		if not quiet: say(tr("🧺 Storage full: %d %s didn't fit. (Bigger store = more room.)") % [up(q - put), iname(k)])
 	if put <= 0.0: return 0.0
 	if not _buying: _produced += put * flex_worth(k)
 	if not S["inv"].has(k): S["inv"][k] = []
@@ -519,7 +531,7 @@ func _open_early(id: String) -> void:
 		p["weeds"] = 3.0; p["stones"] = 2.0; p["quality"] = float(meta.get("yield", {}).get("earlyQuality", 0.85))
 		idx.append(i)
 	S["early_patches"][id] = idx
-	say("🌱 %d new patches can be planted now! Clearing them more makes them better." % idx.size())
+	say(tr("🌱 %d new patches can be planted now! Clearing them more makes them better.") % idx.size())
 
 func _improve_early(id: String, done_steps: int, total: int) -> void:
 	var oa := int(nodes[id].get("openAfter", 0))
@@ -732,11 +744,11 @@ func missing_reqs(id: String) -> Array:
 	for r in n.get("requires", []):
 		if not satisfied(r): miss.append(nodes[r]["emoji"] + " " + nodes[r]["name"] if nodes.has(r) else r)
 	if n.has("requiresCards") and cards_learned() < int(n["requiresCards"]):
-		miss.append("📚 %d cards learned (%d so far)" % [int(n["requiresCards"]), cards_learned()])
+		miss.append(tr("📚 %d cards learned (%d so far)") % [int(n["requiresCards"]), cards_learned()])
 	for k in n.get("discover", []):
-		if not S["seen"].has(k): miss.append("🔍 find %s %s first" % [iemoji(k), iname(k)])
+		if not S["seen"].has(k): miss.append(tr("🔍 find %s %s first") % [iemoji(k), iname(k)])
 	if n["type"] == "book" and books_owned() >= int(round(g("bookSlots", 1.0))):
-		miss.append("📦 room in the library (holds %d books)" % int(round(g("bookSlots", 1.0))))
+		miss.append(tr("📦 room in the library (holds %d books)") % int(round(g("bookSlots", 1.0))))
 	if n.has("attach") and n["type"] == "helper":
 		pass
 	return miss
@@ -762,7 +774,7 @@ func _auto_unlocks() -> void:
 
 ## Build, buy, deliver, learn — anything with a cost.
 func can_unlock(id: String) -> Dictionary:
-	if done(id): return {"ok": false, "why": "already done"}
+	if done(id): return {"ok": false, "why": tr("already done")}
 	var mr := missing_reqs(id)
 	if not mr.is_empty(): return {"ok": false, "why": "needs " + ", ".join(mr)}
 	if step_wait_left(id) > 0: return {"ok": false, "why": "wait", "wait": step_wait_left(id)}
@@ -790,7 +802,7 @@ func unlock(id: String) -> bool:
 			pay(node_cost(id)); done_n += 1; paid += 1
 		S["patch_progress"][id] = done_n
 		if done_n < plots():
-			say("🟫 %s: %d of %d patches done." % [nodes[id]["name"], done_n, plots()])
+			say(tr("🟫 %s: %d of %d patches done.") % [nodes[id]["name"], done_n, plots()])
 			_wear("use:field"); save_game(); changed.emit()
 			return true
 		_finish_unlock(id, false)
@@ -800,7 +812,7 @@ func unlock(id: String) -> bool:
 		# one step at a time: pay it, get what it gives, and the node is done after the last one
 		var i := step_index(id)
 		if step_wait_left(id) > 0:
-			say("⏳ %s: the next step can start in %d question%s." % [nodes[id]["name"], step_wait_left(id), "" if step_wait_left(id) == 1 else "s"])
+			say(tr("⏳ %s: the next step can start in %d question%s.") % [nodes[id]["name"], step_wait_left(id), "" if step_wait_left(id) == 1 else "s"])
 			return false
 		pay(node_cost(id))
 		var got := {}
@@ -843,17 +855,17 @@ func _finish_unlock(id: String, auto: bool) -> void:
 		var t: String = n["type"]
 		say("%s %s %s" % ["✅", n.get("emoji", ""), n["name"]])
 		if t == "pet":
-			ask_name.emit(id, str(n.get("defaultName", "Buddy")))
+			ask_name.emit(id, str(n.get("defaultName", tr("Buddy"))))
 			_offer_gift(_news("pet", id.substr(4)))
 		elif t == "sidequest":
 			S["album"].append({"id": id, "text": n.get("reward", {}).get("picture", n["name"]), "emoji": n.get("emoji", "🖼️")})
 			S["stats"]["sidequests"] = int(S["stats"]["sidequests"]) + 1
 			var ls = meta.get("luck", {}).get("sources", {}).get("sidequest", [0.5, 30])
 			add_luck(float(ls[0]), int(ls[1]) + int(g("luckDuration", 0.0)))
-			say("🖼️ New picture in your album! You feel lucky for a while. ☘️")
+			say(tr("🖼️ New picture in your album! You feel lucky for a while. ☘️"))
 			var fr: Dictionary = n.get("friend", {})
 			if not fr.is_empty():
-				say("💌 %s %s is your friend now. Friends send postcards with a gift when they hear of your successes!" % [fr.get("emoji", ""), fr.get("name", "")])
+				say(tr("💌 %s %s is your friend now. Friends send postcards with a gift when they hear of your successes!") % [fr.get("emoji", ""), fr.get("name", "")])
 			if n.has("perk"): give_perk(str(n["perk"]))
 		elif id.begins_with("library_"):
 			_offer_gift(_news("library"))
@@ -870,7 +882,7 @@ func _finish_unlock(id: String, auto: bool) -> void:
 		changed.emit()
 
 func set_pet_name(pet_id: String, name: String) -> void:
-	S["pet_names"][pet_id] = name if name.strip_edges() != "" else str(nodes[pet_id].get("defaultName", "Buddy"))
+	S["pet_names"][pet_id] = name if name.strip_edges() != "" else str(nodes[pet_id].get("defaultName", tr("Buddy")))
 	save_game(); changed.emit()
 
 func set_attach(station: String, helper_id: String) -> void:
@@ -913,9 +925,9 @@ func patch_wild(f: int, i: int) -> Array:
 	return ["weeds", 0.0, ""]
 
 func field_names() -> Array:
-	var names := ["Home Field", "North Field", "River Meadow"]
+	var names := [tr("Home Field"), tr("North Field"), tr("River Meadow")]
 	var out := []
-	for f in range(int(S["patches"].size() / 9)): out.append(names[f] if f < names.size() else "Field %d" % (f + 1))
+	for f in range(int(S["patches"].size() / 9)): out.append(names[f] if f < names.size() else tr("Field %d") % (f + 1))
 	return out
 
 func crop_slot(cid: String) -> String:
@@ -998,19 +1010,19 @@ func plant_plan(a: String, cid: String) -> Dictionary:
 func plant(a: String, i: int, cid: String) -> bool:
 	if not patch_usable(a, i): return false
 	var p = area(a)[i]
-	if p["crop"] != "": say("Something is already growing there."); return false
+	if p["crop"] != "": say(tr("Something is already growing there.")); return false
 	var plan := plant_plan(a, cid)
 	var k := int(plan["plants"])
 	if k < 1:
-		say("🌱 Can't plant %s: not enough %s." % [nodes[cid]["name"], ", ".join(plan["reasons"])])
+		say(tr("🌱 Can't plant %s: not enough %s.") % [nodes[cid]["name"], ", ".join(plan["reasons"])])
 		return false
 	if S["energy"] + 0.001 < float(plan["energy"]):
-		say("⚡ Too tired to plant. Rest a little (tap ⚡)."); return false
+		say(tr("⚡ Too tired to plant. Rest a little (tap ⚡).")); return false
 	var n = nodes[cid]
 	if int(plan["buy_seeds"]) > 0:
 		S["coins"] -= float(plan["coins"])
 		S["seeds"][cid] = float(S["seeds"].get(cid, 0.0)) + int(plan["buy_seeds"])
-		if roll(_event("seed_bargain")): S["seeds"][cid] = float(S["seeds"][cid]) + 1.0; say("🎁 The seed merchant adds one for free.")
+		if roll(_event("seed_bargain")): S["seeds"][cid] = float(S["seeds"][cid]) + 1.0; say(tr("🎁 The seed merchant adds one for free."))
 	if n.has("seedItem"): take(n["seedItem"], k)
 	else: S["seeds"][cid] = float(S["seeds"].get(cid, 0.0)) - k
 	if a == "field":
@@ -1051,10 +1063,10 @@ func harvest(a: String, i: int) -> bool:
 	if p["crop"] == "" or not p["ready"]: return false
 	var n = nodes[p["crop"]]
 	var e := ecost("harvest", 1.0) * m("energy:field")
-	if S["energy"] + 0.001 < e: say("⚡ Too tired to harvest. Rest a little (tap ⚡)."); return false
+	if S["energy"] + 0.001 < e: say(tr("⚡ Too tired to harvest. Rest a little (tap ⚡).")); return false
 	S["energy"] -= e
 	var mult := 1.0
-	if roll(_event("double_harvest")): mult = 2.0; say("🎉 Bumper crop: double harvest!")
+	if roll(_event("double_harvest")): mult = 2.0; say(tr("🎉 Bumper crop: double harvest!"))
 	if a == "orchard":
 		mult *= m("yield:orchard") * float(smod("yieldOrchard", 1.0))
 	var got := []
@@ -1069,7 +1081,7 @@ func harvest(a: String, i: int) -> bool:
 	if n.has("seedItem") and g("heirloomSeedSaving", 0.0) > 0.0: add_item(n["seedItem"], 1.0)
 	S["stats"]["harvests"] = int(S["stats"]["harvests"]) + 1
 	_check_perks()
-	say("🧺 Harvested %s: %s" % [n["name"], " ".join(got)])
+	say(tr("🧺 Harvested %s: %s") % [n["name"], " ".join(got)])
 	_gained("patch:%s:%d" % [a, i], arrived)
 	if n.has("regrow"):
 		p["growth"] = 0.0; p["ready"] = false; p["cycles"] = int(p.get("cycles", 0)) + 1
@@ -1085,7 +1097,7 @@ func cut_tree(a: String, i: int) -> bool:
 	var p = area(a)[i]
 	if p["crop"] == "" or not nodes[p["crop"]].has("regrow"): return false
 	var e := ecost("wood", float(meta.get("orchard", {}).get("cutEnergy", 3)))
-	if S["energy"] + 0.001 < e: say("⚡ Too tired to cut a tree. Rest a little (tap ⚡)."); return false
+	if S["energy"] + 0.001 < e: say(tr("⚡ Too tired to cut a tree. Rest a little (tap ⚡).")); return false
 	S["energy"] -= e
 	var tree_name: String = nodes[p["crop"]]["name"]
 	p["last"] = p["crop"]; p["crop"] = ""; p["plants"] = 0.0; p["growth"] = 0.0; p["ready"] = false; p["cycles"] = 0
@@ -1093,7 +1105,7 @@ func cut_tree(a: String, i: int) -> bool:
 	for k in meta.get("orchard", {}).get("cutGives", {"log": 1, "stick": 2}):
 		got[k] = add_item(k, float(meta.get("orchard", {}).get("cutGives", {"log": 1, "stick": 2})[k]), true)
 	_gained("patch:%s:%d" % [a, i], got)
-	say("🪓 Cut down the %s: the spot is free for another tree." % tree_name)
+	say(tr("🪓 Cut down the %s: the spot is free for another tree.") % tree_name)
 	save_game(); changed.emit()
 	return true
 
@@ -1123,11 +1135,11 @@ func weed(i: int) -> bool:
 	var p = S["patches"][i]
 	var w := float(p["weeds"])
 	if w < 0.5:
-		say("🌿 No weeds to pull here. (Try 'Root out the weeds' in Polish — it keeps them away longer.)")
+		say(tr("🌿 No weeds to pull here. (Try 'Root out the weeds' in Polish — it keeps them away longer.)"))
 		return false
 	var n := minf(w, float(meta.get("weeds", {}).get("weedsPerPull", 3)))
 	var e := ecost("weed", n) * m("energy:field")
-	if S["energy"] + 0.001 < e: say("⚡ Too tired to weed. Rest a little (tap ⚡)."); return false
+	if S["energy"] + 0.001 < e: say(tr("⚡ Too tired to weed. Rest a little (tap ⚡).")); return false
 	S["energy"] -= e
 	p["weeds"] = w - n
 	var fib := n * (1.5 if season() == "spring" else 1.0)
@@ -1147,7 +1159,7 @@ func weed_field(f: int) -> void:
 		if patch_usable("field", i) and float(S["patches"][i]["weeds"]) >= 0.5:
 			if not weed(i): break
 			any = true
-	if not any: say("🌿 This field is already tidy.")
+	if not any: say(tr("🌿 This field is already tidy."))
 
 func pick_stones(i: int) -> bool:
 	var p = S["patches"][i]
@@ -1155,13 +1167,13 @@ func pick_stones(i: int) -> bool:
 	if s < 0.5: return false
 	var n := minf(s, float(meta.get("stones", {}).get("stonesPerPick", 2)))
 	var e := ecost("field", n * float(meta.get("stones", {}).get("energyPerStone", 1)))
-	if S["energy"] + 0.001 < e: say("⚡ Too tired. Rest a little (tap ⚡)."); return false
+	if S["energy"] + 0.001 < e: say(tr("⚡ Too tired. Rest a little (tap ⚡).")); return false
 	S["energy"] -= e
 	p["stones"] = s - n
 	_gained("patch:field:%d" % i, {"stone": add_item("stone", n)})
 	S["stats"]["stones"] = float(S["stats"]["stones"]) + n
 	_job("stones", "", n)
-	if roll(_event("stone_quartz")): add_item("quartz", 1.0); say("💎 A sparkling quartz crystal inside a stone!")
+	if roll(_event("stone_quartz")): add_item("quartz", 1.0); say(tr("💎 A sparkling quartz crystal inside a stone!"))
 	save_game(); changed.emit()
 	return true
 
@@ -1175,9 +1187,9 @@ func fetch_cost() -> float:
 
 func fetch_water() -> bool:
 	var room := water_cap() - float(S["water"])
-	if room < 0.5: say("💧 Your water is full."); return false
+	if room < 0.5: say(tr("💧 Your water is full.")); return false
 	var e := fetch_cost()
-	if S["energy"] + 0.001 < e: say("⚡ Too tired to carry water. Rest a little (tap ⚡)."); return false
+	if S["energy"] + 0.001 < e: say(tr("⚡ Too tired to carry water. Rest a little (tap ⚡).")); return false
 	S["energy"] -= e
 	var q := minf(room, fetch_amount())
 	S["water"] = float(S["water"]) + q
@@ -1207,13 +1219,13 @@ func buy_animal(aid: String) -> bool:
 	var n = nodes[aid]
 	if not missing_reqs(aid).is_empty(): say("🔒 " + ", ".join(missing_reqs(aid))); return false
 	var a := animal(aid)
-	if int(a["count"]) >= animal_cap(aid): say("🏠 No room for more %s. Build a bigger home for them." % n["name"]); return false
-	if not pay(animal_price(aid)): say("🪙 Not enough to buy " + n["name"]); return false
+	if int(a["count"]) >= animal_cap(aid): say(tr("🏠 No room for more %s. Build a bigger home for them.") % n["name"]); return false
+	if not pay(animal_price(aid)): say(tr("🪙 Not enough to buy ") + n["name"]); return false
 	a["count"] = int(a["count"]) + 1
 	if int(a["count"]) == 1: a["ready"] = S["step"]
 	if not done(aid): _finish_unlock(aid, false)
 	else:
-		say("%s One more %s!" % [n.get("emoji", ""), n["name"]])
+		say(tr("%s One more %s!") % [n.get("emoji", ""), n["name"]])
 		save_game(); changed.emit()
 	return true
 
@@ -1247,31 +1259,31 @@ func collect_animal(aid: String) -> bool:
 	var n = nodes[aid]
 	var a := animal(aid)
 	if int(a["count"]) < 1: return false
-	if S["step"] < int(a["ready"]): say("%s needs a little time. Answer a Time Quiz question." % n["name"]); return false
+	if S["step"] < int(a["ready"]): say(tr("%s needs a little time. Answer a Time Quiz question.") % n["name"]); return false
 	if n.get("needsFlowers", false) and not has_flowers():
-		say("🐝 The bees need flowers: grow clover, sunflowers, flax, berries, herbs or fruit trees."); return false
+		say(tr("🐝 The bees need flowers: grow clover, sunflowers, flax, berries, herbs or fruit trees.")); return false
 	var need := feed_needs(aid)
 	var miss := missing_cost(need)
 	if not miss.is_empty():
 		var parts := []
 		for x in miss: parts.append("%s %s" % [iemoji(x["key"]), iname(x["key"]) if x["key"] != "energy" and x["key"] != "water" else x["key"]])
-		say("%s need %s." % [n["name"], ", ".join(parts)]); return false
+		say(tr("%s need %s.") % [n["name"], ", ".join(parts)]); return false
 	pay(need)
 	var mf := muck_factor(aid)
 	var got := []
 	var arrived := {}
 	for k in n.get("produces", {}):
 		var q := float(n["produces"][k]) * int(a["count"]) * m("out:" + aid) * float(smod("out", {}).get(aid, 1.0)) * mf
-		if k == "egg" and roll(_event("double_yolk")): q += 1.0; say("🥚 A double-yolk egg!")
-		if k == "honeycomb" and roll(_event("honey_flow")): q += 1.0; say("🍯 A honey flow: extra comb!")
-		if k == "wool" and roll(_event("thick_fleece")): q += 1.0; say("🧶 An extra-thick fleece!")
+		if k == "egg" and roll(_event("double_yolk")): q += 1.0; say(tr("🥚 A double-yolk egg!"))
+		if k == "honeycomb" and roll(_event("honey_flow")): q += 1.0; say(tr("🍯 A honey flow: extra comb!"))
+		if k == "wool" and roll(_event("thick_fleece")): q += 1.0; say(tr("🧶 An extra-thick fleece!"))
 		q = add_item(k, q, true)
 		arrived[k] = q
 		if q >= 0.5: got.append("%s%d" % [iemoji(k), down(q)])
 	a["muck"] = float(a["muck"]) + float(n.get("muck", 0.0)) * int(a["count"]) * m("muck") * m("muck:" + aid)
 	a["ready"] = S["step"] + int(n.get("cooldown", 1))
-	var msg := "%s Collected: %s" % [n.get("emoji", ""), " ".join(got) if got.size() > 0 else "a little"]
-	if mf < 1.0: msg += "  (the pen is mucky — muck it out!)"
+	var msg := tr("%s Collected: %s") % [n.get("emoji", ""), " ".join(got) if got.size() > 0 else tr("a little")]
+	if mf < 1.0: msg += tr("  (the pen is mucky — muck it out!)")
 	say(msg)
 	_gained("animal:" + aid, arrived)
 	_job("collect", aid, 1.0)
@@ -1282,14 +1294,14 @@ func collect_animal(aid: String) -> bool:
 func muck_out(aid: String) -> bool:
 	var a := animal(aid)
 	var mk := float(a["muck"])
-	if mk < 0.5: say("Already clean."); return false
+	if mk < 0.5: say(tr("Already clean.")); return false
 	var mu = meta.get("muck", {})
 	var e := ecost("animal", mk * float(mu.get("energyPerMuck", 0.5)))
-	if S["energy"] + 0.001 < e: say("⚡ Too tired to muck out. Rest a little."); return false
+	if S["energy"] + 0.001 < e: say(tr("⚡ Too tired to muck out. Rest a little.")); return false
 	S["energy"] -= e
 	a["muck"] = 0.0
 	var got := add_item("manure", mk * float(mu.get("manurePerMuck", 1)))
-	say("💩 Mucked out: +%d manure for the compost." % down(got))
+	say(tr("💩 Mucked out: +%d manure for the compost.") % down(got))
 	save_game(); changed.emit()
 	return true
 
@@ -1431,25 +1443,25 @@ func stoke(need: float) -> float:
 		if used > 0.0: parts.append("%d %s" % [int(round(used)), iname(k)])
 	var added := float(S["woodpile"]) - before
 	if added > 0.0:
-		say("🪵 Stoked the woodpile: %s." % ", ".join(parts))
+		say(tr("🪵 Stoked the woodpile: %s.") % ", ".join(parts))
 		save_game(); changed.emit()
 	elif float(S["woodpile"]) + 0.0001 < need:
-		say("🪵 No wood to stoke with: gather sticks at the Field Edge, or bring straw or logs.")
+		say(tr("🪵 No wood to stoke with: gather sticks at the Field Edge, or bring straw or logs."))
 	return added
 
 func start_recipe(rid: String) -> bool:
 	var r = recipes[rid]
-	if not recipe_open(rid): say("🔒 Not yet."); return false
+	if not recipe_open(rid): say(tr("🔒 Not yet.")); return false
 	var root := chain_root(r["station"])
 	var running: Array = S["running"].get(root, [])
 	var now := output_now(root)
-	if now and recipe_left(rid) > 0.0: say("⏳ That spot needs a question to refill."); return false
+	if now and recipe_left(rid) > 0.0: say(tr("⏳ That spot needs a question to refill.")); return false
 	if running.size() >= station_slots(root):
-		if now: say("⏳ You have gathered all you can for now. Answer a Time Quiz question.")
-		else: say("⏳ %s is busy. Answer Time Quiz questions to finish the batch." % nodes[active_of(root)]["name"])
+		if now: say(tr("⏳ You have gathered all you can for now. Answer a Time Quiz question."))
+		else: say(tr("⏳ %s is busy. Answer Time Quiz questions to finish the batch.") % nodes[active_of(root)]["name"])
 		return false
 	for k in r.get("keeps", []):
-		if count(k) < 1.0: say("Needs %s %s (kept, not used up)." % [iemoji(k), iname(k)]); return false
+		if count(k) < 1.0: say(tr("Needs %s %s (kept, not used up).") % [iemoji(k), iname(k)]); return false
 	# a bigger load (carrying gear) when there is enough for it, else as much as there is
 	var n := recipe_batch(rid)
 	while n > 1 and not missing_cost(recipe_cost(rid, n)).is_empty(): n -= 1
@@ -1458,11 +1470,11 @@ func start_recipe(rid: String) -> bool:
 	if not miss.is_empty():
 		var parts := []
 		for x in miss: parts.append("%s %d more" % [iemoji(x["key"]), up(float(x["need"]) - float(x["have"]))])
-		say("Missing: " + ", ".join(parts)); return false
+		say(tr("Missing: ") + ", ".join(parts)); return false
 	var fuel := recipe_fuel(rid)
 	if fuel > 0.0:
 		if float(S["woodpile"]) + 0.0001 < fuel:
-			say("🪵 Stoke the woodpile first: this needs %d fuel, the woodpile has %d." % [up(fuel), down(S["woodpile"])]); return false
+			say(tr("🪵 Stoke the woodpile first: this needs %d fuel, the woodpile has %d.") % [up(fuel), down(S["woodpile"])]); return false
 		S["woodpile"] = float(S["woodpile"]) - fuel
 	pay(c)
 	S["practice"][root] = int(S["practice"].get(root, 0)) + 1
@@ -1477,13 +1489,13 @@ func start_recipe(rid: String) -> bool:
 	else:
 		running.append({"recipe": rid, "left": t, "n": n})
 		S["running"][root] = running
-		say("⏳ %s: ready in %d question%s." % [r.get("name", iname(r["outputs"].keys()[0])), up(t), "" if up(t) == 1 else "s"])
+		say(tr("⏳ %s: ready in %d question%s.") % [r.get("name", iname(r["outputs"].keys()[0])), up(t), "" if up(t) == 1 else "s"])
 	_job("make", rid, 1.0)
 	var hit := false
 	for th in meta.get("practice", {}).get("thresholds", []):
 		if int(th) == int(S["practice"][root]): hit = true
 	if hit:
-		say("⭐ Practice star at %s: its recipes now cost less energy." % nodes[active_of(root)]["name"])
+		say(tr("⭐ Practice star at %s: its recipes now cost less energy.") % nodes[active_of(root)]["name"])
 	save_game(); changed.emit()
 	return true
 
@@ -1498,7 +1510,7 @@ func _recipe_out(rid: String, n := 1) -> void:
 		q = add_item(k, q)
 		arrived[k] = q
 		got.append("%s%d" % [iemoji(k), down(q)])
-	say("✨ %s ready: %s" % [str(r.get("name", iname(r["outputs"].keys()[0]))), " ".join(got)])
+	say(tr("✨ %s ready: %s") % [str(r.get("name", iname(r["outputs"].keys()[0]))), " ".join(got)])
 	_gained("recipe:" + rid, arrived)
 
 ## Stations whose output comes at once (gathering at the field edge): each recipe then rests for its time.
@@ -1551,7 +1563,7 @@ func do_polish(pid: String) -> bool:
 	if not miss.is_empty():
 		var parts := []
 		for x in miss: parts.append("%s %d more" % [iemoji(x["key"]), up(float(x["need"]) - float(x["have"]))])
-		say("Missing: " + ", ".join(parts)); return false
+		say(tr("Missing: ") + ", ".join(parts)); return false
 	pay(c)
 	# some polish also brings something in ("gives", growing like the cost): rooting out weeds gives plant fibre
 	var f := 1.0 + floorf(polish_level(pid))
@@ -1563,7 +1575,7 @@ func do_polish(pid: String) -> bool:
 	_dirty()
 	var gtxt := []
 	for k in got: gtxt.append("%s%d" % [iemoji(k), down(got[k])])
-	say("✨ %s (%d%% of the full effect now)%s" % [nodes[pid]["name"], int(round(polish_gain(pid, polish_level(pid)) * 100.0)), ("  +" + " ".join(gtxt)) if not gtxt.is_empty() else ""])
+	say(tr("✨ %s (%d%% of the full effect now)%s") % [nodes[pid]["name"], int(round(polish_gain(pid, polish_level(pid)) * 100.0)), ("  +" + " ".join(gtxt)) if not gtxt.is_empty() else ""])
 	S["unlocked"][pid] = true
 	save_game(); changed.emit()
 	return true
@@ -1613,8 +1625,8 @@ func sell(k: String, q: float) -> bool:
 		market_sold()[k] = float(market_sold().get(k, 0.0)) + 1.0
 	S["coins"] += got
 	_job("sell", k, n)
-	var msg := "🪙 Sold %d %s for 🪙%d" % [int(n), iname(k), int(floorf(got + 0.0001))]
-	if demand_factor(k) < 0.999: msg += ". The market has plenty of %s now — it pays less for a while. Different things sell best!" % iname(k)
+	var msg := tr("🪙 Sold %d %s for 🪙%d") % [int(n), iname(k), int(floorf(got + 0.0001))]
+	if demand_factor(k) < 0.999: msg += tr(". The market has plenty of %s now — it pays less for a while. Different things sell best!") % iname(k)
 	say(msg)
 	perk_event("sell", {"item": k, "n": n, "coins": got})
 	sold.emit(k, n, got)
@@ -1645,16 +1657,16 @@ func recipe_worth(rid: String) -> Vector2:
 
 func buy_seeds(cid: String, q: int) -> bool:
 	var c := float(nodes[cid].get("seedCost", 0)) * q
-	if S["coins"] + 0.0001 < c: say("🪙 Not enough coins."); return false
+	if S["coins"] + 0.0001 < c: say(tr("🪙 Not enough coins.")); return false
 	S["coins"] -= c
 	S["seeds"][cid] = float(S["seeds"].get(cid, 0.0)) + q
-	if roll(_event("seed_bargain")): S["seeds"][cid] = float(S["seeds"][cid]) + 1.0; say("🎁 The seed merchant adds one for free.")
+	if roll(_event("seed_bargain")): S["seeds"][cid] = float(S["seeds"][cid]) + 1.0; say(tr("🎁 The seed merchant adds one for free."))
 	save_game(); changed.emit()
 	return true
 
 func buy_item(merchant: String, k: String, q: int) -> bool:
 	var price := float(nodes[merchant].get("sells", {}).get(k, 0)) * q
-	if S["coins"] + 0.0001 < price: say("🪙 Not enough coins."); return false
+	if S["coins"] + 0.0001 < price: say(tr("🪙 Not enough coins.")); return false
 	S["coins"] -= price
 	_buying = true
 	add_item(k, q)
@@ -1666,12 +1678,12 @@ func barter(merchant: String, k: String) -> bool:
 	var b: Dictionary = nodes[merchant].get("barter", {}).get(k, {})
 	var c := {}
 	for x in b: c[x] = float(b[x])
-	if not pay(c): say("Missing what the trader wants."); return false
+	if not pay(c): say(tr("Missing what the trader wants.")); return false
 	var q := float(nodes[merchant].get("barterGives", {}).get(k, 1))
 	_buying = true
 	add_item(k, q)
 	_buying = false
-	say("🤝 Traded for %s%s %s" % ["%d × " % int(q) if q > 1.0 else "", iemoji(k), iname(k)])
+	say(tr("🤝 Traded for %s%s %s") % ["%d × " % int(q) if q > 1.0 else "", iemoji(k), iname(k)])
 	save_game(); changed.emit()
 	return true
 
@@ -1680,7 +1692,7 @@ func eat(k: String) -> bool:
 	if b == null or count(k) < 1.0: return false
 	take(k, 1.0)
 	S["buff"] = {"mult": float(b["energy"]), "until": S["step"] + int(b["questions"]), "item": k}
-	say("😋 Yum! Work costs %d%% less energy for %d question%s." % [int(round((1.0 - float(b["energy"])) * 100)), int(b["questions"]), "" if int(b["questions"]) == 1 else "s"])
+	say(tr("😋 Yum! Work costs %d%% less energy for %d question%s.") % [int(round((1.0 - float(b["energy"])) * 100)), int(b["questions"]), "" if int(b["questions"]) == 1 else "s"])
 	save_game(); changed.emit()
 	return true
 
@@ -1705,9 +1717,9 @@ func read_needed(cid: String) -> float:
 func start_reading(cid: String) -> bool:
 	if card_status(cid) != "readable": return false
 	if S["reading"] != "" and S["reading"] != cid:
-		say("📖 You're already reading \"%s\". One book page at a time!" % nodes[S["reading"]]["name"]); return false
+		say(tr("📖 You're already reading \"%s\". One book page at a time!") % nodes[S["reading"]]["name"]); return false
 	S["reading"] = cid; S["read_progress"] = 0.0
-	say("📖 Reading \"%s\": it takes %d Time Quiz question%s." % [nodes[cid]["name"], up(read_needed(cid) * m("read")), "" if up(read_needed(cid) * m("read")) == 1 else "s"])
+	say(tr("📖 Reading \"%s\": it takes %d Time Quiz question%s.") % [nodes[cid]["name"], up(read_needed(cid) * m("read")), "" if up(read_needed(cid) * m("read")) == 1 else "s"])
 	save_game(); changed.emit()
 	return true
 
@@ -1718,7 +1730,7 @@ func _tick_reading() -> void:
 	if float(S["read_progress"]) + 0.0001 >= read_needed(cid):
 		S["read_done"][cid] = true
 		S["reading"] = ""
-		say("📖 Finished reading \"%s\" — take its quiz in the Library!" % nodes[cid]["name"])
+		say(tr("📖 Finished reading \"%s\" — take its quiz in the Library!") % nodes[cid]["name"])
 
 func card_ancestors(cid: String) -> Array:
 	var out := []
@@ -1792,7 +1804,7 @@ func finish_card(cid: String, all_first_try: bool) -> void:
 	for u in n.get("unlocks", []):
 		if nodes.has(u): unl.append(nodes[u].get("emoji", "") + " " + nodes[u]["name"])
 		elif recipes.has(u): unl.append("🍳 " + str(recipes[u].get("name", iname(recipes[u]["outputs"].keys()[0]))))
-	say("🎓 You know: %s!%s" % [n["name"], (" Now possible: " + ", ".join(unl)) if unl.size() > 0 else ""])
+	say(tr("🎓 You know: %s!%s") % [n["name"], (tr(" Now possible: ") + ", ".join(unl)) if unl.size() > 0 else ""])
 	S["goals"] = int(S["goals"]) + 1
 	if int(S["goals"]) % 12 == 0: _offer_gift(_news("goals"))
 	_check_acorns()
@@ -1821,7 +1833,7 @@ func next_time_question() -> Dictionary:
 			if qs.size() > 0:
 				var qi := rng.randi_range(0, qs.size() - 1)
 				var q := _shuffled_q(qs[qi], cid, qi, true)
-				q["source"] = "📚 Review: " + nodes[cid]["name"]
+				q["source"] = tr("📚 Review: ") + nodes[cid]["name"]
 				return q
 	var recent: Array = S["recent_q"]
 	var pool := []
@@ -1840,7 +1852,7 @@ func next_time_question() -> Dictionary:
 	var src: Dictionary = pack_questions[pick]
 	var q2 := _shuffled_q(src, "", pick, false)
 	q2["wrong_text"] = q2["wrong"]
-	q2["source"] = "⏳ Time Quiz"
+	q2["source"] = tr("⏳ Time Quiz")
 	return q2
 
 ## Remembers how a Time Quiz question went for this player, under its id (wrong: back after 3 others; right: 12, 32, 80 … later).
@@ -1912,17 +1924,17 @@ func roll(e: Dictionary) -> bool:
 	return rng.randf() < float(ch) * (1.0 + luck())
 
 func _weed_luck() -> void:
-	if roll(_event("weed_coin")): S["coins"] += 2.0; say("🪙 A lost coin in the weeds!")
+	if roll(_event("weed_coin")): S["coins"] += 2.0; say(tr("🪙 A lost coin in the weeds!"))
 	if roll(_event("weed_seed")):
 		var cs := crops_for("field")
 		if cs.size() > 0:
 			var c: String = cs[rng.randi_range(0, cs.size() - 1)]
-			if not nodes[c].has("seedItem"): S["seeds"][c] = float(S["seeds"].get(c, 0.0)) + 1.0; say("🌱 An old seed packet: +1 %s seed!" % nodes[c]["name"])
-	if roll(_event("weed_clover")): add_luck(0.3, 20); say("🍀 A four-leaf clover! You feel lucky.")
+			if not nodes[c].has("seedItem"): S["seeds"][c] = float(S["seeds"].get(c, 0.0)) + 1.0; say(tr("🌱 An old seed packet: +1 %s seed!") % nodes[c]["name"])
+	if roll(_event("weed_clover")): add_luck(0.3, 20); say(tr("🍀 A four-leaf clover! You feel lucky."))
 	if roll(_event("weed_relic")):
-		add_item("relic", 1.0); S["album"].append({"id": "relic", "text": "An old relic you dug up while weeding", "emoji": "🏺"}); say("🏺 Something old in the soil: a relic for the album!")
+		add_item("relic", 1.0); S["album"].append({"id": "relic", "text": tr("An old relic you dug up while weeding"), "emoji": "🏺"}); say(tr("🏺 Something old in the soil: a relic for the album!"))
 	if not S["acorns"].has("acorn_lucky") and roll(_event("golden_acorn")):
-		S["acorns"]["acorn_lucky"] = true; _dirty(); say("🌰✨ A golden acorn glints under a leaf! Energy max +3 for good.")
+		S["acorns"]["acorn_lucky"] = true; _dirty(); say(tr("🌰✨ A golden acorn glints under a leaf! Energy max +3 for good."))
 
 # ------------------------------------------------------------------ one Time Quiz answer = one step of farm time
 func step_time() -> Dictionary:
@@ -1969,7 +1981,7 @@ func step_time() -> Dictionary:
 			if items.has(k) and items[k].get("category", "") in ["crop", "animal", "ingredient"]: opts.append(k)
 		if opts.size() > 0:
 			var k2: String = opts[rng.randi_range(0, opts.size() - 1)]
-			add_item(k2, 2.0, true); say("🧺 A neighbour drops off a little gift basket: %s×2" % iemoji(k2))
+			add_item(k2, 2.0, true); say(tr("🧺 A neighbour drops off a little gift basket: %s×2") % iemoji(k2))
 	# expire luck boosts
 	var keep := []
 	for b in S["luck_boosts"]:
@@ -2069,10 +2081,10 @@ func _tick_home_fuel() -> void:
 	auto_stack(need)
 	if float(S["woodpile"]) + 0.0001 >= need:
 		S["woodpile"] = float(S["woodpile"]) - need
-		if S["cold"]: say("🔥 The house is warm again.")
+		if S["cold"]: say(tr("🔥 The house is warm again."))
 		S["cold"] = false
 	else:
-		if not S["cold"]: say("❄️🏠 The house is cold: no firewood! Rest gives less energy. Stack sticks or logs on the woodpile.")
+		if not S["cold"]: say(tr("❄️🏠 The house is cold: no firewood! Rest gives less energy. Stack sticks or logs on the woodpile."))
 		S["cold"] = true
 
 func _season_change(sn: int) -> void:
@@ -2095,12 +2107,12 @@ func _season_change(sn: int) -> void:
 			var to: String = fr.get("spoilsTo", {}).get("animal" if animal_items.has(k) else "plant", "compost")
 			add_item(to, lost, true)
 			spoiled[k] = lost
-	var msg := "%s It's %s! %s" % [str(meta["seasons"]["mods"][nm].get("emoji", "")), nm, str(meta["seasons"]["mods"][nm].get("abundance", ""))]
+	var msg := tr("%s It's %s! %s") % [str(meta["seasons"]["mods"][nm].get("emoji", "")), nm, str(meta["seasons"]["mods"][nm].get("abundance", ""))]
 	say(msg)
 	if not spoiled.is_empty():
 		var parts := []
 		for k in spoiled: parts.append("%s%d" % [iemoji(k), up(spoiled[k])])
-		say("🍂 Went stale at the change of season (now feed mash or compost): " + " ".join(parts))
+		say(tr("🍂 Went stale at the change of season (now feed mash or compost): ") + " ".join(parts))
 	_check_acorns()
 
 # ------------------------------------------------------------------ gift cards (pick 1 of 3)
@@ -2125,7 +2137,7 @@ func friends() -> Array:
 
 ## What a friend heard of: "your new bunny", "your library growing", "all your work on the farm (24 jobs done!)".
 func _news(kind: String, what := "") -> String:
-	var t := str(meta.get("postcards", {}).get("news", {}).get(kind, "all your work on the farm"))
+	var t := str(meta.get("postcards", {}).get("news", {}).get(kind, tr("all your work on the farm")))
 	return t.replace("{pet}", what).replace("{n}", str(int(S["goals"])))
 
 ## Something big happened: a friend may hear of it and send a postcard with a gift. The more friends, the likelier,
@@ -2147,12 +2159,12 @@ func _offer_gift(news := "") -> void:
 	var offer := pool.slice(0, mini(int(cfg.get("choicesMax", 3)), fr.size()))
 	if offer.is_empty(): return
 	var f: Dictionary = fr[rng.randi_range(0, fr.size() - 1)]
-	var msgs: Array = cfg.get("messages", ["Dear {player}, I heard about {news}! Here is a little something for your farm."])
+	var msgs: Array = cfg.get("messages", [tr("Dear {player}, I heard about {news}! Here is a little something for your farm.")])
 	var text := str(msgs[rng.randi_range(0, msgs.size() - 1)])
-	text = text.replace("{player}", player if player != "" else "friend").replace("{news}", news if news != "" else "all your work on the farm")
+	text = text.replace("{player}", player if player != "" else "friend").replace("{news}", news if news != "" else tr("all your work on the farm"))
 	text = text.substr(0, 1).to_upper() + text.substr(1)
 	S["gift_pending"].append({"from": f["name"], "emoji": f["emoji"], "quest": f["quest"], "text": text, "offer": offer, "step": int(S["step"])})
-	say("📬 A postcard from %s!" % f["name"])
+	say(tr("📬 A postcard from %s!") % f["name"])
 	offer_cards.emit(offer)
 
 ## The postcard waiting to be opened (or {}).
@@ -2182,7 +2194,7 @@ func gift_is_active(gid: String) -> bool:
 func _activate_new_gift(gid: String) -> void:
 	if not S.has("gift_active"): S["gift_active"] = []
 	if S["gift_active"].size() < gift_max(): S["gift_active"].append(gid)
-	else: say("🎴 Only %d cards work at a time — the new one waits in your album 🖼️ (swap it in there)." % gift_max())
+	else: say(tr("🎴 Only %d cards work at a time — the new one waits in your album 🖼️ (swap it in there).") % gift_max())
 
 ## Put a card to work or let it rest (at most gift_max() work at the same time).
 func toggle_gift(gid: String) -> bool:
@@ -2190,7 +2202,7 @@ func toggle_gift(gid: String) -> bool:
 	if gift_is_active(gid):
 		S["gift_active"].erase(gid)
 	elif S["gift_active"].size() >= gift_max():
-		say("🎴 Only %d cards can work at a time: put one to rest first." % gift_max())
+		say(tr("🎴 Only %d cards can work at a time: put one to rest first.") % gift_max())
 		return false
 	else:
 		S["gift_active"].append(gid)
@@ -2258,7 +2270,7 @@ func _job(type: String, item: String, q: float) -> void:
 		S["coins"] += coins
 		var rl: Array = jm.get("rewardLuck", [0.1, 10])
 		add_luck(float(rl[0]), int(rl[1]))
-		say("📋 Little job done: %s → 🪙%d and a bit of luck ☘️" % [j["text"], int(coins)])
+		say(tr("📋 Little job done: %s → 🪙%d and a bit of luck ☘️") % [j["text"], int(coins)])
 	if finished.size() > 0: _refill_jobs()
 
 # ------------------------------------------------------------------ golden acorns
@@ -2271,7 +2283,7 @@ func _check_acorns() -> void:
 		if ok:
 			S["acorns"][id] = true
 			_dirty()
-			say("🌰✨ Golden Acorn: %s! Energy max +%d for good." % [a["name"], int(ac.get("energyMaxEach", 3))])
+			say(tr("🌰✨ Golden Acorn: %s! Energy max +%d for good.") % [a["name"], int(ac.get("energyMaxEach", 3))])
 	_check_perks()
 
 ## A condition from the data: "unlocked:id" or "<counter>>=N" (sidequests, seasons, weeds, cards, harvests, rest_quick,
@@ -2321,7 +2333,7 @@ func give_perk(id: String) -> void:
 	if perk_owned(id) or perk_def(id).is_empty(): return
 	perks()[id] = true
 	var p := perk_def(id)
-	say("✨ New perk: %s %s!" % [p.get("emoji", ""), p["name"]])
+	say(tr("✨ New perk: %s %s!") % [p.get("emoji", ""), p["name"]])
 	celebrate.emit("perk:" + id)
 
 func _check_perks() -> void:
@@ -2354,10 +2366,10 @@ func cheat_max() -> void:
 		step_time(); n += 1
 	S["energy"] = energy_max()
 	S["water"] = water_cap()
-	say("⏩ Cheat: %d questions of time passed, energy and water full." % n)
+	say(tr("⏩ Cheat: %d questions of time passed, energy and water full.") % n)
 	save_game(); changed.emit()
 
 func cheat_coins(q: float) -> void:
 	S["coins"] += q
-	say("🪙 Cheat: +%d coins" % int(q))
+	say(tr("🪙 Cheat: +%d coins") % int(q))
 	save_game(); changed.emit()
