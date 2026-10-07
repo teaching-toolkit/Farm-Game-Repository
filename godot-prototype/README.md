@@ -308,6 +308,8 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   orchard and greenhouse sheets; `scripts/art.gd` — pictures with emoji fallback; `scripts/ui.gd` — styles.
 - `scripts/avatar.gd` — the farmer (a 3D figure drawn into a picture on the map) + `data/avatar.json` (its look); `scripts/fx.gd` —
   perk effects (sounds made in code, lightning, flying coins, butterflies, sparkles, rainbow, season breeze).
+- `scripts/sound.gd` — sound effects and music (autoload `Sound`, from `data/sounds.json`); `scripts/i18n.gd` — languages
+  (`data/i18n/`).
 - `learnkit/` — the learning kit, usable in any Godot game: learning records, the maths curriculum and engine, question packs,
   spaced repetition, the timer and the number pad window; `learnkit/tools/learning-editor.html` views and edits a record in any
   browser. See `learnkit/README.md`.
