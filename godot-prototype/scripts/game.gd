@@ -560,6 +560,15 @@ func _raw_cost(id: String) -> Dictionary:
 func flex_on() -> bool:
 	return bool(S.get("dynamic", settings.get("dynamicDifficulty", false)))
 
+## Share of Time Quiz questions that review the knowledge cards already learned (0..1); the rest come from the parent's
+## packs. Set per farm in ⚙️ Settings; data/settings.json gives the starting value.
+func review_share() -> float:
+	return clampf(float(S.get("review_share", settings.get("knowledgeReviewShare", 0.25))), 0.0, 1.0)
+
+func set_review_share(v: float) -> void:
+	S["review_share"] = clampf(snappedf(v, 0.05), 0.0, 1.0)
+	_dirty()
+
 ## Switches dynamic difficulty on or off for this farm (Settings). Prices already fitted keep their factor while on.
 func toggle_flex() -> void:
 	S["dynamic"] = not flex_on()
@@ -1803,7 +1812,7 @@ func due_cards() -> Array:
 
 ## The next Time Quiz question: mostly the parent's packs, sometimes a due knowledge review.
 func next_time_question() -> Dictionary:
-	var share := float(settings.get("knowledgeReviewShare", 0.25))
+	var share := review_share()
 	if share > 0.0 and rng.randf() < share:
 		var due := due_cards()
 		if due.size() > 0:

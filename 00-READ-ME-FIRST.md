@@ -108,6 +108,8 @@ Expected now: smoke test passes; the bot reaches chapter 3 after about 290–415
 pets; the alpaca is chapter 5's own goal, which the bot stops before) after about 680–765. The bot plays randomly, so the
 number changes from run to run (7 Oct 2026, cloud: 678, 715, 763; earlier 729). A bot run takes about 75 seconds.
 The smoke test prints its findings and ends with a few "leaked" warnings; those are harmless.
+If the smoke test prints **nothing** and only stops at the timeout, a script has a parse error (the test then hangs instead
+of failing). Find it with `$G --headless --path . --check-only -s res://tests/ui_smoke.gd` (or the script you changed).
 
 ### 4.3 Screenshots
 

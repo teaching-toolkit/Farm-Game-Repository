@@ -116,6 +116,7 @@ func _parse_args() -> void:
 			G.settings["language"] = a.substr(7)
 			G.quiz_tr = G.quiz.load_texts("res://data/i18n/quiz-%s.json" % a.substr(7))
 		elif a == "--rest": call_deferred("_show_rest")
+		elif a == "--menu": call_deferred("_show_menu")            # screenshots: ⚙️ Settings
 		elif a.begins_with("--card="): call_deferred("_show_card", a.substr(7))
 		elif a.begins_with("--patch="): call_deferred("_on_patch", "field", int(a.substr(8)))
 		elif a.begins_with("--pests="): G.S["pests"] = float(a.substr(8))
@@ -1679,12 +1680,36 @@ func _show_menu() -> void:
 	var box := _open_modal("⚙️ Settings")
 	if G.player != "": box.add_child(UI.soft_button("👤 %s — someone else is playing" % G.player, _ask_player, true, 18))
 	else: box.add_child(UI.soft_button("👤 Who is playing?", _ask_player, true, 18))
-	box.add_child(UI.label("Question packs, the share of knowledge reviews in the Time Quiz and the size of Rest sums are set in data/settings.json and data/quiz_packs/.", 16, UI.MUTED, true))
-	box.add_child(UI.label("Knowledge reviews in the Time Quiz: %d%%" % int(round(float(G.settings.get("knowledgeReviewShare", 0.25)) * 100)), 17))
+	_part_review_share(box)
+	box.add_child(UI.label("Question packs and the size of Rest sums are set in data/settings.json and data/quiz_packs/.", 15, UI.MUTED, true))
 	box.add_child(UI.soft_button("📜 What happened (log)", _open_log, true, 18))
 	box.add_child(UI.soft_button("📊 Learning record (sums and questions)", _show_learning, true, 18))
 	box.add_child(UI.soft_button("%s 🎚️ Prices fit my farm (dynamic difficulty)" % ("✅" if G.flex_on() else "⬜"), _toggle_flex, true, 16))
 	box.add_child(UI.button("🗑️ Start a new game (deletes the save)", _reset, true, UI.RED, 17))
+
+## Settings: where the Time Quiz questions come from — reviews of the cards read, or the parent's packs (5% steps).
+func _part_review_share(box: Control) -> void:
+	var pc := UI.card(Color("f3f7ea"))
+	var v := UI.vbox(4)
+	pc.add_child(v)
+	v.add_child(UI.label("❓ Where the Time Quiz questions come from", 18, UI.INK, true))
+	var pct := int(round(G.review_share() * 100.0))
+	var row := UI.hbox(8)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_child(UI.soft_button("➖", _change_review_share.bind(-0.05), pct > 0, 20))
+	var bar := UI.bar(G.review_share(), 220, 16, UI.BLUE)
+	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(bar)
+	row.add_child(UI.soft_button("➕", _change_review_share.bind(0.05), pct < 100, 20))
+	v.add_child(row)
+	v.add_child(UI.label("📚 %d%% from the books read   ·   📦 %d%% from your question packs" % [pct, 100 - pct], 16, UI.INK, true))
+	v.add_child(UI.label("A book question only comes when a card is due for review; otherwise a pack question takes its place.", 14, UI.MUTED, true))
+	box.add_child(pc)
+
+func _change_review_share(d: float) -> void:
+	G.set_review_share(G.review_share() + d)
+	_close_modal()
+	_show_menu()
 
 ## For parents: the player's learning record — a plain JSON file (learnkit/learner.gd) that can be opened, copied,
 ## edited (learnkit/tools/learning-editor.html) and pasted back; and which maths categories are practised.
