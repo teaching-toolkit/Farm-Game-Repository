@@ -26,7 +26,7 @@ document ever disagree, the data wins and this document should be corrected.
 ### 1.1 Premise
 
 A craft-from-scratch farming game in an old-world, pre-industrial setting. The player comes back to a farm that has burnt
-down. All that is left is a tent, an old dented bucket by a wild pond, a tin pot, a few sticks and stones, five wheat seeds
+down. All that is left is a tent, an old dented bucket by a wild pond, a tin pot, a few sticks and stones, one wheat seed
 — and a box with a book in it. From there the player rebuilds everything: fire and porridge first, then stone tools, a
 cottage, a kitchen, animals, a smithy, a windmill, a farmhouse, a greenhouse, and finally a master farm with heirloom crops
 and plant dyes.
@@ -392,8 +392,8 @@ decimals anywhere.
   the **North Field** (chapter 4: clear the scrub, then fence it) and the **River Meadow** (chapter 5, optional: drain the
   marsh, then a sluice; it also gives water). Later fields are on the map from the start, overgrown behind a crumbling wall;
   tapping them shows only the mysterious sign until their chapter.
-- **Clearing takes steps.** The Home Field starts with 3 cleared patches; the other six are cleared two at a time — *Pull the
-  weeds*, *Clear the rocks*, *Clear the stumps* — in 4–5 taps each (cut the tall weeds, pull the roots, pick the stones,
+- **Clearing takes steps.** The Home Field starts with **one** cleared patch (and one wheat seed to plant in it); the other eight
+  are cleared two at a time — *Clear the thistles*, *Pull the weeds*, *Clear the rocks*, *Clear the stumps* — in 4–5 taps each (cut the tall weeds, pull the roots, pick the stones,
   gather the sticks, rake). Every step costs a little energy, gives material back (fibre, stones, sticks, a log) and makes the
   patch look more like soil. New patches can be planted after the first two steps (the weeds are out); they give 85 % of a
   full harvest until the job is done.

@@ -27,7 +27,7 @@ A task that is not written down here does not exist for the next chat.
 ## 1. The project in a few lines
 
 **Farm Quiz Game** — an educational farming game for an **8-year-old**, played on an **iPad held upright**. The player
-rebuilds a burnt-down farm from a tent and five wheat seeds to a master farm, over five chapters, each ending with a pet
+rebuilds a burnt-down farm from a tent and one wheat seed to a master farm, over five chapters, each ending with a pet
 coming home (bunny, tortoise, goat, pony, alpaca). Learning *is* the economy:
 
 - **Time Quiz** — general-knowledge questions from packs the parent chooses; each right answer moves farm time one step.
@@ -137,7 +137,10 @@ call (background processes die when the call ends); then check that `web-build/i
 ### 4.5 After changing content
 
 - Quiz questions: run `python3 tools/quiz_ids.py` (gives new questions ids, updates `data/i18n/`). Never change or reuse an id.
-- Progression data: check it in the explorer (copy the JSON to `progression/` too).
+- Progression data: run `python3 tools/sync_progression.py` (copies it to `progression/` and into the explorer), then check it in
+  the explorer. In a cloud session the explorer runs headless: `cd ../progression && python3 -m http.server 8765 &` then
+  `NODE_PATH=$(npm root -g) node ../godot-prototype/tools/explorer_check.js http://localhost:8765/progression-explorer.html`
+  (prints the playthrough hours, answers and checks).
 - New pictures in `art-inbox/`: `python3 tools/import_art.py all` (needs Pillow, numpy, scipy); then `python3 tools/art_list.py`.
 - Update the design document (describe the game, not the change), add a row to `PROJECT-LOG.md`, and update §5–7 of this file
   (see the standing rule at the top: do this as you go, not only at the end).
@@ -212,11 +215,11 @@ say why they came · A4 no dark-green forest floor · A5 the knowledge-review sh
 Parent's answer: protect them with a simple password → done 7 Oct 2026: the grown-up part of ⚙️ Settings (question share,
 dynamic difficulty, learning record, new game) asks for `parentPassword` (now "farm"; the hint shows it for now).
 
-### B. The opening (parent's list)
+### B. The opening (parent's list) — done 7 Oct 2026, waiting for the parent's check
 
-- **B1. Start with one usable patch and one wheat seed**; every other patch overgrown. Changes the first minutes of the game:
-  re-check the first goals, the bot's numbers, the explorer's start and decision 4 in the log (5 seeds). One seed = **one
-  plant** (parent, 7 Oct 2026); make sure the first goals and the market still keep the child moving.
+B1: the game starts with **one** cleared patch and **one** wheat seed (one plant). The missing two patches come from a new first
+clearing job, *Clear the thistles (2 patches)* (4 steps, 6 energy). Bot: chapter 3 after ~280–300, chapter 5 after 629–752
+questions (same range as before); explorer: 21.2 h, 1,417 Time Quiz answers.
 
 ### C. Rest (parent's list)
 
@@ -293,5 +296,5 @@ dynamic difficulty, learning record, new game) asks for `parentPassword` (now "f
 ## 7. Key numbers right now
 
 Data v0.8: 141 items, 424 nodes, 106 recipes, 38 stations, 67 cards in 12 books, 22 polish jobs, 58 helpers, 28 side quests.
-Explorer playthrough: about 21 hours, ~1,416 Time Quiz answers, ~1,380 Rest answers; pets at about 1.6 / 5.8 / 12 / 17 / 20 h.
+Explorer playthrough: about 21.2 hours, ~1,417 Time Quiz answers, ~1,380 Rest answers; pets at about 1.6 / 5.8 / 12 / 17 / 20 h.
 Quiz packs: Farm basics (FRM, 4), Continents (CON, 12), Farm pictures (PIC, 18) + card questions KNW-001…201.

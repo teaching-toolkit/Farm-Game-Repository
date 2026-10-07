@@ -1046,7 +1046,7 @@
       "stone": 3
     },
     "seeds": {
-      "crop_wheat": 5
+      "crop_wheat": 1
     },
     "unlocked": [
       "tent",
@@ -1229,7 +1229,7 @@
     "rock": {"type": "tool", "name": "Rock", "emoji": "🪨", "chapter": 1, "slot": "tool:hammering", "desc": "Good enough to knock simple things together.", "track": "hammering", "tier": 0},
     "bucket": {"type": "tool", "name": "Watering Scoop", "emoji": "🫗", "chapter": 1, "slot": "tool:watering", "desc": "Waters the plants. Plants use their full water cost.", "track": "watering", "tier": 0, "effects": {"set": {"waterMult": 1}}},
     "seed_1": {"type": "merchant", "name": "Seed Merchant", "emoji": "🧑‍🌾", "chapter": 1, "slot": "market", "desc": "Always there, always takes coins. Wheat and carrot seeds."},
-    "land_start": {"type": "land", "name": "Three cleared patches", "emoji": "🟫", "chapter": 1, "slot": "field", "desc": "The rest of the field is overgrown.", "effects": {"add": {"plots": 3}}},
+    "land_start": {"type": "land", "name": "One cleared patch", "emoji": "🟫", "chapter": 1, "slot": "field", "desc": "The rest of the field is overgrown.", "effects": {"add": {"plots": 1}}},
     "crop_wheat": {"type": "crop", "name": "Wheat", "emoji": "🌾", "chapter": 1, "slot": "field", "requires": ["seed_1", "k_wheat"], "desc": "The backbone crop: food, feed, flour and straw.", "grow": 2, "water": 2, "seedCost": 1, "yields": {"wheat": 1.3, "straw": 0.65}},
     "crop_carrot": {"type": "crop", "name": "Carrot", "emoji": "🥕", "chapter": 1, "slot": "field", "requires": ["seed_1", "k_roots"], "grow": 3, "water": 2, "seedCost": 2, "yields": {"carrot": 1.3}},
     "campfire": {"type": "station", "name": "Campfire", "emoji": "🔥", "chapter": 1, "slot": "kitchen", "cost": {"stick": 3, "stone": 3, "energy": 3}, "desc": "First build. With the Tin Pot: porridge and soup.", "requires": ["k_fire"], "cat": "cook"},
@@ -1239,6 +1239,7 @@
     "crop_clover": {"type": "crop", "name": "Clover", "emoji": "☘️", "chapter": 1, "slot": "field", "requires": ["seed_2"], "desc": "Cheap, quick fodder. Its flowers feed bees.", "grow": 2, "water": 1, "seedCost": 1, "yields": {"clover": 1.95}, "flower": true},
     "crop_onion": {"type": "crop", "name": "Onion", "emoji": "🧅", "chapter": 1, "slot": "field", "requires": ["seed_2", "k_roots", "present_onion"], "grow": 3, "water": 2, "seedCost": 2, "yields": {"onion": 1.3}},
     "present_onion": {"type": "delivery", "name": "A present for the seed cart", "emoji": "🎁", "chapter": 1, "slot": "market", "requires": ["seed_2"], "cost": {"porridge": 2, "energy": 1}, "cat": "errand", "desc": "Give the seed seller two bowls of porridge — next time she brings onion sets."},
+    "clear_thistles": {"type": "land", "name": "Clear the thistles (2 patches)", "emoji": "🌿", "chapter": 1, "slot": "field", "cost": {"energy": 6.0}, "desc": "Takes 4 steps, one tap each; every step gives something back. After the first 2 steps the 2 patches can be planted; the other steps make them better (bigger harvests, fewer weeds).", "gives": {"fiber": 3, "stone": 1}, "effects": {"add": {"plots": 2}}, "steps": [{"name": "Cut the thistles", "emoji": "✂️", "cost": {"energy": 2}, "gives": {"fiber": 2}}, {"name": "Pull out the roots", "emoji": "💪", "cost": {"energy": 2}, "gives": {"fiber": 1}}, {"name": "Pick out the stones", "emoji": "🤏", "cost": {"energy": 1}, "gives": {"stone": 1}}, {"name": "Rake the soil", "emoji": "🧹", "cost": {"energy": 1}}], "openAfter": 2},
     "clear_weeds": {"type": "land", "name": "Pull the weeds (2 patches)", "emoji": "🌿", "chapter": 1, "slot": "field", "cost": {"energy": 7.5}, "desc": "Takes 5 steps, one tap each; every step gives something back. After the first 2 steps the 2 patches can be planted; the other steps make them better (bigger harvests, fewer weeds).", "gives": {"fiber": 3, "stone": 2, "stick": 2}, "effects": {"add": {"plots": 2}}, "steps": [{"name": "Cut the tall weeds", "emoji": "🌿", "cost": {"energy": 2}, "gives": {"fiber": 2}}, {"name": "Pull out the roots", "emoji": "💪", "cost": {"energy": 2}, "gives": {"fiber": 1}}, {"name": "Pick out the stones", "emoji": "🤏", "cost": {"energy": 1.5}, "gives": {"stone": 2}}, {"name": "Gather the sticks", "emoji": "🪵", "cost": {"energy": 1}, "gives": {"stick": 2}}, {"name": "Rake the soil", "emoji": "🧹", "cost": {"energy": 1}}], "openAfter": 2},
     "workbench": {"type": "station", "name": "Workbench", "emoji": "🪚", "chapter": 1, "slot": "workshop", "requires": ["campfire", "clear_weeds", "ruins_workshop"], "cost": {"stick": 4, "stone": 2, "energy": 3}, "desc": "Rope, stone tools, hutch, scarecrow.", "cat": "craft"},
     "stone_knife": {"type": "tool", "name": "Stone Knife", "emoji": "🔪", "chapter": 1, "slot": "tool:cutting", "requires": ["workbench", "k_tools"], "cost": {"stick": 2, "stone": 2, "fiber": 2, "energy": 4}, "desc": "Rough chopping. Needed for any recipe that cuts things.", "track": "cutting", "tier": 1},

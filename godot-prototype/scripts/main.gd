@@ -1829,7 +1829,7 @@ func _reset() -> void:
 func _show_welcome() -> void:
 	var box := _open_modal("🔥 Ashes")
 	box.add_child(UI.header(null, "🔥", 72))
-	box.add_child(UI.label("Your farm burned down. All that's left: a tent, an old bucket by a wild pond, a tin pot, a few sticks and stones, five wheat seeds — and a box with a book in it.", 20, UI.INK, true))
+	box.add_child(UI.label("Your farm burned down. All that's left: a tent, an old bucket by a wild pond, a tin pot, a few sticks and stones, one wheat seed — and a box with a book in it.", 20, UI.INK, true))
 	box.add_child(UI.label("Tap places on the farm to see what you can do there. Every right answer in the ❓ Time Quiz moves farm time forward. When you're tired, tap ⚡ to rest.", 17, UI.MUTED, true))
 	var ob := UI.button("📗 Open the book", _open_first_book, true, UI.GREEN, 20)
 	ob.custom_minimum_size = Vector2(0, 56)

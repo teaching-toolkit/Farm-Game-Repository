@@ -895,7 +895,7 @@ func patch_usable(a: String, i: int) -> bool:
 	if a == "field": return i < plots()
 	return i < area(a).size()
 
-const CLEARING := [["clear_weeds", "weeds"], ["clear_rocks", "rocks"], ["clear_stumps", "stumps"]]
+const CLEARING := [["clear_thistles", "weeds"], ["clear_weeds", "weeds"], ["clear_rocks", "rocks"], ["clear_stumps", "stumps"]]
 const FIELD_WILD := ["", "scrub", "marsh"]     # fields 2 and 3 before they are opened
 
 ## What is in the way on locked patch i of field f, and how much of its clearing is done (0..1): the clearing jobs still

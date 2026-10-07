@@ -33,6 +33,7 @@ For what the game *is* now, read `farm-quiz-game-master-design-document.md`; for
 | **Group A: small fixes** (7 Oct 2026) | **A1** Planting: when water was short, the plant count dropped to what the water allowed, and with one plant per patch the water cost became 0, so its cubes vanished and "Plant" just went grey; now the water a full patch needs is shown, the missing cubes hollow. **A2** Tapping an overgrown patch opens the field sheet with a note: "Patch 4 is not ready yet: it is still overgrown with weeds" and what clears it (or what is needed first). The what-is-in-the-way logic moved from `iso_field.gd` to `G.patch_wild`. **A3** The new-perk pop-up and the album say why a perk came ("You harvested 40 times!", or the favour). **A4** No dark-green forest floor; the trees stand on the meadow; the outline stays as the tap area (faint dashed line in the layout editor, rebuilt). **A5** ⚙️ Settings: "Where the Time Quiz questions come from", ➖/➕ in 5 % steps, saved per farm (`S.review_share`); `knowledgeReviewShare` is the starting value. New screenshot flags `--water=N`, `--menu`; smoke test checks the share. Found: a parse error in a test script makes the smoke test hang silently (tip in READ-ME §4.2). Web build not re-exported. |
 | **Upgrade benefits (H1)** (7 Oct 2026) | `progression/upgrade-benefits-ideas.md`: 119 of ~240 upgrade effects only save energy, and 48 upgrades do nothing else. 15 other kinds of benefit (which the engine already has, which need code), a suggested rule (first tier saves energy, later tiers do something else; gear helps with seasons and shows on the farmer) and one idea per upgrade. For the parent to choose; no data changed. |
 | **Grown-up lock** (7 Oct 2026) | The parent wants grown-up settings protected by a simple password whose hint is, for now, the password itself (later the password changes and the hint becomes a reminder). ⚙️ Settings: "Who is playing" and the log stay open; "🔒 Grown-up settings" asks for `parentPassword` (settings.json, now "farm", not case-sensitive, hint `parentHint`), then the question share, the learning record, dynamic difficulty and "Start a new game" are open for 5 minutes ("🔒 Lock again" closes them). Flags `--grownup`, `--password`; smoke test checks it. |
+| **B1: the opening** (7 Oct 2026) | The game starts with one cleared patch (`land_start` adds 1 plot instead of 3) and one wheat seed (instead of 5). To keep nine patches, a new first clearing job `clear_thistles` ("Clear the thistles (2 patches)", 4 steps, 6 energy, gives fibre and a stone) comes before *Pull the weeds*; the map shows it as weeds. Welcome text updated. New tools: `tools/sync_progression.py` (data → progression/ and the explorer's built-in copy), `tools/explorer_check.js` (explorer headless), bot `--trace=N` (what happens in the first N questions). Bot: chapter 3 at ~280–300, chapter 5 after 671, 629, 752. Explorer: 21.2 h (was 21.1), 1,417 Time Quiz answers, all checks clear. |
 
 ---
 
@@ -45,7 +46,7 @@ For what the game *is* now, read `farm-quiz-game-master-design-document.md`; for
 | 1 | Rest on a wrong or slow answer | No energy for a wrong answer (the "+1 safety net" was dropped). Later (1.3.4): a slow right answer gives half. |
 | 2 | Energy per right answer | +5 then; now set by the home (5–9) plus bed, pillow, bottle. |
 | 3 | First recipe | **Porridge** at the tent (fire + tin pot); bread later with an oven. |
-| 4 | Starting seeds | 5 wheat. |
+| 4 | Starting seeds | 5 wheat. Changed 7 Oct 2026 (parent): **1 wheat seed** and one cleared patch. |
 | 5 | Sunflower, pumpkin | In the crop list. |
 | 6 | Barn and storage | Separate buildings. Storage = capacity; barn = big animals, cellar, stable. |
 | — | Starting coins | 0 in the design (the old prototype's 200 was a test convenience). |
@@ -123,6 +124,7 @@ For what the game *is* now, read `farm-quiz-game-master-design-document.md`; for
 - "The water bar in the planting window doesn't show the empty cubes" meant the case where water is short (the cubes vanished).
   (A1, 7 Oct 2026)
 - The knowledge-review share is kept per farm (not per device) and goes in 5 % steps. (A5, 7 Oct 2026)
+- The two patches lost from the start come back as a new first clearing job, *Clear the thistles*. (B1, 7 Oct 2026)
 - The grown-up lock: password "farm"; "Who is playing" and the log stay open to the child; once typed it stays open for 5
   minutes. (7 Oct 2026)
 

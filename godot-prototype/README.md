@@ -238,8 +238,8 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   (one Time Quiz question), `--lang=de` (quiz texts in German), `--shot=file.png`.
 
 ## Changing content (no code needed)
-- `data/farm-progression.json` — the whole tree. Edit it (or rebuild it), check it in `../progression/progression-explorer.html`,
-  then copy it here.
+- `data/farm-progression.json` — the whole tree. Edit it, run `python3 tools/sync_progression.py` (copies it into
+  `../progression/` and the explorer) and check it in `../progression/progression-explorer.html`.
 - `data/quiz_packs/*.json` — Time Quiz questions, one file per pack: `{ "id", "code", "title", "subject", "pool", "questions":
   [ {"id", "q", "img", "emoji", "answers", "correct", "right", "wrong"} ] }`. An answer is text or `{"text", "img", "emoji"}` (a
   picture answer; `img` = a picture name like `items/carrot`, `emoji` stands in until it exists); `img`/`emoji` on the question =
@@ -268,7 +268,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 ## Automated checks
 - `godot --headless --path . res://tests/bot.tscn -- --iters=900 --chapter=3` — a greedy bot plays the rules engine and prints progress
   (chapter 3 in about 290–420 Time Quiz answers; `--chapter=5 --iters=1100` reaches chapter 5 in about 680–800; it plays randomly, so
-  the number changes from run to run; `--flex` plays with dynamic difficulty on; it prints
+  the number changes from run to run; `--flex` plays with dynamic difficulty on; `--trace=N` prints what happens during the first N questions; it prints
   its pace, which `meta.flex.basePace` is taken from).
 - `godot --headless --path . res://tests/ui_smoke.tscn` — clicks through the opening (first card, planting, Time Quiz, Rest,
   every place on the map, quest book, album, log) and checks the sums, the market, postcards, perks, the farmer, quiz ids,
