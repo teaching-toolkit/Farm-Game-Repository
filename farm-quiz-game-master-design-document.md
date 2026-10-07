@@ -263,10 +263,13 @@ disappears and never floods.
 
 ### 4.5 Languages
 
-The game will be translated into German. Quiz texts already are separated by id: `data/i18n/quiz-en.json` holds every English
-quiz text (written by `tools/quiz_ids.py`), `quiz-de.json` the German ones (an empty text falls back to English);
-`language` in the settings picks one. The packs are translated; the card questions and the rest of the game's words follow
-the same pattern later (**planned**: an id for every text, one file per language).
+The whole game is in **English and German**, and more languages can be added as files. ⚙️ Settings has a button per
+language (🇬🇧 English · 🇩🇪 Deutsch); the choice belongs to the device and switches everything at once: the interface, the
+farm's names and descriptions, the knowledge cards and their questions, the quiz packs, the Rest sums and their kind words,
+and the read-aloud voice. English is written in the code and the data; every other language is a set of files in
+`data/i18n/` (`ui-<lang>.json` for the interface, `data-<lang>.json` for the game data, `learn-<lang>.json` for the Rest
+sums, `quiz-<lang>.json` for the packs). A text not translated yet shows in English. A new language is a new set of files
+and a line in `data/i18n/languages.json`; `tools/i18n.py` collects every text into them.
 
 ---
 

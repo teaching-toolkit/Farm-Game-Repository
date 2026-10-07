@@ -6113,63 +6113,63 @@
  },
  "nodes/k_cellar/questions/0/q": {
   "en": "Why does food keep longer in a cool cellar?",
-  "de": ""
+  "de": "Warum hält Essen in einem kühlen Keller länger?"
  },
  "nodes/k_cellar/questions/0/why": {
   "en": "Germs that spoil food work much more slowly in the cold.",
-  "de": ""
+  "de": "Keime, die Essen verderben, arbeiten in der Kälte viel langsamer."
  },
  "nodes/k_cellar/questions/0/answers/0": {
   "en": "Cold slows down the germs",
-  "de": ""
+  "de": "Kälte bremst die Keime"
  },
  "nodes/k_cellar/questions/0/answers/1": {
   "en": "Cold makes food ripen faster",
-  "de": ""
+  "de": "Kälte lässt Essen schneller reifen"
  },
  "nodes/k_cellar/questions/0/answers/2": {
   "en": "Cellars are full of salt",
-  "de": ""
+  "de": "Keller sind voller Salz"
  },
  "nodes/k_cellar/questions/1/q": {
   "en": "Why does a cellar stay cool, even in summer?",
-  "de": ""
+  "de": "Warum bleibt ein Keller kühl, sogar im Sommer?"
  },
  "nodes/k_cellar/questions/1/why": {
   "en": "Deep in the ground, the temperature stays cool all year round.",
-  "de": ""
+  "de": "Tief in der Erde bleibt es das ganze Jahr über kühl."
  },
  "nodes/k_cellar/questions/1/answers/0": {
   "en": "It is dug into the ground",
-  "de": ""
+  "de": "Er ist in die Erde gegraben"
  },
  "nodes/k_cellar/questions/1/answers/1": {
   "en": "It has big windows",
-  "de": ""
+  "de": "Er hat große Fenster"
  },
  "nodes/k_cellar/questions/1/answers/2": {
   "en": "It is next to the stove",
-  "de": ""
+  "de": "Er ist neben dem Herd"
  },
  "nodes/k_cellar/questions/2/q": {
   "en": "Which foods can keep in a cellar for months?",
-  "de": ""
+  "de": "Welche Lebensmittel halten im Keller monatelang?"
  },
  "nodes/k_cellar/questions/2/why": {
   "en": "Hardy foods like potatoes, carrots, apples and cheese last for months in a cellar.",
-  "de": ""
+  "de": "Robuste Lebensmittel wie Kartoffeln, Karotten, Äpfel und Käse halten im Keller monatelang."
  },
  "nodes/k_cellar/questions/2/answers/0": {
   "en": "Potatoes, carrots and apples",
-  "de": ""
+  "de": "Kartoffeln, Karotten und Äpfel"
  },
  "nodes/k_cellar/questions/2/answers/1": {
   "en": "Fresh milk and lettuce leaves",
-  "de": ""
+  "de": "Frische Milch und Salatblätter"
  },
  "nodes/k_cellar/questions/2/answers/2": {
   "en": "Warm bread and soup",
-  "de": ""
+  "de": "Warmes Brot und Suppe"
  },
  "nodes/k_pickling/name": {
   "en": "Pickling and vinegar",
@@ -6185,63 +6185,63 @@
  },
  "nodes/k_pickling/questions/0/q": {
   "en": "How is vinegar made?",
-  "de": ""
+  "de": "Wie wird Essig gemacht?"
  },
  "nodes/k_pickling/questions/0/why": {
   "en": "Special bacteria change cider into sour vinegar.",
-  "de": ""
+  "de": "Besondere Bakterien verwandeln Apfelmost in sauren Essig."
  },
  "nodes/k_pickling/questions/0/answers/0": {
   "en": "Bacteria turn cider into acid",
-  "de": ""
+  "de": "Bakterien machen aus Apfelmost Säure"
  },
  "nodes/k_pickling/questions/0/answers/1": {
   "en": "Salt is stirred into hot water",
-  "de": ""
+  "de": "Salz wird in heißes Wasser gerührt"
  },
  "nodes/k_pickling/questions/0/answers/2": {
   "en": "Lemons are squeezed",
-  "de": ""
+  "de": "Zitronen werden ausgepresst"
  },
  "nodes/k_pickling/questions/1/q": {
   "en": "Why don't pickles spoil?",
-  "de": ""
+  "de": "Warum verdirbt Eingelegtes nicht?"
  },
  "nodes/k_pickling/questions/1/why": {
   "en": "The sour vinegar stops the germs that would spoil the vegetables.",
-  "de": ""
+  "de": "Der saure Essig stoppt die Keime, die das Gemüse verderben würden."
  },
  "nodes/k_pickling/questions/1/answers/0": {
   "en": "Spoiling germs can't live in acid",
-  "de": ""
+  "de": "Verderbende Keime können in Säure nicht leben"
  },
  "nodes/k_pickling/questions/1/answers/1": {
   "en": "The jars are kept in the warm sun all day",
-  "de": ""
+  "de": "Die Gläser stehen den ganzen Tag in der warmen Sonne"
  },
  "nodes/k_pickling/questions/1/answers/2": {
   "en": "Pickles are always frozen",
-  "de": ""
+  "de": "Eingelegtes ist immer gefroren"
  },
  "nodes/k_pickling/questions/2/q": {
   "en": "Why did sailors take pickles on long sea trips?",
-  "de": ""
+  "de": "Warum haben Seeleute Eingelegtes auf lange Seereisen mitgenommen?"
  },
  "nodes/k_pickling/questions/2/why": {
   "en": "Pickled food doesn't spoil, so it lasts through long voyages.",
-  "de": ""
+  "de": "Eingelegtes Essen verdirbt nicht, darum reicht es für lange Reisen."
  },
  "nodes/k_pickling/questions/2/answers/0": {
   "en": "Pickles keep for a long time",
-  "de": ""
+  "de": "Eingelegtes hält sehr lange"
  },
  "nodes/k_pickling/questions/2/answers/1": {
   "en": "Pickles need cooking every day",
-  "de": ""
+  "de": "Eingelegtes muss jeden Tag gekocht werden"
  },
  "nodes/k_pickling/questions/2/answers/2": {
   "en": "Pickles are very light to carry",
-  "de": ""
+  "de": "Eingelegtes ist sehr leicht zu tragen"
  },
  "nodes/k_double_dig/name": {
   "en": "Double digging",
@@ -6257,63 +6257,63 @@
  },
  "nodes/k_double_dig/questions/0/q": {
   "en": "How deep do you loosen the soil when double digging?",
-  "de": ""
+  "de": "Wie tief lockert man die Erde beim doppelten Umgraben?"
  },
  "nodes/k_double_dig/questions/0/why": {
   "en": "Double digging loosens the soil two spade-blades deep.",
-  "de": ""
+  "de": "Beim doppelten Umgraben lockert man die Erde zwei Spatenblätter tief."
  },
  "nodes/k_double_dig/questions/0/answers/0": {
   "en": "Two spade-depths",
-  "de": ""
+  "de": "Zwei Spatentiefen"
  },
  "nodes/k_double_dig/questions/0/answers/1": {
   "en": "Half a spade-depth",
-  "de": ""
+  "de": "Eine halbe Spatentiefe"
  },
  "nodes/k_double_dig/questions/0/answers/2": {
   "en": "Down to the groundwater",
-  "de": ""
+  "de": "Bis zum Grundwasser"
  },
  "nodes/k_double_dig/questions/1/q": {
   "en": "Why is double digging worth the hard work?",
-  "de": ""
+  "de": "Warum lohnt sich die harte Arbeit des doppelten Umgrabens?"
  },
  "nodes/k_double_dig/questions/1/why": {
   "en": "Deep, loose soil with compost lets roots go down, so plants can grow closer.",
-  "de": ""
+  "de": "Tiefe, lockere Erde mit Kompost lässt die Wurzeln hinunterwachsen, so können Pflanzen dichter stehen."
  },
  "nodes/k_double_dig/questions/1/answers/0": {
   "en": "Roots go deeper and more plants fit",
-  "de": ""
+  "de": "Wurzeln gehen tiefer, und mehr Pflanzen passen hinein"
  },
  "nodes/k_double_dig/questions/1/answers/1": {
   "en": "Weeds can never, ever grow there again",
-  "de": ""
+  "de": "Dort kann nie, nie wieder Unkraut wachsen"
  },
  "nodes/k_double_dig/questions/1/answers/2": {
   "en": "You never need to water again",
-  "de": ""
+  "de": "Man muss nie wieder gießen"
  },
  "nodes/k_double_dig/questions/2/q": {
   "en": "How do you keep a double-dug bed loose for years?",
-  "de": ""
+  "de": "Wie bleibt ein doppelt umgegrabenes Beet jahrelang locker?"
  },
  "nodes/k_double_dig/questions/2/why": {
   "en": "Feet pack the soil hard, so walk on the paths instead.",
-  "de": ""
+  "de": "Füße machen die Erde hart, darum geh lieber auf den Wegen."
  },
  "nodes/k_double_dig/questions/2/answers/0": {
   "en": "Never step on it",
-  "de": ""
+  "de": "Nie darauf treten"
  },
  "nodes/k_double_dig/questions/2/answers/1": {
   "en": "Dig it again every week",
-  "de": ""
+  "de": "Es jede Woche wieder umgraben"
  },
  "nodes/k_double_dig/questions/2/answers/2": {
   "en": "Stamp it flat after rain",
-  "de": ""
+  "de": "Es nach dem Regen festtreten"
  },
  "nodes/k_pests/name": {
   "en": "Pests and their enemies",
@@ -6329,63 +6329,63 @@
  },
  "nodes/k_pests/questions/0/q": {
   "en": "Slugs are eating your lettuce. Which helper could you bring?",
-  "de": ""
+  "de": "Schnecken fressen deinen Salat. Welchen Helfer könntest du holen?"
  },
  "nodes/k_pests/questions/0/why": {
   "en": "Ducks love to eat slugs.",
-  "de": ""
+  "de": "Enten fressen sehr gern Schnecken."
  },
  "nodes/k_pests/questions/0/answers/0": {
   "en": "Ducks",
-  "de": ""
+  "de": "Enten"
  },
  "nodes/k_pests/questions/0/answers/1": {
   "en": "Ladybirds",
-  "de": ""
+  "de": "Marienkäfer"
  },
  "nodes/k_pests/questions/0/answers/2": {
   "en": "Bees",
-  "de": ""
+  "de": "Bienen"
  },
  "nodes/k_pests/questions/1/q": {
   "en": "What do ladybirds eat?",
-  "de": ""
+  "de": "Was fressen Marienkäfer?"
  },
  "nodes/k_pests/questions/1/why": {
   "en": "Ladybirds gobble up aphids, tiny bugs that harm plants.",
-  "de": ""
+  "de": "Marienkäfer verschlingen Blattläuse, winzige Tierchen, die den Pflanzen schaden."
  },
  "nodes/k_pests/questions/1/answers/0": {
   "en": "Aphids",
-  "de": ""
+  "de": "Blattläuse"
  },
  "nodes/k_pests/questions/1/answers/1": {
   "en": "Slugs",
-  "de": ""
+  "de": "Schnecken"
  },
  "nodes/k_pests/questions/1/answers/2": {
   "en": "Seeds",
-  "de": ""
+  "de": "Samen"
  },
  "nodes/k_pests/questions/2/q": {
   "en": "Why grow many different kinds of plants?",
-  "de": ""
+  "de": "Warum baut man viele verschiedene Pflanzen an?"
  },
  "nodes/k_pests/questions/2/why": {
   "en": "Many kinds of plants give homes to ladybirds, birds and other helpers.",
-  "de": ""
+  "de": "Viele verschiedene Pflanzen geben Marienkäfern, Vögeln und anderen Helfern ein Zuhause."
  },
  "nodes/k_pests/questions/2/answers/0": {
   "en": "They bring more pest-eating helpers",
-  "de": ""
+  "de": "Sie bringen mehr Helfer, die Schädlinge fressen"
  },
  "nodes/k_pests/questions/2/answers/1": {
   "en": "They make crops grow twice as fast",
-  "de": ""
+  "de": "Sie lassen die Ernte doppelt so schnell wachsen"
  },
  "nodes/k_pests/questions/2/answers/2": {
   "en": "They need much less sunlight",
-  "de": ""
+  "de": "Sie brauchen viel weniger Sonnenlicht"
  },
  "nodes/k_steel/name": {
   "en": "From iron to steel",
@@ -6401,63 +6401,63 @@
  },
  "nodes/k_steel/questions/0/q": {
   "en": "What is steel made of?",
-  "de": ""
+  "de": "Woraus besteht Stahl?"
  },
  "nodes/k_steel/questions/0/why": {
   "en": "Adding a tiny bit of carbon from charcoal turns iron into steel.",
-  "de": ""
+  "de": "Wenn man ein ganz kleines bisschen Kohlenstoff aus Holzkohle dazugibt, wird aus Eisen Stahl."
  },
  "nodes/k_steel/questions/0/answers/0": {
   "en": "Iron with a tiny bit of carbon",
-  "de": ""
+  "de": "Aus Eisen mit ein ganz kleines bisschen Kohlenstoff"
  },
  "nodes/k_steel/questions/0/answers/1": {
   "en": "Iron mixed with lots of sand",
-  "de": ""
+  "de": "Aus Eisen, gemischt mit viel Sand"
  },
  "nodes/k_steel/questions/0/answers/2": {
   "en": "Melted stone",
-  "de": ""
+  "de": "Aus geschmolzenem Stein"
  },
  "nodes/k_steel/questions/1/q": {
   "en": "Why make a knife from steel instead of iron?",
-  "de": ""
+  "de": "Warum macht man ein Messer aus Stahl statt aus Eisen?"
  },
  "nodes/k_steel/questions/1/why": {
   "en": "Steel is harder and springier, so its edge stays sharp.",
-  "de": ""
+  "de": "Stahl ist härter und federnder, darum bleibt seine Schneide scharf."
  },
  "nodes/k_steel/questions/1/answers/0": {
   "en": "Steel keeps a sharp edge",
-  "de": ""
+  "de": "Stahl bleibt scharf"
  },
  "nodes/k_steel/questions/1/answers/1": {
   "en": "Steel is softer to bend",
-  "de": ""
+  "de": "Stahl lässt sich leichter biegen"
  },
  "nodes/k_steel/questions/1/answers/2": {
   "en": "Steel needs no fire",
-  "de": ""
+  "de": "Stahl braucht kein Feuer"
  },
  "nodes/k_steel/questions/2/q": {
   "en": "Where does the carbon in steel come from?",
-  "de": ""
+  "de": "Woher kommt der Kohlenstoff im Stahl?"
  },
  "nodes/k_steel/questions/2/why": {
   "en": "Charcoal is mostly carbon, and a little mixes into the hot iron.",
-  "de": ""
+  "de": "Holzkohle ist größtenteils Kohlenstoff, und ein bisschen davon mischt sich in das heiße Eisen."
  },
  "nodes/k_steel/questions/2/answers/0": {
   "en": "Charcoal",
-  "de": ""
+  "de": "Aus Holzkohle"
  },
  "nodes/k_steel/questions/2/answers/1": {
   "en": "Water",
-  "de": ""
+  "de": "Aus Wasser"
  },
  "nodes/k_steel/questions/2/answers/2": {
   "en": "Clay",
-  "de": ""
+  "de": "Aus Lehm"
  },
  "nodes/k_glass/name": {
   "en": "Sand into glass",
@@ -6473,63 +6473,63 @@
  },
  "nodes/k_glass/questions/0/q": {
   "en": "What is glass mainly made from?",
-  "de": ""
+  "de": "Woraus wird Glas hauptsächlich gemacht?"
  },
  "nodes/k_glass/questions/0/why": {
   "en": "Sand melted in a very hot furnace becomes glass.",
-  "de": ""
+  "de": "Sand, der in einem sehr heißen Ofen geschmolzen wird, wird zu Glas."
  },
  "nodes/k_glass/questions/0/answers/0": {
   "en": "Melted sand",
-  "de": ""
+  "de": "Aus geschmolzenem Sand"
  },
  "nodes/k_glass/questions/0/answers/1": {
   "en": "Melted ice",
-  "de": ""
+  "de": "Aus geschmolzenem Eis"
  },
  "nodes/k_glass/questions/0/answers/2": {
   "en": "Fired clay",
-  "de": ""
+  "de": "Aus gebranntem Lehm"
  },
  "nodes/k_glass/questions/1/q": {
   "en": "Why must new glass cool slowly?",
-  "de": ""
+  "de": "Warum muss neues Glas langsam abkühlen?"
  },
  "nodes/k_glass/questions/1/why": {
   "en": "Cooling too fast can crack glass, so it is cooled slowly.",
-  "de": ""
+  "de": "Zu schnelles Abkühlen kann Glas springen lassen, darum kühlt man es langsam ab."
  },
  "nodes/k_glass/questions/1/answers/0": {
   "en": "So it doesn't crack",
-  "de": ""
+  "de": "Damit es nicht springt"
  },
  "nodes/k_glass/questions/1/answers/1": {
   "en": "So it turns green",
-  "de": ""
+  "de": "Damit es grün wird"
  },
  "nodes/k_glass/questions/1/answers/2": {
   "en": "So it stays runny",
-  "de": ""
+  "de": "Damit es flüssig bleibt"
  },
  "nodes/k_glass/questions/2/q": {
   "en": "Why put glass in a window?",
-  "de": ""
+  "de": "Warum setzt man Glas in ein Fenster?"
  },
  "nodes/k_glass/questions/2/why": {
   "en": "Glass is clear, so light comes in while wind and rain stay out.",
-  "de": ""
+  "de": "Glas ist durchsichtig, so kommt Licht herein, während Wind und Regen draußen bleiben."
  },
  "nodes/k_glass/questions/2/answers/0": {
   "en": "It lets light in and keeps rain out",
-  "de": ""
+  "de": "Es lässt Licht herein und hält den Regen draußen"
  },
  "nodes/k_glass/questions/2/answers/1": {
   "en": "It keeps the house dark",
-  "de": ""
+  "de": "Es hält das Haus dunkel"
  },
  "nodes/k_glass/questions/2/answers/2": {
   "en": "It lets the fresh breeze blow through",
-  "de": ""
+  "de": "Es lässt die frische Brise durch"
  },
  "nodes/k_greenhouse/name": {
   "en": "Greenhouses",
@@ -6545,63 +6545,63 @@
  },
  "nodes/k_greenhouse/questions/0/q": {
   "en": "Why is it warm inside a greenhouse?",
-  "de": ""
+  "de": "Warum ist es in einem Gewächshaus warm?"
  },
  "nodes/k_greenhouse/questions/0/why": {
   "en": "Sunlight shines in through the glass, and the glass keeps the warm air inside.",
-  "de": ""
+  "de": "Das Sonnenlicht scheint durch das Glas herein, und das Glas hält die warme Luft drinnen."
  },
  "nodes/k_greenhouse/questions/0/answers/0": {
   "en": "Sun warms it and glass keeps heat in",
-  "de": ""
+  "de": "Die Sonne wärmt es, und das Glas hält die Wärme drin"
  },
  "nodes/k_greenhouse/questions/0/answers/1": {
   "en": "A fire burns under the floor",
-  "de": ""
+  "de": "Unter dem Boden brennt ein Feuer"
  },
  "nodes/k_greenhouse/questions/0/answers/2": {
   "en": "The plants breathe out lots of hot air",
-  "de": ""
+  "de": "Die Pflanzen atmen viel heiße Luft aus"
  },
  "nodes/k_greenhouse/questions/1/q": {
   "en": "What are tender plants?",
-  "de": ""
+  "de": "Was sind empfindliche Pflanzen?"
  },
  "nodes/k_greenhouse/questions/1/why": {
   "en": "Tender plants get hurt by cold, so a greenhouse keeps them safe.",
-  "de": ""
+  "de": "Empfindliche Pflanzen nehmen durch Kälte Schaden, darum schützt sie ein Gewächshaus."
  },
  "nodes/k_greenhouse/questions/1/answers/0": {
   "en": "Plants that don't like cold",
-  "de": ""
+  "de": "Pflanzen, die keine Kälte mögen"
  },
  "nodes/k_greenhouse/questions/1/answers/1": {
   "en": "Plants that are soft to eat",
-  "de": ""
+  "de": "Pflanzen, die weich zum Essen sind"
  },
  "nodes/k_greenhouse/questions/1/answers/2": {
   "en": "Plants with no roots",
-  "de": ""
+  "de": "Pflanzen ohne Wurzeln"
  },
  "nodes/k_greenhouse/questions/2/q": {
   "en": "It is still chilly in early spring. Where can you start seedlings?",
-  "de": ""
+  "de": "Im frühen Frühling ist es noch kühl. Wo kannst du Keimlinge vorziehen?"
  },
  "nodes/k_greenhouse/questions/2/why": {
   "en": "A greenhouse is warm and bright, just right for young seedlings.",
-  "de": ""
+  "de": "Ein Gewächshaus ist warm und hell, genau richtig für junge Keimlinge."
  },
  "nodes/k_greenhouse/questions/2/answers/0": {
   "en": "In a greenhouse",
-  "de": ""
+  "de": "In einem Gewächshaus"
  },
  "nodes/k_greenhouse/questions/2/answers/1": {
   "en": "In the dark cellar",
-  "de": ""
+  "de": "Im dunklen Keller"
  },
  "nodes/k_greenhouse/questions/2/answers/2": {
   "en": "Out in the frosty field",
-  "de": ""
+  "de": "Draußen auf dem frostigen Feld"
  },
  "nodes/k_masonry/name": {
   "en": "Brick houses",
@@ -6617,63 +6617,63 @@
  },
  "nodes/k_masonry/questions/0/q": {
   "en": "Why does each row of bricks overlap the row below?",
-  "de": ""
+  "de": "Warum überdeckt jede Ziegelreihe die Reihe darunter?"
  },
  "nodes/k_masonry/questions/0/why": {
   "en": "Overlapping, called a bond, ties the bricks together so the wall stays strong.",
-  "de": ""
+  "de": "Das Überdecken, der Verband, verbindet die Ziegel, so bleibt die Mauer stark."
  },
  "nodes/k_masonry/questions/0/answers/0": {
   "en": "It makes the wall strong",
-  "de": ""
+  "de": "Es macht die Mauer stark"
  },
  "nodes/k_masonry/questions/0/answers/1": {
   "en": "It uses fewer bricks",
-  "de": ""
+  "de": "Es braucht weniger Ziegel"
  },
  "nodes/k_masonry/questions/0/answers/2": {
   "en": "It makes the wall look red",
-  "de": ""
+  "de": "Es macht die Mauer rot"
  },
  "nodes/k_masonry/questions/1/q": {
   "en": "What goes between the bricks?",
-  "de": ""
+  "de": "Was kommt zwischen die Ziegel?"
  },
  "nodes/k_masonry/questions/1/why": {
   "en": "Mortar is a paste that sticks the bricks together and dries hard.",
-  "de": ""
+  "de": "Mörtel ist eine Masse, die die Ziegel zusammenklebt und hart trocknet."
  },
  "nodes/k_masonry/questions/1/answers/0": {
   "en": "Mortar",
-  "de": ""
+  "de": "Mörtel"
  },
  "nodes/k_masonry/questions/1/answers/1": {
   "en": "Straw",
-  "de": ""
+  "de": "Stroh"
  },
  "nodes/k_masonry/questions/1/answers/2": {
   "en": "Beeswax",
-  "de": ""
+  "de": "Bienenwachs"
  },
  "nodes/k_masonry/questions/2/q": {
   "en": "Why build with bricks instead of wood?",
-  "de": ""
+  "de": "Warum baut man mit Ziegeln statt mit Holz?"
  },
  "nodes/k_masonry/questions/2/why": {
   "en": "Fired clay bricks can't catch fire or rot like wood can.",
-  "de": ""
+  "de": "Gebrannte Lehmziegel können nicht Feuer fangen oder verrotten wie Holz."
  },
  "nodes/k_masonry/questions/2/answers/0": {
   "en": "Bricks don't burn or rot",
-  "de": ""
+  "de": "Ziegel brennen und verrotten nicht"
  },
  "nodes/k_masonry/questions/2/answers/1": {
   "en": "Bricks are lighter than wood",
-  "de": ""
+  "de": "Ziegel sind leichter als Holz"
  },
  "nodes/k_masonry/questions/2/answers/2": {
   "en": "Bricks are quicker to make",
-  "de": ""
+  "de": "Ziegel sind schneller gemacht"
  },
  "nodes/k_orchard/name": {
   "en": "Caring for fruit trees",
@@ -6689,63 +6689,63 @@
  },
  "nodes/k_orchard/questions/0/q": {
   "en": "Why cut out crossing branches?",
-  "de": ""
+  "de": "Warum schneidet man Äste heraus, die sich kreuzen?"
  },
  "nodes/k_orchard/questions/0/why": {
   "en": "With more light and air inside, the tree grows better fruit.",
-  "de": ""
+  "de": "Mit mehr Licht und Luft im Inneren trägt der Baum besseres Obst."
  },
  "nodes/k_orchard/questions/0/answers/0": {
   "en": "To let in light and air",
-  "de": ""
+  "de": "Um Licht und Luft hereinzulassen"
  },
  "nodes/k_orchard/questions/0/answers/1": {
   "en": "To keep the birds out",
-  "de": ""
+  "de": "Um die Vögel fernzuhalten"
  },
  "nodes/k_orchard/questions/0/answers/2": {
   "en": "To stop bees visiting",
-  "de": ""
+  "de": "Damit keine Bienen kommen"
  },
  "nodes/k_orchard/questions/1/q": {
   "en": "When do you prune fruit trees?",
-  "de": ""
+  "de": "Wann schneidet man Obstbäume?"
  },
  "nodes/k_orchard/questions/1/why": {
   "en": "Fruit trees are pruned in winter, before the spring blossoms come.",
-  "de": ""
+  "de": "Obstbäume werden im Winter geschnitten, bevor im Frühling die Blüten kommen."
  },
  "nodes/k_orchard/questions/1/answers/0": {
   "en": "In winter",
-  "de": ""
+  "de": "Im Winter"
  },
  "nodes/k_orchard/questions/1/answers/1": {
   "en": "In spring blossom time",
-  "de": ""
+  "de": "Zur Blütezeit im Frühling"
  },
  "nodes/k_orchard/questions/1/answers/2": {
   "en": "When the apples are ripe",
-  "de": ""
+  "de": "Wenn die Äpfel reif sind"
  },
  "nodes/k_orchard/questions/2/q": {
   "en": "Who helps the apple blossoms turn into apples?",
-  "de": ""
+  "de": "Wer hilft, dass aus den Apfelblüten Äpfel werden?"
  },
  "nodes/k_orchard/questions/2/why": {
   "en": "Bees carry pollen between blossoms, which lets apples grow.",
-  "de": ""
+  "de": "Bienen tragen Pollen von Blüte zu Blüte, so können Äpfel wachsen."
  },
  "nodes/k_orchard/questions/2/answers/0": {
   "en": "Bees",
-  "de": ""
+  "de": "Bienen"
  },
  "nodes/k_orchard/questions/2/answers/1": {
   "en": "Slugs",
-  "de": ""
+  "de": "Schnecken"
  },
  "nodes/k_orchard/questions/2/answers/2": {
   "en": "Ladybirds",
-  "de": ""
+  "de": "Marienkäfer"
  },
  "nodes/k_olives/name": {
   "en": "Olives: oil and curing",
@@ -6761,63 +6761,63 @@
  },
  "nodes/k_olives/questions/0/q": {
   "en": "Why are fresh olives soaked in salty water?",
-  "de": ""
+  "de": "Warum weicht man frische Oliven in Salzwasser ein?"
  },
  "nodes/k_olives/questions/0/why": {
   "en": "Weeks of soaking in salty water, called curing, takes the bitterness away.",
-  "de": ""
+  "de": "Wochenlanges Einweichen in Salzwasser, das Einlegen, nimmt die Bitterkeit weg."
  },
  "nodes/k_olives/questions/0/answers/0": {
   "en": "They are too bitter to eat",
-  "de": ""
+  "de": "Sie sind zu bitter zum Essen"
  },
  "nodes/k_olives/questions/0/answers/1": {
   "en": "They are too sweet to eat",
-  "de": ""
+  "de": "Sie sind zu süß zum Essen"
  },
  "nodes/k_olives/questions/0/answers/2": {
   "en": "They are too dry to eat",
-  "de": ""
+  "de": "Sie sind zu trocken zum Essen"
  },
  "nodes/k_olives/questions/1/q": {
   "en": "How long can an olive tree live?",
-  "de": ""
+  "de": "Wie alt kann ein Olivenbaum werden?"
  },
  "nodes/k_olives/questions/1/why": {
   "en": "Olive trees grow slowly and can live for hundreds of years.",
-  "de": ""
+  "de": "Olivenbäume wachsen langsam und können Hunderte von Jahren alt werden."
  },
  "nodes/k_olives/questions/1/answers/0": {
   "en": "Hundreds of years",
-  "de": ""
+  "de": "Hunderte von Jahren"
  },
  "nodes/k_olives/questions/1/answers/1": {
   "en": "About five years",
-  "de": ""
+  "de": "Etwa fünf Jahre"
  },
  "nodes/k_olives/questions/1/answers/2": {
   "en": "Just one summer",
-  "de": ""
+  "de": "Nur einen Sommer"
  },
  "nodes/k_olives/questions/2/q": {
   "en": "What do you get when you press olives?",
-  "de": ""
+  "de": "Was bekommst du, wenn du Oliven presst?"
  },
  "nodes/k_olives/questions/2/why": {
   "en": "Pressing squeezes the oil out of olives.",
-  "de": ""
+  "de": "Beim Pressen wird das Öl aus den Oliven gedrückt."
  },
  "nodes/k_olives/questions/2/answers/0": {
   "en": "Olive oil",
-  "de": ""
+  "de": "Olivenöl"
  },
  "nodes/k_olives/questions/2/answers/1": {
   "en": "Olive juice for drinking",
-  "de": ""
+  "de": "Olivensaft zum Trinken"
  },
  "nodes/k_olives/questions/2/answers/2": {
   "en": "Vinegar",
-  "de": ""
+  "de": "Essig"
  },
  "nodes/k_pasta/name": {
   "en": "Pasta and dough",
@@ -6833,63 +6833,63 @@
  },
  "nodes/k_pasta/questions/0/q": {
   "en": "What makes pasta dough stretchy?",
-  "de": ""
+  "de": "Was macht Nudelteig dehnbar?"
  },
  "nodes/k_pasta/questions/0/why": {
   "en": "Kneading builds gluten, which makes the dough stretchy.",
-  "de": ""
+  "de": "Beim Kneten entsteht Gluten, das den Teig dehnbar macht."
  },
  "nodes/k_pasta/questions/0/answers/0": {
   "en": "Kneading it",
-  "de": ""
+  "de": "Das Kneten"
  },
  "nodes/k_pasta/questions/0/answers/1": {
   "en": "Leaving it in the sun",
-  "de": ""
+  "de": "Ihn in die Sonne legen"
  },
  "nodes/k_pasta/questions/0/answers/2": {
   "en": "Adding lots of sugar",
-  "de": ""
+  "de": "Viel Zucker dazugeben"
  },
  "nodes/k_pasta/questions/1/q": {
   "en": "What is pasta dough made from?",
-  "de": ""
+  "de": "Woraus wird Nudelteig gemacht?"
  },
  "nodes/k_pasta/questions/1/why": {
   "en": "Pasta needs just flour and eggs, or flour and water.",
-  "de": ""
+  "de": "Für Nudeln braucht man nur Mehl und Eier oder Mehl und Wasser."
  },
  "nodes/k_pasta/questions/1/answers/0": {
   "en": "Flour and egg or water",
-  "de": ""
+  "de": "Aus Mehl und Ei oder Wasser"
  },
  "nodes/k_pasta/questions/1/answers/1": {
   "en": "Butter and honey",
-  "de": ""
+  "de": "Aus Butter und Honig"
  },
  "nodes/k_pasta/questions/1/answers/2": {
   "en": "Milk and salt",
-  "de": ""
+  "de": "Aus Milch und Salz"
  },
  "nodes/k_pasta/questions/2/q": {
   "en": "How long does fresh pasta take to cook?",
-  "de": ""
+  "de": "Wie lange brauchen frische Nudeln zum Kochen?"
  },
  "nodes/k_pasta/questions/2/why": {
   "en": "Fresh pasta is thin, so boiling water cooks it in minutes.",
-  "de": ""
+  "de": "Frische Nudeln sind dünn, darum garen sie in sprudelndem Wasser in Minuten."
  },
  "nodes/k_pasta/questions/2/answers/0": {
   "en": "A few minutes",
-  "de": ""
+  "de": "Ein paar Minuten"
  },
  "nodes/k_pasta/questions/2/answers/1": {
   "en": "A whole day",
-  "de": ""
+  "de": "Einen ganzen Tag"
  },
  "nodes/k_pasta/questions/2/answers/2": {
   "en": "About two hours",
-  "de": ""
+  "de": "Etwa zwei Stunden"
  },
  "nodes/k_hardwood/name": {
   "en": "Hardwood and joinery",
@@ -6905,63 +6905,63 @@
  },
  "nodes/k_hardwood/questions/0/q": {
   "en": "Why make a barrel from oak?",
-  "de": ""
+  "de": "Warum macht man ein Fass aus Eiche?"
  },
  "nodes/k_hardwood/questions/0/why": {
   "en": "Slow-growing hardwoods like oak make heavy, strong wood.",
-  "de": ""
+  "de": "Langsam wachsende Harthölzer wie Eiche geben schweres, starkes Holz."
  },
  "nodes/k_hardwood/questions/0/answers/0": {
   "en": "Oak wood is heavy and strong",
-  "de": ""
+  "de": "Eichenholz ist schwer und stark"
  },
  "nodes/k_hardwood/questions/0/answers/1": {
   "en": "Oak trees grow very fast",
-  "de": ""
+  "de": "Eichen wachsen sehr schnell"
  },
  "nodes/k_hardwood/questions/0/answers/2": {
   "en": "Oak wood is soft and light",
-  "de": ""
+  "de": "Eichenholz ist weich und leicht"
  },
  "nodes/k_hardwood/questions/1/q": {
   "en": "Which trees give softwood?",
-  "de": ""
+  "de": "Welche Bäume geben Weichholz?"
  },
  "nodes/k_hardwood/questions/1/why": {
   "en": "Softwoods come from conifers, the trees with needles and cones.",
-  "de": ""
+  "de": "Weichholz kommt von Nadelbäumen, den Bäumen mit Nadeln und Zapfen."
  },
  "nodes/k_hardwood/questions/1/answers/0": {
   "en": "Trees with needles and cones",
-  "de": ""
+  "de": "Bäume mit Nadeln und Zapfen"
  },
  "nodes/k_hardwood/questions/1/answers/1": {
   "en": "Trees with broad, flat leaves",
-  "de": ""
+  "de": "Bäume mit breiten, flachen Blättern"
  },
  "nodes/k_hardwood/questions/1/answers/2": {
   "en": "Oak and beech trees",
-  "de": ""
+  "de": "Eichen und Buchen"
  },
  "nodes/k_hardwood/questions/2/q": {
   "en": "Which kind of tree grows faster?",
-  "de": ""
+  "de": "Welche Baumart wächst schneller?"
  },
  "nodes/k_hardwood/questions/2/why": {
   "en": "Conifers like pine grow faster than hardwoods like oak and beech.",
-  "de": ""
+  "de": "Nadelbäume wie die Kiefer wachsen schneller als Harthölzer wie Eiche und Buche."
  },
  "nodes/k_hardwood/questions/2/answers/0": {
   "en": "Pine",
-  "de": ""
+  "de": "Kiefer"
  },
  "nodes/k_hardwood/questions/2/answers/1": {
   "en": "Oak",
-  "de": ""
+  "de": "Eiche"
  },
  "nodes/k_hardwood/questions/2/answers/2": {
   "en": "Beech",
-  "de": ""
+  "de": "Buche"
  },
  "nodes/k_deep_soil/name": {
   "en": "Deep soil and humus",
@@ -6977,63 +6977,63 @@
  },
  "nodes/k_deep_soil/questions/0/q": {
   "en": "What is humus made from?",
-  "de": ""
+  "de": "Woraus besteht Humus?"
  },
  "nodes/k_deep_soil/questions/0/why": {
   "en": "Humus forms when old plants rot down into dark soil.",
-  "de": ""
+  "de": "Humus entsteht, wenn alte Pflanzen zu dunkler Erde verrotten."
  },
  "nodes/k_deep_soil/questions/0/answers/0": {
   "en": "Old, rotted plants",
-  "de": ""
+  "de": "Aus alten, verrotteten Pflanzen"
  },
  "nodes/k_deep_soil/questions/0/answers/1": {
   "en": "Crushed stones",
-  "de": ""
+  "de": "Aus zerkleinerten Steinen"
  },
  "nodes/k_deep_soil/questions/0/answers/2": {
   "en": "Sand and salt",
-  "de": ""
+  "de": "Aus Sand und Salz"
  },
  "nodes/k_deep_soil/questions/1/q": {
   "en": "How is humus like a sponge?",
-  "de": ""
+  "de": "Wieso ist Humus wie ein Schwamm?"
  },
  "nodes/k_deep_soil/questions/1/why": {
   "en": "Humus soaks up water and keeps it for plant roots.",
-  "de": ""
+  "de": "Humus saugt Wasser auf und hebt es für die Pflanzenwurzeln auf."
  },
  "nodes/k_deep_soil/questions/1/answers/0": {
   "en": "It holds water",
-  "de": ""
+  "de": "Er hält Wasser fest"
  },
  "nodes/k_deep_soil/questions/1/answers/1": {
   "en": "It is soft and yellow",
-  "de": ""
+  "de": "Er ist weich und gelb"
  },
  "nodes/k_deep_soil/questions/1/answers/2": {
   "en": "It floats on water",
-  "de": ""
+  "de": "Er schwimmt auf dem Wasser"
  },
  "nodes/k_deep_soil/questions/2/q": {
   "en": "Why can many plants grow close in deep, humus-rich soil?",
-  "de": ""
+  "de": "Warum können viele Pflanzen dicht in tiefer, humusreicher Erde wachsen?"
  },
  "nodes/k_deep_soil/questions/2/why": {
   "en": "Deep soil with humus holds lots of water and food for many roots.",
-  "de": ""
+  "de": "Tiefe Erde mit Humus hält viel Wasser und Nahrung für viele Wurzeln."
  },
  "nodes/k_deep_soil/questions/2/answers/0": {
   "en": "There is plenty of water and food",
-  "de": ""
+  "de": "Es gibt viel Wasser und Nahrung"
  },
  "nodes/k_deep_soil/questions/2/answers/1": {
   "en": "Stones in the soil keep roots warm",
-  "de": ""
+  "de": "Steine in der Erde halten die Wurzeln warm"
  },
  "nodes/k_deep_soil/questions/2/answers/2": {
   "en": "There are fewer worms",
-  "de": ""
+  "de": "Es gibt weniger Würmer"
  },
  "nodes/k_mulch/name": {
   "en": "Mulching",
@@ -7049,63 +7049,63 @@
  },
  "nodes/k_mulch/questions/0/q": {
   "en": "How does mulch stop weeds?",
-  "de": ""
+  "de": "Wie stoppt Mulch das Unkraut?"
  },
  "nodes/k_mulch/questions/0/why": {
   "en": "Under thick mulch, weed seeds get no light, so they can't grow.",
-  "de": ""
+  "de": "Unter dickem Mulch bekommen Unkrautsamen kein Licht, darum können sie nicht wachsen."
  },
  "nodes/k_mulch/questions/0/answers/0": {
   "en": "It blocks their light",
-  "de": ""
+  "de": "Er nimmt ihm das Licht"
  },
  "nodes/k_mulch/questions/0/answers/1": {
   "en": "It makes the soil too hot",
-  "de": ""
+  "de": "Er macht die Erde zu heiß"
  },
  "nodes/k_mulch/questions/0/answers/2": {
   "en": "It makes the soil too wet",
-  "de": ""
+  "de": "Er macht die Erde zu nass"
  },
  "nodes/k_mulch/questions/1/q": {
   "en": "It's a hot, dry week. How does mulch help?",
-  "de": ""
+  "de": "Es ist eine heiße, trockene Woche. Wie hilft Mulch?"
  },
  "nodes/k_mulch/questions/1/why": {
   "en": "Mulch covers the soil like a blanket, so less water dries up.",
-  "de": ""
+  "de": "Mulch deckt die Erde zu wie eine Decke, so trocknet weniger Wasser aus."
  },
  "nodes/k_mulch/questions/1/answers/0": {
   "en": "It keeps water in the soil",
-  "de": ""
+  "de": "Er hält das Wasser in der Erde"
  },
  "nodes/k_mulch/questions/1/answers/1": {
   "en": "It makes rain fall more often",
-  "de": ""
+  "de": "Er lässt öfter Regen fallen"
  },
  "nodes/k_mulch/questions/1/answers/2": {
   "en": "It cools the air",
-  "de": ""
+  "de": "Er kühlt die Luft"
  },
  "nodes/k_mulch/questions/2/q": {
   "en": "What happens to old mulch over time?",
-  "de": ""
+  "de": "Was passiert mit altem Mulch mit der Zeit?"
  },
  "nodes/k_mulch/questions/2/why": {
   "en": "Mulch slowly rots down and becomes humus that feeds the soil.",
-  "de": ""
+  "de": "Mulch verrottet langsam und wird zu Humus, der die Erde füttert."
  },
  "nodes/k_mulch/questions/2/answers/0": {
   "en": "It rots into humus",
-  "de": ""
+  "de": "Er verrottet zu Humus"
  },
  "nodes/k_mulch/questions/2/answers/1": {
   "en": "It turns into clay",
-  "de": ""
+  "de": "Er wird zu Lehm"
  },
  "nodes/k_mulch/questions/2/answers/2": {
   "en": "It grows into new plants",
-  "de": ""
+  "de": "Er wächst zu neuen Pflanzen"
  },
  "nodes/k_dyes/name": {
   "en": "Dyes from plants",
@@ -7121,63 +7121,63 @@
  },
  "nodes/k_dyes/questions/0/q": {
   "en": "Which plant gives a blue dye?",
-  "de": ""
+  "de": "Welche Pflanze gibt eine blaue Farbe?"
  },
  "nodes/k_dyes/questions/0/why": {
   "en": "Woad leaves make a blue dye.",
-  "de": ""
+  "de": "Aus Färberwaidblättern macht man blaue Farbe."
  },
  "nodes/k_dyes/questions/0/answers/0": {
   "en": "Woad",
-  "de": ""
+  "de": "Färberwaid"
  },
  "nodes/k_dyes/questions/0/answers/1": {
   "en": "Onion skins",
-  "de": ""
+  "de": "Zwiebelschalen"
  },
  "nodes/k_dyes/questions/0/answers/2": {
   "en": "Madder",
-  "de": ""
+  "de": "Krapp"
  },
  "nodes/k_dyes/questions/1/q": {
   "en": "You want yellow yarn. What should you boil?",
-  "de": ""
+  "de": "Du willst gelbes Garn. Was solltest du kochen?"
  },
  "nodes/k_dyes/questions/1/why": {
   "en": "Onion skins make a warm yellow dye.",
-  "de": ""
+  "de": "Zwiebelschalen machen eine warme gelbe Farbe."
  },
  "nodes/k_dyes/questions/1/answers/0": {
   "en": "Onion skins",
-  "de": ""
+  "de": "Zwiebelschalen"
  },
  "nodes/k_dyes/questions/1/answers/1": {
   "en": "Woad leaves",
-  "de": ""
+  "de": "Färberwaidblätter"
  },
  "nodes/k_dyes/questions/1/answers/2": {
   "en": "Beets",
-  "de": ""
+  "de": "Rüben"
  },
  "nodes/k_dyes/questions/2/q": {
   "en": "Your dyed yarn faded when washed. What did you forget?",
-  "de": ""
+  "de": "Dein gefärbtes Garn ist beim Waschen verblasst. Was hast du vergessen?"
  },
  "nodes/k_dyes/questions/2/why": {
   "en": "A mordant fixes the dye, so the colour stays when washed.",
-  "de": ""
+  "de": "Ein Beizmittel macht die Farbe fest, so bleibt sie beim Waschen."
  },
  "nodes/k_dyes/questions/2/answers/0": {
   "en": "The mordant",
-  "de": ""
+  "de": "Das Beizmittel"
  },
  "nodes/k_dyes/questions/2/answers/1": {
   "en": "More onion skins",
-  "de": ""
+  "de": "Mehr Zwiebelschalen"
  },
  "nodes/k_dyes/questions/2/answers/2": {
   "en": "Cold water",
-  "de": ""
+  "de": "Kaltes Wasser"
  },
  "nodes/k_colour_mixing/name": {
   "en": "Mixing colours",
@@ -7193,63 +7193,63 @@
  },
  "nodes/k_colour_mixing/questions/0/q": {
   "en": "Which two dye colours make green?",
-  "de": ""
+  "de": "Welche zwei Farben ergeben Grün?"
  },
  "nodes/k_colour_mixing/questions/0/why": {
   "en": "Yellow mixed with blue gives green.",
-  "de": ""
+  "de": "Gelb, gemischt mit Blau, ergibt Grün."
  },
  "nodes/k_colour_mixing/questions/0/answers/0": {
   "en": "Yellow and blue",
-  "de": ""
+  "de": "Gelb und Blau"
  },
  "nodes/k_colour_mixing/questions/0/answers/1": {
   "en": "Red and yellow",
-  "de": ""
+  "de": "Rot und Gelb"
  },
  "nodes/k_colour_mixing/questions/0/answers/2": {
   "en": "Red and blue",
-  "de": ""
+  "de": "Rot und Blau"
  },
  "nodes/k_colour_mixing/questions/1/q": {
   "en": "You mix red and blue dye. What colour do you get?",
-  "de": ""
+  "de": "Du mischst rote und blaue Farbe. Welche Farbe bekommst du?"
  },
  "nodes/k_colour_mixing/questions/1/why": {
   "en": "Red and blue together make purple.",
-  "de": ""
+  "de": "Rot und Blau zusammen ergeben Lila."
  },
  "nodes/k_colour_mixing/questions/1/answers/0": {
   "en": "Purple",
-  "de": ""
+  "de": "Lila"
  },
  "nodes/k_colour_mixing/questions/1/answers/1": {
   "en": "Orange",
-  "de": ""
+  "de": "Orange"
  },
  "nodes/k_colour_mixing/questions/1/answers/2": {
   "en": "Green",
-  "de": ""
+  "de": "Grün"
  },
  "nodes/k_colour_mixing/questions/2/q": {
   "en": "You pour red, yellow and blue together. What colour now?",
-  "de": ""
+  "de": "Du gießt Rot, Gelb und Blau zusammen. Welche Farbe jetzt?"
  },
  "nodes/k_colour_mixing/questions/2/why": {
   "en": "Mixing all three main colours makes brown.",
-  "de": ""
+  "de": "Wenn man alle drei Grundfarben mischt, entsteht Braun."
  },
  "nodes/k_colour_mixing/questions/2/answers/0": {
   "en": "Brown",
-  "de": ""
+  "de": "Braun"
  },
  "nodes/k_colour_mixing/questions/2/answers/1": {
   "en": "White",
-  "de": ""
+  "de": "Weiß"
  },
  "nodes/k_colour_mixing/questions/2/answers/2": {
   "en": "Pink",
-  "de": ""
+  "de": "Rosa"
  },
  "nodes/k_worms/name": {
   "en": "Worms make soil",
@@ -7265,63 +7265,63 @@
  },
  "nodes/k_worms/questions/0/q": {
   "en": "What are worm castings?",
-  "de": ""
+  "de": "Was ist Wurmhumus?"
  },
  "nodes/k_worms/questions/0/why": {
   "en": "Castings are worm droppings, and they are very rich food for plants.",
-  "de": ""
+  "de": "Wurmhumus sind die Hinterlassenschaften der Würmer, und das ist sehr reiche Nahrung für Pflanzen."
  },
  "nodes/k_worms/questions/0/answers/0": {
   "en": "What worms leave behind after eating",
-  "de": ""
+  "de": "Was Würmer nach dem Fressen hinterlassen"
  },
  "nodes/k_worms/questions/0/answers/1": {
   "en": "Little worm eggs in the soil",
-  "de": ""
+  "de": "Kleine Wurmeier in der Erde"
  },
  "nodes/k_worms/questions/0/answers/2": {
   "en": "The tunnels worms dig",
-  "de": ""
+  "de": "Die Gänge, die Würmer graben"
  },
  "nodes/k_worms/questions/1/q": {
   "en": "How do worm tunnels help your plants?",
-  "de": ""
+  "de": "Wie helfen die Gänge der Würmer deinen Pflanzen?"
  },
  "nodes/k_worms/questions/1/why": {
   "en": "Tunnels make paths for air and water to reach the roots.",
-  "de": ""
+  "de": "Die Gänge sind Wege, auf denen Luft und Wasser zu den Wurzeln kommen."
  },
  "nodes/k_worms/questions/1/answers/0": {
   "en": "They let air and water in",
-  "de": ""
+  "de": "Sie lassen Luft und Wasser hinein"
  },
  "nodes/k_worms/questions/1/answers/1": {
   "en": "They catch the slugs at night",
-  "de": ""
+  "de": "Sie fangen nachts die Schnecken"
  },
  "nodes/k_worms/questions/1/answers/2": {
   "en": "They keep the soil cold",
-  "de": ""
+  "de": "Sie halten die Erde kalt"
  },
  "nodes/k_worms/questions/2/q": {
   "en": "What does a worm bin do with kitchen scraps?",
-  "de": ""
+  "de": "Was macht eine Wurmkiste mit Küchenresten?"
  },
  "nodes/k_worms/questions/2/why": {
   "en": "Worms eat the scraps and leave castings, a rich food for soil.",
-  "de": ""
+  "de": "Würmer fressen die Reste und hinterlassen Wurmhumus, reiche Nahrung für die Erde."
  },
  "nodes/k_worms/questions/2/answers/0": {
   "en": "Turns them into rich castings",
-  "de": ""
+  "de": "Sie macht daraus reichen Wurmhumus"
  },
  "nodes/k_worms/questions/2/answers/1": {
   "en": "Keeps them fresh for later",
-  "de": ""
+  "de": "Sie hält sie für später frisch"
  },
  "nodes/k_worms/questions/2/answers/2": {
   "en": "Turns them into seeds",
-  "de": ""
+  "de": "Sie macht daraus Samen"
  },
  "nodes/k_seed_saving/name": {
   "en": "Saving seeds",
@@ -7337,63 +7337,63 @@
  },
  "nodes/k_seed_saving/questions/0/q": {
   "en": "Which plants should you save seeds from?",
-  "de": ""
+  "de": "Von welchen Pflanzen solltest du Samen aufheben?"
  },
  "nodes/k_seed_saving/questions/0/why": {
   "en": "Seeds from your best plants grow into good plants too.",
-  "de": ""
+  "de": "Aus Samen deiner besten Pflanzen werden auch gute Pflanzen."
  },
  "nodes/k_seed_saving/questions/0/answers/0": {
   "en": "Your best plants",
-  "de": ""
+  "de": "Von deinen besten Pflanzen"
  },
  "nodes/k_seed_saving/questions/0/answers/1": {
   "en": "Your smallest plants",
-  "de": ""
+  "de": "Von deinen kleinsten Pflanzen"
  },
  "nodes/k_seed_saving/questions/0/answers/2": {
   "en": "The weediest plants",
-  "de": ""
+  "de": "Von den unkrautigsten Pflanzen"
  },
  "nodes/k_seed_saving/questions/1/q": {
   "en": "How should you store saved seeds?",
-  "de": ""
+  "de": "Wie solltest du aufgehobene Samen lagern?"
  },
  "nodes/k_seed_saving/questions/1/why": {
   "en": "Cool, dry seeds stay healthy until planting time next year.",
-  "de": ""
+  "de": "Kühle, trockene Samen bleiben gesund bis zur Pflanzzeit im nächsten Jahr."
  },
  "nodes/k_seed_saving/questions/1/answers/0": {
   "en": "Cool and dry",
-  "de": ""
+  "de": "Kühl und trocken"
  },
  "nodes/k_seed_saving/questions/1/answers/1": {
   "en": "Warm and wet",
-  "de": ""
+  "de": "Warm und nass"
  },
  "nodes/k_seed_saving/questions/1/answers/2": {
   "en": "In a sunny window",
-  "de": ""
+  "de": "In einem sonnigen Fenster"
  },
  "nodes/k_seed_saving/questions/2/q": {
   "en": "Why do seed libraries share old seeds?",
-  "de": ""
+  "de": "Warum teilen Samenbibliotheken alte Samen?"
  },
  "nodes/k_seed_saving/questions/2/why": {
   "en": "When many people grow old kinds, those plants stay alive for the future.",
-  "de": ""
+  "de": "Wenn viele Leute alte Sorten anbauen, bleiben diese Pflanzen für die Zukunft erhalten."
  },
  "nodes/k_seed_saving/questions/2/answers/0": {
   "en": "So old kinds don't disappear",
-  "de": ""
+  "de": "Damit alte Sorten nicht verschwinden"
  },
  "nodes/k_seed_saving/questions/2/answers/1": {
   "en": "So the seeds grow faster",
-  "de": ""
+  "de": "Damit die Samen schneller wachsen"
  },
  "nodes/k_seed_saving/questions/2/answers/2": {
   "en": "So old seeds can be thrown away",
-  "de": ""
+  "de": "Damit man alte Samen wegwerfen kann"
  },
  "nodes/k_saffron/name": {
   "en": "Saffron, the precious spice",
@@ -7409,63 +7409,63 @@
  },
  "nodes/k_saffron/questions/0/q": {
   "en": "Why does saffron cost so much?",
-  "de": ""
+  "de": "Warum kostet Safran so viel?"
  },
  "nodes/k_saffron/questions/0/why": {
   "en": "About 150 flowers, all picked by hand, make just one gram.",
-  "de": ""
+  "de": "Etwa 150 Blüten, alle von Hand gepflückt, ergeben nur ein Gramm."
  },
  "nodes/k_saffron/questions/0/answers/0": {
   "en": "It takes so many flowers",
-  "de": ""
+  "de": "Man braucht so viele Blüten"
  },
  "nodes/k_saffron/questions/0/answers/1": {
   "en": "It is very heavy",
-  "de": ""
+  "de": "Er ist sehr schwer"
  },
  "nodes/k_saffron/questions/0/answers/2": {
   "en": "It grows on big, tall trees",
-  "de": ""
+  "de": "Er wächst auf großen, hohen Bäumen"
  },
  "nodes/k_saffron/questions/1/q": {
   "en": "Which part of the crocus is saffron?",
-  "de": ""
+  "de": "Welcher Teil des Krokus ist Safran?"
  },
  "nodes/k_saffron/questions/1/why": {
   "en": "Saffron is the three red threads, called stigmas, in each flower.",
-  "de": ""
+  "de": "Safran sind die drei roten Fäden, die Narben, in jeder Blüte."
  },
  "nodes/k_saffron/questions/1/answers/0": {
   "en": "The red threads inside",
-  "de": ""
+  "de": "Die roten Fäden darin"
  },
  "nodes/k_saffron/questions/1/answers/1": {
   "en": "The purple petals",
-  "de": ""
+  "de": "Die lila Blütenblätter"
  },
  "nodes/k_saffron/questions/1/answers/2": {
   "en": "The roots under the ground",
-  "de": ""
+  "de": "Die Wurzeln unter der Erde"
  },
  "nodes/k_saffron/questions/2/q": {
   "en": "What does a pinch of saffron do to rice?",
-  "de": ""
+  "de": "Was macht eine Prise Safran mit Reis?"
  },
  "nodes/k_saffron/questions/2/why": {
   "en": "Just a pinch of saffron turns food a golden yellow.",
-  "de": ""
+  "de": "Schon eine Prise Safran färbt Essen goldgelb."
  },
  "nodes/k_saffron/questions/2/answers/0": {
   "en": "Colours it golden",
-  "de": ""
+  "de": "Sie färbt ihn golden"
  },
  "nodes/k_saffron/questions/2/answers/1": {
   "en": "Makes it sour",
-  "de": ""
+  "de": "Sie macht ihn sauer"
  },
  "nodes/k_saffron/questions/2/answers/2": {
   "en": "Keeps it fresh for years",
-  "de": ""
+  "de": "Sie hält ihn jahrelang frisch"
  },
  "nodes/k_master_baking/name": {
   "en": "Master baking",
@@ -7481,63 +7481,63 @@
  },
  "nodes/k_master_baking/questions/0/q": {
   "en": "Why beat the eggs for a cake?",
-  "de": ""
+  "de": "Warum schlägt man die Eier für einen Kuchen?"
  },
  "nodes/k_master_baking/questions/0/why": {
   "en": "Beaten eggs hold air, which makes the cake light.",
-  "de": ""
+  "de": "Geschlagene Eier halten Luft fest, und das macht den Kuchen locker."
  },
  "nodes/k_master_baking/questions/0/answers/0": {
   "en": "To trap tiny air bubbles",
-  "de": ""
+  "de": "Um winzige Luftbläschen einzufangen"
  },
  "nodes/k_master_baking/questions/0/answers/1": {
   "en": "To make them hard",
-  "de": ""
+  "de": "Damit sie hart werden"
  },
  "nodes/k_master_baking/questions/0/answers/2": {
   "en": "To warm them up for the oven",
-  "de": ""
+  "de": "Um sie für den Ofen anzuwärmen"
  },
  "nodes/k_master_baking/questions/1/q": {
   "en": "Your cake burned outside but stayed raw inside. Why?",
-  "de": ""
+  "de": "Dein Kuchen ist außen verbrannt und innen roh geblieben. Warum?"
  },
  "nodes/k_master_baking/questions/1/why": {
   "en": "Steady, gentle heat lets the middle bake before the outside burns.",
-  "de": ""
+  "de": "Gleichmäßige, sanfte Hitze lässt die Mitte backen, bevor das Äußere verbrennt."
  },
  "nodes/k_master_baking/questions/1/answers/0": {
   "en": "The oven was too hot",
-  "de": ""
+  "de": "Der Ofen war zu heiß"
  },
  "nodes/k_master_baking/questions/1/answers/1": {
   "en": "The flour was too fine",
-  "de": ""
+  "de": "Das Mehl war zu fein"
  },
  "nodes/k_master_baking/questions/1/answers/2": {
   "en": "The eggs were beaten too long",
-  "de": ""
+  "de": "Die Eier wurden zu lange geschlagen"
  },
  "nodes/k_master_baking/questions/2/q": {
   "en": "How do you make flour fine enough for light cakes?",
-  "de": ""
+  "de": "Wie wird Mehl fein genug für lockere Kuchen?"
  },
  "nodes/k_master_baking/questions/2/why": {
   "en": "Grinding twice and sifting makes very fine flour for light cakes.",
-  "de": ""
+  "de": "Zweimal mahlen und sieben macht sehr feines Mehl für lockere Kuchen."
  },
  "nodes/k_master_baking/questions/2/answers/0": {
   "en": "Grind it twice and sift it",
-  "de": ""
+  "de": "Zweimal mahlen und sieben"
  },
  "nodes/k_master_baking/questions/2/answers/1": {
   "en": "Soak it in water overnight",
-  "de": ""
+  "de": "Über Nacht in Wasser einweichen"
  },
  "nodes/k_master_baking/questions/2/answers/2": {
   "en": "Mix in plenty of coarse bran",
-  "de": ""
+  "de": "Viel grobe Kleie untermischen"
  },
  "nodes/k_wind_pump/name": {
   "en": "Pumping water with wind",
@@ -7553,63 +7553,63 @@
  },
  "nodes/k_wind_pump/questions/0/q": {
   "en": "What makes a wind pump work?",
-  "de": ""
+  "de": "Was bringt eine Windpumpe zum Arbeiten?"
  },
  "nodes/k_wind_pump/questions/0/why": {
   "en": "The wind spins the sails, and that drives the pump.",
-  "de": ""
+  "de": "Der Wind dreht die Flügel, und das treibt die Pumpe an."
  },
  "nodes/k_wind_pump/questions/0/answers/0": {
   "en": "The wind turning its sails",
-  "de": ""
+  "de": "Der Wind, der ihre Flügel dreht"
  },
  "nodes/k_wind_pump/questions/0/answers/1": {
   "en": "A horse walking in circles",
-  "de": ""
+  "de": "Ein Pferd, das im Kreis läuft"
  },
  "nodes/k_wind_pump/questions/0/answers/2": {
   "en": "Someone pumping by hand",
-  "de": ""
+  "de": "Jemand, der von Hand pumpt"
  },
  "nodes/k_wind_pump/questions/1/q": {
   "en": "How does a wind pump lift water?",
-  "de": ""
+  "de": "Wie hebt eine Windpumpe das Wasser?"
  },
  "nodes/k_wind_pump/questions/1/why": {
   "en": "The sails move a pump rod up and down, lifting water each time.",
-  "de": ""
+  "de": "Die Flügel bewegen eine Pumpstange auf und ab und heben jedes Mal Wasser hoch."
  },
  "nodes/k_wind_pump/questions/1/answers/0": {
   "en": "A rod moves up and down",
-  "de": ""
+  "de": "Eine Stange bewegt sich auf und ab"
  },
  "nodes/k_wind_pump/questions/1/answers/1": {
   "en": "A bucket on a rope",
-  "de": ""
+  "de": "Mit einem Eimer an einem Seil"
  },
  "nodes/k_wind_pump/questions/1/answers/2": {
   "en": "Water flows uphill by itself",
-  "de": ""
+  "de": "Das Wasser fließt von selbst bergauf"
  },
  "nodes/k_wind_pump/questions/2/q": {
   "en": "When does a wind pump fill the tank?",
-  "de": ""
+  "de": "Wann füllt eine Windpumpe den Tank?"
  },
  "nodes/k_wind_pump/questions/2/why": {
   "en": "It runs whenever there is wind, even at night.",
-  "de": ""
+  "de": "Sie läuft, wann immer Wind ist, sogar nachts."
  },
  "nodes/k_wind_pump/questions/2/answers/0": {
   "en": "Whenever the wind blows",
-  "de": ""
+  "de": "Wann immer der Wind weht"
  },
  "nodes/k_wind_pump/questions/2/answers/1": {
   "en": "Only on sunny days",
-  "de": ""
+  "de": "Nur an sonnigen Tagen"
  },
  "nodes/k_wind_pump/questions/2/answers/2": {
   "en": "Only when someone turns it",
-  "de": ""
+  "de": "Nur wenn jemand sie dreht"
  },
  "nodes/k_living_soil/name": {
   "en": "Living soil",
@@ -7625,63 +7625,63 @@
  },
  "nodes/k_living_soil/questions/0/q": {
   "en": "How many tiny living things are in a spoonful of healthy soil?",
-  "de": ""
+  "de": "Wie viele winzige Lebewesen sind in einem Löffel gesunder Erde?"
  },
  "nodes/k_living_soil/questions/0/why": {
   "en": "Healthy soil is packed with billions of tiny living things.",
-  "de": ""
+  "de": "Gesunde Erde steckt voller Milliarden winziger Lebewesen."
  },
  "nodes/k_living_soil/questions/0/answers/0": {
   "en": "Billions",
-  "de": ""
+  "de": "Milliarden"
  },
  "nodes/k_living_soil/questions/0/answers/1": {
   "en": "About ten",
-  "de": ""
+  "de": "Etwa zehn"
  },
  "nodes/k_living_soil/questions/0/answers/2": {
   "en": "None at all",
-  "de": ""
+  "de": "Gar keine"
  },
  "nodes/k_living_soil/questions/1/q": {
   "en": "How do fungi help plant roots?",
-  "de": ""
+  "de": "Wie helfen Pilze den Pflanzenwurzeln?"
  },
  "nodes/k_living_soil/questions/1/why": {
   "en": "Long, thin fungus threads reach far and help roots get water.",
-  "de": ""
+  "de": "Lange, dünne Pilzfäden reichen weit und helfen den Wurzeln, an Wasser zu kommen."
  },
  "nodes/k_living_soil/questions/1/answers/0": {
   "en": "Their threads help roots find water",
-  "de": ""
+  "de": "Ihre Fäden helfen den Wurzeln, Wasser zu finden"
  },
  "nodes/k_living_soil/questions/1/answers/1": {
   "en": "They scare away the slugs and snails",
-  "de": ""
+  "de": "Sie verjagen Schnecken"
  },
  "nodes/k_living_soil/questions/1/answers/2": {
   "en": "They make the soil hard",
-  "de": ""
+  "de": "Sie machen die Erde hart"
  },
  "nodes/k_living_soil/questions/2/q": {
   "en": "How can you keep your soil alive?",
-  "de": ""
+  "de": "Wie hältst du deine Erde lebendig?"
  },
  "nodes/k_living_soil/questions/2/why": {
   "en": "Compost feeds the soil life, and too much digging disturbs it.",
-  "de": ""
+  "de": "Kompost füttert das Leben in der Erde, und zu viel Umgraben stört es."
  },
  "nodes/k_living_soil/questions/2/answers/0": {
   "en": "Add compost and dig only a little",
-  "de": ""
+  "de": "Kompost dazugeben und nur wenig umgraben"
  },
  "nodes/k_living_soil/questions/2/answers/1": {
   "en": "Dig it up deeply every single week",
-  "de": ""
+  "de": "Sie jede Woche tief umgraben"
  },
  "nodes/k_living_soil/questions/2/answers/2": {
   "en": "Keep it bare and dry",
-  "de": ""
+  "de": "Sie nackt und trocken halten"
  },
  "nodes/straw_sandals/name": {
   "en": "Straw Sandals",

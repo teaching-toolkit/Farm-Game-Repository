@@ -1056,7 +1056,8 @@ func _show_celebration() -> void:
 	tw.tween_property(modal_card, "scale", Vector2.ONE, 0.45).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _speak(text: String) -> void:
-	var voices := DisplayServer.tts_get_voices_for_language("en")
+	var voices := DisplayServer.tts_get_voices_for_language(I18n.lang)      # a voice in the game's language
+	if voices.is_empty(): voices = DisplayServer.tts_get_voices_for_language("en")
 	if voices.size() > 0:
 		DisplayServer.tts_stop()
 		DisplayServer.tts_speak(text, voices[0])

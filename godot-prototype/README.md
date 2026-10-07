@@ -246,9 +246,16 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   a picture above it; `pool` = more wrong answers of the same kind to fill questions up. Add a file and list its id in
   `activePacks`. **After adding or changing questions run `python3 tools/quiz_ids.py`**: it gives new questions their id
   (never change or reuse one) and updates `data/i18n/quiz-en.json` and `quiz-de.json` (German texts; empty = still English).
+- **Languages** (`data/i18n/`, see `scripts/i18n.gd`): `languages.json` lists them; per language `ui-<lang>.json` (interface:
+  English text → translation), `data-<lang>.json` and `learn-<lang>.json` (game data and Rest sums: `{"path": {"en", "<lang>"}}`)
+  and `quiz-<lang>.json` (packs). In the scripts every text the player sees is wrapped in `tr("…")` (`TranslationServer.translate`
+  in static functions); tables of texts are marked `# i18n` and shown with `tr()`. **After changing any text run
+  `python3 tools/i18n.py`**: it adds new texts to every language (empty = English for now), flags data texts whose English
+  changed (`"stale": true`) and checks that `%s`/`%d`/`{…}` slots match. `--check` only reports. Plurals: write two full
+  sentences (singular and plural), never add an "s" by code. Screenshots in a language: `--lang=de`.
 - `data/settings.json`:
   - `activePacks` — which packs are on (empty = all); `quizOptions` — answers per question (4; a question with fewer shows all
-    it has); `language` — `en` or `de` for the quiz texts;
+    it has); `language` — the language when the device has not chosen one in ⚙️ Settings (`en` or `de`);
   - `dynamicDifficulty` — prices that fit the farm (see above; tuned in `meta.flex` of farm-progression.json);
   - `knowledgeReviewShare` — share of Time Quiz questions that are reviews of knowledge cards the child already learned
     (0 = off, 0.25 = one in four); the rest come from the parent's packs. This is the starting value: ⚙️ Settings changes it

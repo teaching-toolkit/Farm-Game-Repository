@@ -137,6 +137,8 @@ call (background processes die when the call ends); then check that `web-build/i
 ### 4.5 After changing content
 
 - Quiz questions: run `python3 tools/quiz_ids.py` (gives new questions ids, updates `data/i18n/`). Never change or reuse an id.
+- Any text the player sees (code or data): run `python3 tools/i18n.py`, then translate what it reports as missing (German
+  files in `data/i18n/`; see the prototype README, *Languages*). New interface text in the code goes inside `tr("…")`.
 - Progression data: run `python3 tools/sync_progression.py` (copies it to `progression/` and into the explorer), then check it in
   the explorer. In a cloud session the explorer runs headless: `cd ../progression && python3 -m http.server 8765 &` then
   `NODE_PATH=$(npm root -g) node ../godot-prototype/tools/explorer_check.js http://localhost:8765/progression-explorer.html`
@@ -233,13 +235,13 @@ Tiles with the button at the bottom (`_tile` + `_tile_button` in `main.gd`): sta
 weeds and stones on a patch, goals and optional upgrades (`_node_grid`, two per row), polish, animals (collect, muck out),
 library cards (`_card_tile`). Still lists: the woodpile's "+ Stick" chips, "Weed all / Pick stones", the quest book.
 
-### E. Languages (parent's list; replaces the old "German" task)
+### E. Languages (parent's list) — done 7 Oct 2026, waiting for the parent's proofreading
 
-- **E1. A language setting in ⚙️** that switches the *whole* game: interface, items, places, recipes, cards, card questions,
-  quiz packs. Modular: one file per language (`data/i18n/<lang>.json`), an id for every text, English as the fallback, so a
-  new language is just a new file. The quiz packs already work this way (`quiz-de.json`).
-- **E2. German texts** (Claude drafts in simple, child-friendly German; the parent proofreads) for everything (about 80 interface lines in the scripts, every name and description in
-  `farm-progression.json`, the 67 cards and their 201 questions).
+E1 the system: ⚙️ Settings → 🇬🇧 English / 🇩🇪 Deutsch (per device) switches the whole game; files per language in `data/i18n/`;
+`tools/i18n.py` keeps them complete. E2 German: all 560 interface texts, 2,492 game texts (names, descriptions, 67 card pages,
+201 card questions with answers and explanations, perks, postcards …) and 125 Rest-sum texts, drafted by Claude in simple
+German with "du". **For the parent:** proofread (easiest in the game with the language on Deutsch, or in `data/i18n/*-de.json`);
+❓ Swiss spelling — "ss" instead of "ß" (the quiz packs and the new texts use "ß" for now; one command can switch all)?
 
 ### F. Sound and music (parent's list)
 
