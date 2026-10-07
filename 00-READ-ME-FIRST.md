@@ -93,6 +93,8 @@ and keep the game's own texts simple enough for a young reader.
   `bash godot-prototype/tools/setup_godot.sh` (Godot only; add `--screens` for Xvfb, `--art` for Pillow/numpy/scipy, `--web` for
   the web export templates, ~1 GB download), then import once: `cd godot-prototype && $G --headless --path . --import`.
   Tested 7 Oct 2026: smoke test, bot, screenshot and web export all work this way. `web-build/` is not in the private repo.
+  Godot downloads from github.com (redirected to `release-assets.githubusercontent.com`); a restricted network policy must
+  allow those two hosts. Cloud gotchas (screenshots, saves left by the bot, harmless warnings): see `CLAUDE.md`.
 
 ### 4.2 Run the checks (from the project folder; `G` = the Godot binary)
 
@@ -102,13 +104,24 @@ timeout 170 $G --headless --path . res://tests/bot.tscn -- --chapter=5 --iters=1
 timeout 170 $G --headless --path . -s res://tests/learn_sim.gd               # pretend child practises Rest sums
 ```
 
-Expected now: smoke test passes; the bot reaches chapter 3 after about 290–415 questions and chapter 5 with all five pets
-after about 684–744.
+Expected now: smoke test passes; the bot reaches chapter 3 after about 290–415 questions and chapter 5 (with the first four
+pets; the alpaca is chapter 5's own goal, which the bot stops before) after about 680–765. The bot plays randomly, so the
+number changes from run to run (7 Oct 2026, cloud: 678, 715, 763; earlier 729). A bot run takes about 75 seconds.
+The smoke test prints its findings and ends with a few "leaked" warnings; those are harmless.
 
 ### 4.3 Screenshots
 
 Need a virtual screen (Xvfb): `DISPLAY=:99 $G --path . --resolution 834x1194 --rendering-driver opengl3 -- --shot=out.png [--spot=kitchen] [--timestep=20] [--qid=PIC-004] [--lang=de]`.
 `--timestep=20` skips the welcome pop-up. All flags: prototype README, *Testing shortcuts*.
+
+In a cloud session, `xvfb-run` starts and stops the virtual screen for you:
+
+```bash
+xvfb-run -a -s "-screen 0 1280x1400x24" $G --path . --resolution 834x1194 --rendering-driver opengl3 --audio-driver Dummy -- --newgame --timestep=20 --shot=out.png
+```
+
+Put `--newgame` **first** when you want the start of the game: the bot and the smoke test leave their farm in the default
+save, and without it the screenshot shows that farm (or use `--player=Shots` to keep screenshots on their own player).
 
 ### 4.4 Web export
 
@@ -162,6 +175,9 @@ double-click scripts on the Mac (open task 2).
 
 7 Oct 2026 (after 2.0): added `Build web version.command`, `Publish web version.command`, `CLAUDE.md`, the root `.gitignore`
 and `godot-prototype/tools/setup_godot.sh` for cloud sessions. No game changes; `web-build/` still matches the code.
+
+7 Oct 2026 (cloud check): a fresh cloud session was set up and verified (smoke test, bot, screenshot); the cloud notes in
+this file and `CLAUDE.md` were corrected (see the log). No game changes; `web-build/` still matches the code.
 
 ---
 
