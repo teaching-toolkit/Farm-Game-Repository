@@ -1015,6 +1015,7 @@ func _show_celebration() -> void:
 	var tl := UI.label("%s %s" % [n.get("emoji", ""), n["name"]], 30, UI.INK, true)
 	tl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(tl)
+	if perk: box.add_child(UI.label("🏅 " + _perk_reason(n), 20, UI.GREEN_DARK, true))     # why it came, before what it does
 	if str(n.get("desc", "")) != "": box.add_child(UI.label(str(n["desc"]), 18, UI.MUTED, true))
 	if n.has("effects"):
 		var et := _effect_text(n["effects"])
@@ -2681,7 +2682,7 @@ func _sheet_album() -> void:
 		var pid: String = p["id"]
 		if G.perk_owned(pid):
 			var on: bool = G.perk_on(pid)
-			var pv := _tile(null, str(p.get("emoji", "✨")), "%s\n%s" % [p["name"], p.get("desc", "")], Color("eef6e4") if on else Color("f1ede4"))
+			var pv := _tile(null, str(p.get("emoji", "✨")), "%s\n%s\n🏅 %s" % [p["name"], p.get("desc", ""), _perk_reason(p)], Color("eef6e4") if on else Color("f1ede4"))
 			if on: pv.add_child(UI.button("✅ On", G.toggle_perk.bind(pid), true, UI.GREEN, 16))
 			else: pv.add_child(UI.soft_button("💤 Off — switch on", G.toggle_perk.bind(pid), true, 15))
 			pg.add_child(pv.get_meta("panel"))
@@ -2715,6 +2716,27 @@ func _medal_tile(md: String, lv: Dictionary, next: bool) -> Control:
 	nm.custom_minimum_size = Vector2(112, 0)
 	v.add_child(nm)
 	return v
+
+## Why a perk was given (the pop-up and the album), e.g. "You harvested 40 times!" or the favour that earned it.
+func _perk_reason(p: Dictionary) -> String:
+	var w := str(p.get("when", ""))
+	if w == "":
+		for id in G.nodes:
+			var q: Dictionary = G.nodes[id]
+			if str(q.get("perk", "")) == str(p["id"]): return "A thank-you for helping: %s %s." % [q.get("emoji", ""), q["name"]]
+		return "A thank-you from a neighbour you helped."
+	var parts := w.split(">=")
+	var n := parts[1] if parts.size() > 1 else ""
+	match parts[0]:
+		"rest_quick": return "You answered %s Rest sums quickly!" % n
+		"medals": return "You won %s medals with the Rest sums!" % n
+		"arith_level": return "You reached level %s of the Rest sums!" % n
+		"sold_kinds": return "You sold %s different things!" % n
+		"harvests": return "You harvested %s times!" % n
+		"seasons": return "You lived through %s seasons!" % n
+		"cards": return "You learned %s knowledge cards!" % n
+		"sidequests": return "You helped %s neighbours!" % n
+	return "You earned it by playing!"
 
 ## How a perk not yet owned is earned (shown in the album).
 func _perk_hint(p: Dictionary) -> String:
