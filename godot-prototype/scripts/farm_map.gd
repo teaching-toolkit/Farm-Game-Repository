@@ -18,9 +18,6 @@ const Fx = preload("res://scripts/fx.gd")
 const LAYOUT_PATH := "res://data/map_layout.json"
 const GRASS := {"spring": Color("9cc86a"), "summer": Color("b3c95c"), "autumn": Color("c4b46a"), "winter": Color("dfe8e6")}
 const GRASS_TINT := {"spring": Color(1, 1, 1), "summer": Color(1.05, 1.03, 0.85), "autumn": Color(1.1, 0.95, 0.7), "winter": Color(0.95, 1.0, 1.08)}
-const FOREST := {"spring": Color("5f8f43"), "summer": Color("648d3e"), "autumn": Color("8a7a3c"), "winter": Color("b9c9c4")}
-## the forest floor is the same grass, shaded darker (same as the layout editor)
-const FOREST_SHADE := {"spring": Color(0.11, 0.25, 0.086, 0.42), "summer": Color(0.12, 0.25, 0.07, 0.42), "autumn": Color(0.25, 0.19, 0.06, 0.42), "winter": Color(0.16, 0.26, 0.3, 0.3)}
 const FENCES := [["", Color(0, 0, 0, 0), 0.0], ["stick_fence", Color("8a6239"), 3.0], ["wattle_fence", Color("9a7444"), 5.0],
 	["picket_fence", Color("f4efe3"), 5.0], ["stone_wall", Color("9a9a92"), 8.0], ["hedge_row", Color("3f7a34"), 10.0]]
 const EXTEND := 1500.0   # ground shapes that touch the edge continue beyond it (wide or tall screens)
@@ -477,7 +474,6 @@ func _draw_grass_bits() -> void:
 ## Ground shapes in farm coordinates: forest, road, the house yard, shadows and fences of the fields.
 func _draw_board() -> void:
 	var gr: Dictionary = L.get("ground", {})
-	var grass_tex := Art.tex("tiles", "grass")
 	var tint: Color = GRASS_TINT.get(season, Color.WHITE)
 	# soft patches of the other grass pictures, so the meadow is not the same everywhere (fixed places on the farm)
 	var r := RandomNumberGenerator.new()
@@ -487,11 +483,7 @@ func _draw_board() -> void:
 		if gt == null: continue
 		for _k in range(7):
 			_grass_blob(Vector2(r.randf() * design.x, r.randf() * design.y), r.randf_range(80, 170), gt, tint)
-	# the forest floor: the same grass, shaded darker
-	var poly := forest_poly()
-	if poly.size() >= 3:
-		if grass_tex: _textured(poly, grass_tex, tint)
-		board.draw_colored_polygon(poly, FOREST_SHADE.get(season, FOREST_SHADE["spring"]) if grass_tex else FOREST.get(season, FOREST["spring"]))
+	# the forest has no floor of its own: its trees stand on the meadow (forest_poly is still where taps open the forest)
 	_draw_grass_bits()
 	# the village road: a band along a line, as good as it has been made
 	_draw_road()
