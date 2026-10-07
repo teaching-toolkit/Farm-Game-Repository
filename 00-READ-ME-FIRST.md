@@ -197,8 +197,7 @@ Questions still open with the parent are marked ❓.
   `python3 tools/art_list.py` afterwards and they turn `done`.
 - **W2. GitHub repos and the double-click scripts.** The private repo exists. Still to do: the public web repo (§4.7), GitHub
   Pages, the first run of `Build web version.command` and `Publish web version.command` on the Mac, the iPad Home Screen link.
-  **Cloud sessions cannot push yet** (7 Oct 2026: 403, the Claude GitHub App has read but no write access to the private
-  repo); the branch `claude/farm-game-setup-verify-bdm09s` with the cloud-check doc fixes waits to be pushed and opened as a PR.
+  Cloud sessions can push to the private repo (a 403 on 7 Oct 2026 went away once the Claude GitHub App had write access).
 - **W3. Play-test round 8 on the iPad** and collect the parent's findings (pace, picture questions, stoking, loads, the bar
   explanations).
 
