@@ -54,7 +54,9 @@ if [ "$ART" = 1 ]; then
   echo "Python art packages installed."
 fi
 
-if [ "$SCREENS" = 1 ] && ! command -v Xvfb >/dev/null; then
+if [ "$SCREENS" = 1 ] && command -v Xvfb >/dev/null; then
+  echo "Xvfb already installed."
+elif [ "$SCREENS" = 1 ]; then
   if command -v apt-get >/dev/null; then
     SUDO=""; [ "$(id -u)" != 0 ] && SUDO="sudo"
     $SUDO apt-get update -qq && $SUDO apt-get install -y -qq xvfb >/dev/null

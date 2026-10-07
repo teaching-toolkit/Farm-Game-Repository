@@ -262,7 +262,8 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 
 ## Automated checks
 - `godot --headless --path . res://tests/bot.tscn -- --iters=900 --chapter=3` — a greedy bot plays the rules engine and prints progress
-  (chapter 3 in about 290–420 Time Quiz answers, chapter 4 in about 770; `--flex` plays with dynamic difficulty on; it prints
+  (chapter 3 in about 290–420 Time Quiz answers; `--chapter=5 --iters=1100` reaches chapter 5 in about 680–765; it plays randomly, so
+  the number changes from run to run; `--flex` plays with dynamic difficulty on; it prints
   its pace, which `meta.flex.basePace` is taken from).
 - `godot --headless --path . res://tests/ui_smoke.tscn` — clicks through the opening (first card, planting, Time Quiz, Rest,
   every place on the map, quest book, album, log) and checks the sums, the market, postcards, perks, the farmer, quiz ids,
