@@ -33,8 +33,6 @@ const BORDER_LOOK := {"stick": [Color("8a6239"), 3.0], "log": [Color("7a5230"), 
 	"channel": [Color("5aa7d8"), 4.0], "drip": [Color("2b2b2b"), 2.0], "stick_broken": [Color("7a5a3a"), 2.0],
 	"stone_broken": [Color("8f8f86"), 4.0]}
 ## What is in the way on patches that are not cleared yet, in the order the land nodes open them.
-const CLEARING := [["clear_weeds", "weeds"], ["clear_rocks", "rocks"], ["clear_stumps", "stumps"]]
-const FIELD_WILD := ["", "scrub", "marsh"]     # fields 2 and 3 before they are opened
 
 var G
 var area_name := "field"
@@ -132,20 +130,9 @@ func show_area(a: String, f: int) -> void:
 func _on_patch(k: int) -> void:
 	patch_pressed.emit(area_name, field_index * 9 + k)
 
-## What is in the way on locked patch i: the clearing jobs still to do, two patches each, in order.
-## What is in the way on locked patch i, and how much of the clearing is done (0..1): the clearing jobs still to do,
-## two patches each, in order. A job is done in steps; every step makes the patch look more cleared.
+## What is in the way on locked patch i, and how much of the clearing is done (0..1) — see G.patch_wild.
 func _wild_info(i: int) -> Array:
-	if field_index > 0: return [FIELD_WILD[mini(field_index, FIELD_WILD.size() - 1)], 0.0]
-	var left := []
-	for c in CLEARING:
-		if G.nodes.has(c[0]) and not G.satisfied(c[0]) and not G.S.get("open_early", {}).has(c[0]): left.append(c)
-	var n: int = i - int(G.plots())
-	if n >= 0 and n / 2 < left.size():
-		var id: String = left[n / 2][0]
-		var steps: int = G.steps_of(id).size()
-		return [left[n / 2][1], float(G.step_index(id)) / float(maxi(1, steps))]
-	return ["weeds", 0.0]
+	return G.patch_wild(field_index, i)
 
 func refresh() -> void:
 	var arr: Array = G.area(area_name)

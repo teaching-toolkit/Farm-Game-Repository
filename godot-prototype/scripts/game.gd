@@ -886,6 +886,23 @@ func patch_usable(a: String, i: int) -> bool:
 	if a == "field": return i < plots()
 	return i < area(a).size()
 
+const CLEARING := [["clear_weeds", "weeds"], ["clear_rocks", "rocks"], ["clear_stumps", "stumps"]]
+const FIELD_WILD := ["", "scrub", "marsh"]     # fields 2 and 3 before they are opened
+
+## What is in the way on locked patch i of field f, and how much of its clearing is done (0..1): the clearing jobs still
+## to do, two patches each, in order. Returns [kind, done, job id] (kind: weeds, rocks, stumps, scrub, marsh).
+func patch_wild(f: int, i: int) -> Array:
+	if f > 0: return [FIELD_WILD[mini(f, FIELD_WILD.size() - 1)], 0.0, ""]
+	var left := []
+	for c in CLEARING:
+		if nodes.has(c[0]) and not satisfied(c[0]) and not S.get("open_early", {}).has(c[0]): left.append(c)
+	var n: int = i - int(plots())
+	if n >= 0 and n / 2 < left.size():
+		var id: String = left[n / 2][0]
+		var steps: int = steps_of(id).size()
+		return [left[n / 2][1], float(step_index(id)) / float(maxi(1, steps)), id]
+	return ["weeds", 0.0, ""]
+
 func field_names() -> Array:
 	var names := ["Home Field", "North Field", "River Meadow"]
 	var out := []

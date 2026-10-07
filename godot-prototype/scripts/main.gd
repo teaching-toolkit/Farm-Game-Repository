@@ -41,6 +41,7 @@ var modal: Control
 var modal_card: PanelContainer
 var modal_box: VBoxContainer
 var field_idx := 0        # the field whose patch was tapped last (the field sheet works on it)
+var _patch_note := -1     # an overgrown patch that was tapped: the field sheet says which one and why it is not ready
 var _interior_back := ""  # reopen this building's inside when the corner's sheet closes
 var goal_id := ""
 var _queued := false
@@ -834,6 +835,7 @@ func _open_album() -> void: _open_sheet("album")
 
 func _open_sheet(kind: String) -> void:
 	_interior_back = ""
+	_patch_note = -1
 	var was := sheet.visible
 	sheet_kind = kind
 	sheet_scroll.scroll_vertical = 0
@@ -1379,6 +1381,10 @@ func _on_patch(a: String, i: int) -> void:
 				return
 			field_idx = mini(i / 9, maxi(0, G.field_names().size() - 1))
 			_open_spot("field")
+			if sheet.visible and sheet_kind != "":     # say which patch and why (kept while this sheet stays open)
+				_patch_note = i
+				_rebuild_sheet()
+				_fit_sheet()
 		return
 	_open_sheet("patch:%s:%d" % [a, i])
 	if a == "field":
@@ -1962,6 +1968,7 @@ func _spot_header(sid: String) -> Control:
 	return UI.header(tex, _spot_emoji(sid), 100)
 
 func _sheet_spot(sid: String) -> void:
+	if sid == "field" and _patch_note >= 0: _part_patch_note(_patch_note)
 	var head := _headline(sid)
 	if head != "" and str(G.nodes[head].get("desc", "")) != "" and not (sid in ["market", "board"]):
 		content.add_child(UI.label(str(G.nodes[head]["desc"]), 16, UI.MUTED, true))
@@ -2234,6 +2241,24 @@ func _part_home() -> void:
 		worn.append("%s %s" % [s[1], G.nodes[cur]["name"] if cur != "" else "—"])
 	_section("👕 What you wear and sleep on")
 	content.add_child(UI.label("   ".join(worn), 15, UI.INK, true))
+
+const WILD_WORDS := {"weeds": "overgrown with weeds", "rocks": "full of rocks", "stumps": "full of old tree stumps",
+	"scrub": "overgrown with scrub", "marsh": "a wet marsh"}
+
+## Which overgrown patch was tapped, why it can't be used yet and what clears it.
+func _part_patch_note(i: int) -> void:
+	if G.patch_usable("field", i): return
+	var w: Array = G.patch_wild(i / 9, i)
+	var pc := UI.card(Color("fbf1e0"))
+	var v := UI.vbox(2)
+	pc.add_child(v)
+	v.add_child(UI.label("🟫 Patch %d is not ready yet: it is still %s." % [i % 9 + 1, WILD_WORDS.get(w[0], "overgrown")], 18, UI.INK, true))
+	var job: String = w[2]
+	if job != "":
+		var miss: Array = G.missing_reqs(job)
+		if miss.is_empty(): v.add_child(UI.label("%s %s below clears it." % [G.nodes[job]["emoji"], G.nodes[job]["name"]], 16, UI.MUTED, true))
+		else: v.add_child(UI.label("To clear it you need first: %s." % ", ".join(miss), 16, UI.MUTED, true))
+	content.add_child(pc)
 
 func _part_field() -> void:
 	var pc := UI.card(Color("f3f7ea"))
