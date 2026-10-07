@@ -5,7 +5,7 @@
  },
  "nodes/tent/desc": {
   "en": "Where it starts. Energy max 20; each Rest answer gives 5 energy.",
-  "de": ""
+  "de": "Hier fängt alles an. Maximale Energie 20; jede Antwort beim Ausruhen gibt 5 Energie."
  },
  "nodes/well_1/name": {
   "en": "Old Bucket",
@@ -13,7 +13,7 @@
  },
  "nodes/well_1/desc": {
   "en": "All that is left: a small dented bucket. Carry water from the wild pond: 2 💧 a trip for 1 ⚡. Holds 8.",
-  "de": ""
+  "de": "Mehr ist nicht übrig: ein kleiner, verbeulter Eimer. Trag Wasser vom wilden Teich: 2 💧 pro Gang für 1 ⚡. Fasst 8."
  },
  "nodes/ruins_workshop/name": {
   "en": "Clear the old workshop",
@@ -21,7 +21,7 @@
  },
  "nodes/ruins_workshop/desc": {
   "en": "What is left of the old workshop is in the way: clear it away before anything new can stand here. It gives stones back.",
-  "de": ""
+  "de": "Was von der alten Werkstatt übrig ist, steht im Weg: Räum es weg, bevor hier etwas Neues stehen kann. Es gibt Steine zurück."
  },
  "nodes/ruins_workshop/steps/0/name": {
   "en": "Lift the fallen stones",
@@ -45,7 +45,7 @@
  },
  "nodes/ruins_lumber/desc": {
   "en": "What is left of the burnt woodshed is in the way: clear it away before anything new can stand here. It gives sticks, charcoal and ash back.",
-  "de": ""
+  "de": "Was vom abgebrannten Holzschuppen übrig ist, steht im Weg: Räum es weg, bevor hier etwas Neues stehen kann. Es gibt Stöcke, Holzkohle und Asche zurück."
  },
  "nodes/ruins_lumber/steps/0/name": {
   "en": "Pull out the charred beams",
@@ -69,7 +69,7 @@
  },
  "nodes/ruins_barn/desc": {
   "en": "What is left of the burnt barn is in the way: clear it away before anything new can stand here. It gives sticks, charcoal and ash back.",
-  "de": ""
+  "de": "Was von der abgebrannten Scheune übrig ist, steht im Weg: Räum es weg, bevor hier etwas Neues stehen kann. Es gibt Stöcke, Holzkohle und Asche zurück."
  },
  "nodes/ruins_barn/steps/0/name": {
   "en": "Pull out the charred beams",
@@ -93,7 +93,7 @@
  },
  "nodes/ruins_compost/desc": {
   "en": "What is left of the old compost corner is in the way: clear it away before anything new can stand here. It gives sticks, charcoal and ash back.",
-  "de": ""
+  "de": "Was von der alten Kompostecke übrig ist, steht im Weg: Räum es weg, bevor hier etwas Neues stehen kann. Es gibt Stöcke, Holzkohle und Asche zurück."
  },
  "nodes/ruins_compost/steps/0/name": {
   "en": "Pull out the charred beams",
@@ -117,7 +117,7 @@
  },
  "nodes/ruins_windmill/desc": {
   "en": "What is left of the old mill is in the way: clear it away before anything new can stand here. It gives stones back.",
-  "de": ""
+  "de": "Was von der alten Mühle übrig ist, steht im Weg: Räum es weg, bevor hier etwas Neues stehen kann. Es gibt Steine zurück."
  },
  "nodes/ruins_windmill/steps/0/name": {
   "en": "Lift the fallen stones",
@@ -141,7 +141,7 @@
  },
  "nodes/ruins_greenhouse/desc": {
   "en": "What is left of the old glasshouse is in the way: clear it away before anything new can stand here. It gives stones back.",
-  "de": ""
+  "de": "Was vom alten Glashaus übrig ist, steht im Weg: Räum es weg, bevor hier etwas Neues stehen kann. Es gibt Steine zurück."
  },
  "nodes/ruins_greenhouse/steps/0/name": {
   "en": "Lift the fallen stones",
@@ -165,7 +165,7 @@
  },
  "nodes/road_1/desc": {
   "en": "The old road is mud and potholes. Only the seed seller with her basket gets through.",
-  "de": ""
+  "de": "Die alte Straße ist voller Matsch und Schlaglöcher. Nur die Samenverkäuferin mit ihrem Korb kommt durch."
  },
  "nodes/road_1b/name": {
   "en": "Lay brushwood over the mud",
@@ -173,7 +173,7 @@
  },
  "nodes/road_1b/desc": {
   "en": "Bundles of brushwood over the worst mud: the seed seller's handcart gets through a little more often.",
-  "de": ""
+  "de": "Reisigbündel über dem schlimmsten Matsch: Der Handwagen der Samenverkäuferin kommt ein bisschen öfter durch."
  },
  "nodes/road_2/name": {
   "en": "Fill the potholes",
@@ -181,7 +181,7 @@
  },
  "nodes/road_2/desc": {
   "en": "Stones and sticks in the worst holes: carts can come now — the timber & stone seller, the seed cart and the book cart.",
-  "de": ""
+  "de": "Steine und Stöcke in den schlimmsten Löchern: Jetzt können Wagen kommen — der Holz- & Steinhändler, der Samenwagen und der Bücherwagen."
  },
  "nodes/road_2b/name": {
   "en": "Dig a ditch for the puddles",
@@ -189,7 +189,7 @@
  },
  "nodes/road_2b/desc": {
   "en": "A ditch along the road drains the puddles: the bean grower's cart can come now.",
-  "de": ""
+  "de": "Ein Graben neben der Straße lässt die Pfützen ablaufen: Jetzt kann der Wagen des Bohnenbauern kommen."
  },
  "nodes/road_3/name": {
   "en": "Gravel road",
@@ -197,7 +197,7 @@
  },
  "nodes/road_3/desc": {
   "en": "A firm gravel road: heavy carts with clay and iron ore can reach your farm, and the seed shop delivers.",
-  "de": ""
+  "de": "Eine feste Kiesstraße: Schwere Wagen mit Lehm und Eisenerz erreichen deinen Hof, und der Samenladen liefert."
  },
  "nodes/road_3/steps/0/name": {
   "en": "Spread the gravel bed",
@@ -213,7 +213,7 @@
  },
  "nodes/road_3b/desc": {
   "en": "Kerbstones keep the gravel in place: the sunflower seller from the hills dares the trip.",
-  "de": ""
+  "de": "Randsteine halten den Kies an seinem Platz: Die Sonnenblumenverkäuferin aus den Hügeln wagt die Fahrt."
  },
  "nodes/road_4/name": {
   "en": "Cobbled road",
@@ -221,7 +221,7 @@
  },
  "nodes/road_4/desc": {
   "en": "Cobbles and a ditch: the hardwood & sand carts and the nursery come even after rain.",
-  "de": ""
+  "de": "Pflastersteine und ein Graben: Die Wagen mit Hartholz & Sand und die Gärtnerei kommen sogar nach Regen."
  },
  "nodes/road_4b/name": {
   "en": "Plant trees along the road",
@@ -229,7 +229,7 @@
  },
  "nodes/road_4b/desc": {
   "en": "A row of young trees gives shade and shelter: the herb woman walks over from the next valley.",
-  "de": ""
+  "de": "Eine Reihe junger Bäume gibt Schatten und Schutz: Die Kräuterfrau kommt zu Fuß aus dem Nachbartal herüber."
  },
  "nodes/road_5/name": {
   "en": "Paved road & bridge",
@@ -237,7 +237,7 @@
  },
  "nodes/road_5/desc": {
   "en": "A paved road with a stone bridge: guild wagons and travellers from far away find your farm.",
-  "de": ""
+  "de": "Eine gepflasterte Straße mit einer Steinbrücke: Zunftwagen und Reisende von weit her finden deinen Hof."
  },
  "nodes/road_5/steps/0/name": {
   "en": "Lay the road bed",
@@ -257,7 +257,7 @@
  },
  "nodes/basket/desc": {
   "en": "Holds up to 10 of each item.",
-  "de": ""
+  "de": "Fasst bis zu 10 von jeder Sache."
  },
  "nodes/hands/name": {
   "en": "Hands",
@@ -265,7 +265,7 @@
  },
  "nodes/hands/desc": {
   "en": "Plant, harvest and pull weeds by hand.",
-  "de": ""
+  "de": "Pflanzen, ernten und Unkraut ausreißen mit den Händen."
  },
  "nodes/rock/name": {
   "en": "Rock",
@@ -273,7 +273,7 @@
  },
  "nodes/rock/desc": {
   "en": "Good enough to knock simple things together.",
-  "de": ""
+  "de": "Gut genug, um einfache Dinge zusammenzuklopfen."
  },
  "nodes/bucket/name": {
   "en": "Watering Scoop",
@@ -281,7 +281,7 @@
  },
  "nodes/bucket/desc": {
   "en": "Waters the plants. Plants use their full water cost.",
-  "de": ""
+  "de": "Gießt die Pflanzen. Pflanzen brauchen ihr ganzes Wasser."
  },
  "nodes/seed_1/name": {
   "en": "Seed Merchant",
@@ -289,7 +289,7 @@
  },
  "nodes/seed_1/desc": {
   "en": "Always there, always takes coins. Wheat and carrot seeds.",
-  "de": ""
+  "de": "Immer da, nimmt immer Münzen. Weizen- und Karottensamen."
  },
  "nodes/land_start/name": {
   "en": "One cleared patch",
@@ -297,7 +297,7 @@
  },
  "nodes/land_start/desc": {
   "en": "The rest of the field is overgrown.",
-  "de": ""
+  "de": "Der Rest des Feldes ist zugewachsen."
  },
  "nodes/crop_wheat/name": {
   "en": "Wheat",
@@ -305,7 +305,7 @@
  },
  "nodes/crop_wheat/desc": {
   "en": "The backbone crop: food, feed, flour and straw.",
-  "de": ""
+  "de": "Die wichtigste Pflanze: Essen, Futter, Mehl und Stroh."
  },
  "nodes/crop_carrot/name": {
   "en": "Carrot",
@@ -317,7 +317,7 @@
  },
  "nodes/campfire/desc": {
   "en": "First build. With the Tin Pot: porridge and soup.",
-  "de": ""
+  "de": "Das Erste, was du baust. Mit dem Blechtopf: Haferbrei und Suppe."
  },
  "nodes/d_porridge/name": {
   "en": "Feed the travelling merchant",
@@ -325,7 +325,7 @@
  },
  "nodes/d_porridge/desc": {
   "en": "She shares news — and opens her cart properly.",
-  "de": ""
+  "de": "Sie erzählt Neuigkeiten — und öffnet ihren Wagen richtig."
  },
  "nodes/seed_2/name": {
   "en": "Seed Merchant · cart",
@@ -333,7 +333,7 @@
  },
  "nodes/seed_2/desc": {
   "en": "Adds clover and onion seeds.",
-  "de": ""
+  "de": "Dazu kommen Klee- und Zwiebelsamen."
  },
  "nodes/raw_1/name": {
   "en": "Raw Materials · timber & stone",
@@ -341,7 +341,7 @@
  },
  "nodes/raw_1/desc": {
   "en": "Safety valve for basic building materials.",
-  "de": ""
+  "de": "Für den Notfall: einfache Baumaterialien."
  },
  "nodes/crop_clover/name": {
   "en": "Clover",
@@ -349,7 +349,7 @@
  },
  "nodes/crop_clover/desc": {
   "en": "Cheap, quick fodder. Its flowers feed bees.",
-  "de": ""
+  "de": "Billiges, schnelles Futter. Seine Blüten füttern die Bienen."
  },
  "nodes/crop_onion/name": {
   "en": "Onion",
@@ -361,7 +361,7 @@
  },
  "nodes/present_onion/desc": {
   "en": "Give the seed seller two bowls of porridge — next time she brings onion sets.",
-  "de": ""
+  "de": "Schenk der Samenverkäuferin zwei Schüsseln Haferbrei — nächstes Mal bringt sie Steckzwiebeln mit."
  },
  "nodes/clear_thistles/name": {
   "en": "Clear the thistles (2 patches)",
@@ -369,7 +369,7 @@
  },
  "nodes/clear_thistles/desc": {
   "en": "Takes 4 steps, one tap each; every step gives something back. After the first 2 steps the 2 patches can be planted; the other steps make them better (bigger harvests, fewer weeds).",
-  "de": ""
+  "de": "Dauert 4 Schritte, je ein Tippen; jeder Schritt bringt etwas zurück. Nach den ersten 2 Schritten kannst du die 2 Beete bepflanzen; die anderen Schritte machen sie besser (größere Ernte, weniger Unkraut)."
  },
  "nodes/clear_thistles/steps/0/name": {
   "en": "Cut the thistles",
@@ -393,7 +393,7 @@
  },
  "nodes/clear_weeds/desc": {
   "en": "Takes 5 steps, one tap each; every step gives something back. After the first 2 steps the 2 patches can be planted; the other steps make them better (bigger harvests, fewer weeds).",
-  "de": ""
+  "de": "Dauert 5 Schritte, je ein Tippen; jeder Schritt bringt etwas zurück. Nach den ersten 2 Schritten kannst du die 2 Beete bepflanzen; die anderen Schritte machen sie besser (größere Ernte, weniger Unkraut)."
  },
  "nodes/clear_weeds/steps/0/name": {
   "en": "Cut the tall weeds",
@@ -421,7 +421,7 @@
  },
  "nodes/workbench/desc": {
   "en": "Rope, stone tools, hutch, scarecrow.",
-  "de": ""
+  "de": "Seil, Steinwerkzeuge, Stall, Vogelscheuche."
  },
  "nodes/stone_knife/name": {
   "en": "Stone Knife",
@@ -429,7 +429,7 @@
  },
  "nodes/stone_knife/desc": {
   "en": "Rough chopping. Needed for any recipe that cuts things.",
-  "de": ""
+  "de": "Grobes Schneiden. Nötig für jedes Rezept, bei dem etwas geschnitten wird."
  },
  "nodes/stone_axe/name": {
   "en": "Hand Axe",
@@ -437,7 +437,7 @@
  },
  "nodes/stone_axe/desc": {
   "en": "Clears stumps, splits logs into planks, cuts sticks faster.",
-  "de": ""
+  "de": "Räumt Baumstümpfe, spaltet Holzscheite zu Brettern, schneidet Stöcke schneller."
  },
  "nodes/wooden_shovel/name": {
   "en": "Wooden Shovel",
@@ -445,7 +445,7 @@
  },
  "nodes/wooden_shovel/desc": {
   "en": "Pries out rocks and digs beds: field work −10% energy.",
-  "de": ""
+  "de": "Hebelt Felsen heraus und gräbt Beete um: Feldarbeit −10% Energie."
  },
  "nodes/clear_rocks/name": {
   "en": "Clear the rocks (2 patches)",
@@ -453,7 +453,7 @@
  },
  "nodes/clear_rocks/desc": {
   "en": "Takes 5 steps, one tap each; every step gives something back. After the first 2 steps the 2 patches can be planted; the other steps make them better (bigger harvests, fewer weeds).",
-  "de": ""
+  "de": "Dauert 5 Schritte, je ein Tippen; jeder Schritt bringt etwas zurück. Nach den ersten 2 Schritten kannst du die 2 Beete bepflanzen; die anderen Schritte machen sie besser (größere Ernte, weniger Unkraut)."
  },
  "nodes/clear_rocks/steps/0/name": {
   "en": "Dig out the big rocks",
@@ -481,7 +481,7 @@
  },
  "nodes/clear_stumps/desc": {
   "en": "Takes 5 steps, one tap each; every step gives something back. After the first 2 steps the 2 patches can be planted; the other steps make them better (bigger harvests, fewer weeds).",
-  "de": ""
+  "de": "Dauert 5 Schritte, je ein Tippen; jeder Schritt bringt etwas zurück. Nach den ersten 2 Schritten kannst du die 2 Beete bepflanzen; die anderen Schritte machen sie besser (größere Ernte, weniger Unkraut)."
  },
  "nodes/clear_stumps/steps/0/name": {
   "en": "Chop the stumps",
@@ -509,7 +509,7 @@
  },
  "nodes/chopping_block/desc": {
   "en": "A stump to cut on. Salads and bowls (needs a knife).",
-  "de": ""
+  "de": "Ein Baumstumpf zum Schneiden. Salate und Schüsseln (braucht ein Messer)."
  },
  "nodes/quern/name": {
   "en": "Hand Quern",
@@ -517,7 +517,7 @@
  },
  "nodes/quern/desc": {
   "en": "Two flat stones from the rocky patch grind wheat into flour. Hard work (2 ⚡).",
-  "de": ""
+  "de": "Zwei flache Steine vom steinigen Beet mahlen Weizen zu Mehl. Harte Arbeit (2 ⚡)."
  },
  "nodes/well_2/name": {
   "en": "Dig a well",
@@ -525,7 +525,7 @@
  },
  "nodes/well_2/desc": {
   "en": "A stone well right by the house: 4 💧 a trip, holds 24.",
-  "de": ""
+  "de": "Ein Steinbrunnen direkt beim Haus: 4 💧 pro Gang, fasst 24."
  },
  "nodes/well_3/name": {
   "en": "Well · winch",
@@ -533,7 +533,7 @@
  },
  "nodes/well_3/desc": {
   "en": "A winch and a bigger bucket: 6 💧 a trip, holds 36.",
-  "de": ""
+  "de": "Eine Seilwinde und ein größerer Eimer: 6 💧 pro Gang, fasst 36."
  },
  "nodes/coop_1/name": {
   "en": "Chicken Coop",
@@ -557,7 +557,7 @@
  },
  "nodes/animal_chicken/desc": {
   "en": "Eat any grain (wheat, oats, sunflower seeds, linseed, mash), need water and nest straw, lay an egg every question — and drop a feather now and then.",
-  "de": ""
+  "de": "Fressen jedes Korn (Weizen, Hafer, Sonnenblumenkerne, Leinsamen, Futterbrei), brauchen Wasser und Nest-Stroh, legen bei jeder Frage ein Ei — und verlieren ab und zu eine Feder."
  },
  "nodes/scarecrow_1/name": {
   "en": "Stick Scarecrow",
@@ -565,7 +565,7 @@
  },
  "nodes/scarecrow_1/desc": {
   "en": "Shoots fierce looks at birds and rabbits (removes 0.6 pests per question) and they leave the seeds alone: planting costs half the energy.",
-  "de": ""
+  "de": "Wirft Vögeln und Kaninchen böse Blicke zu (verjagt 0,6 Schädlinge pro Frage), dann lassen sie die Samen in Ruhe: Pflanzen kostet nur die halbe Energie."
  },
  "nodes/scarecrow_1/steps/0/name": {
   "en": "Set the sticks",
@@ -585,7 +585,7 @@
  },
  "nodes/d_veg_soup/desc": {
   "en": "The village notices you. Two new merchants arrive.",
-  "de": ""
+  "de": "Das Dorf wird auf dich aufmerksam. Zwei neue Händler kommen."
  },
  "nodes/seed_3/name": {
   "en": "Seed Merchant · stall",
@@ -593,7 +593,7 @@
  },
  "nodes/seed_3/desc": {
   "en": "Potato, lettuce, beans and beet seeds.",
-  "de": ""
+  "de": "Kartoffel-, Salat-, Bohnen- und Rübensamen."
  },
  "nodes/spice_1/name": {
   "en": "Spice Merchant",
@@ -601,7 +601,7 @@
  },
  "nodes/spice_1/desc": {
   "en": "Salt. (Barter idea: also asks for 1 onion per salt.)",
-  "de": ""
+  "de": "Salz. (Tauschidee: möchte auch 1 Zwiebel pro Salz.)"
  },
  "nodes/compost_bin/name": {
   "en": "Compost Bin",
@@ -609,7 +609,7 @@
  },
  "nodes/compost_bin/desc": {
   "en": "Turns straw, fiber and manure into compost over a few questions.",
-  "de": ""
+  "de": "Macht aus Stroh, Fasern und Mist in ein paar Fragen Kompost."
  },
  "nodes/pet_bunny/name": {
   "en": "Bunny comes home",
@@ -617,7 +617,7 @@
  },
  "nodes/pet_bunny/desc": {
   "en": "Pet 1 (default name Pip; the player can rename). Bonus: every carrot harvest gives +1 carrot.",
-  "de": ""
+  "de": "Haustier 1 (heißt zuerst Pip; du kannst es umbenennen). Bonus: Jede Karottenernte bringt +1 Karotte."
  },
  "nodes/cottage_walls/name": {
   "en": "Cottage · log walls",
@@ -625,7 +625,7 @@
  },
  "nodes/cottage_walls/desc": {
   "en": "Big builds go up in stages; the slot shows the progress.",
-  "de": ""
+  "de": "Große Bauten entstehen in Stufen; der Platz zeigt, wie weit sie sind."
  },
  "nodes/cottage_roof/name": {
   "en": "Cottage · thatched roof",
@@ -649,7 +649,7 @@
  },
  "nodes/cottage/desc": {
   "en": "Hearth and door finish it. Energy max 30, 6 energy per Rest answer, a proper kitchen.",
-  "de": ""
+  "de": "Herd und Tür machen es fertig. Maximale Energie 30, 6 Energie pro Antwort beim Ausruhen, eine richtige Küche."
  },
  "nodes/crop_potato/name": {
   "en": "Potato",
@@ -665,7 +665,7 @@
  },
  "nodes/present_lettuce/desc": {
   "en": "Two bowls of vegetable soup for the stall keeper — she orders lettuce seed for you.",
-  "de": ""
+  "de": "Zwei Schüsseln Gemüsesuppe für die Standbesitzerin — sie bestellt Salatsamen für dich."
  },
  "nodes/crop_beans/name": {
   "en": "Beans",
@@ -681,7 +681,7 @@
  },
  "nodes/present_beet/desc": {
   "en": "A pancake breakfast for the stall keeper — she asks her cousin for beet seed.",
-  "de": ""
+  "de": "Ein Pfannkuchenfrühstück für die Standbesitzerin — sie fragt ihren Cousin nach Rübensamen."
  },
  "nodes/crop_tomato/name": {
   "en": "Tomato",
@@ -689,7 +689,7 @@
  },
  "nodes/crop_tomato/desc": {
   "en": "Ingredient-threshold unlock (kept from the prototype): bring 2 eggs once. Hungry crop: needs compost.",
-  "de": ""
+  "de": "Wird freigeschaltet, wenn du einmal 2 Eier bringst. Hungrige Pflanze: braucht Kompost."
  },
  "nodes/d_stone_soup/name": {
   "en": "Stone Soup for the quarry folk",
@@ -697,7 +697,7 @@
  },
  "nodes/d_stone_soup/desc": {
   "en": "The folk-tale soup. The quarry folk start selling clay.",
-  "de": ""
+  "de": "Die Suppe aus dem Märchen. Die Steinbrucharbeiter verkaufen jetzt Lehm."
  },
  "nodes/raw_2/name": {
   "en": "Raw Materials · clay",
@@ -709,7 +709,7 @@
  },
  "nodes/workshop_1/desc": {
   "en": "Workshop tier 1 — wood working.",
-  "de": ""
+  "de": "Werkstatt Stufe 1 — Holzarbeit."
  },
  "nodes/carpenter_bench/name": {
   "en": "Carpenter's Bench",
@@ -717,7 +717,7 @@
  },
  "nodes/carpenter_bench/desc": {
   "en": "Split logs into planks with the axe (1 log → 2 planks).",
-  "de": ""
+  "de": "Spalte Holzscheite mit der Axt zu Brettern (1 Holzscheit → 2 Bretter)."
  },
  "nodes/kiln/name": {
   "en": "Kiln",
@@ -725,7 +725,7 @@
  },
  "nodes/kiln/desc": {
   "en": "Fires bricks and jars, burns charcoal.",
-  "de": ""
+  "de": "Brennt Ziegel und Krüge, macht Holzkohle."
  },
  "nodes/stove_1/name": {
   "en": "Stove",
@@ -733,7 +733,7 @@
  },
  "nodes/stove_1/desc": {
   "en": "Replaces the campfire. Soups, stews, pancakes.",
-  "de": ""
+  "de": "Ersetzt das Lagerfeuer. Suppen, Eintöpfe, Pfannkuchen."
  },
  "nodes/oven_1/name": {
   "en": "Oven",
@@ -741,7 +741,7 @@
  },
  "nodes/oven_1/desc": {
   "en": "Bread, baked potatoes.",
-  "de": ""
+  "de": "Brot, Ofenkartoffeln."
  },
  "nodes/prep_table_1/name": {
   "en": "Prep Table",
@@ -749,7 +749,7 @@
  },
  "nodes/prep_table_1/desc": {
   "en": "Replaces the chopping block. Salads, platters, dough.",
-  "de": ""
+  "de": "Ersetzt den Hackklotz. Salate, Platten, Teig."
  },
  "nodes/woodlot/name": {
   "en": "Woodlot",
@@ -757,7 +757,7 @@
  },
  "nodes/woodlot/desc": {
   "en": "Planted saplings: 1 log every 2 questions, forever.",
-  "de": ""
+  "de": "Gepflanzte Bäumchen: 1 Holzscheit alle 2 Fragen, für immer."
  },
  "nodes/shed/name": {
   "en": "Log Shed",
@@ -765,7 +765,7 @@
  },
  "nodes/shed/desc": {
   "en": "First chapter-2 build: room for 25 of each item, so bigger projects fit.",
-  "de": ""
+  "de": "Der erste Bau in Kapitel 2: Platz für 25 von jeder Sache, damit größere Vorhaben hineinpassen."
  },
  "nodes/shed/steps/0/name": {
   "en": "Raise the beams",
@@ -805,7 +805,7 @@
  },
  "nodes/barn_1/desc": {
   "en": "Shelter for big animals. Cows can move in.",
-  "de": ""
+  "de": "Ein Dach für große Tiere. Kühe können einziehen."
  },
  "nodes/barn_1/steps/0/name": {
   "en": "Lay the stones",
@@ -825,7 +825,7 @@
  },
  "nodes/animal_cow/desc": {
   "en": "Eat any fodder (clover, lettuce, beets, oilcake, mash), drink lots, need bedding straw; milking every 2 questions. The barn fills with muck — muck it out for manure.",
-  "de": ""
+  "de": "Fressen jedes Futter (Klee, Salat, Rüben, Ölkuchen, Futterbrei), trinken viel, brauchen Stroh zum Liegen; alle 2 Fragen wird gemolken. Die Scheune füllt sich mit Mist — mist sie aus, dann bekommst du Dünger."
  },
  "nodes/churn/name": {
   "en": "Butter Churn",
@@ -837,7 +837,7 @@
  },
  "nodes/animal_bees/desc": {
   "en": "Never fed, but they need a water dish and flowering crops (clover, sunflower, flax, berries, herbs, fruit trees).",
-  "de": ""
+  "de": "Werden nie gefüttert, brauchen aber eine Wasserschale und blühende Pflanzen (Klee, Sonnenblume, Flachs, Beeren, Kräuter, Obstbäume)."
  },
  "nodes/cap_bees_1/name": {
   "en": "Bee Yard",
@@ -845,7 +845,7 @@
  },
  "nodes/cap_bees_1/desc": {
   "en": "Room for 2 skeps.",
-  "de": ""
+  "de": "Platz für 2 Bienenkörbe."
  },
  "nodes/market_stall/name": {
   "en": "Market Stall",
@@ -853,7 +853,7 @@
  },
  "nodes/market_stall/desc": {
   "en": "Your own stall at the village market: +10% on everything sold.",
-  "de": ""
+  "de": "Dein eigener Stand auf dem Dorfmarkt: +10% auf alles Verkaufte."
  },
  "nodes/compost_bin_2/name": {
   "en": "Compost Heap",
@@ -861,7 +861,7 @@
  },
  "nodes/compost_bin_2/desc": {
   "en": "Four batches at once.",
-  "de": ""
+  "de": "Vier Ladungen auf einmal."
  },
  "nodes/wheelbarrow/name": {
   "en": "Wheelbarrow",
@@ -869,7 +869,7 @@
  },
  "nodes/wheelbarrow/desc": {
   "en": "Carry a whole harvest at once: harvesting costs less energy.",
-  "de": ""
+  "de": "Trag eine ganze Ernte auf einmal: Ernten kostet weniger Energie."
  },
  "nodes/d_bread/name": {
   "en": "Sourdough for the Culture Specialist",
@@ -877,7 +877,7 @@
  },
  "nodes/d_bread/desc": {
   "en": "A fermentation nerd tastes your sourdough and wants to trade.",
-  "de": ""
+  "de": "Ein Gärungs-Fan probiert dein Sauerteigbrot und möchte mit dir handeln."
  },
  "nodes/culture_1/name": {
   "en": "Culture Specialist",
@@ -885,7 +885,7 @@
  },
  "nodes/culture_1/desc": {
   "en": "Cultures are bought once and kept alive.",
-  "de": ""
+  "de": "Kulturen kauft man einmal und hält sie am Leben."
  },
  "nodes/d_pancakes/name": {
   "en": "Pancake breakfast for the seed stall",
@@ -893,7 +893,7 @@
  },
  "nodes/d_pancakes/desc": {
   "en": "Unlocks the next seed tier.",
-  "de": ""
+  "de": "Schaltet die nächste Samenstufe frei."
  },
  "nodes/seed_4/name": {
   "en": "Seed Merchant · shop",
@@ -901,7 +901,7 @@
  },
  "nodes/seed_4/desc": {
   "en": "Sunflower, flax, oats seeds and apple saplings (apples need the old orchard cleared).",
-  "de": ""
+  "de": "Sonnenblumen-, Flachs- und Hafersamen und Apfelbäumchen (für Äpfel muss der alte Obstgarten geräumt sein)."
  },
  "nodes/d_hearty_stew/name": {
   "en": "Hearty Stew for the miners",
@@ -909,7 +909,7 @@
  },
  "nodes/d_hearty_stew/desc": {
   "en": "Hungry miners pay in iron ore — the iron age begins.",
-  "de": ""
+  "de": "Hungrige Bergleute bezahlen mit Eisenerz — die Eisenzeit beginnt."
  },
  "nodes/raw_3/name": {
   "en": "Raw Materials · iron ore",
@@ -921,7 +921,7 @@
  },
  "nodes/pet_tortoise/desc": {
   "en": "Pet 2 (default name Mossy). Bonus: finds a hidden spring (+1 💧 per question).",
-  "de": ""
+  "de": "Haustier 2 (heißt zuerst Mossy). Bonus: findet eine versteckte Quelle (+1 💧 pro Frage)."
  },
  "nodes/smithy_chimney/name": {
   "en": "Smithy · chimney",
@@ -933,7 +933,7 @@
  },
  "nodes/workshop_2/desc": {
   "en": "Workshop tier 2 — metal.",
-  "de": ""
+  "de": "Werkstatt Stufe 2 — Metall."
  },
  "nodes/workshop_2/steps/0/name": {
   "en": "Lay the stones",
@@ -949,7 +949,7 @@
  },
  "nodes/forge/desc": {
   "en": "Smelts iron ore with charcoal.",
-  "de": ""
+  "de": "Schmilzt Eisenerz mit Holzkohle."
  },
  "nodes/anvil/name": {
   "en": "Anvil",
@@ -957,7 +957,7 @@
  },
  "nodes/anvil/desc": {
   "en": "Nails and iron tools.",
-  "de": ""
+  "de": "Nägel und Eisenwerkzeuge."
  },
  "nodes/iron_shovel/name": {
   "en": "Iron Shovel",
@@ -965,7 +965,7 @@
  },
  "nodes/iron_shovel/desc": {
   "en": "Needed for double-dug beds; field work −20% energy.",
-  "de": ""
+  "de": "Nötig für doppelt umgegrabene Beete; Feldarbeit −20% Energie."
  },
  "nodes/iron_knife/name": {
   "en": "Iron Knife",
@@ -973,7 +973,7 @@
  },
  "nodes/iron_knife/desc": {
   "en": "Fine dicing: sauces, pasta. Prep −20% energy.",
-  "de": ""
+  "de": "Feines Schneiden: Soßen, Nudeln. Vorbereiten −20% Energie."
  },
  "nodes/iron_hammer/name": {
   "en": "Iron Hammer",
@@ -981,7 +981,7 @@
  },
  "nodes/iron_hammer/desc": {
   "en": "Nails! Needed for bigger buildings. Building −20% energy.",
-  "de": ""
+  "de": "Nägel! Nötig für größere Gebäude. Bauen −20% Energie."
  },
  "nodes/saw/name": {
   "en": "Saw",
@@ -989,7 +989,7 @@
  },
  "nodes/saw/desc": {
   "en": "Clean cuts: 1 log → 4 planks at the sawbench. Wood work −25% energy.",
-  "de": ""
+  "de": "Saubere Schnitte: 1 Holzscheit → 4 Bretter am Sägebock. Holzarbeit −25% Energie."
  },
  "nodes/watering_can/name": {
   "en": "Watering Can",
@@ -997,7 +997,7 @@
  },
  "nodes/watering_can/desc": {
   "en": "Water goes to the roots, not the path: plants need 25% less water.",
-  "de": ""
+  "de": "Das Wasser kommt zu den Wurzeln, nicht auf den Weg: Pflanzen brauchen 25% weniger Wasser."
  },
  "nodes/shears/name": {
   "en": "Shears",
@@ -1005,7 +1005,7 @@
  },
  "nodes/shears/desc": {
   "en": "Needed to keep sheep.",
-  "de": ""
+  "de": "Nötig, um Schafe zu halten."
  },
  "nodes/sawbench/name": {
   "en": "Sawbench",
@@ -1017,7 +1017,7 @@
  },
  "nodes/well_4/desc": {
   "en": "Brick lining and a pulley: 9 💧 a trip, holds 60.",
-  "de": ""
+  "de": "Eine Ziegelwand und eine Rolle: 9 💧 pro Gang, fasst 60."
  },
  "nodes/rain_barrel/name": {
   "en": "Rain Barrel",
@@ -1025,7 +1025,7 @@
  },
  "nodes/rain_barrel/desc": {
   "en": "A big barrel by the well: holds 15 more and every trip brings 1 more.",
-  "de": ""
+  "de": "Ein großes Fass beim Brunnen: fasst 15 mehr, und jeder Gang bringt 1 mehr."
  },
  "nodes/rain_barrel/steps/0/name": {
   "en": "Fit the planks",
@@ -1049,7 +1049,7 @@
  },
  "nodes/barn_2/desc": {
   "en": "A cool cellar below the barn: aging and fermenting.",
-  "de": ""
+  "de": "Ein kühler Keller unter der Scheune: zum Reifen und Gären."
  },
  "nodes/barn_2/steps/0/name": {
   "en": "Lay the bricks",
@@ -1069,7 +1069,7 @@
  },
  "nodes/cellar/desc": {
   "en": "Aging station: vinegar, pickles, olives, cheese wait here — and everything in the pantry keeps one season longer.",
-  "de": ""
+  "de": "Ein Ort zum Reifen: Essig, Eingelegtes, Oliven und Käse warten hier — und alles im Vorrat hält eine Jahreszeit länger."
  },
  "nodes/fermenter/name": {
   "en": "Fermenting Crocks",
@@ -1077,7 +1077,7 @@
  },
  "nodes/fermenter/desc": {
   "en": "Yogurt and cider.",
-  "de": ""
+  "de": "Joghurt und Apfelmost."
  },
  "nodes/cheese_vat/name": {
   "en": "Cheese Vat & Press",
@@ -1105,7 +1105,7 @@
  },
  "nodes/animal_sheep/desc": {
   "en": "Eat any fodder, drink, need bedding straw; shearing every 3 questions. Muck out the pen for manure.",
-  "de": ""
+  "de": "Fressen jedes Futter, trinken, brauchen Stroh zum Liegen; alle 3 Fragen wird geschoren. Mist die Weide aus, dann bekommst du Dünger."
  },
  "nodes/spindle/name": {
   "en": "Hand Spindle",
@@ -1113,7 +1113,7 @@
  },
  "nodes/spindle/desc": {
   "en": "Wool → yarn, flax fiber → linen thread. Slow (2 ⚡).",
-  "de": ""
+  "de": "Wolle → Garn, Flachsfaser → Leinenfaden. Langsam (2 ⚡)."
  },
  "nodes/hand_loom/name": {
   "en": "Hand Loom",
@@ -1121,7 +1121,7 @@
  },
  "nodes/hand_loom/desc": {
   "en": "Yarn → wool cloth, thread → linen.",
-  "de": ""
+  "de": "Garn → Wollstoff, Faden → Leinen."
  },
  "nodes/hand_loom/steps/0/name": {
   "en": "Fit the planks",
@@ -1153,7 +1153,7 @@
  },
  "nodes/windmill_1/desc": {
   "en": "Cloth sails grind flour by themselves every question — the quern is retired.",
-  "de": ""
+  "de": "Segel aus Stoff mahlen bei jeder Frage von selbst Mehl — die Handmühle hat ausgedient."
  },
  "nodes/honey_extractor/name": {
   "en": "Honey Extractor",
@@ -1161,7 +1161,7 @@
  },
  "nodes/honey_extractor/desc": {
   "en": "Spins honey out of the comb: more honey, no crushing.",
-  "de": ""
+  "de": "Schleudert den Honig aus der Wabe: mehr Honig, kein Zerdrücken."
  },
  "nodes/cap_bees_2/name": {
   "en": "Wooden Hives",
@@ -1169,7 +1169,7 @@
  },
  "nodes/cap_bees_2/desc": {
   "en": "Box hives (pegged, no nails needed yet).",
-  "de": ""
+  "de": "Kastenbeuten (gesteckt, noch ohne Nägel)."
  },
  "nodes/press/name": {
   "en": "Wooden Press",
@@ -1177,7 +1177,7 @@
  },
  "nodes/press/desc": {
   "en": "A big wooden screw: oil from seeds, juice from fruit and beets.",
-  "de": ""
+  "de": "Eine große Holzschraube: Öl aus Samen, Saft aus Obst und Rüben."
  },
  "nodes/press/steps/0/name": {
   "en": "Raise the beams",
@@ -1197,7 +1197,7 @@
  },
  "nodes/stove_2/desc": {
   "en": "Sauces, jam, sugar reduction.",
-  "de": ""
+  "de": "Soßen, Marmelade, Zucker einkochen."
  },
  "nodes/oven_2/name": {
   "en": "Oven · iron door",
@@ -1205,7 +1205,7 @@
  },
  "nodes/oven_2/desc": {
   "en": "Cakes and pies.",
-  "de": ""
+  "de": "Kuchen und Torten."
  },
  "nodes/crop_sunflower/name": {
   "en": "Sunflower",
@@ -1221,7 +1221,7 @@
  },
  "nodes/present_flax/desc": {
   "en": "A honey oat cake for the shopkeeper — she sends for flax seed from the coast.",
-  "de": ""
+  "de": "Ein Honig-Hafer-Kuchen für die Ladenbesitzerin — sie lässt Flachssamen von der Küste kommen."
  },
  "nodes/crop_oats/name": {
   "en": "Oats",
@@ -1233,7 +1233,7 @@
  },
  "nodes/orchard/desc": {
   "en": "Special patch 1: room for 3 fruit or nut trees.",
-  "de": ""
+  "de": "Besonderes Beet 1: Platz für 3 Obst- oder Nussbäume."
  },
  "nodes/crop_apple/name": {
   "en": "Apple Tree",
@@ -1241,7 +1241,7 @@
  },
  "nodes/crop_apple/desc": {
   "en": "Plant once (sapling), harvest every 4 questions forever.",
-  "de": ""
+  "de": "Einmal pflanzen (Bäumchen), dann für immer alle 4 Fragen ernten."
  },
  "nodes/pond/name": {
   "en": "Dig out the pond",
@@ -1249,7 +1249,7 @@
  },
  "nodes/pond/desc": {
   "en": "Dig out the wild pond: it holds 20 more, and the water is close, so every trip brings 2 more.",
-  "de": ""
+  "de": "Grab den wilden Teich aus: Er fasst 20 mehr, und das Wasser ist nah, also bringt jeder Gang 2 mehr."
  },
  "nodes/pond_station/name": {
   "en": "Pond bank",
@@ -1257,7 +1257,7 @@
  },
  "nodes/pond_station/desc": {
   "en": "Dig clay; soak (ret) flax.",
-  "de": ""
+  "de": "Lehm graben; Flachs einweichen (rösten)."
  },
  "nodes/d_honey_oat_cake/name": {
   "en": "Honey Oat Cake for the forester",
@@ -1265,7 +1265,7 @@
  },
  "nodes/d_honey_oat_cake/desc": {
   "en": "Hardwood and sand become available.",
-  "de": ""
+  "de": "Hartholz und Sand gibt es jetzt zu kaufen."
  },
  "nodes/raw_4/name": {
   "en": "Raw Materials · hardwood & sand",
@@ -1277,7 +1277,7 @@
  },
  "nodes/d_simple_cake/desc": {
   "en": "Unlocks the last regular seed tier.",
-  "de": ""
+  "de": "Schaltet die letzte normale Samenstufe frei."
  },
  "nodes/seed_5/name": {
   "en": "Seed Merchant · nursery",
@@ -1285,7 +1285,7 @@
  },
  "nodes/seed_5/desc": {
   "en": "Pumpkin, berries, herbs, walnut and olive saplings.",
-  "de": ""
+  "de": "Kürbis, Beeren, Kräuter, Walnuss- und Olivenbäumchen."
  },
  "nodes/scarecrow_2/name": {
   "en": "Dressed Scarecrow",
@@ -1293,7 +1293,7 @@
  },
  "nodes/scarecrow_2/desc": {
   "en": "Flapping wool sleeves: removes 1.2 pests per question; planting costs a quarter of the energy.",
-  "de": ""
+  "de": "Flatternde Wollärmel: verjagt 1,2 Schädlinge pro Frage; Pflanzen kostet ein Viertel der Energie."
  },
  "nodes/lumbermill/name": {
   "en": "Lumbermill",
@@ -1313,7 +1313,7 @@
  },
  "nodes/pet_goat/desc": {
   "en": "Pet 3 (default name Bramble). Bonus: nibbles weeds (weeds −15%) and leaves compost (1 per 4 questions).",
-  "de": ""
+  "de": "Haustier 3 (heißt zuerst Bramble). Bonus: knabbert Unkraut (Unkraut −15%) und hinterlässt Kompost (1 alle 4 Fragen)."
  },
  "nodes/kiln_2/name": {
   "en": "Brickworks",
@@ -1321,7 +1321,7 @@
  },
  "nodes/kiln_2/desc": {
   "en": "Five chambers instead of two: bricks, jars and charcoal in bulk.",
-  "de": ""
+  "de": "Fünf Kammern statt zwei: Ziegel, Krüge und Holzkohle in großen Mengen."
  },
  "nodes/kiln_2/steps/0/name": {
   "en": "Lay the bricks",
@@ -1337,7 +1337,7 @@
  },
  "nodes/forge_2/desc": {
   "en": "Hot enough for steel.",
-  "de": ""
+  "de": "Heiß genug für Stahl."
  },
  "nodes/forge_2/steps/0/name": {
   "en": "Lay the bricks",
@@ -1369,7 +1369,7 @@
  },
  "nodes/steel_shovel/desc": {
   "en": "Needed for deep-worked beds; field work −30% energy.",
-  "de": ""
+  "de": "Nötig für tief gelockerte Beete; Feldarbeit −30% Energie."
  },
  "nodes/steel_knife/name": {
   "en": "Steel Knife",
@@ -1377,7 +1377,7 @@
  },
  "nodes/steel_knife/desc": {
   "en": "Precision work: master dishes. Prep −35% energy.",
-  "de": ""
+  "de": "Feine Arbeit: Meistergerichte. Vorbereiten −35% Energie."
  },
  "nodes/smiths_hammer/name": {
   "en": "Smith's Hammer",
@@ -1385,7 +1385,7 @@
  },
  "nodes/smiths_hammer/desc": {
   "en": "Needed for the Farmhouse, Greenhouse and machines. Building −35% energy.",
-  "de": ""
+  "de": "Nötig für das Bauernhaus, das Gewächshaus und Maschinen. Bauen −35% Energie."
  },
  "nodes/master_saw/name": {
   "en": "Master Saw",
@@ -1393,7 +1393,7 @@
  },
  "nodes/master_saw/desc": {
   "en": "Fine joinery for looms and windmill gears. Wood work −40% energy.",
-  "de": ""
+  "de": "Feine Schreinerarbeit für Webstühle und Windmühlenzahnräder. Holzarbeit −40% Energie."
  },
  "nodes/drip_line/name": {
   "en": "Drip Line",
@@ -1401,7 +1401,7 @@
  },
  "nodes/drip_line/desc": {
   "en": "Clay pipes drip water right at the roots: half the water.",
-  "de": ""
+  "de": "Tonrohre tropfen das Wasser direkt an die Wurzeln: nur halb so viel Wasser."
  },
  "nodes/farmhouse_base/name": {
   "en": "Farmhouse · foundation",
@@ -1429,7 +1429,7 @@
  },
  "nodes/farmhouse/desc": {
   "en": "Energy max 50, 8 energy per Rest answer, the master kitchen.",
-  "de": ""
+  "de": "Maximale Energie 50, 8 Energie pro Antwort beim Ausruhen, die Meisterküche."
  },
  "nodes/warehouse/name": {
   "en": "Warehouse",
@@ -1485,7 +1485,7 @@
  },
  "nodes/greenhouse/desc": {
   "en": "Special patch 3: 4 beds, water is recycled (half water). Heirlooms grow here.",
-  "de": ""
+  "de": "Besonderes Beet 3: 4 Beete, das Wasser wird wiederverwendet (halbes Wasser). Hier wachsen alte Sorten."
  },
  "nodes/well_5/name": {
   "en": "Well · hand pump",
@@ -1493,7 +1493,7 @@
  },
  "nodes/well_5/desc": {
   "en": "A hand pump: 12 💧 a trip, holds 80.",
-  "de": ""
+  "de": "Eine Handpumpe: 12 💧 pro Gang, fasst 80."
  },
  "nodes/well_5/steps/0/name": {
   "en": "Lay the bricks",
@@ -1509,7 +1509,7 @@
  },
  "nodes/barn_3/desc": {
   "en": "Room for a pony. More animals.",
-  "de": ""
+  "de": "Platz für ein Pony. Mehr Tiere."
  },
  "nodes/barn_3/steps/0/name": {
   "en": "Lay the bricks",
@@ -1533,7 +1533,7 @@
  },
  "nodes/food_processor/desc": {
   "en": "Once the windmill makes flour, the quern becomes a nut/olive grinder.",
-  "de": ""
+  "de": "Sobald die Windmühle Mehl macht, wird die Handmühle zur Nuss- und Olivenmühle."
  },
  "nodes/spinning_wheel/name": {
   "en": "Spinning Wheel",
@@ -1541,7 +1541,7 @@
  },
  "nodes/spinning_wheel/desc": {
   "en": "Yarn and thread without the backache (1 ⚡).",
-  "de": ""
+  "de": "Garn und Faden ohne Rückenschmerzen (1 ⚡)."
  },
  "nodes/textile_loom/name": {
   "en": "Textile Loom",
@@ -1549,7 +1549,7 @@
  },
  "nodes/textile_loom/desc": {
   "en": "Weaving moves from the hand loom to the workshop.",
-  "de": ""
+  "de": "Das Weben zieht vom Handwebrahmen in die Werkstatt um."
  },
  "nodes/textile_loom/steps/0/name": {
   "en": "Raise the beams",
@@ -1573,7 +1573,7 @@
  },
  "nodes/present_berries/desc": {
   "en": "A cake for the nursery gardener — she digs up some berry bushes for you.",
-  "de": ""
+  "de": "Ein Kuchen für die Gärtnerin — sie gräbt ein paar Beerensträucher für dich aus."
  },
  "nodes/crop_herbs/name": {
   "en": "Herbs",
@@ -1593,7 +1593,7 @@
  },
  "nodes/d_pizza/desc": {
   "en": "The builders' guild sells finished steel and glass (expensive shortcut).",
-  "de": ""
+  "de": "Die Bauzunft verkauft fertigen Stahl und Glas (eine teure Abkürzung)."
  },
  "nodes/raw_5/name": {
   "en": "Raw Materials · guild stock",
@@ -1605,7 +1605,7 @@
  },
  "nodes/scarecrow_3/desc": {
   "en": "Iron-framed with flapping linen: removes 2 pests per question; planting cheap, harvesting −40% energy.",
-  "de": ""
+  "de": "Mit Eisenrahmen und flatterndem Leinen: verjagt 2 Schädlinge pro Frage; Pflanzen billig, Ernten −40% Energie."
  },
  "nodes/lumbermill_2/name": {
   "en": "Lumbermill · hardwood grove",
@@ -1625,7 +1625,7 @@
  },
  "nodes/import_broker/desc": {
   "en": "Only barters: rare seeds for fine goods. Arrives with the 4th pet (design doc said 3 — moved so chapter 5 has its own opening).",
-  "de": ""
+  "de": "Tauscht nur: seltene Samen gegen feine Waren. Kommt mit dem 4. Haustier."
  },
  "nodes/pet_pony/name": {
   "en": "Pony comes home",
@@ -1633,7 +1633,7 @@
  },
  "nodes/pet_pony/desc": {
   "en": "Pet 4 (default name Hazel). Bonus: pulls the market cart (+10% on everything sold).",
-  "de": ""
+  "de": "Haustier 4 (heißt zuerst Hazel). Bonus: zieht den Marktwagen (+10% auf alles Verkaufte)."
  },
  "nodes/crop_saffron/name": {
   "en": "Saffron Crocus",
@@ -1641,7 +1641,7 @@
  },
  "nodes/crop_saffron/desc": {
   "en": "Each flower gives only a few threads — that's why saffron is precious.",
-  "de": ""
+  "de": "Jede Blüte gibt nur ein paar Fäden — darum ist Safran so kostbar."
  },
  "nodes/crop_rainbow_carrot/name": {
   "en": "Rainbow Carrot",
@@ -1657,7 +1657,7 @@
  },
  "nodes/crop_woad/desc": {
   "en": "Old European blue-dye plant.",
-  "de": ""
+  "de": "Eine alte europäische Pflanze für blaue Farbe."
  },
  "nodes/seed_library/name": {
   "en": "Seed Library",
@@ -1665,7 +1665,7 @@
  },
  "nodes/seed_library/desc": {
   "en": "Heirloom crops can be saved from your own harvest: 1 seed back per harvest. (Seed-saving lesson.)",
-  "de": ""
+  "de": "Samen alter Sorten kannst du aus deiner eigenen Ernte aufheben: 1 Samen zurück pro Ernte. (Wie man Samen aufbewahrt.)"
  },
  "nodes/seed_library/steps/0/name": {
   "en": "Fit the planks",
@@ -1685,7 +1685,7 @@
  },
  "nodes/dye_vat/desc": {
   "en": "Plant dyes — and colour mixing.",
-  "de": ""
+  "de": "Pflanzenfarben — und Farben mischen."
  },
  "nodes/dye_vat/steps/0/name": {
   "en": "Lay the bricks",
@@ -1709,7 +1709,7 @@
  },
  "nodes/windmill_2/desc": {
   "en": "Fine flour for master baking.",
-  "de": ""
+  "de": "Feines Mehl fürs Meisterbacken."
  },
  "nodes/windmill_2/steps/0/name": {
   "en": "Lay the stones",
@@ -1749,7 +1749,7 @@
  },
  "nodes/wind_pump/desc": {
   "en": "The windmill also pumps water.",
-  "de": ""
+  "de": "Die Windmühle pumpt auch Wasser."
  },
  "nodes/wind_pump/steps/0/name": {
   "en": "Lay the bricks",
@@ -1785,7 +1785,7 @@
  },
  "nodes/cap_bees_3/desc": {
   "en": "Observation hive with a glass window.",
-  "de": ""
+  "de": "Ein Schaubienenstock mit Glasfenster."
  },
  "nodes/cap_bees_3/steps/0/name": {
   "en": "Fit the planks",
@@ -1801,7 +1801,7 @@
  },
  "nodes/cellar_2/desc": {
   "en": "Twice the aging space.",
-  "de": ""
+  "de": "Doppelt so viel Platz zum Reifen."
  },
  "nodes/d_fair_pies/name": {
   "en": "Harvest Fair · pie table",
@@ -1809,7 +1809,7 @@
  },
  "nodes/d_fair_pies/desc": {
   "en": "Blue ribbon: +5% on everything sold.",
-  "de": ""
+  "de": "Blaue Schleife: +5% auf alles Verkaufte."
  },
  "nodes/d_fair_cheese/name": {
   "en": "Harvest Fair · cheese table",
@@ -1817,7 +1817,7 @@
  },
  "nodes/d_fair_cheese/desc": {
   "en": "Second ribbon: another +5%.",
-  "de": ""
+  "de": "Zweite Schleife: noch einmal +5%."
  },
  "nodes/d_fair_preserves/name": {
   "en": "Harvest Fair · preserves table",
@@ -1825,7 +1825,7 @@
  },
  "nodes/d_fair_preserves/desc": {
   "en": "Another ribbon: +5%.",
-  "de": ""
+  "de": "Noch eine Schleife: +5%."
  },
  "nodes/d_fair_cloth/name": {
   "en": "Harvest Fair · weaving table",
@@ -1833,7 +1833,7 @@
  },
  "nodes/d_fair_cloth/desc": {
   "en": "Third ribbon: another +5%.",
-  "de": ""
+  "de": "Dritte Schleife: noch einmal +5%."
  },
  "nodes/pet_alpaca/name": {
   "en": "Alpaca comes home",
@@ -1841,7 +1841,7 @@
  },
  "nodes/pet_alpaca/desc": {
   "en": "Pet 5 (default name Alfie). Bonus: soft fleece, 1 wool every 4 questions.",
-  "de": ""
+  "de": "Haustier 5 (heißt zuerst Alfie). Bonus: weiches Vlies, 1 Wolle alle 4 Fragen."
  },
  "nodes/wild_edge/name": {
   "en": "Field Edge & Woods",
@@ -1849,7 +1849,7 @@
  },
  "nodes/wild_edge/desc": {
   "en": "Always open: gather sticks, pick stones, pull wild weeds. What you gather comes at once; each spot refills after a Time Quiz question. Costs energy, never coins.",
-  "de": ""
+  "de": "Immer offen: Stöcke sammeln, Steine aufsammeln, wildes Unkraut ausreißen. Was du sammelst, kommt sofort; jede Stelle füllt sich nach einer Frage im Zeit-Quiz wieder. Kostet Energie, nie Münzen."
  },
  "nodes/stick_hoe/name": {
   "en": "Stick Hoe",
@@ -1857,7 +1857,7 @@
  },
  "nodes/stick_hoe/desc": {
   "en": "Weeding −25% energy.",
-  "de": ""
+  "de": "Jäten −25% Energie."
  },
  "nodes/iron_hoe/name": {
   "en": "Iron Hoe",
@@ -1865,7 +1865,7 @@
  },
  "nodes/iron_hoe/desc": {
   "en": "Thistles come out root and all: weeding −45% energy.",
-  "de": ""
+  "de": "Disteln kommen mit der Wurzel heraus: Jäten −45% Energie."
  },
  "nodes/steel_hoe/name": {
   "en": "Steel Hoe",
@@ -1873,7 +1873,7 @@
  },
  "nodes/steel_hoe/desc": {
   "en": "Even brambles give up: weeding −60% energy.",
-  "de": ""
+  "de": "Sogar Brombeeren geben auf: Jäten −60% Energie."
  },
  "nodes/patch_dug/name": {
   "en": "Dug beds",
@@ -1881,7 +1881,7 @@
  },
  "nodes/patch_dug/desc": {
   "en": "Loosen the soil: 2 plants of the same crop fit in one patch.",
-  "de": ""
+  "de": "Lockere die Erde: 2 Pflanzen derselben Sorte passen in ein Beet."
  },
  "nodes/patch_edged/name": {
   "en": "Stick edging",
@@ -1889,7 +1889,7 @@
  },
  "nodes/patch_edged/desc": {
   "en": "A woven stick border keeps weeds out: weeds grow 20% slower.",
-  "de": ""
+  "de": "Eine geflochtene Stockeinfassung hält Unkraut fern: Unkraut wächst 20% langsamer."
  },
  "nodes/patch_raised/name": {
   "en": "Raised log beds",
@@ -1897,7 +1897,7 @@
  },
  "nodes/patch_raised/desc": {
   "en": "3 plants per patch. Every plant beyond 2 needs 1 fertilizer point per planting (wood ash at first).",
-  "de": ""
+  "de": "3 Pflanzen pro Beet. Jede Pflanze über 2 braucht beim Pflanzen 1 Düngerpunkt (zuerst Holzasche)."
  },
  "nodes/patch_stone/name": {
   "en": "Stone borders & paths",
@@ -1905,7 +1905,7 @@
  },
  "nodes/patch_stone/desc": {
   "en": "Weeds −15%, and paths make harvesting −10% energy.",
-  "de": ""
+  "de": "Unkraut −15%, und auf Wegen kostet Ernten −10% Energie."
  },
  "nodes/patch_double/name": {
   "en": "Double-dug beds",
@@ -1913,7 +1913,7 @@
  },
  "nodes/patch_double/desc": {
   "en": "4 plants per patch (2 fertilizer points per planting).",
-  "de": ""
+  "de": "4 Pflanzen pro Beet (2 Düngerpunkte pro Pflanzung)."
  },
  "nodes/patch_channel/name": {
   "en": "Irrigation channels",
@@ -1921,7 +1921,7 @@
  },
  "nodes/patch_channel/desc": {
   "en": "Water flows from the pond to the roots: field water −15%.",
-  "de": ""
+  "de": "Das Wasser fließt vom Teich zu den Wurzeln: Feldwasser −15%."
  },
  "nodes/patch_deep/name": {
   "en": "Deep-worked beds",
@@ -1929,7 +1929,7 @@
  },
  "nodes/patch_deep/desc": {
   "en": "5 plants per patch (3 fertilizer points per planting).",
-  "de": ""
+  "de": "5 Pflanzen pro Beet (3 Düngerpunkte pro Pflanzung)."
  },
  "nodes/patch_cloche/name": {
   "en": "Glass cloches",
@@ -1937,7 +1937,7 @@
  },
  "nodes/patch_cloche/desc": {
   "en": "Little glass hats keep seedlings warm: crops grow 15% faster.",
-  "de": ""
+  "de": "Kleine Glashüte halten die Keimlinge warm: Pflanzen wachsen 15% schneller."
  },
  "nodes/patch_master/name": {
   "en": "Living-soil beds",
@@ -1945,7 +1945,7 @@
  },
  "nodes/patch_master/desc": {
   "en": "6 plants per patch (4 fertilizer points per planting). The weeds love it too.",
-  "de": ""
+  "de": "6 Pflanzen pro Beet (4 Düngerpunkte pro Pflanzung). Das Unkraut mag es auch."
  },
  "nodes/cottage_loft/name": {
   "en": "Cottage · loft & second room",
@@ -1953,7 +1953,7 @@
  },
  "nodes/cottage_loft/desc": {
   "en": "Energy max 40, 7 energy per Rest answer.",
-  "de": ""
+  "de": "Maximale Energie 40, 7 Energie pro Antwort beim Ausruhen."
  },
  "nodes/cottage_loft/steps/0/name": {
   "en": "Fit the planks",
@@ -1973,7 +1973,7 @@
  },
  "nodes/farmhouse_sunroom/desc": {
   "en": "Energy max 65, 9 energy per Rest answer.",
-  "de": ""
+  "de": "Maximale Energie 65, 9 Energie pro Antwort beim Ausruhen."
  },
  "nodes/farmhouse_sunroom/steps/0/name": {
   "en": "Lay the bricks",
@@ -1993,7 +1993,7 @@
  },
  "nodes/worm_bin/desc": {
   "en": "Worms turn compost and straw into castings worth 4 fertilizer points.",
-  "de": ""
+  "de": "Würmer machen aus Kompost und Stroh Wurmhumus, 4 Düngerpunkte wert."
  },
  "nodes/north_field_clear/name": {
   "en": "North Field · clear the scrub",
@@ -2001,7 +2001,7 @@
  },
  "nodes/north_field_clear/desc": {
   "en": "A second field to swipe to. First the scrub has to go.",
-  "de": ""
+  "de": "Ein zweites Feld. Zuerst muss das Gestrüpp weg."
  },
  "nodes/north_field/name": {
   "en": "North Field",
@@ -2009,7 +2009,7 @@
  },
  "nodes/north_field/desc": {
   "en": "Fence it and it's yours: +9 field patches (they start at level 1 and need their own upgrades and scarecrow).",
-  "de": ""
+  "de": "Zäun es ein, und es gehört dir: +9 Feldbeete (sie fangen bei Stufe 1 an und brauchen eigene Verbesserungen und eine eigene Vogelscheuche)."
  },
  "nodes/river_meadow_drain/name": {
   "en": "River Meadow · drain the marsh",
@@ -2017,7 +2017,7 @@
  },
  "nodes/river_meadow_drain/desc": {
   "en": "A third field by the river.",
-  "de": ""
+  "de": "Ein drittes Feld am Fluss."
  },
  "nodes/river_meadow/name": {
   "en": "River Meadow",
@@ -2025,7 +2025,7 @@
  },
  "nodes/river_meadow/desc": {
   "en": "Optional third field. A sluice from the river: +9 field patches and +2 water per question.",
-  "de": ""
+  "de": "Ein freiwilliges drittes Feld. Eine Schleuse vom Fluss: +9 Feldbeete und +2 Wasser pro Frage."
  },
  "nodes/gathering_basket/name": {
   "en": "Gathering Basket",
@@ -2033,7 +2033,7 @@
  },
  "nodes/gathering_basket/desc": {
   "en": "Carry more per trip: gathering takes 2 loads per tap (2× energy), and −25% energy.",
-  "de": ""
+  "de": "Trag mehr auf einmal: Sammeln bringt 2 Ladungen pro Tippen (2× Energie), und −25% Energie."
  },
  "nodes/fire_ring/name": {
   "en": "Stone Fire Ring",
@@ -2041,7 +2041,7 @@
  },
  "nodes/fire_ring/desc": {
   "en": "Holds the heat: cooking −15% energy.",
-  "de": ""
+  "de": "Hält die Hitze: Kochen −15% Energie."
  },
  "nodes/straw_bed/name": {
   "en": "Straw Bed",
@@ -2049,7 +2049,7 @@
  },
  "nodes/straw_bed/desc": {
   "en": "Sleep better: +1 energy per Rest answer.",
-  "de": ""
+  "de": "Besser schlafen: +1 Energie pro Antwort beim Ausruhen."
  },
  "nodes/nest_boxes/name": {
   "en": "Nest Boxes",
@@ -2057,7 +2057,7 @@
  },
  "nodes/nest_boxes/desc": {
   "en": "Calm hens lay more: +25% eggs.",
-  "de": ""
+  "de": "Ruhige Hühner legen mehr: +25% Eier."
  },
  "nodes/whetstone/name": {
   "en": "Whetstone",
@@ -2065,7 +2065,7 @@
  },
  "nodes/whetstone/desc": {
   "en": "Sharp blades: cutting and wood work −10% energy.",
-  "de": ""
+  "de": "Scharfe Klingen: Schneiden und Holzarbeit −10% Energie."
  },
  "nodes/carrying_yoke/name": {
   "en": "Carrying Yoke",
@@ -2073,7 +2073,7 @@
  },
  "nodes/carrying_yoke/desc": {
   "en": "Two buckets on a pole: +2 💧 every trip to the pond, and planting is easier.",
-  "de": ""
+  "de": "Zwei Eimer an einer Stange: +2 💧 bei jedem Gang zum Teich, und Pflanzen geht leichter."
  },
  "nodes/pot_shelf/name": {
   "en": "Pot Shelf & Clay Pots",
@@ -2081,7 +2081,7 @@
  },
  "nodes/pot_shelf/desc": {
   "en": "Everything in reach: cooking −15% energy.",
-  "de": ""
+  "de": "Alles griffbereit: Kochen −15% Energie."
  },
  "nodes/dough_trough/name": {
   "en": "Dough Trough & Rolling Pin",
@@ -2089,7 +2089,7 @@
  },
  "nodes/dough_trough/desc": {
   "en": "Prep work −15% energy.",
-  "de": ""
+  "de": "Vorbereiten −15% Energie."
  },
  "nodes/milking_stool/name": {
   "en": "Milking Stool & Pail",
@@ -2097,7 +2097,7 @@
  },
  "nodes/milking_stool/desc": {
   "en": "Animal work −20% energy.",
-  "de": ""
+  "de": "Tierpflege −20% Energie."
  },
  "nodes/water_trough/name": {
   "en": "Water Trough",
@@ -2105,7 +2105,7 @@
  },
  "nodes/water_trough/desc": {
   "en": "No spilled buckets: animals use 20% less water.",
-  "de": ""
+  "de": "Keine umgekippten Eimer: Die Tiere brauchen 20% weniger Wasser."
  },
  "nodes/hay_rack/name": {
   "en": "Hay Rack",
@@ -2113,7 +2113,7 @@
  },
  "nodes/hay_rack/desc": {
   "en": "Less trampled fodder: cows and sheep eat 15% less.",
-  "de": ""
+  "de": "Weniger zertrampeltes Futter: Kühe und Schafe fressen 15% weniger."
  },
  "nodes/salt_lick/name": {
   "en": "Salt Lick",
@@ -2121,7 +2121,7 @@
  },
  "nodes/salt_lick/desc": {
   "en": "Healthy cows: +20% milk and manure.",
-  "de": ""
+  "de": "Gesunde Kühe: +20% Milch und Mist."
  },
  "nodes/bee_smoker/name": {
   "en": "Bee Smoker",
@@ -2129,7 +2129,7 @@
  },
  "nodes/bee_smoker/desc": {
   "en": "Calm bees: +25% honeycomb.",
-  "de": ""
+  "de": "Ruhige Bienen: +25% Honigwaben."
  },
  "nodes/scaffolding/name": {
   "en": "Scaffolding",
@@ -2137,7 +2137,7 @@
  },
  "nodes/scaffolding/desc": {
   "en": "Building −15% energy.",
-  "de": ""
+  "de": "Bauen −15% Energie."
  },
  "nodes/hearth/name": {
   "en": "Brick Hearth",
@@ -2145,7 +2145,7 @@
  },
  "nodes/hearth/desc": {
   "en": "A warm room: energy max +5, and the house needs 30% less firewood in winter.",
-  "de": ""
+  "de": "Ein warmes Zimmer: maximale Energie +5, und das Haus braucht im Winter 30% weniger Brennholz."
  },
  "nodes/compost_fork/name": {
   "en": "Compost Fork",
@@ -2153,7 +2153,7 @@
  },
  "nodes/compost_fork/desc": {
   "en": "Turned heaps rot faster: compost −25% time.",
-  "de": ""
+  "de": "Umgesetzte Haufen verrotten schneller: Kompost −25% Zeit."
  },
  "nodes/tool_rack/name": {
   "en": "Tool Rack",
@@ -2161,7 +2161,7 @@
  },
  "nodes/tool_rack/desc": {
   "en": "No searching: crafting −10%, field work −5% energy.",
-  "de": ""
+  "de": "Kein Suchen mehr: Basteln −10%, Feldarbeit −5% Energie."
  },
  "nodes/bellows/name": {
   "en": "Bellows",
@@ -2169,7 +2169,7 @@
  },
  "nodes/bellows/desc": {
   "en": "Hotter fire: the forge needs half the charcoal.",
-  "de": ""
+  "de": "Heißeres Feuer: Die Schmiede braucht nur die halbe Holzkohle."
  },
  "nodes/grindstone/name": {
   "en": "Grindstone",
@@ -2177,7 +2177,7 @@
  },
  "nodes/grindstone/desc": {
   "en": "Replaces the whetstone: cutting and wood work −15% energy.",
-  "de": ""
+  "de": "Ersetzt den Wetzstein: Schneiden und Holzarbeit −15% Energie."
  },
  "nodes/shearing_table/name": {
   "en": "Shearing Table",
@@ -2185,7 +2185,7 @@
  },
  "nodes/shearing_table/desc": {
   "en": "Cleaner fleeces: +25% wool.",
-  "de": ""
+  "de": "Saubereres Vlies: +25% Wolle."
  },
  "nodes/wool_mattress/name": {
   "en": "Wool Mattress",
@@ -2193,7 +2193,7 @@
  },
  "nodes/wool_mattress/desc": {
   "en": "Replaces the straw bed: +2 energy per Rest answer.",
-  "de": ""
+  "de": "Ersetzt das Strohbett: +2 Energie pro Antwort beim Ausruhen."
  },
  "nodes/cheese_moulds/name": {
   "en": "Cheese Moulds",
@@ -2201,7 +2201,7 @@
  },
  "nodes/cheese_moulds/desc": {
   "en": "Less spilled curd: cheese needs 25% less milk.",
-  "de": ""
+  "de": "Weniger verschütteter Bruch: Käse braucht 25% weniger Milch."
  },
  "nodes/oak_barrels/name": {
   "en": "Oak Barrels",
@@ -2209,7 +2209,7 @@
  },
  "nodes/oak_barrels/desc": {
   "en": "Fermenting −25% time, aging −15% time.",
-  "de": ""
+  "de": "Gären −25% Zeit, Reifen −15% Zeit."
  },
  "nodes/hand_cart/name": {
   "en": "Hand Cart",
@@ -2217,7 +2217,7 @@
  },
  "nodes/hand_cart/desc": {
   "en": "Haul more at once: harvesting −15%, building −10% energy.",
-  "de": ""
+  "de": "Mehr auf einmal transportieren: Ernten −15%, Bauen −10% Energie."
  },
  "nodes/insect_hotel/name": {
   "en": "Insect Hotel",
@@ -2225,7 +2225,7 @@
  },
  "nodes/insect_hotel/desc": {
   "en": "Wild bees and ladybirds move in: +20% honeycomb, weeds −5%, pests −10%.",
-  "de": ""
+  "de": "Wildbienen und Marienkäfer ziehen ein: +20% Honigwaben, Unkraut −5%, Schädlinge −10%."
  },
  "nodes/iron_pans/name": {
   "en": "Iron Pans",
@@ -2233,7 +2233,7 @@
  },
  "nodes/iron_pans/desc": {
   "en": "Cooking −15% energy.",
-  "de": ""
+  "de": "Kochen −15% Energie."
  },
  "nodes/weeder_geese/name": {
   "en": "Weeder Geese",
@@ -2241,7 +2241,7 @@
  },
  "nodes/weeder_geese/desc": {
   "en": "Geese graze between the rows: weeds −20%. (Real old practice.)",
-  "de": ""
+  "de": "Gänse grasen zwischen den Reihen: Unkraut −20%. (Das hat man früher wirklich so gemacht.)"
  },
  "nodes/linen_bedding/name": {
   "en": "Linen Bedding",
@@ -2249,7 +2249,7 @@
  },
  "nodes/linen_bedding/desc": {
   "en": "Replaces the mattress: +3 energy per Rest answer.",
-  "de": ""
+  "de": "Ersetzt die Matratze: +3 Energie pro Antwort beim Ausruhen."
  },
  "nodes/lanterns/name": {
   "en": "Lanterns",
@@ -2257,7 +2257,7 @@
  },
  "nodes/lanterns/desc": {
   "en": "Work into the evening: energy max +5.",
-  "de": ""
+  "de": "Bis in den Abend arbeiten: maximale Energie +5."
  },
  "nodes/seed_drill/name": {
   "en": "Seed Drill",
@@ -2265,7 +2265,7 @@
  },
  "nodes/seed_drill/desc": {
   "en": "Sows a whole row in one pass: planting −40% energy.",
-  "de": ""
+  "de": "Sät eine ganze Reihe auf einmal: Pflanzen −40% Energie."
  },
  "nodes/proofing_baskets/name": {
   "en": "Bread Peel & Proofing Baskets",
@@ -2273,7 +2273,7 @@
  },
  "nodes/proofing_baskets/desc": {
   "en": "Cooking and baking −15% energy.",
-  "de": ""
+  "de": "Kochen und Backen −15% Energie."
  },
  "nodes/rotary_churn/name": {
   "en": "Rotary Churn",
@@ -2281,7 +2281,7 @@
  },
  "nodes/rotary_churn/desc": {
   "en": "Butter needs 25% less milk.",
-  "de": ""
+  "de": "Butter braucht 25% weniger Milch."
  },
  "nodes/mulch_spreader/name": {
   "en": "Straw Mulch",
@@ -2289,7 +2289,7 @@
  },
  "nodes/mulch_spreader/desc": {
   "en": "A straw blanket on every bed: weeds −15%, field water −5%.",
-  "de": ""
+  "de": "Eine Strohdecke auf jedem Beet: Unkraut −15%, Feldwasser −5%."
  },
  "nodes/master_tool_chest/name": {
   "en": "Master Tool Chest",
@@ -2297,7 +2297,7 @@
  },
  "nodes/master_tool_chest/desc": {
   "en": "Crafting −15%, field and wood work −10% energy.",
-  "de": ""
+  "de": "Basteln −15%, Feld- und Holzarbeit −10% Energie."
  },
  "nodes/paved_yard/name": {
   "en": "Paved Yard",
@@ -2305,7 +2305,7 @@
  },
  "nodes/paved_yard/desc": {
   "en": "Dry feet everywhere: harvesting and animal work −10% energy.",
-  "de": ""
+  "de": "Überall trockene Füße: Ernten und Tierpflege −10% Energie."
  },
  "nodes/copper_still/name": {
   "en": "Herb Drying Loft",
@@ -2313,7 +2313,7 @@
  },
  "nodes/copper_still/desc": {
   "en": "Dried herbs on hand: cooking and prep −10% energy.",
-  "de": ""
+  "de": "Getrocknete Kräuter zur Hand: Kochen und Vorbereiten −10% Energie."
  },
  "nodes/sq_cold_shepherd/name": {
   "en": "Little shepherd Tom is freezing",
@@ -2321,7 +2321,7 @@
  },
  "nodes/sq_cold_shepherd/desc": {
   "en": "Reward: a picture for the album — Little Tom, grinning and warm, holding up a bundle of your firewood.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Der kleine Tom grinst, ist warm und hält ein Bündel von deinem Brennholz hoch."
  },
  "nodes/sq_cold_shepherd/reward/picture": {
   "en": "Little Tom, grinning and warm, holding up a bundle of your firewood",
@@ -2333,7 +2333,7 @@
  },
  "nodes/lucky_horseshoe/desc": {
   "en": "Little Tom found an old horseshoe and nailed it over your door. Lucky things happen a little more often.",
-  "de": ""
+  "de": "Der kleine Tom hat ein altes Hufeisen gefunden und über deine Tür genagelt. Glück passiert jetzt ein bisschen öfter."
  },
  "nodes/sq_lost_goat/name": {
   "en": "Granny Maud's goat ran off",
@@ -2341,7 +2341,7 @@
  },
  "nodes/sq_lost_goat/desc": {
   "en": "Reward: a picture for the album — Granny Maud laughing, hugging her muddy goat on the rope you found it with.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Oma Maud lacht und umarmt ihre schmutzige Ziege an dem Seil, mit dem du sie gefunden hast."
  },
  "nodes/sq_lost_goat/reward/picture": {
   "en": "Granny Maud laughing, hugging her muddy goat on the rope you found it with",
@@ -2353,7 +2353,7 @@
  },
  "nodes/straw_hat/desc": {
   "en": "Shade from the sun: energy max +2.",
-  "de": ""
+  "de": "Schatten vor der Sonne: maximale Energie +2."
  },
  "nodes/sq_twins_porridge/name": {
   "en": "Porridge for the hungry twins",
@@ -2361,7 +2361,7 @@
  },
  "nodes/sq_twins_porridge/desc": {
   "en": "Reward: a picture for the album — The twins beaming, each holding a bowl of your porridge (some on their noses).",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Die Zwillinge strahlen, jeder mit einer Schüssel von deinem Haferbrei (ein bisschen auf der Nase)."
  },
  "nodes/sq_twins_porridge/reward/picture": {
   "en": "The twins beaming, each holding a bowl of your porridge (some on their noses)",
@@ -2373,7 +2373,7 @@
  },
  "nodes/sq_miller_basket/desc": {
   "en": "Reward: a picture for the album — Ella twirling with your new basket full of flowers.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Ella dreht sich mit deinem neuen Korb voller Blumen im Kreis."
  },
  "nodes/sq_miller_basket/reward/picture": {
   "en": "Ella twirling with your new basket full of flowers",
@@ -2385,7 +2385,7 @@
  },
  "nodes/brass_bell/desc": {
   "en": "A little bell on the field gate: it jingles in the wind and the birds don't like it.",
-  "de": ""
+  "de": "Ein Glöckchen am Feldtor: Es klingelt im Wind, und die Vögel mögen das gar nicht."
  },
  "nodes/sq_washing_line/name": {
   "en": "The washerwoman's line snapped",
@@ -2393,7 +2393,7 @@
  },
  "nodes/sq_washing_line/desc": {
   "en": "Reward: a picture for the album — Hilde smiling, holding the end of your new rope line full of flapping sheets.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Hilde lächelt und hält das Ende deiner neuen Wäscheleine voller flatternder Laken."
  },
  "nodes/sq_washing_line/reward/picture": {
   "en": "Hilde smiling, holding the end of your new rope line full of flapping sheets",
@@ -2405,7 +2405,7 @@
  },
  "nodes/wind_chime/desc": {
   "en": "Shells and sticks that clatter in the wind: rabbits stay away.",
-  "de": ""
+  "de": "Muscheln und Stöcke, die im Wind klappern: Die Kaninchen bleiben weg."
  },
  "nodes/sq_sick_neighbour/name": {
   "en": "Soup for a sick neighbour",
@@ -2413,7 +2413,7 @@
  },
  "nodes/sq_sick_neighbour/desc": {
   "en": "Reward: a picture for the album — Old Jan sitting up in bed, cheeks pink, holding your bowl of tomato soup.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Der alte Jan sitzt im Bett, mit rosa Backen, und hält deine Schüssel Tomatensuppe."
  },
  "nodes/sq_sick_neighbour/reward/picture": {
   "en": "Old Jan sitting up in bed, cheeks pink, holding your bowl of tomato soup",
@@ -2425,7 +2425,7 @@
  },
  "nodes/sq_bridge/desc": {
   "en": "Reward: a picture for the album — Ferryman Otto waving a plank from your mended footbridge as children skip across.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Fährmann Otto winkt mit einem Brett von deinem reparierten Steg, während Kinder darüber hüpfen."
  },
  "nodes/sq_bridge/reward/picture": {
   "en": "Ferryman Otto waving a plank from your mended footbridge as children skip across",
@@ -2437,7 +2437,7 @@
  },
  "nodes/bird_feeder/desc": {
   "en": "Songbirds come to the feeder and eat the caterpillars on your plants.",
-  "de": ""
+  "de": "Singvögel kommen zum Futterhäuschen und fressen die Raupen auf deinen Pflanzen."
  },
  "nodes/sq_healer_honey/name": {
   "en": "Honey for the healer",
@@ -2445,7 +2445,7 @@
  },
  "nodes/sq_healer_honey/desc": {
   "en": "Reward: a picture for the album — Healer Wren smiling, holding a jar of your honey up to the light.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Die Heilerin Wren lächelt und hält ein Glas von deinem Honig ins Licht."
  },
  "nodes/sq_healer_honey/reward/picture": {
   "en": "Healer Wren smiling, holding a jar of your honey up to the light",
@@ -2457,7 +2457,7 @@
  },
  "nodes/lavender_bunch/desc": {
   "en": "Healer Wren's dried lavender by the beds: slugs and caterpillars don't like the smell.",
-  "de": ""
+  "de": "Der getrocknete Lavendel der Heilerin Wren bei den Beeten: Schnecken und Raupen mögen den Duft nicht."
  },
  "nodes/sq_stray_kitten/name": {
   "en": "A stray kitten keeps visiting",
@@ -2465,7 +2465,7 @@
  },
  "nodes/sq_stray_kitten/desc": {
   "en": "A thin little ginger kitten sneaks round the barn every evening. A saucer of milk and a straw bed might make her stay.",
-  "de": ""
+  "de": "Ein dünnes kleines rotes Kätzchen schleicht jeden Abend um die Scheune. Ein Schälchen Milch und ein Strohbett bringen es vielleicht zum Bleiben."
  },
  "nodes/sq_stray_kitten/reward/picture": {
   "en": "The ginger kitten curled up asleep in the straw bed you made for her",
@@ -2477,7 +2477,7 @@
  },
  "nodes/sq_apprentice/desc": {
   "en": "Reward: a picture for the album — Apprentice Bo proudly holding up a gate made with your nails.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Der Lehrling Bo hält stolz ein Tor hoch, das er mit deinen Nägeln gebaut hat."
  },
  "nodes/sq_apprentice/reward/picture": {
   "en": "Apprentice Bo proudly holding up a gate made with your nails",
@@ -2489,7 +2489,7 @@
  },
  "nodes/sq_baby_blanket/desc": {
   "en": "Reward: a picture for the album — A happy new mum holding her baby wrapped in your wool blanket.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Eine glückliche Mama hält ihr Baby, eingewickelt in deine Wolldecke."
  },
  "nodes/sq_baby_blanket/reward/picture": {
   "en": "A happy new mum holding her baby wrapped in your wool blanket",
@@ -2501,7 +2501,7 @@
  },
  "nodes/sq_harvest_dance/desc": {
   "en": "Reward: a picture for the album — Fiddler Rosa raising a mug of your cider at the harvest dance.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Die Geigerin Rosa hebt beim Erntetanz einen Becher von deinem Apfelmost."
  },
  "nodes/sq_harvest_dance/reward/picture": {
   "en": "Fiddler Rosa raising a mug of your cider at the harvest dance",
@@ -2513,7 +2513,7 @@
  },
  "nodes/sq_chapel_roof/desc": {
   "en": "Reward: a picture for the album — Bell-ringer Ansel holding your last roof plank, waving from the dry chapel.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Der Glöckner Ansel hält dein letztes Dachbrett und winkt aus der trockenen Kapelle."
  },
  "nodes/sq_chapel_roof/reward/picture": {
   "en": "Bell-ringer Ansel holding your last roof plank, waving from the dry chapel",
@@ -2525,7 +2525,7 @@
  },
  "nodes/sq_school_window/desc": {
   "en": "Reward: a picture for the album — Teacher Ines and her pupils holding up your new glass pane.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Die Lehrerin Ines und ihre Schüler halten deine neue Glasscheibe hoch."
  },
  "nodes/sq_school_window/reward/picture": {
   "en": "Teacher Ines and her pupils holding up your new glass pane",
@@ -2537,7 +2537,7 @@
  },
  "nodes/sq_wedding_cake/desc": {
   "en": "Reward: a picture for the album — The bride and groom holding your cake between them, laughing.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Braut und Bräutigam halten deinen Kuchen zwischen sich und lachen."
  },
  "nodes/sq_wedding_cake/reward/picture": {
   "en": "The bride and groom holding your cake between them, laughing",
@@ -2549,7 +2549,7 @@
  },
  "nodes/sq_night_watch/desc": {
   "en": "Reward: a picture for the album — Night watchman Pieter holding your glowing lantern on the town wall.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Der Nachtwächter Pieter hält deine leuchtende Laterne auf der Stadtmauer."
  },
  "nodes/sq_night_watch/reward/picture": {
   "en": "Night watchman Pieter holding your glowing lantern on the town wall",
@@ -2561,7 +2561,7 @@
  },
  "nodes/sq_long_voyage/desc": {
   "en": "Reward: a picture for the album — Sailor Mei waving a jar of your pickles from the deck of her boat.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Die Seefahrerin Mei winkt vom Deck ihres Bootes mit einem Glas von deinem Eingelegten."
  },
  "nodes/sq_long_voyage/reward/picture": {
   "en": "Sailor Mei waving a jar of your pickles from the deck of her boat",
@@ -2573,7 +2573,7 @@
  },
  "nodes/sq_poet_scarf/desc": {
   "en": "Reward: a picture for the album — Little poet Kit reciting proudly in your rainbow scarf.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Der kleine Dichter Kit trägt stolz ein Gedicht vor, in deinem Regenbogenschal."
  },
  "nodes/sq_poet_scarf/reward/picture": {
   "en": "Little poet Kit reciting proudly in your rainbow scarf",
@@ -2585,7 +2585,7 @@
  },
  "nodes/sq_painter_saffron/desc": {
   "en": "Reward: a picture for the album — Painter Lucia holding a brush dipped in your golden saffron paint.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Die Malerin Lucia hält einen Pinsel, getaucht in deine goldene Safranfarbe."
  },
  "nodes/sq_painter_saffron/reward/picture": {
   "en": "Painter Lucia holding a brush dipped in your golden saffron paint",
@@ -2597,7 +2597,7 @@
  },
  "nodes/sq_school_garden/desc": {
   "en": "Reward: a picture for the album — The school children each holding up one of your rainbow carrots.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Die Schulkinder halten jedes eine deiner Regenbogenkarotten hoch."
  },
  "nodes/sq_school_garden/reward/picture": {
   "en": "The school children each holding up one of your rainbow carrots",
@@ -2609,7 +2609,7 @@
  },
  "nodes/sq_theatre_cheese/desc": {
   "en": "Reward: a picture for the album — The lead actor taking a bow while holding your cheese wheel high.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Der Hauptdarsteller verbeugt sich und hält deinen Käselaib hoch."
  },
  "nodes/sq_theatre_cheese/reward/picture": {
   "en": "The lead actor taking a bow while holding your cheese wheel high",
@@ -2621,7 +2621,7 @@
  },
  "nodes/sq_orphanage_jam/desc": {
   "en": "Reward: a picture for the album — Matron Elsie holding your jam jar while the children cheer with sandwiches.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Hausmutter Elsie hält dein Marmeladenglas, während die Kinder mit Butterbroten jubeln."
  },
  "nodes/sq_orphanage_jam/reward/picture": {
   "en": "Matron Elsie holding your jam jar while the children cheer with sandwiches",
@@ -2633,7 +2633,7 @@
  },
  "nodes/sq_lamp_maker/desc": {
   "en": "Reward: a picture for the album — Old lamp-maker Ferdinand holding a lamp filled with your olive oil, glowing.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Der alte Lampenmacher Ferdinand hält eine leuchtende Lampe mit deinem Olivenöl."
  },
  "nodes/sq_lamp_maker/reward/picture": {
   "en": "Old lamp-maker Ferdinand holding a lamp filled with your olive oil, glowing",
@@ -2645,7 +2645,7 @@
  },
  "nodes/sq_elders_feast/desc": {
   "en": "Reward: a picture for the album — Elder Agnes holding up your tapenade bowl as the elders laugh around the table.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Die Älteste Agnes hält deine Schüssel Tapenade hoch, und die Ältesten lachen am Tisch."
  },
  "nodes/sq_elders_feast/reward/picture": {
   "en": "Elder Agnes holding up your tapenade bowl as the elders laugh around the table",
@@ -2657,7 +2657,7 @@
  },
  "nodes/sq_festival_flags/desc": {
   "en": "Reward: a picture for the album — Mayor Juno holding a string of your dyed flags over the village square.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Bürgermeisterin Juno hält eine Kette deiner gefärbten Fahnen über den Dorfplatz."
  },
  "nodes/sq_festival_flags/reward/picture": {
   "en": "Mayor Juno holding a string of your dyed flags over the village square",
@@ -2669,7 +2669,7 @@
  },
  "nodes/sq_village_well/desc": {
   "en": "Reward: a picture for the album — Young Sami holding a brimming bucket from the well you rebuilt.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Der junge Sami hält einen randvollen Eimer aus dem Brunnen, den du wieder aufgebaut hast."
  },
  "nodes/sq_village_well/reward/picture": {
   "en": "Young Sami holding a brimming bucket from the well you rebuilt",
@@ -2681,7 +2681,7 @@
  },
  "nodes/sq_telescope/desc": {
   "en": "Reward: a picture for the album — Astronomer Vega holding your telescope, pointing happily at the stars.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Die Sternforscherin Vega hält dein Fernrohr und zeigt fröhlich zu den Sternen."
  },
  "nodes/sq_telescope/reward/picture": {
   "en": "Astronomer Vega holding your telescope, pointing happily at the stars",
@@ -2693,7 +2693,7 @@
  },
  "nodes/sq_healer_garden/desc": {
   "en": "Reward: a picture for the album — Healer Wren kneeling in her new herb garden, holding a bunch of your herbs.",
-  "de": ""
+  "de": "Belohnung: ein Bild fürs Album — Die Heilerin Wren kniet in ihrem neuen Kräutergarten und hält einen Strauß von deinen Kräutern."
  },
  "nodes/sq_healer_garden/reward/picture": {
   "en": "Healer Wren kneeling in her new herb garden, holding a bunch of your herbs",
@@ -2705,7 +2705,7 @@
  },
  "nodes/book_basics/desc": {
   "en": "Free. Was already in the box in the tent: planting, fire, rope, the first tools.",
-  "de": ""
+  "de": "Gratis. War schon in der Kiste im Zelt: Pflanzen, Feuer, Seil, die ersten Werkzeuge."
  },
  "nodes/book_village/name": {
   "en": "Village Crafts",
@@ -2713,7 +2713,7 @@
  },
  "nodes/book_village/desc": {
   "en": "Timber, clay, walls and roofs — how the village builds.",
-  "de": ""
+  "de": "Holz, Lehm, Wände und Dächer — wie das Dorf baut."
  },
  "nodes/book_kitchen/name": {
   "en": "Grandma's Kitchen",
@@ -2721,7 +2721,7 @@
  },
  "nodes/book_kitchen/desc": {
   "en": "Stoves, bread, butter, honey and salt.",
-  "de": ""
+  "de": "Herde, Brot, Butter, Honig und Salz."
  },
  "nodes/book_animals/name": {
   "en": "Animals & Bees",
@@ -2729,7 +2729,7 @@
  },
  "nodes/book_animals/desc": {
   "en": "Cows, bees, feed and muck.",
-  "de": ""
+  "de": "Kühe, Bienen, Futter und Mist."
  },
  "nodes/book_soil/name": {
   "en": "Soil & Seasons",
@@ -2737,7 +2737,7 @@
  },
  "nodes/book_soil/desc": {
   "en": "Rotation, seasons, frost, ponds and trees.",
-  "de": ""
+  "de": "Fruchtwechsel, Jahreszeiten, Frost, Teiche und Bäume."
  },
  "nodes/book_smith/name": {
   "en": "The Smith's Book",
@@ -2745,7 +2745,7 @@
  },
  "nodes/book_smith/desc": {
   "en": "Iron, anvils, nails and wind power.",
-  "de": ""
+  "de": "Eisen, Amboss, Nägel und Windkraft."
  },
  "nodes/book_cloth/name": {
   "en": "From Fleece to Fabric",
@@ -2753,7 +2753,7 @@
  },
  "nodes/book_cloth/desc": {
   "en": "Wool, weaving and linen.",
-  "de": ""
+  "de": "Wolle, Weben und Leinen."
  },
  "nodes/book_cellar/name": {
   "en": "Cellar & Larder",
@@ -2761,7 +2761,7 @@
  },
  "nodes/book_cellar/desc": {
   "en": "Presses, ferments, cheese, cellars and pickles.",
-  "de": ""
+  "de": "Pressen, Gären, Käse, Keller und Einlegen."
  },
  "nodes/book_glass/name": {
   "en": "Fire, Glass & Steel",
@@ -2769,7 +2769,7 @@
  },
  "nodes/book_glass/desc": {
   "en": "Steel, glass, greenhouses and brick houses.",
-  "de": ""
+  "de": "Stahl, Glas, Gewächshäuser und Ziegelhäuser."
  },
  "nodes/book_orchard/name": {
   "en": "Orchard & Oils",
@@ -2777,7 +2777,7 @@
  },
  "nodes/book_orchard/desc": {
   "en": "Pruning, olives, pasta, hardwood and deep soil.",
-  "de": ""
+  "de": "Bäume schneiden, Oliven, Nudeln, Hartholz und tiefe Erde."
  },
  "nodes/book_colours/name": {
   "en": "Colours of the Earth",
@@ -2785,7 +2785,7 @@
  },
  "nodes/book_colours/desc": {
   "en": "Plant dyes and colour mixing.",
-  "de": ""
+  "de": "Pflanzenfarben und Farben mischen."
  },
  "nodes/book_master/name": {
   "en": "The Master Farmer",
@@ -2793,7 +2793,7 @@
  },
  "nodes/book_master/desc": {
   "en": "Worms, seed saving, saffron, master baking, wind pumps.",
-  "de": ""
+  "de": "Würmer, Samen aufbewahren, Safran, Meisterbacken, Windpumpen."
  },
  "nodes/book_cart/name": {
   "en": "Book Cart",
@@ -2801,7 +2801,7 @@
  },
  "nodes/book_cart/desc": {
   "en": "Comes with the travelling merchant. Sells the books your library has room for.",
-  "de": ""
+  "de": "Kommt mit dem reisenden Händler. Verkauft die Bücher, für die deine Bücherei Platz hat."
  },
  "nodes/library_box/name": {
   "en": "Book box in the tent",
@@ -2809,7 +2809,7 @@
  },
  "nodes/library_box/desc": {
   "en": "Holds 2 books. The Little Farm Book was already in it.",
-  "de": ""
+  "de": "Fasst 2 Bücher. Das kleine Hofbuch war schon drin."
  },
  "nodes/library_shelf/name": {
   "en": "Bookshelf",
@@ -2817,7 +2817,7 @@
  },
  "nodes/library_shelf/desc": {
   "en": "Holds 5 books. Reading 10% faster. Needs 5 cards learned.",
-  "de": ""
+  "de": "Fasst 5 Bücher. Lesen 10% schneller. Braucht 5 gelernte Karten."
  },
  "nodes/library_bookcase/name": {
   "en": "Bookcase & reading chair",
@@ -2825,7 +2825,7 @@
  },
  "nodes/library_bookcase/desc": {
   "en": "Holds 10 books. Reading 20% faster. Needs 15 cards learned.",
-  "de": ""
+  "de": "Fasst 10 Bücher. Lesen 20% schneller. Braucht 15 gelernte Karten."
  },
  "nodes/library_bookcase/steps/0/name": {
   "en": "Fit the planks",
@@ -2845,7 +2845,7 @@
  },
  "nodes/library_room/desc": {
   "en": "A quiet room of your own: all 12 books, reading 30% faster, and a cosy chair (+0.5 energy per Rest answer). Needs 30 cards learned.",
-  "de": ""
+  "de": "Ein ruhiges Zimmer für dich allein: alle 12 Bücher, Lesen 30% schneller und ein gemütlicher Sessel (+0,5 Energie pro Antwort beim Ausruhen). Braucht 30 gelernte Karten."
  },
  "nodes/library_room/steps/0/name": {
   "en": "Fit the planks",
@@ -2865,7 +2865,7 @@
  },
  "nodes/k_wheat/desc": {
   "en": "Opening the book. A seed needs soil, water and time.",
-  "de": ""
+  "de": "Das Buch öffnen. Ein Samen braucht Erde, Wasser und Zeit."
  },
  "nodes/k_wheat/page": {
   "en": "Every seed needs three things to grow: soil, water and time. Farmers sow wheat seeds in loose soil and water them. The green stalks grow tall, turn golden, and then they are cut. Each stalk gives grain, to eat or to sow again, and a dry stem called straw.",
@@ -2936,8 +2936,8 @@
   "de": "Ein sicheres kleines Feuer"
  },
  "nodes/k_fire/desc": {
-  "en": "Fire needs three things: fuel, air and heat (fire triangle). Build it inside a ring of stones, start with dry twigs before thicker sticks, never leave it alone, put it out with water or soil..",
-  "de": ""
+  "en": "Fire needs three things: fuel, air and heat (fire triangle). Build it inside a ring of stones, start with dry twigs before thicker sticks, never leave it alone, put it out with water or soil.",
+  "de": "Feuer braucht drei Dinge: Brennstoff, Luft und Hitze (das Feuerdreieck). Mach es in einem Ring aus Steinen, fang mit trockenen Zweigen an, bevor du dickere Stöcke nimmst, lass es nie allein und lösche es mit Wasser oder Erde."
  },
  "nodes/k_fire/page": {
   "en": "A fire needs three things: fuel to burn, air, and heat. Build it inside a ring of stones, and light small dry twigs before you add thicker sticks. Never leave a fire alone. To put it out, pour on water or cover it with soil, which keeps the air away.",
@@ -3009,7 +3009,7 @@
  },
  "nodes/k_roots/desc": {
   "en": "Carrots and onions are plants whose roots/bulbs we eat.",
-  "de": ""
+  "de": "Karotten und Zwiebeln sind Pflanzen, deren Wurzeln oder Knollen wir essen."
  },
  "nodes/k_roots/page": {
   "en": "With carrots and onions, we eat the part under the ground: a carrot's root and an onion's round bulb. Their green leaves above the ground use sunlight to make food for the plant. They grow more slowly than leafy plants like lettuce. Pull them up when the green tops are big.",
@@ -3081,7 +3081,7 @@
  },
  "nodes/k_rope/desc": {
   "en": "Rope is made by twisting plant fibres (from tough weed stems, flax, or straw) into strands and twisting the strands together the other way so the rope does not unwind.",
-  "de": ""
+  "de": "Seil entsteht, wenn man Pflanzenfasern (aus zähen Unkrautstängeln, Flachs oder Stroh) zu Strängen dreht und die Stränge dann andersherum zusammendreht, damit sich das Seil nicht aufdreht."
  },
  "nodes/k_rope/page": {
   "en": "Rope is made from fibres, the thin, tough threads inside plant stems like flax or straw. First you twist the fibres into strands. Then you twist the strands together the other way, so the rope does not unwind. The more strands you use, the stronger the rope.",
@@ -3153,7 +3153,7 @@
  },
  "nodes/k_tools/desc": {
   "en": "The first tools: a sharp flake of stone becomes a knife.",
-  "de": ""
+  "de": "Die ersten Werkzeuge: Ein scharfer Steinsplitter wird zum Messer."
  },
  "nodes/k_tools/page": {
   "en": "The first tools were made of stone. A sharp flake chipped off a stone makes a knife. Tie a stone to a wooden handle with rope to make an axe; the handle lets you swing much harder. People used stone tools for a very, very long time, called the Stone Age.",
@@ -3225,7 +3225,7 @@
  },
  "nodes/k_weeds/desc": {
   "en": "Weeds are wild plants that grow where we do not want them.",
-  "de": ""
+  "de": "Unkraut sind wilde Pflanzen, die dort wachsen, wo wir sie nicht haben wollen."
  },
  "nodes/k_weeds/page": {
   "en": "Weeds are wild plants that grow where we don't want them. They steal water, light and food from our crops. Their seeds blow in on the wind and can wait in the soil for years. Pull weeds out with their roots, and use a border or a cover of straw to keep new ones away.",
@@ -3297,7 +3297,7 @@
  },
  "nodes/k_water/desc": {
   "en": "A well reaches water stored underground (groundwater) that came from rain soaking into the soil.",
-  "de": ""
+  "de": "Ein Brunnen reicht bis zum Wasser unter der Erde (Grundwasser), das vom Regen kommt, der in den Boden sickert."
  },
  "nodes/k_water/page": {
   "en": "Rain soaks down through the soil and is stored deep underground. This water is called groundwater. A well is a deep hole that reaches it, and a deeper well reaches more water. A winch, which is a roller with a handle, makes lifting the heavy bucket much easier.",
@@ -3369,7 +3369,7 @@
  },
  "nodes/k_soil/desc": {
   "en": "Roots need air and water in the soil.",
-  "de": ""
+  "de": "Wurzeln brauchen Luft und Wasser in der Erde."
  },
  "nodes/k_soil/page": {
   "en": "Roots need air and water in the soil to grow. Digging breaks up hard soil, so roots can grow deep and more plants fit in one bed. Worms help too, because their tunnels loosen the soil. But stamping on a bed packs it hard again.",
@@ -3441,7 +3441,7 @@
  },
  "nodes/k_ash/desc": {
   "en": "Wood ash from a fire contains minerals (like potassium) that plants need.",
-  "de": ""
+  "de": "Holzasche aus dem Feuer enthält Mineralstoffe (wie Kalium), die Pflanzen brauchen."
  },
  "nodes/k_ash/page": {
   "en": "Wood ash from the fire holds minerals, like potassium, that plants need. Sprinkle a little on your beds to feed your crops. Plants growing close together need extra food, called fertilizer. But be careful: too much ash can harm plants.",
@@ -3513,7 +3513,7 @@
  },
  "nodes/k_chickens/desc": {
   "en": "Hens eat grain and seeds, drink water every day, need a dry coop with straw to sleep safe from foxes, and lay eggs.",
-  "de": ""
+  "de": "Hühner fressen Körner und Samen, trinken jeden Tag Wasser, brauchen einen trockenen Stall mit Stroh, um sicher vor dem Fuchs zu schlafen, und legen Eier."
  },
  "nodes/k_chickens/page": {
   "en": "Hens eat grain and seeds, and they scratch the ground to find bugs. They need fresh water every day and a dry coop with straw, where they sleep safe from foxes. Hens lay eggs, and a hen does not need a rooster to lay them.",
@@ -3585,7 +3585,7 @@
  },
  "nodes/k_birds/desc": {
   "en": "Birds love freshly sown seeds and rabbits nibble young plants.",
-  "de": ""
+  "de": "Vögel lieben frisch gesäte Samen, und Kaninchen knabbern an jungen Pflanzen."
  },
  "nodes/k_birds/page": {
   "en": "Birds love to eat freshly sown seeds, and rabbits nibble young plants. A scarecrow looks like a person, so it frightens birds, but things that flap or move scare them even better. A fence keeps rabbits out. Remember: the more plants you grow, the more hungry visitors come.",
@@ -3657,7 +3657,7 @@
  },
  "nodes/k_grinding/desc": {
   "en": "Flour is grain ground into powder between two stones (a quern, later a mill).",
-  "de": ""
+  "de": "Mehl ist Korn, das zwischen zwei Steinen zu Pulver gemahlen wird (in einer Handmühle, später in einer Mühle)."
  },
  "nodes/k_grinding/page": {
   "en": "Flour is grain that has been ground into powder. You crush the grain between two heavy stones called a quern; later, people built mills to do it. The hard outside of the grain, called bran, and the soft inside both get crushed. It takes lots of turning by hand, but then you can make bread and pancakes.",
@@ -3729,7 +3729,7 @@
  },
  "nodes/k_market/desc": {
   "en": "Buying and selling: things that take more work or are rare cost more.",
-  "de": ""
+  "de": "Kaufen und Verkaufen: Was mehr Arbeit macht oder selten ist, kostet mehr."
  },
  "nodes/k_market/page": {
   "en": "At the market, people buy and sell. Things that are rare, or take lots of work to make, cost more. When you turn cheap things into something better, like flour into bread, it is worth more. A fair price is good for the buyer and the seller, and money is just a handy way to swap work.",
@@ -3801,7 +3801,7 @@
  },
  "nodes/k_timber/desc": {
   "en": "A log can be split along the grain (the lines of the wood) into planks with an axe and wedges.",
-  "de": ""
+  "de": "Einen Holzscheit kann man mit Axt und Keilen entlang der Maserung (den Linien im Holz) in Bretter spalten."
  },
  "nodes/k_timber/page": {
   "en": "Wood has lines running along it, called the grain. With an axe and wedges you can split a log along the grain into planks. A saw cuts thinner planks and wastes less wood. Wood is strongest along the grain, and trees take many years to grow, so never waste it.",
@@ -3873,7 +3873,7 @@
  },
  "nodes/k_clay/desc": {
   "en": "Clay is very fine, sticky earth.",
-  "de": ""
+  "de": "Lehm ist sehr feine, klebrige Erde."
  },
  "nodes/k_clay/page": {
   "en": "Clay is very fine, sticky earth that you can shape when it is wet. Unfired clay gets soft in the rain and crumbles. Baked in a very hot oven called a kiln, it turns hard for good, and water can't soften it again. That is how we make bricks and jars.",
@@ -3945,7 +3945,7 @@
  },
  "nodes/k_charcoal/desc": {
   "en": "Charcoal is wood heated with very little air so it does not burn up.",
-  "de": ""
+  "de": "Holzkohle ist Holz, das mit ganz wenig Luft erhitzt wird, damit es nicht verbrennt."
  },
  "nodes/k_charcoal/page": {
   "en": "Charcoal is made by heating wood with very little air, so it can't burn up. The water and smoke leave the wood, and the black part that stays behind is called carbon. Charcoal burns hotter and cleaner than wood, so smiths and glassmakers love it.",
@@ -4017,7 +4017,7 @@
  },
  "nodes/k_building/desc": {
   "en": "A building needs a strong base (foundation) so it doesn't sink, walls to carry the roof, and a sloped roof so rain runs off.",
-  "de": ""
+  "de": "Ein Gebäude braucht einen festen Grund (Fundament), damit es nicht einsinkt, Wände, die das Dach tragen, und ein schräges Dach, damit der Regen abläuft."
  },
  "nodes/k_building/page": {
   "en": "A building needs a strong base, called a foundation, so it doesn't sink. The walls hold up the roof, and a sloped roof lets rain run off. Triangles make a wooden frame stiff. Every door and window needs a strong beam above it.",
@@ -4089,7 +4089,7 @@
  },
  "nodes/k_thatch/desc": {
   "en": "Thatch is a roof of tightly packed straw or reeds laid in thick layers on a steep roof so rain runs down the outside.",
-  "de": ""
+  "de": "Ein Strohdach besteht aus dicht gepacktem Stroh oder Schilf in dicken Schichten auf einem steilen Dach, damit der Regen außen herunterläuft."
  },
  "nodes/k_thatch/page": {
   "en": "Thatch is a roof made of straw or reeds, packed tightly in thick layers. It sits on a steep roof, so rain runs down the outside and the inside stays dry. A good thatched roof lasts many years, and it keeps the house warm in winter.",
@@ -4161,7 +4161,7 @@
  },
  "nodes/k_compost/desc": {
   "en": "Compost is old plants, straw and manure broken down by tiny living things (bacteria, fungi, worms) into dark crumbly soil food.",
-  "de": ""
+  "de": "Kompost sind alte Pflanzen, Stroh und Mist, die winzige Lebewesen (Bakterien, Pilze, Würmer) zu dunkler, krümeliger Nahrung für die Erde zersetzen."
  },
  "nodes/k_compost/page": {
   "en": "Compost is made when tiny living things, like bacteria, fungi and worms, break down old plants, straw and manure. They turn it all into dark, crumbly food for the soil. The heap needs air and a little water, and turning it with a fork makes it work faster. All their busy work makes the heap warm inside!",
@@ -4233,7 +4233,7 @@
  },
  "nodes/k_bread/desc": {
   "en": "Sourdough starter is flour and water where wild yeast lives.",
-  "de": ""
+  "de": "Sauerteig ist Mehl und Wasser, in dem wilde Hefe lebt."
  },
  "nodes/k_bread/page": {
   "en": "A sourdough starter is flour and water where wild yeast lives. Yeast is a tiny living thing that eats the sugar in flour and makes bubbles of gas. The bubbles make the dough rise. A hot oven sets the bubbles in place, so the bread is soft inside.",
@@ -4305,7 +4305,7 @@
  },
  "nodes/k_stove/desc": {
   "en": "A stove keeps the fire inside a box with a chimney, so heat goes into the pot and smoke goes outside.",
-  "de": ""
+  "de": "Ein Herd hält das Feuer in einem Kasten mit Kamin, so geht die Hitze in den Topf und der Rauch nach draußen."
  },
  "nodes/k_stove/page": {
   "en": "A stove keeps the fire inside a box with a chimney. The heat goes into the pot, and the smoke goes out through the chimney. A stove uses less wood than an open fire, and it is safer. It is perfect for soups and stews that simmer, which means bubble gently, for a long time.",
@@ -4377,7 +4377,7 @@
  },
  "nodes/k_cows/desc": {
   "en": "Cows eat grass and clover and chew it again later (chewing the cud, ruminants with a stomach in four parts).",
-  "de": ""
+  "de": "Kühe fressen Gras und Klee und kauen es später noch einmal (Wiederkäuer mit einem Magen aus vier Teilen)."
  },
  "nodes/k_cows/page": {
   "en": "Cows eat grass and clover, and their stomach has four parts. Later they bring the food back up and chew it again, which is called chewing the cud. A cow gives milk after she has had a calf. Cows drink lots of water and need a dry barn with bedding.",
@@ -4449,7 +4449,7 @@
  },
  "nodes/k_butter/desc": {
   "en": "Milk has cream (fat) that rises to the top.",
-  "de": ""
+  "de": "Milch enthält Rahm (Fett), der nach oben steigt."
  },
  "nodes/k_butter/page": {
   "en": "Fresh milk has cream in it, the fatty part, and it rises to the top. If you shake or churn the cream for a long time, the tiny drops of fat stick together into butter. The thin milk left over is called buttermilk.",
@@ -4521,7 +4521,7 @@
  },
  "nodes/k_bees/desc": {
   "en": "Bees collect nectar and pollen from flowers.",
-  "de": ""
+  "de": "Bienen sammeln Nektar und Pollen von Blumen."
  },
  "nodes/k_bees/page": {
   "en": "Bees visit flowers to collect sweet nectar and dusty pollen. They carry pollen from flower to flower, which is called pollination, so plants can make fruit and seeds. Bees turn nectar into honey, store it in wax combs, and need water to drink, too.",
@@ -4593,7 +4593,7 @@
  },
  "nodes/k_honey/desc": {
   "en": "Honeycomb is made of six-sided wax cells filled with honey.",
-  "de": ""
+  "de": "Eine Honigwabe besteht aus sechseckigen Wachszellen voller Honig."
  },
  "nodes/k_honey/page": {
   "en": "A honeycomb is made of six-sided wax cells full of honey. Crush the comb and strain it through a cloth: the honey drips out, and the wax stays behind. Beeswax makes candles and keeps things waterproof. Honey keeps for years without going bad.",
@@ -4665,7 +4665,7 @@
  },
  "nodes/k_salt/desc": {
   "en": "Salt pulls water out of food, and the tiny germs that spoil food cannot grow without water.",
-  "de": ""
+  "de": "Salz zieht Wasser aus dem Essen, und die winzigen Keime, die Essen verderben, können ohne Wasser nicht wachsen."
  },
  "nodes/k_salt/page": {
   "en": "Food spoils when tiny germs grow in it, and germs need water to grow. Salt pulls the water out of food, so the germs can't grow. That is why salted, dried and pickled foods keep for a long time. Salt comes from the sea or from salt mines.",
@@ -4737,7 +4737,7 @@
  },
  "nodes/k_mucking/desc": {
   "en": "Animals make dung.",
-  "de": ""
+  "de": "Tiere machen Mist."
  },
  "nodes/k_mucking/page": {
   "en": "Animals make dung, and when it mixes with their old bedding straw we call it muck. Mucking out means cleaning the muck away, and it keeps the animals clean and healthy. Rotted manure is rich food for the fields. What is waste for animals is food for plants!",
@@ -4809,7 +4809,7 @@
  },
  "nodes/k_feed/desc": {
   "en": "Hens eat grain and seeds, cows and sheep eat grass, clover and hay.",
-  "de": ""
+  "de": "Hühner fressen Körner und Samen, Kühe und Schafe fressen Gras, Klee und Heu."
  },
  "nodes/k_feed/page": {
   "en": "Hens eat grain and seeds. Cows and sheep eat grass, clover and hay, which is dried grass. Leftover vegetables and oilcake, the pressed seeds left after making oil, can be feed too. Every animal needs clean water, and too much of one food is not healthy.",
@@ -4881,7 +4881,7 @@
  },
  "nodes/k_rotation/desc": {
   "en": "Growing the same crop in the same bed again and again tires the soil and invites its pests.",
-  "de": ""
+  "de": "Wenn im selben Beet immer wieder dieselbe Pflanze wächst, wird die Erde müde und lockt ihre Schädlinge an."
  },
  "nodes/k_rotation/page": {
   "en": "Don't grow the same crop in the same bed year after year. The soil gets tired, and that crop's pests move in. Changing the crop each time is called rotation. Beans, peas and clover are special: they put a plant food called nitrogen back into the soil.",
@@ -4953,7 +4953,7 @@
  },
  "nodes/k_seasons/desc": {
   "en": "The year has spring, summer, autumn and winter because the Earth is tilted as it circles the Sun.",
-  "de": ""
+  "de": "Das Jahr hat Frühling, Sommer, Herbst und Winter, weil die Erde schräg steht, während sie um die Sonne kreist."
  },
  "nodes/k_seasons/page": {
   "en": "The year has four seasons: spring, summer, autumn and winter. They happen because the Earth is tilted, or leaning, as it travels around the Sun. In winter the days are short and cold, so plants grow slowly. Seeds sprout in spring, crops ripen in summer, and we harvest in autumn.",
@@ -5025,7 +5025,7 @@
  },
  "nodes/k_frost/desc": {
   "en": "Water in the soil freezes and expands in winter, pushing stones upward a little each year (frost heave).",
-  "de": ""
+  "de": "Im Winter gefriert das Wasser in der Erde und dehnt sich aus. So schiebt es Steine jedes Jahr ein bisschen nach oben (Frosthebung)."
  },
  "nodes/k_frost/page": {
   "en": "In winter, water in the soil freezes into ice. Ice takes up more space than water, so it pushes stones up a little every year; this is called frost heave. That is why farmers find new stones every spring. They piled them up to build stone walls and paths.",
@@ -5097,7 +5097,7 @@
  },
  "nodes/k_pond/desc": {
   "en": "A pond collects rain and keeps water for dry days.",
-  "de": ""
+  "de": "Ein Teich sammelt Regen und hebt Wasser für trockene Tage auf."
  },
  "nodes/k_pond/page": {
   "en": "A pond collects rainwater and keeps it for dry days. Ducks, frogs and dragonflies make their homes there. Clay at the bottom holds the water in, because water can't soak through it. Farmers also soak flax stems in ponds to loosen their fibres, which is called retting.",
@@ -5169,7 +5169,7 @@
  },
  "nodes/k_trees/desc": {
   "en": "Trees grow from seeds or young saplings and take years to grow.",
-  "de": ""
+  "de": "Bäume wachsen aus Samen oder jungen Bäumchen und brauchen Jahre zum Wachsen."
  },
  "nodes/k_trees/page": {
   "en": "A tree grows from a seed or from a young tree called a sapling. It takes many years to grow big. In a woodlot, cut just a few trees at a time and plant new ones, so wood never runs out. Once a fruit tree is grown, it gives fruit every year.",
@@ -5241,7 +5241,7 @@
  },
  "nodes/k_iron/desc": {
   "en": "Iron ore is rock that contains iron.",
-  "de": ""
+  "de": "Eisenerz ist Gestein, in dem Eisen steckt."
  },
  "nodes/k_iron/page": {
   "en": "Iron ore is a rock with iron hidden inside it. When it is heated very, very hot with charcoal, the iron comes out of the rock; this is called smelting. Hot iron glows and can be hammered into shape. When it cools, iron is hard and strong.",
@@ -5313,7 +5313,7 @@
  },
  "nodes/k_smithing/desc": {
   "en": "A smith heats iron until it glows, then shapes it with a hammer on an anvil.",
-  "de": ""
+  "de": "Ein Schmied erhitzt Eisen, bis es glüht, und formt es dann mit dem Hammer auf dem Amboss."
  },
  "nodes/k_smithing/page": {
   "en": "A smith heats iron until it glows, then hammers it into shape on an anvil, a heavy iron block. Dipping the hot tool quickly into water is called quenching, and it makes the tool harder. Iron tools last much longer than stone tools.",
@@ -5385,7 +5385,7 @@
  },
  "nodes/k_nails/desc": {
   "en": "Nails hold wooden boards together.",
-  "de": ""
+  "de": "Nägel halten Holzbretter zusammen."
  },
  "nodes/k_nails/page": {
   "en": "Nails hold wooden boards together. Before people had nails, they cut joints: ends that fit together like puzzle pieces. They held the joints tight with wooden pegs. A saw makes straight, thin planks that are good for building.",
@@ -5457,7 +5457,7 @@
  },
  "nodes/k_wind/desc": {
   "en": "Moving air (wind) pushes the sails of a windmill round.",
-  "de": ""
+  "de": "Bewegte Luft (Wind) dreht die Flügel einer Windmühle."
  },
  "nodes/k_wind/page": {
   "en": "Wind is moving air, and it pushes the sails of a windmill round and round. The sails turn a shaft, which is a long pole, and the shaft drives gears that turn heavy millstones. That way, wind can grind flour or pump water, with no people or animals doing the turning.",
@@ -5529,7 +5529,7 @@
  },
  "nodes/k_irrigation/desc": {
   "en": "Irrigation brings water to crops through channels or pipes.",
-  "de": ""
+  "de": "Bewässerung bringt Wasser durch Gräben oder Rohre zu den Pflanzen."
  },
  "nodes/k_irrigation/page": {
   "en": "Irrigation means bringing water to crops through channels or pipes. Water always flows downhill, so the channel must slope down toward the crops. Watering at the roots wastes less water than splashing the leaves. A watering can with a long spout helps you aim right at the roots.",
@@ -5601,7 +5601,7 @@
  },
  "nodes/k_wool/desc": {
   "en": "Sheep grow thick wool that is cut off (sheared) once a year, which doesn't hurt them.",
-  "de": ""
+  "de": "Schafe bekommen dicke Wolle, die einmal im Jahr abgeschnitten (geschoren) wird. Das tut ihnen nicht weh."
  },
  "nodes/k_wool/page": {
   "en": "Sheep grow thick wool, and once a year it is cut off. This is called shearing, and it doesn't hurt, just like a haircut. The wool is cleaned, combed and twisted on a spindle into yarn. Spinning turns short, fluffy fibres into long, strong thread.",
@@ -5673,7 +5673,7 @@
  },
  "nodes/k_weaving/desc": {
   "en": "Cloth is woven on a loom: long threads (the warp) are stretched tight and another thread (the weft) goes over and under them, back and forth.",
-  "de": ""
+  "de": "Stoff wird auf einem Webstuhl gewebt: Lange Fäden (die Kette) werden straff gespannt, und ein anderer Faden (der Schuss) geht hin und her, darüber und darunter."
  },
  "nodes/k_weaving/page": {
   "en": "Cloth is woven on a loom. Long threads called the warp are stretched tight. Another thread, the weft, goes over and under them, back and forth, back and forth. The tighter the weaving, the stronger the cloth.",
@@ -5745,7 +5745,7 @@
  },
  "nodes/k_flax/desc": {
   "en": "Flax is a plant with long fibres inside its stem.",
-  "de": ""
+  "de": "Flachs ist eine Pflanze mit langen Fasern im Stängel."
  },
  "nodes/k_flax/page": {
   "en": "Flax is a plant with long fibres inside its stem. The stems are soaked until the fibres come loose, which is called retting. Then the fibres are beaten, combed, spun into thread and woven into linen cloth. Flax seeds give linseed oil.",
@@ -5817,7 +5817,7 @@
  },
  "nodes/k_press/desc": {
   "en": "A press squeezes fruit or seeds very hard with a big screw.",
-  "de": ""
+  "de": "Eine Presse drückt Obst oder Samen mit einer großen Schraube ganz fest zusammen."
  },
  "nodes/k_press/page": {
   "en": "A press squeezes fruit or seeds very hard when you turn its big wooden screw. Apples give juice, and sunflower and flax seeds give oil. What is left over, called pomace or oilcake, can feed animals or go on the compost.",
@@ -5889,7 +5889,7 @@
  },
  "nodes/k_sugar/desc": {
   "en": "Sugar beets store sugar in their roots.",
-  "de": ""
+  "de": "Zuckerrüben speichern Zucker in ihren Wurzeln."
  },
  "nodes/k_sugar/page": {
   "en": "Sugar beets store sugar in their big roots. Their juice is squeezed out and boiled, so the water goes off as steam and sugar crystals are left behind. Before sugar was common, people sweetened their food mostly with honey.",
@@ -5961,7 +5961,7 @@
  },
  "nodes/k_ferment/desc": {
   "en": "Fermentation: tiny living things (yeasts and bacteria) change food.",
-  "de": ""
+  "de": "Gärung: Winzige Lebewesen (Hefen und Bakterien) verändern das Essen."
  },
  "nodes/k_ferment/page": {
   "en": "Microbes are tiny living things, too small to see, like yeasts and bacteria. Some of them change food in a good way, which is called fermentation. Yeast turns the sugar in apple juice into cider, and bacteria turn milk into yogurt. These good microbes keep the bad ones away, so the food keeps longer.",
@@ -6033,7 +6033,7 @@
  },
  "nodes/k_cheese/desc": {
   "en": "Cheese: milk is thickened (curdled) with cultures and rennet into curds and whey.",
-  "de": ""
+  "de": "Käse: Milch wird mit Kulturen und Lab dick gemacht, bis sie sich in Bruch und Molke trennt."
  },
  "nodes/k_cheese/page": {
   "en": "To make cheese, you thicken milk with cultures, which are friendly bacteria, and rennet. The milk splits into soft lumps called curds and a watery liquid called whey. The curds are pressed into a round wheel and aged in a cool cellar, which makes the taste stronger. Ten litres of milk make only about one kilo of cheese.",
@@ -6105,7 +6105,7 @@
  },
  "nodes/k_cellar/desc": {
   "en": "Cold slows down the germs that spoil food.",
-  "de": ""
+  "de": "Kälte bremst die Keime, die Essen verderben."
  },
  "nodes/k_cellar/page": {
   "en": "Cold slows down the germs that spoil food. A cellar dug into the ground stays cool and dark all year, even in summer. Potatoes, carrots, apples and cheese can keep there for months. Cool and dark is the rule!",
@@ -6177,7 +6177,7 @@
  },
  "nodes/k_pickling/desc": {
   "en": "Vinegar is made when bacteria turn cider into acid.",
-  "de": ""
+  "de": "Essig entsteht, wenn Bakterien aus Apfelmost Säure machen."
  },
  "nodes/k_pickling/page": {
   "en": "Vinegar is made when bacteria turn cider into a sour acid. Vegetables kept in vinegar and salt are called pickles. They don't spoil, because the germs that spoil food can't live in sour acid. People pickled food for the winter and for long trips at sea.",
@@ -6249,7 +6249,7 @@
  },
  "nodes/k_double_dig/desc": {
   "en": "Double digging loosens the soil two spade-depths deep and mixes compost in, so roots go deeper and more plants fit.",
-  "de": ""
+  "de": "Beim doppelten Umgraben lockert man die Erde zwei Spatentiefen tief und mischt Kompost hinein, so wachsen die Wurzeln tiefer und mehr Pflanzen passen hinein."
  },
  "nodes/k_double_dig/page": {
   "en": "Double digging means loosening the soil two spade-depths deep and mixing in compost. Then roots can grow deeper, and more plants fit in the bed. It is hard work, but you only do it once. If you never step on the bed, it stays loose for years.",
@@ -6321,7 +6321,7 @@
  },
  "nodes/k_pests/desc": {
   "en": "Slugs, caterpillars, mice and birds eat crops.",
-  "de": ""
+  "de": "Schnecken, Raupen, Mäuse und Vögel fressen die Pflanzen."
  },
  "nodes/k_pests/page": {
   "en": "Slugs, caterpillars, mice and birds all like to eat our crops. But pests have enemies: ladybirds eat aphids (tiny green bugs), owls and cats catch mice, and ducks gobble up slugs. A garden with many different plants has more of these helpers. And remember, more crops bring more pests.",
@@ -6393,7 +6393,7 @@
  },
  "nodes/k_steel/desc": {
   "en": "Steel is iron with a tiny bit of carbon (from charcoal) mixed in.",
-  "de": ""
+  "de": "Stahl ist Eisen mit ein ganz kleines bisschen Kohlenstoff (aus Holzkohle) darin."
  },
  "nodes/k_steel/page": {
   "en": "Steel is iron with a tiny bit of carbon mixed in, and the carbon comes from charcoal. Steel is harder and springier than iron. It keeps a sharp edge and doesn't break easily. Making steel needs a very hot furnace.",
@@ -6465,7 +6465,7 @@
  },
  "nodes/k_glass/desc": {
   "en": "Glass is made by melting sand in a very hot furnace until it flows like honey, then shaping it and letting it cool slowly.",
-  "de": ""
+  "de": "Glas entsteht, wenn man Sand in einem sehr heißen Ofen schmilzt, bis er wie Honig fließt, ihn dann formt und langsam abkühlen lässt."
  },
  "nodes/k_glass/page": {
   "en": "Glass is made by melting sand, with a little plant ash to help, in a very hot furnace. Melted glass flows like honey, so it can be shaped. Then it must cool slowly, or it may crack. Glass lets light through but keeps the wind and rain out.",
@@ -6537,7 +6537,7 @@
  },
  "nodes/k_greenhouse/desc": {
   "en": "Sunlight shines through glass and warms the air and soil inside.",
-  "de": ""
+  "de": "Das Sonnenlicht scheint durch das Glas und wärmt die Luft und die Erde drinnen."
  },
  "nodes/k_greenhouse/page": {
   "en": "In a greenhouse, sunlight shines through the glass and warms the air and soil inside. The glass keeps the warm air in, so plants can grow even when it is cold outside. People grow tender plants there, which are plants that don't like cold. They also start early seedlings in spring.",
@@ -6609,7 +6609,7 @@
  },
  "nodes/k_masonry/desc": {
   "en": "Bricks are laid in rows with mortar between them, each row overlapping the joints below (a bond) so the wall is strong.",
-  "de": ""
+  "de": "Ziegel werden in Reihen mit Mörtel dazwischen gelegt, und jede Reihe überdeckt die Fugen darunter (ein Verband), damit die Mauer stark ist."
  },
  "nodes/k_masonry/page": {
   "en": "Bricks are laid in rows with mortar, a sticky paste that dries hard, between them. Each row overlaps the joins in the row below. This pattern is called a bond, and it makes the wall strong. Brick walls don't burn or rot, and they keep a house warm.",
@@ -6681,7 +6681,7 @@
  },
  "nodes/k_orchard/desc": {
   "en": "Fruit trees are pruned in winter: cutting out old and crossing branches lets in light and air so the tree makes better fruit.",
-  "de": ""
+  "de": "Obstbäume schneidet man im Winter: Wenn man alte und sich kreuzende Äste herausschneidet, kommen Licht und Luft hinein, und der Baum trägt besseres Obst."
  },
  "nodes/k_orchard/page": {
   "en": "Fruit trees are pruned, or trimmed, in winter. Cutting out old branches and branches that cross lets light and air into the tree, so it makes better fruit. In spring, bees pollinate the blossoms, and in autumn the apples are ripe.",
@@ -6753,7 +6753,7 @@
  },
  "nodes/k_olives/desc": {
   "en": "Olives straight from the tree are too bitter to eat.",
-  "de": ""
+  "de": "Oliven direkt vom Baum sind zu bitter zum Essen."
  },
  "nodes/k_olives/page": {
   "en": "Olives picked straight from the tree taste far too bitter to eat. They are cured, which means soaked in salty water for weeks, until they taste good. Pressed olives give us olive oil. Olive trees can live for hundreds of years.",
@@ -6825,7 +6825,7 @@
  },
  "nodes/k_pasta/desc": {
   "en": "Pasta is flour and egg (or water) kneaded into a dough, rolled thin and cut.",
-  "de": ""
+  "de": "Nudeln sind Mehl und Ei (oder Wasser), zu einem Teig geknetet, dünn ausgerollt und geschnitten."
  },
  "nodes/k_pasta/page": {
   "en": "Pasta is flour and egg, or flour and water, kneaded into a dough. Kneading means pressing and folding, and it builds gluten, which makes the dough stretchy. The dough is rolled thin and cut into shapes. Fresh pasta cooks in just a few minutes in boiling water.",
@@ -6897,7 +6897,7 @@
  },
  "nodes/k_hardwood/desc": {
   "en": "Hardwoods like oak and beech come from broad-leaved trees that grow slowly.",
-  "de": ""
+  "de": "Harthölzer wie Eiche und Buche kommen von Laubbäumen, die langsam wachsen."
  },
  "nodes/k_hardwood/page": {
   "en": "Hardwoods like oak and beech come from trees with broad, flat leaves, and they grow slowly. Their wood is heavy and strong, so it is good for tools, barrels and machine parts. Softwoods come from conifers, trees with needles and cones like pines, and they grow faster.",
@@ -6969,7 +6969,7 @@
  },
  "nodes/k_deep_soil/desc": {
   "en": "Humus is the dark, rotted part of soil made from old plants.",
-  "de": ""
+  "de": "Humus ist der dunkle, verrottete Teil der Erde aus alten Pflanzen."
  },
  "nodes/k_deep_soil/page": {
   "en": "Humus is the dark, rotted part of soil, made from old plants. It holds water like a sponge and feeds plants slowly. In deep soil full of humus, many plants can grow close together.",
@@ -7041,7 +7041,7 @@
  },
  "nodes/k_mulch/desc": {
   "en": "Mulch is a blanket of straw, leaves or wood chips on top of the soil.",
-  "de": ""
+  "de": "Mulch ist eine Decke aus Stroh, Laub oder Holzschnitzeln auf der Erde."
  },
  "nodes/k_mulch/page": {
   "en": "Mulch is a blanket of straw, leaves or wood chips laid on top of the soil. It keeps water in the ground and stops weeds, because they get no light. It protects the soil from frost. Slowly, the mulch rots and turns into humus.",
@@ -7113,7 +7113,7 @@
  },
  "nodes/k_dyes/desc": {
   "en": "Many plants give colour: beets and madder red, onion skins yellow, woad blue.",
-  "de": ""
+  "de": "Viele Pflanzen geben Farbe: Rüben und Krapp rot, Zwiebelschalen gelb, Färberwaid blau."
  },
  "nodes/k_dyes/page": {
   "en": "Many plants give colour: madder roots and beets make red, onion skins make yellow, and woad makes blue. You boil the plant in water to make a dye bath, then soak the yarn in it. Adding a fixer, called a mordant, makes the colour stay.",
@@ -7185,7 +7185,7 @@
  },
  "nodes/k_colour_mixing/desc": {
   "en": "Primary dye colours red, yellow and blue mix into secondary colours: red + yellow = orange, yellow + blue = green, red + blue = purple.",
-  "de": ""
+  "de": "Die Grundfarben Rot, Gelb und Blau ergeben gemischt neue Farben: Rot + Gelb = Orange, Gelb + Blau = Grün, Rot + Blau = Lila."
  },
  "nodes/k_colour_mixing/page": {
   "en": "Red, yellow and blue are the main dye colours. Mix two of them to make a new colour. Red and yellow make orange, yellow and blue make green, and red and blue make purple. Mix all three together and you get brown.",
@@ -7257,7 +7257,7 @@
  },
  "nodes/k_worms/desc": {
   "en": "Earthworms eat dead leaves and compost and leave behind castings, the richest soil food.",
-  "de": ""
+  "de": "Regenwürmer fressen tote Blätter und Kompost und hinterlassen Wurmhumus, die beste Nahrung für die Erde."
  },
  "nodes/k_worms/page": {
   "en": "Earthworms eat dead leaves and compost. What they leave behind is called castings, and it is the richest food for soil. Their tunnels let air and water into the ground. In a worm bin, worms turn kitchen scraps into castings.",
@@ -7329,7 +7329,7 @@
  },
  "nodes/k_seed_saving/desc": {
   "en": "Heirloom plants grow true from their own seeds: let the best plants flower, collect the dry seeds, keep them cool and dry for next year.",
-  "de": ""
+  "de": "Alte Sorten wachsen aus ihren eigenen Samen wieder gleich: Lass die besten Pflanzen blühen, sammle die trockenen Samen und bewahre sie kühl und trocken fürs nächste Jahr auf."
  },
  "nodes/k_seed_saving/page": {
   "en": "Heirloom plants are old kinds that grow true from their own seeds: the new plants come out just like the parent. Let your best plants flower, and collect the seeds when they are dry. Keep them cool and dry until next year. Seed libraries share old kinds of seeds, so they don't disappear.",
@@ -7401,7 +7401,7 @@
  },
  "nodes/k_saffron/desc": {
   "en": "Saffron comes from the three red threads (stigmas) inside each crocus flower, picked by hand.",
-  "de": ""
+  "de": "Safran sind die drei roten Fäden (Narben) in jeder Krokusblüte, von Hand gepflückt."
  },
  "nodes/k_saffron/page": {
   "en": "Saffron comes from a purple crocus flower. Inside each flower are three red threads, called stigmas, and they are picked by hand. It takes about 150 flowers to make just one gram, so saffron is very precious. A pinch colours food a golden yellow.",
@@ -7473,7 +7473,7 @@
  },
  "nodes/k_master_baking/desc": {
   "en": "Fine flour is ground twice and sifted for light cakes.",
-  "de": ""
+  "de": "Feines Mehl wird zweimal gemahlen und gesiebt, für lockere Kuchen."
  },
  "nodes/k_master_baking/page": {
   "en": "For light cakes, flour is ground twice and sifted until it is very fine. Beating eggs traps tiny air bubbles. Creaming, or beating, butter and sugar together makes a cake soft. The oven must be evenly hot, not too hot, so the inside bakes before the outside burns.",
@@ -7544,8 +7544,8 @@
   "de": "Wasser pumpen mit Wind"
  },
  "nodes/k_wind_pump/desc": {
-  "en": "A wind pump uses the turning sails to move a pump rod up and down, lifting water from deep underground into a tank, day and night whenever the wind blows — without anyone pumping by hand..",
-  "de": ""
+  "en": "A wind pump uses the turning sails to move a pump rod up and down, lifting water from deep underground into a tank, day and night whenever the wind blows — without anyone pumping by hand.",
+  "de": "Eine Windpumpe bewegt mit den drehenden Flügeln eine Pumpstange auf und ab und holt so Wasser aus der Tiefe in einen Tank, Tag und Nacht, wann immer der Wind weht — ohne dass jemand von Hand pumpen muss."
  },
  "nodes/k_wind_pump/page": {
   "en": "A wind pump uses its turning sails to move a pump rod up and down. Each stroke lifts water from deep underground into a tank. It works day and night, whenever the wind blows, with nobody pumping by hand.",
@@ -7617,7 +7617,7 @@
  },
  "nodes/k_living_soil/desc": {
   "en": "A spoonful of healthy soil holds billions of tiny living things — bacteria, fungi, worms.",
-  "de": ""
+  "de": "In einem Löffel gesunder Erde leben Milliarden winziger Lebewesen — Bakterien, Pilze, Würmer."
  },
  "nodes/k_living_soil/page": {
   "en": "Healthy soil is alive! One spoonful holds billions of tiny living things, like bacteria and fungi, and worms live there too. Fungi grow long, thin threads that help roots find water. Feed the soil with compost and don't dig it too much, and it stays alive.",
@@ -7689,7 +7689,7 @@
  },
  "nodes/straw_sandals/desc": {
   "en": "Your feet stop hurting: walking jobs −5% energy.",
-  "de": ""
+  "de": "Deine Füße tun nicht mehr weh: Laufarbeiten −5% Energie."
  },
  "nodes/wooden_clogs/name": {
   "en": "Wooden Clogs",
@@ -7697,7 +7697,7 @@
  },
  "nodes/wooden_clogs/desc": {
   "en": "Dry feet in the mud: walking jobs −10% energy.",
-  "de": ""
+  "de": "Trockene Füße im Matsch: Laufarbeiten −10% Energie."
  },
  "nodes/hobnail_boots/name": {
   "en": "Hobnail Boots",
@@ -7705,7 +7705,7 @@
  },
  "nodes/hobnail_boots/desc": {
   "en": "Grip on every path: walking jobs −15% energy.",
-  "de": ""
+  "de": "Halt auf jedem Weg: Laufarbeiten −15% Energie."
  },
  "nodes/waxed_boots/name": {
   "en": "Waxed Walking Boots",
@@ -7713,7 +7713,7 @@
  },
  "nodes/waxed_boots/desc": {
   "en": "Light, tough and waterproof: walking jobs −20% energy.",
-  "de": ""
+  "de": "Leicht, robust und wasserdicht: Laufarbeiten −20% Energie."
  },
  "nodes/fiber_mitts/name": {
   "en": "Fibre Mitts",
@@ -7721,7 +7721,7 @@
  },
  "nodes/fiber_mitts/desc": {
   "en": "No more thistle stings: weeding −10% energy.",
-  "de": ""
+  "de": "Keine Distelstiche mehr: Jäten −10% Energie."
  },
  "nodes/wool_gloves/name": {
   "en": "Wool Work Gloves",
@@ -7729,7 +7729,7 @@
  },
  "nodes/wool_gloves/desc": {
   "en": "Warm hands work faster: weeding −15%, building −5%.",
-  "de": ""
+  "de": "Warme Hände arbeiten schneller: Jäten −15%, Bauen −5%."
  },
  "nodes/waxed_gloves/name": {
   "en": "Waxed Linen Gloves",
@@ -7737,7 +7737,7 @@
  },
  "nodes/waxed_gloves/desc": {
   "en": "Brambles can't get through: weeding −25%, building −10%.",
-  "de": ""
+  "de": "Brombeeren kommen nicht durch: Jäten −25%, Bauen −10%."
  },
  "nodes/fiber_bag/name": {
   "en": "Woven Bag",
@@ -7745,7 +7745,7 @@
  },
  "nodes/fiber_bag/desc": {
   "en": "Carry more per trip: gathering −10%, harvesting −5%.",
-  "de": ""
+  "de": "Trag mehr auf einmal: Sammeln −10%, Ernten −5%."
  },
  "nodes/wicker_pack/name": {
   "en": "Wicker Pack Basket",
@@ -7753,7 +7753,7 @@
  },
  "nodes/wicker_pack/desc": {
   "en": "On your back, hands free: +1 load per gathering tap, gathering −15%, harvesting −10%.",
-  "de": ""
+  "de": "Auf dem Rücken, Hände frei: +1 Ladung pro Tippen beim Sammeln, Sammeln −15%, Ernten −10%."
  },
  "nodes/canvas_rucksack/name": {
   "en": "Canvas Rucksack",
@@ -7761,7 +7761,7 @@
  },
  "nodes/canvas_rucksack/desc": {
   "en": "Straps that don't cut in: +1 load per gathering tap, gathering −20%, harvesting −15%, errands −10%.",
-  "de": ""
+  "de": "Riemen, die nicht einschneiden: +1 Ladung pro Tippen beim Sammeln, Sammeln −20%, Ernten −15%, Besorgungen −10%."
  },
  "nodes/frame_rucksack/name": {
   "en": "Frame Rucksack",
@@ -7769,7 +7769,7 @@
  },
  "nodes/frame_rucksack/desc": {
   "en": "The frame carries the weight: +2 loads per gathering tap, gathering −25%, harvesting −20%, errands −15%.",
-  "de": ""
+  "de": "Das Gestell trägt das Gewicht: +2 Ladungen pro Tippen beim Sammeln, Sammeln −25%, Ernten −20%, Besorgungen −15%."
  },
  "nodes/clay_flask/name": {
   "en": "Clay Water Flask",
@@ -7777,7 +7777,7 @@
  },
  "nodes/clay_flask/desc": {
   "en": "A sip between jobs: +0.5 energy per Rest answer.",
-  "de": ""
+  "de": "Ein Schluck zwischendurch: +0,5 Energie pro Antwort beim Ausruhen."
  },
  "nodes/stoneware_jug/name": {
   "en": "Sealed Stoneware Jug",
@@ -7785,7 +7785,7 @@
  },
  "nodes/stoneware_jug/desc": {
   "en": "Stays cool all day: +1 energy per Rest answer.",
-  "de": ""
+  "de": "Bleibt den ganzen Tag kühl: +1 Energie pro Antwort beim Ausruhen."
  },
  "nodes/glass_bottle/name": {
   "en": "Glass Bottle & Sling",
@@ -7793,7 +7793,7 @@
  },
  "nodes/glass_bottle/desc": {
   "en": "Always with you: +1.5 energy per Rest answer.",
-  "de": ""
+  "de": "Immer dabei: +1,5 Energie pro Antwort beim Ausruhen."
  },
  "nodes/insulated_flask/name": {
   "en": "Wool-wrapped Flask",
@@ -7801,7 +7801,7 @@
  },
  "nodes/insulated_flask/desc": {
   "en": "Warm tea in winter, cool water in summer: +2 energy per Rest answer.",
-  "de": ""
+  "de": "Warmer Tee im Winter, kühles Wasser im Sommer: +2 Energie pro Antwort beim Ausruhen."
  },
  "nodes/felt_hat/name": {
   "en": "Felt Hat",
@@ -7809,7 +7809,7 @@
  },
  "nodes/felt_hat/desc": {
   "en": "Warm in winter, shady in summer: energy max +4.",
-  "de": ""
+  "de": "Warm im Winter, schattig im Sommer: maximale Energie +4."
  },
  "nodes/linen_sunhat/name": {
   "en": "Wide Linen Sunhat",
@@ -7817,7 +7817,7 @@
  },
  "nodes/linen_sunhat/desc": {
   "en": "Cool head all summer: energy max +6, field work −10%.",
-  "de": ""
+  "de": "Den ganzen Sommer einen kühlen Kopf: maximale Energie +6, Feldarbeit −10%."
  },
  "nodes/linen_apron/name": {
   "en": "Linen Apron",
@@ -7825,7 +7825,7 @@
  },
  "nodes/linen_apron/desc": {
   "en": "Pockets for everything: cooking and prep −10%.",
-  "de": ""
+  "de": "Taschen für alles: Kochen und Vorbereiten −10%."
  },
  "nodes/canvas_apron/name": {
   "en": "Waxed Canvas Apron",
@@ -7833,7 +7833,7 @@
  },
  "nodes/canvas_apron/desc": {
   "en": "Splash-proof: cooking and prep −15%, dairy & press work −10%.",
-  "de": ""
+  "de": "Spritzfest: Kochen und Vorbereiten −15%, Milch- und Pressarbeit −10%."
  },
  "nodes/straw_pillow/name": {
   "en": "Straw Pillow",
@@ -7841,7 +7841,7 @@
  },
  "nodes/straw_pillow/desc": {
   "en": "Better than a rolled-up coat: +0.5 energy per Rest answer.",
-  "de": ""
+  "de": "Besser als ein zusammengerollter Mantel: +0,5 Energie pro Antwort beim Ausruhen."
  },
  "nodes/feather_pillow/name": {
   "en": "Feather Pillow",
@@ -7849,7 +7849,7 @@
  },
  "nodes/feather_pillow/desc": {
   "en": "Soft and light: +1 energy per Rest answer.",
-  "de": ""
+  "de": "Weich und leicht: +1 Energie pro Antwort beim Ausruhen."
  },
  "nodes/down_pillow/name": {
   "en": "Wool & Down Pillow",
@@ -7857,7 +7857,7 @@
  },
  "nodes/down_pillow/desc": {
   "en": "Like sleeping on a cloud: +1.5 energy per Rest answer.",
-  "de": ""
+  "de": "Wie auf einer Wolke schlafen: +1,5 Energie pro Antwort beim Ausruhen."
  },
  "nodes/scarecrow_4/name": {
   "en": "Whirligig Scarecrow",
@@ -7865,7 +7865,7 @@
  },
  "nodes/scarecrow_4/desc": {
   "en": "Spinning pinwheels and rattling cans: removes 3 pests per question.",
-  "de": ""
+  "de": "Drehende Windräder und klappernde Dosen: verjagt 3 Schädlinge pro Frage."
  },
  "nodes/stick_fence/name": {
   "en": "Rickety Stick Fence",
@@ -7873,7 +7873,7 @@
  },
  "nodes/stick_fence/desc": {
   "en": "Crooked sticks tied with string round the Home Field: better than nothing — a few pests stay out.",
-  "de": ""
+  "de": "Krumme Stöcke, mit Schnur ums Hausfeld gebunden: besser als nichts — ein paar Schädlinge bleiben draußen."
  },
  "nodes/wattle_fence/name": {
   "en": "Woven Wattle Fence",
@@ -7881,7 +7881,7 @@
  },
  "nodes/wattle_fence/desc": {
   "en": "Woven willow: 30% fewer pests arrive.",
-  "de": ""
+  "de": "Geflochtene Weide: 30% weniger Schädlinge kommen."
  },
  "nodes/wattle_fence/steps/0/name": {
   "en": "Raise the beams",
@@ -7901,7 +7901,7 @@
  },
  "nodes/picket_fence/desc": {
   "en": "A neat, low row of pointed stakes with no gaps between them: mice and rabbits stay out, and you can still see the whole field.",
-  "de": ""
+  "de": "Eine ordentliche, niedrige Reihe spitzer Pfähle ohne Lücken: Mäuse und Kaninchen bleiben draußen, und du siehst trotzdem das ganze Feld."
  },
  "nodes/picket_fence/steps/0/name": {
   "en": "Fit the planks",
@@ -7917,7 +7917,7 @@
  },
  "nodes/stone_wall/desc": {
   "en": "All those frost-heaved stones become a wall: 55% fewer pests arrive.",
-  "de": ""
+  "de": "Aus all den vom Frost hochgedrückten Steinen wird eine Mauer: 55% weniger Schädlinge kommen."
  },
  "nodes/stone_wall/steps/0/name": {
   "en": "Lay the stones",
@@ -7933,7 +7933,7 @@
  },
  "nodes/hedge_row/desc": {
   "en": "A living fence full of birds that eat bugs: 65% fewer pests arrive.",
-  "de": ""
+  "de": "Ein lebendiger Zaun voller Vögel, die Käfer fressen: 65% weniger Schädlinge kommen."
  },
  "nodes/hedge_row/steps/0/name": {
   "en": "Set the sticks",
@@ -7949,7 +7949,7 @@
  },
  "nodes/barn_cat/desc": {
   "en": "The kitten stayed! She prowls round the fields, chases off birds and mice — and naps a lot. Fewer pests come, and fewer of them stay.",
-  "de": ""
+  "de": "Das Kätzchen ist geblieben! Es streift über die Felder, verjagt Vögel und Mäuse — und schläft viel. Weniger Schädlinge kommen, und weniger bleiben."
  },
  "nodes/retting_trough/name": {
   "en": "Retting Trough",
@@ -7957,7 +7957,7 @@
  },
  "nodes/retting_trough/desc": {
   "en": "A clay-lined trough next to the pond: soak two more batches of flax at once.",
-  "de": ""
+  "de": "Ein mit Lehm ausgekleideter Trog neben dem Teich: Weiche zwei Ladungen Flachs mehr auf einmal ein."
  },
  "nodes/owl_box/name": {
   "en": "Owl Box",
@@ -7965,7 +7965,7 @@
  },
  "nodes/owl_box/desc": {
   "en": "An owl hunts mice at night: removes 0.4 pests per question.",
-  "de": ""
+  "de": "Eine Eule jagt nachts Mäuse: verjagt 0,4 Schädlinge pro Frage."
  },
  "nodes/duck_house/name": {
   "en": "Duck House",
@@ -7973,7 +7973,7 @@
  },
  "nodes/duck_house/desc": {
   "en": "Ducks love slugs: removes 0.3 pests per question.",
-  "de": ""
+  "de": "Enten lieben Schnecken: verjagt 0,3 Schädlinge pro Frage."
  },
  "nodes/cooking_tripod/name": {
   "en": "Cooking Tripod",
@@ -7981,7 +7981,7 @@
  },
  "nodes/cooking_tripod/desc": {
   "en": "Hangs the pot right in the flames: the campfire uses 30% less fuel. (Choice slot: only one item per station works at a time — swap any time.)",
-  "de": ""
+  "de": "Hängt den Topf direkt in die Flammen: Das Lagerfeuer braucht 30% weniger Brennholz. (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
  },
  "nodes/oven_tray/name": {
   "en": "Second Baking Tray",
@@ -7989,7 +7989,7 @@
  },
  "nodes/oven_tray/desc": {
   "en": "Bake two batches at once. (Choice slot: only one item per station works at a time — swap any time.)",
-  "de": ""
+  "de": "Zwei Ladungen auf einmal backen. (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
  },
  "nodes/tall_chimney/name": {
   "en": "Tall Kiln Chimney",
@@ -7997,7 +7997,7 @@
  },
  "nodes/tall_chimney/desc": {
   "en": "Better draught: the kiln uses 30% less fuel. (Choice slot: only one item per station works at a time — swap any time.)",
-  "de": ""
+  "de": "Besserer Zug: Der Brennofen braucht 30% weniger Brennholz. (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
  },
  "nodes/glaze_shelf/name": {
   "en": "Extra Kiln Shelf",
@@ -8005,7 +8005,7 @@
  },
  "nodes/glaze_shelf/desc": {
   "en": "One more batch in the kiln. (Choice slot: only one item per station works at a time — swap any time.)",
-  "de": ""
+  "de": "Eine Ladung mehr im Brennofen. (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
  },
  "nodes/quench_trough/name": {
   "en": "Quench Trough",
@@ -8013,7 +8013,7 @@
  },
  "nodes/quench_trough/desc": {
   "en": "Properly hardened tools stay sharp twice as long (polish wears off half as fast). (Choice slot: only one item per station works at a time — swap any time.)",
-  "de": ""
+  "de": "Richtig gehärtetes Werkzeug bleibt doppelt so lange scharf (die Pflege nutzt sich halb so schnell ab). (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
  },
  "nodes/canvas_sails/name": {
   "en": "Linen Sails",
@@ -8021,7 +8021,7 @@
  },
  "nodes/canvas_sails/desc": {
   "en": "Catch more wind: milling 20% faster. (Choice slot: only one item per station works at a time — swap any time.)",
-  "de": ""
+  "de": "Fangen mehr Wind: Mahlen 20% schneller. (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
  },
  "nodes/sack_hoist/name": {
   "en": "Sack Hoist",
@@ -8029,7 +8029,7 @@
  },
  "nodes/sack_hoist/desc": {
   "en": "Grain goes up by rope: one more batch at a time. (Choice slot: only one item per station works at a time — swap any time.)",
-  "de": ""
+  "de": "Das Korn wird am Seil hochgezogen: eine Ladung mehr gleichzeitig. (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
  },
  "nodes/flying_shuttle/name": {
   "en": "Flying Shuttle",
@@ -8037,7 +8037,7 @@
  },
  "nodes/flying_shuttle/desc": {
   "en": "The shuttle shoots across by itself: weaving −20% energy. (Choice slot: only one item per station works at a time — swap any time.)",
-  "de": ""
+  "de": "Der Webschütze schießt von selbst hinüber: Weben −20% Energie. (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
  },
  "nodes/wide_beam/name": {
   "en": "Wide Loom Beam",
@@ -8045,7 +8045,7 @@
  },
  "nodes/wide_beam/desc": {
   "en": "Wider cloth from the same yarn: +15% cloth. (Choice slot: only one item per station works at a time — swap any time.)",
-  "de": ""
+  "de": "Breiterer Stoff aus demselben Garn: +15% Stoff. (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
  },
  "nodes/worm_starter/name": {
   "en": "Worm Starter",
@@ -8053,7 +8053,7 @@
  },
  "nodes/worm_starter/desc": {
   "en": "A handful of worms in the heap: +15% compost. (Choice slot: only one item per station works at a time — swap any time.)",
-  "de": ""
+  "de": "Eine Handvoll Würmer im Haufen: +15% Kompost. (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
  },
  "nodes/perches/name": {
   "en": "Roosting Perches",
@@ -8061,7 +8061,7 @@
  },
  "nodes/perches/desc": {
   "en": "Hens sleep up high: 30% less muck in the coop. (Choice slot: only one item per station works at a time — swap any time.)",
-  "de": ""
+  "de": "Hühner schlafen oben: 30% weniger Mist im Hühnerstall. (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
  },
  "nodes/drain_gutter/name": {
   "en": "Barn Drain Gutter",
@@ -8069,7 +8069,7 @@
  },
  "nodes/drain_gutter/desc": {
   "en": "A stone gutter carries the wet away: 30% less muck in the barn. (Choice slot: only one item per station works at a time — swap any time.)",
-  "de": ""
+  "de": "Eine Steinrinne leitet das Nasse ab: 30% weniger Mist in der Scheune. (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
  },
  "nodes/flower_strip/name": {
   "en": "Wildflower Strip",
@@ -8077,7 +8077,7 @@
  },
  "nodes/flower_strip/desc": {
   "en": "Flowers all season: +15% honeycomb, a few pests fewer. (Choice slot: only one item per station works at a time — swap any time.)",
-  "de": ""
+  "de": "Blumen die ganze Saison: +15% Honigwaben, ein paar Schädlinge weniger. (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
  },
  "nodes/polish_knife/name": {
   "en": "Sharpen the knife",
@@ -8085,7 +8085,7 @@
  },
  "nodes/polish_knife/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_axe/name": {
   "en": "Sharpen the axe & saw",
@@ -8093,7 +8093,7 @@
  },
  "nodes/polish_axe/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_shovel/name": {
   "en": "Clean & oil the shovel",
@@ -8101,7 +8101,7 @@
  },
  "nodes/polish_shovel/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_hoe/name": {
   "en": "Sharpen the hoe",
@@ -8109,7 +8109,7 @@
  },
  "nodes/polish_hoe/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_rootout/name": {
   "en": "Root out the weeds",
@@ -8117,7 +8117,7 @@
  },
  "nodes/polish_rootout/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly. The weeds you root out go to the store as plant fibre (more each time).",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab. Das ausgerissene Unkraut kommt als Pflanzenfaser ins Lager (jedes Mal mehr)."
  },
  "nodes/polish_bed/name": {
   "en": "Air the bed & fresh straw",
@@ -8125,7 +8125,7 @@
  },
  "nodes/polish_bed/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_well/name": {
   "en": "Clean out the well",
@@ -8133,7 +8133,7 @@
  },
  "nodes/polish_well/desc": {
   "en": "Clean out the well: every trip brings a little more.",
-  "de": ""
+  "de": "Den Brunnen säubern: Jeder Gang bringt ein bisschen mehr."
  },
  "nodes/polish_fire/name": {
   "en": "Sweep the fire pit",
@@ -8141,7 +8141,7 @@
  },
  "nodes/polish_fire/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_quern/name": {
   "en": "Dress the millstones",
@@ -8149,7 +8149,7 @@
  },
  "nodes/polish_quern/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_scarecrow/name": {
   "en": "Re-stuff the scarecrow",
@@ -8157,7 +8157,7 @@
  },
  "nodes/polish_scarecrow/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_fence/name": {
   "en": "Mend the fence",
@@ -8165,7 +8165,7 @@
  },
  "nodes/polish_fence/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_coop/name": {
   "en": "Fresh nest straw",
@@ -8173,7 +8173,7 @@
  },
  "nodes/polish_coop/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_workbench/name": {
   "en": "Tidy the workbench",
@@ -8181,7 +8181,7 @@
  },
  "nodes/polish_workbench/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_kiln/name": {
   "en": "Patch the kiln lining",
@@ -8189,7 +8189,7 @@
  },
  "nodes/polish_kiln/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_boots/name": {
   "en": "Wax the boots",
@@ -8197,7 +8197,7 @@
  },
  "nodes/polish_boots/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_brush/name": {
   "en": "Brush the cows",
@@ -8205,7 +8205,7 @@
  },
  "nodes/polish_brush/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_hives/name": {
   "en": "Clean the hive frames",
@@ -8213,7 +8213,7 @@
  },
  "nodes/polish_hives/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_library/name": {
   "en": "Dust the shelves",
@@ -8221,7 +8221,7 @@
  },
  "nodes/polish_library/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_loom/name": {
   "en": "Oil the loom & spindle",
@@ -8229,7 +8229,7 @@
  },
  "nodes/polish_loom/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_hammer/name": {
   "en": "Re-wedge the hammer",
@@ -8237,7 +8237,7 @@
  },
  "nodes/polish_hammer/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_shears/name": {
   "en": "Sharpen the shears",
@@ -8245,7 +8245,7 @@
  },
  "nodes/polish_shears/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "nodes/polish_forge/name": {
   "en": "Tune the bellows",
@@ -8253,7 +8253,7 @@
  },
  "nodes/polish_forge/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
-  "de": ""
+  "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
  "items/stick/name": {
   "en": "Stick",
