@@ -1511,43 +1511,29 @@ func _sheet_patch(a: String, i: int) -> void:
 		content.add_child(UI.label("🌱".repeat(cap) + "  fits here", 17, UI.MUTED, true))
 		var cs: Array = G.crops_for(a)
 		if cs.is_empty(): content.add_child(UI.label("No seeds you can plant here yet. Learn crop cards in the 📦 library.", 17, UI.MUTED, true))
+		# every crop that can go here is a tile: picture, plants and growing time, water and energy, seeds, Plant at the bottom
+		var grid := _grid()
 		for cid in cs:
 			var n: Dictionary = G.nodes[cid]
 			var plan: Dictionary = G.plant_plan(a, cid)
-			var pc := UI.card()
-			var row := UI.hbox(8)
-			pc.add_child(row)
-			var ct: Texture2D = Art.tex("crops", cid)
-			if ct:
-				var tr := TextureRect.new()
-				tr.texture = ct
-				tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-				tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-				tr.custom_minimum_size = Vector2(52, 52)
-				row.add_child(tr)
-			else:
-				row.add_child(UI.label(str(n.get("emoji", "🌱")), 36))
-			var v := UI.vbox(2)
-			row.add_child(v)
 			var plants := int(plan["plants"])
-			v.add_child(UI.label("%s   %s   ⏳%d" % [n["name"], "🌱".repeat(maxi(plants, 0)) if plants > 0 else "—", int(n.get("grow", 0))], 17, UI.INK, true))
+			var t := _tile(Art.tex("crops", cid), str(n.get("emoji", "🌱")), str(n["name"]))
+			t.add_child(UI.label("%s   ⏳%d" % ["🌱".repeat(maxi(plants, 0)) if plants > 0 else "—", int(n.get("grow", 0))], 16, UI.INK, true))
 			# short of water: show the water a full patch needs, so the missing cubes show up hollow
 			var short: bool = plan["reasons"].has("water")
 			var c := {"water": float(plan["water_full" if short else "water"]), "energy": float(plan["energy"])}
 			var base := {"water": float(plan["water_full_base" if short else "water_base"]), "energy": float(plan["energy_base"])}
-			var cr := UI.hbox(10)
-			cr.add_child(_costs(c, base))
-			cr.add_child(UI.label("🌰 %d" % G.down(G.seed_have(cid)), 16, UI.INK if G.seed_have(cid) >= 1.0 else UI.RED))
-			v.add_child(cr)
+			t.add_child(_costs(c, base))
+			t.add_child(UI.label("🌰 %d" % G.down(G.seed_have(cid)), 16, UI.INK if G.seed_have(cid) >= 1.0 else UI.RED))
 			if plants < int(plan["max"]) and plan["reasons"].size() > 0:
 				var why := []
 				for rk in plan["reasons"]: why.append(G.iemoji(rk) if rk != "seeds" else "🌰")
-				v.add_child(UI.label("fewer: " + " ".join(why), 14, UI.MUTED))
-			var pb := UI.action_button("plant", _do_plant.bind(a, i, cid), plants >= 1)
-			row.add_child(pb)
-			content.add_child(pc)
+				t.add_child(UI.label("fewer: " + " ".join(why), 14, UI.MUTED))
 			if G.seed_have(cid) < 1.0 and not n.has("seedItem"):
-				v.add_child(UI.soft_button("🛒 Buy seeds at the market", _go_spot.bind("market"), true, 15))
+				t.add_child(UI.soft_button("🛒 Buy seeds", _go_spot.bind("market"), true, 15))
+			_tile_button(t, UI.action_button("plant", _do_plant.bind(a, i, cid), plants >= 1))
+			grid.add_child(t.get_meta("panel"))
+		if grid.get_child_count() > 0: content.add_child(grid)
 	else:
 		var n2: Dictionary = G.nodes[p["crop"]]
 		var ct2: Texture2D = Art.tex("crops", str(p["crop"]))
@@ -1582,20 +1568,21 @@ func _sheet_patch(a: String, i: int) -> void:
 			hr.add_child(_costs({"energy": e1}, {"energy": 1.0}))
 			content.add_child(hr)
 	if a == "field":
+		# weeds and stones on the patch: a tile each, with how many there are and the button to clear them
+		var wg := _grid()
 		if float(p["weeds"]) >= 0.5:
-			var wr := UI.hbox(8)
-			wr.add_child(UI.label("🌿", 22))
-			wr.add_child(UI.explain(UI.stock_bar(float(p["weeds"]), maxf(6.0, ceilf(float(p["weeds"]))), UI.item_color("fiber"), 150), "🌿 Weeds here: they make the harvest smaller. Pull them!"))
+			var wt := _tile(Art.tex("deco", "weeds"), "🌿", "Weeds")
+			wt.add_child(UI.explain(UI.stock_bar(float(p["weeds"]), maxf(6.0, ceilf(float(p["weeds"]))), UI.item_color("fiber"), 150), "🌿 Weeds here: they make the harvest smaller. Pull them!"))
 			var pull := minf(3.0, float(p["weeds"]))
-			wr.add_child(_costs({"energy": G.ecost("weed", pull) * G.m("energy:field")}, {"energy": pull}))
-			wr.add_child(UI.action_button("weed", _do_weed.bind(i), true, UI.GREEN_DARK, "💪", "Pull"))
-			content.add_child(wr)
+			wt.add_child(_costs({"energy": G.ecost("weed", pull) * G.m("energy:field")}, {"energy": pull}))
+			_tile_button(wt, UI.action_button("weed", _do_weed.bind(i), true, UI.GREEN_DARK, "💪", "Pull"))
+			wg.add_child(wt.get_meta("panel"))
 		if float(p["stones"]) >= 0.5:
-			var sr := UI.hbox(8)
-			sr.add_child(UI.label("🪨", 22))
-			sr.add_child(UI.explain(UI.stock_bar(float(p["stones"]), maxf(6.0, ceilf(float(p["stones"]))), UI.item_color("stone"), 150), "🪨 Stones in the soil: they make the harvest smaller. Pick them out."))
-			sr.add_child(UI.action_button("field", _do_stones.bind(i), true, UI.SOIL, "🤏", "Pick"))
-			content.add_child(sr)
+			var st := _tile(Art.tex("deco", "stone"), "🪨", "Stones")
+			st.add_child(UI.explain(UI.stock_bar(float(p["stones"]), maxf(6.0, ceilf(float(p["stones"]))), UI.item_color("stone"), 150), "🪨 Stones in the soil: they make the harvest smaller. Pick them out."))
+			_tile_button(st, UI.action_button("field", _do_stones.bind(i), true, UI.SOIL, "🤏", "Pick"))
+			wg.add_child(st.get_meta("panel"))
+		if wg.get_child_count() > 0: content.add_child(wg)
 
 func _do_plant(a: String, i: int, cid: String) -> void:
 	var plan: Dictionary = G.plant_plan(a, cid)
@@ -2041,9 +2028,12 @@ func _section(title: String, note := "") -> void:
 const VERB := {"building": "🔨", "station": "🔨", "tool": "🛠️", "gear": "🧵", "helper": "🔨", "land": "💪",
 	"patch": "🟫", "delivery": "📦", "pet": "🐾", "sidequest": "🤝", "book": "🛒"}
 
-func _node_row(id: String, show_button := true, show_place := false) -> PanelContainer:
+## A goal as a card. tile = true: for a grid (the button goes to the bottom, as wide as the card).
+func _node_row(id: String, show_button := true, show_place := false, tile := false) -> PanelContainer:
 	var n: Dictionary = G.nodes[id]
 	var pc := UI.card()
+	if tile: pc.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var bottom: Button = null
 	var v := UI.vbox(3)
 	pc.add_child(v)
 	var h := UI.hbox(6)
@@ -2059,11 +2049,13 @@ func _node_row(id: String, show_button := true, show_place := false) -> PanelCon
 		var verb: String = VERB.get(n["type"], "✔")
 		if steps.size() > 0: verb = str(steps[mini(G.step_index(id), steps.size() - 1)].get("emoji", verb))
 		if n.get("perPatch", false): verb += " %d/%d" % [G.patch_progress(id), G.plots()]
+		var b: Button
 		if str(ck.get("why", "")) == "wait":
-			h.add_child(UI.wait_button(int(ck["wait"]), _show_time_quiz))      # the mortar is drying: wait for the next step
+			b = UI.wait_button(int(ck["wait"]), _show_time_quiz)      # the mortar is drying: wait for the next step
 		else:
-			var b := UI.action_button("", _do_unlock.bind(id), ck["ok"], UI.GREEN, verb, _node_word(id))
-			h.add_child(b)
+			b = UI.action_button("", _do_unlock.bind(id), ck["ok"], UI.GREEN, verb, _node_word(id))
+		if tile: bottom = b
+		else: h.add_child(b)
 	if steps.size() > 0:
 		# done in steps: how far it is (cubes) and what the next step is
 		var sr := UI.hbox(6)
@@ -2087,7 +2079,14 @@ func _node_row(id: String, show_button := true, show_place := false) -> PanelCon
 	if n.has("effects"):
 		var et := _effect_text(n["effects"])
 		if et != "": v.add_child(UI.label("✨ " + et, 15, UI.GREEN_DARK, true))
+	if bottom: _tile_button(v, bottom)
 	return pc
+
+## Goals as a grid of cards (two per row: they carry more words than a recipe).
+func _node_grid(ids: Array) -> GridContainer:
+	var g := _grid(2)
+	for id in ids: g.add_child(_node_row(id, true, false, true))
+	return g
 
 ## One word for a goal's button: the step's own word ("Lay", "Raise", "Pull" …), the node's "verb", or by its kind.
 func _node_word(id: String) -> String:
@@ -2198,12 +2197,12 @@ func _part_main_goals(sid: String, main: Array) -> void:
 	if main.is_empty(): return
 	_section("🤝 Favours for neighbours" if sid == "board" else ("📦 Orders to deliver" if sid == "market" else "🔨 To do here"),
 		"Help someone: the reward is a picture for your album, and a bit of luck." if sid == "board" else "")
-	for id in main: content.add_child(_node_row(id))
+	content.add_child(_node_grid(main))
 
 func _part_more_goals(sid: String, main: Array, opt: Array, soon: Array) -> void:
 	if not opt.is_empty():
 		_section("🧰 Upgrades (optional)", "Never required — they make work cheaper for good.")
-		for id in opt: content.add_child(_node_row(id))
+		content.add_child(_node_grid(opt))
 	# what comes later is not shown here: only what can be done now (the quest book has this chapter's next steps)
 
 func _part_polish_here(sid: String) -> void:
@@ -2212,22 +2211,25 @@ func _part_polish_here(sid: String) -> void:
 		if Spots.in_spot(G, pid, sid) and G.polish_open(pid): ids.append(pid)
 	if ids.is_empty(): return
 	_section("✨ Polish", "Sharpen, oil, clean… The first time helps most; every next time adds half as much and costs more. Use wears it off slowly.")
-	for pid in ids: content.add_child(_polish_card(pid))
+	var g := _grid(2)
+	for pid in ids: g.add_child(_polish_card(pid))
+	content.add_child(g)
 
 func _polish_card(pid: String) -> PanelContainer:
 	var n: Dictionary = G.nodes[pid]
 	var p: float = G.polish_level(pid)
 	var pc := UI.card()
-	var v := UI.vbox(2)
+	pc.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var v := UI.vbox(3)
 	pc.add_child(v)
+	v.add_child(UI.label("%s %s" % [n.get("emoji", ""), n["name"]], 17, UI.INK, true))
 	var h := UI.hbox(6)
-	h.add_child(UI.label("%s %s" % [n.get("emoji", ""), n["name"]], 17, UI.INK, true))
-	h.add_child(UI.explain(UI.bar(G.polish_gain(pid, p), 80, 10, UI.AMBER), "✨ How polished it is: the fuller, the stronger it works."))
+	h.add_child(UI.explain(UI.bar(G.polish_gain(pid, p), 120, 10, UI.AMBER), "✨ How polished it is: the fuller, the stronger it works."))
 	h.add_child(UI.label("%d%%→%d%%" % [int(round(G.polish_gain(pid, p) * 100)), int(round(G.polish_gain(pid, floorf(p) + 1.0) * 100))], 14, UI.MUTED))
-	var c: Dictionary = G.polish_cost(pid)
-	h.add_child(UI.button("✨ " + G.cost_text(c), G.do_polish.bind(pid), G.missing_cost(c).is_empty(), UI.AMBER, 15))
 	v.add_child(h)
 	v.add_child(UI.label("At full polish: " + _effect_text(n.get("effects", {})), 14, UI.GREEN_DARK, true))
+	var c: Dictionary = G.polish_cost(pid)
+	_tile_button(v, UI.button("✨ " + G.cost_text(c), G.do_polish.bind(pid), G.missing_cost(c).is_empty(), UI.AMBER, 16))
 	return pc
 
 func _part_woodpile() -> void:
@@ -2274,9 +2276,14 @@ func _station_card(root: String) -> PanelContainer:
 			else:
 				ah.add_child(UI.label("(%s %s: build it below) " % [hn.get("emoji", ""), hn["name"]], 13, UI.MUTED))
 		v.add_child(ah)
+	# every open recipe is a tile in a grid (picture, name, what it gives, its cost, and its button at the bottom);
+	# recipes waiting for something of this chapter are listed below the grid
+	var grid := _grid()
+	var locked := []
 	for rid in G.station_recipes_for(root):
 		var r: Dictionary = G.recipes[rid]
-		var title := str(r.get("name", G.iname(r["outputs"].keys()[0])))
+		var out0: String = r["outputs"].keys()[0]
+		var title := str(r.get("name", G.iname(out0)))
 		if not G.recipe_open(rid):
 			var why := []
 			var later := false
@@ -2284,9 +2291,8 @@ func _station_card(root: String) -> PanelContainer:
 				if not G.satisfied(q):
 					why.append(G.nodes[q].get("emoji", "") + " " + G.nodes[q]["name"])
 					if not _in_chapter(q) or not G.missing_reqs(q).is_empty(): later = true
-			if not later: v.add_child(UI.label("🔒 %s — needs %s" % [title, ", ".join(why)], 14, UI.MUTED, true))
+			if not later: locked.append("🔒 %s — needs %s" % [title, ", ".join(why)])
 			continue
-		var row := UI.hbox(6)
 		var outs := []
 		var batch: int = G.recipe_batch(rid)     # carrying gear: a bigger load per tap (and more energy)
 		for k in r["outputs"]: outs.append("%s%s" % [G.iemoji(k), _num(float(r["outputs"][k]) * G.m("out:" + r["station"]) * batch)])
@@ -2303,27 +2309,29 @@ func _station_card(root: String) -> PanelContainer:
 		if tm > 0.0: extra.append("⏳%d" % G.up(tm))
 		for k in r.get("keeps", []): extra.append("keeps %s" % G.iemoji(k))
 		var wv: Vector2 = G.recipe_worth(rid)
-		if wv.y > 0.0: extra.append("[color=#3c8a3c]🪙%s → 🪙%s[/color]" % [_num(wv.x), _num(wv.y)])
-		var rv := UI.vbox(2)
-		rv.add_child(UI.rich("[b]%s[/b] → %s  [color=#7a705c]%s[/color]" % [title, " ".join(outs), " ".join(extra)], 16))
-		rv.add_child(_costs(c, base))
-		row.add_child(rv)
+		var t := _tile(Art.first("items", [out0]), G.iemoji(out0), title)
+		t.add_child(UI.rich("→ %s  [color=#7a705c]%s[/color]%s" % [" ".join(outs), " ".join(extra),
+			("\n[color=#3c8a3c]🪙%s → 🪙%s[/color]" % [_num(wv.x), _num(wv.y)]) if wv.y > 0.0 else ""], 15))
+		t.add_child(_costs(c, base))
 		var have_all: bool = G.missing_cost(G.recipe_cost(rid, 1)).is_empty() and _have_any("fuel") + 0.001 >= fuel   # a smaller load still works
 		# everything else is there, only the woodpile needs wood first: then the button stokes it
 		var stoke_now: bool = fuel > 0.0 and _have_any("fuel") + 0.001 < fuel and G.missing_cost(G.recipe_cost(rid, 1)).is_empty()
 		var left: float = G.recipe_left(rid)
+		var btn: Button
 		if left > 0.0:
-			row.add_child(UI.wait_button(G.up(left), _show_time_quiz))                         # this one is cooking / refilling
+			btn = UI.wait_button(G.up(left), _show_time_quiz)                         # this one is cooking / refilling
 		elif running.size() >= G.station_slots(root):
-			row.add_child(UI.wait_button(soonest if soonest < 999 else 1, _show_time_quiz))    # busy: wait for a batch
+			btn = UI.wait_button(soonest if soonest < 999 else 1, _show_time_quiz)    # busy: wait for a batch
 		elif stoke_now:
 			var can: bool = G.fuel_in_store() + float(G.S["woodpile"]) + 0.001 >= fuel
-			var sb := UI.action_button("cook", _stoke.bind(fuel), can, UI.AMBER, "🪵", "Stoke" if can else "Need wood")
-			sb.tooltip_text = "Put wood on the woodpile first: %d fuel." % G.up(fuel)
-			row.add_child(sb)
+			btn = UI.action_button("cook", _stoke.bind(fuel), can, UI.AMBER, "🪵", "Stoke" if can else "Need wood")
+			btn.tooltip_text = "Put wood on the woodpile first: %d fuel." % G.up(fuel)
 		else:
-			row.add_child(UI.action_button(G.recipe_cat(rid), G.start_recipe.bind(rid), have_all, UI.GREEN, "", str(r.get("verb", ""))))
-		v.add_child(row)
+			btn = UI.action_button(G.recipe_cat(rid), G.start_recipe.bind(rid), have_all, UI.GREEN, "", str(r.get("verb", "")))
+		_tile_button(t, btn)
+		grid.add_child(t.get_meta("panel"))
+	if grid.get_child_count() > 0: v.add_child(grid)
+	for line in locked: v.add_child(UI.label(line, 14, UI.MUTED, true))
 	return pc
 
 func _do_cut_tree(a: String, i: int) -> void:
@@ -2351,25 +2359,24 @@ func _animal_card(aid: String) -> PanelContainer:
 	h.add_child(UI.button("Buy one  " + G.cost_text(G.animal_price(aid)), G.buy_animal.bind(aid), can_buy, UI.GREEN, 16))
 	v.add_child(UI.label(str(n.get("desc", "")), 15, UI.MUTED, true))
 	if G.animal_cap(aid) <= 0: v.add_child(UI.label("No room yet: build them a home first.", 15, UI.RED, true))
+	var ag := _grid(2)
 	if int(a["count"]) > 0:
 		var ready: bool = G.S["step"] >= int(a["ready"])
-		var row := UI.hbox(6)
-		row.add_child(_costs(G.feed_needs(aid), _feed_base(aid)))
-		if ready:
-			var cb := UI.action_button("animal", G.collect_animal.bind(aid), true)
-			row.add_child(cb)
-		else:
-			row.add_child(UI.wait_button(int(a["ready"]) - G.S["step"], _show_time_quiz))
-		v.add_child(row)
+		var ct := _tile(null, "🧺", "Collect · they need:")
+		ct.add_child(_costs(G.feed_needs(aid), _feed_base(aid)))
+		if ready: _tile_button(ct, UI.action_button("animal", G.collect_animal.bind(aid), true))
+		else: _tile_button(ct, UI.wait_button(int(a["ready"]) - G.S["step"], _show_time_quiz))
+		ag.add_child(ct.get_meta("panel"))
 		if n.get("needsFlowers", false):
 			v.add_child(UI.label("🌼 Flowers on the farm: %s" % ("yes" if G.has_flowers() else "none — plant clover, flax or sunflowers"), 15, UI.GREEN_DARK if G.has_flowers() else UI.RED, true))
 		if float(n.get("muck", 0.0)) > 0.0:
 			var mf: float = G.muck_factor(aid)
-			var mrow := UI.hbox(6)
-			mrow.add_child(UI.label("💩 Muck %d %s" % [G.down(a["muck"]), "" if mf >= 1.0 else "— animals give %d%% less!" % int(round((1.0 - mf) * 100))], 16, UI.INK if mf >= 1.0 else UI.RED, true))
-			mrow.add_child(_costs({"energy": G.ecost("animal", float(a["muck"]) * 0.5)}, {"energy": float(a["muck"]) * 0.5}))
-			mrow.add_child(UI.action_button("animal", G.muck_out.bind(aid), float(a["muck"]) >= 0.5, UI.SOIL, "🧹", "Clean"))
-			v.add_child(mrow)
+			var mt := _tile(null, "💩", "Muck %d" % G.down(a["muck"]))
+			if mf < 1.0: mt.add_child(UI.label("Animals give %d%% less!" % int(round((1.0 - mf) * 100)), 15, UI.RED, true))
+			mt.add_child(_costs({"energy": G.ecost("animal", float(a["muck"]) * 0.5)}, {"energy": float(a["muck"]) * 0.5}))
+			_tile_button(mt, UI.action_button("animal", G.muck_out.bind(aid), float(a["muck"]) >= 0.5, UI.SOIL, "🧹", "Clean"))
+			ag.add_child(mt.get_meta("panel"))
+	if ag.get_child_count() > 0: v.add_child(ag)
 	return pc
 
 ## What a collection would need without any upgrade (to show the saving as grey cubes).
@@ -2544,9 +2551,9 @@ func _part_jobs() -> void:
 const CAT_ORDER := ["crop", "animal", "ingredient", "dish", "material", "textile", "fertilizer", "byproduct", "feed", "fuel", "container", "craft", "find", "seed", "keeper", "pet-item"]
 
 ## A grid for long lists (the store, the market): 3 tiles in a row (4 on wide screens).
-func _grid() -> GridContainer:
+func _grid(cols := 3) -> GridContainer:
 	var g := GridContainer.new()
-	g.columns = 4 if size.x >= 900 else 3
+	g.columns = cols + 1 if size.x >= 900 else cols
 	g.add_theme_constant_override("h_separation", 8)
 	g.add_theme_constant_override("v_separation", 8)
 	return g
@@ -2573,6 +2580,15 @@ func _tile(pic: Texture2D, emoji: String, title: String, bg := UI.PAPER) -> VBox
 	v.add_child(top)
 	v.set_meta("panel", pc)
 	return v
+
+## The action button at the bottom of a tile: as wide as the tile, pushed to the bottom so the buttons of a row line up.
+func _tile_button(t: VBoxContainer, btn: Button) -> void:
+	var sp := Control.new()
+	sp.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	t.add_child(sp)
+	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	btn.custom_minimum_size = Vector2(0, maxf(btn.custom_minimum_size.y, 52))
+	t.add_child(btn)
 
 func _part_pantry() -> void:
 	var ready_n := _ready_count("field") + _ready_count("orchard") + _ready_count("gh")
@@ -2702,53 +2718,52 @@ func _part_library() -> void:
 		if G.nodes[bid]["type"] != "book" or not G.done(bid): continue
 		var bn2: Dictionary = G.nodes[bid]
 		_section("%s %s" % [bn2.get("emoji", ""), bn2["name"]])
+		var cg := _grid()
 		for cid in G.card_ids:
 			if G.nodes[cid]["requires"][0] != bid: continue
 			if not _in_chapter(cid) and not G.done(cid): continue
-			content.add_child(_card_row(cid))
+			cg.add_child(_card_tile(cid))
+		content.add_child(cg)
 
 ## Starting to read a card shows its page at once (and the reading takes a few Time Quiz questions).
 func _start_reading(cid: String) -> void:
 	if G.start_reading(cid): _card_page(cid)
 
-func _card_row(cid: String) -> HBoxContainer:
+## A knowledge card as a tile: what it is about, where it stands (learned with stars, quiz waiting, being read, can be read,
+## locked) and the button for the next thing to do with it at the bottom.
+func _card_tile(cid: String) -> PanelContainer:
 	var n: Dictionary = G.nodes[cid]
 	var st: String = G.card_status(cid)
-	var row := UI.hbox(6)
-	var t := "%s %s" % [n.get("emoji", ""), n["name"]]
+	var bg: Color = {"learned": Color("eef6e4"), "quiz": Color("fdf3dc"), "reading": Color("e8f0f8"), "readable": UI.PAPER}.get(st, Color("f1ede4"))
+	var t := _tile(null, str(n.get("emoji", "📄")), str(n["name"]), bg)
 	match st:
 		"learned":
 			var box_n := int(G.S["cards"].get(cid, {}).get("box", 1))
-			row.add_child(UI.label("✅ " + t + "  " + "⭐".repeat(box_n), 17, UI.GREEN_DARK, true))
-			row.add_child(UI.soft_button("📖", _card_page.bind(cid), true, 20))
+			t.add_child(UI.label("✅ " + "⭐".repeat(box_n), 16, UI.GREEN_DARK))
+			_tile_button(t, UI.soft_button("📖 Read again", _card_page.bind(cid), true, 16))
 		"quiz":
-			row.add_child(UI.label("❓ " + t, 17, UI.INK, true))
-			var qb := UI.button("❓", _show_card.bind(cid), true, UI.GREEN, 22)
-			qb.custom_minimum_size = Vector2(0, 46)
-			row.add_child(qb)
+			t.add_child(UI.label("Read! Now its quiz.", 15, UI.INK, true))
+			_tile_button(t, UI.button("❓ Quiz", _show_card.bind(cid), true, UI.GREEN, 20))
 		"reading":
-			row.add_child(UI.label("📖 " + t, 17, UI.BLUE, true))
-			row.add_child(UI.explain(UI.stock_bar(float(G.S["read_progress"]), ceilf(G.read_needed(cid)), UI.BLUE, 120), "📖 Pages read: each Time Quiz question turns one."))
-			row.add_child(UI.wait_button(maxi(1, G.up(G.read_needed(cid) - float(G.S["read_progress"]))), _show_time_quiz))
+			t.add_child(UI.explain(UI.stock_bar(float(G.S["read_progress"]), ceilf(G.read_needed(cid)), UI.BLUE, 120), "📖 Pages read: each Time Quiz question turns one."))
+			_tile_button(t, UI.wait_button(maxi(1, G.up(G.read_needed(cid) - float(G.S["read_progress"]))), _show_time_quiz))
 		"readable":
 			var rq: int = G.up(G.read_needed(cid) * G.m("read"))
-			row.add_child(UI.label("📖 %s  (reading takes %d question%s)" % [t, rq, "" if rq == 1 else "s"], 17, UI.INK, true))
-			var sb := UI.button("📖", _start_reading.bind(cid), G.S["reading"] == "", UI.BLUE, 22)
-			sb.custom_minimum_size = Vector2(0, 46)
-			row.add_child(sb)
+			t.add_child(UI.label("Reading takes %d question%s" % [rq, "" if rq == 1 else "s"], 15, UI.MUTED, true))
+			_tile_button(t, UI.button("📖 Read", _start_reading.bind(cid), G.S["reading"] == "", UI.BLUE, 20))
 		"prereq":
 			var miss := []
 			for r in n["requires"]:
 				if not G.satisfied(r): miss.append(G.nodes[r]["name"])
-			row.add_child(UI.label("🔒 %s — first: %s" % [t, ", ".join(miss)], 15, UI.MUTED, true))
+			t.add_child(UI.label("🔒 First: %s" % ", ".join(miss), 14, UI.MUTED, true))
 		"discover":
 			var miss2 := []
 			for k in n.get("discover", []):
 				if not G.S["seen"].has(k): miss2.append(G.iemoji(k) + " " + G.iname(k))
-			row.add_child(UI.label("🔍 %s — find %s first" % [t, ", ".join(miss2)], 15, UI.MUTED, true))
+			t.add_child(UI.label("🔍 Find %s first" % ", ".join(miss2), 14, UI.MUTED, true))
 		_:
-			row.add_child(UI.label("🔒 " + t, 15, UI.MUTED, true))
-	return row
+			t.add_child(UI.label("🔒", 15, UI.MUTED))
+	return t.get_meta("panel")
 
 # ------------------------------------------------------------------ quest book, album, log
 func _sheet_goals() -> void:

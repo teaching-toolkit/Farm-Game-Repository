@@ -227,10 +227,11 @@ C1 a start page (category and title, level and progress, the section's medals an
 it takes, best streak, "🏁 Ready, set, go!" with a countdown). C2 a sum left on screen when the child goes back to the farm
 leaves no trace in the learning record (`pick_state`/`abandon` in the learning kit).
 
-### D. Every window as a grid (parent's list)
+### D. Every window as a grid (parent's list) — done 7 Oct 2026, waiting for the parent's check
 
-- **D1.** The planting window, and then every window with actions, uses a grid of tiles like the store and the market.
-  Done before E so each text is touched once.
+Tiles with the button at the bottom (`_tile` + `_tile_button` in `main.gd`): station recipes, planting (one tile per crop),
+weeds and stones on a patch, goals and optional upgrades (`_node_grid`, two per row), polish, animals (collect, muck out),
+library cards (`_card_tile`). Still lists: the woodpile's "+ Stick" chips, "Weed all / Pick stones", the quest book.
 
 ### E. Languages (parent's list; replaces the old "German" task)
 

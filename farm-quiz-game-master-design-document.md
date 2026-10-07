@@ -893,7 +893,9 @@ front. Only a picture's visible pixels react to taps, so a tall roof never steal
 - **Top bar:** 🪙 coins; 💧 water and ⚡ energy as rows of cubes (tap water to fetch, energy to Rest); the season bar (one thin
   stripe per question, in the season's colour); 🎒 pantry, 📖 quest book, 🖼️ album, ⚙️ settings.
 - **Tap a place → a sheet slides up** with a picture on top and everything to do there: build, stations and recipes, animals,
-  polish.
+  polish. Everything with a button is a **tile in a grid** (like the store and the market): a picture or emoji, the name,
+  what it gives and costs, and its button at the bottom, as wide as the tile — recipes, crops to plant, weeds and stones on
+  a patch, goals and upgrades (two per row), polish, collecting from animals and mucking out, and the knowledge cards.
 - **Tap a patch that is still overgrown** and the field's sheet opens with a note on top: which patch it is, what is in the way
   (weeds, rocks, stumps, scrub, marsh) and what clears it, or what is needed first. When planting, a cost the player can't
   pay shows its missing cubes hollow (e.g. the water a full patch needs).
