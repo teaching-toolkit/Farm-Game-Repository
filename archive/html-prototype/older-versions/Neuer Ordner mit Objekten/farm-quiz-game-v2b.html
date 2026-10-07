@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Farm Quiz Game – Prototype v2b</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f3efe4;
+      color: #2c3e50;
+      display: flex;
+      justify-content: center;
+    }
+    #game {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      background: linear-gradient(#c7f0ff, #f3efe4);
+      display: flex;
+      flex-direction: column;
+      padding: 8px;
+    }
+    #top-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+    .top-chip {
+      background: rgba(255,255,255,0.9);
+      border-radius: 999px;
+      padding: 4px 10px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+      white-space: nowrap;
+    }
+    .top-chip span.value { font-weight: 700; }
+    #progress-container { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+    #progress-label { font-size: 10px; opacity: 0.7; }
+    #progress-bar-shell {
+      width: 100%;
+      height: 10px;
+      background: rgba(255,255,255,0.8);
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+    #level-progress {
+      position: absolute;
+      top: 0; left: 0;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg,#ffb347,#ffcc33);
+      transition: width 0.2s ease-out;
+    }
+    button.icon-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: #ffb347;
+      color: #4a2700;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    button.icon-btn.secondary { background: #fff; color: #333; }
+    button.icon-btn:active { transform: translateY(1px); box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+
+    #play-area { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .buildings-row { display: flex; justify-content: space-between; gap: 4px; }
+    .building-slot {
+      flex: 1;
+      min-height: 56px;
+      max-width: 90px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 10px;
+      position: relative;
+      padding: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 11px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .building-emoji { font-size: 20px; margin-bottom: 2px; }
+    .building-name { font-weight: 600; }
+    .building-level { font-size: 10px; opacity: 0.75; }
+    .upgrade-arrow {
+      position: absolute;
+      top: 2px;
+      right: 4px;
+      font-size: 16px;
+      animation: bounce-arrow 0.8s ease-in-out infinite;
+    }
+    @keyframes bounce-arrow {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+
+    #farm-grid {
+      flex: 1;
+      background: #d7f0c3;
+      border-radius: 14px;
+      padding: 8px;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      grid-auto-rows: minmax(70px,1fr);
+      gap: 6px;
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,0.05);
+    }
+    .farm-plot {
+      background: #c6975f;
+      border-radius: 10px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .farm-plot.plot-empty { background: #cfa574; }
+    .farm-plot.plot-growing { background: #b58350; }
+    .farm-plot.plot-ready { background: #a86d3b; box-shadow: 0 0 0 2px #ffe066 inset; }
+    .plot-inner { width: 100%; height: 100%; display:flex; align-items:center; justify-content:center; position:relative; }
+    .empty-plot-icon { font-size: 26px; opacity: 0.8; }
+    .crop-image { width: 70%; height: 70%; object-fit: contain; image-rendering: pixelated; }
+    .plants-count {
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 999px;
+      padding: 1px 6px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    .ready-pulse { animation: ready-pulse 1.4s ease-in-out infinite; }
+    @keyframes ready-pulse {
+      0%,100% { transform: scale(1); filter: brightness(1); }
+      50% { transform: scale(1.05); filter: brightness(1.2); }
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+    }
+    .modal-overlay.hidden { display: none; }
+    .modal-card {
+      width: 90%;
+      max-width: 420px;
+      max-height: 85vh;
+      background: #fffaf0;
+      border-radius: 18px;
+      padding: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+    .modal-header h2, .modal-header h3 { margin:0; font-size:18px; }
+    .modal-body { flex:1; overflow-y:auto; padding-right:4px; font-size:14px; }
+    .pill-btn {
+      border-radius:999px; border:none; padding:8px 12px; font-size:13px; font-weight:600; cursor:pointer;
+    }
+    .pill-primary { background:#4caf50; color:#fff; }
+    .pill-ghost { background:#eee; color:#333; }
+
+    .quiz-question { margin-bottom:12px; font-weight:600; font-size:16px; }
+    .quiz-answers { display:flex; flex-direction:column; gap:8px; }
+    .quiz-answer-btn {
+      border-radius:999px; border:2px solid #ddd; padding:8px 10px;
+      background:#fff; font-size:14px; display:flex; justify-content:space-between; align-items:center;
+    }
+    .quiz-answer-btn.correct-picked { border-color:#4caf50; background:#e8f5e9; }
+    .quiz-answer-btn.wrong-picked { border-color:#e53935; background:#ffebee; }
+    .quiz-feedback { margin-top:8px; font-size:13px; min-height:18px; }
+
+    .inventory-category { margin:10px 0; padding:8px; border-radius:10px; }
+    .inventory-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(90px,1fr)); gap:6px; margin-top:6px; }
+    .inventory-item {
+      background:#fff; border-radius:8px; border:2px solid #eee;
+      padding:6px; text-align:center; font-size:11px;
+    }
+    .item-icon { font-size:22px; }
+    .item-amount { font-weight:700; margin:2px 0; color:#2c5f2d; }
+    .item-name { opacity:0.7; }
+    .sell-item-btn {
+      margin-top:4px; padding:4px 6px; font-size:10px;
+      border-radius:999px; border:none; background:#ffb347; color:#4a2700; font-weight:600;
+    }
+    .empty-category { font-size:12px; opacity:0.7; padding:6px 2px; }
+
+    .recipe-list { display:grid; grid-template-columns:1fr; gap:10px; }
+    .recipe-card {
+      background:#fff3cd; border-radius:10px; border:2px solid #ffc107;
+      padding:8px; font-size:13px;
+    }
+    .recipe-card.locked { opacity:0.5; border-color:#ccc; background:#f0f0f0; }
+    .recipe-output { display:flex; align-items:center; gap:8px; margin-bottom:4px; }
+    .recipe-icon { font-size:28px; }
+    .recipe-name { font-weight:700; font-size:15px; }
+    .recipe-ingredients { display:flex; flex-wrap:wrap; gap:4px; margin:6px 0; }
+    .ingredient {
+      border-radius:999px; padding:4px 7px; font-size:11px; background:#fff;
+    }
+    .ingredient.sufficient { border:1px solid #28a745; color:#2e7d32; }
+    .ingredient.insufficient { border:1px solid #e53935; color:#c62828; }
+    .recipe-value { font-size:12px; opacity:0.8; margin-bottom:4px; }
+    .craft-btn {
+      width:100%; padding:6px; border-radius:999px; border:none;
+      background:#4caf50; color:#fff; font-weight:700; font-size:13px;
+    }
+
+    .upgrade-info { display:flex; align-items:center; justify-content:center; gap:12px; margin:10px 0; font-size:18px; font-weight:700; }
+    .upgrade-benefits, .upgrade-requirements {
+      background:#f7f7f7; border-radius:10px; padding:8px; font-size:12px; margin-bottom:6px;
+    }
+    .requirement { display:flex; justify-content:space-between; padding:4px 0; font-size:12px; }
+    .requirement.met { color:#2e7d32; }
+    .requirement.unmet { color:#c62828; }
+    .upgrade-confirm-btn {
+      width:100%; padding:8px; border-radius:999px; border:none;
+      background:#4caf50; color:#fff; font-size:14px; font-weight:700; margin-top:4px;
+    }
+    .cannot-afford {
+      width:100%; padding:8px; border-radius:999px; background:#fdecea; color:#b71c1c;
+      text-align:center; font-size:12px; margin-top:4px;
+    }
+    .close-modal-btn {
+      width:100%; padding:8px; border-radius:999px; border:none;
+      background:#eee; font-size:13px; font-weight:600; margin-top:4px;
+    }
+  </style>
+</head>
+<body>
+  <div id="game">
+    <div id="top-bar">
+      <div class="top-chip">💰 <span class="value" id="coins-display">0</span></div>
+      <div class="top-chip">💧 <span class="value" id="water-display">0/0</span></div>
+      <div id="progress-container">
+        <div id="progress-label"><span id="progress-text">Next: Tomato Seeds</span></div>
+        <div id="progress-bar-shell"><div id="level-progress"></div></div>
+      </div>
+      <button id="quiz-button" class="icon-btn">❓ Quiz</button>
+      <button id="inventory-button" class="icon-btn secondary">🏺</button>
+    </div>
+
+    <div id="play-area">
+      <div class="buildings-row">
+        <div class="building-slot" data-building="workshop"></div>
+        <div class="building-slot" data-building="well"></div>
+        <div class="building-slot" data-building="coop"></div>
+      </div>
+
+      <div id="farm-grid">
+        <div class="farm-plot" data-plot="0"><div class="plot-inner"></div></div>
+        <div class="farm-plot" data-plot="1"><div class="plot-inner"></div></div>
+        <div class="farm-plot" data-plot="2"><div class="plot-inner"></div></div>
+        <div class="farm-plot" data-plot="3"><div class="plot-inner"></div></div>
+        <div class="farm-plot" data-plot="4"><div class="plot-inner"></div></div>
+        <div class="farm-plot" data-plot="5"><div class="plot-inner"></div></div>
+        <div class="farm-plot" data-plot="6"><div class="plot-inner"></div></div>
+        <div class="farm-plot" data-plot="7"><div class="plot-inner"></div></div>
+        <div class="farm-plot" data-plot="8"><div class="plot-inner"></div></div>
+      </div>
+
+      <div class="buildings-row">
+        <div class="building-slot" data-building="farmhouse"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="quiz-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Quiz Time!</h2>
+        <button id="quiz-close" class="pill-btn pill-ghost">Close</button>
+      </div>
+      <div class="modal-body">
+        <div id="quiz-question" class="quiz-question"></div>
+        <div id="quiz-answers" class="quiz-answers"></div>
+        <div id="quiz-feedback" class="quiz-feedback"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ui-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="ui-modal-title">Modal</h3>
+        <button id="ui-modal-close" class="pill-btn pill-ghost">Close</button>
+      </div>
+      <div id="ui-modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    /* ---- data definitions ---- */
+    var CROPS = {
+      wheat: {
+        id: "wheat",
+        name: "Wheat",
+        stages: ["crops/wheat-stage1.png","crops/wheat-stage2.png","crops/wheat-stage3.png"],
+        growthTime: 2,
+        seedCost: 1,
+        waterCost: 2,
+        sellPrice: 3
+      },
+      carrot: {
+        id: "carrot",
+        name: "Carrot",
+        stages: ["crops/carrot-stage1.png","crops/carrot-stage2.png","crops/carrot-stage3.png","crops/carrot-stage4.png"],
+        growthTime: 4,
+        seedCost: 1,
+        waterCost: 2,
+        sellPrice: 8
+      }
+    };
+
+    var ANIMALS = {
+      chicken: {
+        id: "chicken",
+        name: "Chicken",
+        buildingType: "coop",
+        purchaseCost: 20,
+        inputResource: "wheat",
+        inputAmount: 5,
+        outputResource: "egg",
+        outputAmount: 1,
+        waterCost: 5,
+        cooldownQuestions: 1
+      }
+    };
+
+    var BUILDINGS = {
+      workshop: {
+        id: "workshop",
+        name: "Workshop",
+        type: "passive",
+        levels: [
+          { coinCost: 30 },
+          { coinCost: 60, woodCost: 10 }
+        ]
+      },
+      well: {
+        id: "well",
+        name: "Well",
+        type: "passive",
+        levels: [
+          { coinCost: 0, waterProduction: 3, waterCapacity: 15 },
+          { coinCost: 20, waterProduction: 5, waterCapacity: 25 },
+          { coinCost: 40, waterProduction: 8, waterCapacity: 40 }
+        ]
+      },
+      coop: {
+        id: "coop",
+        name: "Chicken Coop",
+        type: "animal",
+        animalType: "chicken",
+        levels: [
+          { coinCost: 50, capacity: 1, prerequisite: "workshop", workshopLevel: 1 },
+          { coinCost: 100, capacity: 3 },
+          { coinCost: 150, capacity: 6, conversionBonus: 2 }
+        ]
+      },
+      farmhouse: {
+        id: "farmhouse",
+        name: "Farmhouse",
+        type: "special",
+        levels: [{ coinCost: 0 }]
+      }
+    };
+
+    var RECIPES = {
+      Bread: {
+        name: "Bread",
+        output: "bread",
+        ingredients: [{resource:"wheat", amount:3}],
+        sellPrice: 15,
+        discovered: false,
+        purchaseable: false
+      },
+      Cake: {
+        name: "Cake",
+        output: "cake",
+        ingredients: [{resource:"wheat", amount:2},{resource:"egg", amount:2}],
+        sellPrice: 35,
+        discovered: false,
+        purchaseable: false
+      }
+    };
+
+    var QUIZ_QUESTIONS = [
+      {
+        question: "Which uses more water to make?",
+        answers: ["A glass of milk","A glass of carrot juice"],
+        correctIndex: 0,
+        feedbackCorrect: "Yes! Animal products like milk usually use more water.",
+        feedbackWrong: "Try again! Think about which one comes from an animal."
+      },
+      {
+        question: "What helps plants grow on this farm?",
+        answers: ["Water","Coins"],
+        correctIndex: 0,
+        feedbackCorrect: "Right! Plants need water to grow.",
+        feedbackWrong: "Coins buy things, but water makes plants grow."
+      },
+      {
+        question: "If you save wheat instead of selling it, what can you do later?",
+        answers: ["Use it in recipes","Lose it forever"],
+        correctIndex: 0,
+        feedbackCorrect: "Correct! Saving wheat lets you make bread or cake.",
+        feedbackWrong: "Nope! Saved wheat can be very useful later."
+      },
+      {
+        question: "Which is usually better for water use?",
+        answers: ["Growing carrots","Feeding animals to get eggs"],
+        correctIndex: 0,
+        feedbackCorrect: "Yes! Plants usually use less water than animal products.",
+        feedbackWrong: "Not quite. Animals need food and water, too!"
+      }
+    ];
+
+    /* ---- state ---- */
+    var gameState = {
+      resources: {
+        coins: 40,
+        water: 10,
+        wood: 0,
+        inventory: {
+          wheat: 0,
+          carrot: 0,
+          egg: 0,
+          bread: 0,
+          cake: 0,
+          wheatSeed: 5,
+          carrotSeed: 3
+        }
+      },
+      unlockedCrops: ["wheat","carrot"],
+      buildings: {
+        workshop: { level: 0, built: false },
+        well: { level: 1, built: true },
+        coop: { level: 0, built: false },
+        farmhouse: { level: 1, built: true }
+      },
+      animals: {
+        chickens: []
+      },
+      farm: {
+        plots: []
+      },
+      discoveredRecipes: [],
+      stats: { totalCoinsEarned: 0 },
+      quiz: { questionsAnswered: 0 }
+    };
+
+    var STORAGE_KEY = "farmQuizGameV2b";
+    var currentQuizIndex = null;
+
+    function getIcon(resource) {
+      var map = {
+        wheat:"🌾", carrot:"🥕", egg:"🥚", bread:"🍞", cake:"🎂",
+        water:"💧", coins:"💰", wood:"🪵", milk:"🥛"
+      };
+      return map[resource] || "❓";
+    }
+    function getResourceSellPrice(res) {
+      var prices = { wheat:3, carrot:8, egg:6, bread:15, cake:35 };
+      return prices[res] || 0;
+    }
+    function getWaterCapacity() {
+      var wellState = gameState.buildings.well;
+      if (!wellState.built || wellState.level < 1) return 0;
+      var levelDef = BUILDINGS.well.levels[wellState.level - 1];
+      return levelDef.waterCapacity;
+    }
+    function getWellProduction() {
+      var wellState = gameState.buildings.well;
+      if (!wellState.built || wellState.level < 1) return 0;
+      var levelDef = BUILDINGS.well.levels[wellState.level - 1];
+      return levelDef.waterProduction;
+    }
+    function addCoins(amount) {
+      if (amount <= 0) return;
+      gameState.resources.coins += amount;
+      gameState.stats.totalCoinsEarned += amount;
+    }
+    function saveGame() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(gameState)); } catch (e) {}
+    }
+    function loadGame() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        var data = JSON.parse(raw);
+        if (data && typeof data === "object") gameState = data;
+      } catch (e) {}
+    }
+
+    function advanceTime() {
+      gameState.quiz.questionsAnswered += 1;
+
+      for (var i=0;i<gameState.farm.plots.length;i++) {
+        var plot = gameState.farm.plots[i];
+        if (plot.planted) plot.growth += 1;
+      }
+
+      for (var j=0;j<gameState.animals.chickens.length;j++) {
+        var ch = gameState.animals.chickens[j];
+        if (!ch.ready) {
+          var diff = gameState.quiz.questionsAnswered - ch.lastConversion;
+          if (diff >= 1) ch.ready = true;
+        }
+      }
+
+      if (gameState.buildings.well.built) {
+        var produced = getWellProduction();
+        if (produced > 0) {
+          var cap = getWaterCapacity();
+          gameState.resources.water = Math.min(gameState.resources.water + produced, cap);
+        }
+      }
+
+      checkForNewRecipes();
+      updateUI();
+      saveGame();
+    }
+
+    /* ---- rendering ---- */
+    function renderPlot(idx) {
+      var plot = gameState.farm.plots[idx];
+      var el = document.querySelector('.farm-plot[data-plot="' + idx + '"]');
+      if (!el) return;
+      var inner = el.querySelector(".plot-inner");
+
+      if (!plot.planted || !plot.cropId) {
+        el.className = "farm-plot plot-empty";
+        inner.innerHTML = '<div class="empty-plot-icon">🌱</div>';
+        return;
+      }
+
+      var crop = CROPS[plot.cropId];
+      var isReady = plot.growth >= crop.growthTime;
+      var imgSrc;
+      if (isReady) {
+        imgSrc = crop.stages[crop.stages.length - 1];
+      } else {
+        var stageIdx = Math.min(
+          crop.stages.length - 1,
+          Math.floor((plot.growth / crop.growthTime) * (crop.stages.length - 1))
+        );
+        imgSrc = crop.stages[stageIdx];
+      }
+
+      el.className = "farm-plot " + (isReady ? "plot-ready" : "plot-growing");
+      var cls = "crop-image" + (isReady ? " ready-pulse" : "");
+      inner.innerHTML =
+        '<img src="' + imgSrc + '" alt="' + crop.name + '" class="' + cls + '">' +
+        '<div class="plants-count">×' + plot.plantsPerPlot + '</div>';
+    }
+
+    function buildingIcon(id, level) {
+      var icons = {
+        workshop:["🔨","⚒️","🛠️"],
+        well:["🚰","⛲","💦"],
+        coop:["🏚️","🏠","🏡"],
+        farmhouse:["🏠","🏡","🏘️"]
+      };
+      var arr = icons[id] || ["🏗️"];
+      var idx = Math.min(level-1, arr.length-1);
+      return arr[idx];
+    }
+
+    function canAffordBuildingUpgrade(id) {
+      var state = gameState.buildings[id];
+      var def = BUILDINGS[id];
+      var nextIndex = state.level;
+      var next = def.levels[nextIndex];
+      if (!next) return false;
+      if (typeof next.coinCost === "number" && gameState.resources.coins < next.coinCost) return false;
+      if (typeof next.woodCost === "number" && (gameState.resources.inventory.wood || 0) < next.woodCost) return false;
+      return true;
+    }
+
+    function renderBuilding(id) {
+      var slot = document.querySelector('.building-slot[data-building="' + id + '"]');
+      if (!slot) return;
+      var state = gameState.buildings[id];
+      var def = BUILDINGS[id];
+      slot.innerHTML = "";
+
+      if (!state.built && id !== "well" && id !== "farmhouse") {
+        var next = def.levels[state.level];
+        var costText = (next && typeof next.coinCost === "number") ? (next.coinCost + "💰") : "Build";
+        slot.innerHTML =
+          '<div class="building-emoji">🏗️</div>' +
+          '<div class="building-name">' + def.name + '</div>' +
+          '<div class="building-level">' + costText + '</div>';
+        return;
+      }
+
+      var icon = buildingIcon(id, state.level || 1);
+      slot.innerHTML =
+        '<div class="building-emoji">' + icon + '</div>' +
+        '<div class="building-name">' + def.name + '</div>' +
+        '<div class="building-level">Lv ' + state.level + '</div>';
+
+      if (id === "coop") {
+        var cap = 0;
+        if (state.level > 0) cap = BUILDINGS.coop.levels[state.level - 1].capacity || 0;
+        var count = gameState.animals.chickens.length;
+        var info = document.createElement("div");
+        info.style.fontSize = "11px";
+        info.textContent = "🐔 " + count + "/" + cap;
+        slot.appendChild(info);
+      }
+
+      if (canAffordBuildingUpgrade(id)) {
+        var arrow = document.createElement("div");
+        arrow.className = "upgrade-arrow";
+        arrow.textContent = "⬆️";
+        slot.appendChild(arrow);
+      }
+    }
+
+    function updateProgressBar() {
+      var unlock = { name:"Tomato Seeds", threshold:200 };
+      var label = document.getElementById("progress-text");
+      var bar = document.getElementById("level-progress");
+      var current = gameState.stats.totalCoinsEarned || 0;
+      var pct = Math.min(100, (current / unlock.threshold) * 100);
+      label.textContent = "Next: " + unlock.name;
+      bar.style.width = pct + "%";
+    }
+
+    function updateUI() {
+      document.getElementById("coins-display").textContent = gameState.resources.coins;
+      document.getElementById("water-display").textContent =
+        gameState.resources.water + "/" + getWaterCapacity();
+
+      updateProgressBar();
+
+      for (var i=0;i<gameState.farm.plots.length;i++) renderPlot(i);
+      renderBuilding("workshop");
+      renderBuilding("well");
+      renderBuilding("coop");
+      renderBuilding("farmhouse");
+    }
+
+    /* ---- planting & harvesting ---- */
+    function showPlantingModal(plotIndex) {
+      var modal = document.getElementById("ui-modal");
+      var title = document.getElementById("ui-modal-title");
+      var body = document.getElementById("ui-modal-body");
+      title.textContent = "What to plant?";
+
+      var html = '<div class="inventory-grid">';
+      for (var id in CROPS) {
+        if (!CROPS.hasOwnProperty(id)) continue;
+        if (gameState.unlockedCrops.indexOf(id) === -1) continue;
+        var crop = CROPS[id];
+        var seedKey = id + "Seed";
+        var seeds = gameState.resources.inventory[seedKey] || 0;
+        var hasSeeds = seeds >= crop.seedCost;
+        var hasWater = gameState.resources.water >= crop.waterCost;
+        var canPlant = hasSeeds && hasWater;
+        html += '<div class="inventory-item" data-crop="' + id + '">';
+        html += '<div class="item-icon">' + getIcon(id) + '</div>';
+        html += '<div class="item-name">' + crop.name + '</div>';
+        html += '<div class="item-amount">Seeds: ' + seeds + '</div>';
+        html += '<div style="font-size:11px;margin-top:2px;">💧 ' + crop.waterCost +
+                ' • ⏱️ ' + crop.growthTime + ' Q • 💰 ' + crop.sellPrice + '</div>';
+        if (canPlant) {
+          html += '<button class="sell-item-btn plant-btn">Plant</button>';
+        } else {
+          html += '<div style="font-size:11px;opacity:0.7;margin-top:3px;">Need seeds & water</div>';
+        }
+        html += '</div>';
+      }
+      html += '</div><button class="close-modal-btn">Cancel</button>';
+      body.innerHTML = html;
+      modal.classList.remove("hidden");
+
+      var buttons = body.querySelectorAll(".plant-btn");
+      for (var i=0;i<buttons.length;i++) {
+        buttons[i].onclick = (function(idx, btn) {
+          return function() {
+            var card = btn.parentNode;
+            var cropId = card.getAttribute("data-crop");
+            plantCrop(idx, cropId);
+            modal.classList.add("hidden");
+          };
+        })(plotIndex, buttons[i]);
+      }
+      body.querySelector(".close-modal-btn").onclick = function() {
+        modal.classList.add("hidden");
+      };
+    }
+
+    function plantCrop(plotIndex, cropId) {
+      var crop = CROPS[cropId];
+      var plot = gameState.farm.plots[plotIndex];
+      var seedKey = cropId + "Seed";
+      var seeds = gameState.resources.inventory[seedKey] || 0;
+      if (seeds < crop.seedCost) { alert("Not enough seeds!"); return; }
+      if (gameState.resources.water < crop.waterCost) { alert("Not enough water!"); return; }
+
+      gameState.resources.inventory[seedKey] = seeds - crop.seedCost;
+      gameState.resources.water -= crop.waterCost;
+
+      plot.planted = true;
+      plot.cropId = cropId;
+      plot.growth = 0;
+
+      updateUI();
+      saveGame();
+    }
+
+    function harvestCrop(plotIndex) {
+      var plot = gameState.farm.plots[plotIndex];
+      if (!plot.planted || !plot.cropId) return;
+      var crop = CROPS[plot.cropId];
+      if (plot.growth < crop.growthTime) return;
+
+      var amount = plot.plantsPerPlot;
+      var resKey = plot.cropId;
+      var totalSell = crop.sellPrice * amount;
+
+      var modal = document.getElementById("ui-modal");
+      var title = document.getElementById("ui-modal-title");
+      var body = document.getElementById("ui-modal-body");
+      title.textContent = "Harvest!";
+      var html =
+        '<div style="text-align:center;">' +
+        '<div style="font-size:32px;">' + getIcon(resKey) + '</div>' +
+        '<p>You harvested <strong>' + amount + '</strong> ' + crop.name + '!</p>' +
+        '<p style="font-size:13px;">Sell now or save for later?</p>' +
+        '<button id="harvest-sell" class="pill-btn pill-primary" style="width:100%;margin-top:6px;">' +
+        '💰 Sell now (+' + totalSell + ' coins)</button>' +
+        '<button id="harvest-save" class="pill-btn pill-ghost" style="width:100%;margin-top:4px;">' +
+        '🏺 Save to pantry</button>' +
+        '<button class="close-modal-btn" style="margin-top:4px;">Cancel</button>' +
+        '</div>';
+      body.innerHTML = html;
+      modal.classList.remove("hidden");
+
+      document.getElementById("harvest-sell").onclick = function() {
+        addCoins(totalSell);
+        resetPlot(plotIndex);
+        modal.classList.add("hidden");
+        updateUI();
+        saveGame();
+      };
+      document.getElementById("harvest-save").onclick = function() {
+        gameState.resources.inventory[resKey] =
+          (gameState.resources.inventory[resKey] || 0) + amount;
+        resetPlot(plotIndex);
+        modal.classList.add("hidden");
+        updateUI();
+        saveGame();
+      };
+      body.querySelector(".close-modal-btn").onclick = function() {
+        modal.classList.add("hidden");
+      };
+    }
+
+    function resetPlot(i) {
+      var plot = gameState.farm.plots[i];
+      plot.planted = false;
+      plot.cropId = null;
+      plot.growth = 0;
+    }
+
+    /* ---- animals ---- */
+    function showCoopModal() {
+      var modal = document.getElementById("ui-modal");
+      var title = document.getElementById("ui-modal-title");
+      var body = document.getElementById("ui-modal-body");
+      var state = gameState.buildings.coop;
+      var def = BUILDINGS.coop;
+      var animalDef = ANIMALS.chicken;
+      var chickens = gameState.animals.chickens;
+      var capacity = 0;
+      if (state.level > 0) {
+        capacity = def.levels[state.level - 1].capacity || 0;
+      }
+      var canBuy = capacity > chickens.length;
+
+      title.textContent = def.name;
+      var html =
+        '<div class="animal-overview">' +
+        '<div>Chickens: ' + chickens.length + '/' + capacity + '</div>';
+      if (canBuy) {
+        html += '<button id="buy-chicken" class="pill-btn pill-primary" style="margin-top:4px;">' +
+          'Buy Chicken (' + animalDef.purchaseCost + ' 💰)</button>';
+      } else {
+        html += '<div style="font-size:11px;margin-top:4px;">At capacity – upgrade coop</div>';
+      }
+      html += '</div>';
+
+      html += '<div class="conversion-interface"><h4 style="margin:4px 0;">Convert plants → eggs</h4>';
+      if (!chickens.length) {
+        html += '<p style="font-size:12px;">Buy a chicken to start making eggs.</p>';
+      } else {
+        for (var i=0;i<chickens.length;i++) {
+          var ch = chickens[i];
+          var formula = animalDef.inputAmount + ' ' + getIcon(animalDef.inputResource) +
+            ' + ' + animalDef.waterCost + ' ' + getIcon("water") +
+            ' → ' + animalDef.outputAmount + ' ' + getIcon(animalDef.outputResource);
+          html += '<div class="animal-converter ' + (ch.ready ? "ready" : "cooldown") + '">' +
+            '<div class="animal-icon">🐔</div>' +
+            '<div class="conversion-formula">' + formula + '</div>';
+          if (ch.ready) {
+            html += '<button class="convert-btn" data-index="' + i + '">Convert</button>';
+          } else {
+            html += '<div class="cooldown-text">Answer 1 question to use again</div>';
+          }
+          html += '</div>';
+        }
+      }
+      html += '</div>';
+      html += '<button id="coop-upgrade" class="upgrade-building-btn">Upgrade building</button>';
+      html += '<button class="close-modal-btn">Close</button>';
+
+      body.innerHTML = html;
+      modal.classList.remove("hidden");
+
+      var buy = document.getElementById("buy-chicken");
+      if (buy) {
+        buy.onclick = function() {
+          if (gameState.resources.coins >= animalDef.purchaseCost) {
+            gameState.resources.coins -= animalDef.purchaseCost;
+            gameState.animals.chickens.push({ready:true,lastConversion:0});
+            saveGame();
+            updateUI();
+            showCoopModal();
+          } else {
+            alert("Not enough coins!");
+          }
+        };
+      }
+
+      var convBtns = body.querySelectorAll(".convert-btn");
+      for (var j=0;j<convBtns.length;j++) {
+        convBtns[j].onclick = function() {
+          var idx = parseInt(this.getAttribute("data-index"),10);
+          convertWithChicken(idx);
+          modal.classList.add("hidden");
+        };
+      }
+
+      document.getElementById("coop-upgrade").onclick = function() {
+        modal.classList.add("hidden");
+        showBuildingUpgradeModal("coop");
+      };
+      body.querySelector(".close-modal-btn").onclick = function() {
+        modal.classList.add("hidden");
+      };
+    }
+
+    function convertWithChicken(chIndex) {
+      var def = ANIMALS.chicken;
+      var chicken = gameState.animals.chickens[chIndex];
+      if (!chicken || !chicken.ready) {
+        alert("Chicken is tired! Answer a question first.");
+        return;
+      }
+      var haveInput = (gameState.resources.inventory[def.inputResource] || 0) >= def.inputAmount;
+      if (!haveInput) { alert("Not enough " + def.inputResource + "!"); return; }
+      if (gameState.resources.water < def.waterCost) { alert("Not enough water!"); return; }
+
+      var outputAmount = def.outputAmount;
+      var coopState = gameState.buildings.coop;
+      if (coopState.level > 0) {
+        var levelDef = BUILDINGS.coop.levels[coopState.level - 1];
+        if (levelDef.conversionBonus) outputAmount = levelDef.conversionBonus;
+      }
+
+      gameState.resources.inventory[def.inputResource] -= def.inputAmount;
+      gameState.resources.water -= def.waterCost;
+
+      var sellPrice = getResourceSellPrice(def.outputResource) * outputAmount;
+      var modal = document.getElementById("ui-modal");
+      var title = document.getElementById("ui-modal-title");
+      var body = document.getElementById("ui-modal-body");
+      title.textContent = "Eggs ready!";
+      var html =
+        '<div style="text-align:center;">' +
+        '<div style="font-size:32px;">' + getIcon(def.outputResource) + '</div>' +
+        '<p>Your chickens made <strong>' + outputAmount + '</strong> eggs.</p>' +
+        '<button id="egg-sell" class="pill-btn pill-primary" style="width:100%;margin-top:6px;">' +
+        '💰 Sell now (+' + sellPrice + ' coins)</button>' +
+        '<button id="egg-save" class="pill-btn pill-ghost" style="width:100%;margin-top:4px;">' +
+        '🏺 Save to pantry</button>' +
+        '<button class="close-modal-btn" style="margin-top:4px;">Cancel</button>' +
+        '</div>';
+      body.innerHTML = html;
+      modal.classList.remove("hidden");
+
+      document.getElementById("egg-sell").onclick = function() {
+        addCoins(sellPrice);
+        modal.classList.add("hidden");
+        updateUI();
+        saveGame();
+      };
+      document.getElementById("egg-save").onclick = function() {
+        gameState.resources.inventory[def.outputResource] =
+          (gameState.resources.inventory[def.outputResource] || 0) + outputAmount;
+        modal.classList.add("hidden");
+        updateUI();
+        saveGame();
+      };
+      body.querySelector(".close-modal-btn").onclick = function() {
+        modal.classList.add("hidden");
+      };
+
+      chicken.ready = false;
+      chicken.lastConversion = gameState.quiz.questionsAnswered;
+    }
+
+    /* ---- recipes ---- */
+    function checkForNewRecipes() {
+      for (var name in RECIPES) {
+        if (!RECIPES.hasOwnProperty(name)) continue;
+        var rec = RECIPES[name];
+        if (rec.discovered || rec.purchaseable) continue;
+        var ok = true;
+        for (var i=0;i<rec.ingredients.length;i++) {
+          var ing = rec.ingredients[i];
+          if ((gameState.resources.inventory[ing.resource] || 0) < ing.amount) {
+            ok = false; break;
+          }
+        }
+        if (ok) {
+          rec.discovered = true;
+          gameState.discoveredRecipes.push(rec.name);
+          console.log("Discovered recipe:", rec.name);
+        }
+      }
+    }
+
+    function showRecipeBook() {
+      var modal = document.getElementById("ui-modal");
+      var title = document.getElementById("ui-modal-title");
+      var body = document.getElementById("ui-modal-body");
+      title.textContent = "Recipe Book";
+
+      var html = '<div class="recipe-list">';
+      var any = false;
+      for (var name in RECIPES) {
+        if (!RECIPES.hasOwnProperty(name)) continue;
+        var rec = RECIPES[name];
+        if (!rec.discovered && !rec.purchaseable) continue;
+        any = true;
+        var canCraft = true;
+        var ingHtml = "";
+        for (var i=0;i<rec.ingredients.length;i++) {
+          var ing = rec.ingredients[i];
+          var have = gameState.resources.inventory[ing.resource] || 0;
+          var ok = have >= ing.amount;
+          ingHtml += '<div class="ingredient ' + (ok ? "sufficient" : "insufficient") + '">';
+          ingHtml += getIcon(ing.resource) + " " + have + "/" + ing.amount + "</div>";
+          if (!ok) canCraft = false;
+        }
+        html += '<div class="recipe-card ' + (canCraft ? "craftable" : "locked") + '">';
+        html += '<div class="recipe-output"><div class="recipe-icon">' + getIcon(rec.output) + '</div>';
+        html += '<div class="recipe-name">' + rec.name + '</div></div>';
+        html += '<div class="recipe-ingredients">' + ingHtml + '</div>';
+        html += '<div class="recipe-value">Sells for ' + rec.sellPrice + ' 💰</div>';
+        if (canCraft) {
+          html += '<button class="craft-btn" data-recipe="' + rec.name + '">Craft</button>';
+        }
+        html += '</div>';
+      }
+      if (!any) {
+        html += '<p style="font-size:13px;">Collect ingredients to discover recipes.</p>';
+      }
+      html += '</div><button class="close-modal-btn">Close</button>';
+      body.innerHTML = html;
+      modal.classList.remove("hidden");
+
+      var craftBtns = body.querySelectorAll(".craft-btn");
+      for (var j=0;j<craftBtns.length;j++) {
+        craftBtns[j].onclick = function() {
+          var name = this.getAttribute("data-recipe");
+          craftRecipe(name);
+        };
+      }
+      body.querySelector(".close-modal-btn").onclick = function() {
+        modal.classList.add("hidden");
+      };
+    }
+
+    function craftRecipe(name) {
+      var rec = RECIPES[name];
+      if (!rec) return;
+      var can = true;
+      for (var i=0;i<rec.ingredients.length;i++) {
+        var ing = rec.ingredients[i];
+        if ((gameState.resources.inventory[ing.resource] || 0) < ing.amount) {
+          can = false; break;
+        }
+      }
+      if (!can) { alert("Missing ingredients!"); return; }
+
+      for (var j=0;j<rec.ingredients.length;j++) {
+        var ing2 = rec.ingredients[j];
+        gameState.resources.inventory[ing2.resource] -= ing2.amount;
+      }
+
+      var modal = document.getElementById("ui-modal");
+      var title = document.getElementById("ui-modal-title");
+      var body = document.getElementById("ui-modal-body");
+      title.textContent = "Crafted " + rec.name + "!";
+      var html =
+        '<div style="text-align:center;">' +
+        '<div style="font-size:32px;">' + getIcon(rec.output) + '</div>' +
+        '<p>You crafted <strong>' + rec.name + '</strong>.</p>' +
+        '<button id="craft-sell" class="pill-btn pill-primary" style="width:100%;margin-top:6px;">' +
+        '💰 Sell now (+' + rec.sellPrice + ' coins)</button>' +
+        '<button id="craft-save" class="pill-btn pill-ghost" style="width:100%;margin-top:4px;">' +
+        '🏺 Save to pantry</button>' +
+        '<button class="close-modal-btn" style="margin-top:4px;">Close</button>' +
+        '</div>';
+      body.innerHTML = html;
+      modal.classList.remove("hidden");
+
+      document.getElementById("craft-sell").onclick = function() {
+        addCoins(rec.sellPrice);
+        modal.classList.add("hidden");
+        updateUI();
+        saveGame();
+      };
+      document.getElementById("craft-save").onclick = function() {
+        gameState.resources.inventory[rec.output] =
+          (gameState.resources.inventory[rec.output] || 0) + 1;
+        modal.classList.add("hidden");
+        updateUI();
+        saveGame();
+      };
+      body.querySelector(".close-modal-btn").onclick = function() {
+        modal.classList.add("hidden");
+      };
+    }
+
+    /* ---- inventory ---- */
+    function showInventory() {
+      var modal = document.getElementById("ui-modal");
+      var title = document.getElementById("ui-modal-title");
+      var body = document.getElementById("ui-modal-body");
+      title.textContent = "Pantry";
+
+      var raw = ["wheat","carrot"];
+      var animal = ["egg"];
+      var crafted = ["bread","cake"];
+
+      function cat(label, items, bg) {
+        var html = '<div class="inventory-category" style="background:' + bg + ';">';
+        html += '<strong>' + label + '</strong><div class="inventory-grid">';
+        var any = false;
+        for (var i=0;i<items.length;i++) {
+          var item = items[i];
+          var amt = gameState.resources.inventory[item] || 0;
+          if (!amt) continue;
+          any = true;
+          html += '<div class="inventory-item">';
+          html += '<div class="item-icon">' + getIcon(item) + '</div>';
+          html += '<div class="item-amount">×' + amt + '</div>';
+          html += '<div class="item-name">' + item + '</div>';
+          var price = getResourceSellPrice(item);
+          if (price) {
+            html += '<button class="sell-item-btn" data-item="' + item + '">Sell (+' + price + ')</button>';
+          }
+          html += '</div>';
+        }
+        if (!any) html += '<div class="empty-category">None yet</div>';
+        html += '</div></div>';
+        return html;
+      }
+
+      var inner = "";
+      inner += cat("Raw materials", raw, "#f0e6d2");
+      inner += cat("Animal products", animal, "#ffe4e1");
+      inner += cat("Crafted goods", crafted, "#e6f3ff");
+      inner += '<button class="close-modal-btn">Close</button>';
+      body.innerHTML = inner;
+      modal.classList.remove("hidden");
+
+      var sellBtns = body.querySelectorAll(".sell-item-btn");
+      for (var j=0;j<sellBtns.length;j++) {
+        sellBtns[j].onclick = function() {
+          var item = this.getAttribute("data-item");
+          var amt = gameState.resources.inventory[item] || 0;
+          var price = getResourceSellPrice(item);
+          if (!amt || !price) return;
+          var total = amt * price;
+          if (confirm("Sell " + amt + " " + item + " for " + total + " coins?")) {
+            addCoins(total);
+            gameState.resources.inventory[item] = 0;
+            updateUI();
+            saveGame();
+            showInventory();
+          }
+        };
+      }
+      body.querySelector(".close-modal-btn").onclick = function() {
+        modal.classList.add("hidden");
+      };
+    }
+
+    /* ---- building upgrades ---- */
+    function showBuildingUpgradeModal(id) {
+      var modal = document.getElementById("ui-modal");
+      var title = document.getElementById("ui-modal-title");
+      var body = document.getElementById("ui-modal-body");
+      var state = gameState.buildings[id];
+      var def = BUILDINGS[id];
+      var nextIndex = state.level;
+      var next = def.levels[nextIndex];
+      if (!next) {
+        title.textContent = def.name;
+        body.innerHTML = "<p style='text-align:center;'>Max level reached in this prototype.</p>" +
+                         "<button class='close-modal-btn'>Close</button>";
+        modal.classList.remove("hidden");
+        body.querySelector(".close-modal-btn").onclick = function() {
+          modal.classList.add("hidden");
+        };
+        return;
+      }
+
+      title.textContent = (state.built ? "Upgrade " : "Build ") + def.name;
+      var reqs = [];
+      if (typeof next.coinCost === "number") {
+        reqs.push({type:"coins", label:"Coins", need:next.coinCost, have:gameState.resources.coins});
+      }
+      if (typeof next.woodCost === "number") {
+        var haveWood = gameState.resources.inventory.wood || 0;
+        reqs.push({type:"wood", label:"Wood", need:next.woodCost, have:haveWood});
+      }
+      var can = true;
+      for (var i=0;i<reqs.length;i++) {
+        if (reqs[i].have < reqs[i].need) { can = false; break; }
+      }
+
+      var benefits = "";
+      if (id === "well") {
+        benefits = "<div>💧 Water per question: " + next.waterProduction +
+                   "</div><div>📦 Water capacity: " + next.waterCapacity + "</div>";
+      } else if (id === "coop") {
+        benefits = "<div>🐔 Chicken capacity: " + (next.capacity || 0) + "</div>";
+        if (next.conversionBonus) {
+          benefits += "<div>⚡ Eggs per conversion: " + next.conversionBonus + "</div>";
+        }
+      } else if (id === "workshop") {
+        benefits = "<div>🔧 Needed for advanced buildings later.</div>";
+      } else {
+        benefits = "<div>Improved building.</div>";
+      }
+
+      var html =
+        '<div class="upgrade-info"><span>Lv ' + state.level + '</span><span>→</span>' +
+        '<span>Lv ' + (state.level+1) + '</span></div>' +
+        '<div class="upgrade-benefits"><strong>Benefits:</strong>' + benefits + '</div>' +
+        '<div class="upgrade-requirements"><strong>Requirements:</strong>';
+
+      if (!reqs.length) {
+        html += "<div style='font-size:12px;'>No cost for this level.</div>";
+      } else {
+        for (var j=0;j<reqs.length;j++) {
+          var r = reqs[j];
+          var cls = (r.have >= r.need) ? "met" : "unmet";
+          html += '<div class="requirement ' + cls + '"><span>' +
+                  getIcon(r.type) + " " + r.label + "</span><span>" +
+                  r.have + "/" + r.need + "</span></div>";
+        }
+      }
+      html += '</div>';
+      if (can) {
+        html += '<button class="upgrade-confirm-btn">Upgrade!</button>';
+      } else {
+        html += '<div class="cannot-afford">Not enough resources</div>';
+      }
+      html += '<button class="close-modal-btn">Cancel</button>';
+
+      body.innerHTML = html;
+      modal.classList.remove("hidden");
+
+      if (can) {
+        body.querySelector(".upgrade-confirm-btn").onclick = function() {
+          for (var k=0;k<reqs.length;k++) {
+            var rr = reqs[k];
+            if (rr.type === "coins") {
+              gameState.resources.coins -= rr.need;
+            } else if (rr.type === "wood") {
+              gameState.resources.inventory.wood =
+                (gameState.resources.inventory.wood || 0) - rr.need;
+            }
+          }
+          state.level += 1;
+          state.built = true;
+          updateUI();
+          saveGame();
+          modal.classList.add("hidden");
+        };
+      }
+      body.querySelector(".close-modal-btn").onclick = function() {
+        modal.classList.add("hidden");
+      };
+    }
+
+    /* ---- quiz ---- */
+    function openQuiz() {
+      var modal = document.getElementById("quiz-modal");
+      var qEl = document.getElementById("quiz-question");
+      var aEl = document.getElementById("quiz-answers");
+      var fEl = document.getElementById("quiz-feedback");
+
+      var idx = Math.floor(Math.random() * QUIZ_QUESTIONS.length);
+      currentQuizIndex = idx;
+      var q = QUIZ_QUESTIONS[idx];
+
+      qEl.textContent = q.question;
+      fEl.textContent = "";
+      aEl.innerHTML = "";
+
+      for (var i=0;i<q.answers.length;i++) {
+        (function(i_inner){
+          var btn = document.createElement("button");
+          btn.className = "quiz-answer-btn";
+          btn.textContent = q.answers[i_inner];
+          btn.onclick = function() {
+            handleQuizAnswer(i_inner === q.correctIndex, i_inner);
+          };
+          aEl.appendChild(btn);
+        })(i);
+      }
+
+      modal.classList.remove("hidden");
+    }
+
+    function handleQuizAnswer(isCorrect, index) {
+      var q = QUIZ_QUESTIONS[currentQuizIndex];
+      var fEl = document.getElementById("quiz-feedback");
+      var buttons = document.querySelectorAll("#quiz-answers .quiz-answer-btn");
+      for (var i=0;i<buttons.length;i++) {
+        buttons[i].disabled = true;
+        if (i === index) buttons[i].classList.add(isCorrect ? "correct-picked" : "wrong-picked");
+      }
+      if (isCorrect) {
+        fEl.textContent = q.feedbackCorrect;
+        advanceTime();
+        setTimeout(function() {
+          document.getElementById("quiz-modal").classList.add("hidden");
+        }, 600);
+      } else {
+        fEl.textContent = q.feedbackWrong;
+        setTimeout(function() {
+          for (var j=0;j<buttons.length;j++) {
+            if (j !== index) buttons[j].disabled = false;
+          }
+        }, 300);
+      }
+    }
+
+    /* ---- init ---- */
+    function setupEventListeners() {
+      document.getElementById("quiz-button").onclick = openQuiz;
+      document.getElementById("quiz-close").onclick = function() {
+        document.getElementById("quiz-modal").classList.add("hidden");
+      };
+      document.getElementById("ui-modal-close").onclick = function() {
+        document.getElementById("ui-modal").classList.add("hidden");
+      };
+      document.getElementById("inventory-button").onclick = showInventory;
+
+      var plots = document.querySelectorAll(".farm-plot");
+      for (var i=0;i<plots.length;i++) {
+        (function(idx){
+          plots[idx].onclick = function() {
+            var plot = gameState.farm.plots[idx];
+            if (!plot.planted) {
+              showPlantingModal(idx);
+            } else {
+              var crop = CROPS[plot.cropId];
+              if (plot.growth >= crop.growthTime) {
+                harvestCrop(idx);
+              } else {
+                alert(crop.name + " is still growing... (" + plot.growth + "/" + crop.growthTime + " questions)");
+              }
+            }
+          };
+        })(i);
+      }
+
+      var buildSlots = document.querySelectorAll(".building-slot");
+      for (var j=0;j<buildSlots.length;j++) {
+        buildSlots[j].onclick = (function(slot){
+          return function() {
+            var id = slot.getAttribute("data-building");
+            if (id === "farmhouse") {
+              showRecipeBook();
+            } else if (id === "coop" && gameState.buildings.coop.built) {
+              showCoopModal();
+            } else {
+              showBuildingUpgradeModal(id);
+            }
+          };
+        })(buildSlots[j]);
+      }
+    }
+
+    function init() {
+      /* init plots */
+      if (!gameState.farm.plots || !gameState.farm.plots.length) {
+        gameState.farm.plots = [];
+        for (var i=0;i<9;i++) {
+          gameState.farm.plots.push({ planted:false, cropId:null, growth:0, plantsPerPlot:1 });
+        }
+      }
+      loadGame();
+      updateUI();
+      setupEventListeners();
+      checkForNewRecipes();
+    }
+
+    document.addEventListener("DOMContentLoaded", init);
+  </script>
+</body>
+</html>

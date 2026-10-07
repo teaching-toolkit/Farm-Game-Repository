@@ -1,0 +1,830 @@
+<title>Farm Map Layout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: the whole farm (one iPad screen) on the left, scaled to fit; a tool rail on the right (under the map on phones). */
+:root {
+  --bg: #e9e3d3; --panel: #fffaf0; --ink: #2f2a1f; --muted: #7a705c; --line: #d9cfb8;
+  --accent: #4f8a34; --accent-ink: #ffffff; --select: #e3a820; --danger: #b9472f; --chip: #f1e8d4;
+  --font-ui: "Andika", "Trebuchet MS", system-ui, sans-serif;
+  --font-num: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1d1a15; --panel: #29241c; --ink: #f1e9d8; --muted: #b3a88f; --line: #463d30;
+  --accent: #7cb85a; --accent-ink: #13200c; --select: #f2c14e; --danger: #e0775e; --chip: #362f25; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #1d1a15; --panel: #29241c; --ink: #f1e9d8; --muted: #b3a88f; --line: #463d30;
+  --accent: #7cb85a; --accent-ink: #13200c; --select: #f2c14e; --danger: #e0775e; --chip: #362f25; color-scheme: dark }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-ui); font-size: 15px; }
+.app { display: flex; gap: 14px; padding: 12px 16px; height: 100%; box-sizing: border-box; }
+.stage-wrap { flex: 1 1 auto; min-width: 0; overflow: auto; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); position: relative; display: flex; justify-content: center; align-items: flex-start; }
+#board { display: block; user-select: none; -webkit-user-select: none; touch-action: none; cursor: default; }
+.rail { flex: 0 0 310px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; min-width: 0; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.card h2 { margin: 0; font-size: 14px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.title-row h1 { margin: 0; font-size: 22px; line-height: 1.1; text-wrap: balance; }
+.title-row p { margin: 4px 0 0; color: var(--muted); font-size: 14px; line-height: 1.35; }
+.sel-name { font-size: 18px; font-weight: 700; }
+.sel-sub { font-size: 13px; color: var(--muted); margin-top: -6px; }
+.fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.fields.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.fields label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--muted); }
+input[type=number] { width: 100%; box-sizing: border-box; font: 500 15px var(--font-num); font-variant-numeric: tabular-nums; padding: 6px 7px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+.row { display: flex; flex-wrap: wrap; gap: 8px; }
+button { font: 700 14px var(--font-ui); border-radius: 10px; border: 1px solid var(--line); background: var(--chip); color: var(--ink); padding: 8px 12px; cursor: pointer; }
+button:hover { filter: brightness(1.05); }
+button:focus-visible, input:focus-visible { outline: 3px solid var(--select); outline-offset: 2px; }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+button.danger { color: var(--danger); }
+button[disabled] { opacity: .45; cursor: default; }
+.seg { display: flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.seg button { flex: 1; border: 0; border-radius: 0; padding: 7px 6px; font-size: 13px; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button.on { background: var(--select); color: #2f2a1f; }
+.deco-pick { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.deco-pick button { padding: 4px; display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 11px; font-weight: 600; }
+.deco-pick img { width: 40px; height: 40px; object-fit: contain; }
+.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.chips button { padding: 4px 8px; font-size: 12px; font-weight: 600; }
+.chips button.on { background: var(--select); color: #2f2a1f; }
+.toggles { display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+.toggles label { display: flex; align-items: center; gap: 8px; }
+.status { font-size: 13px; color: var(--muted); min-height: 1.2em; }
+.status.ok { color: var(--accent); }
+.status.err { color: var(--danger); }
+textarea { width: 100%; box-sizing: border-box; min-height: 110px; font: 12px/1.35 var(--font-num); border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); padding: 8px; }
+.hint { font-size: 13px; color: var(--muted); line-height: 1.4; margin: 0; }
+kbd { font: 500 12px var(--font-num); background: var(--chip); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+@media (max-width: 820px) {
+  .app { flex-direction: column; height: auto; }
+  .stage-wrap { flex: 0 0 auto; }
+  .rail { flex: 0 0 auto; overflow: visible; }
+}
+</style>
+
+<div class="app">
+  <div class="stage-wrap" id="wrap">
+    <svg id="board" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs id="defs"></defs><g id="scene"></g></svg>
+  </div>
+  <aside class="rail">
+    <div class="card title-row">
+      <h1>Farm map layout</h1>
+      <p>The whole farm fits one iPad screen. Drag a picture to move it, drag the yellow dot to resize it. Every place stands on its footprint (the diamond); lower things are drawn in front.</p>
+    </div>
+    <div class="card">
+      <h2>What you see</h2>
+      <div class="seg" id="modeSeg" role="group" aria-label="Map or inside a building">
+        <button data-mode="farm" class="on">Farm</button><button data-mode="home">House</button><button data-mode="barn">Barn</button><button data-mode="workshop">Workshop</button>
+      </div>
+      <div class="seg" id="timeSeg" role="group" aria-label="Start or final farm">
+        <button data-time="start">Start of the game</button><button data-time="final" class="on">Everything built</button>
+      </div>
+      <div class="toggles">
+        <label for="tLabels"><input id="tLabels" type="checkbox" checked> Names</label>
+        <label for="tFoot"><input id="tFoot" type="checkbox" checked> Footprints (diamonds)</label>
+        <label for="tGrid"><input id="tGrid" type="checkbox"> Diamond grid</label>
+        <label for="tSnap"><input id="tSnap" type="checkbox" checked> Snap places to the grid</label>
+        <label for="tGround"><input id="tGround" type="checkbox"> Edit forest and road (drag their corners)</label>
+      </div>
+    </div>
+    <div class="card" id="selCard">
+      <h2>Selected</h2>
+      <div class="sel-name" id="selName">Nothing yet — tap a picture</div>
+      <div class="sel-sub" id="selSub"></div>
+      <div class="fields">
+        <label for="fx">x (feet)<input id="fx" type="number" step="1"></label>
+        <label for="fy">y (feet)<input id="fy" type="number" step="1"></label>
+        <label for="fw" id="fwLabel">width<input id="fw" type="number" step="1" min="10"></label>
+      </div>
+      <div class="fields two" id="footRow">
+        <label for="fa">footprint ↘ tiles<input id="fa" type="number" step="1" min="1" max="6"></label>
+        <label for="fb">footprint ↙ tiles<input id="fb" type="number" step="1" min="1" max="6"></label>
+      </div>
+      <div class="row">
+        <button id="smaller" title="Smaller (−)">− Smaller</button>
+        <button id="bigger" title="Bigger (+)">+ Bigger</button>
+        <button id="dup">Copy</button>
+        <button id="del" class="danger">Remove</button>
+      </div>
+      <p class="hint">Arrow keys move 1 px (<kbd>Shift</kbd> 10 px), <kbd>+</kbd> <kbd>−</kbd> resize. Moving a place moves what stands on it. The size you set belongs to the picture you see: the start basket and the final warehouse each keep their own.</p>
+    </div>
+    <div class="card">
+      <h2>Find a place</h2>
+      <div class="chips" id="placeChips"></div>
+    </div>
+    <div class="card" id="decoCard">
+      <h2>Add a decoration</h2>
+      <div class="deco-pick" id="decoPick"></div>
+    </div>
+    <div class="card">
+      <h2>Ground</h2>
+      <div class="fields two">
+        <label for="gRoadW">road width<input id="gRoadW" type="number" step="2"></label>
+        <label for="gTile">tile width<input id="gTile" type="number" step="2" min="60" max="140"></label>
+        <label for="gPatch">field patch width<input id="gPatch" type="number" step="2" min="80" max="200"></label>
+        <label for="gGap">gap between patches<input id="gGap" type="number" step="1" min="0" max="40"></label>
+      </div>
+      <p class="hint">Tile width sets the size of every footprint. The fields have their own, bigger patches with a gap between them for edging, little fences and irrigation.</p>
+    </div>
+    <div class="card">
+      <h2>Send it to Claude</h2>
+      <div class="row">
+        <button id="undo">Undo</button>
+        <button id="reset" class="danger">Back to the game's layout</button>
+      </div>
+      <label for="note" class="hint">Note for Claude (optional)</label>
+      <textarea id="note" style="min-height:52px" placeholder="e.g. the barn could be bigger in the game too"></textarea>
+      <div class="row">
+        <button id="send" class="primary" hidden>Send to Claude</button>
+        <button id="copy">Copy as text</button>
+        <button id="download" hidden>Download layout file</button>
+        <button id="pasteBtn">Load text…</button>
+      </div>
+      <div class="status" id="status"></div>
+      <textarea id="out" hidden aria-label="Layout as text"></textarea>
+      <p class="hint" id="sendHint">After sending, tell Claude “I sent the layout”. The text is the game's <code>data/map_layout.json</code>.</p>
+    </div>
+  </aside>
+</div>
+
+<script>
+const GAME_LAYOUT = __LAYOUT__;
+const PICS = __PICS__;          // picture name -> data URI (small copies for this editor)
+const PLACES = __PLACES__;      // place id -> {title, emoji, startPic, finalPic, openAtStart}
+const ADDON_PICS = __ADDONS__;  // add-on node id -> picture name (or null)
+const CORNERS = __CORNERS__;    // building -> {art, members: {id: {title, emoji, startPic, finalPic}}}
+const DECO_KINDS = __DECO__;    // decoration picture names
+const DRAFT_KEY = "farm-layout-draft-v2";
+const SVGNS = "http://www.w3.org/2000/svg";
+
+let L = JSON.parse(JSON.stringify(GAME_LAYOUT));
+let sel = null;          // {kind, id}
+let mode = "farm";       // farm | home | barn | workshop
+let time = "final";      // start | final
+let undoStack = [];
+let scale = 1;
+const svg = document.getElementById("board");
+const scene = document.getElementById("scene");
+const defs = document.getElementById("defs");
+const wrap = document.getElementById("wrap");
+const $ = (id) => document.getElementById(id);
+
+// ---------- pictures: defined once as symbols, used by reference; alpha kept for picking
+const imgInfo = {};
+function loadPics() {
+  const jobs = Object.entries(PICS).map(([k, src]) => new Promise((res) => {
+    const im = new Image();
+    im.onload = () => {
+      const c = document.createElement("canvas");
+      c.width = im.naturalWidth; c.height = im.naturalHeight;
+      const g = c.getContext("2d"); g.drawImage(im, 0, 0);
+      let data = null;
+      try { data = g.getImageData(0, 0, c.width, c.height).data; } catch (e) { data = null; }
+      imgInfo[k] = { w: im.naturalWidth, h: im.naturalHeight, data };
+      res();
+    };
+    im.onerror = () => res();
+    im.src = src;
+  }));
+  return Promise.all(jobs).then(() => {
+    let h = "";
+    for (const [k, i] of Object.entries(imgInfo)) {
+      h += `<symbol id="${sid(k)}" viewBox="0 0 ${i.w} ${i.h}" preserveAspectRatio="none"><image href="${PICS[k]}" width="${i.w}" height="${i.h}"/></symbol>`;
+    }
+    for (const t of ["tiles/grass", "tiles/path"]) {
+      if (PICS[t]) h += `<pattern id="${sid(t)}-pat" patternUnits="userSpaceOnUse" width="256" height="256"><image href="${PICS[t]}" width="256" height="256"/></pattern>`;
+    }
+    defs.innerHTML = h;
+  });
+}
+function sid(k) { return "p-" + k.replace(/[^a-z0-9]/gi, "_"); }
+function aspect(pic) { const i = imgInfo[pic]; return i ? i.h / i.w : 0.75; }
+function has(pic) { return !!(pic && imgInfo[pic]); }
+
+// ---------- geometry
+const T = () => L.tile;
+function footPts(x, y, a, b) {
+  const t = T(), ux = t / 2, uy = t / 4;
+  const top = [x - (a * ux - b * ux), y - (a * uy + b * uy)];
+  return [top, [top[0] + a * ux, top[1] + a * uy], [x, y], [top[0] - b * ux, top[1] + b * uy]];
+}
+function footCenter(x, y, a, b) { const p = footPts(x, y, a, b); return [(p[0][0] + p[2][0]) / 2, (p[0][1] + p[2][1]) / 2]; }
+// fields: 3×3 patches of field.patch width with field.gap between them; x, y = front corner of the field
+function fieldGeo() { const P = (L.field || {}).patch || 144, g = (L.field || {}).gap || 12, W = 3 * P + 2 * g; return { P, g, pitch: P + g, W, H: W / 2 }; }
+function fieldDia(x, y, m) { const F = fieldGeo(), hw = F.W / 2 + (m || 0), hh = hw / 2, cy = y - F.H / 2; return [[x, cy - hh], [x + hw, cy], [x, cy + hh], [x - hw, cy]]; }
+function inFieldDia(px, py, x, y) { const F = fieldGeo(); return Math.abs(px - x) / (F.W / 2) + Math.abs(py - (y - F.H / 2)) / (F.H / 2) <= 1; }
+const FENCE_LOOK = { stick_fence: ["#8a6239", 3], wattle_fence: ["#9a7444", 5], picket_fence: ["#f4efe3", 5], stone_wall: ["#9a9a92", 8], hedge_row: ["#3f7a34", 10], stick_broken: ["#7a5a3a", 2.5], stone_broken: ["#8f8f86", 6] };
+const BORDER_LOOK = { stick: ["#8a6239", 3], log: ["#7a5230", 5], stone: ["#a3a39a", 5], channel: ["#5aa7d8", 4], drip: ["#2b2b2b", 2] };
+// one straight side from a to b: a picture of a side rising to the right, mirrored for one falling to the right
+function sideSvg(a, b, pic, look, posts) {
+  if (has(pic)) {
+    const w = Math.abs(b[0] - a[0]), h = w * aspect(pic), mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2, top = my - (h - w / 4);
+    if ((b[0] - a[0]) * (b[1] - a[1]) > 0) return `<use href="#${sid(pic)}" x="${(-w / 2).toFixed(1)}" y="${top.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" transform="translate(${mx.toFixed(1)},0) scale(-1,1)"/>`;
+    return `<use href="#${sid(pic)}" x="${(mx - w / 2).toFixed(1)}" y="${top.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}"/>`;
+  }
+  const [col, th] = look;
+  if (!posts) return `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${col}" stroke-width="${th}" stroke-linecap="round"/>`;
+  const up = th * 2.2;
+  let h = `<line x1="${a[0]}" y1="${a[1] - up}" x2="${b[0]}" y2="${b[1] - up}" stroke="${col}" stroke-width="${th * 0.6}"/><line x1="${a[0]}" y1="${a[1] - up * 0.45}" x2="${b[0]}" y2="${b[1] - up * 0.45}" stroke="${col}" stroke-width="${th * 0.6}"/>`;
+  for (const t of [0, 0.5, 1]) { const x = a[0] + (b[0] - a[0]) * t, y = a[1] + (b[1] - a[1]) * t; h += `<rect x="${x - th / 2}" y="${y - th * 3}" width="${th}" height="${th * 3}" fill="${col}"/>`; }
+  return h;
+}
+// a pen: earth/grass on the footprint and fence sides along its four edges (the game draws the same)
+function drawPen(it, fp) {
+  const start = time === "start";
+  const [top, rgt, fr, lft] = fp, a = it.foot[0], b = it.foot[1];
+  let o = `<polygon points="${poly(fp)}" fill="${start ? "rgba(150,115,70,.28)" : "rgba(70,120,30,.12)"}"/>`;
+  const fence = start ? "stick_broken" : it.pen;
+  if (!fence) return o;
+  const pic = "fences/" + fence, look = FENCE_LOOK[fence] || ["#8a6239", 3];
+  let idx = 0;
+  for (const [p, q, n0] of [[lft, top, b], [top, rgt, a], [lft, fr, a], [fr, rgt, b]]) {
+    const n = Math.max(1, Math.round(n0 / 2));
+    for (let i = 0; i < n; i++) {
+      idx++;
+      if (start && idx % 3 !== 0) continue;   // only a few broken posts are left at the start
+      const pa = [p[0] + (q[0] - p[0]) * i / n, p[1] + (q[1] - p[1]) * i / n], pb = [p[0] + (q[0] - p[0]) * (i + 1) / n, p[1] + (q[1] - p[1]) * (i + 1) / n];
+      o += sideSvg(pa, pb, pic, look, true);
+    }
+  }
+  return o;
+}
+function inFoot(px, py, x, y, a, b) {
+  const p = footPts(x, y, a, b), t = T(), u = [t / 2, t / 4], v = [-t / 2, t / 4];
+  const q = [px - p[0][0], py - p[0][1]], det = u[0] * v[1] - u[1] * v[0];
+  const i = (q[0] * v[1] - q[1] * v[0]) / det, j = (u[0] * q[1] - u[1] * q[0]) / det;
+  return i >= 0 && j >= 0 && i <= a && j <= b;
+}
+function snap(x, y) {
+  const t = T(), cx = L.size.w / 2;
+  let a = Math.round((x - cx) / (t / 2)), b = Math.round(y / (t / 4));
+  if (((a + b) % 2 + 2) % 2 !== 0) {
+    const fa = (x - cx) / (t / 2) - a, fb = y / (t / 4) - b;
+    if (Math.abs(fa) > Math.abs(fb)) a += fa > 0 ? 1 : -1; else b += fb > 0 ? 1 : -1;
+  }
+  return [cx + a * t / 2, b * t / 4];
+}
+function poly(pts) { return pts.map((p) => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" "); }
+
+// ---------- what is on the board in each view
+const isInterior = () => mode !== "farm";
+function boardSize() {
+  if (!isInterior()) return { w: L.size.w, h: L.size.h };
+  const art = "interiors/" + CORNERS[mode].art;
+  return { w: 834, h: Math.round(834 * (has(art) ? aspect(art) : 0.8)) };
+}
+function picW(p, pic) { const key = pic ? pic.split("/").pop() : ""; return (p.ws && p.ws[key]) || p.w; }
+function placePic(id) {
+  const m = PLACES[id] || {};
+  return time === "start" ? (m.openAtStart && has(m.startPic) ? m.startPic : null) : (has(m.finalPic) ? m.finalPic : null);
+}
+function placeHidden(id) {
+  const k = (L.places[id] || {}).k;
+  if (k === "sub") return time === "final";
+  if (id === "home") return false;  // start: shown as the yard
+  return false;
+}
+// items: {kind, id, x, y, w, pic, flat, foot:[a,b], label, locked}
+function items() {
+  const out = [];
+  if (isInterior()) {
+    const B = boardSize(), C = CORNERS[mode], spots = (L.interiors || {})[mode] || {};
+    for (const [m, meta] of Object.entries(C.members)) {
+      const s = spots[m] || { x: 0.5, y: 0.6, w: 0.2 };
+      const pic = time === "start" ? meta.startPic : meta.finalPic;
+      const w = s.w * B.w;
+      out.push({ kind: "corner", id: m, x: s.x * B.w, y: s.y * B.h, w, pic: has(pic) ? pic : null, foot: [1, 1], footT: w * 0.9, label: meta.title, emoji: meta.emoji });
+    }
+    return out.sort((a, b) => a.y - b.y);
+  }
+  (L.fields || []).forEach((f, i) => out.push({ kind: "field", id: i, x: f.x, y: f.y, flat: true, foot: null, field: true }));
+  for (const [id, p] of Object.entries(L.places)) {
+    if (placeHidden(id)) continue;
+    const m = PLACES[id] || {};
+    let pic = placePic(id);
+    if (id === "home" && time === "start") pic = has("plots/home") ? "plots/home" : null;
+    const yard = id === "home" && time === "start";
+    const locked = time === "start" && !yard ? !m.openAtStart : false;
+    const flat = p.k === "plot" || yard;
+    const pen = m.pen;   // pens: no picture of their own — a fence round the footprint (broken posts at the start)
+    if (pen !== undefined && pen !== null) pic = null;
+    out.push({ kind: "place", id, x: p.x, y: p.y, w: pic ? picW(p, pic) : p.w, pic, flat, foot: p.foot || [1, 1], label: yard ? "House plot" : (locked ? "🔒 " : "") + (m.title || id), locked, emoji: m.emoji, yard, pen });
+  }
+  if (time === "final") {
+    for (const [pid, list] of Object.entries(L.addons || {})) {
+      const p = L.places[pid]; if (!p) continue;
+      list.forEach((a, i) => {
+        const pic = ADDON_PICS[a.id];
+        out.push({ kind: "addon", id: pid + ":" + i, x: p.x + (a.dx || 0), y: p.y + (a.dy || 0) + 0.2, w: a.w || 50, pic: has(pic) ? pic : null, foot: null, label: a.id.replace(/_/g, " "), emoji: "✚", small: true });
+      });
+    }
+  }
+  L.deco.forEach((d, i) => out.push({ kind: "deco", id: i, x: d.x, y: d.y, w: d.w, pic: has("deco/" + d.pic) ? "deco/" + d.pic : null }));
+  const sc = L.scarecrow;
+  if (sc) out.push({ kind: "scarecrow", id: "scarecrow", x: sc.x, y: sc.y, w: sc.w, pic: has("map/scarecrow_1") ? "map/scarecrow_1" : null });
+  out.sort((a, b) => (a.flat === b.flat ? a.y - b.y : (a.flat ? -1 : 1)));
+  return out;
+}
+function picRect(it) {
+  if (it.kind === "addon" && !it.pic) return { x: it.x - 9, y: it.y - 16, w: 18, h: 18 };
+  // the picture stands centred on its footprint with its bottom at the feet
+  const cx = it.foot && it.kind !== "corner" ? footCenter(it.x, it.y, it.foot[0], it.foot[1])[0] : it.x;
+  // flat places (pens, gardens, the house yard) are drawn as a slab of earth: its top surface is the footprint
+  if (it.pic) { const h = it.w * aspect(it.pic), drop = it.flat && it.kind === "place" ? it.w * 0.2 : 0; return { x: cx - it.w / 2, y: it.y - h + drop, w: it.w, h }; }
+  const s = Math.max(30, Math.min(80, (it.footT || T()) * ((it.foot ? it.foot[0] + it.foot[1] : 2)) * 0.22));
+  const fc = it.foot ? footCenterOf(it) : [it.x, it.y - s / 2];
+  return { x: fc[0] - s / 2, y: fc[1] - s * 0.9, w: s, h: s };
+}
+function footOf(it) {
+  if (!it.foot) return null;
+  if (it.kind === "corner") { const t = it.footT, ux = t / 2, uy = t / 4; return [[it.x, it.y - 2 * uy], [it.x + ux, it.y - uy], [it.x, it.y], [it.x - ux, it.y - uy]]; }
+  return footPts(it.x, it.y, it.foot[0], it.foot[1]);
+}
+function footCenterOf(it) { const p = footOf(it); return [(p[0][0] + p[2][0]) / 2, (p[0][1] + p[2][1]) / 2]; }
+
+// ---------- drawing
+function px(v) { return Math.round(v); }
+function render() {
+  const B = boardSize();
+  svg.setAttribute("viewBox", `0 0 ${B.w} ${B.h}`);
+  let h = "";
+  if (isInterior()) h += drawRoom(B); else h += drawGround(B);
+  if ($("tGrid").checked && !isInterior()) h += drawGrid(B);
+  const list = items();
+  const labels = [];
+  for (const it of list) {
+    const fp = footOf(it);
+    if (it.kind === "field") { h += drawField(it); continue; }
+    const r = picRect(it);
+    if (fp && ($("tFoot").checked || !it.pic) && !it.yard) {
+      const fill = it.locked ? "rgba(90,70,30,.10)" : (it.flat && !it.pic ? "rgba(245,226,160,.45)" : "rgba(90,70,30,.16)");
+      h += `<polygon points="${poly(fp)}" fill="${it.pic ? "rgba(255,255,255,.10)" : fill}" stroke="rgba(60,45,20,${it.locked ? .35 : .6})" stroke-width="1.6" stroke-dasharray="6 5"/>`;
+    }
+    if (it.yard && !it.pic) h += `<polygon points="${poly(fp)}" fill="rgba(200,168,118,.8)" stroke="rgba(110,80,50,.6)" stroke-width="2"/>`;
+    if (it.pen !== undefined && it.pen !== null && fp) h += drawPen(it, fp);
+    if (it.pic) h += `<use href="#${sid(it.pic)}" x="${r.x.toFixed(1)}" y="${r.y.toFixed(1)}" width="${r.w.toFixed(1)}" height="${r.h.toFixed(1)}"${it.locked ? ' opacity=".5"' : ""}/>`;
+    else if (it.kind === "addon") h += `<circle cx="${it.x}" cy="${it.y - 7}" r="7" fill="rgba(255,255,255,.75)" stroke="rgba(60,45,20,.7)" stroke-width="1.5" stroke-dasharray="3 2"/>`;
+    else if (!it.yard) h += `<text x="${(r.x + r.w / 2).toFixed(1)}" y="${(r.y + r.h * 0.8).toFixed(1)}" font-size="${(r.h * 0.8).toFixed(0)}" text-anchor="middle"${it.locked ? ' opacity=".5"' : ""}>${it.emoji || "❔"}</text>`;
+    if (isSel(it)) h += `<rect x="${r.x - 4}" y="${r.y - 4}" width="${r.w + 8}" height="${r.h + 8}" rx="6" fill="none" stroke="#e3a820" stroke-width="3" stroke-dasharray="7 5"/>`;
+    if (isSel(it) && fp) h += `<polygon points="${poly(fp)}" fill="none" stroke="#e3a820" stroke-width="3"/>`;
+    if ((it.kind === "place" || it.kind === "corner" || it.kind === "addon") && $("tLabels").checked && !(it.kind === "addon" && it.pic)) labels.push(it);
+    if (isSel(it)) h += `<circle cx="${it.x}" cy="${it.y}" r="5" fill="#fff" stroke="#2f2a1f" stroke-width="2"/>`;
+  }
+  for (const it of labels) {
+    const fc = it.foot ? [footCenterOf(it)[0], it.y] : [it.x, it.y];
+    if (it.kind === "addon") {
+      h += `<text x="${it.x}" y="${it.y + 11}" font-size="10.5" font-weight="700" text-anchor="middle" fill="#2f2a1f" stroke="rgba(255,250,235,.85)" stroke-width="3" paint-order="stroke" font-family="Andika, sans-serif">${esc(it.label)}</text>`;
+      continue;
+    }
+    const txt = esc(it.label || it.id), w = txt.length * 6.6 + 14;
+    if (it.flat && it.pic && it.kind === "place") fc[1] += it.w * 0.15;
+    h += `<g transform="translate(${fc[0].toFixed(1)},${(fc[1] + 4).toFixed(1)})"${it.small ? ' opacity=".85"' : ""}><rect x="${-w / 2}" y="0" width="${w}" height="19" rx="9" fill="rgba(255,250,235,.94)" stroke="rgba(0,0,0,.25)"/><text x="0" y="14" font-size="12.5" font-weight="700" text-anchor="middle" fill="${it.locked ? "#7a705c" : "#2f2a1f"}" font-family="Andika, sans-serif">${txt}</text></g>`;
+  }
+  if (!isInterior() && L.pests) {
+    h += `<g transform="translate(${L.pests.x},${L.pests.y})"><rect x="-44" y="0" width="88" height="20" rx="10" fill="rgba(255,250,235,.94)" stroke="rgba(0,0,0,.25)"/><text x="0" y="15" font-size="12.5" text-anchor="middle" font-family="Andika, sans-serif">🐦 5%</text></g>`;
+    if (sel && sel.kind === "pests") h += `<rect x="${L.pests.x - 48}" y="${L.pests.y - 4}" width="96" height="28" rx="8" fill="none" stroke="#e3a820" stroke-width="3" stroke-dasharray="7 5"/>`;
+  }
+  if ($("tGround").checked && !isInterior()) h += drawGroundHandles();
+  const hp = handlePos();
+  if (hp) h += `<circle id="handle" cx="${hp.x}" cy="${hp.y}" r="${12 / scale}" fill="#e3a820" stroke="#fff" stroke-width="${3 / scale}" style="cursor:nwse-resize"/>`;
+  scene.innerHTML = h;
+  fitScale();
+  syncPanel();
+}
+function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+function drawGround(B) {
+  let h = `<rect x="0" y="0" width="${B.w}" height="${B.h}" fill="${PICS["tiles/grass"] ? `url(#${sid("tiles/grass")}-pat)` : "#9cc86a"}"/>`;
+  const g = L.ground || {};
+  if (g.forest && g.forest.length >= 3) {
+    h += `<polygon points="${poly(g.forest)}" fill="${PICS["tiles/grass"] ? `url(#${sid("tiles/grass")}-pat)` : "#5f8f43"}"/><polygon points="${poly(g.forest)}" fill="rgba(28,64,22,.42)"/>`;
+  }
+  if (g.road && g.road.points && g.road.points.length >= 2) {
+    const pts = g.road.points, w = g.road.w || 64;
+    const band = roadBand(pts, w);
+    h += `<polygon points="${poly(band)}" fill="${PICS["tiles/path"] ? `url(#${sid("tiles/path")}-pat)` : "#d8bf8e"}" stroke="rgba(0,0,0,.12)" stroke-width="4"/>`;
+  }
+  // soft shadows under the fields
+  for (const f of L.fields || []) {
+    const p = fieldDia(f.x, f.y + 12, fieldGeo().g);
+    h += `<polygon points="${poly(p)}" fill="rgba(20,30,76,.16)"/>`;
+  }
+  return h;
+}
+function roadBand(pts, w) {
+  const n = pts.length, left = [], right = [];
+  for (let i = 0; i < n; i++) {
+    let dx = 0, dy = 0;
+    if (i > 0) { const l = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]) || 1; dx += (pts[i][0] - pts[i - 1][0]) / l; dy += (pts[i][1] - pts[i - 1][1]) / l; }
+    if (i < n - 1) { const l = Math.hypot(pts[i + 1][0] - pts[i][0], pts[i + 1][1] - pts[i][1]) || 1; dx += (pts[i + 1][0] - pts[i][0]) / l; dy += (pts[i + 1][1] - pts[i][1]) / l; }
+    const l = Math.hypot(dx, dy) || 1, nx = -dy / l * w / 2, ny = dx / l * w / 2;
+    left.push([pts[i][0] + nx, pts[i][1] + ny]); right.push([pts[i][0] - nx, pts[i][1] - ny]);
+  }
+  return left.concat(right.reverse());
+}
+function drawField(it) {
+  // a fence round the field (back sides first), the borders in the gaps, then nine patches back to front, then the front fence
+  let h = "";
+  const F = fieldGeo(), fi = it.id;
+  const fence = time === "start" ? (fi === 0 ? "stick_broken" : "stone_broken") : "hedge_row";
+  const fpic = "fences/" + fence, flook = FENCE_LOOK[fence];
+  const D = fieldDia(it.x, it.y, F.g * 0.9), [ftop, frgt, fbot, flft] = D;
+  const fenceSides = (sides) => {
+    let o = "";
+    sides.forEach(([a, b], si) => { for (let i = 0; i < 3; i++) {
+      if (fence.endsWith("_broken") && (i + fi + si) % 3 === 1) continue;
+      const pa = [a[0] + (b[0] - a[0]) * i / 3, a[1] + (b[1] - a[1]) * i / 3], pb = [a[0] + (b[0] - a[0]) * (i + 1) / 3, a[1] + (b[1] - a[1]) * (i + 1) / 3];
+      o += sideSvg(pa, pb, fpic, flook, true);
+    } });
+    return o;
+  };
+  h += fenceSides([[flft, ftop], [ftop, frgt]]);
+  const top = [it.x, it.y - F.H];
+  const centre = (k) => { const r = Math.floor(k / 3), c = k % 3; return [top[0] + (c - r) * F.pitch / 2, top[1] + F.P / 4 + (c + r) * F.pitch / 4]; };
+  const open = (k) => time === "final" || (fi === 0 && k < 3);
+  const order = [];
+  for (let k = 0; k < 9; k++) order.push(k);
+  order.sort((a, b) => (Math.floor(a / 3) + a % 3) - (Math.floor(b / 3) + b % 3));
+  // what can go into the gaps (everything built: a drip line and a stone border)
+  const borders = time === "final" ? [["drip", BORDER_LOOK.drip], ["stone", BORDER_LOOK.stone]] : [];
+  const edges = (k) => { const [cx, cy] = centre(k), hw = F.pitch / 2, hh = hw / 2; return { T: [cx, cy - hh], R: [cx + hw, cy], B: [cx, cy + hh], L: [cx - hw, cy] }; };
+  for (const k of order) {
+    const r = Math.floor(k / 3), [cx, cy] = centre(k);
+
+    let pic = open(k) ? (time === "final" ? ["deco/soil_heap", "deco/sprout_patch", "deco/soil_heap"][r] : "deco/soil_heap") : "deco/overgrown_patch";
+    if (has(pic)) {
+      const w = F.P * 1.02, ph = w * aspect(pic), bottom = cy + F.P * 0.33;
+      h += `<use href="#${sid(pic)}" x="${(cx - w / 2).toFixed(1)}" y="${(bottom - ph).toFixed(1)}" width="${w.toFixed(1)}" height="${ph.toFixed(1)}"/>`;
+    } else {
+      h += `<polygon points="${poly([[cx, cy - F.P / 4], [cx + F.P / 2, cy], [cx, cy + F.P / 4], [cx - F.P / 2, cy]])}" fill="${open(k) ? "#c9a77c" : "#6b7f4b"}" stroke="#8a6a44"/>`;
+    }
+    if (time === "final" && r === 2) {
+      // up to nine plants on a patch: show a full one
+      for (let cell = 0; cell < 9; cell++) {
+        const sr = Math.floor(cell / 3), sc = cell % 3, px2 = cx + (sc - sr) * F.P / 6, py2 = cy + (sc + sr - 2) * F.P / 12;
+        h += `<text x="${px2.toFixed(1)}" y="${(py2 + 4).toFixed(1)}" font-size="${(F.P * 0.13).toFixed(0)}" text-anchor="middle">🌾</text>`;
+      }
+    }
+  }
+  // borders in the gaps, over the soft edges of the patch pictures
+  for (let k = 0; k < 9; k++) {
+    const r = Math.floor(k / 3), c = k % 3, E = edges(k);
+    for (const [kind, look] of borders) {
+      h += sideSvg(E.L, E.B, "edging/" + kind, look, false) + sideSvg(E.B, E.R, "edging/" + kind, look, false);
+      if (c === 0) h += sideSvg(E.L, E.T, "edging/" + kind, look, false);
+      if (r === 0) h += sideSvg(E.T, E.R, "edging/" + kind, look, false);
+    }
+  }
+  h += fenceSides([[flft, fbot], [fbot, frgt]]);
+  if (isSel(it)) h += `<polygon points="${poly(fieldDia(it.x, it.y, 4))}" fill="none" stroke="#e3a820" stroke-width="3" stroke-dasharray="7 5"/>`;
+  if ($("tLabels").checked) {
+    const name = ["Home Field", "North Field", "River Meadow"][fi] || "Field " + (fi + 1);
+    const w = name.length * 6.6 + 14, lx = it.x - F.W / 2 + w / 2 + 6, ly = it.y - F.H / 2 + 10;
+    h += `<g transform="translate(${lx.toFixed(1)},${ly.toFixed(1)})" opacity=".85"><rect x="${-w / 2}" y="0" width="${w}" height="19" rx="9" fill="rgba(255,250,235,.9)" stroke="rgba(0,0,0,.2)"/><text x="0" y="14" font-size="12" text-anchor="middle" font-family="Andika, sans-serif">${name}</text></g>`;
+  }
+  return h;
+}
+function drawRoom(B) {
+  const art = "interiors/" + CORNERS[mode].art;
+  if (has(art)) return `<rect width="${B.w}" height="${B.h}" fill="#fffaf0"/><use href="#${sid(art)}" x="0" y="0" width="${B.w}" height="${B.h}"/>`;
+  const w = B.w, h = B.h, top = [w / 2, h * 0.22], lft = [0, h * 0.6], rgt = [w, h * 0.6], bot = [w / 2, h * 0.98], up = h * 0.2;
+  return `<rect width="${w}" height="${h}" fill="#fffaf0"/>` +
+    `<polygon points="${poly([[lft[0], lft[1] - up], [top[0], top[1] - up], top, lft])}" fill="#efe3c8" stroke="#8a6a44" stroke-width="3"/>` +
+    `<polygon points="${poly([[top[0], top[1] - up], [rgt[0], rgt[1] - up], rgt, top])}" fill="#e6d6b4" stroke="#8a6a44" stroke-width="3"/>` +
+    `<polygon points="${poly([top, rgt, bot, lft])}" fill="#d9b98a" stroke="#8a6a44" stroke-width="3"/>` +
+    `<text x="${w / 2}" y="${h * 0.12}" font-size="18" text-anchor="middle" fill="#7a705c" font-family="Andika, sans-serif">(the inside picture comes here: assets/interiors/${CORNERS[mode].art}.png)</text>`;
+}
+function drawGrid(B) {
+  const t = T(), cx = B.w / 2;
+  let d = "";
+  for (let k = -60; k <= 60; k++) {
+    const b = k * t / 2;           // lines y = ±(x - cx)/2 + b
+    d += `M0 ${(b + cx / 2).toFixed(1)} L${B.w} ${(b - (B.w - cx) / 2).toFixed(1)} `;
+    d += `M0 ${(b - cx / 2).toFixed(1)} L${B.w} ${(b + (B.w - cx) / 2).toFixed(1)} `;
+  }
+  return `<path d="${d}" stroke="rgba(255,255,255,.38)" stroke-width="1" fill="none"/>`;
+}
+function groundHandles() {
+  const g = L.ground || {}, out = [];
+  (g.forest || []).forEach((p, i) => out.push({ kind: "forest", i, x: p[0], y: p[1] }));
+  ((g.road || {}).points || []).forEach((p, i) => out.push({ kind: "road", i, x: p[0], y: p[1] }));
+  return out;
+}
+function drawGroundHandles() {
+  let h = "";
+  for (const q of groundHandles()) h += `<rect x="${q.x - 9 / scale}" y="${q.y - 9 / scale}" width="${18 / scale}" height="${18 / scale}" rx="${4 / scale}" fill="${q.kind === "forest" ? "#3f7a34" : "#b98a4a"}" stroke="#fff" stroke-width="${2.5 / scale}"/>`;
+  return h;
+}
+function isSel(it) { return sel && sel.kind === it.kind && sel.id === it.id; }
+function handlePos() {
+  if (!sel || sel.kind === "pests" || sel.kind === "field") return null;
+  const it = items().find(isSel); if (!it) return null;
+  const r = picRect(it); return { x: r.x + r.w, y: r.y };
+}
+function fitScale() {
+  const B = boardSize();
+  const aw = wrap.clientWidth - 4, ah = Math.max(320, wrap.clientHeight - 4);
+  scale = Math.min(aw / B.w, ah / B.h);
+  if (window.innerWidth <= 820) scale = aw / B.w;
+  svg.setAttribute("width", Math.floor(B.w * scale));
+  svg.setAttribute("height", Math.floor(B.h * scale));
+}
+
+// ---------- picking (only visible pixels count; places without a picture by their footprint)
+function hitPic(it, x, y) {
+  const r = picRect(it);
+  if (x < r.x || y < r.y || x > r.x + r.w || y > r.y + r.h) return false;
+  const info = it.pic && imgInfo[it.pic];
+  if (!info || !info.data) return true;
+  const u = Math.min(info.w - 1, Math.floor((x - r.x) / r.w * info.w)), v = Math.min(info.h - 1, Math.floor((y - r.y) / r.h * info.h));
+  return info.data[(v * info.w + u) * 4 + 3] > 90;
+}
+function pick(x, y) {
+  if ($("tGround").checked && !isInterior()) {
+    for (const q of groundHandles()) if (Math.abs(x - q.x) < 14 / scale && Math.abs(y - q.y) < 14 / scale) return { kind: "g-" + q.kind, id: q.i };
+  }
+  if (!isInterior() && L.pests && Math.abs(x - L.pests.x) < 46 && y > L.pests.y && y < L.pests.y + 20) return { kind: "pests", id: "pests" };
+  const list = items().slice().reverse();
+  for (const it of list) if (!it.flat && it.kind !== "field" && hitPic(it, x, y)) return { kind: it.kind, id: it.id };
+  for (const it of list) if (!it.flat && it.foot && !it.pic && inFootIt(it, x, y)) return { kind: it.kind, id: it.id };
+  for (const it of list) if (it.flat && it.foot && inFootIt(it, x, y)) return { kind: it.kind, id: it.id };
+  for (const it of list) if (it.field && inFieldDia(x, y, it.x, it.y)) return { kind: it.kind, id: it.id };
+  if ($("tLabels").checked) for (const it of list) if ((it.kind === "place" || it.kind === "corner") && it.foot) {
+    const fc = footCenterOf(it); if (Math.abs(x - fc[0]) < 40 && y > it.y && y < it.y + 22) return { kind: it.kind, id: it.id };
+  }
+  return null;
+}
+function inFootIt(it, x, y) {
+  if (it.kind === "corner") { const t = it.footT; return Math.abs(x - it.x) / (t / 2) + Math.abs(y - (it.y - t / 4)) / (t / 4) <= 1; }
+  return inFoot(x, y, it.x, it.y, it.foot[0], it.foot[1]);
+}
+function toBoard(ev) {
+  const r = svg.getBoundingClientRect(), B = boardSize();
+  return { x: (ev.clientX - r.left) / r.width * B.w, y: (ev.clientY - r.top) / r.height * B.h };
+}
+
+// ---------- reading and writing the selected thing
+function getV(s) {
+  if (!s) return null;
+  const B = boardSize();
+  switch (s.kind) {
+    case "place": { const p = L.places[s.id]; const it = items().find(isSel); return { x: p.x, y: p.y, w: it && it.pic ? picW(p, it.pic) : p.w, a: (p.foot || [1, 1])[0], b: (p.foot || [1, 1])[1] }; }
+    case "field": return { x: L.fields[s.id].x, y: L.fields[s.id].y };
+    case "addon": { const [pid, i] = s.id.split(":"), a = L.addons[pid][+i], p = L.places[pid]; return { x: p.x + (a.dx || 0), y: p.y + (a.dy || 0), w: a.w || 50 }; }
+    case "deco": return L.deco[s.id];
+    case "scarecrow": return L.scarecrow;
+    case "pests": return { x: L.pests.x, y: L.pests.y };
+    case "corner": { const c = L.interiors[mode][s.id]; return { x: Math.round(c.x * B.w), y: Math.round(c.y * B.h), w: Math.round(c.w * B.w) }; }
+  }
+  return null;
+}
+function setV(s, v) {
+  const r = (n) => Math.round(n), B = boardSize();
+  if (s.kind === "place") {
+    const p = L.places[s.id];
+    if (v.x != null || v.y != null) {
+      let nx = v.x != null ? v.x : p.x, ny = v.y != null ? v.y : p.y;
+      if ($("tSnap").checked && v.snap) [nx, ny] = snap(nx, ny);
+      const dx = r(nx) - p.x, dy = r(ny) - p.y;
+      p.x = r(nx); p.y = r(ny);
+      if (s.id === "home") for (const [id, q] of Object.entries(L.places)) if (q.k === "sub") { q.x += dx; q.y += dy; }
+    }
+    if (v.w != null) {
+      const it = items().find(isSel), key = it && it.pic ? it.pic.split("/").pop() : "";
+      const finalKey = ((PLACES[s.id] || {}).finalPic || "").split("/").pop();
+      if (key && ((p.ws && p.ws[key] != null) || (time === "start" && key !== finalKey))) { p.ws = p.ws || {}; p.ws[key] = Math.max(10, r(v.w)); }
+      else p.w = Math.max(10, r(v.w));
+    }
+    if (v.a != null) { p.foot = [Math.max(1, Math.min(6, r(v.a))), (p.foot || [1, 1])[1]]; }
+    if (v.b != null) { p.foot = [(p.foot || [1, 1])[0], Math.max(1, Math.min(6, r(v.b)))]; }
+    return;
+  }
+  if (s.kind === "field") {
+    const f = L.fields[s.id]; let nx = v.x != null ? v.x : f.x, ny = v.y != null ? v.y : f.y;
+    if ($("tSnap").checked && v.snap) [nx, ny] = snap(nx, ny);
+    f.x = r(nx); f.y = r(ny); return;
+  }
+  if (s.kind === "addon") {
+    const [pid, i] = s.id.split(":"), a = L.addons[pid][+i], p = L.places[pid];
+    if (v.x != null) a.dx = r(v.x - p.x); if (v.y != null) a.dy = r(v.y - p.y); if (v.w != null) a.w = Math.max(8, r(v.w)); return;
+  }
+  if (s.kind === "corner") {
+    const c = L.interiors[mode][s.id], k = (n) => Math.round(n * 1000) / 1000;
+    if (v.x != null) c.x = k(v.x / B.w); if (v.y != null) c.y = k(v.y / B.h); if (v.w != null) c.w = k(Math.max(20, v.w) / B.w); return;
+  }
+  if (s.kind === "pests") { if (v.x != null) L.pests.x = r(v.x); if (v.y != null) L.pests.y = r(v.y); return; }
+  const o = getV(s);
+  if (v.x != null) o.x = r(v.x); if (v.y != null) o.y = r(v.y); if (v.w != null) o.w = Math.max(8, r(v.w));
+}
+function nameOf(s) {
+  if (!s) return "Nothing yet — tap a picture";
+  if (s.kind === "place") return (PLACES[s.id] || {}).title || s.id;
+  if (s.kind === "field") return ["Home Field", "North Field", "River Meadow"][s.id] + " (3 × 3 patches, front corner)";
+  if (s.kind === "addon") { const [pid, i] = s.id.split(":"); return "On " + ((PLACES[pid] || {}).title || pid) + ": " + L.addons[pid][+i].id.replace(/_/g, " "); }
+  if (s.kind === "deco") return "Decoration: " + L.deco[s.id].pic.replace("_", " ");
+  if (s.kind === "scarecrow") return "Scarecrow";
+  if (s.kind === "pests") return "Pests counter";
+  if (s.kind === "corner") return (CORNERS[mode].members[s.id] || {}).title || s.id;
+  if (s.kind === "g-forest") return "Forest corner";
+  if (s.kind === "g-road") return "Road point";
+}
+function subOf(s) {
+  if (!s) return "";
+  const it = items().find(isSel);
+  if (s.kind === "place") return it && it.pic ? "Picture: " + it.pic.split("/").pop() + (time === "start" ? " (start)" : " (everything built)") : "No picture yet — the footprint stands in for it";
+  if (s.kind === "addon") return it && it.pic ? "Appears when it is built" : "No picture yet — appears when it is built";
+  if (s.kind === "corner") return it && it.pic ? "Picture: " + it.pic.split("/").pop() : "No picture yet";
+  return "";
+}
+function syncPanel() {
+  $("selName").textContent = nameOf(sel);
+  $("selSub").textContent = subOf(sel);
+  const v = sel && !sel.kind.startsWith("g-") ? getV(sel) : null;
+  for (const [k, id] of [["x", "fx"], ["y", "fy"], ["w", "fw"], ["a", "fa"], ["b", "fb"]]) {
+    const inp = $(id); inp.disabled = !v || v[k] == null;
+    if (document.activeElement !== inp) inp.value = v && v[k] != null ? v[k] : "";
+  }
+  $("footRow").style.display = sel && sel.kind === "place" ? "" : "none";
+  $("dup").disabled = $("del").disabled = !(sel && sel.kind === "deco");
+  $("smaller").disabled = $("bigger").disabled = !(v && v.w != null);
+  for (const b of document.querySelectorAll("#placeChips button")) b.classList.toggle("on", !!(sel && sel.kind === b.dataset.kind && String(sel.id) === b.dataset.id));
+  $("gRoadW").value = (L.ground.road || {}).w || ""; $("gTile").value = L.tile;
+  $("gPatch").value = (L.field || {}).patch || 144; $("gGap").value = (L.field || {}).gap || 12;
+  $("undo").disabled = undoStack.length === 0;
+  for (const b of document.querySelectorAll("#modeSeg button")) b.classList.toggle("on", b.dataset.mode === mode);
+  for (const b of document.querySelectorAll("#timeSeg button")) b.classList.toggle("on", b.dataset.time === time);
+  $("decoCard").style.display = isInterior() ? "none" : "";
+}
+
+// ---------- history, draft and changes
+function snapshot() { undoStack.push(JSON.stringify(L)); if (undoStack.length > 60) undoStack.shift(); }
+function changed() { saveDraft(); render(); }
+function saveDraft() { try { localStorage.setItem(DRAFT_KEY, JSON.stringify(L)); } catch (e) {} }
+function loadDraft() { try { const d = localStorage.getItem(DRAFT_KEY); return d ? JSON.parse(d) : null; } catch (e) { return null; } }
+function clearDraft() { try { localStorage.removeItem(DRAFT_KEY); } catch (e) {} }
+
+// ---------- pointer: drag to move, drag the yellow dot to resize, drag ground corners
+let drag = null;
+svg.addEventListener("pointerdown", (ev) => {
+  const p = toBoard(ev);
+  if (ev.target.id === "handle") {
+    const v = getV(sel);
+    drag = { mode: "size", start: p, w0: v.w, pid: ev.pointerId }; snapshot();
+    svg.setPointerCapture(ev.pointerId); ev.preventDefault(); return;
+  }
+  const hit = pick(p.x, p.y);
+  sel = hit;
+  if (hit && hit.kind.startsWith("g-")) {
+    const arr = hit.kind === "g-forest" ? L.ground.forest : L.ground.road.points;
+    drag = { mode: "ground", arr, i: hit.id, start: p, x0: arr[hit.id][0], y0: arr[hit.id][1], moved: false, pid: ev.pointerId };
+  } else if (hit) {
+    const v = getV(hit);
+    drag = { mode: "move", start: p, x0: v.x, y0: v.y, moved: false, pid: ev.pointerId };
+  }
+  svg.setPointerCapture(ev.pointerId); ev.preventDefault();
+  render();
+});
+svg.addEventListener("pointermove", (ev) => {
+  if (!drag || ev.pointerId !== drag.pid) return;
+  const p = toBoard(ev), dx = p.x - drag.start.x, dy = p.y - drag.start.y;
+  if (drag.mode === "move" || drag.mode === "ground") {
+    if (!drag.moved && Math.hypot(dx, dy) < 3) return;
+    if (!drag.moved) { snapshot(); drag.moved = true; }
+    if (drag.mode === "ground") { drag.arr[drag.i] = [Math.round(drag.x0 + dx), Math.round(drag.y0 + dy)]; }
+    else setV(sel, { x: drag.x0 + dx, y: drag.y0 + dy, snap: true });
+  } else if (drag.mode === "size") {
+    setV(sel, { w: drag.w0 + (dx - dy) });
+  }
+  render();
+});
+function endDrag(ev) { if (drag && ev.pointerId === drag.pid) { drag = null; saveDraft(); render(); } }
+svg.addEventListener("pointerup", endDrag);
+svg.addEventListener("pointercancel", endDrag);
+
+// ---------- keyboard
+document.addEventListener("keydown", (ev) => {
+  if (ev.target.tagName === "INPUT" || ev.target.tagName === "TEXTAREA") return;
+  if ((ev.metaKey || ev.ctrlKey) && ev.key.toLowerCase() === "z") { doUndo(); ev.preventDefault(); return; }
+  if (!sel || sel.kind.startsWith("g-")) return;
+  const step = ev.shiftKey ? 10 : 1, v = getV(sel);
+  const moves = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] };
+  if (moves[ev.key]) { snapshot(); setV(sel, { x: v.x + moves[ev.key][0], y: v.y + moves[ev.key][1] }); changed(); ev.preventDefault(); }
+  else if (ev.key === "+" || ev.key === "=") { resizeBy(1.06); ev.preventDefault(); }
+  else if (ev.key === "-" || ev.key === "_") { resizeBy(1 / 1.06); ev.preventDefault(); }
+  else if ((ev.key === "Delete" || ev.key === "Backspace") && sel.kind === "deco") { removeSel(); ev.preventDefault(); }
+});
+function resizeBy(f) { const v = getV(sel); if (!v || v.w == null) return; snapshot(); setV(sel, { w: v.w * f }); changed(); }
+function removeSel() { if (!sel || sel.kind !== "deco") return; snapshot(); L.deco.splice(sel.id, 1); sel = null; changed(); }
+function doUndo() { if (!undoStack.length) return; L = JSON.parse(undoStack.pop()); sel = null; changed(); }
+
+// ---------- panel controls
+for (const [id, key] of [["fx", "x"], ["fy", "y"], ["fw", "w"], ["fa", "a"], ["fb", "b"]]) {
+  $(id).addEventListener("change", () => { if (!sel) return; const n = parseFloat($(id).value); if (isNaN(n)) return; snapshot(); setV(sel, { [key]: n }); changed(); });
+}
+$("bigger").onclick = () => resizeBy(1.08);
+$("smaller").onclick = () => resizeBy(1 / 1.08);
+$("del").onclick = removeSel;
+$("dup").onclick = () => { if (!sel || sel.kind !== "deco") return; snapshot(); const d = Object.assign({}, L.deco[sel.id]); d.x += 30; d.y += 12; L.deco.push(d); sel = { kind: "deco", id: L.deco.length - 1 }; changed(); };
+$("undo").onclick = doUndo;
+let resetArmed = false;
+$("reset").onclick = () => {
+  if (!resetArmed) { resetArmed = true; $("reset").textContent = "Tap again to reset"; setTimeout(() => { resetArmed = false; $("reset").textContent = "Back to the game's layout"; }, 3000); return; }
+  resetArmed = false; $("reset").textContent = "Back to the game's layout";
+  snapshot(); L = JSON.parse(JSON.stringify(GAME_LAYOUT)); sel = null; clearDraft(); render(); status("Back to the layout that is in the game now.", "ok");
+};
+for (const id of ["tLabels", "tFoot", "tGrid", "tGround"]) $(id).addEventListener("change", render);
+for (const b of document.querySelectorAll("#modeSeg button")) b.onclick = () => { mode = b.dataset.mode; sel = null; buildChips(); render(); };
+for (const b of document.querySelectorAll("#timeSeg button")) b.onclick = () => { time = b.dataset.time; sel = null; render(); };
+$("gRoadW").addEventListener("change", () => { snapshot(); L.ground.road.w = Math.max(20, Math.round(+$("gRoadW").value)); changed(); });
+$("gTile").addEventListener("change", () => { snapshot(); L.tile = Math.max(60, Math.min(140, Math.round(+$("gTile").value))); changed(); });
+$("gPatch").addEventListener("change", () => { snapshot(); L.field = L.field || {}; L.field.patch = Math.max(80, Math.min(200, Math.round(+$("gPatch").value))); changed(); });
+$("gGap").addEventListener("change", () => { snapshot(); L.field = L.field || {}; L.field.gap = Math.max(0, Math.min(40, Math.round(+$("gGap").value))); changed(); });
+
+function buildChips() {
+  const box = $("placeChips"); box.innerHTML = "";
+  const add = (label, s) => { const b = document.createElement("button"); b.dataset.kind = s.kind; b.dataset.id = String(s.id); b.textContent = label; b.onclick = () => { sel = s; render(); }; box.appendChild(b); };
+  if (isInterior()) { for (const [m, meta] of Object.entries(CORNERS[mode].members)) add(meta.title, { kind: "corner", id: m }); return; }
+  for (const id of Object.keys(L.places)) add((PLACES[id] || {}).title || id, { kind: "place", id });
+  (L.fields || []).forEach((f, i) => add(["Home Field", "North Field", "River Meadow"][i] || "Field", { kind: "field", id: i }));
+  add("Scarecrow", { kind: "scarecrow", id: "scarecrow" });
+  add("Pests counter", { kind: "pests", id: "pests" });
+}
+function buildDecoPick() {
+  const box = $("decoPick"); box.innerHTML = "";
+  for (const k of DECO_KINDS) {
+    if (!PICS["deco/" + k]) continue;
+    const b = document.createElement("button"); b.title = "Add " + k.replace("_", " ");
+    const im = document.createElement("img"); im.src = PICS["deco/" + k]; im.alt = "";
+    const t = document.createElement("span"); t.textContent = k.replace("_", " ");
+    b.append(im, t);
+    b.onclick = () => {
+      snapshot();
+      const w = k.startsWith("tree") ? 62 : (k === "bush" ? 42 : 32);
+      L.deco.push({ pic: k, x: Math.round(L.size.w / 2), y: Math.round(L.size.h / 2), w });
+      sel = { kind: "deco", id: L.deco.length - 1 }; changed();
+    };
+    box.appendChild(b);
+  }
+}
+
+// ---------- export
+function layoutText() { return JSON.stringify(L, null, 1); }
+function status(msg, kind) { const s = $("status"); s.textContent = msg; s.className = "status" + (kind ? " " + kind : ""); }
+$("copy").onclick = async () => {
+  const txt = layoutText();
+  try { await navigator.clipboard.writeText(txt); status("Copied. Paste it into the chat with Claude.", "ok"); }
+  catch (e) { const o = $("out"); o.hidden = false; o.value = txt; o.focus(); o.select(); status("Copying was blocked here — the text is selected below, copy it with ⌘C / Ctrl+C.", ""); }
+};
+$("pasteBtn").onclick = () => {
+  const o = $("out");
+  if (o.hidden || o.dataset.mode !== "load") { o.hidden = false; o.dataset.mode = "load"; o.value = ""; o.placeholder = "Paste a layout text here, then tap “Load text…” again"; o.focus(); status("Paste the text into the box below.", ""); return; }
+  try {
+    const d = JSON.parse(o.value);
+    if (!d.places || !d.fields || !d.size || (d.version || 1) < 2) throw new Error("not a layout");
+    snapshot(); L = d; sel = null; changed(); o.hidden = true; o.dataset.mode = ""; status("Layout loaded.", "ok");
+  } catch (e) { status("That text isn't a farm layout (version 2). Copy it again from the editor or the game's map_layout.json.", "err"); }
+};
+$("download").onclick = () => {
+  const blob = new Blob([layoutText()], { type: "application/json" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "map_layout.json"; a.click();
+  status("Saved map_layout.json — put it into the game's data folder, or send it to Claude.", "ok");
+};
+
+let db = null;
+async function connect() {
+  if (!(window.claude && window.claude.use)) { $("download").hidden = false; $("sendHint").textContent = "Copy the text and paste it into the chat with Claude, or save it as the game's data/map_layout.json."; return; }
+  db = await window.claude.use("db");
+  if (!db) { $("sendHint").textContent = "Copy the text and paste it into the chat with Claude."; return; }
+  $("send").hidden = false;
+  try {
+    const snap = await db.doc("layouts/latest").get();
+    if (snap.exists) status("Last sent to Claude: " + new Date(snap.data().sentAt).toLocaleString() + ".", "");
+  } catch (e) {}
+}
+$("send").onclick = async () => {
+  if (!db) return;
+  $("send").disabled = true; status("Sending…", "");
+  const body = { json: layoutText(), note: $("note").value.slice(0, 2000), sentAt: Date.now() };
+  try {
+    await db.doc("layouts/latest").set(body);
+    try { await db.collection("history").add(body); } catch (e) {}
+    status("Sent. Tell Claude “I sent the layout”.", "ok");
+  } catch (e) {
+    status(e && e.code === "invalid_argument" ? "You can't send from this view — copy the text instead." : "Couldn't send right now. Try again, or copy the text instead.", "err");
+  }
+  $("send").disabled = false;
+};
+
+// ---------- start
+window.addEventListener("resize", () => { fitScale(); });
+loadPics().then(() => {
+  const draft = loadDraft();
+  if (draft && (draft.version || 1) >= 2 && JSON.stringify(draft) !== JSON.stringify(GAME_LAYOUT)) {
+    L = draft; status("Your unsent changes are back. “Back to the game's layout” starts over.", "");
+  }
+  L.interiors = L.interiors || {};
+  for (const b of Object.keys(CORNERS)) L.interiors[b] = L.interiors[b] || {};
+  buildChips(); buildDecoPick(); render();
+  connect();
+});
+</script>

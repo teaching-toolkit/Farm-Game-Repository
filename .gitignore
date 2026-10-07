@@ -1,0 +1,23 @@
+# Farm Quiz Game - private repo (mirror of the "Farm game" folder)
+
+# macOS
+.DS_Store
+
+# Godot's cache (rebuilt automatically on import)
+.godot/
+godot-prototype/.godot/
+
+# The web build is its own public repo (nested git repo inside web-build/)
+web-build/
+
+# Temporary transfer folder: keep only its README
+Claude outputs/*
+!Claude outputs/README.md
+
+# Archive: keep the old documents and prototypes, skip the big screenshots and the old zip
+archive/screenshots/
+archive/*.zip
+
+# Python caches
+__pycache__/
+*.pyc

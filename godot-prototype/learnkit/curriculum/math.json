@@ -1,0 +1,178 @@
+{
+  "format": "learnkit-math-1",
+  "note": "Mental maths from 1st to about 7th class, in categories (plus & minus, times & divide, numbers, fractions, decimals & percent, measures, powers & negatives). Every category has two sections: 'By heart' (facts to recall at once — like 8 + 5 or 6 × 7) and 'Working it out' (too many to learn by heart: the steps should run smoothly, like 32 - 17 or 12 × 17). Each level is a set of tasks made by a generator ('kind' + its settings, see learnkit/math_engine.gd). 'quick' = seconds for a quick answer (plus timing.digitAllowance for every typed character after the first); 'need' = how many different tasks must be learned to pass; 'class' = the school year it usually belongs to (Swiss Lehrplan 21 / Schweizer Zahlenbuch; US Common Core is close); 'after' = a level that must be passed first; 'keys' = extra keys on the number pad (. − R). Order within a section = the order of learning.",
+  "sources": [
+    "Lehrplan 21 Mathematik, Zyklus 1–2 (core facts ×1 ×2 ×5 ×10 in 1st–2nd class; the whole Einmaleins automated in 3rd; mental arithmetic to 4 digits in 4th; decimals and fractions in 5th–6th) — Schweizer Zahlenbuch handreichung",
+    "PIKAS (DZLM): understand first, then core tasks by heart, then derive the rest, then automate",
+    "Common Core: sums of two one-digit numbers from memory by end of grade 2; all products of two one-digit numbers from memory by end of grade 3",
+    "XtraMath: 3 s per fact as the fluency mark (6 s default, 12 s for young learners)",
+    "Times Tables Rock Stars: speed titles by seconds per answer"
+  ],
+  "timing": {"digitAllowance": 0.5, "note": "A quick answer: the level's 'quick' seconds plus digitAllowance for every character typed after the first (typing 13 takes longer than typing 7). Games can stretch all times (scale), e.g. for a younger child."},
+  "srs": {
+    "gaps": [3, 8, 20, 60, 180, 500, 1400],
+    "knownBox": 4,
+    "wrongAfter": 2,
+    "slowAfter": 3,
+    "newInFlight": 4,
+    "newInFlightStruggling": 2,
+    "fastTrack": 4,
+    "fastTrackWithin": 12,
+    "reviewRun": 1,
+    "firstSightBox": 3,
+    "reviewRunStruggling": 4,
+    "struggleWindow": 8,
+    "struggleWrong": 4,
+    "struggleSlow": 7,
+    "boosterEvery": 3,
+    "passAccuracy": 0.8,
+    "goldReviewShare": 0.3,
+    "note": "Spaced repetition like Anki, counted in answers: a wrong task comes back after wrongAfter others, a slow one after slowAfter; quick and right it waits gaps[box] answers (box goes up by one each time). At most newInFlight new tasks are being learned at once. A level passes when 'need' of its tasks reached box 2 and passAccuracy of the recent answers on it were right — or at once when fastTrack answers in a row on it are quick and right while it is still new (within its first fastTrackWithin answers). firstSightBox: a task answered quick and right the very first time starts in this box (the child knows it already). reviewRun: after this many reviews in a row a new task comes (if there is room), so the child keeps moving on (reviewRunStruggling when it is hard going). Hard going (struggleWrong wrong or struggleSlow slow among the last struggleWindow): every boosterEvery-th task is an easy known one. goldReviewShare: how often a level waiting for its gold check is reviewed."
+  },
+  "medals": {
+    "bronze": {"emoji": "🥉", "name": "Bronze", "means": "Level passed: enough of its tasks were quick and right twice in a row."},
+    "silver": {"emoji": "🥈", "name": "Silver", "means": "By heart: every task of a small level (up to allUpTo tasks), or share of the tasks of a bigger one, quick and right twice in a row, and 9 of the last 10 answers on the level quick and right. Working it out: silverCount different tasks quick and right, and 9 of the last 10 quick and right.", "silverCount": 20, "allUpTo": 20, "share": 0.7},
+    "gold": {"emoji": "🥇", "name": "Gold", "days": 7, "means": "Still quick at least 'days' days after silver: it has stuck."},
+    "trophy": {"emoji": "🏆", "name": "Trophy", "means": "Every level of a section has silver."},
+    "crown": {"emoji": "👑", "name": "Crown", "means": "Every level of a section has gold."}
+  },
+  "ranks": [
+    {"share": 0.0, "title": "🌰 Seed"},
+    {"share": 0.05, "title": "🌱 Sprout"},
+    {"share": 0.2, "title": "🌿 Seedling"},
+    {"share": 0.4, "title": "🌳 Young tree"},
+    {"share": 0.65, "title": "🌲 Tall tree"},
+    {"share": 0.9, "title": "🏔️ Mighty oak"}
+  ],
+  "ranksNote": "A title per category from its medal points (bronze 1, silver 2, gold 3) as a share of all points the category has.",
+  "categories": [
+    {"id": "addsub", "name": "Plus & minus", "emoji": "➕", "classes": "1–4", "sections": [
+      {"id": "facts", "name": "By heart", "emoji": "⚡", "fluency": true, "levels": [
+        {"id": "as.f01", "name": "Tiny sums", "emoji": "🐣", "kind": "add_upto", "max": 5, "quick": 2.5, "need": 7, "class": 1, "example": "2 + 2"},
+        {"id": "as.f02", "name": "Take away up to 5", "emoji": "🐥", "kind": "sub_within", "max": 5, "quick": 2.5, "need": 7, "class": 1, "example": "4 - 1"},
+        {"id": "as.f03", "name": "Sums up to 10", "emoji": "🌱", "kind": "add_upto", "max": 10, "quick": 2.5, "need": 10, "class": 1, "example": "6 + 3"},
+        {"id": "as.f04", "name": "Take away up to 10", "emoji": "🌿", "kind": "sub_within", "max": 10, "quick": 2.5, "need": 10, "class": 1, "example": "9 - 4"},
+        {"id": "as.f05", "name": "Doubles", "emoji": "👯", "kind": "doubles", "max": 10, "quick": 2.5, "need": 8, "class": 1, "example": "7 + 7"},
+        {"id": "as.f06", "name": "Make ten", "emoji": "🔟", "kind": "bonds", "total": 10, "quick": 2.5, "need": 7, "class": 1, "example": "7 + ? = 10"},
+        {"id": "as.f07", "name": "Ten and a bit", "emoji": "🧺", "kind": "teens", "quick": 2.5, "need": 10, "class": 1, "example": "10 + 4, 14 - 4"},
+        {"id": "as.f08", "name": "Teens plus", "emoji": "🥕", "kind": "add20_nobridge", "quick": 2.5, "need": 10, "class": 2, "example": "12 + 5"},
+        {"id": "as.f09", "name": "Teens minus", "emoji": "🥔", "kind": "sub20_nobridge", "quick": 2.5, "need": 10, "class": 2, "example": "17 - 5"},
+        {"id": "as.f10", "name": "Jump over ten (+)", "emoji": "🐸", "kind": "add_bridge10", "quick": 3.0, "need": 12, "class": 2, "example": "8 + 5"},
+        {"id": "as.f11", "name": "Jump over ten (-)", "emoji": "🐇", "kind": "sub_bridge10", "quick": 3.0, "need": 12, "class": 2, "example": "13 - 5"},
+        {"id": "as.f12", "name": "Whole tens", "emoji": "💯", "kind": "tens", "quick": 3.0, "need": 10, "class": 2, "example": "30 + 40, 90 - 60"},
+        {"id": "as.f13", "name": "Tens to a hundred", "emoji": "🎯", "kind": "bonds_tens", "total": 100, "quick": 3.0, "need": 7, "class": 2, "example": "30 + ? = 100"}
+      ]},
+      {"id": "work", "name": "Working it out", "emoji": "🧠", "fluency": false, "levels": [
+        {"id": "as.w01", "name": "Big number plus a small one", "emoji": "🐄", "kind": "add_2d1d", "carry": false, "quick": 5, "need": 10, "class": 2, "after": "as.f08", "example": "34 + 5"},
+        {"id": "as.w02", "name": "Big number minus a small one", "emoji": "🐖", "kind": "sub_2d1d", "carry": false, "quick": 5, "need": 10, "class": 2, "after": "as.f09", "example": "47 - 3"},
+        {"id": "as.w03", "name": "Plus whole tens", "emoji": "🪜", "kind": "pm_2d_tens", "quick": 5, "need": 10, "class": 2, "after": "as.f12", "example": "34 + 20, 57 - 30"},
+        {"id": "as.w04", "name": "Over the next ten (+)", "emoji": "🐎", "kind": "add_2d1d", "carry": true, "quick": 6, "need": 12, "class": 2, "after": "as.f10", "example": "38 + 5"},
+        {"id": "as.w05", "name": "Back over the ten (-)", "emoji": "🐐", "kind": "sub_2d1d", "carry": true, "quick": 6.5, "need": 12, "class": 2, "after": "as.f11", "example": "42 - 7"},
+        {"id": "as.w06", "name": "Two big numbers (+)", "emoji": "🚜", "kind": "add_2d2d", "carry": false, "quick": 7, "need": 10, "class": 2, "after": "as.w03", "example": "23 + 14"},
+        {"id": "as.w07", "name": "Two big numbers (-)", "emoji": "🏡", "kind": "sub_2d2d", "carry": false, "quick": 7, "need": 10, "class": 2, "after": "as.w03", "example": "58 - 23"},
+        {"id": "as.w08", "name": "Big sums with a carry", "emoji": "🌾", "kind": "add_2d2d", "carry": true, "quick": 9, "need": 12, "class": 2, "after": "as.w04", "example": "27 + 15"},
+        {"id": "as.w09", "name": "Big take-aways with borrowing", "emoji": "🏆", "kind": "sub_2d2d", "carry": true, "quick": 10, "need": 12, "class": 2, "after": "as.w05", "example": "32 - 17"},
+        {"id": "as.w10", "name": "Fill up to a hundred", "emoji": "🪣", "kind": "bonds_any", "total": 100, "quick": 8, "need": 10, "class": 3, "after": "as.f13", "example": "37 + ? = 100"},
+        {"id": "as.w11", "name": "Whole hundreds", "emoji": "🏰", "kind": "hundreds", "quick": 5, "need": 10, "class": 3, "after": "as.f12", "example": "300 + 400, 900 - 600"},
+        {"id": "as.w12", "name": "Hundreds and a bit", "emoji": "🧮", "kind": "pm_3d_small", "quick": 9, "need": 12, "class": 3, "after": "as.w08", "example": "456 + 30, 645 - 8"},
+        {"id": "as.w13", "name": "Three-digit numbers", "emoji": "🏔️", "kind": "pm_3d3d", "quick": 18, "need": 12, "class": 4, "after": "as.w12", "example": "246 + 138, 503 - 248"}
+      ]}
+    ]},
+    {"id": "muldiv", "name": "Times & divide", "emoji": "✖️", "classes": "2–5", "sections": [
+      {"id": "facts", "name": "By heart", "emoji": "⚡", "fluency": true, "levels": [
+        {"id": "md.f01", "name": "Times 1 and times 10", "emoji": "🔟", "kind": "mul_tables", "tables": [1, 10], "quick": 2.5, "need": 12, "class": 2, "example": "1 × 7, 10 × 4"},
+        {"id": "md.f02", "name": "Times 2", "emoji": "✌️", "kind": "mul_tables", "tables": [2], "quick": 2.5, "need": 10, "class": 2, "example": "2 × 8"},
+        {"id": "md.f03", "name": "Times 5", "emoji": "🖐️", "kind": "mul_tables", "tables": [5], "quick": 2.5, "need": 10, "class": 2, "example": "5 × 6"},
+        {"id": "md.f04", "name": "Squares", "emoji": "🟪", "kind": "squares", "max": 10, "quick": 2.5, "need": 8, "class": 3, "example": "6 × 6"},
+        {"id": "md.f05", "name": "Times 3 and 4", "emoji": "🍀", "kind": "mul_tables", "tables": [3, 4], "quick": 2.5, "need": 14, "class": 3, "example": "4 × 7"},
+        {"id": "md.f06", "name": "Times 6 and 9", "emoji": "🐞", "kind": "mul_tables", "tables": [6, 9], "quick": 2.5, "need": 14, "class": 3, "example": "6 × 8"},
+        {"id": "md.f07", "name": "Times 7 and 8", "emoji": "🕷️", "kind": "mul_tables", "tables": [7, 8], "quick": 2.5, "need": 14, "class": 3, "example": "7 × 8"},
+        {"id": "md.f08", "name": "All the times tables", "emoji": "🎲", "kind": "mul_tables", "tables": [2, 3, 4, 5, 6, 7, 8, 9], "from": 2, "quick": 2.5, "need": 30, "class": 3, "example": "7 × 6"},
+        {"id": "md.f09", "name": "Divide by 2, 5 and 10", "emoji": "🍕", "kind": "div_tables", "tables": [2, 5, 10], "quick": 3.0, "need": 14, "class": 3, "after": "md.f03", "example": "35 ÷ 5"},
+        {"id": "md.f10", "name": "Divide by 3 and 4", "emoji": "🍰", "kind": "div_tables", "tables": [3, 4], "quick": 3.0, "need": 12, "class": 3, "after": "md.f05", "example": "28 ÷ 4"},
+        {"id": "md.f11", "name": "Divide by 6 to 9", "emoji": "🧁", "kind": "div_tables", "tables": [6, 7, 8, 9], "quick": 3.0, "need": 16, "class": 3, "after": "md.f07", "example": "56 ÷ 8"},
+        {"id": "md.f12", "name": "All divisions", "emoji": "🎯", "kind": "div_tables", "tables": [2, 3, 4, 5, 6, 7, 8, 9], "quick": 3.0, "need": 30, "class": 3, "after": "md.f11", "example": "63 ÷ 7"}
+      ]},
+      {"id": "work", "name": "Working it out", "emoji": "🧠", "fluency": false, "levels": [
+        {"id": "md.w01", "name": "Tens times", "emoji": "🧺", "kind": "mul_tens", "quick": 5, "need": 12, "class": 3, "after": "md.f05", "example": "40 × 3, 7 × 60"},
+        {"id": "md.w02", "name": "Times and divide by 10 and 100", "emoji": "🔢", "kind": "pow10", "quick": 5, "need": 12, "class": 4, "after": "md.f01", "example": "34 × 100, 4500 ÷ 10"},
+        {"id": "md.w03", "name": "Big times small", "emoji": "🐘", "kind": "mul_2d1d", "quick": 10, "need": 12, "class": 3, "after": "md.f08", "example": "12 × 7, 23 × 4"},
+        {"id": "md.w04", "name": "Share out big numbers", "emoji": "🎁", "kind": "div_2d1d", "quick": 10, "need": 12, "class": 4, "after": "md.f12", "example": "84 ÷ 4"},
+        {"id": "md.w05", "name": "Divide with a rest", "emoji": "🍪", "kind": "div_rem", "quick": 9, "need": 12, "class": 3, "after": "md.f12", "keys": ["R"], "example": "23 ÷ 4 = 5 R 3"},
+        {"id": "md.w06", "name": "Two big numbers times", "emoji": "🏗️", "kind": "mul_2d2d", "quick": 30, "need": 12, "class": 4, "after": "md.w03", "example": "12 × 17"},
+        {"id": "md.w07", "name": "Hundreds times small", "emoji": "🚂", "kind": "mul_3d1d", "quick": 25, "need": 12, "class": 4, "after": "md.w03", "example": "213 × 4"},
+        {"id": "md.w08", "name": "Share out hundreds", "emoji": "🚛", "kind": "div_3d1d", "quick": 25, "need": 12, "class": 5, "after": "md.w04", "example": "432 ÷ 4"}
+      ]}
+    ]},
+    {"id": "numbers", "name": "Numbers", "emoji": "🔢", "classes": "2–4", "sections": [
+      {"id": "facts", "name": "By heart", "emoji": "⚡", "fluency": true, "levels": [
+        {"id": "nu.f01", "name": "Ten more, ten less", "emoji": "🪜", "kind": "ten_more", "quick": 3.0, "need": 12, "class": 2, "example": "10 more than 47"},
+        {"id": "nu.f02", "name": "Double and half", "emoji": "🪞", "kind": "double_half", "quick": 4.0, "need": 12, "class": 2, "example": "double 36, half of 48"},
+        {"id": "nu.f03", "name": "A hundred more, a hundred less", "emoji": "🏢", "kind": "hundred_more", "quick": 3.5, "need": 12, "class": 3, "example": "100 less than 436"}
+      ]},
+      {"id": "work", "name": "Working it out", "emoji": "🧠", "fluency": false, "levels": [
+        {"id": "nu.w01", "name": "Round to tens", "emoji": "🎯", "kind": "round10", "quick": 5, "need": 12, "class": 3, "example": "47 → 50"},
+        {"id": "nu.w02", "name": "Round to hundreds", "emoji": "🎯", "kind": "round100", "quick": 5, "need": 12, "class": 3, "after": "nu.w01", "example": "462 → 500"},
+        {"id": "nu.w03", "name": "Thousands", "emoji": "🏙️", "kind": "thousands", "quick": 6, "need": 12, "class": 4, "example": "3000 + 4000, 10000 - 2500"},
+        {"id": "nu.w04", "name": "Double and half of big numbers", "emoji": "🪞", "kind": "double_half_big", "quick": 8, "need": 12, "class": 4, "after": "nu.f02", "example": "double 370, half of 560"}
+      ]}
+    ]},
+    {"id": "fractions", "name": "Fractions", "emoji": "🍰", "classes": "3–6", "sections": [
+      {"id": "facts", "name": "By heart", "emoji": "⚡", "fluency": true, "levels": [
+        {"id": "fr.f01", "name": "Half of", "emoji": "🌗", "kind": "frac_of", "dens": [2], "quick": 3.5, "need": 10, "class": 3, "example": "1/2 of 16"},
+        {"id": "fr.f02", "name": "Quarters, thirds and fifths of", "emoji": "🍕", "kind": "frac_of", "dens": [3, 4, 5], "quick": 4.0, "need": 14, "class": 4, "example": "1/4 of 20"},
+        {"id": "fr.f03", "name": "Make a whole", "emoji": "⭕", "kind": "frac_whole", "quick": 3.5, "need": 12, "class": 4, "example": "3/8 + ?/8 = 1"},
+        {"id": "fr.f04", "name": "Same amount, other pieces", "emoji": "🔁", "kind": "frac_equiv", "quick": 4.5, "need": 14, "class": 5, "example": "1/2 = ?/8"},
+        {"id": "fr.f05", "name": "Fractions as decimals", "emoji": "🔄", "kind": "frac_dec", "quick": 4.0, "need": 10, "class": 5, "keys": ["."], "example": "1/4 = 0.25"}
+      ]},
+      {"id": "work", "name": "Working it out", "emoji": "🧠", "fluency": false, "levels": [
+        {"id": "fr.w01", "name": "Some pieces of a number", "emoji": "🧁", "kind": "frac_of_any", "quick": 9, "need": 12, "class": 4, "after": "fr.f02", "example": "3/4 of 24"},
+        {"id": "fr.w02", "name": "Add pieces of the same size", "emoji": "➕", "kind": "frac_add_same", "quick": 6, "need": 12, "class": 5, "after": "fr.f03", "example": "2/7 + 3/7 = ?/7"},
+        {"id": "fr.w03", "name": "Make it simpler", "emoji": "✂️", "kind": "frac_simplify", "quick": 8, "need": 12, "class": 5, "after": "fr.f04", "example": "6/8 = ?/4"}
+      ]}
+    ]},
+    {"id": "decimals", "name": "Decimals & percent", "emoji": "💯", "classes": "5–6", "sections": [
+      {"id": "facts", "name": "By heart", "emoji": "⚡", "fluency": true, "levels": [
+        {"id": "de.f01", "name": "Fill up to 1", "emoji": "🥛", "kind": "dec_bonds", "quick": 4.0, "need": 9, "class": 5, "keys": ["."], "example": "0.3 + ? = 1"},
+        {"id": "de.f02", "name": "Decimals times and divided by 10 and 100", "emoji": "🔢", "kind": "dec_pow10", "quick": 5.0, "need": 12, "class": 5, "keys": ["."], "example": "3.4 × 10"},
+        {"id": "de.f03", "name": "Easy percent", "emoji": "🏷️", "kind": "pct_easy", "quick": 5.0, "need": 12, "class": 6, "example": "50% of 80, 10% of 70"}
+      ]},
+      {"id": "work", "name": "Working it out", "emoji": "🧠", "fluency": false, "levels": [
+        {"id": "de.w01", "name": "Add and take away decimals", "emoji": "🪙", "kind": "dec_pm", "quick": 10, "need": 12, "class": 5, "after": "de.f01", "keys": ["."], "example": "2.5 + 1.75"},
+        {"id": "de.w02", "name": "Percent of amounts", "emoji": "🛍️", "kind": "pct_any", "quick": 12, "need": 12, "class": 6, "after": "de.f03", "example": "15% of 80"}
+      ]}
+    ]},
+    {"id": "measures", "name": "Measures", "emoji": "📏", "classes": "2–5", "sections": [
+      {"id": "facts", "name": "By heart", "emoji": "⚡", "fluency": true, "levels": [
+        {"id": "me.f01", "name": "Time", "emoji": "⏰", "kind": "units_time", "quick": 5.0, "need": 10, "class": 3, "example": "minutes in 2 hours"},
+        {"id": "me.f02", "name": "Lengths", "emoji": "📏", "kind": "units_length", "quick": 5.0, "need": 10, "class": 3, "example": "cm in 3 m"},
+        {"id": "me.f03", "name": "Weights and liquids", "emoji": "⚖️", "kind": "units_mass", "quick": 5.0, "need": 10, "class": 4, "example": "g in 2 kg"}
+      ]},
+      {"id": "work", "name": "Working it out", "emoji": "🧠", "fluency": false, "levels": [
+        {"id": "me.w01", "name": "Francs and Rappen", "emoji": "💰", "kind": "money", "quick": 8, "need": 10, "class": 3, "example": "3.40 Fr. = ? Rp."},
+        {"id": "me.w02", "name": "Mixed units", "emoji": "🧭", "kind": "units_mixed", "quick": 10, "need": 12, "class": 4, "after": "me.f02", "example": "2 h 15 min = ? min"}
+      ]}
+    ]},
+    {"id": "powers", "name": "Powers & minus numbers", "emoji": "🚀", "classes": "6–7", "sections": [
+      {"id": "facts", "name": "By heart", "emoji": "⚡", "fluency": true, "levels": [
+        {"id": "pw.f01", "name": "Squares to 20", "emoji": "🟦", "kind": "squares", "max": 20, "from": 11, "quick": 4.0, "need": 8, "class": 6, "example": "13 × 13"},
+        {"id": "pw.f02", "name": "Doubling up (powers of 2)", "emoji": "🐇", "kind": "pow2", "quick": 4.0, "need": 8, "class": 6, "example": "2 × 2 × 2 × 2"},
+        {"id": "pw.f03", "name": "Below zero", "emoji": "🌡️", "kind": "neg_pm", "quick": 4.0, "need": 14, "class": 6, "keys": ["-"], "example": "-3 + 7, 4 - 9"}
+      ]},
+      {"id": "work", "name": "Working it out", "emoji": "🧠", "fluency": false, "levels": [
+        {"id": "pw.w01", "name": "Square roots", "emoji": "🌱", "kind": "roots", "quick": 6, "need": 10, "class": 7, "after": "pw.f01", "example": "√144"},
+        {"id": "pw.w02", "name": "Bigger minus numbers", "emoji": "🧊", "kind": "neg_pm_big", "quick": 9, "need": 12, "class": 7, "after": "pw.f03", "keys": ["-"], "example": "-23 + 15"}
+      ]}
+    ]}
+  ],
+  "comments": {
+    "booster": ["Here's an easy one! 💪", "A quick one for you 😊", "You know this one! ⭐"],
+    "struggling": ["Tricky ones today — take your time. 🙂", "Every try makes your brain stronger! 🧠", "Mistakes help you learn. Keep going! 🌱", "You're getting there! 🐢➡️🐇"],
+    "streak": {"5": "5 quick ones in a row! ⚡", "10": "10 in a row! You're on fire! 🔥", "20": "20 in a row! Amazing! 🌟", "30": "30 in a row!! A champion! 🏆"},
+    "known": ["You know {task} by heart now! 🌟", "{task} — got it for good! ✅"],
+    "levelUp": "⭐ New level: {emoji} {name}!",
+    "fastTrack": "You already know these — on to the next level! 🚀",
+    "medal": "{medal} {medalName} medal: {emoji} {name}!",
+    "trophy": "🏆 Trophy: {category} · {section}!"
+  }
+}

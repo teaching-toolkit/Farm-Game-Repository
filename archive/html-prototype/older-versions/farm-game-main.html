@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Farm Quiz Game – Layout + Core Loop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" href="farm-game-style.css">
+</head>
+<body>
+  <div id="game-root">
+    <!-- Top bar: coins, water, energy, Time Quiz, Training -->
+    <header id="top-bar">
+      <div class="top-chip">
+        💰 <span id="coins-display">0</span>
+      </div>
+      <div class="top-chip">
+        💧 <span id="water-display">0/0</span>
+      </div>
+      <div class="top-chip">
+        ⚡ <span id="energy-display">0/0</span>
+      </div>
+      <button id="quiz-button" class="icon-btn">❓ Time Quiz</button>
+      <button id="training-button" class="icon-btn secondary">⚡ Training</button>
+    </header>
+
+    <!-- Animal row (4 slots) -->
+    <section id="animal-row" class="row animals-row">
+      <div class="animal-slot" data-animal-slot="chickens">
+        <img src="assets/animals/coop-placeholder.png" class="animal-img" alt="Chicken Area">
+      </div>
+      <div class="animal-slot" data-animal-slot="cows">
+        <img src="assets/animals/cow-placeholder.png" class="animal-img" alt="Cow Area">
+      </div>
+      <div class="animal-slot" data-animal-slot="sheep">
+        <img src="assets/animals/sheep-placeholder.png" class="animal-img" alt="Sheep Area">
+      </div>
+      <div class="animal-slot" data-animal-slot="bees">
+        <img src="assets/animals/beehive-placeholder.png" class="animal-img" alt="Bee Area">
+      </div>
+    </section>
+
+    <!-- Middle field grid (3×4 dirt patches, no gaps) -->
+    <main id="field-area">
+      <div id="field-grid"><div class="field-plot" data-plot="0"><img src="assets/tiles/field-placeholder.png" class="field-bg" alt="Field 0"><div class="plot-content"></div></div><div class="field-plot" data-plot="1"><img src="assets/tiles/field-placeholder.png" class="field-bg" alt="Field 1"><div class="plot-content"></div></div><div class="field-plot" data-plot="2"><img src="assets/tiles/field-placeholder.png" class="field-bg" alt="Field 2"><div class="plot-content"></div></div><div class="field-plot" data-plot="3"><img src="assets/tiles/field-placeholder.png" class="field-bg" alt="Field 3"><div class="plot-content"></div></div><div class="field-plot" data-plot="4"><img src="assets/tiles/field-placeholder.png" class="field-bg" alt="Field 4"><div class="plot-content"></div></div><div class="field-plot" data-plot="5"><img src="assets/tiles/field-placeholder.png" class="field-bg" alt="Field 5"><div class="plot-content"></div></div><div class="field-plot" data-plot="6"><img src="assets/tiles/field-placeholder.png" class="field-bg" alt="Field 6"><div class="plot-content"></div></div><div class="field-plot" data-plot="7"><img src="assets/tiles/field-placeholder.png" class="field-bg" alt="Field 7"><div class="plot-content"></div></div><div class="field-plot" data-plot="8"><img src="assets/tiles/field-placeholder.png" class="field-bg" alt="Field 8"><div class="plot-content"></div></div><div class="field-plot" data-plot="9"><img src="assets/tiles/field-placeholder.png" class="field-bg" alt="Field 9"><div class="plot-content"></div></div><div class="field-plot" data-plot="10"><img src="assets/tiles/field-placeholder.png" class="field-bg" alt="Field 10"><div class="plot-content"></div></div><div class="field-plot" data-plot="11"><img src="assets/tiles/field-placeholder.png" class="field-bg" alt="Field 11"><div class="plot-content"></div></div></div>
+    </main>
+
+    <!-- Bottom buildings: 2 rows × 4 slots (8 total) -->
+    <section id="bottom-buildings">
+      <div class="row buildings-row">
+        <div class="building-slot" data-building="market">
+          <img src="assets/buildings/market-placeholder.png" class="building-img" alt="Market">
+        </div>
+        <div class="building-slot" data-building="farmhouse">
+          <img src="assets/buildings/farmhouse-placeholder.png" class="building-img" alt="Farmhouse">
+        </div>
+        <div class="building-slot" data-building="workshop">
+          <img src="assets/buildings/workshop-placeholder.png" class="building-img" alt="Workshop">
+        </div>
+        <div class="building-slot" data-building="storage">
+          <img src="assets/buildings/storage-placeholder.png" class="building-img" alt="Storage">
+        </div>
+      </div>
+      <div class="row buildings-row">
+        <div class="building-slot" data-building="well">
+          <img src="assets/buildings/well-placeholder.png" class="building-img" alt="Well">
+        </div>
+        <div class="building-slot" data-building="windmill">
+          <img src="assets/buildings/windmill-placeholder.png" class="building-img" alt="Windmill">
+        </div>
+        <div class="building-slot" data-building="barn">
+          <img src="assets/buildings/barn-placeholder.png" class="building-img" alt="Barn">
+        </div>
+        <div class="building-slot" data-building="extra">
+          <img src="assets/buildings/extra-placeholder.png" class="building-img" alt="Extra">
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Time Quiz modal with iframe -->
+  <div id="quiz-modal" class="modal-overlay hidden">
+    <div class="modal-card quiz-modal-card">
+      <iframe id="quiz-iframe" class="quiz-iframe" title="Quiz"></iframe>
+    </div>
+  </div>
+
+  <!-- Generic UI modal -->
+  <div id="ui-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="ui-modal-title"></h3>
+        <button id="ui-modal-close" class="pill-btn pill-ghost">Close</button>
+      </div>
+      <div id="ui-modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="farm-game-config.js"></script>
+  <script src="farm-game-core.js"></script>
+</body>
+</html>

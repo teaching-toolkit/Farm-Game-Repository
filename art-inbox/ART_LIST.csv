@@ -1,0 +1,444 @@
+"# style prompt: Bright, friendly mobile-game cartoon, thick rounded dark outlines, flat colours with simple cel shading, chunky cute proportions, three-quarter top-down view (isometric, like Hay Day), standing on a flat diamond-shaped footprint about twice as wide as deep, small soft shadow, isolated on plain white background, no text."
+priority,chapter,file,size,what,prompt,status
+1,1,assets/deco/bush.png,256 max,Bush,small round green bush,done
+1,1,assets/deco/mystery_sign.png,256 max,Sign shown for a place you can't reach yet,weathered wooden signpost with a painted question mark,done
+1,1,assets/deco/planks.png,256 max,Planks lying in wooden ruins,three old charred planks lying crossed on the ground,done
+1,1,assets/deco/reeds.png,256 max,"Reeds (marsh field, wild pond)",small clump of reeds and cattails,done
+1,1,assets/deco/rubble.png,256 max,"Rocks on a patch not cleared yet, rubble in ruins",small pile of grey fieldstone rubble,done
+1,1,assets/deco/signpost.png,256 max,Field signpost (Home Field),wooden signpost with a blank sign,done
+1,1,assets/deco/soil_heap.png,512 max,Field patch: empty or growing,diamond-shaped raised patch of freshly dug brown soil with a few furrows,done
+1,1,assets/deco/sprout.png,256 max,One young plant (one per seed planted),a tiny young green sprout with two round seed leaves,done
+1,1,assets/deco/stone.png,256 max,One stone on a patch (one per stone),single grey field stone,done
+1,1,assets/deco/stump.png,256 max,Stump on a patch not cleared yet,"old tree stump with roots, cut flat on top",done
+1,1,assets/deco/tree_oak.png,512 max,Forest tree,round leafy oak tree,done
+1,1,assets/deco/tree_pine.png,512 max,Forest tree,tall pine tree,done
+1,1,assets/deco/weeds.png,256 max,One weed on a patch (one per weed),small clump of weeds,done
+1,1,assets/ground/earth_1.png,512 max,"Bare earth tile (yard, pens, ruins, lots)","flat isometric diamond of beige trodden earth with soft grassy edges (#b1d876), no slab",done
+1,1,assets/ground/earth_2.png,512 max,"Bare earth tile (yard, pens, ruins, lots)","flat isometric diamond of beige trodden earth with soft grassy edges (#b1d876), no slab",done
+1,1,assets/ground/earth_3.png,512 max,"Bare earth tile (yard, pens, ruins, lots)","flat isometric diamond of beige trodden earth with soft grassy edges (#b1d876), no slab",done
+1,1,assets/ground/earth_4.png,512 max,"Bare earth tile (yard, pens, ruins, lots)","flat isometric diamond of beige trodden earth with soft grassy edges (#b1d876), no slab",done
+1,1,assets/ground/earth_5.png,512 max,"Bare earth tile (yard, pens, ruins, lots)","flat isometric diamond of beige trodden earth with soft grassy edges (#b1d876), no slab",done
+1,1,assets/ground/earth_6.png,512 max,"Bare earth tile (yard, pens, ruins, lots)","flat isometric diamond of beige trodden earth with soft grassy edges (#b1d876), no slab",done
+1,1,assets/ground/earth_7.png,512 max,"Bare earth tile (yard, pens, ruins, lots)","flat isometric diamond of beige trodden earth with soft grassy edges (#b1d876), no slab",done
+1,1,assets/ground/earth_8.png,512 max,"Bare earth tile (yard, pens, ruins, lots)","flat isometric diamond of beige trodden earth with soft grassy edges (#b1d876), no slab",done
+1,1,assets/ground/earth_9.png,512 max,"Bare earth tile (yard, pens, ruins, lots)","flat isometric diamond of beige trodden earth with soft grassy edges (#b1d876), no slab",done
+1,1,assets/map/_lot.png,512 max,Empty building lot,empty diamond-shaped plot of grass with a low wooden fence and a small blank sign,done
+1,1,assets/map/board.png,512 max,"Notice board (jobs, favours)",wooden notice board on two posts with blank pinned papers,done
+1,1,assets/map/forest.png,512 max,Forest edge (gathering),"edge of a forest, cluster of trees with a small path leading in",done
+1,1,assets/map/market.png,512 max,Market stall (seed merchant),small village market stall with a striped awning and sacks of seeds,done
+1,1,assets/map/well_1.png,256 max,Old bucket (water at the start),old dented tin bucket with a wire handle,done
+1,1,assets/map/workbench_empty.png,512 max,Empty workbench (what is made lies on it),rustic wooden workbench with an empty top,done
+1,1,assets/plots/pond_wild.png,512 max,Wild overgrown pond (before it is dug out),"small wild pond lying flat: murky water, reeds, duckweed, lily pads, muddy banks",done
+1,1,assets/ruins/stone_wall.png,512 max,Ruined stone wall side (locked stone buildings),"ruined low fieldstone wall segment, one straight side of an isometric diamond, lower left to upper right",done
+1,1,assets/ruins/wood_wall.png,512 max,Ruined wooden wall side (locked wooden buildings),"ruined burnt plank wall segment, one straight side of an isometric diamond, lower left to upper right",done
+1,1,assets/tiles/grass.png,512x512 seamless,Grass ground,"seamless tileable short meadow grass seen from above, no objects",done
+1,1,assets/tiles/overgrown.png,256x256 seamless,Wild growth on patches not cleared yet (drawn as a diamond),seamless tileable tangle of weeds and wild grass seen from above,done
+1,1,assets/tiles/path.png,512x512 seamless,Village road,seamless tileable sandy dirt path seen from above,done
+1,1,assets/ui/clock_face.png,512 max,Time Quiz button (old clock),antique clock face without hands / one clock hand pointing up,done
+1,1,assets/ui/clock_hour.png,512 max,Time Quiz button (old clock),antique clock face without hands / one clock hand pointing up,done
+1,1,assets/ui/clock_minute.png,512 max,Time Quiz button (old clock),antique clock face without hands / one clock hand pointing up,done
+2,1,assets/crops/crop_carrot.png,256 max,Carrot (one plant),"one ripe carrot plant growing out of the ground, no pot",done
+2,1,assets/crops/crop_clover.png,256 max,Clover (one plant),"one ripe clover plant growing out of the ground, no pot",done
+2,1,assets/crops/crop_onion.png,256 max,Onion (one plant),"one ripe onion plant growing out of the ground, no pot",done
+2,1,assets/crops/crop_wheat.png,256 max,Wheat (one plant),"one ripe wheat plant growing out of the ground, no pot",done
+2,1,assets/deco/debris_1.png,256 max,"Stones, twigs, roots on half-cleared patches","small stone, twig or clod",done
+2,1,assets/deco/debris_2.png,256 max,"Stones, twigs, roots on half-cleared patches","small stone, twig or clod",done
+2,1,assets/deco/debris_3.png,256 max,"Stones, twigs, roots on half-cleared patches","small stone, twig or clod",done
+2,1,assets/deco/debris_4.png,256 max,"Stones, twigs, roots on half-cleared patches","small stone, twig or clod",done
+2,1,assets/deco/debris_5.png,256 max,"Stones, twigs, roots on half-cleared patches","small stone, twig or clod",done
+2,1,assets/deco/debris_6.png,256 max,"Stones, twigs, roots on half-cleared patches","small stone, twig or clod",done
+2,1,assets/deco/debris_7.png,256 max,"Stones, twigs, roots on half-cleared patches","small stone, twig or clod",done
+2,1,assets/deco/debris_8.png,256 max,"Stones, twigs, roots on half-cleared patches","small stone, twig or clod",done
+2,1,assets/deco/debris_9.png,256 max,"Stones, twigs, roots on half-cleared patches","small stone, twig or clod",done
+2,1,assets/deco/fence_stick.png,256 max,Stick fence piece,short piece of rustic stick fence,done
+2,1,assets/deco/post_1.png,256 max,Lone old fence post (remnants),one old weathered fence post,done
+2,1,assets/deco/post_2.png,256 max,Lone old fence post (remnants),one old weathered fence post,done
+2,1,assets/deco/post_3.png,256 max,Lone old fence post (remnants),one old weathered fence post,done
+2,1,assets/deco/post_4.png,256 max,Lone old fence post (remnants),one old weathered fence post,done
+2,1,assets/deco/weed_1.png,256 max,One weed (variants on the patches),one small weed,done
+2,1,assets/deco/weed_2.png,256 max,One weed (variants on the patches),one small weed,done
+2,1,assets/deco/weed_3.png,256 max,One weed (variants on the patches),one small weed,done
+2,1,assets/deco/weed_4.png,256 max,One weed (variants on the patches),one small weed,done
+2,1,assets/deco/weed_5.png,256 max,One weed (variants on the patches),one small weed,done
+2,1,assets/deco/weed_6.png,256 max,One weed (variants on the patches),one small weed,done
+2,1,assets/deco/weed_7.png,256 max,One weed (variants on the patches),one small weed,done
+2,1,assets/deco/weed_8.png,256 max,One weed (variants on the patches),one small weed,done
+2,1,assets/deco/weed_9.png,256 max,One weed (variants on the patches),one small weed,done
+2,1,assets/edging/log.png,384 max,Patch border side: one round log lying as edging (raised log beds),"one round log lying as edging (raised log beds), low and narrow, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+2,1,assets/edging/stick.png,384 max,Patch border side: short sticks as edging,"short sticks as edging, low and narrow, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+2,1,assets/edging/stick_broken.png,384 max,Patch border side: old leaning stick edging,"old leaning stick edging, low and narrow, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+2,1,assets/fences/stick_broken.png,512 max,Field fence side: broken old stick fence (after the fire),"broken old stick fence (after the fire), one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+2,1,assets/fences/stick_broken_2.png,512 max,Broken fence side (variant),"broken stick fence, one straight side of an isometric diamond",done
+2,1,assets/fences/stick_broken_3.png,512 max,Broken fence side (variant),"broken stick fence, one straight side of an isometric diamond",done
+2,1,assets/fences/stick_fence.png,512 max,Field fence side: stick fence,"stick fence, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+2,1,assets/fences/stone_broken.png,512 max,Field fence side: crumbling stone wall round the old fields,"crumbling stone wall round the old fields, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+2,1,assets/map/basket.png,512 max,Basket (storage),basket: Holds up to 10 of each item.,done
+2,1,assets/map/bookcart.png,512 max,Book cart,wooden hand cart full of colourful books,done
+2,1,assets/map/campfire.png,512 max,Campfire (kitchen),campfire: First build. With the Tin Pot: porridge and soup.,done
+2,1,assets/map/library_box.png,512 max,Book box in the tent (library),book box in the tent: Holds 2 books. The Little Farm Book was already in it.,done
+2,1,assets/map/lumber.png,512 max,Woodlot clearing (before the woodlot is built),"small forest clearing with a tree stump, an axe and a few logs",done
+2,1,assets/map/pets.png,512 max,Pet corner,small wooden bunny hutch with a straw roof,done
+2,1,assets/map/scarecrow_1.png,256 max,Stick Scarecrow,"friendly scarecrow, Shoots fierce looks at birds and rabbits (removes 0.6 pests per question) and they leave the seeds alone: planting costs half the energy.",done
+2,1,assets/map/tent.png,512 max,Tent (living),tent: Where it starts. Energy max 20; each Rest answer gives 5 energy.,done
+2,1,assets/map/well_2.png,512 max,Dig a well (well),"dig a well: A stone well right by the house: 4 💧 a trip, holds 24.",done
+2,1,assets/map/well_3.png,512 max,Well · winch (well),"well · winch: A winch and a bigger bucket: 6 💧 a trip, holds 36.",generated - pick sheet27-buildings-a.png
+2,1,assets/map/workbench.png,512 max,Workbench (workshop),"workbench: Rope, stone tools, hutch, scarecrow.",done
+2,1,assets/plots/bees.png,512 max,"Ground of bees (flat, diamond)","wildflower bee garden with lavender, poppies, sunflowers and a stepping-stone path, no fence, no hives",done
+2,1,assets/plots/coop.png,512 max,"Ground of coop (flat, diamond)","empty chicken run: packed earth with straw, fenced with a rustic picket fence along all four diamond edges, small gate, nothing inside",done
+2,1,assets/plots/cows.png,512 max,"Ground of cows (flat, diamond)","empty cow pasture: lush grass and clover, three-rail wooden fence along all four diamond edges, gate, nothing inside",done
+2,1,assets/plots/home.png,512 max,House yard before the house (2×2 tiles),"homestead yard: packed earth with a few flagstones, nothing on it",done
+2,1,assets/plots/orchard.png,512 max,"Ground of orchard (flat, diamond)",orchard plot: tidy grass with four small apple trees in a 2 by 2 pattern,done
+2,1,assets/plots/pets.png,512 max,"Ground of pets (flat, diamond)","empty pet garden: soft grass, stepping stones, flower clumps, low white picket fence along the diamond edges",done
+2,1,assets/plots/pond.png,512 max,"Ground of pond (flat, diamond)","small farm pond with reeds, lily pads and a little wooden jetty on a diamond of grass",done
+2,1,assets/plots/sheep.png,512 max,"Ground of sheep (flat, diamond)","empty sheep meadow: soft grass and tiny flowers, low stone-and-rail fence along all four diamond edges, nothing inside",done
+2,1,assets/tiles/grass_2.png,512x512 seamless,Ground variety,"grass 2 seen from above, seamless",done
+2,1,assets/tiles/grass_3.png,512x512 seamless,Ground variety,"grass 3 seen from above, seamless",done
+2,1,assets/tiles/overgrown_2.png,512x512 seamless,Ground variety,"overgrown 2 seen from above, seamless",done
+2,1,assets/tiles/overgrown_3.png,512x512 seamless,Ground variety,"overgrown 3 seen from above, seamless",done
+2,1,assets/tools/flint_knife.png,256 max,On the workbench / on the workshop wall,flint knife lying on its side,done
+2,1,assets/tools/hand_saw.png,256 max,On the workbench / on the workshop wall,hand saw lying on its side,done
+2,1,assets/tools/iron_hammer.png,256 max,On the workbench / on the workshop wall,iron hammer lying on its side,done
+2,1,assets/tools/rope.png,256 max,On the workbench / on the workshop wall,rope lying on its side,done
+2,1,assets/tools/stone_axe.png,256 max,On the workbench / on the workshop wall,stone axe lying on its side,done
+2,1,assets/tools/stone_hammer.png,256 max,On the workbench / on the workshop wall,stone hammer lying on its side,done
+2,1,assets/tools/wooden_rake.png,256 max,On the workbench / on the workshop wall,wooden rake lying on its side,done
+2,1,assets/tools/wooden_shovel.png,256 max,On the workbench / on the workshop wall,wooden shovel lying on its side,done
+3,1,assets/addons/coop_1.png,256 max,On coop: Chicken Coop (appears when built),chicken coop:,generated - pick sheet30-addons.png
+3,1,assets/addons/nest_boxes.png,256 max,On coop: Nest Boxes (appears when built),nest boxes: Calm hens lay more: +25% eggs.,done
+3,1,assets/addons/perches.png,256 max,On coop: Roosting Perches (appears when built),roosting perches: Hens sleep up high: 30% less muck in the coop. (Choice slot: only one item per station works at a time — swap any time.),done
+3,1,assets/addons/pets.png,256 max,On pets: Bunny comes home (appears when built),bunny comes home: Pet 1 (default name Pip; the player can rename). Bonus: every carrot harvest gives +1 carrot.,generated - pick sheet30-addons.png
+3,1,assets/animals/animal_chicken.png,256 max,Chickens,"chickens, whole body, side view",done
+3,1,assets/animals/pet_bunny.png,256 max,Bunny comes home,"bunny comes home, whole body, side view",done
+3,1,assets/deco/grass_1.png,256 max,Little things growing in the grass,"grass tuft, daisies, clover, moss",done
+3,1,assets/deco/grass_2.png,256 max,Little things growing in the grass,"grass tuft, daisies, clover, moss",done
+3,1,assets/deco/grass_3.png,256 max,Little things growing in the grass,"grass tuft, daisies, clover, moss",done
+3,1,assets/deco/grass_4.png,256 max,Little things growing in the grass,"grass tuft, daisies, clover, moss",done
+3,1,assets/deco/grass_5.png,256 max,Little things growing in the grass,"grass tuft, daisies, clover, moss",done
+3,1,assets/deco/grass_6.png,256 max,Little things growing in the grass,"grass tuft, daisies, clover, moss",done
+3,1,assets/deco/grass_7.png,256 max,Little things growing in the grass,"grass tuft, daisies, clover, moss",done
+3,1,assets/deco/grass_8.png,256 max,Little things growing in the grass,"grass tuft, daisies, clover, moss",done
+3,1,assets/deco/grass_9.png,256 max,Little things growing in the grass,"grass tuft, daisies, clover, moss",done
+3,1,assets/friends/sq_cold_shepherd.png,256 max,Friend: Tom the shepherd boy (postcard stamp),"head-and-shoulders portrait of tom the shepherd boy, friendly, looking at the viewer, in a round frame",generated - pick sheet35-friends-1.png
+3,1,assets/friends/sq_lost_goat.png,256 max,Friend: Granny Maud (postcard stamp),"head-and-shoulders portrait of granny maud, friendly, looking at the viewer, in a round frame",generated - pick sheet35-friends-1.png
+3,1,assets/friends/sq_miller_basket.png,256 max,"Friend: Ella, the miller's daughter (postcard stamp)","head-and-shoulders portrait of ella, the miller's daughter, friendly, looking at the viewer, in a round frame",generated - pick sheet35-friends-1.png
+3,1,assets/friends/sq_twins_porridge.png,256 max,"Friend: Lotte and Linus, the twins (postcard stamp)","head-and-shoulders portrait of lotte and linus, the twins, friendly, looking at the viewer, in a round frame",generated - pick sheet35-friends-1.png
+3,1,assets/pests/bird.png,128 max,Pest on a patch: bird,"small sparrow pecking, whole body, side view",generated - pick sheet25-animals.png
+3,1,assets/pests/caterpillar.png,128 max,Pest on a patch: caterpillar,"green caterpillar, whole body, side view",generated - pick sheet26-pests-crops.png
+3,1,assets/pests/rabbit.png,128 max,Pest on a patch: rabbit,"small wild rabbit nibbling, whole body, side view",generated - pick sheet25-animals.png
+3,1,assets/pests/slug.png,128 max,Pest on a patch: slug,"garden slug, whole body, side view",generated - pick sheet26-pests-crops.png
+3,1,assets/pests/vole.png,128 max,Pest on a patch: vole,"small field vole, whole body, side view",generated - pick sheet26-pests-crops.png
+3,2,assets/addons/bee_skep.png,256 max,On bees: Bees (straw skeps) (appears when built),"bees (straw skeps): Never fed, but they need a water dish and flowering crops (clover, sunflower, flax, berries, herbs, fruit trees).",done
+3,2,assets/addons/beehive.png,256 max,On bees: Wooden Hives (appears when built),"wooden hives: Box hives (pegged, no nails needed yet).",done
+3,2,assets/addons/coop_2.png,256 max,On coop: Bigger Coop (appears when built),bigger coop:,done
+3,2,assets/addons/cow_shelter.png,256 max,On cows: Cows (appears when built),"cows: Eat any fodder (clover, lettuce, beets, oilcake, mash), drink lots, need bedding straw; milking every 2 questions. The barn fills with muck — muck it out for manure.",done
+3,2,assets/addons/salt_lick.png,256 max,On cows: Salt Lick (appears when built),salt lick: Healthy cows: +20% milk and manure.,done
+3,2,assets/crops/crop_apple.png,256 max,Apple Tree (one plant),"one ripe apple tree plant growing out of the ground, no pot",done
+3,2,assets/crops/crop_beans.png,256 max,Beans (one plant),"one ripe beans plant growing out of the ground, no pot",done
+3,2,assets/crops/crop_beet.png,256 max,Beet (one plant),"one ripe beet plant growing out of the ground, no pot",done
+3,2,assets/crops/crop_lettuce.png,256 max,Lettuce (one plant),"one ripe lettuce plant growing out of the ground, no pot",done
+3,2,assets/crops/crop_potato.png,256 max,Potato (one plant),"one ripe potato plant growing out of the ground, no pot",done
+3,2,assets/crops/crop_tomato.png,256 max,Tomato (one plant),"one ripe tomato plant growing out of the ground, no pot",done
+3,2,assets/edging/stone.png,384 max,Patch border side: low border of flat stones,"low border of flat stones, low and narrow, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+3,2,assets/edging/stone_broken.png,384 max,Patch border side: stone border with gaps and grass,"stone border with gaps and grass, low and narrow, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+3,2,assets/edging/wicker.png,384 max,Patch border side: very low woven wicker edging,"very low woven wicker edging, low and narrow, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+3,2,assets/fences/wattle_broken.png,512 max,Field fence side: sagging wattle fence with holes,"sagging wattle fence with holes, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+3,2,assets/fences/wattle_fence.png,512 max,Field fence side: woven wattle fence,"woven wattle fence, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+3,2,assets/interiors/barn.png,1024 max,Inside the big wooden barn (empty),"empty big wooden barn interior as an isometric dollhouse cutaway: diamond floor, two back walls, no furniture",done
+3,2,assets/interiors/house.png,1024 max,Inside the farmhouse (empty),"empty farmhouse interior as an isometric dollhouse cutaway: diamond floor, two back walls, no furniture",done
+3,2,assets/interiors/workshop.png,1024 max,Inside the timber workshop (empty),"empty timber workshop interior as an isometric dollhouse cutaway: diamond floor, two back walls, no furniture",done
+3,2,assets/map/barn_1.png,512 max,Barn (barn),barn: Shelter for big animals. Cows can move in.,done
+3,2,assets/map/compost_bin.png,512 max,Compost Bin (compost),"compost bin: Turns straw, fiber and manure into compost over a few questions.",done
+3,2,assets/map/compost_bin_2.png,512 max,Compost Heap (compost),compost heap: Four batches at once.,generated - pick sheet27-buildings-a.png
+3,2,assets/map/cottage.png,512 max,Cottage (home),"cottage: Hearth and door finish it. Energy max 30, 6 energy per Rest answer, a proper kitchen.",done
+3,2,assets/map/cows.png,512 max,Cow pasture,"small cow pasture with a wooden fence, a trough and a cow",generated - pick sheet27-buildings-a.png
+3,2,assets/map/library_shelf.png,512 max,Bookshelf (library),bookshelf: Holds 5 books. Reading 10% faster. Needs 5 cards learned.,generated - pick sheet27-buildings-a.png
+3,2,assets/map/market_stall.png,512 max,Market Stall (market),market stall: Your own stall at the village market: +10% on everything sold.,done
+3,2,assets/map/pond.png,512 max,Pond,small round farm pond with reeds and a duck,generated - pick sheet27-buildings-a.png
+3,2,assets/map/shed.png,512 max,Log Shed (storage),"log shed: First chapter-2 build: room for 25 of each item, so bigger projects fit.",done
+3,2,assets/map/stove_1.png,512 max,Stove (kitchen),"stove: Replaces the campfire. Soups, stews, pancakes.",generated - pick sheet27-buildings-a.png
+3,2,assets/map/woodlot.png,512 max,Woodlot (lumber),"woodlot: Planted saplings: 1 log every 2 questions, forever.",generated - pick sheet27-buildings-a.png
+3,2,assets/map/workshop_1.png,512 max,Carpenter's Shed (workshop),carpenter's shed: Workshop tier 1 — wood working.,done
+4,1,assets/album/sq_cold_shepherd.png,512 max,Album picture: Little shepherd Tom is freezing,"Little Tom, grinning and warm, holding up a bundle of your firewood",generated - pick sheet38-album-1.png
+4,1,assets/album/sq_lost_goat.png,512 max,Album picture: Granny Maud's goat ran off,"Granny Maud laughing, hugging her muddy goat on the rope you found it with",generated - pick sheet38-album-1.png
+4,1,assets/album/sq_miller_basket.png,512 max,Album picture: The miller's daughter needs a basket,Ella twirling with your new basket full of flowers,generated - pick sheet38-album-1.png
+4,1,assets/album/sq_twins_porridge.png,512 max,Album picture: Porridge for the hungry twins,"The twins beaming, each holding a bowl of your porridge (some on their noses)",generated - pick sheet38-album-1.png
+4,1,assets/interior/campfire.png,384 max,"Campfire (inside, kitchen)",campfire: First build. With the Tin Pot: porridge and soup.,generated - pick sheet31-interior-a.png
+4,1,assets/interior/library_box.png,384 max,"Book box in the tent (inside, library)",book box in the tent: Holds 2 books. The Little Farm Book was already in it.,generated - pick sheet31-interior-a.png
+4,1,assets/interior/straw_bed.png,384 max,"Straw Bed (inside, living)",straw bed: Sleep better: +1 energy per Rest answer.,generated - pick sheet31-interior-a.png
+4,1,assets/interior/workbench.png,384 max,"Workbench (inside, ws_bench)","workbench: Rope, stone tools, hutch, scarecrow.",generated - pick sheet31-interior-a.png
+4,2,assets/animals/animal_bees.png,256 max,Bees (straw skeps),"bees (straw skeps), whole body, side view",generated - pick sheet25-animals.png
+4,2,assets/animals/animal_cow.png,256 max,Cows,"cows, whole body, side view",generated - pick sheet25-animals.png
+4,2,assets/animals/pet_tortoise.png,256 max,Tortoise comes home,"tortoise comes home, whole body, side view",generated - pick sheet25-animals.png
+4,2,assets/friends/sq_bridge.png,256 max,Friend: Otto the ferryman (postcard stamp),"head-and-shoulders portrait of otto the ferryman, friendly, looking at the viewer, in a round frame",generated - pick sheet35-friends-1.png
+4,2,assets/friends/sq_healer_honey.png,256 max,Friend: Wren the healer (postcard stamp),"head-and-shoulders portrait of wren the healer, friendly, looking at the viewer, in a round frame",generated - pick sheet35-friends-1.png
+4,2,assets/friends/sq_sick_neighbour.png,256 max,Friend: Old Jan (postcard stamp),"head-and-shoulders portrait of old jan, friendly, looking at the viewer, in a round frame",generated - pick sheet35-friends-1.png
+4,2,assets/friends/sq_stray_kitten.png,256 max,Friend: Ginger the cat (postcard stamp),"head-and-shoulders portrait of ginger the cat, friendly, looking at the viewer, in a round frame",generated - pick sheet35-friends-1.png
+4,2,assets/friends/sq_washing_line.png,256 max,Friend: Hilde the washerwoman (postcard stamp),"head-and-shoulders portrait of hilde the washerwoman, friendly, looking at the viewer, in a round frame",generated - pick sheet35-friends-1.png
+4,2,assets/interior/carpenter_bench.png,384 max,"Carpenter's Bench (inside, ws_bench)",carpenter's bench: Split logs into planks with the axe (1 log → 2 planks).,generated - pick sheet31-interior-a.png
+4,2,assets/interior/hay_rack.png,384 max,"Hay Rack (inside, barn_hay)",hay rack: Less trampled fodder: cows and sheep eat 15% less.,generated - pick sheet31-interior-a.png
+4,2,assets/interior/kiln.png,384 max,"Kiln (inside, ws_fire)","kiln: Fires bricks and jars, burns charcoal.",generated - pick sheet31-interior-a.png
+4,2,assets/interior/library_shelf.png,384 max,"Bookshelf (inside, library)",bookshelf: Holds 5 books. Reading 10% faster. Needs 5 cards learned.,generated - pick sheet31-interior-a.png
+4,2,assets/interior/stove_1.png,384 max,"Stove (inside, kitchen)","stove: Replaces the campfire. Soups, stews, pancakes.",generated - pick sheet31-interior-a.png
+4,2,assets/interior/tool_rack.png,384 max,"Tool Rack (inside, ws_tools)","tool rack: No searching: crafting −10%, field work −5% energy.",generated - pick sheet32-interior-b.png
+4,2,assets/interior/water_trough.png,384 max,"Water Trough (inside, barn_hay)",water trough: No spilled buckets: animals use 20% less water.,generated - pick sheet32-interior-b.png
+4,2,assets/tiles/soil.png,256x256,Orchard/greenhouse patch: empty,square patch of freshly dug brown soil seen from above,done
+4,2,assets/tiles/soil_sprouts.png,256x256,Orchard/greenhouse patch: growing,square patch of dark soil with rows of tiny green sprouts seen from above,done
+4,3,assets/addons/duck_house.png,256 max,On pond: Duck House (appears when built),duck house: Ducks love slugs: removes 0.3 pests per question.,generated - pick sheet30-addons.png
+4,3,assets/addons/hand_cart.png,256 max,On storage: Hand Cart (appears when built),"hand cart: Haul more at once: harvesting −15%, building −10% energy.",generated - pick sheet30-addons.png
+4,3,assets/addons/rain_barrel.png,256 max,On well: Rain Barrel (appears when built),rain barrel: A big barrel by the well: holds 15 more and every trip brings 1 more.,generated - pick sheet30-addons.png
+4,3,assets/addons/shearing_table.png,256 max,On sheep: Shearing Table (appears when built),shearing table: Cleaner fleeces: +25% wool.,done
+4,3,assets/crops/crop_flax.png,256 max,Flax (one plant),"one ripe flax plant growing out of the ground, no pot",done
+4,3,assets/crops/crop_oats.png,256 max,Oats (one plant),"one ripe oats plant growing out of the ground, no pot",done
+4,3,assets/crops/crop_sunflower.png,256 max,Sunflower (one plant),"one ripe sunflower plant growing out of the ground, no pot",done
+4,3,assets/edging/channel.png,384 max,Patch border side: narrow irrigation channel with water,"narrow irrigation channel with water, low and narrow, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+4,3,assets/edging/net.png,384 max,Patch border side: tiny mesh net fence against rabbits and birds,"tiny mesh net fence against rabbits and birds, low and narrow, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+4,3,assets/fences/picket_broken.png,512 max,"Field fence side: weathered picket fence, pickets missing","weathered picket fence, pickets missing, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+4,3,assets/fences/picket_fence.png,512 max,Field fence side: white picket fence,"white picket fence, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+4,3,assets/map/barn_2.png,512 max,Barn · cellar (barn),barn · cellar: A cool cellar below the barn: aging and fermenting.,generated - pick sheet27-buildings-a.png
+4,3,assets/map/cottage_loft.png,512 max,Cottage · loft & second room (home),"cottage · loft & second room: Energy max 40, 7 energy per Rest answer.",generated - pick sheet27-buildings-a.png
+4,3,assets/map/library_bookcase.png,512 max,Bookcase & reading chair (library),bookcase & reading chair: Holds 10 books. Reading 20% faster. Needs 15 cards learned.,generated - pick sheet28-buildings-b.png
+4,3,assets/map/lumbermill.png,512 max,Lumbermill (lumber),lumbermill: ,done
+4,3,assets/map/scarecrow_2.png,256 max,Dressed Scarecrow,"friendly scarecrow, Flapping wool sleeves: removes 1.2 pests per question; planting costs a quarter of the energy.",generated - pick sheet28-buildings-b.png
+4,3,assets/map/stove_2.png,512 max,Stove · iron top (kitchen),"stove · iron top: Sauces, jam, sugar reduction.",generated - pick sheet28-buildings-b.png
+4,3,assets/map/well_4.png,512 max,Well · brick lining & pulley (well),"well · brick lining & pulley: Brick lining and a pulley: 9 💧 a trip, holds 60.",done
+4,3,assets/map/windmill_1.png,512 max,Windmill (windmill),windmill: Cloth sails grind flour by themselves every question — the quern is retired.,done
+4,3,assets/map/workshop_2.png,512 max,Smithy (workshop),smithy: Workshop tier 2 — metal.,generated - pick sheet28-buildings-b.png
+5,1,assets/items/ash.png,128 max,Item: Wood Ash,"wood ash, single object icon",generated - pick sheet46-items-2.png
+5,1,assets/items/bunny_bowl.png,128 max,Item: Carrot-Clover Bowl,"carrot-clover bowl, single object icon",generated - pick sheet50-items-6.png
+5,1,assets/items/carrot.png,128 max,Item: Carrot,"carrot, single object icon",generated - pick sheet46-items-2.png
+5,1,assets/items/clover.png,128 max,Item: Clover,"clover, single object icon",generated - pick sheet46-items-2.png
+5,1,assets/items/egg.png,128 max,Item: Egg,"egg, single object icon",generated - pick sheet48-items-4.png
+5,1,assets/items/feather.png,128 max,Item: Feather,"feather, single object icon",generated - pick sheet53-items-9.png
+5,1,assets/items/feed_mash.png,128 max,Item: Feed Mash,"feed mash, single object icon",generated - pick sheet53-items-9.png
+5,1,assets/items/fiber.png,128 max,Item: Plant Fiber,"plant fiber, single object icon",generated - pick sheet45-items-1.png
+5,1,assets/items/flatbread.png,128 max,Item: Flatbread,"flatbread, single object icon",generated - pick sheet50-items-6.png
+5,1,assets/items/flour.png,128 max,Item: Flour,"flour, single object icon",generated - pick sheet48-items-4.png
+5,1,assets/items/log.png,128 max,Item: Log,"log, single object icon",generated - pick sheet45-items-1.png
+5,1,assets/items/manure.png,128 max,Item: Manure,"manure, single object icon",generated - pick sheet46-items-2.png
+5,1,assets/items/onion.png,128 max,Item: Onion,"onion, single object icon",generated - pick sheet46-items-2.png
+5,1,assets/items/porridge.png,128 max,Item: Porridge,"porridge, single object icon",generated - pick sheet50-items-6.png
+5,1,assets/items/quartz.png,128 max,Item: Quartz Crystal,"quartz crystal, single object icon",generated - pick sheet53-items-9.png
+5,1,assets/items/relic.png,128 max,Item: Old Relic,"old relic, single object icon",generated - pick sheet53-items-9.png
+5,1,assets/items/roast_carrots.png,128 max,Item: Roast Carrots,"roast carrots, single object icon",generated - pick sheet50-items-6.png
+5,1,assets/items/rope.png,128 max,Item: Rope,"rope, single object icon",generated - pick sheet45-items-1.png
+5,1,assets/items/salt.png,128 max,Item: Salt,"salt, single object icon",generated - pick sheet48-items-4.png
+5,1,assets/items/stick.png,128 max,Item: Stick,"stick, single object icon",generated - pick sheet45-items-1.png
+5,1,assets/items/stone.png,128 max,Item: Stone,"stone, single object icon",generated - pick sheet45-items-1.png
+5,1,assets/items/straw.png,128 max,Item: Straw,"straw, single object icon",generated - pick sheet45-items-1.png
+5,1,assets/items/straw_hutch.png,128 max,Item: Straw Hutch,"straw hutch, single object icon",generated - pick sheet52-items-8.png
+5,1,assets/items/tin_pot.png,128 max,Item: Tin Pot,"tin pot, single object icon",generated - pick sheet46-items-2.png
+5,1,assets/items/veg_soup.png,128 max,Item: Vegetable Soup,"vegetable soup, single object icon",generated - pick sheet50-items-6.png
+5,1,assets/items/wheat.png,128 max,Item: Wheat,"wheat, single object icon",generated - pick sheet46-items-2.png
+5,2,assets/album/sq_bridge.png,512 max,Album picture: Mend the footbridge,Ferryman Otto waving a plank from your mended footbridge as children skip across,generated - pick sheet39-album-2.png
+5,2,assets/album/sq_healer_honey.png,512 max,Album picture: Honey for the healer,"Healer Wren smiling, holding a jar of your honey up to the light",generated - pick sheet39-album-2.png
+5,2,assets/album/sq_sick_neighbour.png,512 max,Album picture: Soup for a sick neighbour,"Old Jan sitting up in bed, cheeks pink, holding your bowl of tomato soup",generated - pick sheet39-album-2.png
+5,2,assets/album/sq_stray_kitten.png,512 max,Album picture: A stray kitten keeps visiting,The ginger kitten curled up asleep in the straw bed you made for her,generated - pick sheet40-album-3.png
+5,2,assets/album/sq_washing_line.png,512 max,Album picture: The washerwoman's line snapped,"Hilde smiling, holding the end of your new rope line full of flapping sheets",generated - pick sheet39-album-2.png
+5,2,assets/items/apple.png,128 max,Item: Apple,"apple, single object icon",generated - pick sheet47-items-3.png
+5,2,assets/items/baked_potato.png,128 max,Item: Baked Potato,"baked potato, single object icon",generated - pick sheet51-items-7.png
+5,2,assets/items/bean_stew.png,128 max,Item: Bean Stew,"bean stew, single object icon",generated - pick sheet51-items-7.png
+5,2,assets/items/beans.png,128 max,Item: Beans,"beans, single object icon",generated - pick sheet47-items-3.png
+5,2,assets/items/beeswax.png,128 max,Item: Beeswax,"beeswax, single object icon",generated - pick sheet46-items-2.png
+5,2,assets/items/beet.png,128 max,Item: Beet,"beet, single object icon",generated - pick sheet47-items-3.png
+5,2,assets/items/bread.png,128 max,Item: Sourdough Bread,"sourdough bread, single object icon",generated - pick sheet50-items-6.png
+5,2,assets/items/brick.png,128 max,Item: Brick,"brick, single object icon",generated - pick sheet45-items-1.png
+5,2,assets/items/butter.png,128 max,Item: Butter,"butter, single object icon",generated - pick sheet48-items-4.png
+5,2,assets/items/candle.png,128 max,Item: Candle,"candle, single object icon",generated - pick sheet46-items-2.png
+5,2,assets/items/charcoal.png,128 max,Item: Charcoal,"charcoal, single object icon",generated - pick sheet45-items-1.png
+5,2,assets/items/cheese_culture.png,128 max,Item: Cheese Culture,"cheese culture, single object icon",generated - pick sheet48-items-4.png
+5,2,assets/items/clay.png,128 max,Item: Clay,"clay, single object icon",generated - pick sheet45-items-1.png
+5,2,assets/items/clay_jar.png,128 max,Item: Clay Jar,"clay jar, single object icon",generated - pick sheet46-items-2.png
+5,2,assets/items/compost.png,128 max,Item: Compost,"compost, single object icon",generated - pick sheet46-items-2.png
+5,2,assets/items/garden_platter.png,128 max,Item: Tortoise Garden Platter,"tortoise garden platter, single object icon",generated - pick sheet51-items-7.png
+5,2,assets/items/garden_salad.png,128 max,Item: Garden Salad,"garden salad, single object icon",generated - pick sheet51-items-7.png
+5,2,assets/items/hearty_stew.png,128 max,Item: Hearty Vegetable Stew,"hearty vegetable stew, single object icon",generated - pick sheet51-items-7.png
+5,2,assets/items/honey.png,128 max,Item: Honey,"honey, single object icon",generated - pick sheet48-items-4.png
+5,2,assets/items/honey_porridge.png,128 max,Item: Honey Porridge,"honey porridge, single object icon",generated - pick sheet50-items-6.png
+5,2,assets/items/honeycomb.png,128 max,Item: Honeycomb,"honeycomb, single object icon",generated - pick sheet48-items-4.png
+5,2,assets/items/iron_ore.png,128 max,Item: Iron Ore,"iron ore, single object icon",generated - pick sheet45-items-1.png
+5,2,assets/items/lettuce.png,128 max,Item: Lettuce,"lettuce, single object icon",generated - pick sheet46-items-2.png
+5,2,assets/items/mashed_potatoes.png,128 max,Item: Mashed Potatoes,"mashed potatoes, single object icon",generated - pick sheet51-items-7.png
+5,2,assets/items/milk.png,128 max,Item: Milk,"milk, single object icon",generated - pick sheet48-items-4.png
+5,2,assets/items/omelette.png,128 max,Item: Omelette,"omelette, single object icon",generated - pick sheet51-items-7.png
+5,2,assets/items/pancakes.png,128 max,Item: Pancakes,"pancakes, single object icon",generated - pick sheet51-items-7.png
+5,2,assets/items/plank.png,128 max,Item: Plank,"plank, single object icon",generated - pick sheet45-items-1.png
+5,2,assets/items/potato.png,128 max,Item: Potato,"potato, single object icon",generated - pick sheet46-items-2.png
+5,2,assets/items/shell_house.png,128 max,Item: Warm Shell House,"warm shell house, single object icon",generated - pick sheet52-items-8.png
+5,2,assets/items/sourdough_starter.png,128 max,Item: Sourdough Starter,"sourdough starter, single object icon",generated - pick sheet48-items-4.png
+5,2,assets/items/stone_soup.png,128 max,Item: Stone Soup,"stone soup, single object icon",generated - pick sheet50-items-6.png
+5,2,assets/items/tomato.png,128 max,Item: Tomato,"tomato, single object icon",generated - pick sheet47-items-3.png
+5,2,assets/items/tomato_soup.png,128 max,Item: Tomato Soup,"tomato soup, single object icon",generated - pick sheet51-items-7.png
+5,2,assets/items/yogurt_culture.png,128 max,Item: Yogurt Culture,"yogurt culture, single object icon",generated - pick sheet48-items-4.png
+5,3,assets/animals/animal_sheep.png,256 max,Sheep,"sheep, whole body, side view",generated - pick sheet25-animals.png
+5,3,assets/animals/pet_goat.png,256 max,Goat comes home,"goat comes home, whole body, side view",generated - pick sheet25-animals.png
+5,3,assets/friends/sq_apprentice.png,256 max,"Friend: Bo, the smith's apprentice (postcard stamp)","head-and-shoulders portrait of bo, the smith's apprentice, friendly, looking at the viewer, in a round frame",generated - pick sheet36-friends-2.png
+5,3,assets/friends/sq_baby_blanket.png,256 max,Friend: Baby Lena's family (postcard stamp),"head-and-shoulders portrait of baby lena's family, friendly, looking at the viewer, in a round frame",generated - pick sheet36-friends-2.png
+5,3,assets/friends/sq_chapel_roof.png,256 max,Friend: Ansel the bell-ringer (postcard stamp),"head-and-shoulders portrait of ansel the bell-ringer, friendly, looking at the viewer, in a round frame",generated - pick sheet36-friends-2.png
+5,3,assets/friends/sq_harvest_dance.png,256 max,Friend: Rosa the fiddler (postcard stamp),"head-and-shoulders portrait of rosa the fiddler, friendly, looking at the viewer, in a round frame",generated - pick sheet36-friends-2.png
+5,3,assets/interior/anvil.png,384 max,"Anvil (inside, ws_fire)",anvil: Nails and iron tools.,generated - pick sheet32-interior-b.png
+5,3,assets/interior/cellar.png,384 max,"Cellar Racks (inside, barn_cellar)","cellar racks: Aging station: vinegar, pickles, olives, cheese wait here — and everything in the pantry keeps one season longer.",generated - pick sheet32-interior-b.png
+5,3,assets/interior/fermenter.png,384 max,"Fermenting Crocks (inside, barn_ferment)",fermenting crocks: Yogurt and cider.,generated - pick sheet32-interior-b.png
+5,3,assets/interior/forge.png,384 max,"Forge (inside, ws_fire)",forge: Smelts iron ore with charcoal.,generated - pick sheet32-interior-b.png
+5,3,assets/interior/hand_loom.png,384 max,"Hand Loom (inside, ws_loom)","hand loom: Yarn → wool cloth, thread → linen.",generated - pick sheet32-interior-b.png
+5,3,assets/interior/library_bookcase.png,384 max,"Bookcase & reading chair (inside, library)",bookcase & reading chair: Holds 10 books. Reading 20% faster. Needs 15 cards learned.,generated - pick sheet32-interior-b.png
+5,3,assets/interior/press.png,384 max,"Wooden Press (inside, ws_bench)","wooden press: A big wooden screw: oil from seeds, juice from fruit and beets.",generated - pick sheet32-interior-b.png
+5,3,assets/interior/sawbench.png,384 max,"Sawbench (inside, ws_bench)",sawbench: ,generated - pick sheet33-interior-c.png
+5,3,assets/interior/stove_2.png,384 max,"Stove · iron top (inside, kitchen)","stove · iron top: Sauces, jam, sugar reduction.",generated - pick sheet33-interior-c.png
+5,3,assets/interior/wool_mattress.png,384 max,"Wool Mattress (inside, living)",wool mattress: Replaces the straw bed: +2 energy per Rest answer.,generated - pick sheet33-interior-c.png
+5,4,assets/crops/crop_berries.png,256 max,Berry Bush (one plant),"one ripe berry bush plant growing out of the ground, no pot",done
+5,4,assets/crops/crop_herbs.png,256 max,Herbs (one plant),"one ripe herbs plant growing out of the ground, no pot",done
+5,4,assets/crops/crop_olive.png,256 max,Olive Tree (one plant),"one ripe olive tree plant growing out of the ground, no pot",done
+5,4,assets/crops/crop_pumpkin.png,256 max,Pumpkin (one plant),"one ripe pumpkin plant growing out of the ground, no pot",done
+5,4,assets/crops/crop_walnut.png,256 max,Walnut Tree (one plant),"one ripe walnut tree plant growing out of the ground, no pot",generated - pick sheet26-pests-crops.png
+5,4,assets/edging/drip.png,384 max,Patch border side: thin black drip irrigation hose,"thin black drip irrigation hose, low and narrow, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+5,4,assets/fences/stone_wall.png,512 max,Field fence side: dry-stone wall,"dry-stone wall, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+5,4,assets/map/barn_3.png,512 max,Barn · stable (barn),barn · stable: Room for a pony. More animals.,generated - pick sheet28-buildings-b.png
+5,4,assets/map/farmhouse.png,512 max,Farmhouse (home),"farmhouse: Energy max 50, 8 energy per Rest answer, the master kitchen.",generated - pick sheet28-buildings-b.png
+5,4,assets/map/greenhouse.png,512 max,Greenhouse (greenhouse),"greenhouse: Special patch 3: 4 beds, water is recycled (half water). Heirlooms grow here.",done
+5,4,assets/map/library_room.png,512 max,Library room (library),"library room: A quiet room of your own: all 12 books, reading 30% faster, and a cosy chair (+0.5 energy per Rest answer). Needs 30 cards learned.",generated - pick sheet28-buildings-b.png
+5,4,assets/map/lumbermill_2.png,512 max,Lumbermill · hardwood grove (lumber),lumbermill · hardwood grove: ,generated - pick sheet28-buildings-b.png
+5,4,assets/map/scarecrow_3.png,256 max,Guardian Scarecrow,"friendly scarecrow, Iron-framed with flapping linen: removes 2 pests per question; planting cheap, harvesting −40% energy.",generated - pick sheet28-buildings-b.png
+5,4,assets/map/warehouse.png,512 max,Warehouse (storage),warehouse: ,generated - pick sheet29-buildings-c.png
+5,4,assets/map/well_5.png,512 max,Well · hand pump (well),"well · hand pump: A hand pump: 12 💧 a trip, holds 80.",generated - pick sheet29-buildings-c.png
+5,4,assets/map/workshop_3.png,512 max,Master Workshop (workshop),master workshop: ,generated - pick sheet29-buildings-c.png
+6,3,assets/album/sq_apprentice.png,512 max,Album picture: The smith's apprentice is short of nails,Apprentice Bo proudly holding up a gate made with your nails,generated - pick sheet40-album-3.png
+6,3,assets/album/sq_baby_blanket.png,512 max,Album picture: A blanket for the newborn,A happy new mum holding her baby wrapped in your wool blanket,generated - pick sheet40-album-3.png
+6,3,assets/album/sq_chapel_roof.png,512 max,Album picture: Fix the chapel roof,"Bell-ringer Ansel holding your last roof plank, waving from the dry chapel",generated - pick sheet41-album-4.png
+6,3,assets/album/sq_harvest_dance.png,512 max,Album picture: Cider for the harvest dance,Fiddler Rosa raising a mug of your cider at the harvest dance,generated - pick sheet40-album-3.png
+6,3,assets/items/aged_cheese.png,128 max,Item: Aged Cheese,"aged cheese, single object icon",generated - pick sheet49-items-5.png
+6,3,assets/items/apple_crumble.png,128 max,Item: Apple Oat Crumble,"apple oat crumble, single object icon",generated - pick sheet51-items-7.png
+6,3,assets/items/apple_juice.png,128 max,Item: Apple Juice,"apple juice, single object icon",generated - pick sheet48-items-4.png
+6,3,assets/items/apple_pie.png,128 max,Item: Apple Pie,"apple pie, single object icon",generated - pick sheet52-items-8.png
+6,3,assets/items/beet_juice.png,128 max,Item: Beet Juice,"beet juice, single object icon",generated - pick sheet48-items-4.png
+6,3,assets/items/caramel_onions.png,128 max,Item: Caramelized Onions,"caramelized onions, single object icon",generated - pick sheet51-items-7.png
+6,3,assets/items/cider.png,128 max,Item: Cider,"cider, single object icon",generated - pick sheet49-items-5.png
+6,3,assets/items/flax.png,128 max,Item: Flax,"flax, single object icon",generated - pick sheet47-items-3.png
+6,3,assets/items/flax_fiber.png,128 max,Item: Flax Fiber,"flax fiber, single object icon",generated - pick sheet49-items-5.png
+6,3,assets/items/fresh_cheese.png,128 max,Item: Fresh Cheese,"fresh cheese, single object icon",generated - pick sheet49-items-5.png
+6,3,assets/items/goat_shed.png,128 max,Item: Goat Shed,"goat shed, single object icon",generated - pick sheet52-items-8.png
+6,3,assets/items/hardwood.png,128 max,Item: Hardwood,"hardwood, single object icon",generated - pick sheet46-items-2.png
+6,3,assets/items/honey_cake.png,128 max,Item: Honey Cake,"honey cake, single object icon",generated - pick sheet53-items-9.png
+6,3,assets/items/honey_oat_cake.png,128 max,Item: Honey Oat Cake,"honey oat cake, single object icon",generated - pick sheet51-items-7.png
+6,3,assets/items/iron.png,128 max,Item: Iron Bar,"iron bar, single object icon",generated - pick sheet45-items-1.png
+6,3,assets/items/linen_cloth.png,128 max,Item: Linen Cloth,"linen cloth, single object icon",generated - pick sheet50-items-6.png
+6,3,assets/items/linen_thread.png,128 max,Item: Linen Thread,"linen thread, single object icon",generated - pick sheet49-items-5.png
+6,3,assets/items/linseed.png,128 max,Item: Linseed,"linseed, single object icon",generated - pick sheet53-items-9.png
+6,3,assets/items/linseed_oil.png,128 max,Item: Linseed Oil,"linseed oil, single object icon",generated - pick sheet53-items-9.png
+6,3,assets/items/nails.png,128 max,Item: Nails,"nails, single object icon",generated - pick sheet45-items-1.png
+6,3,assets/items/oats.png,128 max,Item: Oats,"oats, single object icon",generated - pick sheet47-items-3.png
+6,3,assets/items/oilcake.png,128 max,Item: Oilcake,"oilcake, single object icon",generated - pick sheet46-items-2.png
+6,3,assets/items/pickles.png,128 max,Item: Pickled Vegetables,"pickled vegetables, single object icon",generated - pick sheet51-items-7.png
+6,3,assets/items/saddle_blanket.png,128 max,Item: Saddle Blanket,"saddle blanket, single object icon",generated - pick sheet53-items-9.png
+6,3,assets/items/sand.png,128 max,Item: Sand,"sand, single object icon",generated - pick sheet45-items-1.png
+6,3,assets/items/simple_cake.png,128 max,Item: Simple Cake,"simple cake, single object icon",generated - pick sheet51-items-7.png
+6,3,assets/items/sugar.png,128 max,Item: Sugar,"sugar, single object icon",generated - pick sheet48-items-4.png
+6,3,assets/items/sunflower.png,128 max,Item: Sunflower Seeds,"sunflower seeds, single object icon",generated - pick sheet47-items-3.png
+6,3,assets/items/sunflower_oil.png,128 max,Item: Sunflower Oil,"sunflower oil, single object icon",generated - pick sheet48-items-4.png
+6,3,assets/items/vinegar.png,128 max,Item: Vinegar,"vinegar, single object icon",generated - pick sheet49-items-5.png
+6,3,assets/items/wool.png,128 max,Item: Wool,"wool, single object icon",generated - pick sheet48-items-4.png
+6,3,assets/items/wool_cloth.png,128 max,Item: Wool Cloth,"wool cloth, single object icon",generated - pick sheet49-items-5.png
+6,3,assets/items/yarn.png,128 max,Item: Yarn,"yarn, single object icon",generated - pick sheet49-items-5.png
+6,3,assets/items/yogurt.png,128 max,Item: Yogurt,"yogurt, single object icon",generated - pick sheet49-items-5.png
+6,4,assets/animals/pet_pony.png,256 max,Pony comes home,"pony comes home, whole body, side view",generated - pick sheet25-animals.png
+6,4,assets/friends/sq_long_voyage.png,256 max,Friend: Captain Mei (postcard stamp),"head-and-shoulders portrait of captain mei, friendly, looking at the viewer, in a round frame",generated - pick sheet36-friends-2.png
+6,4,assets/friends/sq_night_watch.png,256 max,Friend: Pieter the night watchman (postcard stamp),"head-and-shoulders portrait of pieter the night watchman, friendly, looking at the viewer, in a round frame",generated - pick sheet36-friends-2.png
+6,4,assets/friends/sq_school_window.png,256 max,"Friend: Miss Ines, the teacher (postcard stamp)","head-and-shoulders portrait of miss ines, the teacher, friendly, looking at the viewer, in a round frame",generated - pick sheet36-friends-2.png
+6,4,assets/friends/sq_wedding_cake.png,256 max,"Friend: Anna and Ben, the newlyweds (postcard stamp)","head-and-shoulders portrait of anna and ben, the newlyweds, friendly, looking at the viewer, in a round frame",generated - pick sheet36-friends-2.png
+6,4,assets/interior/forge_2.png,384 max,"Blast Forge (inside, ws_fire)",blast forge: Hot enough for steel.,generated - pick sheet33-interior-c.png
+6,4,assets/interior/glass_kiln.png,384 max,"Glass Kiln (inside, ws_fire)",glass kiln: ,generated - pick sheet33-interior-c.png
+6,4,assets/interior/kiln_2.png,384 max,"Brickworks (inside, ws_fire)","brickworks: Five chambers instead of two: bricks, jars and charcoal in bulk.",generated - pick sheet33-interior-c.png
+6,4,assets/interior/library_room.png,384 max,"Library room (inside, library)","library room: A quiet room of your own: all 12 books, reading 30% faster, and a cosy chair (+0.5 energy per Rest answer). Needs 30 cards learned.",generated - pick sheet33-interior-c.png
+6,4,assets/interior/linen_bedding.png,384 max,"Linen Bedding (inside, living)",linen bedding: Replaces the mattress: +3 energy per Rest answer.,generated - pick sheet33-interior-c.png
+6,4,assets/interior/spinning_wheel.png,384 max,"Spinning Wheel (inside, ws_loom)",spinning wheel: Yarn and thread without the backache (1 ⚡).,generated - pick sheet33-interior-c.png
+6,4,assets/interior/textile_loom.png,384 max,"Textile Loom (inside, ws_loom)",textile loom: Weaving moves from the hand loom to the workshop.,generated - pick sheet34-interior-d.png
+6,5,assets/addons/bee_house.png,256 max,On bees: Bee Garden (appears when built),bee garden: Observation hive with a glass window.,done
+6,5,assets/addons/greenhouse_extension.png,256 max,On greenhouse: Greenhouse · extension (appears when built),greenhouse · extension:,generated - pick sheet30-addons.png
+6,5,assets/addons/sunroom.png,256 max,On home: Farmhouse · sun room (appears when built),"farmhouse · sun room: Energy max 65, 9 energy per Rest answer.",generated - pick sheet30-addons.png
+6,5,assets/addons/wind_pump.png,256 max,On windmill: Wind Pump (appears when built),wind pump: The windmill also pumps water.,generated - pick sheet30-addons.png
+6,5,assets/crops/crop_golden_beet.png,256 max,Golden Beet (one plant),"one ripe golden beet plant growing out of the ground, no pot",generated - pick sheet26-pests-crops.png
+6,5,assets/crops/crop_rainbow_carrot.png,256 max,Rainbow Carrot (one plant),"one ripe rainbow carrot plant growing out of the ground, no pot",generated - pick sheet26-pests-crops.png
+6,5,assets/crops/crop_saffron.png,256 max,Saffron Crocus (one plant),"one ripe saffron crocus plant growing out of the ground, no pot",generated - pick sheet26-pests-crops.png
+6,5,assets/crops/crop_woad.png,256 max,Woad (one plant),"one ripe woad plant growing out of the ground, no pot",generated - pick sheet26-pests-crops.png
+6,5,assets/fences/hedge_row.png,512 max,Field fence side: trimmed hedgerow,"trimmed hedgerow, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
+6,5,assets/map/broker.png,512 max,Import Broker,fancy travelling merchant wagon with crates and a canopy,generated - pick sheet29-buildings-c.png
+6,5,assets/map/farmhouse_sunroom.png,512 max,Farmhouse · sun room (home),"farmhouse · sun room: Energy max 65, 9 energy per Rest answer.",generated - pick sheet29-buildings-c.png
+6,5,assets/map/greenhouse_2.png,512 max,Greenhouse · extension (greenhouse),greenhouse · extension: ,generated - pick sheet29-buildings-c.png
+6,5,assets/map/stove_3.png,512 max,Master Stove (kitchen),master stove: ,generated - pick sheet29-buildings-c.png
+6,5,assets/map/windmill_2.png,512 max,Windmill · stone grinders (windmill),windmill · stone grinders: Fine flour for master baking.,generated - pick sheet29-buildings-c.png
+7,4,assets/album/sq_long_voyage.png,512 max,Album picture: Pickles for a long voyage,Sailor Mei waving a jar of your pickles from the deck of her boat,generated - pick sheet42-album-5.png
+7,4,assets/album/sq_night_watch.png,512 max,Album picture: A lantern for the night watchman,Night watchman Pieter holding your glowing lantern on the town wall,generated - pick sheet41-album-4.png
+7,4,assets/album/sq_school_window.png,512 max,Album picture: The schoolroom window is broken,Teacher Ines and her pupils holding up your new glass pane,generated - pick sheet41-album-4.png
+7,4,assets/album/sq_wedding_cake.png,512 max,Album picture: A wedding needs a cake,"The bride and groom holding your cake between them, laughing",generated - pick sheet41-album-4.png
+7,4,assets/items/apple_carrot_cake.png,128 max,Item: Apple-Carrot Cake,"apple-carrot cake, single object icon",generated - pick sheet52-items-8.png
+7,4,assets/items/berries.png,128 max,Item: Berries,"berries, single object icon",generated - pick sheet47-items-3.png
+7,4,assets/items/berry_cake.png,128 max,Item: Berry Cake,"berry cake, single object icon",generated - pick sheet52-items-8.png
+7,4,assets/items/buttered_pasta.png,128 max,Item: Buttered Pasta,"buttered pasta, single object icon",generated - pick sheet51-items-7.png
+7,4,assets/items/cheese_board.png,128 max,Item: Cheese Board,"cheese board, single object icon",generated - pick sheet52-items-8.png
+7,4,assets/items/cured_olives.png,128 max,Item: Cured Olives,"cured olives, single object icon",generated - pick sheet49-items-5.png
+7,4,assets/items/fresh_pasta.png,128 max,Item: Fresh Pasta,"fresh pasta, single object icon",generated - pick sheet49-items-5.png
+7,4,assets/items/glass.png,128 max,Item: Glass,"glass, single object icon",generated - pick sheet45-items-1.png
+7,4,assets/items/herbs.png,128 max,Item: Herbs,"herbs, single object icon",generated - pick sheet47-items-3.png
+7,4,assets/items/jam.png,128 max,Item: Berry Jam,"berry jam, single object icon",generated - pick sheet49-items-5.png
+7,4,assets/items/olive.png,128 max,Item: Olive,"olive, single object icon",generated - pick sheet47-items-3.png
+7,4,assets/items/olive_oil.png,128 max,Item: Olive Oil,"olive oil, single object icon",generated - pick sheet49-items-5.png
+7,4,assets/items/pasta_pomodoro.png,128 max,Item: Pasta Pomodoro,"pasta pomodoro, single object icon",generated - pick sheet52-items-8.png
+7,4,assets/items/pizza.png,128 max,Item: Pizza,"pizza, single object icon",generated - pick sheet52-items-8.png
+7,4,assets/items/pizza_dough.png,128 max,Item: Pizza Dough,"pizza dough, single object icon",generated - pick sheet49-items-5.png
+7,4,assets/items/pumpkin.png,128 max,Item: Pumpkin,"pumpkin, single object icon",generated - pick sheet47-items-3.png
+7,4,assets/items/pumpkin_pie.png,128 max,Item: Pumpkin Pie,"pumpkin pie, single object icon",generated - pick sheet52-items-8.png
+7,4,assets/items/pumpkin_soup.png,128 max,Item: Pumpkin Soup,"pumpkin soup, single object icon",generated - pick sheet52-items-8.png
+7,4,assets/items/sandwich.png,128 max,Item: Farm Sandwich,"farm sandwich, single object icon",generated - pick sheet52-items-8.png
+7,4,assets/items/steel.png,128 max,Item: Steel Bar,"steel bar, single object icon",generated - pick sheet45-items-1.png
+7,4,assets/items/tapenade.png,128 max,Item: Olive Tapenade,"olive tapenade, single object icon",generated - pick sheet52-items-8.png
+7,4,assets/items/tomato_sauce.png,128 max,Item: Tomato Sauce,"tomato sauce, single object icon",generated - pick sheet49-items-5.png
+7,4,assets/items/walnut.png,128 max,Item: Walnut,"walnut, single object icon",generated - pick sheet47-items-3.png
+7,4,assets/items/walnut_butter.png,128 max,Item: Walnut Butter,"walnut butter, single object icon",generated - pick sheet49-items-5.png
+7,4,assets/items/walnut_pesto.png,128 max,Item: Walnut Pesto,"walnut pesto, single object icon",generated - pick sheet52-items-8.png
+7,4,assets/items/yogurt_bowl.png,128 max,Item: Yogurt Berry Bowl,"yogurt berry bowl, single object icon",generated - pick sheet51-items-7.png
+7,5,assets/animals/pet_alpaca.png,256 max,Alpaca comes home,"alpaca comes home, whole body, side view",generated - pick sheet25-animals.png
+7,5,assets/friends/sq_elders_feast.png,256 max,Friend: Elder Agnes and the elders (postcard stamp),"head-and-shoulders portrait of elder agnes and the elders, friendly, looking at the viewer, in a round frame",generated - pick sheet37-friends-3.png
+7,5,assets/friends/sq_festival_flags.png,256 max,Friend: Mayor Juno (postcard stamp),"head-and-shoulders portrait of mayor juno, friendly, looking at the viewer, in a round frame",generated - pick sheet37-friends-3.png
+7,5,assets/friends/sq_lamp_maker.png,256 max,Friend: Ferdinand the lamp-maker (postcard stamp),"head-and-shoulders portrait of ferdinand the lamp-maker, friendly, looking at the viewer, in a round frame",generated - pick sheet37-friends-3.png
+7,5,assets/friends/sq_orphanage_jam.png,256 max,Friend: Matron Elsie and the children (postcard stamp),"head-and-shoulders portrait of matron elsie and the children, friendly, looking at the viewer, in a round frame",generated - pick sheet37-friends-3.png
+7,5,assets/friends/sq_painter_saffron.png,256 max,Friend: Lucia the painter (postcard stamp),"head-and-shoulders portrait of lucia the painter, friendly, looking at the viewer, in a round frame",generated - pick sheet37-friends-3.png
+7,5,assets/friends/sq_poet_scarf.png,256 max,"Friend: Kit, the little poet (postcard stamp)","head-and-shoulders portrait of kit, the little poet, friendly, looking at the viewer, in a round frame",generated - pick sheet36-friends-2.png
+7,5,assets/friends/sq_school_garden.png,256 max,Friend: The school children (postcard stamp),"head-and-shoulders portrait of the school children, friendly, looking at the viewer, in a round frame",generated - pick sheet37-friends-3.png
+7,5,assets/friends/sq_telescope.png,256 max,Friend: Vega the astronomer (postcard stamp),"head-and-shoulders portrait of vega the astronomer, friendly, looking at the viewer, in a round frame",generated - pick sheet37-friends-3.png
+7,5,assets/friends/sq_theatre_cheese.png,256 max,Friend: The travelling theatre (postcard stamp),"head-and-shoulders portrait of the travelling theatre, friendly, looking at the viewer, in a round frame",generated - pick sheet37-friends-3.png
+7,5,assets/friends/sq_village_well.png,256 max,Friend: Young Sami (postcard stamp),"head-and-shoulders portrait of young sami, friendly, looking at the viewer, in a round frame",generated - pick sheet37-friends-3.png
+7,5,assets/interior/cellar_2.png,384 max,"Cheese Cave (inside, barn_cellar)",cheese cave: Twice the aging space.,generated - pick sheet34-interior-d.png
+7,5,assets/interior/dye_vat.png,384 max,"Dye Vat (inside, ws_loom)",dye vat: Plant dyes — and colour mixing.,generated - pick sheet34-interior-d.png
+7,5,assets/interior/master_tool_chest.png,384 max,"Master Tool Chest (inside, ws_tools)","master tool chest: Crafting −15%, field and wood work −10% energy.",generated - pick sheet34-interior-d.png
+7,5,assets/interior/seed_library.png,384 max,"Seed Library (inside, barn_seeds)",seed library: Heirloom crops can be saved from your own harvest: 1 seed back per harvest. (Seed-saving lesson.),generated - pick sheet34-interior-d.png
+7,5,assets/interior/stove_3.png,384 max,"Master Stove (inside, kitchen)",master stove: ,generated - pick sheet34-interior-d.png
+8,5,assets/album/sq_elders_feast.png,512 max,Album picture: A feast for the village elders,Elder Agnes holding up your tapenade bowl as the elders laugh around the table,generated - pick sheet43-album-6.png
+8,5,assets/album/sq_festival_flags.png,512 max,Album picture: Dye the festival flags,Mayor Juno holding a string of your dyed flags over the village square,generated - pick sheet44-album-7.png
+8,5,assets/album/sq_healer_garden.png,512 max,Album picture: Herbs for the healer's garden,"Healer Wren kneeling in her new herb garden, holding a bunch of your herbs",generated - pick sheet44-album-7.png
+8,5,assets/album/sq_lamp_maker.png,512 max,Album picture: Oil for the old lamp-maker,"Old lamp-maker Ferdinand holding a lamp filled with your olive oil, glowing",generated - pick sheet43-album-6.png
+8,5,assets/album/sq_orphanage_jam.png,512 max,Album picture: Jam for the orphanage,Matron Elsie holding your jam jar while the children cheer with sandwiches,generated - pick sheet43-album-6.png
+8,5,assets/album/sq_painter_saffron.png,512 max,Album picture: Golden paint for the painter,Painter Lucia holding a brush dipped in your golden saffron paint,generated - pick sheet42-album-5.png
+8,5,assets/album/sq_poet_scarf.png,512 max,Album picture: A rainbow scarf for the little poet,Little poet Kit reciting proudly in your rainbow scarf,generated - pick sheet42-album-5.png
+8,5,assets/album/sq_school_garden.png,512 max,Album picture: Seeds for the school garden,The school children each holding up one of your rainbow carrots,generated - pick sheet42-album-5.png
+8,5,assets/album/sq_telescope.png,512 max,Album picture: The astronomer's telescope,"Astronomer Vega holding your telescope, pointing happily at the stars",generated - pick sheet44-album-7.png
+8,5,assets/album/sq_theatre_cheese.png,512 max,Album picture: Cheese for the travelling theatre,The lead actor taking a bow while holding your cheese wheel high,generated - pick sheet43-album-6.png
+8,5,assets/album/sq_village_well.png,512 max,Album picture: Rebuild the village well,Young Sami holding a brimming bucket from the well you rebuilt,generated - pick sheet44-album-7.png
+8,5,assets/items/blue_dye.png,128 max,Item: Blue Dye,"blue dye, single object icon",generated - pick sheet50-items-6.png
+8,5,assets/items/fine_flour.png,128 max,Item: Fine Flour,"fine flour, single object icon",generated - pick sheet48-items-4.png
+8,5,assets/items/golden_beet.png,128 max,Item: Golden Beet,"golden beet, single object icon",generated - pick sheet47-items-3.png
+8,5,assets/items/golden_beet_seed.png,128 max,Item: Golden Beet Seeds,"golden beet seeds, single object icon",generated - pick sheet53-items-9.png
+8,5,assets/items/golden_honey_cake.png,128 max,Item: Golden Honey Cake,"golden honey cake, single object icon",generated - pick sheet52-items-8.png
+8,5,assets/items/green_dye.png,128 max,Item: Green Dye,"green dye, single object icon",generated - pick sheet50-items-6.png
+8,5,assets/items/orange_dye.png,128 max,Item: Orange Dye,"orange dye, single object icon",generated - pick sheet50-items-6.png
+8,5,assets/items/purple_dye.png,128 max,Item: Purple Dye,"purple dye, single object icon",generated - pick sheet50-items-6.png
+8,5,assets/items/rainbow_carrot.png,128 max,Item: Rainbow Carrot,"rainbow carrot, single object icon",generated - pick sheet47-items-3.png
+8,5,assets/items/rainbow_carrot_seed.png,128 max,Item: Rainbow Carrot Seeds,"rainbow carrot seeds, single object icon",generated - pick sheet53-items-9.png
+8,5,assets/items/rainbow_quilt.png,128 max,Item: Rainbow Quilt,"rainbow quilt, single object icon",generated - pick sheet53-items-9.png
+8,5,assets/items/rainbow_roast.png,128 max,Item: Rainbow Roast,"rainbow roast, single object icon",generated - pick sheet52-items-8.png
+8,5,assets/items/rainbow_yarn.png,128 max,Item: Rainbow Yarn,"rainbow yarn, single object icon",generated - pick sheet50-items-6.png
+8,5,assets/items/red_dye.png,128 max,Item: Red Dye,"red dye, single object icon",generated - pick sheet50-items-6.png
+8,5,assets/items/saffron.png,128 max,Item: Saffron,"saffron, single object icon",generated - pick sheet47-items-3.png
+8,5,assets/items/saffron_corm.png,128 max,Item: Saffron Corm,"saffron corm, single object icon",generated - pick sheet53-items-9.png
+8,5,assets/items/woad.png,128 max,Item: Woad Leaves,"woad leaves, single object icon",generated - pick sheet47-items-3.png
+8,5,assets/items/woad_seed.png,128 max,Item: Woad Seeds,"woad seeds, single object icon",generated - pick sheet53-items-9.png
+8,5,assets/items/worm_castings.png,128 max,Item: Worm Castings,"worm castings, single object icon",generated - pick sheet46-items-2.png
+8,5,assets/items/yellow_dye.png,128 max,Item: Yellow Dye,"yellow dye, single object icon",generated - pick sheet50-items-6.png

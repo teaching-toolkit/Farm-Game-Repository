@@ -1,0 +1,58 @@
+{
+ "id": "farm-basics",
+ "code": "FRM",
+ "title": "Farm basics",
+ "subject": "Science",
+ "questions": [
+  {
+   "id": "FRM-001",
+   "q": "Which uses more water to make?",
+   "answers": [
+    "A glass of milk",
+    "A glass of carrot juice",
+    "A glass of tap water"
+   ],
+   "correct": 0,
+   "right": "Yes! Animal products like milk usually use more water.",
+   "wrong": "Think about which one comes from an animal."
+  },
+  {
+   "id": "FRM-002",
+   "q": "What helps plants grow on this farm?",
+   "answers": [
+    "Water",
+    "Coins",
+    "Stones",
+    "Toys"
+   ],
+   "correct": 0,
+   "right": "Right! Plants need water to grow.",
+   "wrong": "Coins buy things, but water makes plants grow."
+  },
+  {
+   "id": "FRM-003",
+   "q": "If you save wheat instead of selling it, what can you do later?",
+   "answers": [
+    "Use it in recipes",
+    "Lose it forever",
+    "Turn it into stones",
+    "Nothing at all"
+   ],
+   "correct": 0,
+   "right": "Correct! Saved wheat becomes porridge, flour or bread.",
+   "wrong": "Saved wheat can be very useful later."
+  },
+  {
+   "id": "FRM-004",
+   "q": "Which is usually better for water use?",
+   "answers": [
+    "Growing carrots",
+    "Feeding animals to get eggs",
+    "Feeding animals to get milk"
+   ],
+   "correct": 0,
+   "right": "Yes! Plants usually use less water than animal products.",
+   "wrong": "Animals need food and water, too!"
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+  "note": "The player's farmer on the map: a little 3D figure made of simple shapes (scripts/avatar.gd). Every part is its own slot, so a 'make your farmer' screen at the start can change them later; a player's choice is kept in their farm save (S.look) and falls back to 'default'. Colours are hex. hair.style: short | long | pigtails | bun | none. shirt.style: tee | long. trousers.style: trousers | overalls | shorts. hat.style: none | straw | cap.",
+  "default": {
+    "skin": "#f1c7a0",
+    "cheeks": "#f29a9a",
+    "eyes": "#3a2a22",
+    "hair": {"style": "short", "color": "#7a4a26"},
+    "shirt": {"style": "tee", "color": "#e86a4a"},
+    "trousers": {"style": "overalls", "color": "#4a6fa5"},
+    "shoes": {"color": "#6b4a2b"},
+    "hat": {"style": "straw", "color": "#e9c46a", "band": "#c0392b"}
+  },
+  "options": {
+    "skin": ["#f6d7bd", "#f1c7a0", "#d9a17a", "#b97c54", "#8d5a3b", "#5e3b26"],
+    "hairColor": ["#2b1d14", "#5a3519", "#7a4a26", "#b5651d", "#e0b25a", "#f0d58c", "#9e9e9e"],
+    "hairStyle": ["short", "long", "pigtails", "bun", "none"],
+    "clothes": ["#e86a4a", "#f2b632", "#5bb34a", "#3f8fd8", "#a35dd8", "#ff8fb1", "#ffffff", "#4a6fa5", "#6b4a2b"],
+    "shirtStyle": ["tee", "long"],
+    "trousersStyle": ["trousers", "overalls", "shorts"],
+    "hatStyle": ["none", "straw", "cap"]
+  },
+  "walk": {"speed": 95, "cell": 16, "note": "speed in farm pixels per second; cell = size of the grid used to find a way around buildings, pens and fields"}
+}

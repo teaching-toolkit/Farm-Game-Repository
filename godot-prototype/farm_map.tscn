@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/farm_map.gd" id="1_map"]
+
+[node name="FarmMap" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 834.0
+offset_bottom = 1500.0
+mouse_filter = 1
+script = ExtResource("1_map")

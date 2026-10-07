@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Farm Quiz Engine – Embedded</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <style>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #fffaf0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      color: #2c3e50;
+    }
+
+    #quiz-shell {
+      width: 100%;
+      max-width: 480px;
+      background: #fffaf0;
+      border-radius: 18px;
+      padding: 12px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    #quiz-header h1 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .pill-btn {
+      border-radius: 999px;
+      border: none;
+      padding: 7px 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .pill-primary { background:#4caf50; color:#fff; }
+    .pill-ghost { background:#eee; color:#333; }
+
+    #quiz-body {
+      font-size: 15px;
+    }
+
+    .quiz-question {
+      margin-bottom: 10px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .quiz-answers {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .quiz-answer-btn {
+      border-radius: 999px;
+      border: 2px solid #ddd;
+      padding: 8px 10px;
+      background: #fff;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .quiz-answer-btn.correct-picked {
+      border-color: #4caf50;
+      background: #e8f5e9;
+    }
+
+    .quiz-answer-btn.wrong-picked {
+      border-color: #e53935;
+      background: #ffebee;
+    }
+
+    #quiz-feedback {
+      min-height: 18px;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    #quiz-nav {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    #quiz-nav button {
+      flex: 1;
+    }
+
+    #quiz-closed-message {
+      display: none;
+      font-size: 14px;
+      text-align: center;
+      padding: 16px 4px 4px;
+    }
+  </style>
+</head>
+<body>
+  <div id="quiz-shell">
+    <div id="quiz-header">
+      <h1>Quiz Time!</h1>
+      <button id="close-btn-top" class="pill-btn pill-ghost">Close</button>
+    </div>
+
+    <div id="quiz-body">
+      <div id="quiz-question" class="quiz-question"></div>
+      <div id="quiz-answers" class="quiz-answers"></div>
+      <div id="quiz-feedback"></div>
+
+      <div id="quiz-nav">
+        <button id="next-question-btn" class="pill-btn pill-primary" disabled>Next question</button>
+        <!-- Close quiz is always enabled now -->
+        <button id="close-quiz-btn" class="pill-btn pill-ghost">Close quiz</button>
+      </div>
+    </div>
+
+    <div id="quiz-closed-message">
+      <p>Quiz closed. You can now go back to your farm.</p>
+    </div>
+  </div>
+
+  <script>
+    const QUIZ_QUESTIONS = [
+      {
+        question: "Which uses more water to make?",
+        answers: ["A glass of milk","A glass of carrot juice"],
+        correctIndex: 0,
+        feedbackCorrect: "Yes! Animal products like milk usually use more water.",
+        feedbackWrong: "Try again! Think about which one comes from an animal."
+      },
+      {
+        question: "What helps plants grow on this farm?",
+        answers: ["Water","Coins"],
+        correctIndex: 0,
+        feedbackCorrect: "Right! Plants need water to grow.",
+        feedbackWrong: "Coins buy things, but water makes plants grow."
+      },
+      {
+        question: "If you save wheat instead of selling it, what can you do later?",
+        answers: ["Use it in recipes","Lose it forever"],
+        correctIndex: 0,
+        feedbackCorrect: "Correct! Saving wheat lets you make bread or cake.",
+        feedbackWrong: "Nope! Saved wheat can be very useful later."
+      },
+      {
+        question: "Which is usually better for water use?",
+        answers: ["Growing carrots","Feeding animals to get eggs"],
+        correctIndex: 0,
+        feedbackCorrect: "Yes! Plants usually use less water than animal products.",
+        feedbackWrong: "Not quite. Animals need food and water, too!"
+      }
+    ];
+
+    let currentIndex = null;
+    let questionAnsweredCorrectly = false;
+
+    const qEl = document.getElementById("quiz-question");
+    const aEl = document.getElementById("quiz-answers");
+    const fEl = document.getElementById("quiz-feedback");
+
+    const nextBtn = document.getElementById("next-question-btn");
+    const closeQuizBtn = document.getElementById("close-quiz-btn");
+    const closeBtnTop = document.getElementById("close-btn-top");
+
+    const bodyEl = document.getElementById("quiz-body");
+    const closedMsgEl = document.getElementById("quiz-closed-message");
+
+    function notifyParent(message) {
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage(message, "*");
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    function loadRandomQuestion() {
+      const idx = Math.floor(Math.random() * QUIZ_QUESTIONS.length);
+      currentIndex = idx;
+      questionAnsweredCorrectly = false;
+
+      const q = QUIZ_QUESTIONS[idx];
+      qEl.textContent = q.question;
+      fEl.textContent = "";
+      aEl.innerHTML = "";
+      nextBtn.disabled = true;
+      // closeQuizBtn is always enabled, no need to touch it
+
+      q.answers.forEach((ans, i) => {
+        const btn = document.createElement("button");
+        btn.className = "quiz-answer-btn";
+        btn.textContent = ans;
+        btn.addEventListener("click", () => handleAnswer(i));
+        aEl.appendChild(btn);
+      });
+    }
+
+    function handleAnswer(chosenIndex) {
+      if (currentIndex === null) return;
+      const q = QUIZ_QUESTIONS[currentIndex];
+      const isCorrect = (chosenIndex === q.correctIndex);
+      const buttons = aEl.querySelectorAll(".quiz-answer-btn");
+
+      if (isCorrect) {
+        questionAnsweredCorrectly = true;
+        fEl.textContent = q.feedbackCorrect;
+        buttons.forEach((b, i) => {
+          b.disabled = true;
+          if (i === chosenIndex) b.classList.add("correct-picked");
+        });
+
+        // notify parent farm to advance time
+        notifyParent({ type: "quizCorrect" });
+
+        // enable "Next question"
+        nextBtn.disabled = false;
+      } else {
+        fEl.textContent = q.feedbackWrong;
+        buttons.forEach((b, i) => {
+          if (i === chosenIndex) b.classList.add("wrong-picked");
+        });
+      }
+    }
+
+    function closeQuizView() {
+      // notify parent to close modal if embedded
+      notifyParent({ type: "quizClose" });
+
+      // standalone fallback: hide quiz and show message
+      bodyEl.style.display = "none";
+      closedMsgEl.style.display = "block";
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (!questionAnsweredCorrectly) return;
+      loadRandomQuestion();
+    });
+
+    closeQuizBtn.addEventListener("click", () => {
+      closeQuizView();
+    });
+
+    closeBtnTop.addEventListener("click", () => {
+      closeQuizView();
+    });
+
+    loadRandomQuestion();
+  </script>
+</body>
+</html>

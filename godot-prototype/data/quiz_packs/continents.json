@@ -1,0 +1,139 @@
+{
+ "id": "continents",
+ "code": "CON",
+ "title": "Continents",
+ "subject": "Geography",
+ "pool": [
+  "Europe",
+  "Asia",
+  "Africa",
+  "North America",
+  "South America",
+  "Australia",
+  "Antarctica"
+ ],
+ "questions": [
+  {
+   "id": "CON-001",
+   "q": "On which continent is Switzerland?",
+   "answers": [
+    "Europe",
+    "Asia",
+    "Africa"
+   ],
+   "correct": 0
+  },
+  {
+   "id": "CON-002",
+   "q": "Which is the biggest continent?",
+   "answers": [
+    "Asia",
+    "Europe",
+    "Australia"
+   ],
+   "correct": 0
+  },
+  {
+   "id": "CON-003",
+   "q": "On which continent is Egypt?",
+   "answers": [
+    "Africa",
+    "Asia",
+    "South America"
+   ],
+   "correct": 0
+  },
+  {
+   "id": "CON-004",
+   "q": "Where do kangaroos live in the wild?",
+   "answers": [
+    "Australia",
+    "Africa",
+    "Europe"
+   ],
+   "correct": 0
+  },
+  {
+   "id": "CON-005",
+   "q": "Which continent is almost completely covered in ice?",
+   "answers": [
+    "Antarctica",
+    "Europe",
+    "North America"
+   ],
+   "correct": 0
+  },
+  {
+   "id": "CON-006",
+   "q": "On which continent is Brazil?",
+   "answers": [
+    "South America",
+    "Africa",
+    "Asia"
+   ],
+   "correct": 0
+  },
+  {
+   "id": "CON-007",
+   "q": "On which continent is Canada?",
+   "answers": [
+    "North America",
+    "Europe",
+    "South America"
+   ],
+   "correct": 0
+  },
+  {
+   "id": "CON-008",
+   "q": "How many continents are there?",
+   "answers": [
+    "7",
+    "5",
+    "10",
+    "3"
+   ],
+   "correct": 0,
+   "pool": false
+  },
+  {
+   "id": "CON-009",
+   "q": "On which continent is the Sahara desert?",
+   "answers": [
+    "Africa",
+    "Australia",
+    "Europe"
+   ],
+   "correct": 0
+  },
+  {
+   "id": "CON-010",
+   "q": "On which continent is Mount Everest?",
+   "answers": [
+    "Asia",
+    "Europe",
+    "South America"
+   ],
+   "correct": 0
+  },
+  {
+   "id": "CON-011",
+   "q": "Which is the smallest continent?",
+   "answers": [
+    "Australia",
+    "Europe",
+    "Antarctica"
+   ],
+   "correct": 0
+  },
+  {
+   "id": "CON-012",
+   "q": "Which continent has the most countries?",
+   "answers": [
+    "Africa",
+    "Europe",
+    "North America"
+   ],
+   "correct": 0
+  }
+ ]
+}

@@ -1,0 +1,483 @@
+{
+ "id": "farm-pictures",
+ "code": "PIC",
+ "title": "Farm pictures",
+ "subject": "Science",
+ "note": "Picture questions. An answer can be text or {text, img, emoji}: img = a picture in assets/ (items/carrot …), emoji = shown until that picture exists. img/emoji on a question = a picture above it.",
+ "questions": [
+  {
+   "id": "PIC-001",
+   "q": "Which one is a carrot?",
+   "answers": [
+    {
+     "text": "Carrot",
+     "img": "items/carrot",
+     "emoji": "🥕"
+    },
+    {
+     "text": "Potato",
+     "img": "items/potato",
+     "emoji": "🥔"
+    },
+    {
+     "text": "Onion",
+     "img": "items/onion",
+     "emoji": "🧅"
+    },
+    {
+     "text": "Tomato",
+     "img": "items/tomato",
+     "emoji": "🍅"
+    }
+   ],
+   "correct": 0,
+   "right": "Yes! A carrot is a long orange root.",
+   "wrong": "Look for the long orange one."
+  },
+  {
+   "id": "PIC-002",
+   "q": "Which one grows under the ground?",
+   "answers": [
+    {
+     "text": "Potato",
+     "img": "items/potato",
+     "emoji": "🥔"
+    },
+    {
+     "text": "Apple",
+     "img": "items/apple",
+     "emoji": "🍎"
+    },
+    {
+     "text": "Tomato",
+     "img": "items/tomato",
+     "emoji": "🍅"
+    },
+    {
+     "text": "Berries",
+     "img": "items/berries",
+     "emoji": "🫐"
+    }
+   ],
+   "correct": 0,
+   "right": "Right! Potatoes grow under the soil.",
+   "wrong": "Apples, tomatoes and berries hang in the sun."
+  },
+  {
+   "id": "PIC-003",
+   "q": "Which one grows on a tree?",
+   "answers": [
+    {
+     "text": "Apple",
+     "img": "items/apple",
+     "emoji": "🍎"
+    },
+    {
+     "text": "Carrot",
+     "img": "items/carrot",
+     "emoji": "🥕"
+    },
+    {
+     "text": "Potato",
+     "img": "items/potato",
+     "emoji": "🥔"
+    },
+    {
+     "text": "Lettuce",
+     "img": "items/lettuce",
+     "emoji": "🥬"
+    }
+   ],
+   "correct": 0,
+   "right": "Yes! Apples grow on apple trees.",
+   "wrong": "Carrots, potatoes and lettuce grow in a field."
+  },
+  {
+   "id": "PIC-004",
+   "q": "What does a hen give us?",
+   "answers": [
+    {
+     "text": "Eggs",
+     "img": "items/egg",
+     "emoji": "🥚"
+    },
+    {
+     "text": "Milk",
+     "img": "items/milk",
+     "emoji": "🥛"
+    },
+    {
+     "text": "Wool",
+     "img": "items/wool",
+     "emoji": "🧶"
+    },
+    {
+     "text": "Honey",
+     "img": "items/honey",
+     "emoji": "🍯"
+    }
+   ],
+   "correct": 0,
+   "img": "animals/animal_chicken",
+   "emoji": "🐔",
+   "right": "Right! Hens lay eggs.",
+   "wrong": "Hens lay something you can cook for breakfast."
+  },
+  {
+   "id": "PIC-005",
+   "q": "What does a cow give us?",
+   "answers": [
+    {
+     "text": "Milk",
+     "img": "items/milk",
+     "emoji": "🥛"
+    },
+    {
+     "text": "Eggs",
+     "img": "items/egg",
+     "emoji": "🥚"
+    },
+    {
+     "text": "Wool",
+     "img": "items/wool",
+     "emoji": "🧶"
+    },
+    {
+     "text": "Honey",
+     "img": "items/honey",
+     "emoji": "🍯"
+    }
+   ],
+   "correct": 0,
+   "img": "animals/animal_cow",
+   "emoji": "🐄",
+   "right": "Yes! Cows give milk.",
+   "wrong": "Think of something white you can drink."
+  },
+  {
+   "id": "PIC-006",
+   "q": "What does a sheep give us?",
+   "answers": [
+    {
+     "text": "Wool",
+     "img": "items/wool",
+     "emoji": "🧶"
+    },
+    {
+     "text": "Eggs",
+     "img": "items/egg",
+     "emoji": "🥚"
+    },
+    {
+     "text": "Honey",
+     "img": "items/honey",
+     "emoji": "🍯"
+    },
+    {
+     "text": "Apples",
+     "img": "items/apple",
+     "emoji": "🍎"
+    }
+   ],
+   "correct": 0,
+   "img": "animals/animal_sheep",
+   "emoji": "🐑",
+   "right": "Right! Sheep grow wool, and it is cut off in summer.",
+   "wrong": "Look at the sheep's soft coat."
+  },
+  {
+   "id": "PIC-007",
+   "q": "What do bees make?",
+   "answers": [
+    {
+     "text": "Honey",
+     "img": "items/honey",
+     "emoji": "🍯"
+    },
+    {
+     "text": "Eggs",
+     "img": "items/egg",
+     "emoji": "🥚"
+    },
+    {
+     "text": "Butter",
+     "img": "items/butter",
+     "emoji": "🧈"
+    },
+    {
+     "text": "Jam",
+     "img": "items/jam",
+     "emoji": "🍓"
+    }
+   ],
+   "correct": 0,
+   "img": "animals/animal_bees",
+   "emoji": "🐝",
+   "right": "Yes! Bees make honey from flower nectar.",
+   "wrong": "Bees visit flowers and make something sweet."
+  },
+  {
+   "id": "PIC-008",
+   "q": "What is this?",
+   "answers": [
+    "Pumpkin",
+    "Tomato",
+    "Apple",
+    "Onion"
+   ],
+   "correct": 0,
+   "img": "items/pumpkin",
+   "emoji": "🎃",
+   "right": "Right! A big orange pumpkin.",
+   "wrong": "It is big, round and orange."
+  },
+  {
+   "id": "PIC-009",
+   "q": "Which one is made from milk?",
+   "answers": [
+    {
+     "text": "Cheese",
+     "img": "items/fresh_cheese",
+     "emoji": "🧀"
+    },
+    {
+     "text": "Bread",
+     "img": "items/bread",
+     "emoji": "🍞"
+    },
+    {
+     "text": "Jam",
+     "img": "items/jam",
+     "emoji": "🍓"
+    },
+    {
+     "text": "Flatbread",
+     "img": "items/flatbread",
+     "emoji": "🫓"
+    }
+   ],
+   "correct": 0,
+   "right": "Yes! Cheese is made from milk.",
+   "wrong": "Bread and flatbread are made from flour, jam from fruit."
+  },
+  {
+   "id": "PIC-010",
+   "q": "Which one is made from flour?",
+   "answers": [
+    {
+     "text": "Bread",
+     "img": "items/bread",
+     "emoji": "🍞"
+    },
+    {
+     "text": "Cheese",
+     "img": "items/fresh_cheese",
+     "emoji": "🧀"
+    },
+    {
+     "text": "Butter",
+     "img": "items/butter",
+     "emoji": "🧈"
+    },
+    {
+     "text": "Honey",
+     "img": "items/honey",
+     "emoji": "🍯"
+    }
+   ],
+   "correct": 0,
+   "right": "Right! Bread is baked from flour.",
+   "wrong": "Cheese and butter come from milk, honey from bees."
+  },
+  {
+   "id": "PIC-011",
+   "q": "Which animal gives us wool?",
+   "answers": [
+    {
+     "text": "Sheep",
+     "img": "animals/animal_sheep",
+     "emoji": "🐑"
+    },
+    {
+     "text": "Cow",
+     "img": "animals/animal_cow",
+     "emoji": "🐄"
+    },
+    {
+     "text": "Hen",
+     "img": "animals/animal_chicken",
+     "emoji": "🐔"
+    },
+    {
+     "text": "Bees",
+     "img": "animals/animal_bees",
+     "emoji": "🐝"
+    }
+   ],
+   "correct": 0,
+   "right": "Yes! Sheep have a thick woolly coat.",
+   "wrong": "Look for the fluffiest animal."
+  },
+  {
+   "id": "PIC-012",
+   "q": "Which animal makes honey?",
+   "answers": [
+    {
+     "text": "Bees",
+     "img": "animals/animal_bees",
+     "emoji": "🐝"
+    },
+    {
+     "text": "Cow",
+     "img": "animals/animal_cow",
+     "emoji": "🐄"
+    },
+    {
+     "text": "Sheep",
+     "img": "animals/animal_sheep",
+     "emoji": "🐑"
+    },
+    {
+     "text": "Hen",
+     "img": "animals/animal_chicken",
+     "emoji": "🐔"
+    }
+   ],
+   "correct": 0,
+   "right": "Right! Bees make honey.",
+   "wrong": "It is a very small animal that flies."
+  },
+  {
+   "id": "PIC-013",
+   "q": "How many legs does a hen have?",
+   "answers": [
+    "2",
+    "4",
+    "6",
+    "8"
+   ],
+   "correct": 0,
+   "img": "animals/animal_chicken",
+   "emoji": "🐔",
+   "right": "Yes! A hen has two legs, like a bird.",
+   "wrong": "Hens are birds."
+  },
+  {
+   "id": "PIC-014",
+   "q": "How many legs does a cow have?",
+   "answers": [
+    "4",
+    "2",
+    "6",
+    "8"
+   ],
+   "correct": 0,
+   "img": "animals/animal_cow",
+   "emoji": "🐄",
+   "right": "Right! A cow has four legs.",
+   "wrong": "Count the cow's legs."
+  },
+  {
+   "id": "PIC-015",
+   "q": "Which one is a vegetable?",
+   "answers": [
+    {
+     "text": "Lettuce",
+     "img": "items/lettuce",
+     "emoji": "🥬"
+    },
+    {
+     "text": "Apple",
+     "img": "items/apple",
+     "emoji": "🍎"
+    },
+    {
+     "text": "Berries",
+     "img": "items/berries",
+     "emoji": "🫐"
+    },
+    {
+     "text": "Honey",
+     "img": "items/honey",
+     "emoji": "🍯"
+    }
+   ],
+   "correct": 0,
+   "right": "Yes! Lettuce is a leafy vegetable.",
+   "wrong": "Apples and berries are fruit, honey comes from bees."
+  },
+  {
+   "id": "PIC-016",
+   "q": "Which one burns well in a fire?",
+   "answers": [
+    {
+     "text": "Wood",
+     "img": "items/log",
+     "emoji": "🪵"
+    },
+    {
+     "text": "Stone",
+     "img": "items/stone",
+     "emoji": "🪨"
+    },
+    {
+     "text": "Glass",
+     "img": "items/glass",
+     "emoji": "🪟"
+    },
+    {
+     "text": "Brick",
+     "img": "items/brick",
+     "emoji": "🧱"
+    }
+   ],
+   "correct": 0,
+   "right": "Right! Dry wood burns well.",
+   "wrong": "Stone, glass and bricks do not burn."
+  },
+  {
+   "id": "PIC-017",
+   "q": "What is a brick made of?",
+   "answers": [
+    "Clay",
+    "Wood",
+    "Glass",
+    "Wool"
+   ],
+   "correct": 0,
+   "img": "items/brick",
+   "emoji": "🧱",
+   "right": "Yes! Bricks are clay baked in a hot kiln.",
+   "wrong": "It is soft and sticky earth before it is baked."
+  },
+  {
+   "id": "PIC-018",
+   "q": "Which one is made from sand?",
+   "answers": [
+    {
+     "text": "Glass",
+     "img": "items/glass",
+     "emoji": "🪟"
+    },
+    {
+     "text": "Brick",
+     "img": "items/brick",
+     "emoji": "🧱"
+    },
+    {
+     "text": "Wood",
+     "img": "items/log",
+     "emoji": "🪵"
+    },
+    {
+     "text": "Wool",
+     "img": "items/wool",
+     "emoji": "🧶"
+    }
+   ],
+   "correct": 0,
+   "right": "Right! Glass is sand melted in a very hot fire.",
+   "wrong": "It is clear and you can look through it."
+  }
+ ]
+}

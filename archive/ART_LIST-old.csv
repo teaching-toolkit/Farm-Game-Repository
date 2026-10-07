@@ -1,0 +1,98 @@
+"# style prompt: Bright, friendly mobile-game cartoon, thick rounded dark outlines, flat colours with simple cel shading, chunky cute proportions, three-quarter top-down view, small soft shadow, isolated on plain white background, no text."
+priority,chapter,file,size,what,prompt,status
+1,1,assets/deco/tree_oak.png,512 max,Forest tree,round leafy oak tree,missing
+1,1,assets/deco/tree_pine.png,512 max,Forest tree,tall pine tree,missing
+1,1,assets/map/_lot.png,512 max,Empty building lot,empty square plot of grass with a low wooden fence and a small blank sign,missing
+1,1,assets/map/board.png,512 max,"Notice board (jobs, favours)",wooden notice board on two posts with blank pinned papers,missing
+1,1,assets/map/forest.png,512 max,Forest edge (gathering),"edge of a forest, cluster of trees with a small path leading in",missing
+1,1,assets/map/market.png,512 max,Market stall (seed merchant),small village market stall with a striped awning and sacks of seeds,missing
+1,1,assets/tiles/grass.png,512x512 seamless,Grass ground,"seamless tileable short meadow grass seen from above, no objects",missing
+1,1,assets/tiles/overgrown.png,256x256,Overgrown patch,square patch of ground overgrown with weeds and brambles,missing
+1,1,assets/tiles/path.png,512x512 seamless,Village road,seamless tileable sandy dirt path seen from above,missing
+1,1,assets/tiles/soil.png,256x256,Empty field patch,square patch of freshly dug brown soil,missing
+1,1,assets/tiles/soil_sprouts.png,256x256,Growing field patch,square patch of dark soil with rows of tiny green sprouts,missing
+2,1,assets/map/basket.png,512 max,Basket (storage),basket: Holds up to 10 of each item.,missing
+2,1,assets/map/bookcart.png,512 max,Book cart,wooden hand cart full of colourful books,missing
+2,1,assets/map/campfire.png,512 max,Campfire (kitchen),campfire: First build. With the Tin Pot: porridge and soup.,missing
+2,1,assets/map/coop_1.png,512 max,Chicken Coop (coop),chicken coop: ,missing
+2,1,assets/map/library_box.png,512 max,Book box in the tent (library),book box in the tent: Holds 2 books. The Little Farm Book was already in it.,missing
+2,1,assets/map/pets.png,512 max,Pet corner,small wooden bunny hutch with a straw roof,missing
+2,1,assets/map/scarecrow_1.png,256 max,Stick Scarecrow,"friendly scarecrow, Shoots fierce looks at birds and rabbits (removes 0.6 pests per question) and they leave the seeds alone: planting costs half the energy.",missing
+2,1,assets/map/tent.png,512 max,Tent (living),tent: Where it starts. Energy max 20; each Rest answer gives 5 energy.,missing
+2,1,assets/map/well_1.png,512 max,Old Well (well),"old well: The only thing that still works. +2 💧 per question, holds 20.",missing
+2,1,assets/map/well_2.png,512 max,Well · deeper shaft (well),well · deeper shaft: ,missing
+2,1,assets/map/well_3.png,512 max,Well · winch (well),well · winch: ,missing
+2,1,assets/map/workbench.png,512 max,Workbench (workshop),"workbench: Rope, stone tools, hutch, scarecrow.",missing
+3,1,assets/animals/animal_chicken.png,256 max,Chickens,"chickens, whole body, side view",missing
+3,1,assets/animals/pet_bunny.png,256 max,Bunny comes home,"bunny comes home, whole body, side view",missing
+3,2,assets/map/barn_1.png,512 max,Barn (barn),barn: Shelter for big animals. Cows can move in.,missing
+3,2,assets/map/cap_bees_1.png,512 max,Bee Yard (bees),bee yard: Room for 2 skeps.,missing
+3,2,assets/map/cap_bees_2.png,512 max,Wooden Hives (bees),"wooden hives: Box hives (pegged, no nails needed yet).",missing
+3,2,assets/map/compost_bin.png,512 max,Compost Bin (compost),"compost bin: Turns straw, fiber and manure into compost over a few questions.",missing
+3,2,assets/map/compost_bin_2.png,512 max,Compost Heap (compost),compost heap: Four batches at once.,missing
+3,2,assets/map/coop_2.png,512 max,Bigger Coop (coop),bigger coop: ,missing
+3,2,assets/map/cottage.png,512 max,Cottage (living),"cottage: Hearth and door finish it. Energy max 30, 6 energy per Rest answer, a proper kitchen.",missing
+3,2,assets/map/cows.png,512 max,Cow pasture,"small cow pasture with a wooden fence, a trough and a cow",missing
+3,2,assets/map/library_shelf.png,512 max,Bookshelf (library),bookshelf: Holds 5 books. Reading 10% faster. Needs 5 cards learned.,missing
+3,2,assets/map/market_stall.png,512 max,Market Stall (market),market stall: Your own stall at the village market: +10% on everything sold.,missing
+3,2,assets/map/orchard.png,512 max,Clear the old orchard (orchard),clear the old orchard: Special patch 1: room for 3 fruit or nut trees.,missing
+3,2,assets/map/pond.png,512 max,Pond,small round farm pond with reeds and a duck,missing
+3,2,assets/map/shed.png,512 max,Log Shed (storage),"log shed: First chapter-2 build: room for 25 of each item, so bigger projects fit.",missing
+3,2,assets/map/stove_1.png,512 max,Stove (kitchen),"stove: Replaces the campfire. Soups, stews, pancakes.",missing
+3,2,assets/map/woodlot.png,512 max,Woodlot (lumber),"woodlot: Planted saplings: 1 log every 2 questions, forever.",missing
+3,2,assets/map/workshop_1.png,512 max,Carpenter's Shed (workshop),carpenter's shed: Workshop tier 1 — wood working.,missing
+4,2,assets/animals/animal_bees.png,256 max,Bees (straw skeps),"bees (straw skeps), whole body, side view",missing
+4,2,assets/animals/animal_cow.png,256 max,Cows,"cows, whole body, side view",missing
+4,2,assets/animals/pet_tortoise.png,256 max,Tortoise comes home,"tortoise comes home, whole body, side view",missing
+4,3,assets/map/barn_2.png,512 max,Barn · cellar (barn),barn · cellar: A cool cellar below the barn: aging and fermenting.,missing
+4,3,assets/map/cottage_loft.png,512 max,Cottage · loft & second room (living),"cottage · loft & second room: Energy max 40, 7 energy per Rest answer.",missing
+4,3,assets/map/library_bookcase.png,512 max,Bookcase & reading chair (library),bookcase & reading chair: Holds 10 books. Reading 20% faster. Needs 15 cards learned.,missing
+4,3,assets/map/lumbermill.png,512 max,Lumbermill (lumber),lumbermill: ,missing
+4,3,assets/map/scarecrow_2.png,256 max,Dressed Scarecrow,"friendly scarecrow, Flapping wool sleeves: removes 1.2 pests per question; planting costs a quarter of the energy.",missing
+4,3,assets/map/sheep_pen.png,512 max,Sheep Pen (sheep),sheep pen: ,missing
+4,3,assets/map/stove_2.png,512 max,Stove · iron top (kitchen),"stove · iron top: Sauces, jam, sugar reduction.",missing
+4,3,assets/map/well_4.png,512 max,Well · brick lining & pulley (well),well · brick lining & pulley: ,missing
+4,3,assets/map/windmill_1.png,512 max,Windmill (windmill),windmill: Cloth sails grind flour by themselves every question — the quern is retired.,missing
+4,3,assets/map/workshop_2.png,512 max,Smithy (workshop),smithy: Workshop tier 2 — metal.,missing
+5,1,assets/crops/crop_carrot.png,256 max,Carrot (ready),"ripe carrot plants, a small bunch",missing
+5,1,assets/crops/crop_clover.png,256 max,Clover (ready),"ripe clover plants, a small bunch",missing
+5,1,assets/crops/crop_onion.png,256 max,Onion (ready),"ripe onion plants, a small bunch",missing
+5,1,assets/crops/crop_wheat.png,256 max,Wheat (ready),"ripe wheat plants, a small bunch",missing
+5,3,assets/animals/animal_sheep.png,256 max,Sheep,"sheep, whole body, side view",missing
+5,3,assets/animals/pet_goat.png,256 max,Goat comes home,"goat comes home, whole body, side view",missing
+5,4,assets/map/barn_3.png,512 max,Barn · stable (barn),barn · stable: Room for a pony. More animals.,missing
+5,4,assets/map/farmhouse.png,512 max,Farmhouse (living),"farmhouse: Energy max 50, 8 energy per Rest answer, the master kitchen.",missing
+5,4,assets/map/greenhouse.png,512 max,Greenhouse (greenhouse),"greenhouse: Special patch 3: 4 beds, water is recycled (half water). Heirlooms grow here.",missing
+5,4,assets/map/library_room.png,512 max,Library room (library),"library room: A quiet room of your own: all 12 books, reading 30% faster, and a cosy chair (+0.5 energy per Rest answer). Needs 30 cards learned.",missing
+5,4,assets/map/lumbermill_2.png,512 max,Lumbermill · hardwood grove (lumber),lumbermill · hardwood grove: ,missing
+5,4,assets/map/scarecrow_3.png,256 max,Guardian Scarecrow,"friendly scarecrow, Iron-framed with flapping linen: removes 2 pests per question; planting cheap, harvesting −40% energy.",missing
+5,4,assets/map/warehouse.png,512 max,Warehouse (storage),warehouse: ,missing
+5,4,assets/map/well_5.png,512 max,Well · hand pump (well),well · hand pump: ,missing
+5,4,assets/map/workshop_3.png,512 max,Master Workshop (workshop),master workshop: ,missing
+6,2,assets/crops/crop_apple.png,256 max,Apple Tree (ready),"ripe apple tree plants, a small bunch",missing
+6,2,assets/crops/crop_beans.png,256 max,Beans (ready),"ripe beans plants, a small bunch",missing
+6,2,assets/crops/crop_beet.png,256 max,Beet (ready),"ripe beet plants, a small bunch",missing
+6,2,assets/crops/crop_lettuce.png,256 max,Lettuce (ready),"ripe lettuce plants, a small bunch",missing
+6,2,assets/crops/crop_potato.png,256 max,Potato (ready),"ripe potato plants, a small bunch",missing
+6,2,assets/crops/crop_tomato.png,256 max,Tomato (ready),"ripe tomato plants, a small bunch",missing
+6,4,assets/animals/pet_pony.png,256 max,Pony comes home,"pony comes home, whole body, side view",missing
+6,5,assets/map/broker.png,512 max,Import Broker,fancy travelling merchant wagon with crates and a canopy,missing
+6,5,assets/map/cap_bees_3.png,512 max,Bee Garden (bees),bee garden: Observation hive with a glass window.,missing
+6,5,assets/map/farmhouse_sunroom.png,512 max,Farmhouse · sun room (living),"farmhouse · sun room: Energy max 65, 9 energy per Rest answer.",missing
+6,5,assets/map/greenhouse_2.png,512 max,Greenhouse · extension (greenhouse),greenhouse · extension: ,missing
+6,5,assets/map/orchard_2.png,512 max,Orchard terraces (orchard),orchard terraces: ,missing
+6,5,assets/map/stove_3.png,512 max,Master Stove (kitchen),master stove: ,missing
+6,5,assets/map/windmill_2.png,512 max,Windmill · stone grinders (windmill),windmill · stone grinders: Fine flour for master baking.,missing
+7,3,assets/crops/crop_flax.png,256 max,Flax (ready),"ripe flax plants, a small bunch",missing
+7,3,assets/crops/crop_oats.png,256 max,Oats (ready),"ripe oats plants, a small bunch",missing
+7,3,assets/crops/crop_sunflower.png,256 max,Sunflower (ready),"ripe sunflower plants, a small bunch",missing
+7,5,assets/animals/pet_alpaca.png,256 max,Alpaca comes home,"alpaca comes home, whole body, side view",missing
+8,4,assets/crops/crop_berries.png,256 max,Berry Bush (ready),"ripe berry bush plants, a small bunch",missing
+8,4,assets/crops/crop_herbs.png,256 max,Herbs (ready),"ripe herbs plants, a small bunch",missing
+8,4,assets/crops/crop_olive.png,256 max,Olive Tree (ready),"ripe olive tree plants, a small bunch",missing
+8,4,assets/crops/crop_pumpkin.png,256 max,Pumpkin (ready),"ripe pumpkin plants, a small bunch",missing
+8,4,assets/crops/crop_walnut.png,256 max,Walnut Tree (ready),"ripe walnut tree plants, a small bunch",missing
+9,5,assets/crops/crop_golden_beet.png,256 max,Golden Beet (ready),"ripe golden beet plants, a small bunch",missing
+9,5,assets/crops/crop_rainbow_carrot.png,256 max,Rainbow Carrot (ready),"ripe rainbow carrot plants, a small bunch",missing
+9,5,assets/crops/crop_saffron.png,256 max,Saffron Crocus (ready),"ripe saffron crocus plants, a small bunch",missing
+9,5,assets/crops/crop_woad.png,256 max,Woad (ready),"ripe woad plants, a small bunch",missing

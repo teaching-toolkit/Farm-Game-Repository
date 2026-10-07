@@ -1,0 +1,2159 @@
+{
+ "CON-001": {
+  "q": "Auf welchem Kontinent liegt die Schweiz?",
+  "answers": [
+   "Europa",
+   "Asien",
+   "Afrika"
+  ]
+ },
+ "CON-002": {
+  "q": "Welcher Kontinent ist der größte?",
+  "answers": [
+   "Asien",
+   "Europa",
+   "Australien"
+  ]
+ },
+ "CON-003": {
+  "q": "Auf welchem Kontinent liegt Ägypten?",
+  "answers": [
+   "Afrika",
+   "Asien",
+   "Südamerika"
+  ]
+ },
+ "CON-004": {
+  "q": "Wo leben Kängurus in freier Wildbahn?",
+  "answers": [
+   "Australien",
+   "Afrika",
+   "Europa"
+  ]
+ },
+ "CON-005": {
+  "q": "Welcher Kontinent ist fast ganz mit Eis bedeckt?",
+  "answers": [
+   "Antarktis",
+   "Europa",
+   "Nordamerika"
+  ]
+ },
+ "CON-006": {
+  "q": "Auf welchem Kontinent liegt Brasilien?",
+  "answers": [
+   "Südamerika",
+   "Afrika",
+   "Asien"
+  ]
+ },
+ "CON-007": {
+  "q": "Auf welchem Kontinent liegt Kanada?",
+  "answers": [
+   "Nordamerika",
+   "Europa",
+   "Südamerika"
+  ]
+ },
+ "CON-008": {
+  "q": "Wie viele Kontinente gibt es?",
+  "answers": [
+   "7",
+   "5",
+   "10",
+   "3"
+  ]
+ },
+ "CON-009": {
+  "q": "Auf welchem Kontinent liegt die Wüste Sahara?",
+  "answers": [
+   "Afrika",
+   "Australien",
+   "Europa"
+  ]
+ },
+ "CON-010": {
+  "q": "Auf welchem Kontinent steht der Mount Everest?",
+  "answers": [
+   "Asien",
+   "Europa",
+   "Südamerika"
+  ]
+ },
+ "CON-011": {
+  "q": "Welcher Kontinent ist der kleinste?",
+  "answers": [
+   "Australien",
+   "Europa",
+   "Antarktis"
+  ]
+ },
+ "CON-012": {
+  "q": "Welcher Kontinent hat die meisten Länder?",
+  "answers": [
+   "Afrika",
+   "Europa",
+   "Nordamerika"
+  ]
+ },
+ "FRM-001": {
+  "q": "Wofür braucht man mehr Wasser?",
+  "right": "Ja! Für Milch und andere Dinge von Tieren braucht man meist mehr Wasser.",
+  "wrong": "Überleg, was davon von einem Tier kommt.",
+  "answers": [
+   "Ein Glas Milch",
+   "Ein Glas Karottensaft",
+   "Ein Glas Leitungswasser"
+  ]
+ },
+ "FRM-002": {
+  "q": "Was hilft den Pflanzen auf diesem Hof beim Wachsen?",
+  "right": "Richtig! Pflanzen brauchen Wasser zum Wachsen.",
+  "wrong": "Mit Münzen kauft man Dinge, aber Wasser lässt Pflanzen wachsen.",
+  "answers": [
+   "Wasser",
+   "Münzen",
+   "Steine",
+   "Spielzeug"
+  ]
+ },
+ "FRM-003": {
+  "q": "Wenn du Weizen aufhebst statt ihn zu verkaufen, was kannst du später damit machen?",
+  "right": "Genau! Aus aufgehobenem Weizen wird Brei, Mehl oder Brot.",
+  "wrong": "Aufgehobener Weizen kann später sehr nützlich sein.",
+  "answers": [
+   "Ihn zum Kochen nutzen",
+   "Ihn für immer verlieren",
+   "Steine daraus machen",
+   "Gar nichts"
+  ]
+ },
+ "FRM-004": {
+  "q": "Was braucht meistens weniger Wasser?",
+  "right": "Ja! Pflanzen brauchen meist weniger Wasser als Dinge von Tieren.",
+  "wrong": "Tiere brauchen auch Futter und Wasser!",
+  "answers": [
+   "Karotten anbauen",
+   "Tiere füttern, um Eier zu bekommen",
+   "Tiere füttern, um Milch zu bekommen"
+  ]
+ },
+ "PIC-001": {
+  "q": "Welches ist eine Karotte?",
+  "right": "Ja! Eine Karotte ist eine lange orange Wurzel.",
+  "wrong": "Such die lange orange.",
+  "answers": [
+   "Karotte",
+   "Kartoffel",
+   "Zwiebel",
+   "Tomate"
+  ]
+ },
+ "PIC-002": {
+  "q": "Was wächst unter der Erde?",
+  "right": "Richtig! Kartoffeln wachsen in der Erde.",
+  "wrong": "Äpfel, Tomaten und Beeren hängen in der Sonne.",
+  "answers": [
+   "Kartoffel",
+   "Apfel",
+   "Tomate",
+   "Beeren"
+  ]
+ },
+ "PIC-003": {
+  "q": "Was wächst an einem Baum?",
+  "right": "Ja! Äpfel wachsen an Apfelbäumen.",
+  "wrong": "Karotten, Kartoffeln und Salat wachsen auf dem Feld.",
+  "answers": [
+   "Apfel",
+   "Karotte",
+   "Kartoffel",
+   "Salat"
+  ]
+ },
+ "PIC-004": {
+  "q": "Was bekommen wir von einem Huhn?",
+  "right": "Richtig! Hühner legen Eier.",
+  "wrong": "Hühner legen etwas, das man zum Frühstück kochen kann.",
+  "answers": [
+   "Eier",
+   "Milch",
+   "Wolle",
+   "Honig"
+  ]
+ },
+ "PIC-005": {
+  "q": "Was bekommen wir von einer Kuh?",
+  "right": "Ja! Kühe geben Milch.",
+  "wrong": "Denk an etwas Weißes, das man trinken kann.",
+  "answers": [
+   "Milch",
+   "Eier",
+   "Wolle",
+   "Honig"
+  ]
+ },
+ "PIC-006": {
+  "q": "Was bekommen wir von einem Schaf?",
+  "right": "Richtig! Schafen wächst Wolle, und im Sommer wird sie geschoren.",
+  "wrong": "Schau dir das weiche Fell des Schafs an.",
+  "answers": [
+   "Wolle",
+   "Eier",
+   "Honig",
+   "Äpfel"
+  ]
+ },
+ "PIC-007": {
+  "q": "Was machen Bienen?",
+  "right": "Ja! Bienen machen Honig aus Blütennektar.",
+  "wrong": "Bienen besuchen Blumen und machen etwas Süßes.",
+  "answers": [
+   "Honig",
+   "Eier",
+   "Butter",
+   "Marmelade"
+  ]
+ },
+ "PIC-008": {
+  "q": "Was ist das?",
+  "right": "Richtig! Ein großer orangefarbener Kürbis.",
+  "wrong": "Es ist groß, rund und orange.",
+  "answers": [
+   "Kürbis",
+   "Tomate",
+   "Apfel",
+   "Zwiebel"
+  ]
+ },
+ "PIC-009": {
+  "q": "Was wird aus Milch gemacht?",
+  "right": "Ja! Käse wird aus Milch gemacht.",
+  "wrong": "Brot und Fladenbrot macht man aus Mehl, Marmelade aus Früchten.",
+  "answers": [
+   "Käse",
+   "Brot",
+   "Marmelade",
+   "Fladenbrot"
+  ]
+ },
+ "PIC-010": {
+  "q": "Was wird aus Mehl gemacht?",
+  "right": "Richtig! Brot wird aus Mehl gebacken.",
+  "wrong": "Käse und Butter kommen von der Milch, Honig von den Bienen.",
+  "answers": [
+   "Brot",
+   "Käse",
+   "Butter",
+   "Honig"
+  ]
+ },
+ "PIC-011": {
+  "q": "Welches Tier gibt uns Wolle?",
+  "right": "Ja! Schafe haben ein dickes Wollfell.",
+  "wrong": "Such das flauschigste Tier.",
+  "answers": [
+   "Schaf",
+   "Kuh",
+   "Huhn",
+   "Bienen"
+  ]
+ },
+ "PIC-012": {
+  "q": "Welches Tier macht Honig?",
+  "right": "Richtig! Bienen machen Honig.",
+  "wrong": "Es ist ein ganz kleines Tier, das fliegt.",
+  "answers": [
+   "Bienen",
+   "Kuh",
+   "Schaf",
+   "Huhn"
+  ]
+ },
+ "PIC-013": {
+  "q": "Wie viele Beine hat ein Huhn?",
+  "right": "Ja! Ein Huhn hat zwei Beine wie ein Vogel.",
+  "wrong": "Hühner sind Vögel.",
+  "answers": [
+   "2",
+   "4",
+   "6",
+   "8"
+  ]
+ },
+ "PIC-014": {
+  "q": "Wie viele Beine hat eine Kuh?",
+  "right": "Richtig! Eine Kuh hat vier Beine.",
+  "wrong": "Zähl die Beine der Kuh.",
+  "answers": [
+   "4",
+   "2",
+   "6",
+   "8"
+  ]
+ },
+ "PIC-015": {
+  "q": "Welches ist ein Gemüse?",
+  "right": "Ja! Salat ist ein Blattgemüse.",
+  "wrong": "Äpfel und Beeren sind Obst, Honig kommt von Bienen.",
+  "answers": [
+   "Salat",
+   "Apfel",
+   "Beeren",
+   "Honig"
+  ]
+ },
+ "PIC-016": {
+  "q": "Was brennt gut im Feuer?",
+  "right": "Richtig! Trockenes Holz brennt gut.",
+  "wrong": "Stein, Glas und Ziegel brennen nicht.",
+  "answers": [
+   "Holz",
+   "Stein",
+   "Glas",
+   "Ziegel"
+  ]
+ },
+ "PIC-017": {
+  "q": "Woraus ist ein Ziegelstein gemacht?",
+  "right": "Ja! Ziegel sind Lehm, der in einem heißen Ofen gebrannt wird.",
+  "wrong": "Bevor es gebrannt wird, ist es weiche, klebrige Erde.",
+  "answers": [
+   "Lehm",
+   "Holz",
+   "Glas",
+   "Wolle"
+  ]
+ },
+ "PIC-018": {
+  "q": "Was wird aus Sand gemacht?",
+  "right": "Richtig! Glas ist Sand, der in einem sehr heißen Feuer geschmolzen wird.",
+  "wrong": "Es ist durchsichtig, man kann hindurchschauen.",
+  "answers": [
+   "Glas",
+   "Ziegel",
+   "Holz",
+   "Wolle"
+  ]
+ },
+ "KNW-001": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-002": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-003": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-004": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-005": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-006": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-007": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-008": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-009": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-010": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-011": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-012": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-013": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-014": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-015": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-016": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-017": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-018": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-019": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-020": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-021": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-022": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-023": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-024": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-025": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-026": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-027": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-028": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-029": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-030": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-031": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-032": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-033": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-034": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-035": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-036": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-037": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-038": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-039": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-040": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-041": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-042": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-043": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-044": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-045": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-046": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-047": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-048": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-049": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-050": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-051": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-052": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-053": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-054": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-055": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-056": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-057": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-058": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-059": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-060": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-061": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-062": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-063": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-064": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-065": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-066": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-067": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-068": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-069": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-070": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-071": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-072": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-073": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-074": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-075": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-076": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-077": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-078": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-079": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-080": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-081": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-082": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-083": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-084": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-085": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-086": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-087": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-088": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-089": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-090": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-091": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-092": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-093": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-094": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-095": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-096": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-097": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-098": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-099": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-100": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-101": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-102": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-103": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-104": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-105": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-106": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-107": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-108": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-109": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-110": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-111": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-112": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-113": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-114": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-115": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-116": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-117": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-118": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-119": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-120": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-121": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-122": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-123": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-124": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-125": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-126": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-127": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-128": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-129": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-130": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-131": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-132": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-133": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-134": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-135": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-136": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-137": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-138": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-139": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-140": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-141": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-142": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-143": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-144": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-145": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-146": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-147": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-148": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-149": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-150": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-151": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-152": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-153": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-154": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-155": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-156": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-157": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-158": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-159": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-160": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-161": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-162": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-163": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-164": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-165": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-166": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-167": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-168": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-169": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-170": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-171": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-172": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-173": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-174": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-175": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-176": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-177": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-178": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-179": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-180": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-181": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-182": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-183": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-184": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-185": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-186": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-187": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-188": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-189": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-190": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-191": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-192": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-193": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-194": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-195": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-196": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-197": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-198": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-199": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-200": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "KNW-201": {
+  "q": "",
+  "why": "",
+  "answers": [
+   "",
+   "",
+   ""
+  ]
+ },
+ "CON-POOL": {
+  "answers": [
+   "Europa",
+   "Asien",
+   "Afrika",
+   "Nordamerika",
+   "Südamerika",
+   "Australien",
+   "Antarktis"
+  ]
+ }
+}

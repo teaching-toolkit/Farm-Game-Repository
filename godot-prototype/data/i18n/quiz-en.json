@@ -1,0 +1,2159 @@
+{
+ "CON-001": {
+  "q": "On which continent is Switzerland?",
+  "answers": [
+   "Europe",
+   "Asia",
+   "Africa"
+  ]
+ },
+ "CON-002": {
+  "q": "Which is the biggest continent?",
+  "answers": [
+   "Asia",
+   "Europe",
+   "Australia"
+  ]
+ },
+ "CON-003": {
+  "q": "On which continent is Egypt?",
+  "answers": [
+   "Africa",
+   "Asia",
+   "South America"
+  ]
+ },
+ "CON-004": {
+  "q": "Where do kangaroos live in the wild?",
+  "answers": [
+   "Australia",
+   "Africa",
+   "Europe"
+  ]
+ },
+ "CON-005": {
+  "q": "Which continent is almost completely covered in ice?",
+  "answers": [
+   "Antarctica",
+   "Europe",
+   "North America"
+  ]
+ },
+ "CON-006": {
+  "q": "On which continent is Brazil?",
+  "answers": [
+   "South America",
+   "Africa",
+   "Asia"
+  ]
+ },
+ "CON-007": {
+  "q": "On which continent is Canada?",
+  "answers": [
+   "North America",
+   "Europe",
+   "South America"
+  ]
+ },
+ "CON-008": {
+  "q": "How many continents are there?",
+  "answers": [
+   "7",
+   "5",
+   "10",
+   "3"
+  ]
+ },
+ "CON-009": {
+  "q": "On which continent is the Sahara desert?",
+  "answers": [
+   "Africa",
+   "Australia",
+   "Europe"
+  ]
+ },
+ "CON-010": {
+  "q": "On which continent is Mount Everest?",
+  "answers": [
+   "Asia",
+   "Europe",
+   "South America"
+  ]
+ },
+ "CON-011": {
+  "q": "Which is the smallest continent?",
+  "answers": [
+   "Australia",
+   "Europe",
+   "Antarctica"
+  ]
+ },
+ "CON-012": {
+  "q": "Which continent has the most countries?",
+  "answers": [
+   "Africa",
+   "Europe",
+   "North America"
+  ]
+ },
+ "FRM-001": {
+  "q": "Which uses more water to make?",
+  "right": "Yes! Animal products like milk usually use more water.",
+  "wrong": "Think about which one comes from an animal.",
+  "answers": [
+   "A glass of milk",
+   "A glass of carrot juice",
+   "A glass of tap water"
+  ]
+ },
+ "FRM-002": {
+  "q": "What helps plants grow on this farm?",
+  "right": "Right! Plants need water to grow.",
+  "wrong": "Coins buy things, but water makes plants grow.",
+  "answers": [
+   "Water",
+   "Coins",
+   "Stones",
+   "Toys"
+  ]
+ },
+ "FRM-003": {
+  "q": "If you save wheat instead of selling it, what can you do later?",
+  "right": "Correct! Saved wheat becomes porridge, flour or bread.",
+  "wrong": "Saved wheat can be very useful later.",
+  "answers": [
+   "Use it in recipes",
+   "Lose it forever",
+   "Turn it into stones",
+   "Nothing at all"
+  ]
+ },
+ "FRM-004": {
+  "q": "Which is usually better for water use?",
+  "right": "Yes! Plants usually use less water than animal products.",
+  "wrong": "Animals need food and water, too!",
+  "answers": [
+   "Growing carrots",
+   "Feeding animals to get eggs",
+   "Feeding animals to get milk"
+  ]
+ },
+ "PIC-001": {
+  "q": "Which one is a carrot?",
+  "right": "Yes! A carrot is a long orange root.",
+  "wrong": "Look for the long orange one.",
+  "answers": [
+   "Carrot",
+   "Potato",
+   "Onion",
+   "Tomato"
+  ]
+ },
+ "PIC-002": {
+  "q": "Which one grows under the ground?",
+  "right": "Right! Potatoes grow under the soil.",
+  "wrong": "Apples, tomatoes and berries hang in the sun.",
+  "answers": [
+   "Potato",
+   "Apple",
+   "Tomato",
+   "Berries"
+  ]
+ },
+ "PIC-003": {
+  "q": "Which one grows on a tree?",
+  "right": "Yes! Apples grow on apple trees.",
+  "wrong": "Carrots, potatoes and lettuce grow in a field.",
+  "answers": [
+   "Apple",
+   "Carrot",
+   "Potato",
+   "Lettuce"
+  ]
+ },
+ "PIC-004": {
+  "q": "What does a hen give us?",
+  "right": "Right! Hens lay eggs.",
+  "wrong": "Hens lay something you can cook for breakfast.",
+  "answers": [
+   "Eggs",
+   "Milk",
+   "Wool",
+   "Honey"
+  ]
+ },
+ "PIC-005": {
+  "q": "What does a cow give us?",
+  "right": "Yes! Cows give milk.",
+  "wrong": "Think of something white you can drink.",
+  "answers": [
+   "Milk",
+   "Eggs",
+   "Wool",
+   "Honey"
+  ]
+ },
+ "PIC-006": {
+  "q": "What does a sheep give us?",
+  "right": "Right! Sheep grow wool, and it is cut off in summer.",
+  "wrong": "Look at the sheep's soft coat.",
+  "answers": [
+   "Wool",
+   "Eggs",
+   "Honey",
+   "Apples"
+  ]
+ },
+ "PIC-007": {
+  "q": "What do bees make?",
+  "right": "Yes! Bees make honey from flower nectar.",
+  "wrong": "Bees visit flowers and make something sweet.",
+  "answers": [
+   "Honey",
+   "Eggs",
+   "Butter",
+   "Jam"
+  ]
+ },
+ "PIC-008": {
+  "q": "What is this?",
+  "right": "Right! A big orange pumpkin.",
+  "wrong": "It is big, round and orange.",
+  "answers": [
+   "Pumpkin",
+   "Tomato",
+   "Apple",
+   "Onion"
+  ]
+ },
+ "PIC-009": {
+  "q": "Which one is made from milk?",
+  "right": "Yes! Cheese is made from milk.",
+  "wrong": "Bread and flatbread are made from flour, jam from fruit.",
+  "answers": [
+   "Cheese",
+   "Bread",
+   "Jam",
+   "Flatbread"
+  ]
+ },
+ "PIC-010": {
+  "q": "Which one is made from flour?",
+  "right": "Right! Bread is baked from flour.",
+  "wrong": "Cheese and butter come from milk, honey from bees.",
+  "answers": [
+   "Bread",
+   "Cheese",
+   "Butter",
+   "Honey"
+  ]
+ },
+ "PIC-011": {
+  "q": "Which animal gives us wool?",
+  "right": "Yes! Sheep have a thick woolly coat.",
+  "wrong": "Look for the fluffiest animal.",
+  "answers": [
+   "Sheep",
+   "Cow",
+   "Hen",
+   "Bees"
+  ]
+ },
+ "PIC-012": {
+  "q": "Which animal makes honey?",
+  "right": "Right! Bees make honey.",
+  "wrong": "It is a very small animal that flies.",
+  "answers": [
+   "Bees",
+   "Cow",
+   "Sheep",
+   "Hen"
+  ]
+ },
+ "PIC-013": {
+  "q": "How many legs does a hen have?",
+  "right": "Yes! A hen has two legs, like a bird.",
+  "wrong": "Hens are birds.",
+  "answers": [
+   "2",
+   "4",
+   "6",
+   "8"
+  ]
+ },
+ "PIC-014": {
+  "q": "How many legs does a cow have?",
+  "right": "Right! A cow has four legs.",
+  "wrong": "Count the cow's legs.",
+  "answers": [
+   "4",
+   "2",
+   "6",
+   "8"
+  ]
+ },
+ "PIC-015": {
+  "q": "Which one is a vegetable?",
+  "right": "Yes! Lettuce is a leafy vegetable.",
+  "wrong": "Apples and berries are fruit, honey comes from bees.",
+  "answers": [
+   "Lettuce",
+   "Apple",
+   "Berries",
+   "Honey"
+  ]
+ },
+ "PIC-016": {
+  "q": "Which one burns well in a fire?",
+  "right": "Right! Dry wood burns well.",
+  "wrong": "Stone, glass and bricks do not burn.",
+  "answers": [
+   "Wood",
+   "Stone",
+   "Glass",
+   "Brick"
+  ]
+ },
+ "PIC-017": {
+  "q": "What is a brick made of?",
+  "right": "Yes! Bricks are clay baked in a hot kiln.",
+  "wrong": "It is soft and sticky earth before it is baked.",
+  "answers": [
+   "Clay",
+   "Wood",
+   "Glass",
+   "Wool"
+  ]
+ },
+ "PIC-018": {
+  "q": "Which one is made from sand?",
+  "right": "Right! Glass is sand melted in a very hot fire.",
+  "wrong": "It is clear and you can look through it.",
+  "answers": [
+   "Glass",
+   "Brick",
+   "Wood",
+   "Wool"
+  ]
+ },
+ "KNW-001": {
+  "q": "What three things does a seed need to grow?",
+  "why": "With soil, water and enough time, a seed can sprout and grow.",
+  "answers": [
+   "Soil, water and time",
+   "Sand, wind and stones",
+   "Straw, salt and shade"
+  ]
+ },
+ "KNW-002": {
+  "q": "How can you tell your wheat is ready to cut?",
+  "why": "Wheat turns golden when the grain is ripe and ready to harvest.",
+  "answers": [
+   "The stalks have turned golden",
+   "The stalks are bright green",
+   "The seeds were just watered"
+  ]
+ },
+ "KNW-003": {
+  "q": "What two things does each wheat stalk give you?",
+  "why": "The top gives grain to eat or sow, and the dry stem is straw.",
+  "answers": [
+   "Grain and straw",
+   "Flour and honey",
+   "Leaves and roots to eat"
+  ]
+ },
+ "KNW-004": {
+  "q": "What three things does every fire need?",
+  "why": "Take away the fuel, the air or the heat, and the fire goes out.",
+  "answers": [
+   "Fuel, air and heat",
+   "Stones, twigs and water",
+   "Smoke, ash and wind"
+  ]
+ },
+ "KNW-005": {
+  "q": "Your big sticks won't catch fire. What should you light first?",
+  "why": "Small dry twigs catch fire easily and then help the bigger sticks burn.",
+  "answers": [
+   "Small dry twigs",
+   "Wet green leaves",
+   "The thickest log you have"
+  ]
+ },
+ "KNW-006": {
+  "q": "Why does covering a fire with soil put it out?",
+  "why": "A fire needs air, so covering it with soil makes it go out.",
+  "answers": [
+   "The soil keeps the air away",
+   "The soil makes the fire hotter",
+   "The soil burns up like fuel"
+  ]
+ },
+ "KNW-007": {
+  "q": "Which part of a carrot do we eat?",
+  "why": "The orange part we eat is the carrot's root, which grows underground.",
+  "answers": [
+   "The root",
+   "The green leaves on top",
+   "The little white flowers"
+  ]
+ },
+ "KNW-008": {
+  "q": "What do the green leaves of a carrot do?",
+  "why": "Leaves use sunlight to make food for the whole plant, even the root.",
+  "answers": [
+   "Make food from sunlight",
+   "Soak up rain for the root",
+   "Keep the birds away"
+  ]
+ },
+ "KNW-009": {
+  "q": "How can you tell your carrots are ready to pull?",
+  "why": "Big green tops mean the root below has had time to grow big too.",
+  "answers": [
+   "The green tops are big",
+   "The leaves are still small and new",
+   "The soil has gone hard"
+  ]
+ },
+ "KNW-010": {
+  "q": "Why twist the strands together the other way?",
+  "why": "Twisting the opposite way locks the strands, so the rope holds together.",
+  "answers": [
+   "So the rope does not unwind",
+   "So the rope looks pretty",
+   "So the rope gets shorter"
+  ]
+ },
+ "KNW-011": {
+  "q": "You need rope to lift a heavy bucket. What makes it stronger?",
+  "why": "Each extra strand shares the pull, so the rope gets stronger.",
+  "answers": [
+   "More strands",
+   "Fewer, thinner strands",
+   "Twisting it only one way"
+  ]
+ },
+ "KNW-012": {
+  "q": "What is rope made from?",
+  "why": "Fibres from plants like flax or straw are twisted to make rope.",
+  "answers": [
+   "Tough fibres from plant stems",
+   "Thin twigs tied together in knots",
+   "Strips of dried clay"
+  ]
+ },
+ "KNW-013": {
+  "q": "Why tie a stone axe head onto a handle?",
+  "why": "A handle works like a longer arm, so each swing hits much harder.",
+  "answers": [
+   "So you can swing much harder",
+   "So the stone stays sharp forever",
+   "So the axe gets lighter"
+  ]
+ },
+ "KNW-014": {
+  "q": "How were the very first knives made?",
+  "why": "People chipped a sharp flake off a stone and used it to cut.",
+  "answers": [
+   "From a sharp flake of stone",
+   "From melted iron poured into a mould",
+   "From hard dried clay"
+  ]
+ },
+ "KNW-015": {
+  "q": "What do we call the long time when people used stone tools?",
+  "why": "People used stone tools for so long that we call it the Stone Age.",
+  "answers": [
+   "The Stone Age",
+   "The Iron Age",
+   "The Old Days"
+  ]
+ },
+ "KNW-016": {
+  "q": "Why are weeds bad for your crops?",
+  "why": "Weeds take the water, light and food that your crops need.",
+  "answers": [
+   "They steal water, light and food",
+   "They make the soil much too loose",
+   "They scare away the bees"
+  ]
+ },
+ "KNW-017": {
+  "q": "You pulled a weed, but it grew back. What went wrong?",
+  "why": "If the roots stay in the ground, the weed can grow again.",
+  "answers": [
+   "Its roots stayed in the soil",
+   "You pulled it on a sunny day",
+   "You forgot to water it"
+  ]
+ },
+ "KNW-018": {
+  "q": "Your bed is clean now. How can you keep new weeds away?",
+  "why": "A straw cover or a border stops many weed seeds from growing.",
+  "answers": [
+   "Cover the soil with straw",
+   "Water the bare soil every day",
+   "Plant your crops far apart"
+  ]
+ },
+ "KNW-019": {
+  "q": "Where does the water in a well come from?",
+  "why": "Rain soaks into the soil and collects deep underground as groundwater.",
+  "answers": [
+   "Rain that soaked into the ground",
+   "The sea, flowing under the farm",
+   "Ice melting at the bottom of the hole"
+  ]
+ },
+ "KNW-020": {
+  "q": "Your well keeps running dry. What could help?",
+  "why": "A deeper well reaches more of the water stored underground.",
+  "answers": [
+   "Dig it deeper",
+   "Use a bigger bucket",
+   "Cover it with straw"
+  ]
+ },
+ "KNW-021": {
+  "q": "What does a winch help you do?",
+  "why": "Turning the winch handle winds up the rope, so lifting is easier.",
+  "answers": [
+   "Lift the heavy bucket",
+   "Dig the well deeper",
+   "Keep the water clean"
+  ]
+ },
+ "KNW-022": {
+  "q": "Why do roots grow better in loose soil?",
+  "why": "Loose soil has room for air and water, and roots can push down deep.",
+  "answers": [
+   "They get air and water",
+   "Loose soil is warmer in winter",
+   "Loose soil never has weeds"
+  ]
+ },
+ "KNW-023": {
+  "q": "Which little animal helps loosen the soil?",
+  "why": "Worms dig tunnels as they move, which loosens the soil.",
+  "answers": [
+   "Earthworms",
+   "Ladybirds",
+   "Bees"
+  ]
+ },
+ "KNW-024": {
+  "q": "Your friend keeps walking on your bed. What happens to the soil?",
+  "why": "Feet squeeze the soil tight, so roots struggle to grow.",
+  "answers": [
+   "It gets packed hard",
+   "It gets looser",
+   "It gets more food"
+  ]
+ },
+ "KNW-025": {
+  "q": "Why sprinkle wood ash on your beds?",
+  "why": "Ash holds minerals like potassium, which help plants grow.",
+  "answers": [
+   "It has minerals that feed plants",
+   "It keeps the soil cool",
+   "It helps the soil hold on to rain"
+  ]
+ },
+ "KNW-026": {
+  "q": "Your bed is packed with plants. What do they need more of?",
+  "why": "Many plants close together share the soil's food, so they need extra.",
+  "answers": [
+   "Fertilizer",
+   "Shade",
+   "Stones"
+  ]
+ },
+ "KNW-027": {
+  "q": "How much ash should you put on a bed?",
+  "why": "A little ash feeds plants, but too much can harm them.",
+  "answers": [
+   "Just a little",
+   "As much as you have",
+   "A thick layer every day"
+  ]
+ },
+ "KNW-028": {
+  "q": "Where should your hens sleep at night?",
+  "why": "A dry coop keeps hens cosy and safe from foxes.",
+  "answers": [
+   "In a dry coop with straw",
+   "Out in the open field all night",
+   "Down by the pond"
+  ]
+ },
+ "KNW-029": {
+  "q": "Do hens need a rooster to lay eggs?",
+  "why": "A hen lays eggs whether or not there is a rooster.",
+  "answers": [
+   "No, hens lay eggs on their own",
+   "Yes, every egg needs a rooster",
+   "Only in the winter"
+  ]
+ },
+ "KNW-030": {
+  "q": "Why do hens scratch at the ground?",
+  "why": "Hens scratch the soil to find tasty bugs and seeds.",
+  "answers": [
+   "To find bugs to eat",
+   "To bury their eggs",
+   "To make the soil wet"
+  ]
+ },
+ "KNW-031": {
+  "q": "Which scarecrow will keep birds away best?",
+  "why": "Moving, flapping things scare birds better than a scarecrow that never moves.",
+  "answers": [
+   "One with flapping cloth",
+   "One that stands very still",
+   "One hidden behind the barn"
+  ]
+ },
+ "KNW-032": {
+  "q": "Rabbits keep nibbling your young plants. What helps most?",
+  "why": "A fence stops rabbits from reaching your plants.",
+  "answers": [
+   "A fence",
+   "A scarecrow",
+   "More seeds"
+  ]
+ },
+ "KNW-033": {
+  "q": "You planted twice as many crops. What should you expect?",
+  "why": "More plants mean more food, so more hungry visitors come.",
+  "answers": [
+   "More hungry birds and rabbits",
+   "Fewer birds and rabbits than before",
+   "No more rabbits at all"
+  ]
+ },
+ "KNW-034": {
+  "q": "How is grain turned into flour?",
+  "why": "Two heavy stones grind the grain until it becomes fine powder.",
+  "answers": [
+   "It is crushed between two stones",
+   "It is soaked in water for many days",
+   "It is dried in the sun"
+  ]
+ },
+ "KNW-035": {
+  "q": "What is bran?",
+  "why": "Bran is the tough outer skin of each grain.",
+  "answers": [
+   "The hard outside of the grain",
+   "The soft inside of the grain",
+   "The stem under the grain"
+  ]
+ },
+ "KNW-036": {
+  "q": "Why is making flour by hand hard work?",
+  "why": "You turn the quern stone again and again to grind the grain.",
+  "answers": [
+   "The stone needs lots of turning",
+   "The flour is very heavy",
+   "The grain has to be boiled first"
+  ]
+ },
+ "KNW-037": {
+  "q": "Why does a loaf of bread cost more than its flour?",
+  "why": "Turning flour into bread takes work, so the bread is worth more.",
+  "answers": [
+   "Baking it took extra work",
+   "Bread is lighter than flour",
+   "Flour is very rare"
+  ]
+ },
+ "KNW-038": {
+  "q": "What makes a price fair?",
+  "why": "A fair price is good for both people, so both are happy to trade.",
+  "answers": [
+   "It is good for buyer and seller",
+   "The seller gets as much as possible",
+   "The buyer pays almost nothing"
+  ]
+ },
+ "KNW-039": {
+  "q": "Only a few people sell honey. Why does it cost a lot?",
+  "why": "When something is rare, people pay more for the little there is.",
+  "answers": [
+   "Rare things cost more",
+   "Honey is very heavy",
+   "Honey is easy to find"
+  ]
+ },
+ "KNW-040": {
+  "q": "What is the grain of wood?",
+  "why": "Grain means the lines in wood, which show the way it splits.",
+  "answers": [
+   "The lines that run along it",
+   "The little seeds inside a log",
+   "The bark on the outside"
+  ]
+ },
+ "KNW-041": {
+  "q": "Why use a saw for thin planks instead of an axe?",
+  "why": "A saw cuts neat, thin planks, so more of the log gets used.",
+  "answers": [
+   "A saw wastes less wood",
+   "A saw makes wood stronger",
+   "A saw makes the tree grow back"
+  ]
+ },
+ "KNW-042": {
+  "q": "Why should you never waste wood?",
+  "why": "A tree needs many years to grow big enough for planks.",
+  "answers": [
+   "Trees take many years to grow",
+   "Wood is much heavier than stone",
+   "Saws are hard to make"
+  ]
+ },
+ "KNW-043": {
+  "q": "When is clay easiest to shape?",
+  "why": "Wet clay is soft and sticky, so you can press it into shape.",
+  "answers": [
+   "When it is wet",
+   "After it is fired",
+   "When it is frozen"
+  ]
+ },
+ "KNW-044": {
+  "q": "Why are bricks fired in a kiln?",
+  "why": "Firing makes clay hard for good, so water can't soften it.",
+  "answers": [
+   "So rain can't soften them",
+   "So they stay soft and sticky",
+   "So they turn back into earth"
+  ]
+ },
+ "KNW-045": {
+  "q": "Your unfired clay pot was left out in the rain. What happens?",
+  "why": "Unfired clay soaks up rain and falls apart.",
+  "answers": [
+   "It goes soft and crumbles",
+   "It bakes as hard as a stone",
+   "It turns into a brick"
+  ]
+ },
+ "KNW-046": {
+  "q": "How is charcoal made?",
+  "why": "With little air, the wood can't burn away; it turns into black charcoal.",
+  "answers": [
+   "Heating wood with very little air",
+   "Burning wood in a big, open bonfire",
+   "Soaking wood in the pond"
+  ]
+ },
+ "KNW-047": {
+  "q": "Why do smiths use charcoal instead of wood?",
+  "why": "Charcoal gives a hotter, cleaner fire, which smiths need to work metal.",
+  "answers": [
+   "It burns hotter and cleaner",
+   "It burns slower and cooler",
+   "It makes more smoke"
+  ]
+ },
+ "KNW-048": {
+  "q": "What leaves the wood as it turns into charcoal?",
+  "why": "Water and smoke escape, and black carbon stays behind.",
+  "answers": [
+   "Water and smoke",
+   "Carbon",
+   "Ash and iron"
+  ]
+ },
+ "KNW-049": {
+  "q": "Why does a roof slope?",
+  "why": "On a slope, rain runs down and away instead of soaking in.",
+  "answers": [
+   "So rain runs off",
+   "So birds can sit on it",
+   "So it looks taller"
+  ]
+ },
+ "KNW-050": {
+  "q": "Which shape makes a wooden frame stiff?",
+  "why": "A triangle can't be pushed out of shape, so it keeps frames strong.",
+  "answers": [
+   "A triangle",
+   "A circle",
+   "A square"
+  ]
+ },
+ "KNW-051": {
+  "q": "Why does a house need a foundation?",
+  "why": "The foundation is a strong base that stops the heavy house sinking.",
+  "answers": [
+   "So it doesn't sink",
+   "So rain runs off the roof",
+   "So the windows let in light"
+  ]
+ },
+ "KNW-052": {
+  "q": "Why is a thatched roof built steep?",
+  "why": "On a steep roof, rain slides down the straw before it can soak in.",
+  "answers": [
+   "So rain slides off",
+   "So snow can sit on top",
+   "So it needs less straw"
+  ]
+ },
+ "KNW-053": {
+  "q": "What is thatch made from?",
+  "why": "Thatch is thick layers of tightly packed straw or reeds.",
+  "answers": [
+   "Straw or reeds",
+   "Clay and bricks",
+   "Wool and flax"
+  ]
+ },
+ "KNW-054": {
+  "q": "How does thatch help you in winter?",
+  "why": "Thick straw traps warm air, like a cosy blanket on the house.",
+  "answers": [
+   "It keeps the house warm",
+   "It lets in more sunlight",
+   "It melts the snow"
+  ]
+ },
+ "KNW-055": {
+  "q": "Who turns old plants into compost?",
+  "why": "Tiny living things eat the old plants and turn them into compost.",
+  "answers": [
+   "Bacteria, fungi and worms",
+   "The rain all by itself",
+   "The sun and the wind"
+  ]
+ },
+ "KNW-056": {
+  "q": "Your compost heap is very slow. What can you do?",
+  "why": "Turning lets in air, which helps the tiny living things work faster.",
+  "answers": [
+   "Turn it with a fork",
+   "Cover it with a stone lid",
+   "Let it dry out completely"
+  ]
+ },
+ "KNW-057": {
+  "q": "Why does a compost heap feel warm inside?",
+  "why": "As bacteria and fungi break things down, they give off heat.",
+  "answers": [
+   "Tiny living things are busy working",
+   "The sun heats the middle",
+   "The manure was still warm from the animals"
+  ]
+ },
+ "KNW-058": {
+  "q": "Your bread did not rise. What was missing?",
+  "why": "Yeast makes the gas bubbles that puff the dough up.",
+  "answers": [
+   "Yeast",
+   "Salt",
+   "Butter"
+  ]
+ },
+ "KNW-059": {
+  "q": "How does yeast make dough rise?",
+  "why": "Yeast eats sugar in the flour and gives off gas, which makes bubbles.",
+  "answers": [
+   "It makes bubbles of gas",
+   "It soaks up all the water",
+   "It makes the flour sticky"
+  ]
+ },
+ "KNW-060": {
+  "q": "Why is baked bread soft and airy inside?",
+  "why": "The hot oven firms the dough around the bubbles, so they stay.",
+  "answers": [
+   "The heat sets the bubbles",
+   "The oven melts the flour",
+   "The oven squeezes the air out"
+  ]
+ },
+ "KNW-061": {
+  "q": "Where does the smoke from a stove go?",
+  "why": "The chimney carries smoke up and out of the house.",
+  "answers": [
+   "Out through the chimney",
+   "Into the cooking pot",
+   "Under the floor"
+  ]
+ },
+ "KNW-062": {
+  "q": "Why cook on a stove instead of an open fire?",
+  "why": "The boxed-in fire sends its heat into the pot, so less wood is wasted.",
+  "answers": [
+   "It uses less wood and is safer",
+   "It makes more smoke",
+   "It needs no fuel or wood at all"
+  ]
+ },
+ "KNW-063": {
+  "q": "Your stew should simmer. What should it do?",
+  "why": "To simmer means to bubble gently, so food cooks slowly.",
+  "answers": [
+   "Bubble gently for a long time",
+   "Boil very hard for just one minute",
+   "Sit cold in the cellar"
+  ]
+ },
+ "KNW-064": {
+  "q": "Your cow is lying down, chewing, with no food nearby. What is she doing?",
+  "why": "Cows bring food back up and chew it again; this is chewing the cud.",
+  "answers": [
+   "Chewing the cud",
+   "Feeling sick",
+   "Waiting for milking"
+  ]
+ },
+ "KNW-065": {
+  "q": "When does a cow start giving milk?",
+  "why": "Like other mothers, a cow makes milk to feed her calf.",
+  "answers": [
+   "After she has a calf",
+   "As soon as she is born",
+   "Whenever she eats clover"
+  ]
+ },
+ "KNW-066": {
+  "q": "How many parts does a cow's stomach have?",
+  "why": "A cow's stomach has four parts to help break down tough grass.",
+  "answers": [
+   "Four",
+   "One",
+   "Two"
+  ]
+ },
+ "KNW-067": {
+  "q": "Where does the cream go in a pail of fresh milk?",
+  "why": "Cream, the fatty part of milk, rises and can be skimmed off the top.",
+  "answers": [
+   "It rises to the top",
+   "It sinks to the bottom",
+   "It turns into water"
+  ]
+ },
+ "KNW-068": {
+  "q": "How does churning turn cream into butter?",
+  "why": "Shaking makes tiny drops of fat bump together and stick into butter.",
+  "answers": [
+   "The fat drops stick together",
+   "The cream gets very cold and hard",
+   "The cream turns sour"
+  ]
+ },
+ "KNW-069": {
+  "q": "What is left over after making butter?",
+  "why": "After the butter forms, the thin liquid left behind is buttermilk.",
+  "answers": [
+   "Buttermilk",
+   "Cheese",
+   "Cream"
+  ]
+ },
+ "KNW-070": {
+  "q": "Why do your apple trees need bees?",
+  "why": "Moving pollen between flowers, called pollination, lets plants make fruit and seeds.",
+  "answers": [
+   "Bees carry pollen so fruit can grow",
+   "Bees keep the leaves green",
+   "Bees eat the little bugs on the bark"
+  ]
+ },
+ "KNW-071": {
+  "q": "What do bees make honey from?",
+  "why": "Bees collect sweet nectar from flowers and turn it into honey.",
+  "answers": [
+   "Nectar",
+   "Pollen",
+   "Water"
+  ]
+ },
+ "KNW-072": {
+  "q": "Where do bees store their honey?",
+  "why": "Bees build combs out of wax and fill them with honey.",
+  "answers": [
+   "In wax combs",
+   "In the flower petals",
+   "In holes in the ground"
+  ]
+ },
+ "KNW-073": {
+  "q": "What shape are the cells in a honeycomb?",
+  "why": "Bees build six-sided wax cells that fit snugly together.",
+  "answers": [
+   "Six-sided",
+   "Round",
+   "Square"
+  ]
+ },
+ "KNW-074": {
+  "q": "How do you get honey out of the comb?",
+  "why": "Crushing breaks the cells, and straining lets the honey drip out.",
+  "answers": [
+   "Crush it and strain it",
+   "Bury it in the soil",
+   "Churn it like butter"
+  ]
+ },
+ "KNW-075": {
+  "q": "What can you make with the leftover beeswax?",
+  "why": "Beeswax makes good candles and can make things waterproof.",
+  "answers": [
+   "Candles",
+   "Bread",
+   "Rope"
+  ]
+ },
+ "KNW-076": {
+  "q": "Why does salted food keep for a long time?",
+  "why": "Without water, the germs that spoil food cannot grow.",
+  "answers": [
+   "Salt pulls the water out",
+   "Salt makes food taste better",
+   "Salt keeps food warm"
+  ]
+ },
+ "KNW-077": {
+  "q": "What do germs need to grow in food?",
+  "why": "Germs need water, so taking the water away stops them.",
+  "answers": [
+   "Water",
+   "Salt",
+   "Darkness"
+  ]
+ },
+ "KNW-078": {
+  "q": "Where does salt come from?",
+  "why": "Salt is dried from seawater or dug out of salt mines.",
+  "answers": [
+   "The sea or salt mines",
+   "Inside wheat grains",
+   "The ash from fires"
+  ]
+ },
+ "KNW-079": {
+  "q": "Why do you muck out the barn?",
+  "why": "Fresh, clean bedding keeps animals healthy and comfortable.",
+  "answers": [
+   "To keep animals healthy",
+   "To give the animals food",
+   "To make the barn colder"
+  ]
+ },
+ "KNW-080": {
+  "q": "What can you do with rotted manure?",
+  "why": "Rotted manure is rich plant food that helps crops grow.",
+  "answers": [
+   "Spread it on the fields",
+   "Feed it to the hens",
+   "Pour it into the pond"
+  ]
+ },
+ "KNW-081": {
+  "q": "What is muck?",
+  "why": "Muck is animal dung mixed with the old bedding straw.",
+  "answers": [
+   "Dung mixed with old straw",
+   "Fresh, clean straw for bedding",
+   "Mud from the pond"
+  ]
+ },
+ "KNW-082": {
+  "q": "What do cows and sheep mostly eat?",
+  "why": "Cows and sheep eat grass and clover, and hay is dried grass.",
+  "answers": [
+   "Grass, clover and hay",
+   "Grain and bugs",
+   "Seeds and oilcake only"
+  ]
+ },
+ "KNW-083": {
+  "q": "What is oilcake?",
+  "why": "After seeds are pressed for oil, the leftover cake makes good feed.",
+  "answers": [
+   "Pressed seeds left after making oil",
+   "A sweet cake baked for the farm animals",
+   "Hay soaked in oil"
+  ]
+ },
+ "KNW-084": {
+  "q": "Why give your animals a mix of foods?",
+  "why": "Animals stay healthy with a mix of foods and clean water.",
+  "answers": [
+   "Too much of one food isn't healthy",
+   "Mixed food means they need no water",
+   "Mixed food is cheaper to buy"
+  ]
+ },
+ "KNW-085": {
+  "q": "What is crop rotation?",
+  "why": "Rotation means growing a different crop in the bed each time.",
+  "answers": [
+   "Changing the crop in a bed each time",
+   "Turning the soil round and round",
+   "Planting all your crops in a big circle"
+  ]
+ },
+ "KNW-086": {
+  "q": "Which plants put nitrogen back into the soil?",
+  "why": "Beans, peas and clover add nitrogen, a plant food, to the soil.",
+  "answers": [
+   "Beans, peas and clover",
+   "Carrots and onions",
+   "Wheat and oats"
+  ]
+ },
+ "KNW-087": {
+  "q": "You grow wheat in the same bed every year. What happens?",
+  "why": "One crop again and again tires the soil and feeds the same pests.",
+  "answers": [
+   "The soil tires and pests move in",
+   "The wheat grows taller each year",
+   "The bed turns into clay"
+  ]
+ },
+ "KNW-088": {
+  "q": "Why do we have seasons?",
+  "why": "Because Earth is tilted, our part gets more sunlight in summer and less in winter.",
+  "answers": [
+   "The Earth leans as it circles the Sun",
+   "The Sun gets bigger in summer",
+   "The Earth gets closer to the Sun in summer"
+  ]
+ },
+ "KNW-089": {
+  "q": "Why do plants grow slowly in winter?",
+  "why": "Plants need light and warmth, and winter has little of both.",
+  "answers": [
+   "The days are short and cold",
+   "The soil has no seeds left",
+   "There is too much sunlight"
+  ]
+ },
+ "KNW-090": {
+  "q": "In which season do farmers harvest most crops?",
+  "why": "Crops ripen in summer and are gathered in autumn.",
+  "answers": [
+   "Autumn",
+   "Spring",
+   "Winter"
+  ]
+ },
+ "KNW-091": {
+  "q": "Why do new stones appear in your field each spring?",
+  "why": "Frozen water swells and pushes stones a little higher every winter.",
+  "answers": [
+   "Freezing water pushed them up",
+   "The stones grew bigger over the winter",
+   "Birds dropped them there"
+  ]
+ },
+ "KNW-092": {
+  "q": "What happens to water when it freezes?",
+  "why": "Ice takes up more room than water, so it pushes soil and stones.",
+  "answers": [
+   "It takes up more space",
+   "It takes up less space",
+   "It turns into stone"
+  ]
+ },
+ "KNW-093": {
+  "q": "What did farmers do with all those stones?",
+  "why": "Farmers piled the stones into walls and paths, so they were useful.",
+  "answers": [
+   "Built walls and paths",
+   "Ground them into flour",
+   "Threw them in the well"
+  ]
+ },
+ "KNW-094": {
+  "q": "Why does a pond need clay at the bottom?",
+  "why": "Water can't soak through clay, so it stays in the pond.",
+  "answers": [
+   "Clay holds the water in",
+   "Clay feeds the frogs",
+   "Clay keeps the water warm"
+  ]
+ },
+ "KNW-095": {
+  "q": "How does a pond help in a dry summer?",
+  "why": "A pond stores rainwater, so you still have water when it doesn't rain.",
+  "answers": [
+   "It stores rainwater",
+   "It makes more rain fall",
+   "It keeps the soil frozen"
+  ]
+ },
+ "KNW-096": {
+  "q": "Why soak flax stems in a pond?",
+  "why": "Soaking, called retting, loosens the long fibres inside flax stems.",
+  "answers": [
+   "To loosen their fibres",
+   "To make them grow again",
+   "To wash off the mud"
+  ]
+ },
+ "KNW-097": {
+  "q": "How can your woodlot never run out of wood?",
+  "why": "Cutting a little and replanting means new trees are always growing.",
+  "answers": [
+   "Cut a few trees and plant new ones",
+   "Cut all the trees at once",
+   "Only cut the youngest, smallest trees"
+  ]
+ },
+ "KNW-098": {
+  "q": "What is a sapling?",
+  "why": "A sapling is a young tree, ready to be planted out.",
+  "answers": [
+   "A young tree",
+   "A tree stump",
+   "A kind of seed"
+  ]
+ },
+ "KNW-099": {
+  "q": "Why plant a fruit tree, even though it grows slowly?",
+  "why": "Once a fruit tree is grown, it gives a harvest year after year.",
+  "answers": [
+   "It gives fruit every year",
+   "It turns into a woodlot",
+   "It keeps weeds away forever"
+  ]
+ },
+ "KNW-100": {
+  "q": "What is iron ore?",
+  "why": "Iron ore is rock that has iron hidden inside.",
+  "answers": [
+   "Rock with iron inside it",
+   "A kind of charcoal",
+   "Old rusty tools"
+  ]
+ },
+ "KNW-101": {
+  "q": "What does smelting mean?",
+  "why": "Smelting uses great heat and charcoal to get iron out of rock.",
+  "answers": [
+   "Heating ore so the iron comes out",
+   "Hammering hot iron into new shapes",
+   "Cooling iron in water"
+  ]
+ },
+ "KNW-102": {
+  "q": "When is iron easiest to hammer into shape?",
+  "why": "Glowing hot iron is soft enough to shape; cold iron is hard.",
+  "answers": [
+   "When it is glowing hot",
+   "When it is ice cold",
+   "When it is wet"
+  ]
+ },
+ "KNW-103": {
+  "q": "What is an anvil?",
+  "why": "The smith lays hot iron on the anvil and hammers it into shape.",
+  "answers": [
+   "A heavy iron block to hammer on",
+   "A big hammer for hitting iron",
+   "A bucket of cold water for cooling"
+  ]
+ },
+ "KNW-104": {
+  "q": "Why does a smith dip a hot tool into water?",
+  "why": "Cooling it quickly in water, called quenching, makes the tool harder.",
+  "answers": [
+   "To make it harder",
+   "To make it softer",
+   "To make it glow"
+  ]
+ },
+ "KNW-105": {
+  "q": "Why swap your stone axe for an iron one?",
+  "why": "Iron is tough and lasts far longer than stone, which chips and breaks.",
+  "answers": [
+   "Iron tools last much longer",
+   "Iron axes need no handle",
+   "Stone axes are too sharp"
+  ]
+ },
+ "KNW-106": {
+  "q": "How did people join wood before they had nails?",
+  "why": "Cut joints fit snugly together, and wooden pegs held them tight.",
+  "answers": [
+   "Joints and wooden pegs",
+   "Sticky strips of wet clay",
+   "Knots of straw rope"
+  ]
+ },
+ "KNW-107": {
+  "q": "What do nails do?",
+  "why": "A nail goes through one board into another and holds them together.",
+  "answers": [
+   "Hold boards together",
+   "Make wood grow straight",
+   "Split logs into planks"
+  ]
+ },
+ "KNW-108": {
+  "q": "Why use a saw to make planks for building?",
+  "why": "Straight, even planks fit together neatly when you build.",
+  "answers": [
+   "It cuts straight, thin planks",
+   "It makes the planks heavier",
+   "It joins planks together"
+  ]
+ },
+ "KNW-109": {
+  "q": "What makes windmill sails turn?",
+  "why": "Wind is moving air, and it pushes the sails round.",
+  "answers": [
+   "Moving air pushing them",
+   "Animals walking in circles",
+   "Water flowing downhill"
+  ]
+ },
+ "KNW-110": {
+  "q": "How do the sails turn the heavy millstones?",
+  "why": "The sails spin a shaft, and gears pass the turning to the stones.",
+  "answers": [
+   "Through a shaft and gears",
+   "People push the stones",
+   "The sails roll over them"
+  ]
+ },
+ "KNW-111": {
+  "q": "Why build a windmill instead of grinding by hand?",
+  "why": "A windmill uses wind power, so people and animals don't have to turn the stones.",
+  "answers": [
+   "The wind does the hard turning",
+   "Wind makes the flour sweeter",
+   "It grinds best with no wind"
+  ]
+ },
+ "KNW-112": {
+  "q": "Your field is higher than the pond. Why won't channel water reach it?",
+  "why": "Water flows downhill, so it can't climb up to a higher field.",
+  "answers": [
+   "Water only flows downhill",
+   "The channel is too short",
+   "The water is too cold"
+  ]
+ },
+ "KNW-113": {
+  "q": "Where is the best place to pour water on a plant?",
+  "why": "Water at the roots goes where the plant drinks, with less waste.",
+  "answers": [
+   "At the roots",
+   "On top of the leaves",
+   "On the flowers"
+  ]
+ },
+ "KNW-114": {
+  "q": "Why does a watering can have a long spout?",
+  "why": "The spout lets you pour exactly where the roots are.",
+  "answers": [
+   "To aim water at the roots",
+   "To make the water warm",
+   "To hold more water"
+  ]
+ },
+ "KNW-115": {
+  "q": "Does shearing hurt a sheep?",
+  "why": "Wool is like hair, so cutting it off doesn't hurt the sheep.",
+  "answers": [
+   "No, it is like a haircut",
+   "Yes, a little every time",
+   "Only on cold days"
+  ]
+ },
+ "KNW-116": {
+  "q": "What does spinning do to wool?",
+  "why": "Twisting short fibres on a spindle joins them into one long, strong yarn.",
+  "answers": [
+   "Makes long thread from short fibres",
+   "Washes all the dirt and grease out of it",
+   "Dyes it bright colours"
+  ]
+ },
+ "KNW-117": {
+  "q": "How often are sheep sheared?",
+  "why": "Sheep grow a thick new coat each year, so they are sheared once a year.",
+  "answers": [
+   "Once a year",
+   "Once a month",
+   "Every ten years"
+  ]
+ },
+ "KNW-118": {
+  "q": "What is stretched tight on the loom?",
+  "why": "The warp is stretched tight first, and the weft weaves through it.",
+  "answers": [
+   "The warp threads",
+   "The weft thread",
+   "The spindle"
+  ]
+ },
+ "KNW-119": {
+  "q": "How does the weft thread move?",
+  "why": "The weft goes over one warp thread and under the next, row after row.",
+  "answers": [
+   "Over and under, back and forth",
+   "Straight down the middle",
+   "Round and round in little circles"
+  ]
+ },
+ "KNW-120": {
+  "q": "You want strong cloth for a grain sack. How should you weave?",
+  "why": "Tight weaving packs the threads close, which makes strong cloth.",
+  "answers": [
+   "Tightly",
+   "Loosely",
+   "With only one thread"
+  ]
+ },
+ "KNW-121": {
+  "q": "What cloth is made from flax?",
+  "why": "Flax fibres are spun and woven into linen.",
+  "answers": [
+   "Linen",
+   "Wool",
+   "Cotton"
+  ]
+ },
+ "KNW-122": {
+  "q": "Why are flax stems soaked first?",
+  "why": "Soaking, or retting, loosens the long fibres from the stem.",
+  "answers": [
+   "To loosen the fibres inside",
+   "To make the seeds inside sprout",
+   "To wash out the colour"
+  ]
+ },
+ "KNW-123": {
+  "q": "What do flax seeds give us?",
+  "why": "Flax seeds are pressed to make linseed oil.",
+  "answers": [
+   "Linseed oil",
+   "Sugar",
+   "Beeswax"
+  ]
+ },
+ "KNW-124": {
+  "q": "What comes out when you press apples?",
+  "why": "Squeezing apples hard pushes out their sweet juice.",
+  "answers": [
+   "Juice",
+   "Oil",
+   "Flour"
+  ]
+ },
+ "KNW-125": {
+  "q": "What can you do with the leftover oilcake?",
+  "why": "Leftovers from pressing still have goodness, so animals can eat them.",
+  "answers": [
+   "Feed it to your animals",
+   "Use it as roof thatch",
+   "Throw it into the pond"
+  ]
+ },
+ "KNW-126": {
+  "q": "How does a press squeeze so hard?",
+  "why": "Turning a big screw pushes the press down with great force.",
+  "answers": [
+   "By turning a big screw",
+   "By heating it in the oven",
+   "By soaking it in water"
+  ]
+ },
+ "KNW-127": {
+  "q": "Where does a sugar beet store its sugar?",
+  "why": "Sugar beets keep their sugar in their big white roots.",
+  "answers": [
+   "In its root",
+   "In its leaves",
+   "In its flowers"
+  ]
+ },
+ "KNW-128": {
+  "q": "Why boil the beet juice?",
+  "why": "Boiling drives off the water, leaving sugar crystals behind.",
+  "answers": [
+   "So the water steams away",
+   "So it turns into honey",
+   "So it turns into vinegar"
+  ]
+ },
+ "KNW-129": {
+  "q": "How did people sweeten food before sugar was common?",
+  "why": "Honey was the main sweetener long before sugar was easy to get.",
+  "answers": [
+   "With honey",
+   "With salt",
+   "With vinegar"
+  ]
+ },
+ "KNW-130": {
+  "q": "What turns apple juice into cider?",
+  "why": "Yeast eats the sugar in apple juice and turns it into cider.",
+  "answers": [
+   "Yeast",
+   "Salt",
+   "Sunlight"
+  ]
+ },
+ "KNW-131": {
+  "q": "What turns milk into yogurt?",
+  "why": "Friendly bacteria change milk into thick, tangy yogurt.",
+  "answers": [
+   "Friendly bacteria",
+   "Lots of salt",
+   "Churning it hard"
+  ]
+ },
+ "KNW-132": {
+  "q": "Why does fermented food keep longer?",
+  "why": "Friendly microbes fill the food, so spoiling germs can't take over.",
+  "answers": [
+   "Good microbes keep bad ones away",
+   "It is kept in the hot sun",
+   "All the germs have been boiled away"
+  ]
+ },
+ "KNW-133": {
+  "q": "When milk thickens for cheese, what does it split into?",
+  "why": "The soft lumps are curds, and the watery part is whey.",
+  "answers": [
+   "Curds and whey",
+   "Butter and cream",
+   "Yogurt and honey"
+  ]
+ },
+ "KNW-134": {
+  "q": "How can you make a cheese taste stronger?",
+  "why": "Aging slowly in a cool cellar gives cheese a stronger taste.",
+  "answers": [
+   "Age it in a cool cellar",
+   "Add lots more water to it",
+   "Eat it the same day"
+  ]
+ },
+ "KNW-135": {
+  "q": "How much milk makes about one kilo of cheese?",
+  "why": "Most of the milk drains away as whey, so it takes about ten litres.",
+  "answers": [
+   "About ten litres",
+   "About one litre",
+   "About one cup"
+  ]
+ },
+ "KNW-136": {
+  "q": "Why does food keep longer in a cool cellar?",
+  "why": "Germs that spoil food work much more slowly in the cold.",
+  "answers": [
+   "Cold slows down the germs",
+   "Cold makes food ripen faster",
+   "Cellars are full of salt"
+  ]
+ },
+ "KNW-137": {
+  "q": "Why does a cellar stay cool, even in summer?",
+  "why": "Deep in the ground, the temperature stays cool all year round.",
+  "answers": [
+   "It is dug into the ground",
+   "It has big windows",
+   "It is next to the stove"
+  ]
+ },
+ "KNW-138": {
+  "q": "Which foods can keep in a cellar for months?",
+  "why": "Hardy foods like potatoes, carrots, apples and cheese last for months in a cellar.",
+  "answers": [
+   "Potatoes, carrots and apples",
+   "Fresh milk and lettuce leaves",
+   "Warm bread and soup"
+  ]
+ },
+ "KNW-139": {
+  "q": "How is vinegar made?",
+  "why": "Special bacteria change cider into sour vinegar.",
+  "answers": [
+   "Bacteria turn cider into acid",
+   "Salt is stirred into hot water",
+   "Lemons are squeezed"
+  ]
+ },
+ "KNW-140": {
+  "q": "Why don't pickles spoil?",
+  "why": "The sour vinegar stops the germs that would spoil the vegetables.",
+  "answers": [
+   "Spoiling germs can't live in acid",
+   "The jars are kept in the warm sun all day",
+   "Pickles are always frozen"
+  ]
+ },
+ "KNW-141": {
+  "q": "Why did sailors take pickles on long sea trips?",
+  "why": "Pickled food doesn't spoil, so it lasts through long voyages.",
+  "answers": [
+   "Pickles keep for a long time",
+   "Pickles need cooking every day",
+   "Pickles are very light to carry"
+  ]
+ },
+ "KNW-142": {
+  "q": "How deep do you loosen the soil when double digging?",
+  "why": "Double digging loosens the soil two spade-blades deep.",
+  "answers": [
+   "Two spade-depths",
+   "Half a spade-depth",
+   "Down to the groundwater"
+  ]
+ },
+ "KNW-143": {
+  "q": "Why is double digging worth the hard work?",
+  "why": "Deep, loose soil with compost lets roots go down, so plants can grow closer.",
+  "answers": [
+   "Roots go deeper and more plants fit",
+   "Weeds can never, ever grow there again",
+   "You never need to water again"
+  ]
+ },
+ "KNW-144": {
+  "q": "How do you keep a double-dug bed loose for years?",
+  "why": "Feet pack the soil hard, so walk on the paths instead.",
+  "answers": [
+   "Never step on it",
+   "Dig it again every week",
+   "Stamp it flat after rain"
+  ]
+ },
+ "KNW-145": {
+  "q": "Slugs are eating your lettuce. Which helper could you bring?",
+  "why": "Ducks love to eat slugs.",
+  "answers": [
+   "Ducks",
+   "Ladybirds",
+   "Bees"
+  ]
+ },
+ "KNW-146": {
+  "q": "What do ladybirds eat?",
+  "why": "Ladybirds gobble up aphids, tiny bugs that harm plants.",
+  "answers": [
+   "Aphids",
+   "Slugs",
+   "Seeds"
+  ]
+ },
+ "KNW-147": {
+  "q": "Why grow many different kinds of plants?",
+  "why": "Many kinds of plants give homes to ladybirds, birds and other helpers.",
+  "answers": [
+   "They bring more pest-eating helpers",
+   "They make crops grow twice as fast",
+   "They need much less sunlight"
+  ]
+ },
+ "KNW-148": {
+  "q": "What is steel made of?",
+  "why": "Adding a tiny bit of carbon from charcoal turns iron into steel.",
+  "answers": [
+   "Iron with a tiny bit of carbon",
+   "Iron mixed with lots of sand",
+   "Melted stone"
+  ]
+ },
+ "KNW-149": {
+  "q": "Why make a knife from steel instead of iron?",
+  "why": "Steel is harder and springier, so its edge stays sharp.",
+  "answers": [
+   "Steel keeps a sharp edge",
+   "Steel is softer to bend",
+   "Steel needs no fire"
+  ]
+ },
+ "KNW-150": {
+  "q": "Where does the carbon in steel come from?",
+  "why": "Charcoal is mostly carbon, and a little mixes into the hot iron.",
+  "answers": [
+   "Charcoal",
+   "Water",
+   "Clay"
+  ]
+ },
+ "KNW-151": {
+  "q": "What is glass mainly made from?",
+  "why": "Sand melted in a very hot furnace becomes glass.",
+  "answers": [
+   "Melted sand",
+   "Melted ice",
+   "Fired clay"
+  ]
+ },
+ "KNW-152": {
+  "q": "Why must new glass cool slowly?",
+  "why": "Cooling too fast can crack glass, so it is cooled slowly.",
+  "answers": [
+   "So it doesn't crack",
+   "So it turns green",
+   "So it stays runny"
+  ]
+ },
+ "KNW-153": {
+  "q": "Why put glass in a window?",
+  "why": "Glass is clear, so light comes in while wind and rain stay out.",
+  "answers": [
+   "It lets light in and keeps rain out",
+   "It keeps the house dark",
+   "It lets the fresh breeze blow through"
+  ]
+ },
+ "KNW-154": {
+  "q": "Why is it warm inside a greenhouse?",
+  "why": "Sunlight shines in through the glass, and the glass keeps the warm air inside.",
+  "answers": [
+   "Sun warms it and glass keeps heat in",
+   "A fire burns under the floor",
+   "The plants breathe out lots of hot air"
+  ]
+ },
+ "KNW-155": {
+  "q": "What are tender plants?",
+  "why": "Tender plants get hurt by cold, so a greenhouse keeps them safe.",
+  "answers": [
+   "Plants that don't like cold",
+   "Plants that are soft to eat",
+   "Plants with no roots"
+  ]
+ },
+ "KNW-156": {
+  "q": "It is still chilly in early spring. Where can you start seedlings?",
+  "why": "A greenhouse is warm and bright, just right for young seedlings.",
+  "answers": [
+   "In a greenhouse",
+   "In the dark cellar",
+   "Out in the frosty field"
+  ]
+ },
+ "KNW-157": {
+  "q": "Why does each row of bricks overlap the row below?",
+  "why": "Overlapping, called a bond, ties the bricks together so the wall stays strong.",
+  "answers": [
+   "It makes the wall strong",
+   "It uses fewer bricks",
+   "It makes the wall look red"
+  ]
+ },
+ "KNW-158": {
+  "q": "What goes between the bricks?",
+  "why": "Mortar is a paste that sticks the bricks together and dries hard.",
+  "answers": [
+   "Mortar",
+   "Straw",
+   "Beeswax"
+  ]
+ },
+ "KNW-159": {
+  "q": "Why build with bricks instead of wood?",
+  "why": "Fired clay bricks can't catch fire or rot like wood can.",
+  "answers": [
+   "Bricks don't burn or rot",
+   "Bricks are lighter than wood",
+   "Bricks are quicker to make"
+  ]
+ },
+ "KNW-160": {
+  "q": "Why cut out crossing branches?",
+  "why": "With more light and air inside, the tree grows better fruit.",
+  "answers": [
+   "To let in light and air",
+   "To keep the birds out",
+   "To stop bees visiting"
+  ]
+ },
+ "KNW-161": {
+  "q": "When do you prune fruit trees?",
+  "why": "Fruit trees are pruned in winter, before the spring blossoms come.",
+  "answers": [
+   "In winter",
+   "In spring blossom time",
+   "When the apples are ripe"
+  ]
+ },
+ "KNW-162": {
+  "q": "Who helps the apple blossoms turn into apples?",
+  "why": "Bees carry pollen between blossoms, which lets apples grow.",
+  "answers": [
+   "Bees",
+   "Slugs",
+   "Ladybirds"
+  ]
+ },
+ "KNW-163": {
+  "q": "Why are fresh olives soaked in salty water?",
+  "why": "Weeks of soaking in salty water, called curing, takes the bitterness away.",
+  "answers": [
+   "They are too bitter to eat",
+   "They are too sweet to eat",
+   "They are too dry to eat"
+  ]
+ },
+ "KNW-164": {
+  "q": "How long can an olive tree live?",
+  "why": "Olive trees grow slowly and can live for hundreds of years.",
+  "answers": [
+   "Hundreds of years",
+   "About five years",
+   "Just one summer"
+  ]
+ },
+ "KNW-165": {
+  "q": "What do you get when you press olives?",
+  "why": "Pressing squeezes the oil out of olives.",
+  "answers": [
+   "Olive oil",
+   "Olive juice for drinking",
+   "Vinegar"
+  ]
+ },
+ "KNW-166": {
+  "q": "What makes pasta dough stretchy?",
+  "why": "Kneading builds gluten, which makes the dough stretchy.",
+  "answers": [
+   "Kneading it",
+   "Leaving it in the sun",
+   "Adding lots of sugar"
+  ]
+ },
+ "KNW-167": {
+  "q": "What is pasta dough made from?",
+  "why": "Pasta needs just flour and eggs, or flour and water.",
+  "answers": [
+   "Flour and egg or water",
+   "Butter and honey",
+   "Milk and salt"
+  ]
+ },
+ "KNW-168": {
+  "q": "How long does fresh pasta take to cook?",
+  "why": "Fresh pasta is thin, so boiling water cooks it in minutes.",
+  "answers": [
+   "A few minutes",
+   "A whole day",
+   "About two hours"
+  ]
+ },
+ "KNW-169": {
+  "q": "Why make a barrel from oak?",
+  "why": "Slow-growing hardwoods like oak make heavy, strong wood.",
+  "answers": [
+   "Oak wood is heavy and strong",
+   "Oak trees grow very fast",
+   "Oak wood is soft and light"
+  ]
+ },
+ "KNW-170": {
+  "q": "Which trees give softwood?",
+  "why": "Softwoods come from conifers, the trees with needles and cones.",
+  "answers": [
+   "Trees with needles and cones",
+   "Trees with broad, flat leaves",
+   "Oak and beech trees"
+  ]
+ },
+ "KNW-171": {
+  "q": "Which kind of tree grows faster?",
+  "why": "Conifers like pine grow faster than hardwoods like oak and beech.",
+  "answers": [
+   "Pine",
+   "Oak",
+   "Beech"
+  ]
+ },
+ "KNW-172": {
+  "q": "What is humus made from?",
+  "why": "Humus forms when old plants rot down into dark soil.",
+  "answers": [
+   "Old, rotted plants",
+   "Crushed stones",
+   "Sand and salt"
+  ]
+ },
+ "KNW-173": {
+  "q": "How is humus like a sponge?",
+  "why": "Humus soaks up water and keeps it for plant roots.",
+  "answers": [
+   "It holds water",
+   "It is soft and yellow",
+   "It floats on water"
+  ]
+ },
+ "KNW-174": {
+  "q": "Why can many plants grow close in deep, humus-rich soil?",
+  "why": "Deep soil with humus holds lots of water and food for many roots.",
+  "answers": [
+   "There is plenty of water and food",
+   "Stones in the soil keep roots warm",
+   "There are fewer worms"
+  ]
+ },
+ "KNW-175": {
+  "q": "How does mulch stop weeds?",
+  "why": "Under thick mulch, weed seeds get no light, so they can't grow.",
+  "answers": [
+   "It blocks their light",
+   "It makes the soil too hot",
+   "It makes the soil too wet"
+  ]
+ },
+ "KNW-176": {
+  "q": "It's a hot, dry week. How does mulch help?",
+  "why": "Mulch covers the soil like a blanket, so less water dries up.",
+  "answers": [
+   "It keeps water in the soil",
+   "It makes rain fall more often",
+   "It cools the air"
+  ]
+ },
+ "KNW-177": {
+  "q": "What happens to old mulch over time?",
+  "why": "Mulch slowly rots down and becomes humus that feeds the soil.",
+  "answers": [
+   "It rots into humus",
+   "It turns into clay",
+   "It grows into new plants"
+  ]
+ },
+ "KNW-178": {
+  "q": "Which plant gives a blue dye?",
+  "why": "Woad leaves make a blue dye.",
+  "answers": [
+   "Woad",
+   "Onion skins",
+   "Madder"
+  ]
+ },
+ "KNW-179": {
+  "q": "You want yellow yarn. What should you boil?",
+  "why": "Onion skins make a warm yellow dye.",
+  "answers": [
+   "Onion skins",
+   "Woad leaves",
+   "Beets"
+  ]
+ },
+ "KNW-180": {
+  "q": "Your dyed yarn faded when washed. What did you forget?",
+  "why": "A mordant fixes the dye, so the colour stays when washed.",
+  "answers": [
+   "The mordant",
+   "More onion skins",
+   "Cold water"
+  ]
+ },
+ "KNW-181": {
+  "q": "Which two dye colours make green?",
+  "why": "Yellow mixed with blue gives green.",
+  "answers": [
+   "Yellow and blue",
+   "Red and yellow",
+   "Red and blue"
+  ]
+ },
+ "KNW-182": {
+  "q": "You mix red and blue dye. What colour do you get?",
+  "why": "Red and blue together make purple.",
+  "answers": [
+   "Purple",
+   "Orange",
+   "Green"
+  ]
+ },
+ "KNW-183": {
+  "q": "You pour red, yellow and blue together. What colour now?",
+  "why": "Mixing all three main colours makes brown.",
+  "answers": [
+   "Brown",
+   "White",
+   "Pink"
+  ]
+ },
+ "KNW-184": {
+  "q": "What are worm castings?",
+  "why": "Castings are worm droppings, and they are very rich food for plants.",
+  "answers": [
+   "What worms leave behind after eating",
+   "Little worm eggs in the soil",
+   "The tunnels worms dig"
+  ]
+ },
+ "KNW-185": {
+  "q": "How do worm tunnels help your plants?",
+  "why": "Tunnels make paths for air and water to reach the roots.",
+  "answers": [
+   "They let air and water in",
+   "They catch the slugs at night",
+   "They keep the soil cold"
+  ]
+ },
+ "KNW-186": {
+  "q": "What does a worm bin do with kitchen scraps?",
+  "why": "Worms eat the scraps and leave castings, a rich food for soil.",
+  "answers": [
+   "Turns them into rich castings",
+   "Keeps them fresh for later",
+   "Turns them into seeds"
+  ]
+ },
+ "KNW-187": {
+  "q": "Which plants should you save seeds from?",
+  "why": "Seeds from your best plants grow into good plants too.",
+  "answers": [
+   "Your best plants",
+   "Your smallest plants",
+   "The weediest plants"
+  ]
+ },
+ "KNW-188": {
+  "q": "How should you store saved seeds?",
+  "why": "Cool, dry seeds stay healthy until planting time next year.",
+  "answers": [
+   "Cool and dry",
+   "Warm and wet",
+   "In a sunny window"
+  ]
+ },
+ "KNW-189": {
+  "q": "Why do seed libraries share old seeds?",
+  "why": "When many people grow old kinds, those plants stay alive for the future.",
+  "answers": [
+   "So old kinds don't disappear",
+   "So the seeds grow faster",
+   "So old seeds can be thrown away"
+  ]
+ },
+ "KNW-190": {
+  "q": "Why does saffron cost so much?",
+  "why": "About 150 flowers, all picked by hand, make just one gram.",
+  "answers": [
+   "It takes so many flowers",
+   "It is very heavy",
+   "It grows on big, tall trees"
+  ]
+ },
+ "KNW-191": {
+  "q": "Which part of the crocus is saffron?",
+  "why": "Saffron is the three red threads, called stigmas, in each flower.",
+  "answers": [
+   "The red threads inside",
+   "The purple petals",
+   "The roots under the ground"
+  ]
+ },
+ "KNW-192": {
+  "q": "What does a pinch of saffron do to rice?",
+  "why": "Just a pinch of saffron turns food a golden yellow.",
+  "answers": [
+   "Colours it golden",
+   "Makes it sour",
+   "Keeps it fresh for years"
+  ]
+ },
+ "KNW-193": {
+  "q": "Why beat the eggs for a cake?",
+  "why": "Beaten eggs hold air, which makes the cake light.",
+  "answers": [
+   "To trap tiny air bubbles",
+   "To make them hard",
+   "To warm them up for the oven"
+  ]
+ },
+ "KNW-194": {
+  "q": "Your cake burned outside but stayed raw inside. Why?",
+  "why": "Steady, gentle heat lets the middle bake before the outside burns.",
+  "answers": [
+   "The oven was too hot",
+   "The flour was too fine",
+   "The eggs were beaten too long"
+  ]
+ },
+ "KNW-195": {
+  "q": "How do you make flour fine enough for light cakes?",
+  "why": "Grinding twice and sifting makes very fine flour for light cakes.",
+  "answers": [
+   "Grind it twice and sift it",
+   "Soak it in water overnight",
+   "Mix in plenty of coarse bran"
+  ]
+ },
+ "KNW-196": {
+  "q": "What makes a wind pump work?",
+  "why": "The wind spins the sails, and that drives the pump.",
+  "answers": [
+   "The wind turning its sails",
+   "A horse walking in circles",
+   "Someone pumping by hand"
+  ]
+ },
+ "KNW-197": {
+  "q": "How does a wind pump lift water?",
+  "why": "The sails move a pump rod up and down, lifting water each time.",
+  "answers": [
+   "A rod moves up and down",
+   "A bucket on a rope",
+   "Water flows uphill by itself"
+  ]
+ },
+ "KNW-198": {
+  "q": "When does a wind pump fill the tank?",
+  "why": "It runs whenever there is wind, even at night.",
+  "answers": [
+   "Whenever the wind blows",
+   "Only on sunny days",
+   "Only when someone turns it"
+  ]
+ },
+ "KNW-199": {
+  "q": "How many tiny living things are in a spoonful of healthy soil?",
+  "why": "Healthy soil is packed with billions of tiny living things.",
+  "answers": [
+   "Billions",
+   "About ten",
+   "None at all"
+  ]
+ },
+ "KNW-200": {
+  "q": "How do fungi help plant roots?",
+  "why": "Long, thin fungus threads reach far and help roots get water.",
+  "answers": [
+   "Their threads help roots find water",
+   "They scare away the slugs and snails",
+   "They make the soil hard"
+  ]
+ },
+ "KNW-201": {
+  "q": "How can you keep your soil alive?",
+  "why": "Compost feeds the soil life, and too much digging disturbs it.",
+  "answers": [
+   "Add compost and dig only a little",
+   "Dig it up deeply every single week",
+   "Keep it bare and dry"
+  ]
+ },
+ "CON-POOL": {
+  "answers": [
+   "Europe",
+   "Asia",
+   "Africa",
+   "North America",
+   "South America",
+   "Australia",
+   "Antarctica"
+  ]
+ }
+}

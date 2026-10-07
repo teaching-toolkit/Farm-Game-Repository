@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Learning record</title>
+<style>
+:root{--bg:#f7f2e7;--paper:#fffdf8;--ink:#3b2f2a;--muted:#7a705c;--line:#d8cdb8;--green:#4f9a3c;--red:#c0503a;--gold:#c99a1c;--chip:#fff6e0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:16px;background:var(--paper);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:2}
+h1{font-size:20px;margin:0 0 8px}
+h2{font-size:17px;margin:22px 0 8px}
+h3{font-size:15px;margin:14px 0 6px;color:var(--muted)}
+main{padding:0 16px 40px;max-width:1100px;margin:0 auto}
+button,.btn{font:inherit;border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:6px 12px;cursor:pointer;color:var(--ink)}
+button.primary{background:var(--green);color:#fff;border-color:var(--green)}
+button.danger{color:var(--red)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0}
+.muted{color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left;vertical-align:middle}
+th{font-weight:600;color:var(--muted)}
+td input[type=number]{width:64px}
+.lv{display:grid;grid-template-columns:minmax(220px,1fr) 60px 70px repeat(3,96px) 120px;gap:4px 8px;align-items:center;padding:4px 0;border-bottom:1px dashed var(--line)}
+.lv.head{font-weight:600;color:var(--muted);border-bottom:1px solid var(--line)}
+.cur{background:#eef6e4;border-radius:6px}
+textarea{width:100%;min-height:90px;font:12px/1.4 ui-monospace,monospace}
+.wrap{overflow-x:auto}
+.pill{display:inline-block;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:1px 8px;margin:1px;font-size:13px}
+@media (max-width:700px){.lv{grid-template-columns:1fr 50px 60px repeat(3,70px);font-size:13px}.lv .act{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<header>
+  <h1>📊 Learning record</h1>
+  <div class="row">
+    <label class="btn">📂 Open learning.json <input id="file" type="file" accept=".json,application/json" hidden></label>
+    <button id="pasteBtn">📥 Paste text</button>
+    <button id="save" class="primary" disabled>💾 Download learning.json</button>
+    <button id="copy" disabled>📋 Copy (to paste into the game)</button>
+    <span id="status" class="muted"></span>
+  </div>
+  <div id="pasteBox" hidden><textarea id="paste" placeholder="Paste the record copied from the game (⚙️ → Learning record → Copy) …"></textarea><button id="usePaste">Use it</button></div>
+</header>
+<main>
+  <p class="muted">Open the player's <b>learning.json</b> (in the game: ⚙️ Settings → 📊 Learning record → Open the folder, or Copy). Change what you like, then download it and put it back in the same folder (or copy it and paste it in the game). Nothing leaves this page.</p>
+  <div id="out"></div>
+</main>
+<script id="curriculum" type="application/json">/*CURRICULUM*/</script>
+<script>const QTEXT = /*QUESTIONS*/{};   // question id -> text (the game's data/i18n/quiz-en.json, if there is one)</script>
+<script>
+const C = JSON.parse(document.getElementById('curriculum').textContent);
+let D = null;
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+const now = () => Math.floor(Date.now() / 1000);
+const day = (t) => t ? new Date(t * 1000).toLocaleDateString() : '';
+const levels = {};
+for (const cat of C.categories) for (const sec of cat.sections) for (const lv of sec.levels) levels[lv.id] = Object.assign({cat: cat.id, sec: sec.id}, lv);
+
+function load(text) {
+  try { D = JSON.parse(text); } catch (e) { $('#status').textContent = '❌ That is not JSON.'; return; }
+  if (typeof D !== 'object' || D === null) { $('#status').textContent = '❌ Not a record.'; return; }
+  D.math = D.math || {n: 0, active: ['addsub'], items: {}, levels: {}, recent: []};
+  D.math.items = D.math.items || {}; D.math.levels = D.math.levels || {}; D.math.active = D.math.active || ['addsub'];
+  D.quiz = D.quiz || {n: 0, items: {}}; D.quiz.items = D.quiz.items || {};
+  $('#save').disabled = false; $('#copy').disabled = false; $('#pasteBox').hidden = true;
+  $('#status').textContent = '✅ ' + (D.name || '(no name)') + (D.updated ? ' · saved ' + D.updated : '');
+  render();
+}
+$('#file').addEventListener('change', (e) => { const f = e.target.files[0]; if (f) f.text().then(load); });
+$('#pasteBtn').onclick = () => { $('#pasteBox').hidden = !$('#pasteBox').hidden; };
+$('#usePaste').onclick = () => load($('#paste').value);
+$('#save').onclick = () => {
+  const blob = new Blob([JSON.stringify(D, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'learning.json'; a.click();
+};
+$('#copy').onclick = () => navigator.clipboard.writeText(JSON.stringify(D, null, 2)).then(() => { $('#status').textContent = '📋 Copied.'; });
+
+function lrec(id) { return D.math.levels[id] = D.math.levels[id] || {n: 0, bad: 0, bronze: 0, silver: 0, gold: 0}; }
+function counts(id) {
+  let seen = 0, ok = 0;
+  for (const [k, it] of Object.entries(D.math.items)) if (it.lvl === id) { seen++; if ((it.box || 0) >= 2) ok++; }
+  return [seen, ok];
+}
+function current(sec) {
+  for (const lv of sec.levels) {
+    if ((D.math.levels[lv.id] || {}).bronze) continue;
+    if (lv.after && !(D.math.levels[lv.after] || {}).bronze) return '';
+    return lv.id;
+  }
+  return '';
+}
+function render() {
+  const m = D.math;
+  let h = '<h2>➕ Rest sums</h2><div class="card"><div class="row">' +
+    `<b>${esc(D.name || '')}</b><span class="muted">${m.n || 0} answers · ${Object.keys(m.items).length} tasks met · best streak ${m.best_streak || 0}</span></div>` +
+    '<h3>Categories practised</h3><div class="row">';
+  for (const cat of C.categories) h += `<label><input type="checkbox" data-cat="${cat.id}" ${m.active.includes(cat.id) ? 'checked' : ''}> ${cat.emoji} ${esc(cat.name)} <span class="muted">(classes ${esc(cat.classes || '')})</span></label>`;
+  h += '</div><p class="muted">Medals: tick or untick to give or take one (the date is today). "Start here" passes every level before it in that section (bronze), for a child who already knows them.</p></div>';
+  for (const cat of C.categories) {
+    if (!m.active.includes(cat.id)) continue;
+    h += `<h2>${cat.emoji} ${esc(cat.name)}</h2>`;
+    for (const sec of cat.sections) {
+      const cur = current(sec);
+      h += `<div class="card"><h3>${sec.emoji} ${esc(sec.name)}</h3><div class="lv head"><span>Level</span><span>Class</span><span>Learned</span><span>🥉 Bronze</span><span>🥈 Silver</span><span>🥇 Gold</span><span></span></div>`;
+      for (const lv of sec.levels) {
+        const r = m.levels[lv.id] || {};
+        const [seen, ok] = counts(lv.id);
+        h += `<div class="lv ${lv.id === cur ? 'cur' : ''}"><span>${lv.emoji} ${esc(lv.name)} <span class="muted">${esc(lv.example || '')}</span>${lv.id === cur ? ' ▶️' : ''}</span><span>${lv.class || ''}</span><span>${ok}/${lv.need}${seen ? ' <span class="muted">(' + seen + ')</span>' : ''}</span>`;
+        for (const md of ['bronze', 'silver', 'gold']) h += `<label><input type="checkbox" data-lv="${lv.id}" data-md="${md}" ${r[md] ? 'checked' : ''}> <span class="muted">${day(r[md])}</span></label>`;
+        h += `<span class="act"><button data-start="${lv.id}">Start here</button></span></div>`;
+      }
+      h += '</div>';
+    }
+  }
+  // tasks
+  h += '<h2>🧮 Tasks</h2><div class="card"><div class="row"><label>Level <select id="flt"><option value="">all</option>';
+  for (const id of Object.keys(levels)) h += `<option value="${id}">${id} ${esc(levels[id].name)}</option>`;
+  h += '</select></label><span class="muted">box: 0 = still learning, 2+ = quick twice, 4+ = known for good · due = answer number when it comes back</span></div><div class="wrap" id="tasks"></div></div>';
+  // quiz
+  h += '<h2>❓ Time Quiz questions</h2><div class="card wrap" id="quiz"></div>';
+  $('#out').innerHTML = h;
+  document.querySelectorAll('[data-cat]').forEach((el) => el.onchange = () => {
+    const id = el.dataset.cat;
+    if (el.checked) { if (!m.active.includes(id)) m.active.push(id); } else m.active = m.active.filter((x) => x !== id);
+    render();
+  });
+  document.querySelectorAll('[data-md]').forEach((el) => el.onchange = () => { lrec(el.dataset.lv)[el.dataset.md] = el.checked ? now() : 0; render(); });
+  document.querySelectorAll('[data-start]').forEach((el) => el.onclick = () => {
+    const lv = levels[el.dataset.start];
+    const sec = C.categories.find((c) => c.id === lv.cat).sections.find((s) => s.id === lv.sec);
+    for (const x of sec.levels) { if (x.id === lv.id) break; const r = lrec(x.id); if (!r.bronze) r.bronze = now(); }
+    const r2 = lrec(lv.id); r2.bronze = 0; r2.silver = 0; r2.gold = 0;
+    render();
+  });
+  $('#flt').onchange = tasks;
+  tasks(); quiz();
+}
+function tasks() {
+  const f = $('#flt').value;
+  const rows = Object.entries(D.math.items).filter(([k, it]) => !f || it.lvl === f).sort((a, b) => (a[1].due || 0) - (b[1].due || 0));
+  let h = '<table><tr><th>Task</th><th>Level</th><th>Box</th><th>Due</th><th>✔</th><th>✖</th><th>🐢</th><th>Last quick</th><th></th></tr>';
+  for (const [k, it] of rows.slice(0, 400)) {
+    h += `<tr><td>${esc(k)}</td><td>${esc(it.lvl || '')}</td><td><input type="number" min="0" max="7" value="${it.box || 0}" data-box="${esc(k)}"></td><td><input type="number" value="${it.due || 0}" data-due="${esc(k)}"></td><td>${it.right || 0}</td><td>${it.wrong || 0}</td><td>${it.slow || 0}</td><td>${day(it.last_ok)}</td><td><button class="danger" data-del="${esc(k)}">✖</button></td></tr>`;
+  }
+  h += '</table>' + (rows.length > 400 ? `<p class="muted">… and ${rows.length - 400} more (pick a level).</p>` : '') + (rows.length ? '' : '<p class="muted">None yet.</p>');
+  $('#tasks').innerHTML = h;
+  document.querySelectorAll('[data-box]').forEach((el) => el.onchange = () => { D.math.items[el.dataset.box].box = +el.value; });
+  document.querySelectorAll('[data-due]').forEach((el) => el.onchange = () => { D.math.items[el.dataset.due].due = +el.value; });
+  document.querySelectorAll('[data-del]').forEach((el) => el.onclick = () => { delete D.math.items[el.dataset.del]; tasks(); });
+}
+function quiz() {
+  const rows = Object.entries(D.quiz.items);
+  let h = `<p class="muted">${D.quiz.n || 0} answers. A question answered wrong comes back after 3 others; right at the first try it waits 12, 32, 80 … questions.</p><table><tr><th>Question</th><th>Box</th><th>Due</th><th>✔</th><th>✖</th><th></th></tr>`;
+  for (const [k, it] of rows) h += `<tr><td>${QTEXT[k] ? '<b>' + esc(k) + '</b> ' + esc(QTEXT[k]) : esc(k)}</td><td>${it.box || 0}</td><td>${it.due || 0}</td><td>${it.right || 0}</td><td>${it.wrong || 0}</td><td><button class="danger" data-qdel="${esc(k)}">✖</button></td></tr>`;
+  h += '</table>' + (rows.length ? '' : '<p class="muted">None yet.</p>');
+  $('#quiz').innerHTML = h;
+  document.querySelectorAll('[data-qdel]').forEach((el) => el.onclick = () => { delete D.quiz.items[el.dataset.qdel]; quiz(); });
+}
+</script>
+</body>
+</html>

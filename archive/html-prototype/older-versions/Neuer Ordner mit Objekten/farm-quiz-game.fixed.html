@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Farm Quiz Game</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #87CEEB 0%, #98D8C8 100%);
+      min-height: 100vh;
+      padding: 10px;
+      touch-action: manipulation;
+    }
+
+    #game-container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #2c5f2d;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    #resources {
+      display: flex;
+      justify-content: space-around;
+      gap: 10px;
+    }
+
+    .resource {
+      background: #f0f8ff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-align: center;
+      flex: 1;
+    }
+
+    .resource-label {
+      font-size: 12px;
+      color: #666;
+    }
+
+    .resource-value {
+      font-size: 20px;
+      font-weight: bold;
+      color: #2c5f2d;
+    }
+
+    #farm-section {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #2c5f2d;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    #farm-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .farm-plot {
+      background: #8B4513;
+      border: 3px solid #654321;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      font-size: 40px;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .farm-plot:active {
+      transform: scale(0.95);
+    }
+
+    .plot-empty {
+      background: #D2691E;
+    }
+
+    .plot-status {
+      font-size: 12px;
+      margin-top: 8px;
+      color: #333;
+    }
+
+    #buildings {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .building {
+      flex: 1;
+      background: #FFE4B5;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      border: 2px solid #DEB887;
+    }
+
+    .building-icon {
+      font-size: 30px;
+    }
+
+    .building-name {
+      font-size: 12px;
+      font-weight: bold;
+      margin: 5px 0;
+    }
+
+    .building-level {
+      font-size: 11px;
+      color: #666;
+    }
+
+    #quiz-button {
+      width: 100%;
+      padding: 18px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      margin-bottom: 15px;
+    }
+
+    #quiz-button:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    #quiz-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    #quiz-content {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    #question-text {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .answer-button {
+      width: 100%;
+      padding: 15px;
+      margin: 8px 0;
+      background: #f0f0f0;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+    }
+
+    .answer-button:hover {
+      background: #e0e0e0;
+    }
+
+    .answer-button:active {
+      transform: scale(0.98);
+    }
+
+    .answer-correct {
+      background: #d4edda !important;
+      border-color: #28a745 !important;
+    }
+
+    .answer-wrong {
+      background: #f8d7da !important;
+      border-color: #dc3545 !important;
+    }
+
+    #feedback {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .feedback-correct {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .feedback-wrong {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    #next-button {
+      width: 100%;
+      padding: 15px;
+      margin-top: 15px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #close-quiz {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    #stats {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+      padding: 8px;
+      background: #f8f9fa;
+      border-radius: 5px;
+    }
+
+    #save-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .save-button {
+      flex: 1;
+      padding: 12px;
+      background: #17a2b8;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .reward-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      text-align: center;
+      z-index: 2000;
+      animation: popIn 0.3s ease-out;
+    }
+
+    @keyframes popIn {
+      from {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+      }
+      to {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .shop-item {
+      background: #fff3cd;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      border: 2px solid #ffc107;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .shop-button {
+      padding: 8px 15px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .shop-button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  
+
+    /* Fix: ensure the modal can be hidden despite #quiz-modal { display:flex } */
+    #quiz-modal.hidden {
+      display: none;
+    }
+
+</style>
+</head>
+<body>
+  <div id="game-container">
+    <header>
+      <h1>🌾 Farm Quiz Game 🌾</h1>
+      <div id="resources">
+        <div class="resource">
+          <div class="resource-label">Coins</div>
+          <div class="resource-value" id="coins-display">0</div>
+        </div>
+        <div class="resource">
+          <div class="resource-label">Seeds</div>
+          <div class="resource-value" id="seeds-display">0</div>
+        </div>
+        <div class="resource">
+          <div class="resource-label">XP</div>
+          <div class="resource-value" id="xp-display">0</div>
+        </div>
+      </div>
+    </header>
+
+    <button id="quiz-button">📚 Answer Questions to Earn Resources! 📚</button>
+
+    <div id="farm-section">
+      <h2>🚜 Your Farm</h2>
+      <div id="farm-grid">
+        <div class="farm-plot plot-empty" data-plot="0">
+          <div>🌱</div>
+          <div class="plot-status">Empty Plot</div>
+        </div>
+        <div class="farm-plot plot-empty" data-plot="1">
+          <div>🌱</div>
+          <div class="plot-status">Empty Plot</div>
+        </div>
+        <div class="farm-plot plot-empty" data-plot="2">
+          <div>🌱</div>
+          <div class="plot-status">Empty Plot</div>
+        </div>
+        <div class="farm-plot plot-empty" data-plot="3">
+          <div>🌱</div>
+          <div class="plot-status">Empty Plot</div>
+        </div>
+      </div>
+
+      <h2>🏠 Buildings</h2>
+      <div id="buildings">
+        <div class="building">
+          <div class="building-icon">🏠</div>
+          <div class="building-name">Farmhouse</div>
+          <div class="building-level">Level <span id="house-level">1</span></div>
+        </div>
+        <div class="building">
+          <div class="building-icon">🏚️</div>
+          <div class="building-name">Barn</div>
+          <div class="building-level">Level <span id="barn-level">1</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="stats">
+      <h2>📊 Statistics</h2>
+      <div class="stat-row">
+        <span>Questions Answered:</span>
+        <span id="questions-answered">0</span>
+      </div>
+      <div class="stat-row">
+        <span>Correct Answers:</span>
+        <span id="correct-answers">0</span>
+      </div>
+      <div class="stat-row">
+        <span>Current Streak:</span>
+        <span id="current-streak">0</span>
+      </div>
+      <div class="stat-row">
+        <span>Crops Planted:</span>
+        <span id="crops-planted">0</span>
+      </div>
+      <div id="save-buttons">
+        <button class="save-button" onclick="exportSave()">💾 Export Save</button>
+        <button class="save-button" onclick="importSave()">📥 Import Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="quiz-modal" class="hidden">
+    <div id="quiz-content">
+      <h2>🎓 Quiz Time!</h2>
+      <div id="question-text"></div>
+      <div id="answers-container"></div>
+      <div id="feedback" class="hidden"></div>
+      <button id="next-button" class="hidden">Next Question</button>
+      <button id="close-quiz">Close Quiz</button>
+    </div>
+  </div>
+
+  <script>
+    // Game state
+    let gameState = {
+      resources: {
+        coins: 10,
+        seeds: 5,
+        xp: 0
+      },
+      farm: {
+        plots: [
+          { planted: false, crop: null, growth: 0 },
+          { planted: false, crop: null, growth: 0 },
+          { planted: false, crop: null, growth: 0 },
+          { planted: false, crop: null, growth: 0 }
+        ]
+      },
+      buildings: {
+        house: 1,
+        barn: 1
+      },
+      quiz: {
+        questionsAnswered: 0,
+        correctAnswers: 0,
+        currentStreak: 0,
+        cropsPlanted: 0
+      },
+      currentQuestion: null,
+      answeredCurrentQuestion: false
+    };
+
+    // Question bank
+    const questions = [
+      {
+        question: "What is the capital of France?",
+        answers: ["London", "Paris", "Berlin", "Madrid"],
+        correct: 1
+      },
+      {
+        question: "What is 7 × 8?",
+        answers: ["54", "56", "63", "64"],
+        correct: 1
+      },
+      {
+        question: "Which planet is known as the Red Planet?",
+        answers: ["Venus", "Mars", "Jupiter", "Saturn"],
+        correct: 1
+      },
+      {
+        question: "What is the largest ocean on Earth?",
+        answers: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+        correct: 3
+      },
+      {
+        question: "Who wrote 'Romeo and Juliet'?",
+        answers: ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"],
+        correct: 1
+      },
+      {
+        question: "What is the square root of 144?",
+        answers: ["10", "11", "12", "13"],
+        correct: 2
+      },
+      {
+        question: "Which element has the chemical symbol 'O'?",
+        answers: ["Gold", "Oxygen", "Silver", "Iron"],
+        correct: 1
+      },
+      {
+        question: "How many continents are there?",
+        answers: ["5", "6", "7", "8"],
+        correct: 2
+      },
+      {
+        question: "What is the smallest prime number?",
+        answers: ["0", "1", "2", "3"],
+        correct: 2
+      },
+      {
+        question: "Which country is home to the kangaroo?",
+        answers: ["New Zealand", "Australia", "South Africa", "Brazil"],
+        correct: 1
+      }
+    ];
+
+    // Crop types
+    const crops = [
+      { name: "Wheat", emoji: "🌾", growthTime: 3, seedCost: 2, sellPrice: 5 },
+      { name: "Corn", emoji: "🌽", growthTime: 5, seedCost: 3, sellPrice: 8 },
+      { name: "Carrot", emoji: "🥕", growthTime: 2, seedCost: 1, sellPrice: 3 }
+    ];
+
+    // Load game on start
+    window.addEventListener('load', () => {
+      loadGame();
+      updateUI();
+      setupEventListeners();
+    });
+
+    // Setup event listeners
+    function setupEventListeners() {
+      document.getElementById('quiz-button').addEventListener('click', startQuiz);
+      document.getElementById('close-quiz').addEventListener('click', closeQuiz);
+      document.getElementById('next-button').addEventListener('click', nextQuestion);
+
+      // Farm plot clicks
+      document.querySelectorAll('.farm-plot').forEach(plot => {
+        plot.addEventListener('click', () => handlePlotClick(parseInt(plot.dataset.plot)));
+      });
+    }
+
+    // Save/Load functions
+    function saveGame() {
+      localStorage.setItem('farmQuizGame', JSON.stringify(gameState));
+    }
+
+    function loadGame() {
+      const saved = localStorage.getItem('farmQuizGame');
+      if (saved) {
+        gameState = JSON.parse(saved);
+      }
+    }
+
+    function exportSave() {
+      const saveCode = btoa(JSON.stringify(gameState));
+      const message = `Copy this save code:\n\n${saveCode}`;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(saveCode);
+        alert('Save code copied to clipboard!');
+      } else {
+        prompt(message, saveCode);
+      }
+    }
+
+    function importSave() {
+      const code = prompt("Paste your save code:");
+      if (code) {
+        try {
+          gameState = JSON.parse(atob(code));
+          saveGame();
+          updateUI();
+          alert("Save loaded successfully!");
+        } catch (e) {
+          alert("Invalid save code!");
+        }
+      }
+    }
+
+    // Update UI
+    function updateUI() {
+      document.getElementById('coins-display').textContent = gameState.resources.coins;
+      document.getElementById('seeds-display').textContent = gameState.resources.seeds;
+      document.getElementById('xp-display').textContent = gameState.resources.xp;
+      document.getElementById('questions-answered').textContent = gameState.quiz.questionsAnswered;
+      document.getElementById('correct-answers').textContent = gameState.quiz.correctAnswers;
+      document.getElementById('current-streak').textContent = gameState.quiz.currentStreak;
+      document.getElementById('crops-planted').textContent = gameState.quiz.cropsPlanted;
+      document.getElementById('house-level').textContent = gameState.buildings.house;
+      document.getElementById('barn-level').textContent = gameState.buildings.barn;
+
+      // Update farm plots
+      gameState.farm.plots.forEach((plot, index) => {
+        const plotElement = document.querySelector(`[data-plot="${index}"]`);
+        if (plot.planted) {
+          const crop = crops[plot.crop];
+          if (plot.growth >= crop.growthTime) {
+            plotElement.innerHTML = `<div>${crop.emoji}</div><div class="plot-status">Ready!</div>`;
+            plotElement.className = 'farm-plot';
+            plotElement.style.background = '#90EE90';
+          } else {
+            plotElement.innerHTML = `<div>🌱</div><div class="plot-status">Growing... ${plot.growth}/${crop.growthTime}</div>`;
+            plotElement.className = 'farm-plot';
+            plotElement.style.background = '#8B4513';
+          }
+        } else {
+          plotElement.innerHTML = `<div>🌱</div><div class="plot-status">Empty Plot</div>`;
+          plotElement.className = 'farm-plot plot-empty';
+          plotElement.style.background = '#D2691E';
+        }
+      });
+    }
+
+    // Handle plot clicks
+    function handlePlotClick(plotIndex) {
+      const plot = gameState.farm.plots[plotIndex];
+      
+      if (!plot.planted) {
+        // Plant a crop
+        if (gameState.resources.seeds >= 2) {
+          if (confirm("Plant wheat for 2 seeds?")) {
+            plot.planted = true;
+            plot.crop = 0; // Wheat
+            plot.growth = 0;
+            gameState.resources.seeds -= 2;
+            gameState.quiz.cropsPlanted++;
+            saveGame();
+            updateUI();
+          }
+        } else {
+          alert("Not enough seeds! Answer quiz questions to earn more.");
+        }
+      } else {
+        const crop = crops[plot.crop];
+        if (plot.growth >= crop.growthTime) {
+          // Harvest
+          gameState.resources.coins += crop.sellPrice;
+          showReward(`Harvested ${crop.name}! +${crop.sellPrice} coins`);
+          plot.planted = false;
+          plot.crop = null;
+          plot.growth = 0;
+          saveGame();
+          updateUI();
+        } else {
+          alert(`${crop.name} is still growing... ${plot.growth}/${crop.growthTime}`);
+        }
+      }
+    }
+
+    // Quiz functions
+    function startQuiz() {
+      gameState.answeredCurrentQuestion = false;
+      document.getElementById('quiz-modal').classList.remove('hidden');
+      loadQuestion();
+    }
+
+    function closeQuiz() {
+      document.getElementById('quiz-modal').classList.add('hidden');
+    }
+
+    function loadQuestion() {
+      gameState.currentQuestion = questions[Math.floor(Math.random() * questions.length)];
+      gameState.answeredCurrentQuestion = false;
+      
+      document.getElementById('question-text').textContent = gameState.currentQuestion.question;
+      document.getElementById('feedback').classList.add('hidden');
+      document.getElementById('next-button').classList.add('hidden');
+      
+      const answersContainer = document.getElementById('answers-container');
+      answersContainer.innerHTML = '';
+      
+      gameState.currentQuestion.answers.forEach((answer, index) => {
+        const button = document.createElement('button');
+        button.className = 'answer-button';
+        button.textContent = answer;
+        button.addEventListener('click', () => checkAnswer(index));
+        answersContainer.appendChild(button);
+      });
+    }
+
+    function checkAnswer(selectedIndex) {
+      if (gameState.answeredCurrentQuestion) return;
+      
+      gameState.answeredCurrentQuestion = true;
+      const correct = selectedIndex === gameState.currentQuestion.correct;
+      const buttons = document.querySelectorAll('.answer-button');
+      
+      buttons.forEach((button, index) => {
+        button.disabled = true;
+        if (index === gameState.currentQuestion.correct) {
+          button.classList.add('answer-correct');
+        } else if (index === selectedIndex && !correct) {
+          button.classList.add('answer-wrong');
+        }
+      });
+      
+      const feedback = document.getElementById('feedback');
+      feedback.classList.remove('hidden');
+      
+      gameState.quiz.questionsAnswered++;
+      
+      if (correct) {
+        gameState.quiz.correctAnswers++;
+        gameState.quiz.currentStreak++;
+        
+        // Rewards
+        const coinsEarned = 5 + (gameState.quiz.currentStreak > 2 ? 3 : 0);
+        const seedsEarned = 2;
+        const xpEarned = 10;
+        
+        gameState.resources.coins += coinsEarned;
+        gameState.resources.seeds += seedsEarned;
+        gameState.resources.xp += xpEarned;
+        
+        // Grow crops
+        gameState.farm.plots.forEach(plot => {
+          if (plot.planted) {
+            plot.growth++;
+          }
+        });
+        
+        feedback.className = 'feedback-correct';
+        feedback.innerHTML = `
+          ✅ Correct!<br>
+          +${coinsEarned} coins, +${seedsEarned} seeds, +${xpEarned} XP<br>
+          ${gameState.quiz.currentStreak > 2 ? '🔥 Streak bonus!' : ''}
+          🌱 Your crops grew!
+        `;
+      } else {
+        gameState.quiz.currentStreak = 0;
+        feedback.className = 'feedback-wrong';
+        feedback.innerHTML = '❌ Wrong answer. Try again!';
+      }
+      
+      saveGame();
+      updateUI();
+      document.getElementById('next-button').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      loadQuestion();
+    }
+
+    function showReward(message) {
+      const popup = document.createElement('div');
+      popup.className = 'reward-popup';
+      popup.textContent = message;
+      document.body.appendChild(popup);
+      
+      setTimeout(() => {
+        popup.remove();
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
