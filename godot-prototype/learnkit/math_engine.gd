@@ -218,6 +218,16 @@ func _make(r: Dictionary, key: String, id: String, review: bool, booster: bool, 
 	return {"key": key, "answer": t[0], "q": t[1], "hint": t[2], "level": lvl, "review": review, "booster": booster,
 		"limit": limit_for(lv, t[0], scale), "keys": lv.get("keys", [])}
 
+## Picking a task moves a few turn counters (turn, since_new). A task left unanswered (the child went back to the farm)
+## must not count: the pad keeps pick_state() before asking and puts it back with restore_pick_state() if no answer came.
+func pick_state(L: Dictionary) -> Dictionary:
+	var r := rec(L)
+	return {"turn": int(r.get("turn", 0)), "since_new": int(r.get("since_new", 0))}
+
+func restore_pick_state(L: Dictionary, s: Dictionary) -> void:
+	var r := rec(L)
+	for k in s: r[k] = s[k]
+
 ## The next task. scale stretches the time for a quick answer (a parent setting).
 func question(L: Dictionary, rng: RandomNumberGenerator, scale := 1.0) -> Dictionary:
 	var r := rec(L)

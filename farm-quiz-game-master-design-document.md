@@ -205,6 +205,13 @@ second currency.
 Tapping the energy bar opens **Rest** (sleep, food, a sip of water). The child types answers to sums on a number pad (or the
 keyboard). The sums come from the **learning kit** (`learnkit/`), a self-contained part that any game can use.
 
+- **A start page first.** Rest opens on a page that shows where the child stands: the category and its title (🌰 Seed …
+  🏔️ Mighty oak), the section and level ("level 2 of 13: 🐥 Take away up to 5") with a bar for how far along it is, the
+  medals of the section won so far and an empty slot for the next one with what it takes, and the best streak. A big
+  **🏁 Ready, set, go!** counts down (Ready… Set… Go!) and the sums begin.
+- **Leaving mid-sum.** Going back to the farm while a sum is on screen leaves no trace: it is not wrong, not slow, and it
+  does not change when it comes back.
+
 - **Taking an answer.** The moment the typed number is right it is taken — no ✔ needed. A wrong number only counts when ✔
   is tapped; then the right sum is shown, with the steps for a tricky one (13 − 5: 13 − 3 = 10, 10 − 2 = 8).
 - **Energy.** A quick right answer gives the full energy per Rest answer (§5.1), a slower right one half

@@ -221,13 +221,11 @@ B1: the game starts with **one** cleared patch and **one** wheat seed (one plant
 clearing job, *Clear the thistles (2 patches)* (4 steps, 6 energy). Bot: chapter 3 after ~280–300, chapter 5 after 629–752
 questions (same range as before); explorer: 21.2 h, 1,417 Time Quiz answers.
 
-### C. Rest (parent's list)
+### C. Rest (parent's list) — done 7 Oct 2026, waiting for the parent's check
 
-- **C1. A start screen before the sums** (from the energy bar or the bed/tent): where the child stands in the category (level,
-  progress to the next), the medals so far and an empty slot for the next one with a short description, and a
-  "Ready, set, go!" start button.
-- **C2. The question left on screen when the child goes back to the farm doesn't count** for the spaced repetition (no
-  "wrong", no "slow", no change to its interval).
+C1 a start page (category and title, level and progress, the section's medals and an empty slot for the next one with what
+it takes, best streak, "🏁 Ready, set, go!" with a countdown). C2 a sum left on screen when the child goes back to the farm
+leaves no trace in the learning record (`pick_state`/`abandon` in the learning kit).
 
 ### D. Every window as a grid (parent's list)
 

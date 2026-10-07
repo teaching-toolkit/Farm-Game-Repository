@@ -26,6 +26,7 @@ var typed := ""
 var busy := true
 var stopped := false
 var late := false
+var _pick := {}                 # the turn counters before the task on screen was picked (see abandon)
 
 var col := {"ink": Color("3b2f2a"), "muted": Color("7a705c"), "green": Color("4f9a3c"), "green_dark": Color("3c7a2c"),
 	"red": Color("c0503a"), "amber": Color("e0a030"), "key": Color("6c8fb3"), "back": Color("b8af9c"), "paper": Color.WHITE,
@@ -104,6 +105,7 @@ func next() -> void:
 	if stopped: return
 	before_next.emit()
 	if stopped or engine == null: return
+	_pick = engine.pick_state(L)
 	question = engine.question(L, rng, float(opts.get("scale", 1.0)))
 	typed = ""
 	busy = false
@@ -135,6 +137,7 @@ func key(k: String) -> void:
 func enter() -> void:
 	if busy or typed == "": return
 	busy = true
+	_pick = {}
 	var secs: float = timer.elapsed()
 	var right: bool = engine.is_right(question, typed)
 	var quick: bool = right and secs <= float(timer.limit)
@@ -162,6 +165,16 @@ func enter() -> void:
 	_say(str(res["text"]), col["green_dark"] if right else col["red"])
 	_level_line(str(question.get("level", "")))
 	if not stopped: get_tree().create_timer(float(res["wait"])).timeout.connect(next)
+
+## The child leaves while a task is on screen: it was never answered, so it leaves no trace in the record (no wrong,
+## no slow, no change to when it comes back; the turn counters go back to before it was picked). Also called when the
+## pad leaves the screen.
+func abandon() -> void:
+	if not _pick.is_empty() and engine != null: engine.restore_pick_state(L, _pick)
+	_pick = {}
+
+func _exit_tree() -> void:
+	abandon()
 
 ## Ends the round with a message (the pad and timer go away).
 func stop(msg: String) -> void:

@@ -116,6 +116,7 @@ func _parse_args() -> void:
 			G.settings["language"] = a.substr(7)
 			G.quiz_tr = G.quiz.load_texts("res://data/i18n/quiz-%s.json" % a.substr(7))
 		elif a == "--rest": call_deferred("_show_rest")
+		elif a == "--restgo": call_deferred("_rest_go")              # screenshots: past the Rest start page (after --rest)
 		elif a == "--menu": call_deferred("_show_menu")            # screenshots: ⚙️ Settings
 		elif a == "--grownup": _grownup_until = 1e12                # screenshots: grown-up settings open
 		elif a == "--password": call_deferred("_ask_password")     # screenshots: the grown-up password box
@@ -1221,19 +1222,115 @@ func _show_rest() -> void:
 	er.add_child(eb)
 	box.add_child(er)
 	G.math_record()
+	# first a start page: where the child stands, the medals so far and the next one to win; the sums start with the button
+	var start := _rest_start_page()
+	box.add_child(start)
+	var back := UI.soft_button("⬅️ Back to the farm", _close_modal, true, 17)
+	box.add_child(back)
+	_rest = {"eb": eb, "box": box, "start": start, "back": back}
+	call_deferred("_fit_modal")
+
+const MEDAL_WORDS := {"bronze": "🥉 Bronze: answer %d of its sums quick and right, twice each.",
+	"silver": "🥈 Silver: know all its sums by heart, quick every time.", "gold": "🥇 Gold: still quick a week after silver."}
+
+## The Rest start page: category and title, the level and how far along it is, the section's medals and an empty slot
+## for the next medal (what it takes), and the "Ready, set, go!" button.
+func _rest_start_page() -> Control:
+	var v := UI.vbox(8)
+	var li: Dictionary = G.math.level_info(G._learn())
+	if li.is_empty(): return v
+	var pc := UI.card(Color("f3f7ea"))
+	var pv := UI.vbox(6)
+	pc.add_child(pv)
+	var t := UI.label("%s %s — %s" % [li["category_emoji"], li["category"], li["rank"]], 20, UI.INK, true)
+	t.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	pv.add_child(t)
+	var lt := UI.label("%s %s · level %d of %d" % [li["section_emoji"], li["section"], li["pos"], li["count"]], 16, UI.MUTED, true)
+	lt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	pv.add_child(lt)
+	var big := UI.label("%s %s" % [li["emoji"], li["name"]], 30, UI.INK, true)
+	big.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	pv.add_child(big)
+	var pr := UI.hbox(8)
+	pr.alignment = BoxContainer.ALIGNMENT_CENTER
+	pr.add_child(UI.bar(float(li["got"]) / float(maxi(1, int(li["need"]))), 300, 16, UI.AMBER))
+	pr.add_child(UI.label("%d / %d" % [li["got"], li["need"]], 16, UI.MUTED))
+	pv.add_child(pr)
+	# the medals of this section so far, then an empty slot for the next one
+	var fl := HFlowContainer.new()
+	fl.alignment = FlowContainer.ALIGNMENT_CENTER
+	fl.add_theme_constant_override("h_separation", 10)
+	fl.add_theme_constant_override("v_separation", 10)
+	for cs in G.math.overview(G._learn()):
+		for ss in cs["sections"]:
+			if str(ss["name"]) != str(li["section"]) or not ss["levels"].any(func(e): return e["id"] == li["id"]): continue
+			for lv in ss["levels"]:
+				if not lv["bronze"]: continue
+				var mt := _medal_tile("🥇" if lv["gold"] else ("🥈" if lv["silver"] else "🥉"), lv, false)
+				mt.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+				fl.add_child(mt)
+	var nxt := "gold" if li["silver"] else ("silver" if li["bronze"] else "bronze")
+	var slot := UI.card(Color(1, 1, 1, 0.6), UI.LINE)
+	slot.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	var sv := UI.vbox(2)
+	slot.add_child(sv)
+	var md := UI.label({"bronze": "🥉", "silver": "🥈", "gold": "🥇"}[nxt], 44)
+	md.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	md.modulate = Color(1, 1, 1, 0.3)
+	sv.add_child(md)
+	var nl := UI.label("Next: %s %s" % [li["emoji"], li["name"]], 13, UI.MUTED, true)
+	nl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	nl.custom_minimum_size = Vector2(112, 0)
+	sv.add_child(nl)
+	fl.add_child(slot)
+	pv.add_child(fl)
+	var how := str(MEDAL_WORDS[nxt])
+	if nxt == "bronze": how = how % int(li["need"])
+	pv.add_child(UI.label(how, 16, UI.GREEN_DARK, true))
+	if int(li["best"]) > 0: pv.add_child(UI.label("🔥 Best streak so far: %d quick sums in a row" % int(li["best"]), 15, UI.MUTED, true))
+	v.add_child(pc)
+	var go := UI.button("🏁 Ready, set, go!", _rest_go, true, UI.GREEN, 26)
+	go.custom_minimum_size = Vector2(0, 72)
+	v.add_child(go)
+	return v
+
+## "Ready … set … go!", then the sums.
+func _rest_go() -> void:
+	if _rest.is_empty() or not _rest.has("start"): return
+	var box: Control = _rest["box"]
+	var start: Control = _rest["start"]
+	var at := start.get_index()
+	start.queue_free()
+	_rest.erase("start")
+	var cd := UI.label("Ready…", 54, UI.GREEN_DARK)
+	cd.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	cd.custom_minimum_size = Vector2(0, 160)
+	cd.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	box.add_child(cd)
+	box.move_child(cd, at)
+	_rest["count"] = cd
+	call_deferred("_fit_modal")
+	for w in ["Set…", "Go! 🏁"]:
+		await get_tree().create_timer(0.6).timeout
+		if _rest.get("count") != cd: return            # the child left already
+		cd.text = w
+	await get_tree().create_timer(0.45).timeout
+	if _rest.get("count") != cd: return
+	_rest.erase("count")
+	cd.queue_free()
 	var pad = Pad.new()
 	pad.setup(G.math, G._learn(), G.rng, {"scale": float(G.settings.get("restTimerScale", 1.0)), "streak": G.perk_on("perk_streak"),
 		"colors": {"ink": UI.INK, "muted": UI.MUTED, "green": UI.GREEN, "green_dark": UI.GREEN_DARK, "red": UI.RED, "amber": UI.AMBER, "line": UI.LINE}})
 	box.add_child(pad)
+	box.move_child(pad, at)
 	pad.before_next.connect(_rest_before_next)
 	pad.answered.connect(_rest_answered)
-	box.add_child(UI.soft_button("⬅️ Back to the farm", _close_modal, true, 17))
-	_rest = {"eb": eb, "pad": pad}
+	_rest["pad"] = pad
 	pad.next()
 	call_deferred("_fit_modal")
 
 func _rest_before_next() -> void:
-	if _rest.is_empty(): return
+	if not _rest.has("pad"): return
 	if float(G.S["energy"]) >= G.energy_max() - 0.01: _rest["pad"].stop("Full of energy! Back to work.")
 	call_deferred("_fit_modal")
 
