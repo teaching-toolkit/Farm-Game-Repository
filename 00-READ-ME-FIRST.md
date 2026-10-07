@@ -27,7 +27,7 @@ A task that is not written down here does not exist for the next chat.
 ## 1. The project in a few lines
 
 **Farm Quiz Game** — an educational farming game for an **8-year-old**, played on an **iPad held upright**. The player
-rebuilds a burnt-down farm from a tent and five wheat seeds to a master farm, over five chapters, each ending with a pet
+rebuilds a burnt-down farm from a tent and one wheat seed to a master farm, over five chapters, each ending with a pet
 coming home (bunny, tortoise, goat, pony, alpaca). Learning *is* the economy:
 
 - **Time Quiz** — general-knowledge questions from packs the parent chooses; each right answer moves farm time one step.
@@ -105,9 +105,12 @@ timeout 170 $G --headless --path . -s res://tests/learn_sim.gd               # p
 ```
 
 Expected now: smoke test passes; the bot reaches chapter 3 after about 290–415 questions and chapter 5 (with the first four
-pets; the alpaca is chapter 5's own goal, which the bot stops before) after about 680–765. The bot plays randomly, so the
-number changes from run to run (7 Oct 2026, cloud: 678, 715, 763; earlier 729). A bot run takes about 75 seconds.
+pets; the alpaca is chapter 5's own goal, which the bot stops before) after about 680–800. The bot plays randomly, so the
+number changes from run to run (7 Oct 2026, cloud: 678, 715, 763, 774, 689, 793; earlier 729). A bot run takes about 75 seconds.
 The smoke test prints its findings and ends with a few "leaked" warnings; those are harmless.
+(`--check-only` reports "Identifier not found: Sound" for scripts that use the `Sound` autoload; that one is expected.)
+If the smoke test prints **nothing** and only stops at the timeout, a script has a parse error (the test then hangs instead
+of failing). Find it with `$G --headless --path . --check-only -s res://tests/ui_smoke.gd` (or the script you changed).
 
 ### 4.3 Screenshots
 
@@ -135,7 +138,12 @@ call (background processes die when the call ends); then check that `web-build/i
 ### 4.5 After changing content
 
 - Quiz questions: run `python3 tools/quiz_ids.py` (gives new questions ids, updates `data/i18n/`). Never change or reuse an id.
-- Progression data: check it in the explorer (copy the JSON to `progression/` too).
+- Any text the player sees (code or data): run `python3 tools/i18n.py`, then translate what it reports as missing (German
+  files in `data/i18n/`; see the prototype README, *Languages*). New interface text in the code goes inside `tr("…")`.
+- Progression data: run `python3 tools/sync_progression.py` (copies it to `progression/` and into the explorer), then check it in
+  the explorer. In a cloud session the explorer runs headless: `cd ../progression && python3 -m http.server 8765 &` then
+  `NODE_PATH=$(npm root -g) node ../godot-prototype/tools/explorer_check.js http://localhost:8765/progression-explorer.html`
+  (prints the playthrough hours, answers and checks).
 - New pictures in `art-inbox/`: `python3 tools/import_art.py all` (needs Pillow, numpy, scipy); then `python3 tools/art_list.py`.
 - Update the design document (describe the game, not the change), add a row to `PROJECT-LOG.md`, and update §5–7 of this file
   (see the standing rule at the top: do this as you go, not only at the end).
@@ -176,6 +184,8 @@ on the Mac (W2).
 7 Oct 2026 (after 2.0): added `Build web version.command`, `Publish web version.command`, `CLAUDE.md`, the root `.gitignore`
 and `godot-prototype/tools/setup_godot.sh` for cloud sessions. No game changes; `web-build/` still matches the code.
 
+7 Oct 2026 (group A): the five small fixes A1–A5 are in the code (see the log); `web-build/` does **not** match the code now.
+
 7 Oct 2026 (cloud check): a fresh cloud session was set up and verified (smoke test, bot, screenshot); the cloud notes in
 this file and `CLAUDE.md` were corrected (see the log). No game changes; `web-build/` still matches the code.
 
@@ -201,58 +211,61 @@ Questions still open with the parent are marked ❓.
 - **W3. Play-test round 8 on the iPad** and collect the parent's findings (pace, picture questions, stoking, loads, the bar
   explanations).
 
-### A. Small fixes and clarity (parent's list, 7 Oct 2026)
+### A. Small fixes and clarity (parent's list, 7 Oct 2026) — done 7 Oct 2026, waiting for the parent's check
 
-- **A1. Water bar in the planting window** doesn't show the empty cubes (the other bars do).
-- **A2. Tapping a patch that isn't ready** in a field that is (e.g. the 4th patch of the Home Field) should say which patch it
-  is and why it can't be used yet (still overgrown with weeds; what clears it).
-- **A3. Say why a perk was given.** The "new perk" pop-up shows the perk's effect ("Confetti when you harvest everything at
-  once"), which reads like the reason; it should also say what earned it ("You harvested 40 times!"). Same in the album.
-- **A4. No dark-green forest overlay.** Drop the diagonal dark-green area over the grass (`FOREST`/`FOREST_SHADE` in
-  `farm_map.gd`); the trees alone mark the forest and spread over the space it used to cover. The forest must stay tappable.
-- **A5. Knowledge-review share in ⚙️ Settings** (`knowledgeReviewShare`, now only in `data/settings.json`): a control for the
-  share of Time Quiz questions that come from the cards read vs. the parent's packs. ❓ protect parent settings from the child?
+A1 planting water bar shows its missing cubes · A2 tapping an overgrown patch says which one, why and what clears it · A3 perks
+say why they came · A4 no dark-green forest floor · A5 the knowledge-review share in ⚙️ Settings. Details in `PROJECT-LOG.md`.
+Parent's answer: protect them with a simple password → done 7 Oct 2026: the grown-up part of ⚙️ Settings (question share,
+dynamic difficulty, learning record, new game) asks for `parentPassword` (now "farm"; the hint shows it for now).
 
-### B. The opening (parent's list)
+### B. The opening (parent's list) — done 7 Oct 2026, waiting for the parent's check
 
-- **B1. Start with one usable patch and one wheat seed**; every other patch overgrown. Changes the first minutes of the game:
-  re-check the first goals, the bot's numbers, the explorer's start and decision 4 in the log (5 seeds). One seed = **one
-  plant** (parent, 7 Oct 2026); make sure the first goals and the market still keep the child moving.
+B1: the game starts with **one** cleared patch and **one** wheat seed (one plant). The missing two patches come from a new first
+clearing job, *Clear the thistles (2 patches)* (4 steps, 6 energy). Bot: chapter 3 after ~280–300, chapter 5 after 629–752
+questions (same range as before); explorer: 21.2 h, 1,417 Time Quiz answers.
 
-### C. Rest (parent's list)
+### C. Rest (parent's list) — done 7 Oct 2026, waiting for the parent's check
 
-- **C1. A start screen before the sums** (from the energy bar or the bed/tent): where the child stands in the category (level,
-  progress to the next), the medals so far and an empty slot for the next one with a short description, and a
-  "Ready, set, go!" start button.
-- **C2. The question left on screen when the child goes back to the farm doesn't count** for the spaced repetition (no
-  "wrong", no "slow", no change to its interval).
+C1 a start page (category and title, level and progress, the section's medals and an empty slot for the next one with what
+it takes, best streak, "🏁 Ready, set, go!" with a countdown). C2 a sum left on screen when the child goes back to the farm
+leaves no trace in the learning record (`pick_state`/`abandon` in the learning kit).
 
-### D. Every window as a grid (parent's list)
+### D. Every window as a grid (parent's list) — done 7 Oct 2026, waiting for the parent's check
 
-- **D1.** The planting window, and then every window with actions, uses a grid of tiles like the store and the market.
-  Done before E so each text is touched once.
+Tiles with the button at the bottom (`_tile` + `_tile_button` in `main.gd`): station recipes, planting (one tile per crop),
+weeds and stones on a patch, goals and optional upgrades (`_node_grid`, two per row), polish, animals (collect, muck out),
+library cards (`_card_tile`). Still lists: the woodpile's "+ Stick" chips, "Weed all / Pick stones", the quest book.
 
-### E. Languages (parent's list; replaces the old "German" task)
+### E. Languages (parent's list) — done 7 Oct 2026, waiting for the parent's proofreading
 
-- **E1. A language setting in ⚙️** that switches the *whole* game: interface, items, places, recipes, cards, card questions,
-  quiz packs. Modular: one file per language (`data/i18n/<lang>.json`), an id for every text, English as the fallback, so a
-  new language is just a new file. The quiz packs already work this way (`quiz-de.json`).
-- **E2. German texts** (Claude drafts in simple, child-friendly German; the parent proofreads) for everything (about 80 interface lines in the scripts, every name and description in
-  `farm-progression.json`, the 67 cards and their 201 questions).
+E1 the system: ⚙️ Settings → 🇬🇧 English / 🇩🇪 Deutsch (per device) switches the whole game; files per language in `data/i18n/`;
+`tools/i18n.py` keeps them complete. E2 German: all 560 interface texts, 2,492 game texts (names, descriptions, 67 card pages,
+201 card questions with answers and explanations, perks, postcards …) and 125 Rest-sum texts, drafted by Claude in simple
+German with "du". **For the parent:** proofread (easiest in the game with the language on Deutsch, or in `data/i18n/*-de.json`);
+❓ Swiss spelling — "ss" instead of "ß" (the quiz packs and the new texts use "ß" for now; one command can switch all)?
 
-### F. Sound and music (parent's list)
+### F. Sound and music (parent's list) — system done 7 Oct 2026; waiting for the sound files
 
-- **F1. Sound effects for everything a game usually has** (taps, buttons, harvest, sell, coins, build, right/wrong answer,
-  new thing, level up, animals, water, chopping, digging, footsteps …), open-licence files (CC0 preferred). Today the game makes
-  a few sounds itself, only with the "Farm sounds" perk. Parent's decision (7 Oct 2026): the basic sounds and music are on
-  from the start; the optional, extra-fun sounds are held back as **perks** (not only Ella's), often paired with something to
-  see, like the lightning for quick Rest sums: animals that make a sound when tapped and now and then by themselves, etc.
-- **F2. Background music**: open-licence tracks that fit the game, by situation (farm by season, Time Quiz, Rest,
-  celebrations), with gentle cross-fades. Licences: CC0 and CC-BY (parent, 7 Oct 2026), with a credits page in ⚙️; every file's
-  source, author and licence recorded next to it. The parent listens to a shortlist first. Ask before downloading.
-- **F3. Settings:** music on/off (and separately the sound effects). Keep the web build small (Ogg, short loops).
+Done: `scripts/sound.gd` (autoload `Sound`) plays everything from `data/sounds.json` — 40 effects and 6 music tracks
+(farm by season, Time Quiz, Rest), music cross-fades, a Music and an Effects bus, ⚙️ Settings: 🎵 Music on/off, 🔔 Sounds
+on/off (per device), 🎼 Credits (sounds, music, fonts). Everyday sounds for everyone; the fun extras belong to perks (animal
+voices = *Farm sounds*, now re-described; thunder, streak, coin shower, party popper, rainbow, sparkles, breeze). Until
+files are there, the game's own little sounds stand in (tap, right, wrong, harvest, coin, build, level, medal, lightning).
+**Waiting:** the files. This cloud machine cannot reach kenney.nl, opengameart.org, bigsoundbank.com or incompetech.com (7 Oct
+2026). Either the parent downloads what `sound-inbox/README.md` lists into `sound-inbox/` (four Kenney packs, 12 single
+sounds, 6 music loops — the parent picks the music), or allows those four domains for cloud sessions; then run
+`python3 tools/import_sounds.py` and `$G --headless --path . --import`, listen, and adjust volumes in `data/sounds.json`.
 
-### G. The farmer as an actor (parent's list)
+### G. The farmer as an actor (parent's list) — done 7 Oct 2026; poses can be tuned by eye
+
+Done: `scripts/actor.gd` plays acts from `data/acts.json` (25 poses, 9 props, 14 acts: weed, plant, harvest, dig, chop,
+build, cook, craft, collect, water, sell, read, rest, cheer). The farmer has knees, a bending waist and hands that hold
+props (bucket, seed bag, basket, axe, hammer, shovel, spoon, book, coin, all made of simple shapes). Hooked in: what arrives
+from a patch, recipe, animal or water; planting; reading; Rest; selling; celebrations; new things built. A new act or a tap
+on the ground stops the one playing. To look at an act: `--act=plant@patch0` (or `@<place>`) with `--shotframes=N`;
+all poses side by side: `res://tests/pose_sheet.tscn`. Still open: the parent watches the acts on the iPad and says which
+look wrong or too fast (each is a few numbers in `data/acts.json`).
+
 
 - **G1. Pantomime.** After a tap, the farmer walks to the place and acts out what was ordered (kneeling and pulling weeds,
   sowing, fetching the bucket from the pond and carrying it to the field and emptying it …). The game's numbers have already
@@ -264,7 +277,8 @@ Questions still open with the parent are marked ❓.
 
 - **H1. A list of other kinds of benefits** for the upgrades (many now only cut energy): more harvest, better quality/price,
   faster growing, fewer pests, more storage, new recipes, longer freshness, luck, things the farmer can show … For the parent
-  to choose from before any data changes.
+  to choose from before any data changes. **Written:** `progression/upgrade-benefits-ideas.md` (7 Oct 2026); waiting for the
+  parent's choice.
 
 ### Later (older tasks)
 
@@ -293,5 +307,5 @@ Questions still open with the parent are marked ❓.
 ## 7. Key numbers right now
 
 Data v0.8: 141 items, 424 nodes, 106 recipes, 38 stations, 67 cards in 12 books, 22 polish jobs, 58 helpers, 28 side quests.
-Explorer playthrough: about 21 hours, ~1,416 Time Quiz answers, ~1,380 Rest answers; pets at about 1.6 / 5.8 / 12 / 17 / 20 h.
+Explorer playthrough: about 21.2 hours, ~1,417 Time Quiz answers, ~1,380 Rest answers; pets at about 1.6 / 5.8 / 12 / 17 / 20 h.
 Quiz packs: Farm basics (FRM, 4), Continents (CON, 12), Farm pictures (PIC, 18) + card questions KNW-001…201.

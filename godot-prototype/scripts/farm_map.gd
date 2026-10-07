@@ -14,13 +14,11 @@ const UI = preload("res://scripts/ui.gd")
 const Slot = preload("res://scripts/slot.gd")
 const IsoField = preload("res://scripts/iso_field.gd")
 const Avatar = preload("res://scripts/avatar.gd")
+const Actor = preload("res://scripts/actor.gd")
 const Fx = preload("res://scripts/fx.gd")
 const LAYOUT_PATH := "res://data/map_layout.json"
 const GRASS := {"spring": Color("9cc86a"), "summer": Color("b3c95c"), "autumn": Color("c4b46a"), "winter": Color("dfe8e6")}
 const GRASS_TINT := {"spring": Color(1, 1, 1), "summer": Color(1.05, 1.03, 0.85), "autumn": Color(1.1, 0.95, 0.7), "winter": Color(0.95, 1.0, 1.08)}
-const FOREST := {"spring": Color("5f8f43"), "summer": Color("648d3e"), "autumn": Color("8a7a3c"), "winter": Color("b9c9c4")}
-## the forest floor is the same grass, shaded darker (same as the layout editor)
-const FOREST_SHADE := {"spring": Color(0.11, 0.25, 0.086, 0.42), "summer": Color(0.12, 0.25, 0.07, 0.42), "autumn": Color(0.25, 0.19, 0.06, 0.42), "winter": Color(0.16, 0.26, 0.3, 0.3)}
 const FENCES := [["", Color(0, 0, 0, 0), 0.0], ["stick_fence", Color("8a6239"), 3.0], ["wattle_fence", Color("9a7444"), 5.0],
 	["picket_fence", Color("f4efe3"), 5.0], ["stone_wall", Color("9a9a92"), 8.0], ["hedge_row", Color("3f7a34"), 10.0]]
 const EXTEND := 1500.0   # ground shapes that touch the edge continue beyond it (wide or tall screens)
@@ -48,6 +46,7 @@ var _cat := {"state": "", "until": 0.0, "target": Vector2.ZERO, "frame": 0.0}
 var _cat_sort := 0.0
 var road_badge: PanelContainer
 var avatar                    # the farmer: walks to wherever the player taps (scripts/avatar.gd)
+var actor                     # … and acts out what the player did there (scripts/actor.gd, data/acts.json)
 var perk_fx                   # butterflies, sparkles, rainbow, season breeze (fx.gd MapFx)
 var astar := AStarGrid2D.new()
 var _grid_sig := ""
@@ -170,6 +169,9 @@ func _ready() -> void:
 	avatar.map = self
 	avatar.feet = Vector2(float(L.get("avatar", {}).get("x", 417)), float(L.get("avatar", {}).get("y", 262)))
 	_sort_in(avatar, avatar.feet.y)
+	actor = Actor.new()
+	actor.avatar = avatar
+	add_child(actor)
 	resized.connect(_layout)
 	_layout()
 
@@ -196,7 +198,7 @@ func _load_layout() -> void:
 	var txt := FileAccess.get_file_as_string(LAYOUT_PATH)
 	var d = JSON.parse_string(txt) if txt != "" else null
 	if typeof(d) != TYPE_DICTIONARY or int(d.get("version", 1)) < 2:
-		push_warning("map_layout.json missing, broken or old — using an empty farm")
+		push_warning(tr("map_layout.json missing, broken or old — using an empty farm"))
 		d = {"version": 2, "size": {"w": 834, "h": 1000}, "tile": 88, "ground": {}, "fields": [{"x": 417, "y": 616}],
 			"places": {}, "deco": []}
 	L = d
@@ -258,6 +260,11 @@ func spot_point(sid: String) -> Vector2:
 			var b := pts[pts.size() - 1].clamp(Vector2.ZERO, design)
 			return (a + b) / 2.0
 	return design / 2.0
+
+## Where the farmer stands to do something at a place: just in front of it.
+func stand_point(sid: String) -> Vector2:
+	if slots.has(sid): return slots[sid].anchor + Vector2(0, 14)
+	return spot_point(sid)
 
 ## Middle of patch k of field f, in farm coordinates.
 func patch_point(f: int, k: int) -> Vector2:
@@ -389,7 +396,7 @@ func refresh_fields(G) -> void:
 	var any_growing := total > 0
 	pests_box.visible = any_growing and share >= 0.005
 	pest_lbl.text = "🐦 %d%%" % int(round(share * 100.0))
-	pests_box.tooltip_text = "Pests eat about this much of what is growing, every question."
+	pests_box.tooltip_text = tr("Pests eat about this much of what is growing, every question.")
 	_layout_pill()
 	var rl := snappedf(G.g("roadLevel", 1.0), 0.5)
 	if rl != road_level:
@@ -477,7 +484,6 @@ func _draw_grass_bits() -> void:
 ## Ground shapes in farm coordinates: forest, road, the house yard, shadows and fences of the fields.
 func _draw_board() -> void:
 	var gr: Dictionary = L.get("ground", {})
-	var grass_tex := Art.tex("tiles", "grass")
 	var tint: Color = GRASS_TINT.get(season, Color.WHITE)
 	# soft patches of the other grass pictures, so the meadow is not the same everywhere (fixed places on the farm)
 	var r := RandomNumberGenerator.new()
@@ -487,11 +493,7 @@ func _draw_board() -> void:
 		if gt == null: continue
 		for _k in range(7):
 			_grass_blob(Vector2(r.randf() * design.x, r.randf() * design.y), r.randf_range(80, 170), gt, tint)
-	# the forest floor: the same grass, shaded darker
-	var poly := forest_poly()
-	if poly.size() >= 3:
-		if grass_tex: _textured(poly, grass_tex, tint)
-		board.draw_colored_polygon(poly, FOREST_SHADE.get(season, FOREST_SHADE["spring"]) if grass_tex else FOREST.get(season, FOREST["spring"]))
+	# the forest has no floor of its own: its trees stand on the meadow (forest_poly is still where taps open the forest)
 	_draw_grass_bits()
 	# the village road: a band along a line, as good as it has been made
 	_draw_road()
@@ -892,14 +894,17 @@ func _cat_tick(delta: float) -> void:
 # ------------------------------------------------------------------ the farmer walking about
 ## The grass (or road, or forest floor) was tapped at p (farm coordinates): the farmer walks there.
 func ground_tapped(p: Vector2) -> void:
+	if actor: actor.stop()
 	if avatar: avatar.walk_to(p)
 
 func _walk_to_spot(sid: String) -> void:
 	if avatar == null or not slots.has(sid): return
+	if actor: actor.stop()
 	avatar.walk_to(slots[sid].anchor + Vector2(0, 14))
 
 func _walk_to_patch(_a: String, k: int, fv) -> void:
 	if avatar == null: return
+	if actor: actor.stop()
 	avatar.walk_to(fv.position + fv.patch_center(k))
 
 func _cell(p: Vector2) -> Vector2i:
@@ -1001,6 +1006,7 @@ func rainbow() -> void:
 func sparkle_global(gp: Vector2) -> void:
 	if perk_fx == null or not perk_fx.on.get("sparkles", false): return
 	perk_fx.sparkle(board.get_global_transform().affine_inverse() * gp)
+	Sound.play("sparkle")
 
 ## Catches taps on the ground (it lies under everything else, so places and patches come first): the farmer walks
 ## there; the forest floor and the road also open their sheet.

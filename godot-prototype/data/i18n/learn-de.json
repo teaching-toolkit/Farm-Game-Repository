@@ -1,0 +1,502 @@
+{
+ "categories/0/name": {
+  "en": "Plus & minus",
+  "de": "Plus & Minus"
+ },
+ "categories/0/sections/0/name": {
+  "en": "By heart",
+  "de": "Auswendig"
+ },
+ "categories/0/sections/0/levels/0/name": {
+  "en": "Tiny sums",
+  "de": "Winzige Rechnungen"
+ },
+ "categories/0/sections/0/levels/1/name": {
+  "en": "Take away up to 5",
+  "de": "Minus bis 5"
+ },
+ "categories/0/sections/0/levels/2/name": {
+  "en": "Sums up to 10",
+  "de": "Plus bis 10"
+ },
+ "categories/0/sections/0/levels/3/name": {
+  "en": "Take away up to 10",
+  "de": "Minus bis 10"
+ },
+ "categories/0/sections/0/levels/4/name": {
+  "en": "Doubles",
+  "de": "Verdoppeln"
+ },
+ "categories/0/sections/0/levels/5/name": {
+  "en": "Make ten",
+  "de": "Ergänze bis zehn"
+ },
+ "categories/0/sections/0/levels/6/name": {
+  "en": "Ten and a bit",
+  "de": "Zehn und ein bisschen"
+ },
+ "categories/0/sections/0/levels/7/name": {
+  "en": "Teens plus",
+  "de": "Plus im Zehner"
+ },
+ "categories/0/sections/0/levels/8/name": {
+  "en": "Teens minus",
+  "de": "Minus im Zehner"
+ },
+ "categories/0/sections/0/levels/9/name": {
+  "en": "Jump over ten (+)",
+  "de": "Über die Zehn (+)"
+ },
+ "categories/0/sections/0/levels/10/name": {
+  "en": "Jump over ten (-)",
+  "de": "Über die Zehn (-)"
+ },
+ "categories/0/sections/0/levels/11/name": {
+  "en": "Whole tens",
+  "de": "Ganze Zehner"
+ },
+ "categories/0/sections/0/levels/12/name": {
+  "en": "Tens to a hundred",
+  "de": "Zehner bis hundert"
+ },
+ "categories/0/sections/1/name": {
+  "en": "Working it out",
+  "de": "Ausrechnen"
+ },
+ "categories/0/sections/1/levels/0/name": {
+  "en": "Big number plus a small one",
+  "de": "Große Zahl plus kleine"
+ },
+ "categories/0/sections/1/levels/1/name": {
+  "en": "Big number minus a small one",
+  "de": "Große Zahl minus kleine"
+ },
+ "categories/0/sections/1/levels/2/name": {
+  "en": "Plus whole tens",
+  "de": "Plus ganze Zehner"
+ },
+ "categories/0/sections/1/levels/3/name": {
+  "en": "Over the next ten (+)",
+  "de": "Über den nächsten Zehner (+)"
+ },
+ "categories/0/sections/1/levels/4/name": {
+  "en": "Back over the ten (-)",
+  "de": "Zurück über den Zehner (-)"
+ },
+ "categories/0/sections/1/levels/5/name": {
+  "en": "Two big numbers (+)",
+  "de": "Zwei große Zahlen (+)"
+ },
+ "categories/0/sections/1/levels/6/name": {
+  "en": "Two big numbers (-)",
+  "de": "Zwei große Zahlen (-)"
+ },
+ "categories/0/sections/1/levels/7/name": {
+  "en": "Big sums with a carry",
+  "de": "Große Rechnungen mit Übertrag"
+ },
+ "categories/0/sections/1/levels/8/name": {
+  "en": "Big take-aways with borrowing",
+  "de": "Großes Minus mit Entbündeln"
+ },
+ "categories/0/sections/1/levels/9/name": {
+  "en": "Fill up to a hundred",
+  "de": "Ergänze bis hundert"
+ },
+ "categories/0/sections/1/levels/10/name": {
+  "en": "Whole hundreds",
+  "de": "Ganze Hunderter"
+ },
+ "categories/0/sections/1/levels/11/name": {
+  "en": "Hundreds and a bit",
+  "de": "Hunderter und ein bisschen"
+ },
+ "categories/0/sections/1/levels/12/name": {
+  "en": "Three-digit numbers",
+  "de": "Dreistellige Zahlen"
+ },
+ "categories/1/name": {
+  "en": "Times & divide",
+  "de": "Mal & Geteilt"
+ },
+ "categories/1/sections/0/name": {
+  "en": "By heart",
+  "de": "Auswendig"
+ },
+ "categories/1/sections/0/levels/0/name": {
+  "en": "Times 1 and times 10",
+  "de": "Mal 1 und mal 10"
+ },
+ "categories/1/sections/0/levels/1/name": {
+  "en": "Times 2",
+  "de": "Mal 2"
+ },
+ "categories/1/sections/0/levels/2/name": {
+  "en": "Times 5",
+  "de": "Mal 5"
+ },
+ "categories/1/sections/0/levels/3/name": {
+  "en": "Squares",
+  "de": "Quadratzahlen"
+ },
+ "categories/1/sections/0/levels/4/name": {
+  "en": "Times 3 and 4",
+  "de": "Mal 3 und 4"
+ },
+ "categories/1/sections/0/levels/5/name": {
+  "en": "Times 6 and 9",
+  "de": "Mal 6 und 9"
+ },
+ "categories/1/sections/0/levels/6/name": {
+  "en": "Times 7 and 8",
+  "de": "Mal 7 und 8"
+ },
+ "categories/1/sections/0/levels/7/name": {
+  "en": "All the times tables",
+  "de": "Das ganze Einmaleins"
+ },
+ "categories/1/sections/0/levels/8/name": {
+  "en": "Divide by 2, 5 and 10",
+  "de": "Geteilt durch 2, 5 und 10"
+ },
+ "categories/1/sections/0/levels/9/name": {
+  "en": "Divide by 3 and 4",
+  "de": "Geteilt durch 3 und 4"
+ },
+ "categories/1/sections/0/levels/10/name": {
+  "en": "Divide by 6 to 9",
+  "de": "Geteilt durch 6 bis 9"
+ },
+ "categories/1/sections/0/levels/11/name": {
+  "en": "All divisions",
+  "de": "Alle Geteiltrechnungen"
+ },
+ "categories/1/sections/1/name": {
+  "en": "Working it out",
+  "de": "Ausrechnen"
+ },
+ "categories/1/sections/1/levels/0/name": {
+  "en": "Tens times",
+  "de": "Zehner mal"
+ },
+ "categories/1/sections/1/levels/1/name": {
+  "en": "Times and divide by 10 and 100",
+  "de": "Mal und geteilt durch 10 und 100"
+ },
+ "categories/1/sections/1/levels/2/name": {
+  "en": "Big times small",
+  "de": "Groß mal klein"
+ },
+ "categories/1/sections/1/levels/3/name": {
+  "en": "Share out big numbers",
+  "de": "Große Zahlen teilen"
+ },
+ "categories/1/sections/1/levels/4/name": {
+  "en": "Divide with a rest",
+  "de": "Teilen mit Rest"
+ },
+ "categories/1/sections/1/levels/5/name": {
+  "en": "Two big numbers times",
+  "de": "Zwei große Zahlen mal"
+ },
+ "categories/1/sections/1/levels/6/name": {
+  "en": "Hundreds times small",
+  "de": "Hunderter mal klein"
+ },
+ "categories/1/sections/1/levels/7/name": {
+  "en": "Share out hundreds",
+  "de": "Hunderter teilen"
+ },
+ "categories/2/name": {
+  "en": "Numbers",
+  "de": "Zahlen"
+ },
+ "categories/2/sections/0/name": {
+  "en": "By heart",
+  "de": "Auswendig"
+ },
+ "categories/2/sections/0/levels/0/name": {
+  "en": "Ten more, ten less",
+  "de": "Zehn mehr, zehn weniger"
+ },
+ "categories/2/sections/0/levels/1/name": {
+  "en": "Double and half",
+  "de": "Doppelt und halb"
+ },
+ "categories/2/sections/0/levels/2/name": {
+  "en": "A hundred more, a hundred less",
+  "de": "Hundert mehr, hundert weniger"
+ },
+ "categories/2/sections/1/name": {
+  "en": "Working it out",
+  "de": "Ausrechnen"
+ },
+ "categories/2/sections/1/levels/0/name": {
+  "en": "Round to tens",
+  "de": "Auf Zehner runden"
+ },
+ "categories/2/sections/1/levels/1/name": {
+  "en": "Round to hundreds",
+  "de": "Auf Hunderter runden"
+ },
+ "categories/2/sections/1/levels/2/name": {
+  "en": "Thousands",
+  "de": "Tausender"
+ },
+ "categories/2/sections/1/levels/3/name": {
+  "en": "Double and half of big numbers",
+  "de": "Doppelt und halb bei großen Zahlen"
+ },
+ "categories/3/name": {
+  "en": "Fractions",
+  "de": "Brüche"
+ },
+ "categories/3/sections/0/name": {
+  "en": "By heart",
+  "de": "Auswendig"
+ },
+ "categories/3/sections/0/levels/0/name": {
+  "en": "Half of",
+  "de": "Die Hälfte von"
+ },
+ "categories/3/sections/0/levels/1/name": {
+  "en": "Quarters, thirds and fifths of",
+  "de": "Viertel, Drittel und Fünftel von"
+ },
+ "categories/3/sections/0/levels/2/name": {
+  "en": "Make a whole",
+  "de": "Ergänze zum Ganzen"
+ },
+ "categories/3/sections/0/levels/3/name": {
+  "en": "Same amount, other pieces",
+  "de": "Gleich viel, andere Teile"
+ },
+ "categories/3/sections/0/levels/4/name": {
+  "en": "Fractions as decimals",
+  "de": "Brüche als Dezimalzahlen"
+ },
+ "categories/3/sections/1/name": {
+  "en": "Working it out",
+  "de": "Ausrechnen"
+ },
+ "categories/3/sections/1/levels/0/name": {
+  "en": "Some pieces of a number",
+  "de": "Ein paar Teile einer Zahl"
+ },
+ "categories/3/sections/1/levels/1/name": {
+  "en": "Add pieces of the same size",
+  "de": "Gleich große Teile zusammenzählen"
+ },
+ "categories/3/sections/1/levels/2/name": {
+  "en": "Make it simpler",
+  "de": "Kürzen"
+ },
+ "categories/4/name": {
+  "en": "Decimals & percent",
+  "de": "Dezimalzahlen & Prozent"
+ },
+ "categories/4/sections/0/name": {
+  "en": "By heart",
+  "de": "Auswendig"
+ },
+ "categories/4/sections/0/levels/0/name": {
+  "en": "Fill up to 1",
+  "de": "Ergänze bis 1"
+ },
+ "categories/4/sections/0/levels/1/name": {
+  "en": "Decimals times and divided by 10 and 100",
+  "de": "Dezimalzahlen mal und geteilt durch 10 und 100"
+ },
+ "categories/4/sections/0/levels/2/name": {
+  "en": "Easy percent",
+  "de": "Einfache Prozente"
+ },
+ "categories/4/sections/1/name": {
+  "en": "Working it out",
+  "de": "Ausrechnen"
+ },
+ "categories/4/sections/1/levels/0/name": {
+  "en": "Add and take away decimals",
+  "de": "Dezimalzahlen plus und minus"
+ },
+ "categories/4/sections/1/levels/1/name": {
+  "en": "Percent of amounts",
+  "de": "Prozent von Mengen"
+ },
+ "categories/5/name": {
+  "en": "Measures",
+  "de": "Größen"
+ },
+ "categories/5/sections/0/name": {
+  "en": "By heart",
+  "de": "Auswendig"
+ },
+ "categories/5/sections/0/levels/0/name": {
+  "en": "Time",
+  "de": "Zeit"
+ },
+ "categories/5/sections/0/levels/1/name": {
+  "en": "Lengths",
+  "de": "Längen"
+ },
+ "categories/5/sections/0/levels/2/name": {
+  "en": "Weights and liquids",
+  "de": "Gewichte und Flüssigkeiten"
+ },
+ "categories/5/sections/1/name": {
+  "en": "Working it out",
+  "de": "Ausrechnen"
+ },
+ "categories/5/sections/1/levels/0/name": {
+  "en": "Francs and Rappen",
+  "de": "Franken und Rappen"
+ },
+ "categories/5/sections/1/levels/1/name": {
+  "en": "Mixed units",
+  "de": "Gemischte Einheiten"
+ },
+ "categories/6/name": {
+  "en": "Powers & minus numbers",
+  "de": "Potenzen & Minuszahlen"
+ },
+ "categories/6/sections/0/name": {
+  "en": "By heart",
+  "de": "Auswendig"
+ },
+ "categories/6/sections/0/levels/0/name": {
+  "en": "Squares to 20",
+  "de": "Quadratzahlen bis 20"
+ },
+ "categories/6/sections/0/levels/1/name": {
+  "en": "Doubling up (powers of 2)",
+  "de": "Immer doppelt (Zweierpotenzen)"
+ },
+ "categories/6/sections/0/levels/2/name": {
+  "en": "Below zero",
+  "de": "Unter null"
+ },
+ "categories/6/sections/1/name": {
+  "en": "Working it out",
+  "de": "Ausrechnen"
+ },
+ "categories/6/sections/1/levels/0/name": {
+  "en": "Square roots",
+  "de": "Quadratwurzeln"
+ },
+ "categories/6/sections/1/levels/1/name": {
+  "en": "Bigger minus numbers",
+  "de": "Größere Minuszahlen"
+ },
+ "comments/booster/0": {
+  "en": "Here's an easy one! 💪",
+  "de": "Hier ist eine leichte! 💪"
+ },
+ "comments/booster/1": {
+  "en": "A quick one for you 😊",
+  "de": "Eine schnelle für dich 😊"
+ },
+ "comments/booster/2": {
+  "en": "You know this one! ⭐",
+  "de": "Die kennst du! ⭐"
+ },
+ "comments/struggling/0": {
+  "en": "Tricky ones today — take your time. 🙂",
+  "de": "Heute sind sie knifflig — lass dir Zeit. 🙂"
+ },
+ "comments/struggling/1": {
+  "en": "Every try makes your brain stronger! 🧠",
+  "de": "Jeder Versuch macht dein Gehirn stärker! 🧠"
+ },
+ "comments/struggling/2": {
+  "en": "Mistakes help you learn. Keep going! 🌱",
+  "de": "Aus Fehlern lernt man. Mach weiter! 🌱"
+ },
+ "comments/struggling/3": {
+  "en": "You're getting there! 🐢➡️🐇",
+  "de": "Du kommst voran! 🐢➡️🐇"
+ },
+ "comments/streak/5": {
+  "en": "5 quick ones in a row! ⚡",
+  "de": "5 schnelle hintereinander! ⚡"
+ },
+ "comments/streak/10": {
+  "en": "10 in a row! You're on fire! 🔥",
+  "de": "10 hintereinander! Du bist nicht zu bremsen! 🔥"
+ },
+ "comments/streak/20": {
+  "en": "20 in a row! Amazing! 🌟",
+  "de": "20 hintereinander! Unglaublich! 🌟"
+ },
+ "comments/streak/30": {
+  "en": "30 in a row!! A champion! 🏆",
+  "de": "30 hintereinander!! Ein Champion! 🏆"
+ },
+ "comments/known/0": {
+  "en": "You know {task} by heart now! 🌟",
+  "de": "Du kannst {task} jetzt auswendig! 🌟"
+ },
+ "comments/known/1": {
+  "en": "{task} — got it for good! ✅",
+  "de": "{task} — sitzt für immer! ✅"
+ },
+ "comments/levelUp": {
+  "en": "⭐ New level: {emoji} {name}!",
+  "de": "⭐ Neue Stufe: {emoji} {name}!"
+ },
+ "comments/fastTrack": {
+  "en": "You already know these — on to the next level! 🚀",
+  "de": "Die kannst du schon — weiter zur nächsten Stufe! 🚀"
+ },
+ "comments/medal": {
+  "en": "{medal} {medalName} medal: {emoji} {name}!",
+  "de": "{medal} {medalName}-Medaille: {emoji} {name}!"
+ },
+ "comments/trophy": {
+  "en": "🏆 Trophy: {category} · {section}!",
+  "de": "🏆 Pokal: {category} · {section}!"
+ },
+ "ranks/0/title": {
+  "en": "🌰 Seed",
+  "de": "🌰 Samenkorn"
+ },
+ "ranks/1/title": {
+  "en": "🌱 Sprout",
+  "de": "🌱 Keimling"
+ },
+ "ranks/2/title": {
+  "en": "🌿 Seedling",
+  "de": "🌿 Pflänzchen"
+ },
+ "ranks/3/title": {
+  "en": "🌳 Young tree",
+  "de": "🌳 Junger Baum"
+ },
+ "ranks/4/title": {
+  "en": "🌲 Tall tree",
+  "de": "🌲 Großer Baum"
+ },
+ "ranks/5/title": {
+  "en": "🏔️ Mighty oak",
+  "de": "🏔️ Mächtige Eiche"
+ },
+ "medals/bronze/name": {
+  "en": "Bronze",
+  "de": "Bronze"
+ },
+ "medals/silver/name": {
+  "en": "Silver",
+  "de": "Silber"
+ },
+ "medals/gold/name": {
+  "en": "Gold",
+  "de": "Gold"
+ },
+ "medals/trophy/name": {
+  "en": "Trophy",
+  "de": "Pokal"
+ },
+ "medals/crown/name": {
+  "en": "Crown",
+  "de": "Krone"
+ }
+}

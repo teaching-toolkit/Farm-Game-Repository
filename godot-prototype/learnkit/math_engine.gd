@@ -20,10 +20,13 @@ var levels: Dictionary = {}     # level id -> level (with "cat", "sec", "fluency
 var sections: Array = []        # [{"cat", "sec", "ids": [level ids]}]
 var _pools: Dictionary = {}     # level id -> {"keys": [task keys], "by": {key: [answer, text, hint]}}
 
-func load_curriculum(path := DEFAULT_PATH) -> void:
+## texts: translations to put over the curriculum's English texts, {"categories/0/name": "Plus & Minus", …} (a game's
+## language files; see the game's scripts/i18n.gd).
+func load_curriculum(path := DEFAULT_PATH, texts := {}) -> void:
 	var txt := FileAccess.get_file_as_string(path)
 	var d = JSON.parse_string(txt) if txt != "" else null
 	C = d if typeof(d) == TYPE_DICTIONARY else {"categories": []}
+	for p in texts: _put(C, str(p).split("/"), texts[p])
 	levels.clear()
 	sections.clear()
 	_pools.clear()
@@ -40,6 +43,16 @@ func load_curriculum(path := DEFAULT_PATH) -> void:
 				levels[lv["id"]] = lv
 				ids.append(lv["id"])
 			sections.append({"cat": cat["id"], "sec": sec["id"], "ids": ids, "name": sec.get("name", ""), "emoji": sec.get("emoji", "")})
+
+static func _put(o, parts: PackedStringArray, v) -> void:
+	for i in range(parts.size() - 1):
+		var k := parts[i]
+		if typeof(o) == TYPE_DICTIONARY: o = o.get(k, null)
+		elif typeof(o) == TYPE_ARRAY and k.is_valid_int() and int(k) < o.size(): o = o[int(k)]
+		else: return
+	var last := parts[parts.size() - 1]
+	if typeof(o) == TYPE_DICTIONARY and o.has(last): o[last] = v
+	elif typeof(o) == TYPE_ARRAY and last.is_valid_int() and int(last) < o.size(): o[int(last)] = v
 
 func cfg(k: String, def = null):
 	return C.get("srs", {}).get(k, def)
@@ -218,6 +231,16 @@ func _make(r: Dictionary, key: String, id: String, review: bool, booster: bool, 
 	return {"key": key, "answer": t[0], "q": t[1], "hint": t[2], "level": lvl, "review": review, "booster": booster,
 		"limit": limit_for(lv, t[0], scale), "keys": lv.get("keys", [])}
 
+## Picking a task moves a few turn counters (turn, since_new). A task left unanswered (the child went back to the farm)
+## must not count: the pad keeps pick_state() before asking and puts it back with restore_pick_state() if no answer came.
+func pick_state(L: Dictionary) -> Dictionary:
+	var r := rec(L)
+	return {"turn": int(r.get("turn", 0)), "since_new": int(r.get("since_new", 0))}
+
+func restore_pick_state(L: Dictionary, s: Dictionary) -> void:
+	var r := rec(L)
+	for k in s: r[k] = s[k]
+
 ## The next task. scale stretches the time for a quick answer (a parent setting).
 func question(L: Dictionary, rng: RandomNumberGenerator, scale := 1.0) -> Dictionary:
 	var r := rec(L)
@@ -336,13 +359,13 @@ func result(L: Dictionary, q: Dictionary, right: bool, quick: bool, rng: RandomN
 		var sec := _section_of(lvl)
 		var nxt := current(r, sec) if not sec.is_empty() else ""
 		var passed_fast: bool = int(lrec(r, lvl).get("n", 0)) <= int(cfg("fastTrackWithin", 12))
-		if nxt != "": fb["comment"] = _fill(str(com.get("levelUp", "⭐ New level: {emoji} {name}!")), levels[nxt])
-		else: fb["comment"] = _fill(str(com.get("medal", "")).replace("{medal}", "🥉").replace("{medalName}", "Bronze"), levels[lvl])
+		if nxt != "": fb["comment"] = _fill(str(com.get("levelUp", tr("⭐ New level: {emoji} {name}!"))), levels[nxt])
+		else: fb["comment"] = _fill(str(com.get("medal", "")).replace("{medal}", "🥉").replace("{medalName}", tr("Bronze")), levels[lvl])
 		if passed_fast: fb["comment"] = str(com.get("fastTrack", "")) + "  " + fb["comment"]
 	for m2 in fb["medals"]:
 		if m2["medal"] != "bronze":
 			var md: Dictionary = C.get("medals", {}).get(m2["medal"], {})
-			fb["comment"] = _fill(str(com.get("medal", "{medal} {medalName} medal: {emoji} {name}!")).replace("{medal}", str(md.get("emoji", ""))).replace("{medalName}", str(md.get("name", ""))), levels[m2["level"]])
+			fb["comment"] = _fill(str(com.get("medal", tr("{medal} {medalName} medal: {emoji} {name}!"))).replace("{medal}", str(md.get("emoji", ""))).replace("{medalName}", str(md.get("name", ""))), levels[m2["level"]])
 	for m3 in fb["medals"]:
 		var t := _trophy(r, str(m3["level"]), str(m3["medal"]))
 		if not t.is_empty(): fb["trophies"].append(t)
@@ -603,16 +626,16 @@ func _gen(lv: Dictionary) -> Array:
 		"mul_tens":
 			for a in range(2, 10):
 				for b in range(2, 10):
-					out.append(["%d × %d" % [a * 10, b], a * b * 10, "%d × %d = ?" % [a * 10, b], "%d × %d = %d, so %d × %d = %d" % [a, b, a * b, a * 10, b, a * b * 10]])
-					out.append(["%d × %d" % [a, b * 10], a * b * 10, "%d × %d = ?" % [a, b * 10], "%d × %d = %d, so %d × %d = %d" % [a, b, a * b, a, b * 10, a * b * 10]])
+					out.append(["%d × %d" % [a * 10, b], a * b * 10, "%d × %d = ?" % [a * 10, b], tr("%d × %d = %d, so %d × %d = %d") % [a, b, a * b, a * 10, b, a * b * 10]])
+					out.append(["%d × %d" % [a, b * 10], a * b * 10, "%d × %d = ?" % [a, b * 10], tr("%d × %d = %d, so %d × %d = %d") % [a, b, a * b, a, b * 10, a * b * 10]])
 		"pow10":
 			for _i in range(300):
 				var x := rng.randi_range(2, 99)
 				match rng.randi_range(0, 3):
-					0: out.append(["%d × 10" % x, x * 10, "%d × 10 = ?" % x, "× 10: every digit moves one place up → %d" % (x * 10)])
-					1: out.append(["%d × 100" % x, x * 100, "%d × 100 = ?" % x, "× 100: two places up → %d" % (x * 100)])
-					2: out.append(["%d ÷ 10" % (x * 10), x, "%d ÷ 10 = ?" % (x * 10), "÷ 10: one place down → %d" % x])
-					3: out.append(["%d ÷ 100" % (x * 100), x, "%d ÷ 100 = ?" % (x * 100), "÷ 100: two places down → %d" % x])
+					0: out.append(["%d × 10" % x, x * 10, "%d × 10 = ?" % x, tr("× 10: every digit moves one place up → %d") % (x * 10)])
+					1: out.append(["%d × 100" % x, x * 100, "%d × 100 = ?" % x, tr("× 100: two places up → %d") % (x * 100)])
+					2: out.append(["%d ÷ 10" % (x * 10), x, "%d ÷ 10 = ?" % (x * 10), tr("÷ 10: one place down → %d") % x])
+					3: out.append(["%d ÷ 100" % (x * 100), x, "%d ÷ 100 = ?" % (x * 100), tr("÷ 100: two places down → %d") % x])
 		"mul_2d1d":
 			for a in range(11, 50):
 				if a % 10 == 0: continue
@@ -655,28 +678,28 @@ func _gen(lv: Dictionary) -> Array:
 			var st := 10 if lv["kind"] == "ten_more" else 100
 			for _i in range(300):
 				var a5 := rng.randi_range(11, 89) if st == 10 else rng.randi_range(101, 899)
-				if rng.randf() < 0.5: out.append(["%d more than %d" % [st, a5], a5 + st, "%d more than %d = ?" % [st, a5], "%d + %d = %d" % [a5, st, a5 + st]])
-				elif a5 > st + 1: out.append(["%d less than %d" % [st, a5], a5 - st, "%d less than %d = ?" % [st, a5], "%d - %d = %d" % [a5, st, a5 - st]])
+				if rng.randf() < 0.5: out.append([tr("%d more than %d") % [st, a5], a5 + st, tr("%d more than %d = ?") % [st, a5], "%d + %d = %d" % [a5, st, a5 + st]])
+				elif a5 > st + 1: out.append([tr("%d less than %d") % [st, a5], a5 - st, tr("%d less than %d = ?") % [st, a5], "%d - %d = %d" % [a5, st, a5 - st]])
 		"double_half", "double_half_big":
 			var bigh: bool = lv["kind"] == "double_half_big"
 			for a6 in (range(11, 50) if not bigh else range(110, 500, 10)):
 				if a6 % (10 if not bigh else 100) == 0: continue
-				out.append(["double %d" % a6, a6 * 2, "double %d = ?" % a6, "%d + %d = %d" % [a6, a6, a6 * 2]])
+				out.append(["double %d" % a6, a6 * 2, tr("double %d = ?") % a6, "%d + %d = %d" % [a6, a6, a6 * 2]])
 			for n6 in (range(22, 99, 2) if not bigh else range(120, 1000, 20)):
-				out.append(["half of %d" % n6, n6 / 2, "half of %d = ?" % n6, "%d + %d = %d" % [n6 / 2, n6 / 2, n6]])
+				out.append([tr("half of %d") % n6, n6 / 2, tr("half of %d = ?") % n6, "%d + %d = %d" % [n6 / 2, n6 / 2, n6]])
 		"round10":
 			for a7 in range(11, 100):
 				if a7 % 10 == 0: continue
 				var lo := a7 - a7 % 10
 				var res := lo + 10 if a7 % 10 >= 5 else lo
-				out.append(["round %d to tens" % a7, res, "%d rounded to the nearest ten = ?" % a7, "%d is between %d and %d — %s" % [a7, lo, lo + 10, "a 5 or more rounds up" if a7 % 10 >= 5 else "closer to %d" % lo]])
+				out.append([tr("round %d to tens") % a7, res, tr("%d rounded to the nearest ten = ?") % a7, tr("%d is between %d and %d — %s") % [a7, lo, lo + 10, tr("a 5 or more rounds up") if a7 % 10 >= 5 else tr("closer to %d") % lo]])
 		"round100":
 			for _i in range(300):
 				var a8 := rng.randi_range(101, 989)
 				if a8 % 100 == 0: continue
 				var lo8 := a8 - a8 % 100
 				var res8 := lo8 + 100 if a8 % 100 >= 50 else lo8
-				out.append(["round %d to hundreds" % a8, res8, "%d rounded to the nearest hundred = ?" % a8, "%d is between %d and %d → %d" % [a8, lo8, lo8 + 100, res8]])
+				out.append([tr("round %d to hundreds") % a8, res8, tr("%d rounded to the nearest hundred = ?") % a8, tr("%d is between %d and %d → %d") % [a8, lo8, lo8 + 100, res8]])
 		"thousands":
 			for a9 in range(1, 10):
 				for b9 in range(1, 10):
@@ -686,66 +709,66 @@ func _gen(lv: Dictionary) -> Array:
 		"frac_of":
 			for d in lv.get("dens", [2]):
 				for k2 in range(2, 11):
-					out.append(["1/%d of %d" % [int(d), int(d) * k2], k2, "1/%d of %d = ?" % [int(d), int(d) * k2], "%d ÷ %d = %d" % [int(d) * k2, int(d), k2]])
+					out.append([tr("1/%d of %d") % [int(d), int(d) * k2], k2, tr("1/%d of %d = ?") % [int(d), int(d) * k2], "%d ÷ %d = %d" % [int(d) * k2, int(d), k2]])
 		"frac_of_any":
 			for d5 in [3, 4, 5, 6, 8, 10]:
 				for num in range(2, d5):
 					for k3 in range(2, 11):
-						out.append(["%d/%d of %d" % [num, d5, d5 * k3], num * k3, "%d/%d of %d = ?" % [num, d5, d5 * k3], "%d ÷ %d = %d,   %d × %d = %d" % [d5 * k3, d5, k3, k3, num, num * k3]])
+						out.append([tr("%d/%d of %d") % [num, d5, d5 * k3], num * k3, tr("%d/%d of %d = ?") % [num, d5, d5 * k3], "%d ÷ %d = %d,   %d × %d = %d" % [d5 * k3, d5, k3, k3, num, num * k3]])
 		"frac_whole":
 			for d6 in range(2, 11):
 				for a10 in range(1, d6):
-					out.append(["%d/%d +? 1" % [a10, d6], d6 - a10, "%d/%d + ?/%d = 1" % [a10, d6, d6], "1 = %d/%d, and %d - %d = %d" % [d6, d6, d6, a10, d6 - a10]])
+					out.append(["%d/%d +? 1" % [a10, d6], d6 - a10, "%d/%d + ?/%d = 1" % [a10, d6, d6], tr("1 = %d/%d, and %d - %d = %d") % [d6, d6, d6, a10, d6 - a10]])
 		"frac_equiv":
 			for f in [[1, 2], [1, 3], [2, 3], [1, 4], [3, 4], [1, 5], [2, 5], [3, 5], [4, 5]]:
 				for m2 in range(2, 6):
-					out.append(["%d/%d = ?/%d" % [f[0], f[1], f[1] * m2], f[0] * m2, "%d/%d = ?/%d" % [f[0], f[1], f[1] * m2], "%d × %d = %d, so %d × %d = %d" % [f[1], m2, f[1] * m2, f[0], m2, f[0] * m2]])
+					out.append(["%d/%d = ?/%d" % [f[0], f[1], f[1] * m2], f[0] * m2, "%d/%d = ?/%d" % [f[0], f[1], f[1] * m2], tr("%d × %d = %d, so %d × %d = %d") % [f[1], m2, f[1] * m2, f[0], m2, f[0] * m2]])
 		"frac_dec":
 			for f2 in [[1, 2, "0.5"], [1, 4, "0.25"], [3, 4, "0.75"], [1, 5, "0.2"], [2, 5, "0.4"], [3, 5, "0.6"], [4, 5, "0.8"], [1, 10, "0.1"], [3, 10, "0.3"], [7, 10, "0.7"], [9, 10, "0.9"], [1, 8, "0.125"]]:
-				out.append(["%d/%d as a decimal" % [f2[0], f2[1]], f2[2], "%d/%d = ? (as a decimal)" % [f2[0], f2[1]], "%d ÷ %d = %s" % [f2[0], f2[1], f2[2]]])
+				out.append([tr("%d/%d as a decimal") % [f2[0], f2[1]], f2[2], tr("%d/%d = ? (as a decimal)") % [f2[0], f2[1]], "%d ÷ %d = %s" % [f2[0], f2[1], f2[2]]])
 		"frac_add_same":
 			for d7 in range(3, 13):
 				for a11 in range(1, d7):
 					for b11 in range(1, d7 - a11 + 1):
-						out.append(["%d/%d + %d/%d" % [a11, d7, b11, d7], a11 + b11, "%d/%d + %d/%d = ?/%d" % [a11, d7, b11, d7, d7], "same pieces: %d + %d = %d" % [a11, b11, a11 + b11]])
-						if a11 > b11: out.append(["%d/%d - %d/%d" % [a11, d7, b11, d7], a11 - b11, "%d/%d - %d/%d = ?/%d" % [a11, d7, b11, d7, d7], "same pieces: %d - %d = %d" % [a11, b11, a11 - b11]])
+						out.append(["%d/%d + %d/%d" % [a11, d7, b11, d7], a11 + b11, "%d/%d + %d/%d = ?/%d" % [a11, d7, b11, d7, d7], tr("same pieces: %d + %d = %d") % [a11, b11, a11 + b11]])
+						if a11 > b11: out.append(["%d/%d - %d/%d" % [a11, d7, b11, d7], a11 - b11, "%d/%d - %d/%d = ?/%d" % [a11, d7, b11, d7, d7], tr("same pieces: %d - %d = %d") % [a11, b11, a11 - b11]])
 		"frac_simplify":
 			for f3 in [[1, 2], [1, 3], [2, 3], [1, 4], [3, 4], [1, 5], [2, 5], [3, 5], [4, 5], [1, 6], [5, 6]]:
 				for m3 in range(2, 5):
 					out.append(["%d/%d = ?/%d" % [f3[0] * m3, f3[1] * m3, f3[1]], f3[0], "%d/%d = ?/%d" % [f3[0] * m3, f3[1] * m3, f3[1]], "%d ÷ %d = %d" % [f3[0] * m3, m3, f3[0]]])
 		"dec_bonds":
-			for t3 in range(1, 10): out.append(["0.%d +? 1" % t3, _dec(1.0 - t3 / 10.0), "0.%d + ? = 1" % t3, "%d tenths + %d tenths = 10 tenths" % [t3, 10 - t3]])
+			for t3 in range(1, 10): out.append(["0.%d +? 1" % t3, _dec(1.0 - t3 / 10.0), "0.%d + ? = 1" % t3, tr("%d tenths + %d tenths = 10 tenths") % [t3, 10 - t3]])
 			for q5 in [25, 75, 50]: out.append(["0.%d +? 1" % q5, _dec(1.0 - q5 / 100.0), "0.%d + ? = 1" % q5, "%d hundredths + %d hundredths = 100 hundredths" % [q5, 100 - q5]])
 		"dec_pow10":
 			for _i in range(300):
 				var k4 := rng.randi_range(11, 99)
 				if k4 % 10 == 0: continue
 				match rng.randi_range(0, 3):
-					0: out.append(["%s × 10" % _dec(k4 / 10.0), k4, "%s × 10 = ?" % _dec(k4 / 10.0), "× 10: one place up"])
-					1: out.append(["%s × 100" % _dec(k4 / 100.0), k4, "%s × 100 = ?" % _dec(k4 / 100.0), "× 100: two places up"])
-					2: out.append(["%d ÷ 10" % k4, _dec(k4 / 10.0), "%d ÷ 10 = ?" % k4, "÷ 10: one place down"])
-					3: out.append(["%d ÷ 100" % k4, _dec(k4 / 100.0), "%d ÷ 100 = ?" % k4, "÷ 100: two places down"])
+					0: out.append(["%s × 10" % _dec(k4 / 10.0), k4, "%s × 10 = ?" % _dec(k4 / 10.0), tr("× 10: one place up")])
+					1: out.append(["%s × 100" % _dec(k4 / 100.0), k4, "%s × 100 = ?" % _dec(k4 / 100.0), tr("× 100: two places up")])
+					2: out.append(["%d ÷ 10" % k4, _dec(k4 / 10.0), "%d ÷ 10 = ?" % k4, tr("÷ 10: one place down")])
+					3: out.append(["%d ÷ 100" % k4, _dec(k4 / 100.0), "%d ÷ 100 = ?" % k4, tr("÷ 100: two places down")])
 		"pct_easy", "pct_any":
 			var ps: Array = [50, 25, 10, 20, 75] if lv["kind"] == "pct_easy" else [5, 15, 30, 35, 40, 45, 60, 70, 80, 90]
 			for p in ps:
 				for n7 in range(20, 410, 20):
 					if (int(p) * n7) % 100 != 0: continue
-					out.append(["%d%% of %d" % [int(p), n7], int(p) * n7 / 100, "%d%% of %d = ?" % [int(p), n7], "1%% of %d = %s,  so %d%% = %d" % [n7, _dec(n7 / 100.0), int(p), int(p) * n7 / 100]])
+					out.append(["%d%% of %d" % [int(p), n7], int(p) * n7 / 100, tr("%d%% of %d = ?") % [int(p), n7], tr("1%% of %d = %s,  so %d%% = %d") % [n7, _dec(n7 / 100.0), int(p), int(p) * n7 / 100]])
 		"dec_pm":
 			for _i in range(400):
 				var x1 := rng.randi_range(1, 99) / 4.0 if rng.randf() < 0.4 else rng.randi_range(5, 95) / 10.0
 				var x2 := rng.randi_range(1, 40) / 4.0 if rng.randf() < 0.4 else rng.randi_range(1, 50) / 10.0
-				if rng.randf() < 0.5: out.append(["%s + %s" % [_dec(x1), _dec(x2)], _dec(x1 + x2), "%s + %s = ?" % [_dec(x1), _dec(x2)], "whole numbers first, then the decimals"])
-				elif x1 > x2: out.append(["%s - %s" % [_dec(x1), _dec(x2)], _dec(x1 - x2), "%s - %s = ?" % [_dec(x1), _dec(x2)], "whole numbers first, then the decimals"])
+				if rng.randf() < 0.5: out.append(["%s + %s" % [_dec(x1), _dec(x2)], _dec(x1 + x2), "%s + %s = ?" % [_dec(x1), _dec(x2)], tr("whole numbers first, then the decimals")])
+				elif x1 > x2: out.append(["%s - %s" % [_dec(x1), _dec(x2)], _dec(x1 - x2), "%s - %s = ?" % [_dec(x1), _dec(x2)], tr("whole numbers first, then the decimals")])
 		"units_time":
 			for k5 in range(1, 6):
-				out.append(["minutes in %d h" % k5, 60 * k5, "%d h = ? min" % k5, "1 h = 60 min"])
-				out.append(["seconds in %d min" % k5, 60 * k5, "%d min = ? s" % k5, "1 min = 60 s"])
-				out.append(["%d min in h" % (60 * k5), k5, "%d min = ? h" % (60 * k5), "60 min = 1 h"])
+				out.append([tr("minutes in %d h") % k5, 60 * k5, tr("%d h = ? min") % k5, tr("1 h = 60 min")])
+				out.append([tr("seconds in %d min") % k5, 60 * k5, tr("%d min = ? s") % k5, tr("1 min = 60 s")])
+				out.append([tr("%d min in h") % (60 * k5), k5, tr("%d min = ? h") % (60 * k5), tr("60 min = 1 h")])
 			for k6 in range(1, 4):
-				out.append(["hours in %d days" % k6, 24 * k6, "%d days = ? h" % k6, "1 day = 24 h"])
-				out.append(["days in %d weeks" % k6, 7 * k6, "%d weeks = ? days" % k6, "1 week = 7 days"])
-				out.append(["months in %d years" % k6, 12 * k6, "%d years = ? months" % k6, "1 year = 12 months"])
+				out.append([tr("hours in %d days") % k6, 24 * k6, tr("%d days = ? h") % k6, tr("1 day = 24 h")])
+				out.append([tr("days in %d weeks") % k6, 7 * k6, tr("%d weeks = ? days") % k6, tr("1 week = 7 days")])
+				out.append([tr("months in %d years") % k6, 12 * k6, tr("%d years = ? months") % k6, tr("1 year = 12 months")])
 		"units_length", "units_mass":
 			var pairs: Array = [["m", "cm", 100], ["cm", "mm", 10], ["km", "m", 1000]] if lv["kind"] == "units_length" else [["kg", "g", 1000], ["t", "kg", 1000], ["l", "ml", 1000], ["l", "dl", 10]]
 			for pr in pairs:
@@ -758,29 +781,29 @@ func _gen(lv: Dictionary) -> Array:
 					0:
 						var h7 := rng.randi_range(1, 4)
 						var m7 := rng.randi_range(1, 11) * 5
-						out.append(["%d h %d min" % [h7, m7], h7 * 60 + m7, "%d h %d min = ? min" % [h7, m7], "%d × 60 = %d,  + %d" % [h7, h7 * 60, m7]])
+						out.append([tr("%d h %d min") % [h7, m7], h7 * 60 + m7, tr("%d h %d min = ? min") % [h7, m7], "%d × 60 = %d,  + %d" % [h7, h7 * 60, m7]])
 					1:
 						var a12 := rng.randi_range(1, 9)
 						var b12 := rng.randi_range(1, 99)
-						out.append(["%d m %d cm" % [a12, b12], a12 * 100 + b12, "%d m %d cm = ? cm" % [a12, b12], "%d m = %d cm,  + %d" % [a12, a12 * 100, b12]])
+						out.append([tr("%d m %d cm") % [a12, b12], a12 * 100 + b12, tr("%d m %d cm = ? cm") % [a12, b12], tr("%d m = %d cm,  + %d") % [a12, a12 * 100, b12]])
 					2:
 						var a13 := rng.randi_range(1, 9)
 						var b13 := rng.randi_range(1, 9) * 100
-						out.append(["%d kg %d g" % [a13, b13], a13 * 1000 + b13, "%d kg %d g = ? g" % [a13, b13], "%d kg = %d g,  + %d" % [a13, a13 * 1000, b13]])
+						out.append([tr("%d kg %d g") % [a13, b13], a13 * 1000 + b13, tr("%d kg %d g = ? g") % [a13, b13], tr("%d kg = %d g,  + %d") % [a13, a13 * 1000, b13]])
 					3:
 						var a14 := rng.randi_range(1, 5)
 						var b14 := rng.randi_range(1, 19) * 50
-						out.append(["%d km %d m" % [a14, b14], a14 * 1000 + b14, "%d km %d m = ? m" % [a14, b14], "%d km = %d m,  + %d" % [a14, a14 * 1000, b14]])
+						out.append([tr("%d km %d m") % [a14, b14], a14 * 1000 + b14, tr("%d km %d m = ? m") % [a14, b14], tr("%d km = %d m,  + %d") % [a14, a14 * 1000, b14]])
 		"money":
 			for c in range(105, 1000, 5):
 				if c % 20 == 0 or c % 15 == 0:
-					out.append(["%s Fr. in Rp." % _money(c), c, "%s Fr. = ? Rp." % _money(c), "1 Fr. = 100 Rp."])
-					out.append(["%d Rp. in Fr." % c, _dec(c / 100.0), "%d Rp. = ? Fr." % c, "100 Rp. = 1 Fr."])
+					out.append([tr("%s Fr. in Rp.") % _money(c), c, tr("%s Fr. = ? Rp.") % _money(c), tr("1 Fr. = 100 Rp.")])
+					out.append([tr("%d Rp. in Fr.") % c, _dec(c / 100.0), tr("%d Rp. = ? Fr.") % c, tr("100 Rp. = 1 Fr.")])
 		"pow2":
 			var v := 1
 			for e2 in range(1, 11):
 				v *= 2
-				out.append(["2^%d" % e2, v, "2^%d = ?  (2 × 2 × … %d times)" % [e2, e2], "2^%d = 2 × 2^%d = %d" % [e2, e2 - 1, v]])
+				out.append(["2^%d" % e2, v, tr("2^%d = ?  (2 × 2 × … %d times)") % [e2, e2], "2^%d = 2 × 2^%d = %d" % [e2, e2 - 1, v]])
 		"neg_pm", "neg_pm_big":
 			var big2: bool = lv["kind"] == "neg_pm_big"
 			for _i in range(300):
@@ -790,7 +813,7 @@ func _gen(lv: Dictionary) -> Array:
 				var res15 := a15 + b15 if plus else a15 - b15
 				if a15 >= 0 and res15 >= 0: continue
 				var t15 := "%d %s %d" % [a15, "+" if plus else "-", b15]
-				out.append([t15, res15, t15 + " = ?", "on the number line: start at %d, go %d %s" % [a15, b15, "right" if plus else "left"]])
+				out.append([t15, res15, t15 + " = ?", (tr("on the number line: start at %d, go %d to the right") if plus else tr("on the number line: start at %d, go %d to the left")) % [a15, b15]])
 		"roots":
 			for a16 in range(1, 21): out.append(["√%d" % (a16 * a16), a16, "√%d = ?" % (a16 * a16), "%d × %d = %d" % [a16, a16, a16 * a16]])
 	return out
@@ -835,7 +858,7 @@ func _mul(out: Array, a: int, b: int) -> void:
 	var other := mini(a, b)
 	if big == 9 and other > 1: h = "10 × %d = %d,   %d - %d = %d" % [other, 10 * other, 10 * other, other, p]
 	elif big >= 6 and big <= 8 and other > 2 and other != 5: h = "5 × %d = %d,   %d × %d = %d,   %d + %d = %d" % [other, 5 * other, big - 5, other, (big - 5) * other, 5 * other, (big - 5) * other, p]
-	elif big == 4 or other == 4: h = "2 × %d = %d, doubled: %d" % [p / 4, p / 2, p]
+	elif big == 4 or other == 4: h = tr("2 × %d = %d, doubled: %d") % [p / 4, p / 2, p]
 	elif big == 3 or other == 3: h = "2 × %d = %d,   + %d = %d" % [p / 3, 2 * (p / 3), p / 3, p]
 	out.append([key, p, key + " = ?", h])
 

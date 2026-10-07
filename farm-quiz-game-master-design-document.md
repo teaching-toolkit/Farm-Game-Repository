@@ -26,7 +26,7 @@ document ever disagree, the data wins and this document should be corrected.
 ### 1.1 Premise
 
 A craft-from-scratch farming game in an old-world, pre-industrial setting. The player comes back to a farm that has burnt
-down. All that is left is a tent, an old dented bucket by a wild pond, a tin pot, a few sticks and stones, five wheat seeds
+down. All that is left is a tent, an old dented bucket by a wild pond, a tin pot, a few sticks and stones, one wheat seed
 — and a box with a book in it. From there the player rebuilds everything: fire and porridge first, then stone tools, a
 cottage, a kitchen, animals, a smithy, a windmill, a farmhouse, a greenhouse, and finally a master farm with heirloom crops
 and plant dyes.
@@ -128,8 +128,9 @@ The ❓ button (an old clock) at the bottom right opens the Time Quiz. One right
 only thing that moves time.
 
 - **Where questions come from.** Mostly from the **question packs** the parent switched on (`activePacks` in
-  `data/settings.json`; packs are files in `data/quiz_packs/`). A share of the questions (`knowledgeReviewShare`, 25 %)
-  are reviews of knowledge cards the child has already learned (§4.2). A question asked lately does not come back within
+  `data/settings.json`; packs are files in `data/quiz_packs/`). A share of the questions (25 % to start, `knowledgeReviewShare`;
+  the parent changes it per farm in the grown-up part of ⚙️ Settings, in 5 % steps) are reviews of knowledge cards the child has already learned
+  (§4.2); when no card is due, a pack question takes the place. A question asked lately does not come back within
   the next few (`avoidRepeatWithin`, 3).
 - **Spaced repetition per question.** The learning record keeps every question: answered wrong, it comes back after 3
   others; right at the first try, it waits 12, then 32, 80, 200 and 480 questions. New questions come before known ones
@@ -204,6 +205,13 @@ second currency.
 Tapping the energy bar opens **Rest** (sleep, food, a sip of water). The child types answers to sums on a number pad (or the
 keyboard). The sums come from the **learning kit** (`learnkit/`), a self-contained part that any game can use.
 
+- **A start page first.** Rest opens on a page that shows where the child stands: the category and its title (🌰 Seed …
+  🏔️ Mighty oak), the section and level ("level 2 of 13: 🐥 Take away up to 5") with a bar for how far along it is, the
+  medals of the section won so far and an empty slot for the next one with what it takes, and the best streak. A big
+  **🏁 Ready, set, go!** counts down (Ready… Set… Go!) and the sums begin.
+- **Leaving mid-sum.** Going back to the farm while a sum is on screen leaves no trace: it is not wrong, not slow, and it
+  does not change when it comes back.
+
 - **Taking an answer.** The moment the typed number is right it is taken — no ✔ needed. A wrong number only counts when ✔
   is tapped; then the right sum is shown, with the steps for a tricky one (13 − 5: 13 − 3 = 10, 10 − 2 = 8).
 - **Energy.** A quick right answer gives the full energy per Rest answer (§5.1), a slower right one half
@@ -249,13 +257,19 @@ disappears and never floods.
   question with its id and text, and download the record again.
 - **Settings** for the parent (`data/settings.json`): which packs, how many answers, the share of card reviews, the language,
   the maths categories and timing, dynamic difficulty, place names on the map, the test cheat buttons.
+- **The grown-up part of ⚙️ Settings** (the question share, the learning record, dynamic difficulty, a new game) is behind a
+  simple password (`parentPassword`, with a hint under the box) and stays open for 5 minutes; "Who is playing" and the log
+  stay open to the child. It is a child lock, not a secret.
 
 ### 4.5 Languages
 
-The game will be translated into German. Quiz texts already are separated by id: `data/i18n/quiz-en.json` holds every English
-quiz text (written by `tools/quiz_ids.py`), `quiz-de.json` the German ones (an empty text falls back to English);
-`language` in the settings picks one. The packs are translated; the card questions and the rest of the game's words follow
-the same pattern later (**planned**: an id for every text, one file per language).
+The whole game is in **English and German**, and more languages can be added as files. ⚙️ Settings has a button per
+language (🇬🇧 English · 🇩🇪 Deutsch); the choice belongs to the device and switches everything at once: the interface, the
+farm's names and descriptions, the knowledge cards and their questions, the quiz packs, the Rest sums and their kind words,
+and the read-aloud voice. English is written in the code and the data; every other language is a set of files in
+`data/i18n/` (`ui-<lang>.json` for the interface, `data-<lang>.json` for the game data, `learn-<lang>.json` for the Rest
+sums, `quiz-<lang>.json` for the packs). A text not translated yet shows in English. A new language is a new set of files
+and a line in `data/i18n/languages.json`; `tools/i18n.py` collects every text into them.
 
 ---
 
@@ -388,8 +402,8 @@ decimals anywhere.
   the **North Field** (chapter 4: clear the scrub, then fence it) and the **River Meadow** (chapter 5, optional: drain the
   marsh, then a sluice; it also gives water). Later fields are on the map from the start, overgrown behind a crumbling wall;
   tapping them shows only the mysterious sign until their chapter.
-- **Clearing takes steps.** The Home Field starts with 3 cleared patches; the other six are cleared two at a time — *Pull the
-  weeds*, *Clear the rocks*, *Clear the stumps* — in 4–5 taps each (cut the tall weeds, pull the roots, pick the stones,
+- **Clearing takes steps.** The Home Field starts with **one** cleared patch (and one wheat seed to plant in it); the other eight
+  are cleared two at a time — *Clear the thistles*, *Pull the weeds*, *Clear the rocks*, *Clear the stumps* — in 4–5 taps each (cut the tall weeds, pull the roots, pick the stones,
   gather the sticks, rake). Every step costs a little energy, gives material back (fibre, stones, sticks, a log) and makes the
   patch look more like soil. New patches can be planted after the first two steps (the weeds are out); they give 85 % of a
   full harvest until the job is done.
@@ -791,13 +805,28 @@ hidden spring: +1 water a trip; early bird: +3 energy max; growth, luck, Rest, p
 muck, stones …). **Only two gifts work at a time**; the others rest in the album, where they are swapped. **Gifts can never
 be bought.**
 
+### 11.2b Sound and music
+
+Everyone hears the everyday sounds from the start: a soft click on every button, a sheet sliding up and closing, a right
+and a gentle "not quite" answer, harvesting, planting, weeding, digging, chopping, cooking, crafting, the forge, building,
+water, coins, collecting from animals, turning a page, and jingles for something new, a new Rest level or a medal. Music
+plays by situation: its own loop for the farm in each season, a quiet one for the Time Quiz and a calm one for Rest, faded
+in and out. ⚙️ Settings switches music and sounds off separately (on this device), and *🎼 Credits* names who made them.
+The extra, fun sounds belong to perks and come with what the perk shows: animal voices (*Farm sounds*), thunder with the
+lightning sums, a pluck with the hot streak, coins with the coin shower, a party popper with the harvest party, a glassy
+chime with the rainbow and the sparkles, a breeze when the season changes. What plays is data (`data/sounds.json`); only
+CC0 or CC-BY sounds are used. Until the sound files are in, the game makes a few little sounds itself.
+
 ### 11.3 Perks — prettier and livelier, never stronger
+
+The pop-up for a new perk and its tile in the album say why it came ("You harvested 40 times!", or the favour that
+earned it) before what it does.
 
 | Perk | What it does | How it comes |
 |---|---|---|
 | 🦋 Butterflies | butterflies over the fields | Granny Maud's goat (favour) |
 | ✨ Magic sparkles | sparkles where you tap | porridge for the twins (favour) |
-| 🔔 Farm sounds | a jingle when selling, a pop at harvest, a chime for new things | the miller's daughter's basket (favour) |
+| 🔔 Farm sounds | animal voices: hens, cows and sheep call when their pen is tapped and now and then on their own; birdsong | the miller's daughter's basket (favour) |
 | 🌈 Rainbows | a rainbow after rain | the washerwoman's line (favour) |
 | ⚡ Lightning sums | lightning on about one in three quick Rest sums | 25 quick Rest sums |
 | 🔥 Hot streak | a flame counts quick sums in a row | 3 sum medals |
@@ -853,7 +882,8 @@ scrolls). It is seen **at an angle, like Hay Day** (2:1 isometric): the ground i
 on its **footprint** (a diamond of whole tiles; its front corner is its "feet"), and what stands lower on the screen is drawn in
 front. Only a picture's visible pixels react to taps, so a tall roof never steals a tap from the place behind it.
 
-- **The forest** comes in diagonally from the top left (gathering, later the woodlot); **the village road** from the top right
+- **The forest** comes in diagonally from the top left (gathering, later the woodlot): its trees stand right on the meadow,
+  with no darker forest floor; **the village road** from the top right
   (market stall, book cart, notice board, later the Import Broker).
 - **The three fields** stand in a column in the middle, edge to edge; animals and the pond on the left; workshop, bees, barn,
   orchard and greenhouse on the right; compost, scarecrow and broker in the pockets between.
@@ -878,7 +908,12 @@ front. Only a picture's visible pixels react to taps, so a tall roof never steal
 - **Top bar:** 🪙 coins; 💧 water and ⚡ energy as rows of cubes (tap water to fetch, energy to Rest); the season bar (one thin
   stripe per question, in the season's colour); 🎒 pantry, 📖 quest book, 🖼️ album, ⚙️ settings.
 - **Tap a place → a sheet slides up** with a picture on top and everything to do there: build, stations and recipes, animals,
-  polish.
+  polish. Everything with a button is a **tile in a grid** (like the store and the market): a picture or emoji, the name,
+  what it gives and costs, and its button at the bottom, as wide as the tile — recipes, crops to plant, weeds and stones on
+  a patch, goals and upgrades (two per row), polish, collecting from animals and mucking out, and the knowledge cards.
+- **Tap a patch that is still overgrown** and the field's sheet opens with a note on top: which patch it is, what is in the way
+  (weeds, rocks, stumps, scrub, marsh) and what clears it, or what is needed first. When planting, a cost the player can't
+  pay shows its missing cubes hollow (e.g. the water a full patch needs).
 - **Buildings with an inside** (house, barn, workshop) open a window over the dimmed farm showing the room as a cutaway; its
   corners (bed · books · kitchen; cellar · crocks · hay · seed library; benches · kiln & forge · spinning · tools) open their own
   sheets.
@@ -906,7 +941,10 @@ front. Only a picture's visible pixels react to taps, so a tall roof never steal
 A little farmer walks to wherever the player taps — on the grass, to a place (its sheet opens at once), to the edge of a field —
 and finds the way round buildings, pens, ponds and fields; tapped, it waves and hops. It is a small 3D figure made of simple
 shapes, toon-shaded and drawn into the 2D map (`scripts/avatar.gd`); its look is data (`data/avatar.json`: skin, hair, shirt,
-trousers, shoes, hat). **(planned)** a "make your farmer" screen at the start, the look kept per player, gear visible on the
+trousers, shoes, hat). After each action the farmer goes there and acts it out — kneels and pulls weeds, fetches water at
+the pond and sows, picks with a basket, chops, hammers, stirs the pot, reads, sits to rest, cheers. The game has already
+counted the result; the farmer only catches up, and a new tap stops the act at once. Acts, poses and the props in the
+farmer's hands are data (`data/acts.json`), so new ones need no code. **(planned)** a "make your farmer" screen at the start, the look kept per player, gear visible on the
 farmer, merchants walking about.
 
 ### 13.6 For young readers
@@ -958,6 +996,7 @@ Everything about the content is data, so the game can be rebalanced without code
 | `data/i18n/quiz-<lang>.json` | quiz texts by question id |
 | `data/settings.json` | the parent's settings (§4.4) |
 | `data/avatar.json` | the farmer's look |
+| `data/acts.json` | what the farmer acts out: poses, props, acts |
 | `learnkit/curriculum/math.json` | the maths curriculum |
 
 `progression/progression-explorer.html` browses the tree, simulates a playthrough (pacing, Rest per hour, pets, storage and
@@ -970,7 +1009,7 @@ value checks) and keeps a copy of the current data.
 | `scripts/game.gd` (autoload `Game`) | the rules engine: time, energy, water, fields, weeds, pests, animals, stations, fuel, knowledge, polish, gear, seasons, freshness, luck, gifts, jobs, dynamic difficulty, saves |
 | `scripts/main.gd` | the interface: bars, sheets, inside windows, quizzes, album, settings |
 | `scripts/farm_map.gd`, `slot.gd`, `iso_field.gd`, `spots.gd` | the one-screen map, a place, a field, which data node belongs where |
-| `scripts/art.gd`, `ui.gd`, `fx.gd`, `avatar.gd` | pictures with emoji fallback, styles and explanations, perk effects, the farmer |
+| `scripts/art.gd`, `ui.gd`, `fx.gd`, `avatar.gd`, `sound.gd`, `i18n.gd` | pictures with emoji fallback, styles and explanations, perk effects, the farmer |
 | `learnkit/` | the learning kit — learner record, spaced repetition, maths engine, quiz engine, timer, number pad; reusable in any Godot game |
 
 ### 15.4 Saves

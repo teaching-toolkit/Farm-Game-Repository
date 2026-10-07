@@ -5,8 +5,8 @@
 extends TextureRect
 
 const LOOK_PATH := "res://data/avatar.json"
-const VIEW := Vector2i(150, 200)        # pixels rendered
-const SHOW := Vector2(57, 76)           # size on the map (farm pixels)
+const VIEW := Vector2i(200, 200)        # pixels rendered (wide enough for bending and reaching while acting)
+const SHOW := Vector2(76, 76)           # size on the map (farm pixels; the figure itself stays the same size)
 const PITCH := 30.0                     # the camera looks down like the farm pictures (2:1)
 
 var map                                 # the farm map (finds paths, sorts us among the standing things)
@@ -16,7 +16,17 @@ var vp: SubViewport
 var cam: Camera3D
 var rig: Node3D                         # turns to face the way it walks
 var upper: Node3D                       # everything above the hips (bobs while walking)
-var pivots := {}                        # hip_l, hip_r, sh_l, sh_r, head
+var pivots := {}                        # hip_l/r, knee_l/r, sh_l/r, hand_l/r (props go here), head
+var lean: Node3D                        # bends the upper body at the waist (acting)
+const WAIST := 0.62
+# acting (scripts/actor.gd): a pose blends in over a time; props sit in the hands
+var acting := false
+var _pose_from := {}
+var _pose_to := {}
+var _pose_t := 1.0
+var _pose_dur := 0.0
+var props := {}                         # "l" / "r" -> the prop's Node3D
+var _carry_face := 0.0
 var eyes: Array = []
 var feet := Vector2.ZERO                # where it stands, in farm coordinates
 var path := PackedVector2Array()
@@ -166,6 +176,7 @@ func set_look(lk: Dictionary) -> void:
 	for k in lk: look[k] = lk[k]
 	for c in rig.get_children(): c.queue_free()
 	pivots.clear()
+	props.clear()
 	eyes.clear()
 	var skin := _mat(_col(look.get("skin", ""), "#f1c7a0"))
 	var hair: Dictionary = look.get("hair", {})
@@ -181,15 +192,22 @@ func set_look(lk: Dictionary) -> void:
 	# legs (from the hips) and shoes
 	var tstyle := str(trou.get("style", "trousers"))
 	for side in [-1.0, 1.0]:
-		var hip := _pivot(rig, "hip_l" if side < 0 else "hip_r", Vector3(0.1 * side, 0.6, 0))
+		var sd := "l" if side < 0 else "r"
+		var hip := _pivot(rig, "hip_" + sd, Vector3(0.1 * side, 0.6, 0))
+		var knee := _pivot(hip, "knee_" + sd, Vector3(0, -0.29, 0))      # knees, so the farmer can kneel and crouch
 		if tstyle == "shorts":
 			_mesh(hip, _capsule(0.1, 0.3), trou_m, Vector3(0, -0.12, 0))
-			_mesh(hip, _capsule(0.072, 0.42), skin, Vector3(0, -0.33, 0))
+			_mesh(knee, _capsule(0.072, 0.32), skin, Vector3(0, -0.12, 0))
 		else:
-			_mesh(hip, _capsule(0.088, 0.58), trou_m, Vector3(0, -0.27, 0))
-		_mesh(hip, _sphere(0.1), shoe_m, Vector3(0, -0.56, 0.04), Vector3(1.0, 0.6, 1.35))
+			_mesh(hip, _capsule(0.088, 0.34), trou_m, Vector3(0, -0.14, 0))
+			_mesh(knee, _capsule(0.085, 0.32), trou_m, Vector3(0, -0.12, 0))
+		_mesh(knee, _sphere(0.1), shoe_m, Vector3(0, -0.27, 0.04), Vector3(1.0, 0.6, 1.35))
+	lean = Node3D.new()                 # the waist: everything above bends from here
+	lean.position = Vector3(0, WAIST, 0)
+	rig.add_child(lean)
 	upper = Node3D.new()
-	rig.add_child(upper)
+	upper.position = Vector3(0, -WAIST, 0)
+	lean.add_child(upper)
 	# body
 	_mesh(upper, _capsule(0.2, 0.6), shirt_m, Vector3(0, 0.86, 0), Vector3(1.0, 1.0, 0.82))
 	_mesh(upper, _cyl(0.2, 0.2, 0.14), trou_m, Vector3(0, 0.64, 0), Vector3(1.0, 1.0, 0.82))
@@ -205,6 +223,7 @@ func set_look(lk: Dictionary) -> void:
 		_mesh(sh, _capsule(0.072, 0.26 if not long_sleeves else 0.46), shirt_m, Vector3(0.01 * side, -0.09 if not long_sleeves else -0.19, 0))
 		if not long_sleeves: _mesh(sh, _capsule(0.058, 0.34), skin, Vector3(0.01 * side, -0.25, 0))
 		_mesh(sh, _sphere(0.066), skin, Vector3(0.012 * side, -0.43, 0))
+		_pivot(sh, "hand_l" if side < 0 else "hand_r", Vector3(0.012 * side, -0.45, 0.02))
 	# head: face, eyes, cheeks, nose
 	var head := _pivot(upper, "head", Vector3(0, 1.13, 0))
 	_mesh(head, _cyl(0.07, 0.08, 0.1), skin, Vector3(0, 0.0, 0))
@@ -291,22 +310,29 @@ func _animate(d: float) -> void:
 		target = 1.0
 	_swing = lerpf(_swing, target, minf(1.0, d * 8.0))
 	var s := sin(_walk) * 0.62 * _swing
+	var P := _pose_now(d)              # the acting pose (all zero = standing)
+	var still := 1.0 - _swing         # walking takes over legs and arms; the pose shows when standing
 	if pivots.has("hip_l"):
-		pivots["hip_l"].rotation.x = s
-		pivots["hip_r"].rotation.x = -s
-		pivots["sh_l"].rotation.x = -s * 0.85
-		pivots["sh_r"].rotation.x = s * 0.85
-		pivots["sh_l"].rotation.z = -0.08
-		pivots["sh_r"].rotation.z = 0.08
+		pivots["hip_l"].rotation.x = lerpf(P["hip_l"], s, _swing)
+		pivots["hip_r"].rotation.x = lerpf(P["hip_r"], -s, _swing)
+		pivots["knee_l"].rotation.x = lerpf(P["knee_l"], maxf(0.0, s) * 0.5, _swing)
+		pivots["knee_r"].rotation.x = lerpf(P["knee_r"], maxf(0.0, -s) * 0.5, _swing)
+		for sd in ["l", "r"]:
+			var sh: Node3D = pivots["sh_" + sd]
+			var walk_x := (-s if sd == "l" else s) * 0.85
+			if props.has(sd): walk_x = -0.35          # carrying something: the arm stays forward
+			sh.rotation.x = lerpf(P["sh_%s_x" % sd], walk_x, _swing)
+			sh.rotation.z = lerpf(P["sh_%s_z" % sd], -0.08 if sd == "l" else 0.08, _swing)
+	if lean: lean.rotation.x = P["lean"] * still
 	var bob := absf(sin(_walk)) * 0.04 * _swing
 	var breathe := sin(Time.get_ticks_msec() / 600.0) * 0.006 * (1.0 - _swing)
-	if upper: upper.position.y = bob + breathe
-	# hop (when tapped)
+	if upper: upper.position.y = -WAIST + bob + breathe
+	# crouching and kneeling bring the whole figure down; a hop (when tapped) lifts it
+	var y: float = -float(P["drop"]) * still
 	if _hop > 0.0:
 		_hop = maxf(0.0, _hop - d)
-		rig.position.y = sin((0.5 - _hop) / 0.5 * PI) * 0.25 if _hop < 0.5 else 0.0
-	else:
-		rig.position.y = 0.0
+		if _hop < 0.5: y += sin((0.5 - _hop) / 0.5 * PI) * 0.25
+	rig.position.y = y
 	# wave
 	if _wave > 0.0 and pivots.has("sh_r"):
 		_wave = maxf(0.0, _wave - d)
@@ -318,10 +344,84 @@ func _animate(d: float) -> void:
 	if _blink < -0.13: _blink = randf_range(2.0, 5.0)
 	for e in eyes:
 		if is_instance_valid(e): e.scale.y = 0.15 if shut else 1.25
-	# look around a little when standing
+	# look around a little when standing idle; while acting the head follows the pose
 	if pivots.has("head"):
-		var look_y := sin(Time.get_ticks_msec() / 2300.0) * 0.25 * (1.0 - _swing)
+		var look_y := sin(Time.get_ticks_msec() / 2300.0) * 0.25 * (1.0 - _swing) * (0.0 if acting else 1.0)
 		pivots["head"].rotation.y = look_y
+		pivots["head"].rotation.x = P["head"] * still
+
+# ------------------------------------------------------------------ acting: poses and props (driven by scripts/actor.gd)
+const POSE_KEYS := ["drop", "lean", "head", "hip_l", "hip_r", "knee_l", "knee_r", "sh_l_x", "sh_l_z", "sh_r_x", "sh_r_z"]
+
+## A pose from data/acts.json ("hip", "knee", "sh": [forward, out] for both sides; "_l"/"_r" for one side;
+## "drop" lowers the figure, "lean" bends forward at the waist, "head" looks down) as joint angles.
+static func expand_pose(p: Dictionary) -> Dictionary:
+	var out := {}
+	for k in POSE_KEYS: out[k] = 0.0
+	out["sh_l_z"] = -0.08
+	out["sh_r_z"] = 0.08
+	for k in ["drop", "lean", "head"]: out[k] = float(p.get(k, 0.0))
+	for sd in ["l", "r"]:
+		out["hip_" + sd] = float(p.get("hip_" + sd, p.get("hip", 0.0)))
+		out["knee_" + sd] = float(p.get("knee_" + sd, p.get("knee", 0.0)))
+		var sh: Array = p.get("sh_" + sd, p.get("sh", [0.0, 0.08]))
+		out["sh_%s_x" % sd] = float(sh[0])
+		out["sh_%s_z" % sd] = (-1.0 if sd == "l" else 1.0) * float(sh[1] if sh.size() > 1 else 0.08)
+	return out
+
+## Blend into a pose over secs (0 = at once).
+func set_pose(p: Dictionary, secs: float) -> void:
+	_pose_from = _pose_now(0.0)
+	_pose_to = expand_pose(p)
+	_pose_dur = maxf(0.0, secs)
+	_pose_t = 0.0 if secs > 0.0 else 1.0
+
+func _pose_now(d: float) -> Dictionary:
+	if _pose_to.is_empty(): _pose_to = expand_pose({})
+	if _pose_from.is_empty(): _pose_from = _pose_to.duplicate()
+	if _pose_t < 1.0: _pose_t = minf(1.0, _pose_t + (d / _pose_dur if _pose_dur > 0.0 else 1.0))
+	var f := _pose_t * _pose_t * (3.0 - 2.0 * _pose_t)      # smooth in and out
+	var out := {}
+	for k in POSE_KEYS: out[k] = lerpf(float(_pose_from.get(k, 0.0)), float(_pose_to.get(k, 0.0)), f)
+	return out
+
+## Puts a prop (data/acts.json "props": simple shapes) into a hand ("l" or "r"); it stays there while walking.
+func hold(prop: Dictionary, hand: String) -> void:
+	drop(hand)
+	var h: Node3D = pivots.get("hand_" + hand)
+	if h == null: return
+	var n := Node3D.new()
+	for part in prop.get("parts", []):
+		var sz: Array = part.get("size", [0.1, 0.1, 0.1])
+		var mesh: Mesh
+		match str(part.get("shape", "box")):
+			"cyl": mesh = _cyl(float(sz[0]), float(sz[1]), float(sz[2]))
+			"sphere": mesh = _sphere(float(sz[0]))
+			"capsule": mesh = _capsule(float(sz[0]), float(sz[1]))
+			_: mesh = _box(float(sz[0]), float(sz[1]), float(sz[2]))
+		var pos: Array = part.get("pos", [0, 0, 0])
+		var rot: Array = part.get("rot", [0, 0, 0])
+		_mesh(n, mesh, _mat(Color(str(part.get("color", "#8a6239")))), Vector3(pos[0], pos[1], pos[2]), Vector3.ONE, Vector3(rot[0], rot[1], rot[2]))
+	h.add_child(n)
+	props[hand] = n
+
+func drop(hand: String) -> void:
+	if props.has(hand):
+		if is_instance_valid(props[hand]): props[hand].queue_free()
+		props.erase(hand)
+
+func drop_all() -> void:
+	for hd in props.keys(): drop(hd)
+
+## Turn towards a point on the farm.
+func face_point(p: Vector2) -> void:
+	var g := Vector2(p.x - feet.x, (p.y - feet.y) * 2.0)
+	if g.length() > 1.0: _face = atan2(g.x, g.y)
+
+## Stop walking where it is (an act was interrupted).
+func stop_walking() -> void:
+	path = PackedVector2Array()
+	moving = false
 
 ## Tapped: a wave and a little hop.
 func greet() -> void:
@@ -330,7 +430,7 @@ func greet() -> void:
 	_face = 0.0
 
 func _has_point(p: Vector2) -> bool:
-	return Rect2(Vector2(size.x * 0.22, size.y * 0.05), Vector2(size.x * 0.56, size.y * 0.9)).has_point(p)
+	return Rect2(Vector2(size.x * 0.33, size.y * 0.05), Vector2(size.x * 0.34, size.y * 0.9)).has_point(p)
 
 func _gui_input(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT and not e.pressed:

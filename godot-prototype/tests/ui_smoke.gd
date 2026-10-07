@@ -34,6 +34,9 @@ func _ready() -> void:
 	G.S["energy"] = 2.0
 	M._show_rest()
 	await _frames(2)
+	var start_page: bool = M._rest.has("start") and not M._rest.has("pad")
+	M._rest_go()
+	await get_tree().create_timer(2.0).timeout      # ready … set … go!
 	var e0: float = G.S["energy"]
 	var pad = M._rest["pad"]
 	for ch in str(pad.question["answer"]): pad.key(ch)
@@ -44,7 +47,19 @@ func _ready() -> void:
 	var e2: float = G.S["energy"]
 	M._close_modal()
 	var wr: String = await _wrong_rest()
-	print("rest energy: ", e0, " -> quick ", e1, " -> slow ", e2, "  (wrong-answer path: ", wr, ")")
+	print("rest energy: ", e0, " -> quick ", e1, " -> slow ", e2, "  (wrong-answer path: ", wr, ")  start page first: ", start_page)
+	# r9: a sum left unanswered (back to the farm) leaves no trace in the learning record
+	M._show_rest()
+	await _frames(1)
+	var mr: Dictionary = G.math.rec(G._learn())
+	var before_left := [int(mr.get("n", 0)), int(mr.get("turn", 0)), int(mr.get("since_new", 0)), mr["items"].size()]
+	M._rest_go()
+	await get_tree().create_timer(2.0).timeout
+	var sum_shown: bool = not M._rest["pad"].question.is_empty()
+	M._close_modal()
+	await _frames(2)
+	var after_left := [int(mr.get("n", 0)), int(mr.get("turn", 0)), int(mr.get("since_new", 0)), mr["items"].size()]
+	print("r9 rest left mid-sum: question shown %s, record %s -> %s (same: %s)" % [sum_shown, before_left, after_left, before_left == after_left])
 	# 4b) water: fetch from the pond with the bucket; a locked place is a mystery; the road has a sheet
 	var w0: float = G.S["water"]
 	G.S["water"] = 0.0
@@ -245,6 +260,31 @@ func _ready() -> void:
 		print("r8 dynamic prices: pace ratio ", snappedf(G.pace_ratio(), 0.01), "  ", flex_open, " factor ", G.flex_factor(flex_open), "  ", base_c, " -> ", flex_c, "  tip: ", G.flex_tip(flex_open))
 	else: print("r8 dynamic prices: no open goal to test")
 	G.S["dynamic"] = false; G.S.erase("flex")
+	# r9: the share of book reviews in the Time Quiz, set in Settings (5% steps, 0..100%)
+	var rs0: float = G.review_share()
+	G.set_review_share(0.52); var rs1: float = G.review_share()
+	G.set_review_share(1.4); var rs2: float = G.review_share()
+	G.S.erase("review_share")
+	print("r9 review share: start %.2f -> 0.52 gives %.2f, 1.4 gives %.2f, back to %.2f" % [rs0, rs1, rs2, G.review_share()])
+	# r9: sounds — every name the game plays exists in data/sounds.json; buses; switching music and effects
+	var snd = get_node("/root/Sound")
+	var names_missing := []
+	for nm in ["tap", "open", "close", "right", "wrong", "rest_right", "rest_wrong", "harvest", "plant", "weed", "dig", "chop", "cook", "craft", "smith", "build", "water", "coin", "collect", "page", "book", "celebrate", "levelup", "medal", "tired", "lightning", "streak", "coin_shower", "confetti", "rainbow", "sparkle", "breeze", "chicken", "cow", "sheep", "goat", "pony", "bees", "cat", "birds"]:
+		if not snd.has(nm): names_missing.append(nm)
+		snd.play(nm)
+	snd.music("farm", "spring"); snd.music("quiz"); snd.music("rest")
+	var m0: bool = snd.music_on
+	snd.set_music(false); snd.set_music(m0)
+	print("r9 sounds: names missing %s, buses Music %d SFX %d" % [names_missing, AudioServer.get_bus_index("Music"), AudioServer.get_bus_index("SFX")])
+	print("r9 grown-up lock: open at start %s, 'Farm ' %s, 'cow' %s" % [M._grownup_open(), M._password_ok("Farm "), M._password_ok("cow")])
+	M._show_menu()
+	await _frames(2)
+	M._close_modal()
+	M._grownup_until = 1e12
+	M._show_menu()
+	await _frames(2)
+	M._close_modal()
+	M._grownup_until = 0.0
 	M._open_sheet("album")
 	await _frames(2)
 	M._close_sheet()
@@ -323,6 +363,8 @@ func _click_through(goal: Callable) -> void:
 func _wrong_rest() -> String:
 	M._show_rest()
 	await _frames(1)
+	M._rest_go()
+	await get_tree().create_timer(2.0).timeout
 	var before: float = G.S["energy"]
 	var pad = M._rest["pad"]
 	pad.typed = "99999"              # surely wrong

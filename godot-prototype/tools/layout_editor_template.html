@@ -397,7 +397,8 @@ function drawGround(B) {
   let h = `<rect x="0" y="0" width="${B.w}" height="${B.h}" fill="${PICS["tiles/grass"] ? `url(#${sid("tiles/grass")}-pat)` : "#9cc86a"}"/>`;
   const g = L.ground || {};
   if (g.forest && g.forest.length >= 3) {
-    h += `<polygon points="${poly(g.forest)}" fill="${PICS["tiles/grass"] ? `url(#${sid("tiles/grass")}-pat)` : "#5f8f43"}"/><polygon points="${poly(g.forest)}" fill="rgba(28,64,22,.42)"/>`;
+    // the forest has no floor in the game (trees on the meadow); its outline is only the tap area, shown faintly
+    h += `<polygon points="${poly(g.forest)}" fill="rgba(28,64,22,.06)" stroke="rgba(28,64,22,.35)" stroke-width="2" stroke-dasharray="8 6"/>`;
   }
   if (g.road && g.road.points && g.road.points.length >= 2) {
     const pts = g.road.points, w = g.road.w || 64;

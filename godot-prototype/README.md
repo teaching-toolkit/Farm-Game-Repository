@@ -207,7 +207,8 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   a season breeze. Each can be switched off in the album.
 - **🧑‍🌾 The farmer** walks to wherever you tap — on the grass, to a place (its sheet opens at once) or to the edge of a field —
   around buildings, pens, fields and the forest; tap the farmer to get a wave. A little 3D figure (`scripts/avatar.gd`) whose
-  look is data (`data/avatar.json`: skin, hair, shirt, trousers, shoes, hat), ready for a "make your farmer" screen.
+  look is data (`data/avatar.json`: skin, hair, shirt, trousers, shoes, hat), ready for a "make your farmer" screen. After
+  each action it acts it out (weeding, sowing, chopping, cooking …; `data/acts.json`); a new tap interrupts.
 - **🪙 Selling** — the store tiles say exactly what you get: `1 🥣 = 4 🪙`, `5 🥕 = 10 🪙`. Made things pay more than their
   ingredients (more for more different ingredients); the market pays a little less for a big pile of the same thing and
   forgets it again over a few questions, so selling different things pays best.
@@ -234,36 +235,53 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - Saves live in Godot's user folder, one folder per player: `players/<name>/farm_save.json` and `learning.json` (on a Mac:
   `~/Library/Application Support/Godot/app_userdata/Farm Quiz Game (prototype)/`).
 - Screenshots and tests: `--player=Name`, `--newgame`, `--timestep=N`, `--spot=storage`, `--patch=K`, `--unlock=id,id`,
-  `--give=item:5`, `--celebrate=id`, `--postcard`, `--perks=all` (or a list of perk ids), `--rainbow`, `--rest`, `--qid=PIC-004`
+  `--give=item:5`, `--water=1` (carried water), `--menu` (⚙️ Settings), `--grownup` (its grown-up part open), `--password` (the password box), `--celebrate=id`, `--postcard`, `--perks=all` (or a list of perk ids), `--rainbow`, `--rest` (the Rest start page; add `--restgo` for the sums), `--qid=PIC-004`
   (one Time Quiz question), `--lang=de` (quiz texts in German), `--shot=file.png`.
 
 ## Changing content (no code needed)
-- `data/farm-progression.json` — the whole tree. Edit it (or rebuild it), check it in `../progression/progression-explorer.html`,
-  then copy it here.
+- `data/farm-progression.json` — the whole tree. Edit it, run `python3 tools/sync_progression.py` (copies it into
+  `../progression/` and the explorer) and check it in `../progression/progression-explorer.html`.
 - `data/quiz_packs/*.json` — Time Quiz questions, one file per pack: `{ "id", "code", "title", "subject", "pool", "questions":
   [ {"id", "q", "img", "emoji", "answers", "correct", "right", "wrong"} ] }`. An answer is text or `{"text", "img", "emoji"}` (a
   picture answer; `img` = a picture name like `items/carrot`, `emoji` stands in until it exists); `img`/`emoji` on the question =
   a picture above it; `pool` = more wrong answers of the same kind to fill questions up. Add a file and list its id in
   `activePacks`. **After adding or changing questions run `python3 tools/quiz_ids.py`**: it gives new questions their id
   (never change or reuse one) and updates `data/i18n/quiz-en.json` and `quiz-de.json` (German texts; empty = still English).
+- **Sound and music** (`data/sounds.json`, played by `scripts/sound.gd`, the autoload `Sound`): every effect by name
+  (`Sound.play("harvest")`) with its files in `assets/sounds/sfx/`, a volume, a stand-in sound the game makes itself
+  (`synth`) and an optional `perk`; music tracks in `assets/sounds/music/` and which one plays where (`music.play`: the
+  farm per season, `quiz`, `rest`). New files: put them in `../sound-inbox/` with a line in its `SOURCES.json` (licence!),
+  run `python3 tools/import_sounds.py`, then import in Godot. Music and effects can be switched off in ⚙️ Settings.
+- **Languages** (`data/i18n/`, see `scripts/i18n.gd`): `languages.json` lists them; per language `ui-<lang>.json` (interface:
+  English text → translation), `data-<lang>.json` and `learn-<lang>.json` (game data and Rest sums: `{"path": {"en", "<lang>"}}`)
+  and `quiz-<lang>.json` (packs). In the scripts every text the player sees is wrapped in `tr("…")` (`TranslationServer.translate`
+  in static functions); tables of texts are marked `# i18n` and shown with `tr()`. **After changing any text run
+  `python3 tools/i18n.py`**: it adds new texts to every language (empty = English for now), flags data texts whose English
+  changed (`"stale": true`) and checks that `%s`/`%d`/`{…}` slots match. `--check` only reports. Plurals: write two full
+  sentences (singular and plural), never add an "s" by code. Screenshots in a language: `--lang=de`.
 - `data/settings.json`:
   - `activePacks` — which packs are on (empty = all); `quizOptions` — answers per question (4; a question with fewer shows all
-    it has); `language` — `en` or `de` for the quiz texts;
+    it has); `language` — the language when the device has not chosen one in ⚙️ Settings (`en` or `de`);
   - `dynamicDifficulty` — prices that fit the farm (see above; tuned in `meta.flex` of farm-progression.json);
   - `knowledgeReviewShare` — share of Time Quiz questions that are reviews of knowledge cards the child already learned
-    (0 = off, 0.25 = one in four); the rest come from the parent's packs;
+    (0 = off, 0.25 = one in four); the rest come from the parent's packs. This is the starting value: ⚙️ Settings changes it
+    for each farm in 5 % steps;
   - `mathCategories` — what the Rest sums practise (`addsub`, later `muldiv`, `numbers`, `fractions`, `decimals`, `measures`,
     `powers`; a parent can also tick them in ⚙️ → 📊 Learning record);
   - `restTimerScale` — stretches every time limit (1.5 = half as much time again); `restSlowShare` — the share of the energy a
     slow right answer gives;
   - `mathCurriculum` — the curriculum file (`learnkit/curriculum/math.json`: levels, times, repetition, medals, kind words);
   - `showPlaceNames` — name labels under the places on the map (off: no words on the map);
+  - `parentPassword`, `parentHint` — the password for the grown-up part of ⚙️ Settings (question share, dynamic difficulty,
+    learning record, new game; open for 5 minutes once typed, not case-sensitive) and the hint shown under the box. For now the
+    hint is the password itself ("farm"); change the password later and the hint becomes a reminder. Only a child lock: the
+    web build is public;
   - `avoidRepeatWithin`, `showCheatButton`.
 
 ## Automated checks
 - `godot --headless --path . res://tests/bot.tscn -- --iters=900 --chapter=3` — a greedy bot plays the rules engine and prints progress
-  (chapter 3 in about 290–420 Time Quiz answers; `--chapter=5 --iters=1100` reaches chapter 5 in about 680–765; it plays randomly, so
-  the number changes from run to run; `--flex` plays with dynamic difficulty on; it prints
+  (chapter 3 in about 290–420 Time Quiz answers; `--chapter=5 --iters=1100` reaches chapter 5 in about 680–800; it plays randomly, so
+  the number changes from run to run; `--flex` plays with dynamic difficulty on; `--trace=N` prints what happens during the first N questions; it prints
   its pace, which `meta.flex.basePace` is taken from).
 - `godot --headless --path . res://tests/ui_smoke.tscn` — clicks through the opening (first card, planting, Time Quiz, Rest,
   every place on the map, quest book, album, log) and checks the sums, the market, postcards, perks, the farmer, quiz ids,
@@ -275,7 +293,8 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 ## What's simplified in this prototype
 - A patch upgrade (dug beds, raised beds…) is paid patch by patch, then applies to every patch; new fields get it too.
 - One scarecrow and one fence protect all fields; pests are counted for the whole farm.
-- Sounds only with the "Farm sounds" perk (made by the game itself); text-to-speech (🔊) works where the system has a voice.
+- Sound files are not in yet (`../sound-inbox/README.md`): until then the game makes a few little sounds itself and plays no
+  music. Text-to-speech (🔊) works where the system has a voice (in the game's language).
 - The pixie chest mini-game is not in yet; the farmer is a first prototype (one look, no "make your farmer" screen yet).
 
 ## Files
@@ -288,8 +307,11 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   belongs to, the buildings with an inside (`INTERIORS`), and which pictures an upgrade chain uses; `scripts/iso_field.gd` — a field at
   an angle (diamond patches, pests, scarecrow looks, rain); `scripts/field_view.gd` — the square patch grid still used inside the
   orchard and greenhouse sheets; `scripts/art.gd` — pictures with emoji fallback; `scripts/ui.gd` — styles.
-- `scripts/avatar.gd` — the farmer (a 3D figure drawn into a picture on the map) + `data/avatar.json` (its look); `scripts/fx.gd` —
+- `scripts/avatar.gd` — the farmer (a 3D figure drawn into a picture on the map) + `data/avatar.json` (its look); `scripts/actor.gd` — the farmer acting things out (`data/acts.json`; try
+  `--act=weed@patch0`, poses side by side in `tests/pose_sheet.tscn`); `scripts/fx.gd` —
   perk effects (sounds made in code, lightning, flying coins, butterflies, sparkles, rainbow, season breeze).
+- `scripts/sound.gd` — sound effects and music (autoload `Sound`, from `data/sounds.json`); `scripts/i18n.gd` — languages
+  (`data/i18n/`).
 - `learnkit/` — the learning kit, usable in any Godot game: learning records, the maths curriculum and engine, question packs,
   spaced repetition, the timer and the number pad window; `learnkit/tools/learning-editor.html` views and edits a record in any
   browser. See `learnkit/README.md`.

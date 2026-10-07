@@ -6,6 +6,7 @@ var log_lines := []
 var max_iters := 900
 var target_chapter := 4
 var flex := false
+var trace := 0           # --trace=N prints what happens during the first N questions (to check the opening)
 var pace_sum := {}      # chapter -> [sum of pace, questions]: tells meta.flex.basePace
 
 func _ready() -> void:
@@ -14,16 +15,20 @@ func _ready() -> void:
 		if a.begins_with("--iters="): max_iters = int(a.substr(8))
 		if a.begins_with("--chapter="): target_chapter = int(a.substr(10))
 		if a == "--flex": flex = true
+		if a.begins_with("--trace="): trace = int(a.substr(8))
 	G.reset_game()
 	if flex: G.S["dynamic"] = true
 	G.offer_cards.connect(func(c): G.pick_gift(c[0]))
 	G.ask_name.connect(func(id, dn): G.set_pet_name(id, dn))
+	G.toast.connect(func(t): if int(G.S["step"]) < trace: print("  q%d  %s" % [G.S["step"], t]))
 	var t0 := Time.get_ticks_msec()
 	var it := 0
 	while it < max_iters and G.chapter() < target_chapter:
 		it += 1
 		var st0: int = G.S["step"]
 		_turn()
+		if st0 < trace and G.S["step"] != st0:
+			print("q%d -> energy %.1f water %.1f coins %.1f seeds %s plots %d wheat %.1f" % [G.S["step"], G.S["energy"], G.S["water"], G.S["coins"], G.S["seeds"], G.plots(), G.count("wheat")])
 		if G.S["step"] != st0 and int(G.S["step"]) % 20 == 0 and G.S.has("pace"):
 			print("pace_sample step %d goals %d unlocked %d chapter %d pace %.1f" % [G.S["step"], G.S["goals"], G.S["unlocked"].size(), G.chapter(), float(G.S["pace"])])
 		if G.S["step"] != st0 and G.S.has("pace"):

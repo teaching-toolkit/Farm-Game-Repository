@@ -72,7 +72,7 @@ func refresh() -> void:
 	var n := 9 if area_name == "field" else arr.size()
 	grid.columns = 3
 	if n == 0:
-		var l := UI.label("Nothing here yet.", 18, UI.MUTED)
+		var l := UI.label(tr("Nothing here yet."), 18, UI.MUTED)
 		grid.add_child(l)
 	for k in range(n):
 		var i := start + k
@@ -102,7 +102,7 @@ func refresh() -> void:
 			tex_key = "overgrown"
 			icon = "🌿🌳🌿"
 			icon_size = 26
-			txt = "Overgrown" if area_name == "field" else ""
+			txt = tr("Overgrown") if area_name == "field" else ""
 			b.disabled = true
 			if Art.tex("deco", "overgrown_patch") != null:
 				# a bramble patch drawn on wild green ground
@@ -120,8 +120,8 @@ func refresh() -> void:
 			if p["crop"] == "":
 				icon = "" if Art.tex("tiles", "soil") != null else "🟫"
 				icon_size = 26
-				txt = "tap to plant"
-				if p.get("last", "") != "": txt += "\n(last: %s)" % G.nodes[p["last"]]["emoji"]
+				txt = tr("tap to plant")
+				if p.get("last", "") != "": txt += tr("\n(last: %s)") % G.nodes[p["last"]]["emoji"]
 			else:
 				var cn = G.nodes[p["crop"]]
 				var em: String = cn.get("emoji", "🌱")
@@ -131,7 +131,7 @@ func refresh() -> void:
 					tint = Color(1.15, 1.05, 0.7)
 					icon_tex = Art.tex("crops", p["crop"])
 					icon = em.repeat(mini(pl, 3)) if pl <= 3 else "%s×%d" % [em, pl]
-					txt = "✅ Ready!"
+					txt = tr("✅ Ready!")
 				else:
 					col = Color("9cc46a")
 					tint = Color(0.92, 1.0, 0.88)

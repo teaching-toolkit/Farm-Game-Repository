@@ -46,6 +46,10 @@ func _on_before_next(pad) -> void:
 	if enough_done(): pad.stop("Well done! Back to the game.")
 ```
 
+A task left on screen (the child closes the pop-up before answering) leaves no trace: the pad puts back the turn counters
+it moved when it picked the task (`math.pick_state` / `restore_pick_state`) as soon as it leaves the screen. Call
+`pad.abandon()` yourself if you hide the pad without freeing it.
+
 `res` (in `answered`): `q` (the task: `q`, `answer`, `key`, `level`, `limit` …), `typed`, `right`, `quick`, `secs`, `fb` (what
 the engine says: `comment`, `hint`, `level_up`, `medals` [{level, medal}], `trophies`, `streak`, `struggling`), `text` (the
 feedback line — change it to add your own words) and `wait` (seconds until the next task).

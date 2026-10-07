@@ -4,21 +4,21 @@ extends RefCounted
 ## Some places have an inside (house, barn, workshop): once the building stands, tapping it opens a window with
 ## its corners (bed, books, kitchen …), and every corner is a place of its own (a "member") with its own sheet.
 
-const SPOTS := {
-	"home": ["House", "🏠"], "living": ["Bed & home", "🛏️"], "library": ["Library", "📦"], "kitchen": ["Kitchen", "🔥"],
-	"well": ["Well", "🪣"], "storage": ["Storage", "🧺"], "workshop": ["Workshop", "🪚"],
-	"field": ["Field", "🪧"], "forest": ["Forest edge", "🌳"], "lumber": ["Woodlot", "🌲"],
-	"coop": ["Chickens", "🐔"], "cows": ["Cows", "🐄"], "sheep": ["Sheep", "🐑"], "bees": ["Bees", "🐝"],
-	"barn": ["Barn", "🛖"], "windmill": ["Windmill", "🌬️"], "compost": ["Compost", "♻️"],
-	"pond": ["Pond", "🦆"], "orchard": ["Orchard", "🍎"], "greenhouse": ["Greenhouse", "🪴"], "pets": ["Pet corner", "🐾"],
-	"market": ["Market", "🧑‍🌾"], "bookcart": ["Book cart", "🛒"], "board": ["Notice board", "📋"], "broker": ["Import Broker", "🧳"],
-	"road": ["Road", "🛤️"],
-	# corners inside the barn and the workshop
-	"barn_build": ["Barn", "🛖"], "barn_cellar": ["Cellar", "🧀"], "barn_ferment": ["Crocks", "🫙"],
-	"barn_hay": ["Hay & water", "🌾"], "barn_seeds": ["Seed library", "🌱"],
-	"ws_build": ["Workshop", "🪚"], "ws_bench": ["Benches", "🪚"], "ws_fire": ["Kiln & forge", "🔥"],
-	"ws_loom": ["Spinning & weaving", "🧶"], "ws_tools": ["Tools", "🛠️"],
-}
+const SPOTS := {   # i18n
+	"home": ["House", "🏠"], "living": ["Bed & home", "🛏️"], "library": ["Library", "📦"], "kitchen": ["Kitchen", "🔥"],   # i18n
+	"well": ["Well", "🪣"], "storage": ["Storage", "🧺"], "workshop": ["Workshop", "🪚"],   # i18n
+	"field": ["Field", "🪧"], "forest": ["Forest edge", "🌳"], "lumber": ["Woodlot", "🌲"],   # i18n
+	"coop": ["Chickens", "🐔"], "cows": ["Cows", "🐄"], "sheep": ["Sheep", "🐑"], "bees": ["Bees", "🐝"],   # i18n
+	"barn": ["Barn", "🛖"], "windmill": ["Windmill", "🌬️"], "compost": ["Compost", "♻️"],   # i18n
+	"pond": ["Pond", "🦆"], "orchard": ["Orchard", "🍎"], "greenhouse": ["Greenhouse", "🪴"], "pets": ["Pet corner", "🐾"],   # i18n
+	"market": ["Market", "🧑‍🌾"], "bookcart": ["Book cart", "🛒"], "board": ["Notice board", "📋"], "broker": ["Import Broker", "🧳"],   # i18n
+	"road": ["Road", "🛤️"],   # i18n
+	# i18n · corners inside the barn and the workshop
+	"barn_build": ["Barn", "🛖"], "barn_cellar": ["Cellar", "🧀"], "barn_ferment": ["Crocks", "🫙"],   # i18n
+	"barn_hay": ["Hay & water", "🌾"], "barn_seeds": ["Seed library", "🌱"],   # i18n
+	"ws_build": ["Workshop", "🪚"], "ws_bench": ["Benches", "🪚"], "ws_fire": ["Kiln & forge", "🔥"],   # i18n
+	"ws_loom": ["Spinning & weaving", "🧶"], "ws_tools": ["Tools", "🛠️"],   # i18n
+}   # i18n
 
 ## Buildings with an inside. "built": once this (or an upgrade of it) is done, the map shows the building and a tap opens
 ## the inside; before that the members stand outside on their own (house) or the place opens one sheet for all (barn, workshop).
