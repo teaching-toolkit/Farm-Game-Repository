@@ -178,6 +178,8 @@ on the Mac (W2).
 7 Oct 2026 (after 2.0): added `Build web version.command`, `Publish web version.command`, `CLAUDE.md`, the root `.gitignore`
 and `godot-prototype/tools/setup_godot.sh` for cloud sessions. No game changes; `web-build/` still matches the code.
 
+7 Oct 2026 (group A): the five small fixes A1–A5 are in the code (see the log); `web-build/` does **not** match the code now.
+
 7 Oct 2026 (cloud check): a fresh cloud session was set up and verified (smoke test, bot, screenshot); the cloud notes in
 this file and `CLAUDE.md` were corrected (see the log). No game changes; `web-build/` still matches the code.
 
@@ -203,17 +205,12 @@ Questions still open with the parent are marked ❓.
 - **W3. Play-test round 8 on the iPad** and collect the parent's findings (pace, picture questions, stoking, loads, the bar
   explanations).
 
-### A. Small fixes and clarity (parent's list, 7 Oct 2026)
+### A. Small fixes and clarity (parent's list, 7 Oct 2026) — done 7 Oct 2026, waiting for the parent's check
 
-- **A1. Water bar in the planting window** doesn't show the empty cubes (the other bars do).
-- **A2. Tapping a patch that isn't ready** in a field that is (e.g. the 4th patch of the Home Field) should say which patch it
-  is and why it can't be used yet (still overgrown with weeds; what clears it).
-- **A3. Say why a perk was given.** The "new perk" pop-up shows the perk's effect ("Confetti when you harvest everything at
-  once"), which reads like the reason; it should also say what earned it ("You harvested 40 times!"). Same in the album.
-- **A4. No dark-green forest overlay.** Drop the diagonal dark-green area over the grass (`FOREST`/`FOREST_SHADE` in
-  `farm_map.gd`); the trees alone mark the forest and spread over the space it used to cover. The forest must stay tappable.
-- **A5. Knowledge-review share in ⚙️ Settings** (`knowledgeReviewShare`, now only in `data/settings.json`): a control for the
-  share of Time Quiz questions that come from the cards read vs. the parent's packs. ❓ protect parent settings from the child?
+A1 planting water bar shows its missing cubes · A2 tapping an overgrown patch says which one, why and what clears it · A3 perks
+say why they came · A4 no dark-green forest floor · A5 the knowledge-review share in ⚙️ Settings. Details in `PROJECT-LOG.md`.
+Still open: ❓ should parent settings (A5, dynamic difficulty, new game) be protected from the child (e.g. hold a button
+3 seconds)? For now they are open.
 
 ### B. The opening (parent's list)
 

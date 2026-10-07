@@ -30,6 +30,7 @@ For what the game *is* now, read `farm-quiz-game-master-design-document.md`; for
 | **Cloud check** (7 Oct 2026) | A fresh Claude Code cloud session set up from scratch with `setup_godot.sh --screens`: Godot 4.7.2 downloads (from github.com → release-assets.githubusercontent.com, not tuxfamily), the import is clean, the smoke test passes, the bot reaches chapter 5 with four pets after 678, 715 and 763 questions in three runs (it plays randomly; the documented 684–744 was too narrow, now "about 680–765"), screenshots work. Docs fixed: how to start the virtual screen (`xvfb-run`), `--newgame` first (the bot leaves its farm in the default save), harmless warnings, the hosts to allow, "all five pets" → the first four; the prototype README's stale "chapter 4 in about 770" replaced. `setup_godot.sh` now says when Xvfb is already installed. No game changes. |
 | **New wishes planned** (7 Oct 2026) | The parent's new list (sound and music, the farmer acting out actions, the whole game in German, the knowledge-review share in Settings, a Rest start screen, the forest overlay, one patch and one seed at the start, patch status, why a perk was given, grid windows, the planting water bar, upgrade benefits beyond energy) sorted into groups A–H in `00-READ-ME-FIRST.md` §6, in the planned order; open questions put to the parent. No game changes. |
 | **Answers** (7 Oct 2026) | Sounds and music for everyone from the start; extra fun sounds (animal noises on tap and by themselves, paired effects like the Rest lightning) are kept for perks. Sound and music licences: CC0 and CC-BY, with a credits page. The game starts with one wheat seed = one plant. German: Claude drafts, the parent proofreads. |
+| **Group A: small fixes** (7 Oct 2026) | **A1** Planting: when water was short, the plant count dropped to what the water allowed, and with one plant per patch the water cost became 0, so its cubes vanished and "Plant" just went grey; now the water a full patch needs is shown, the missing cubes hollow. **A2** Tapping an overgrown patch opens the field sheet with a note: "Patch 4 is not ready yet: it is still overgrown with weeds" and what clears it (or what is needed first). The what-is-in-the-way logic moved from `iso_field.gd` to `G.patch_wild`. **A3** The new-perk pop-up and the album say why a perk came ("You harvested 40 times!", or the favour). **A4** No dark-green forest floor; the trees stand on the meadow; the outline stays as the tap area (faint dashed line in the layout editor, rebuilt). **A5** ⚙️ Settings: "Where the Time Quiz questions come from", ➖/➕ in 5 % steps, saved per farm (`S.review_share`); `knowledgeReviewShare` is the starting value. New screenshot flags `--water=N`, `--menu`; smoke test checks the share. Found: a parse error in a test script makes the smoke test hang silently (tip in READ-ME §4.2). Web build not re-exported. |
 
 ---
 
@@ -117,6 +118,10 @@ For what the game *is* now, read `farm-quiz-game-master-design-document.md`; for
 - Perks come from the first four favours and from achievements. (1.3.7)
 - "3–4 options" means 4 by default, settable to 3 (`quizOptions`). (1.3.8)
 - Cutting down an orchard tree costs 3 energy and gives a log and 2 sticks. (1.3.8)
+- "The water bar in the planting window doesn't show the empty cubes" meant the case where water is short (the cubes vanished).
+  (A1, 7 Oct 2026)
+- The knowledge-review share is kept per farm (not per device) and goes in 5 % steps; the Settings menu stays open to the
+  child for now. (A5, 7 Oct 2026)
 
 ---
 

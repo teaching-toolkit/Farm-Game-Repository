@@ -128,8 +128,9 @@ The ❓ button (an old clock) at the bottom right opens the Time Quiz. One right
 only thing that moves time.
 
 - **Where questions come from.** Mostly from the **question packs** the parent switched on (`activePacks` in
-  `data/settings.json`; packs are files in `data/quiz_packs/`). A share of the questions (`knowledgeReviewShare`, 25 %)
-  are reviews of knowledge cards the child has already learned (§4.2). A question asked lately does not come back within
+  `data/settings.json`; packs are files in `data/quiz_packs/`). A share of the questions (25 % to start, `knowledgeReviewShare`;
+  the parent changes it per farm in ⚙️ Settings, in 5 % steps) are reviews of knowledge cards the child has already learned
+  (§4.2); when no card is due, a pack question takes the place. A question asked lately does not come back within
   the next few (`avoidRepeatWithin`, 3).
 - **Spaced repetition per question.** The learning record keeps every question: answered wrong, it comes back after 3
   others; right at the first try, it waits 12, then 32, 80, 200 and 480 questions. New questions come before known ones
@@ -793,6 +794,9 @@ be bought.**
 
 ### 11.3 Perks — prettier and livelier, never stronger
 
+The pop-up for a new perk and its tile in the album say why it came ("You harvested 40 times!", or the favour that
+earned it) before what it does.
+
 | Perk | What it does | How it comes |
 |---|---|---|
 | 🦋 Butterflies | butterflies over the fields | Granny Maud's goat (favour) |
@@ -853,7 +857,8 @@ scrolls). It is seen **at an angle, like Hay Day** (2:1 isometric): the ground i
 on its **footprint** (a diamond of whole tiles; its front corner is its "feet"), and what stands lower on the screen is drawn in
 front. Only a picture's visible pixels react to taps, so a tall roof never steals a tap from the place behind it.
 
-- **The forest** comes in diagonally from the top left (gathering, later the woodlot); **the village road** from the top right
+- **The forest** comes in diagonally from the top left (gathering, later the woodlot): its trees stand right on the meadow,
+  with no darker forest floor; **the village road** from the top right
   (market stall, book cart, notice board, later the Import Broker).
 - **The three fields** stand in a column in the middle, edge to edge; animals and the pond on the left; workshop, bees, barn,
   orchard and greenhouse on the right; compost, scarecrow and broker in the pockets between.
@@ -879,6 +884,9 @@ front. Only a picture's visible pixels react to taps, so a tall roof never steal
   stripe per question, in the season's colour); 🎒 pantry, 📖 quest book, 🖼️ album, ⚙️ settings.
 - **Tap a place → a sheet slides up** with a picture on top and everything to do there: build, stations and recipes, animals,
   polish.
+- **Tap a patch that is still overgrown** and the field's sheet opens with a note on top: which patch it is, what is in the way
+  (weeds, rocks, stumps, scrub, marsh) and what clears it, or what is needed first. When planting, a cost the player can't
+  pay shows its missing cubes hollow (e.g. the water a full patch needs).
 - **Buildings with an inside** (house, barn, workshop) open a window over the dimmed farm showing the room as a cutaway; its
   corners (bed · books · kitchen; cellar · crocks · hay · seed library; benches · kiln & forge · spinning · tools) open their own
   sheets.
