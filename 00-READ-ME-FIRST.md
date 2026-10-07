@@ -263,7 +263,8 @@ Still open: ❓ should parent settings (A5, dynamic difficulty, new game) be pro
 
 - **H1. A list of other kinds of benefits** for the upgrades (many now only cut energy): more harvest, better quality/price,
   faster growing, fewer pests, more storage, new recipes, longer freshness, luck, things the farmer can show … For the parent
-  to choose from before any data changes.
+  to choose from before any data changes. **Written:** `progression/upgrade-benefits-ideas.md` (7 Oct 2026); waiting for the
+  parent's choice.
 
 ### Later (older tasks)
 
