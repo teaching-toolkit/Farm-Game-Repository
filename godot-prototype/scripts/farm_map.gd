@@ -993,6 +993,7 @@ func rainbow() -> void:
 func sparkle_global(gp: Vector2) -> void:
 	if perk_fx == null or not perk_fx.on.get("sparkles", false): return
 	perk_fx.sparkle(board.get_global_transform().affine_inverse() * gp)
+	Sound.play("sparkle")
 
 ## Catches taps on the ground (it lies under everything else, so places and patches come first): the farmer walks
 ## there; the forest floor and the road also open their sheet.

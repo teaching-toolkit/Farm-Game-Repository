@@ -3,17 +3,20 @@
 extends RefCounted
 
 
-## Little sounds, synthesised once at start (16-bit mono). play("coin" | "pop" | "chime" | "levelup" | "zap" | "ding").
+## Little sounds, synthesised once at start (16-bit mono). play("coin" | "pop" | "chime" | "levelup" | "zap" | "ding" |
+## "tick" | "bonk"). They stand in for sound files that are not there yet (scripts/sound.gd).
 class Sfx extends Node:
 	const RATE := 22050
 	var streams := {}
 	var players: Array = []
 	var _next := 0
+	var bus := "Master"
 
 	func _ready() -> void:
 		for i in range(4):
 			var p := AudioStreamPlayer.new()
 			p.volume_db = -6.0
+			p.bus = bus
 			add_child(p)
 			players.append(p)
 		streams["coin"] = _make(_coin())
@@ -22,6 +25,8 @@ class Sfx extends Node:
 		streams["levelup"] = _make(_notes([523.0, 659.0, 784.0, 1047.0], 0.09, 0.7, 0.55))
 		streams["ding"] = _make(_notes([1568.0], 0.0, 0.35, 0.45))
 		streams["zap"] = _make(_zap())
+		streams["tick"] = _make(_notes([2093.0], 0.0, 0.05, 0.25))         # a soft click for taps
+		streams["bonk"] = _make(_notes([196.0, 165.0], 0.08, 0.25, 0.4))   # a gentle low "not quite"
 
 	func play(name: String) -> void:
 		if not streams.has(name) or players.is_empty(): return

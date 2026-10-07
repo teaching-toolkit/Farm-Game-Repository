@@ -84,8 +84,12 @@ static func button(text: String, cb: Callable, enabled := true, color := GREEN, 
 	b.add_theme_stylebox_override("pressed", box(color.darkened(0.15), 10, Color(0, 0, 0, 0), 0, 10))
 	b.add_theme_stylebox_override("disabled", box(Color("b8af9c"), 10, Color(0, 0, 0, 0), 0, 10))
 	if cb.is_valid():
+		b.pressed.connect(_tap)                      # a soft click for every button (data/sounds.json "tap")
 		b.pressed.connect(cb)
 	return b
+
+static func _tap() -> void:
+	Sound.play("tap")
 
 static func soft_button(text: String, cb: Callable, enabled := true, size := 15) -> Button:
 	var b := button(text, cb, enabled, Color("e9dfc8"), size)

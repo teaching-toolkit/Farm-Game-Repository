@@ -108,6 +108,7 @@ Expected now: smoke test passes; the bot reaches chapter 3 after about 290–415
 pets; the alpaca is chapter 5's own goal, which the bot stops before) after about 680–800. The bot plays randomly, so the
 number changes from run to run (7 Oct 2026, cloud: 678, 715, 763, 774, 689, 793; earlier 729). A bot run takes about 75 seconds.
 The smoke test prints its findings and ends with a few "leaked" warnings; those are harmless.
+(`--check-only` reports "Identifier not found: Sound" for scripts that use the `Sound` autoload; that one is expected.)
 If the smoke test prints **nothing** and only stops at the timeout, a script has a parse error (the test then hangs instead
 of failing). Find it with `$G --headless --path . --check-only -s res://tests/ui_smoke.gd` (or the script you changed).
 
@@ -243,17 +244,17 @@ E1 the system: ⚙️ Settings → 🇬🇧 English / 🇩🇪 Deutsch (per devi
 German with "du". **For the parent:** proofread (easiest in the game with the language on Deutsch, or in `data/i18n/*-de.json`);
 ❓ Swiss spelling — "ss" instead of "ß" (the quiz packs and the new texts use "ß" for now; one command can switch all)?
 
-### F. Sound and music (parent's list)
+### F. Sound and music (parent's list) — system done 7 Oct 2026; waiting for the sound files
 
-- **F1. Sound effects for everything a game usually has** (taps, buttons, harvest, sell, coins, build, right/wrong answer,
-  new thing, level up, animals, water, chopping, digging, footsteps …), open-licence files (CC0 preferred). Today the game makes
-  a few sounds itself, only with the "Farm sounds" perk. Parent's decision (7 Oct 2026): the basic sounds and music are on
-  from the start; the optional, extra-fun sounds are held back as **perks** (not only Ella's), often paired with something to
-  see, like the lightning for quick Rest sums: animals that make a sound when tapped and now and then by themselves, etc.
-- **F2. Background music**: open-licence tracks that fit the game, by situation (farm by season, Time Quiz, Rest,
-  celebrations), with gentle cross-fades. Licences: CC0 and CC-BY (parent, 7 Oct 2026), with a credits page in ⚙️; every file's
-  source, author and licence recorded next to it. The parent listens to a shortlist first. Ask before downloading.
-- **F3. Settings:** music on/off (and separately the sound effects). Keep the web build small (Ogg, short loops).
+Done: `scripts/sound.gd` (autoload `Sound`) plays everything from `data/sounds.json` — 40 effects and 6 music tracks
+(farm by season, Time Quiz, Rest), music cross-fades, a Music and an Effects bus, ⚙️ Settings: 🎵 Music on/off, 🔔 Sounds
+on/off (per device), 🎼 Credits (sounds, music, fonts). Everyday sounds for everyone; the fun extras belong to perks (animal
+voices = *Farm sounds*, now re-described; thunder, streak, coin shower, party popper, rainbow, sparkles, breeze). Until
+files are there, the game's own little sounds stand in (tap, right, wrong, harvest, coin, build, level, medal, lightning).
+**Waiting:** the files. This cloud machine cannot reach kenney.nl, opengameart.org, bigsoundbank.com or incompetech.com (7 Oct
+2026). Either the parent downloads what `sound-inbox/README.md` lists into `sound-inbox/` (four Kenney packs, 12 single
+sounds, 6 music loops — the parent picks the music), or allows those four domains for cloud sessions; then run
+`python3 tools/import_sounds.py` and `$G --headless --path . --import`, listen, and adjust volumes in `data/sounds.json`.
 
 ### G. The farmer as an actor (parent's list)
 

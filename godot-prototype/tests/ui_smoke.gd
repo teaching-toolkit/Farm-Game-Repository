@@ -266,6 +266,16 @@ func _ready() -> void:
 	G.set_review_share(1.4); var rs2: float = G.review_share()
 	G.S.erase("review_share")
 	print("r9 review share: start %.2f -> 0.52 gives %.2f, 1.4 gives %.2f, back to %.2f" % [rs0, rs1, rs2, G.review_share()])
+	# r9: sounds — every name the game plays exists in data/sounds.json; buses; switching music and effects
+	var snd = get_node("/root/Sound")
+	var names_missing := []
+	for nm in ["tap", "open", "close", "right", "wrong", "rest_right", "rest_wrong", "harvest", "plant", "weed", "dig", "chop", "cook", "craft", "smith", "build", "water", "coin", "collect", "page", "book", "celebrate", "levelup", "medal", "tired", "lightning", "streak", "coin_shower", "confetti", "rainbow", "sparkle", "breeze", "chicken", "cow", "sheep", "goat", "pony", "bees", "cat", "birds"]:
+		if not snd.has(nm): names_missing.append(nm)
+		snd.play(nm)
+	snd.music("farm", "spring"); snd.music("quiz"); snd.music("rest")
+	var m0: bool = snd.music_on
+	snd.set_music(false); snd.set_music(m0)
+	print("r9 sounds: names missing %s, buses Music %d SFX %d" % [names_missing, AudioServer.get_bus_index("Music"), AudioServer.get_bus_index("SFX")])
 	print("r9 grown-up lock: open at start %s, 'Farm ' %s, 'cow' %s" % [M._grownup_open(), M._password_ok("Farm "), M._password_ok("cow")])
 	M._show_menu()
 	await _frames(2)

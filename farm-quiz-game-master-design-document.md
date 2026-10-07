@@ -805,6 +805,18 @@ hidden spring: +1 water a trip; early bird: +3 energy max; growth, luck, Rest, p
 muck, stones …). **Only two gifts work at a time**; the others rest in the album, where they are swapped. **Gifts can never
 be bought.**
 
+### 11.2b Sound and music
+
+Everyone hears the everyday sounds from the start: a soft click on every button, a sheet sliding up and closing, a right
+and a gentle "not quite" answer, harvesting, planting, weeding, digging, chopping, cooking, crafting, the forge, building,
+water, coins, collecting from animals, turning a page, and jingles for something new, a new Rest level or a medal. Music
+plays by situation: its own loop for the farm in each season, a quiet one for the Time Quiz and a calm one for Rest, faded
+in and out. ⚙️ Settings switches music and sounds off separately (on this device), and *🎼 Credits* names who made them.
+The extra, fun sounds belong to perks and come with what the perk shows: animal voices (*Farm sounds*), thunder with the
+lightning sums, a pluck with the hot streak, coins with the coin shower, a party popper with the harvest party, a glassy
+chime with the rainbow and the sparkles, a breeze when the season changes. What plays is data (`data/sounds.json`); only
+CC0 or CC-BY sounds are used. Until the sound files are in, the game makes a few little sounds itself.
+
 ### 11.3 Perks — prettier and livelier, never stronger
 
 The pop-up for a new perk and its tile in the album say why it came ("You harvested 40 times!", or the favour that
@@ -814,7 +826,7 @@ earned it) before what it does.
 |---|---|---|
 | 🦋 Butterflies | butterflies over the fields | Granny Maud's goat (favour) |
 | ✨ Magic sparkles | sparkles where you tap | porridge for the twins (favour) |
-| 🔔 Farm sounds | a jingle when selling, a pop at harvest, a chime for new things | the miller's daughter's basket (favour) |
+| 🔔 Farm sounds | animal voices: hens, cows and sheep call when their pen is tapped and now and then on their own; birdsong | the miller's daughter's basket (favour) |
 | 🌈 Rainbows | a rainbow after rain | the washerwoman's line (favour) |
 | ⚡ Lightning sums | lightning on about one in three quick Rest sums | 25 quick Rest sums |
 | 🔥 Hot streak | a flame counts quick sums in a row | 3 sum medals |
@@ -993,7 +1005,7 @@ value checks) and keeps a copy of the current data.
 | `scripts/game.gd` (autoload `Game`) | the rules engine: time, energy, water, fields, weeds, pests, animals, stations, fuel, knowledge, polish, gear, seasons, freshness, luck, gifts, jobs, dynamic difficulty, saves |
 | `scripts/main.gd` | the interface: bars, sheets, inside windows, quizzes, album, settings |
 | `scripts/farm_map.gd`, `slot.gd`, `iso_field.gd`, `spots.gd` | the one-screen map, a place, a field, which data node belongs where |
-| `scripts/art.gd`, `ui.gd`, `fx.gd`, `avatar.gd` | pictures with emoji fallback, styles and explanations, perk effects, the farmer |
+| `scripts/art.gd`, `ui.gd`, `fx.gd`, `avatar.gd`, `sound.gd`, `i18n.gd` | pictures with emoji fallback, styles and explanations, perk effects, the farmer |
 | `learnkit/` | the learning kit — learner record, spaced repetition, maths engine, quiz engine, timer, number pad; reusable in any Godot game |
 
 ### 15.4 Saves

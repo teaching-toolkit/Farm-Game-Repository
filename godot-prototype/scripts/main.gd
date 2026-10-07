@@ -41,6 +41,7 @@ var modal: Control
 var modal_card: PanelContainer
 var modal_box: VBoxContainer
 var field_idx := 0        # the field whose patch was tapped last (the field sheet works on it)
+var _last_season := ""     # to notice a new season (music, breeze)
 var _patch_note := -1     # an overgrown patch that was tapped: the field sheet says which one and why it is not ready
 var _interior_back := ""  # reopen this building's inside when the corner's sheet closes
 var goal_id := ""
@@ -56,7 +57,6 @@ var _last_fx := ""             # the celebration effect shown last time (the nex
 var _after_close: Array = []   # messages shown when the pop-up closes (rain …)
 const Fx = preload("res://scripts/fx.gd")
 const Pad = preload("res://learnkit/number_pad_quiz.gd")
-var sfx                        # little sounds (perk "Farm sounds")
 var _look_sig := "-"
 
 func _ready() -> void:
@@ -70,8 +70,12 @@ func _ready() -> void:
 	UI.explain_hook = _hint
 	G.offer_cards.connect(_show_gift)
 	G.sold.connect(_on_sold)
-	sfx = Fx.Sfx.new()
-	add_child(sfx)
+	Sound.perk_on = func(id): return G.perk_on(id)
+	var amb := Timer.new()          # now and then an animal on the farm makes itself heard (perk "Farm sounds")
+	amb.wait_time = 30.0
+	amb.timeout.connect(_animal_ambience.bind(amb))
+	add_child(amb)
+	amb.start()
 	G.ask_name.connect(_show_name)
 	G.gained.connect(_on_gained)
 	G.celebrate.connect(_celebrate)
@@ -337,6 +341,10 @@ func _refresh() -> void:
 	water_bar.have = float(S["water"]); water_bar.cap = G.water_cap(); water_bar.refresh()
 	energy_bar.have = float(S["energy"]); energy_bar.cap = G.energy_max(); energy_bar.refresh()
 	season_emoji.text = G.season_emoji()
+	if G.season() != _last_season:            # a new season: its music on the farm, a breeze with the perk
+		if _last_season != "": _sfx("breeze")
+		_last_season = G.season()
+	if not modal.visible: Sound.music("farm", G.season())
 	map.set_perks({"butterflies": G.perk_on("perk_butterflies"), "sparkles": G.perk_on("perk_sparkles"),
 		"rainbow": G.perk_on("perk_rainbow"), "breeze": G.perk_on("perk_breeze")})
 	var lk: Dictionary = S.get("look", {})
@@ -565,7 +573,7 @@ func _in_chapter(id: String) -> bool:
 
 # ------------------------------------------------------------------ things flying to the store
 func _on_gained(source: String, got: Dictionary, lost: Dictionary = {}) -> void:
-	if source.begins_with("patch:") and not got.is_empty(): _sfx("pop")
+	if not got.is_empty(): _sfx(_gain_sound(source, got))
 	var pieces := []
 	var bounce := []
 	for k in got:
@@ -727,6 +735,7 @@ func _reveal(r: Rect2) -> void:
 # ------------------------------------------------------------------ the sheet
 ## A tap on a place: a building with an inside opens its inside, everything else its sheet.
 func _open_spot(sid: String) -> void:
+	_animal_voice(sid)
 	if Spots.INTERIORS.has(sid) and _built(sid):
 		_open_interior(sid)
 		return
@@ -850,6 +859,7 @@ func _open_sheet(kind: String) -> void:
 	call_deferred("_fit_sheet")
 	get_tree().create_timer(0.06).timeout.connect(_fit_sheet)
 	if not was:
+		_sfx("open")
 		_slide = 0.0
 		var tw := create_tween()
 		tw.tween_method(_set_slide, 0.0, 1.0, 0.22).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
@@ -860,6 +870,7 @@ func _set_slide(v: float) -> void:
 	_place_sheet()
 
 func _close_sheet() -> void:
+	if sheet.visible: _sfx("close")
 	sheet.visible = false
 	sheet_kind = ""
 	sheet_h = 0.0
@@ -921,6 +932,7 @@ func _hint(t: String) -> void:
 	_toast(t, 3.0)
 
 func _toast(t: String, secs := 6.5) -> void:
+	if t.begins_with("⚡"): _sfx("tired")             # too tired: a soft "not now"
 	# what flies to the store needs no words (it still goes into the log)
 	# harvests, collections and finished recipes fly to the store instead of a toast (in any language: the message's
 	# translated wording without its %s parts)
@@ -1024,7 +1036,7 @@ func _node_picture(id: String) -> Texture2D:
 func _show_celebration() -> void:
 	if modal.visible or _celebrations.is_empty(): return
 	var id: String = _celebrations.pop_front()
-	_sfx("chime")
+	_sfx("celebrate")
 	var perk := id.begins_with("perk:")
 	var n: Dictionary = G.perk_def(id.substr(5)) if perk else G.nodes[id]
 	var box := _open_modal(tr("✨ A new perk!") if perk else tr("✨ New!"))
@@ -1159,6 +1171,7 @@ func _answer_pressed(i: int, q: Dictionary, buttons: Array, feedback: Label, sta
 		for w in ["Yes", "Right", "Correct", "Exactly", "Ja", "Richtig", "Genau", "Stimmt"]:
 			if why.begins_with(w + "!"): own = true
 		feedback.text = "✅ " + ("" if own else tr("Right! ")) + why
+		_sfx("right")
 		feedback.add_theme_color_override("font_color", UI.GREEN_DARK)
 		on_done.call(state["first"])
 		call_deferred("_fit_modal")
@@ -1170,6 +1183,7 @@ func _answer_pressed(i: int, q: Dictionary, buttons: Array, feedback: Label, sta
 		var hint := str(q.get("wrong_text", ""))
 		if hint == "": hint = tr("Not quite. ") + str(q.get("why", ""))
 		feedback.text = "❌ " + hint + tr("  Try again!")
+		_sfx("wrong")
 		feedback.add_theme_color_override("font_color", UI.RED)
 
 # ------------------------------------------------------------------ Time Quiz
@@ -1184,6 +1198,7 @@ func _show_quiz_id(id: String) -> void:
 func _show_time_quiz(forced: Dictionary = {}) -> void:
 	var q: Dictionary = forced if not forced.is_empty() else G.next_time_question()
 	var box := _open_modal(tr("❓ Time Quiz"))
+	Sound.music("quiz")
 	box.add_child(UI.header(null, "⏳", 64))
 	box.add_child(UI.label(str(q.get("source", "")) + tr("   ·   every right answer moves farm time one step"), 15, UI.MUTED, true))
 	var qbox := UI.vbox(8)
@@ -1199,6 +1214,7 @@ func _time_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> voi
 	var msg := tr("⏳ Time moves on: question %d.") % G.S["step"]
 	if info.get("rain_stopped", false) and G.perk_on("perk_rainbow"):
 		map.rainbow()
+		_sfx("rainbow")
 		_after_close.append(tr("🌈 The rain has stopped — look, a rainbow!"))
 	if info.get("rain", false):
 		msg += tr(" 🌧️ It rained.")
@@ -1223,6 +1239,7 @@ func _time_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> voi
 ## all of it when quick (the level's time — 2.5 s for a sum learned by heart), half when slow.
 func _show_rest() -> void:
 	var box := _open_modal(tr("😴 Rest"))
+	Sound.music("rest")
 	var beds: Array = Spots.HOTSPOT_ART.get("living", []).filter(func(id): return G.nodes.has(id) and G.done(id))
 	beds.reverse()
 	var bed: Texture2D = Art.first("interior", beds)
@@ -1360,15 +1377,17 @@ func _rest_answered(res: Dictionary) -> void:
 		_rest["eb"].have = float(G.S["energy"])
 		_rest["eb"].queue_redraw()
 		if res["quick"] and G.perk_on("perk_lightning") and randf() < 1.0 / 3.0: _lightning()
+	_sfx("rest_right" if res["right"] else "rest_wrong")
 	if not fb.get("medals", []).is_empty():
-		_sfx("levelup")
+		_sfx("medal")
 		var fx = UI.Celebration.new()
 		add_child(fx)
 		fx.size = size
 		fx.start("stars", _rest["pad"].ans_box.get_global_rect().get_center())
 		for m in fb["medals"]:
 			if m["medal"] != "bronze": _after_close.append(str(fb.get("comment", "")))
-	elif int(fb.get("streak", 0)) in [5, 10, 20, 30]: _sfx("ding")
+	elif fb.get("level_up", false): _sfx("levelup")
+	elif int(fb.get("streak", 0)) in [5, 10, 20, 30]: _sfx("streak")
 	call_deferred("_fit_modal")
 
 ## Lightning over the Rest window, down to the answer (perk "Lightning sums").
@@ -1378,16 +1397,63 @@ func _lightning() -> void:
 	lt.position = Vector2.ZERO
 	lt.size = size
 	lt.start(_rest["pad"].ans_box.get_global_rect().get_center())
-	_sfx("zap")
+	_sfx("lightning")
 
-## A sound, if the "Farm sounds" perk is on.
+## Which sound fits what just arrived: from a patch (harvest, weeds, stones, wood), a recipe (by its kind of work),
+## animals, water, a building step.
+func _gain_sound(source: String, got: Dictionary) -> String:
+	if source.begins_with("patch:"):
+		if got.has("fiber"): return "weed"
+		if got.has("stone"): return "dig"
+		if got.has("log") or got.has("stick"): return "chop"
+		return "harvest"
+	if source.begins_with("recipe:"):
+		var cat: String = G.recipe_cat(source.substr(7))
+		if got.has("stone") or got.has("clay"): return "dig"
+		if got.has("fiber"): return "weed"
+		return {"cook": "cook", "prep": "cook", "wood": "chop", "gather": "chop", "smith": "smith", "kiln": "smith",
+			"craft": "craft", "textile": "craft", "process": "craft", "mill": "craft", "animal": "collect"}.get(cat, "build")
+	if source.begins_with("animal:"): return "collect"
+	if source == "water": return "water"
+	return "build"
+
+const ANIMAL_VOICE := {"coop": ["chicken"], "cows": ["cow"], "sheep": ["sheep"], "bees": ["bees"]}
+
+## Tapping a pen: its animals call (perk "Farm sounds"; Sound checks the perk).
+func _animal_voice(sid: String) -> void:
+	var v: Array = _voices_at(sid)
+	if not v.is_empty(): Sound.play(v[randi() % v.size()])
+
+func _voices_at(sid: String) -> Array:
+	if sid == "pets":
+		var out := []
+		for p in [["pet_goat", "goat"], ["pet_pony", "pony"]]:
+			if G.done(p[0]): out.append(p[1])
+		return out
+	var out2 := []
+	for v in ANIMAL_VOICE.get(sid, []):
+		var aid: String = {"chicken": "animal_chicken", "cow": "animal_cow", "sheep": "animal_sheep", "bees": "animal_bees"}[v]
+		if G.nodes.has(aid) and int(G.animal(aid)["count"]) > 0: out2.append(v)
+	return out2
+
+## Now and then, while the farm is on screen, an animal (or a bird, or the cat) makes itself heard.
+func _animal_ambience(t: Timer) -> void:
+	t.wait_time = randf_range(20.0, 45.0)
+	if modal.visible or not G.perk_on("perk_sounds"): return
+	var v := ["birds"]
+	for sid in ["coop", "cows", "sheep", "bees", "pets"]: v.append_array(_voices_at(sid))
+	if G.done("barn_cat"): v.append("cat")
+	Sound.play(v[randi() % v.size()])
+
+## A sound effect by its name in data/sounds.json (scripts/sound.gd: files, or a stand-in the game makes itself).
 func _sfx(name: String) -> void:
-	if sfx and G.perk_on("perk_sounds"): sfx.play(name)
+	Sound.play(name)
 
 ## Something was sold: a jingle, and coins fly into the purse (perk "Coin shower").
 func _on_sold(_k: String, n: float, _coins: float) -> void:
 	_sfx("coin")
 	if not G.perk_on("perk_coins"): return
+	_sfx("coin_shower")
 	var cs = Fx.CoinShower.new()
 	add_child(cs)
 	cs.position = Vector2.ZERO
@@ -1421,6 +1487,7 @@ func _show_card(cid: String) -> void:
 
 ## The card's page (to read now, or to read again). A card whose quiz is waiting gets a button to start it.
 func _card_page(cid: String) -> void:
+	_sfx("book")
 	var n: Dictionary = G.nodes[cid]
 	if not G.S.has("read_seen"): G.S["read_seen"] = {}
 	G.S["read_seen"][cid] = true
@@ -1603,7 +1670,9 @@ func _do_plant(a: String, i: int, cid: String) -> void:
 	if int(plan["plants"]) < 1 and plan["reasons"].has("water"):
 		_show_no_water()
 		return
-	if G.plant(a, i, cid): _close_sheet()
+	if G.plant(a, i, cid):
+		_sfx("plant")
+		_close_sheet()
 
 ## No water left: a drop with a red line through it, and the bucket to fetch more from the pond.
 func _show_no_water() -> void:
@@ -1790,6 +1859,13 @@ func _show_menu() -> void:
 		if code == I18n.lang: lr.add_child(UI.button("✔ " + nm, Callable(), true, UI.GREEN, 17))
 		else: lr.add_child(UI.soft_button(nm, _set_language.bind(code), true, 17))
 	box.add_child(lr)
+	# music and sound effects, each on or off (this device)
+	var sr := HFlowContainer.new()
+	sr.add_theme_constant_override("h_separation", 8)
+	sr.add_child(UI.soft_button((tr("🎵 Music: on") if Sound.music_on else tr("🔇 Music: off")), _toggle_music, true, 17))
+	sr.add_child(UI.soft_button((tr("🔔 Sounds: on") if Sound.sfx_on else tr("🔕 Sounds: off")), _toggle_sfx, true, 17))
+	sr.add_child(UI.soft_button(tr("🎼 Credits"), _show_credits, true, 17))
+	box.add_child(sr)
 	box.add_child(UI.soft_button(tr("📜 What happened (log)"), _open_log, true, 18))
 	if not _grownup_open():
 		box.add_child(UI.button(tr("🔒 Grown-up settings"), _ask_password, true, UI.BLUE, 18))
@@ -1801,6 +1877,34 @@ func _show_menu() -> void:
 	box.add_child(UI.soft_button(tr("%s 🎚️ Prices fit my farm (dynamic difficulty)") % ("✅" if G.flex_on() else "⬜"), _toggle_flex, true, 16))
 	box.add_child(UI.button(tr("🗑️ Start a new game (deletes the save)"), _reset, true, UI.RED, 17))
 	box.add_child(UI.soft_button(tr("🔒 Lock again"), _lock_grownup, true, 16))
+
+func _toggle_music() -> void:
+	Sound.set_music(not Sound.music_on)
+	if Sound.music_on: Sound.music("farm", G.season())
+	_close_modal()
+	_show_menu()
+
+func _toggle_sfx() -> void:
+	Sound.set_sfx(not Sound.sfx_on)
+	_close_modal()
+	_show_menu()
+
+## Who made the music and the sounds (data/sounds.json "credits", filled by tools/import_sounds.py).
+func _show_credits() -> void:
+	var box := _open_modal(tr("🎼 Credits"))
+	var cr: Array = Sound.credits()
+	if cr.is_empty():
+		box.add_child(UI.label(tr("No sound files yet: the little sounds you hear are made by the game itself."), 17, UI.MUTED, true))
+	for c in cr:
+		var pc := UI.card()
+		var v := UI.vbox(2)
+		pc.add_child(v)
+		v.add_child(UI.label(str(c.get("what", "")), 17, UI.INK, true))
+		v.add_child(UI.label("%s · %s" % [c.get("author", ""), c.get("licence", "")], 15, UI.MUTED, true))
+		if str(c.get("source", "")) != "": v.add_child(UI.label(str(c["source"]), 14, UI.BLUE, true))
+		box.add_child(pc)
+	box.add_child(UI.label(tr("Fonts: Andika (SIL International) and Noto Color Emoji (Google), both under the SIL Open Font License."), 15, UI.MUTED, true))
+	box.add_child(UI.soft_button(tr("⬅️ Back"), func(): _close_modal(); _show_menu(), true, 16))
 
 ## Switches the language and builds the screen again in it (the farm stays as it is).
 func _set_language(code: String) -> void:
@@ -2671,6 +2775,7 @@ func _harvest_everything() -> void:
 		add_child(fx)
 		fx.size = size
 		fx.start("confetti", size / 2.0)
+		_sfx("confetti")
 
 func _part_market() -> void:
 	_section(tr("🌱 Seed merchant"), tr("Only seeds you have can be planted — buy them here."))
@@ -2756,7 +2861,9 @@ func _part_library() -> void:
 
 ## Starting to read a card shows its page at once (and the reading takes a few Time Quiz questions).
 func _start_reading(cid: String) -> void:
-	if G.start_reading(cid): _card_page(cid)
+	if G.start_reading(cid):
+		_sfx("page")
+		_card_page(cid)
 
 ## A knowledge card as a tile: what it is about, where it stands (learned with stars, quiz waiting, being read, can be read,
 ## locked) and the button for the next thing to do with it at the bottom.

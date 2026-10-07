@@ -1,0 +1,6 @@
+[
+ {"path": "kenney_interface-sounds", "what": "Interface Sounds (clicks, opening, closing, right, wrong)", "author": "Kenney", "licence": "CC0 1.0", "source": "https://kenney.nl/assets/interface-sounds"},
+ {"path": "kenney_rpg-audio", "what": "RPG Audio (chopping, pots, coins, pages, cloth)", "author": "Kenney", "licence": "CC0 1.0", "source": "https://kenney.nl/assets/rpg-audio"},
+ {"path": "kenney_impact-sounds", "what": "Impact Sounds (wood, digging, footsteps, metal)", "author": "Kenney", "licence": "CC0 1.0", "source": "https://kenney.nl/assets/impact-sounds"},
+ {"path": "kenney_music-jingles", "what": "Music Jingles (celebrations, medals, new levels)", "author": "Kenney", "licence": "CC0 1.0", "source": "https://kenney.nl/assets/music-jingles"}
+]

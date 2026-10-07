@@ -246,6 +246,11 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   a picture above it; `pool` = more wrong answers of the same kind to fill questions up. Add a file and list its id in
   `activePacks`. **After adding or changing questions run `python3 tools/quiz_ids.py`**: it gives new questions their id
   (never change or reuse one) and updates `data/i18n/quiz-en.json` and `quiz-de.json` (German texts; empty = still English).
+- **Sound and music** (`data/sounds.json`, played by `scripts/sound.gd`, the autoload `Sound`): every effect by name
+  (`Sound.play("harvest")`) with its files in `assets/sounds/sfx/`, a volume, a stand-in sound the game makes itself
+  (`synth`) and an optional `perk`; music tracks in `assets/sounds/music/` and which one plays where (`music.play`: the
+  farm per season, `quiz`, `rest`). New files: put them in `../sound-inbox/` with a line in its `SOURCES.json` (licence!),
+  run `python3 tools/import_sounds.py`, then import in Godot. Music and effects can be switched off in ⚙️ Settings.
 - **Languages** (`data/i18n/`, see `scripts/i18n.gd`): `languages.json` lists them; per language `ui-<lang>.json` (interface:
   English text → translation), `data-<lang>.json` and `learn-<lang>.json` (game data and Rest sums: `{"path": {"en", "<lang>"}}`)
   and `quiz-<lang>.json` (packs). In the scripts every text the player sees is wrapped in `tr("…")` (`TranslationServer.translate`
@@ -287,7 +292,8 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 ## What's simplified in this prototype
 - A patch upgrade (dug beds, raised beds…) is paid patch by patch, then applies to every patch; new fields get it too.
 - One scarecrow and one fence protect all fields; pests are counted for the whole farm.
-- Sounds only with the "Farm sounds" perk (made by the game itself); text-to-speech (🔊) works where the system has a voice.
+- Sound files are not in yet (`../sound-inbox/README.md`): until then the game makes a few little sounds itself and plays no
+  music. Text-to-speech (🔊) works where the system has a voice (in the game's language).
 - The pixie chest mini-game is not in yet; the farmer is a first prototype (one look, no "make your farmer" screen yet).
 
 ## Files

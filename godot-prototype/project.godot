@@ -23,6 +23,7 @@ general/text_to_speech=true
 [autoload]
 
 Game="*res://scripts/game.gd"
+Sound="*res://scripts/sound.gd"
 
 [display]
 
