@@ -7,6 +7,14 @@ Sounds and music waiting to go into the game, like `art-inbox/` for pictures. No
 `SOURCES.json` (who made it, the licence, the web page); the tool skips anything without one, and the credits page in
 ⚙️ Settings is made from it.
 
+## Layout (tidied 7 Oct 2026)
+
+- `kenney_*/` the four packs, `animals/`, `water/`, `extras/`, `music/`: what the importer reads (each needs a `SOURCES.json` line).
+- `originals/`: untouched source files that the ready-to-use files were cut or converted from (storm recording, first music
+  files, hen, water-splash flacs). Never imported.
+- `unused/`: downloaded but deliberately not used: `MudchuteAnimals/` (CC-BY-SA, share-alike; see the log) and `mouse-2.ogg`
+  (no source known, no slot in the game).
+
 ## 1. Sound effects — four free packs by Kenney (CC0)
 
 Download each zip from its page and unzip it here, keeping the folder name:

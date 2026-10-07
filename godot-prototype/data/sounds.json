@@ -8,7 +8,11 @@
     "kenney_interface-sounds/**/click_00[1-3].ogg"
    ],
    "what": "any button",
-   "files": []
+   "files": [
+    "tap_1.ogg",
+    "tap_2.ogg",
+    "tap_3.ogg"
+   ]
   },
   "open": {
    "synth": "",
@@ -17,7 +21,11 @@
     "kenney_interface-sounds/**/maximize_00[1-3].ogg"
    ],
    "what": "a place's sheet slides up",
-   "files": []
+   "files": [
+    "open_1.ogg",
+    "open_2.ogg",
+    "open_3.ogg"
+   ]
   },
   "close": {
    "synth": "",
@@ -26,7 +34,11 @@
     "kenney_interface-sounds/**/minimize_00[1-3].ogg"
    ],
    "what": "a sheet or pop-up closes",
-   "files": []
+   "files": [
+    "close_1.ogg",
+    "close_2.ogg",
+    "close_3.ogg"
+   ]
   },
   "right": {
    "synth": "ding",
@@ -35,7 +47,10 @@
     "kenney_interface-sounds/**/confirmation_00[1-2].ogg"
    ],
    "what": "right answer in a quiz",
-   "files": []
+   "files": [
+    "right_1.ogg",
+    "right_2.ogg"
+   ]
   },
   "wrong": {
    "synth": "bonk",
@@ -44,7 +59,10 @@
     "kenney_interface-sounds/**/error_00[4-5].ogg"
    ],
    "what": "not quite right (gentle)",
-   "files": []
+   "files": [
+    "wrong_1.ogg",
+    "wrong_2.ogg"
+   ]
   },
   "rest_right": {
    "synth": "ding",
@@ -53,7 +71,11 @@
     "kenney_interface-sounds/**/select_00[1-3].ogg"
    ],
    "what": "a Rest sum right",
-   "files": []
+   "files": [
+    "rest_right_1.ogg",
+    "rest_right_2.ogg",
+    "rest_right_3.ogg"
+   ]
   },
   "rest_wrong": {
    "synth": "bonk",
@@ -62,7 +84,10 @@
     "kenney_interface-sounds/**/back_00[1-2].ogg"
    ],
    "what": "a Rest sum wrong",
-   "files": []
+   "files": [
+    "rest_wrong_1.ogg",
+    "rest_wrong_2.ogg"
+   ]
   },
   "harvest": {
    "synth": "pop",
@@ -71,7 +96,11 @@
     "kenney_impact-sounds/**/impactSoft_medium_00[0-2].ogg"
    ],
    "what": "harvesting a patch",
-   "files": []
+   "files": [
+    "harvest_1.ogg",
+    "harvest_2.ogg",
+    "harvest_3.ogg"
+   ]
   },
   "plant": {
    "synth": "pop",
@@ -80,7 +109,11 @@
     "kenney_impact-sounds/**/footstep_grass_00[0-2].ogg"
    ],
    "what": "planting",
-   "files": []
+   "files": [
+    "plant_1.ogg",
+    "plant_2.ogg",
+    "plant_3.ogg"
+   ]
   },
   "weed": {
    "synth": "",
@@ -89,7 +122,11 @@
     "kenney_rpg-audio/**/cloth[1-3].ogg"
    ],
    "what": "pulling weeds",
-   "files": []
+   "files": [
+    "weed_1.ogg",
+    "weed_2.ogg",
+    "weed_3.ogg"
+   ]
   },
   "dig": {
    "synth": "",
@@ -98,7 +135,11 @@
     "kenney_impact-sounds/**/impactMining_00[0-2].ogg"
    ],
    "what": "stones, digging, clearing",
-   "files": []
+   "files": [
+    "dig_1.ogg",
+    "dig_2.ogg",
+    "dig_3.ogg"
+   ]
   },
   "chop": {
    "synth": "",
@@ -108,7 +149,11 @@
     "kenney_impact-sounds/**/impactWood_medium_00[0-1].ogg"
    ],
    "what": "wood work, gathering sticks",
-   "files": []
+   "files": [
+    "chop_1.ogg",
+    "chop_2.ogg",
+    "chop_3.ogg"
+   ]
   },
   "cook": {
    "synth": "",
@@ -117,7 +162,11 @@
     "kenney_rpg-audio/**/metalPot[1-3].ogg"
    ],
    "what": "cooking, baking",
-   "files": []
+   "files": [
+    "cook_1.ogg",
+    "cook_2.ogg",
+    "cook_3.ogg"
+   ]
   },
   "craft": {
    "synth": "",
@@ -127,7 +176,12 @@
     "kenney_rpg-audio/**/drawKnife[1-2].ogg"
    ],
    "what": "crafting, weaving, pressing",
-   "files": []
+   "files": [
+    "craft_1.ogg",
+    "craft_2.ogg",
+    "craft_3.ogg",
+    "craft_4.ogg"
+   ]
   },
   "smith": {
    "synth": "",
@@ -136,7 +190,11 @@
     "kenney_impact-sounds/**/impactMetal_light_00[0-2].ogg"
    ],
    "what": "forge and anvil",
-   "files": []
+   "files": [
+    "smith_1.ogg",
+    "smith_2.ogg",
+    "smith_3.ogg"
+   ]
   },
   "build": {
    "synth": "chime",
@@ -145,7 +203,11 @@
     "kenney_impact-sounds/**/impactPlank_medium_00[0-2].ogg"
    ],
    "what": "building a step",
-   "files": []
+   "files": [
+    "build_1.ogg",
+    "build_2.ogg",
+    "build_3.ogg"
+   ]
   },
   "water": {
    "synth": "",
@@ -154,7 +216,11 @@
     "water/splash*"
    ],
    "what": "fetching water (any CC0 splash)",
-   "files": []
+   "files": [
+    "water_1.ogg",
+    "water_2.ogg",
+    "water_3.ogg"
+   ]
   },
   "coin": {
    "synth": "coin",
@@ -163,7 +229,10 @@
     "kenney_rpg-audio/**/handleCoins*.ogg"
    ],
    "what": "selling",
-   "files": []
+   "files": [
+    "coin_1.ogg",
+    "coin_2.ogg"
+   ]
   },
   "collect": {
    "synth": "pop",
@@ -172,7 +241,9 @@
     "kenney_rpg-audio/**/dropLeather.ogg"
    ],
    "what": "collecting from animals",
-   "files": []
+   "files": [
+    "collect_1.ogg"
+   ]
   },
   "page": {
    "synth": "",
@@ -181,7 +252,11 @@
     "kenney_rpg-audio/**/bookFlip[1-3].ogg"
    ],
    "what": "reading a card",
-   "files": []
+   "files": [
+    "page_1.ogg",
+    "page_2.ogg",
+    "page_3.ogg"
+   ]
   },
   "book": {
    "synth": "",
@@ -190,7 +265,9 @@
     "kenney_rpg-audio/**/bookOpen.ogg"
    ],
    "what": "opening a card or the album",
-   "files": []
+   "files": [
+    "book_1.ogg"
+   ]
   },
   "celebrate": {
    "synth": "chime",
@@ -200,7 +277,12 @@
     "kenney_music-jingles/**/jingles_PIZZI0[0-4].ogg"
    ],
    "what": "something new is built",
-   "files": []
+   "files": [
+    "celebrate_1.ogg",
+    "celebrate_2.ogg",
+    "celebrate_3.ogg",
+    "celebrate_4.ogg"
+   ]
   },
   "levelup": {
    "synth": "levelup",
@@ -210,7 +292,11 @@
     "kenney_music-jingles/**/jingles_STEEL0[0-2].ogg"
    ],
    "what": "new Rest level, card learned",
-   "files": []
+   "files": [
+    "levelup_1.ogg",
+    "levelup_2.ogg",
+    "levelup_3.ogg"
+   ]
   },
   "medal": {
    "synth": "levelup",
@@ -220,7 +306,11 @@
     "kenney_music-jingles/**/jingles_SAX0[0-2].ogg"
    ],
    "what": "a Rest medal",
-   "files": []
+   "files": [
+    "medal_1.ogg",
+    "medal_2.ogg",
+    "medal_3.ogg"
+   ]
   },
   "tired": {
    "synth": "bonk",
@@ -229,7 +319,10 @@
     "kenney_interface-sounds/**/error_00[1-2].ogg"
    ],
    "what": "too tired / can't do it yet",
-   "files": []
+   "files": [
+    "tired_1.ogg",
+    "tired_2.ogg"
+   ]
   },
   "chicken": {
    "perk": "perk_sounds",
@@ -238,7 +331,9 @@
     "animals/chicken*"
    ],
    "what": "hens (tap the coop, now and then)",
-   "files": []
+   "files": [
+    "chicken_1.ogg"
+   ]
   },
   "cow": {
    "perk": "perk_sounds",
@@ -312,7 +407,9 @@
     "extras/thunder*"
    ],
    "what": "lightning on a quick sum",
-   "files": []
+   "files": [
+    "lightning_1.ogg"
+   ]
   },
   "streak": {
    "perk": "perk_streak",
@@ -322,7 +419,10 @@
     "kenney_interface-sounds/**/pluck_00[1-2].ogg"
    ],
    "what": "the hot-streak flame",
-   "files": []
+   "files": [
+    "streak_1.ogg",
+    "streak_2.ogg"
+   ]
   },
   "coin_shower": {
    "perk": "perk_coins",
@@ -332,7 +432,9 @@
     "kenney_rpg-audio/**/handleCoins2.ogg"
    ],
    "what": "coins flying into the purse",
-   "files": []
+   "files": [
+    "coin_shower_1.ogg"
+   ]
   },
   "confetti": {
    "perk": "perk_confetti",
@@ -352,7 +454,10 @@
     "kenney_interface-sounds/**/glass_00[1-2].ogg"
    ],
    "what": "a rainbow after the rain",
-   "files": []
+   "files": [
+    "rainbow_1.ogg",
+    "rainbow_2.ogg"
+   ]
   },
   "sparkle": {
    "perk": "perk_sparkles",
@@ -362,7 +467,10 @@
     "kenney_interface-sounds/**/glass_00[3-4].ogg"
    ],
    "what": "magic sparkles when tapping",
-   "files": []
+   "files": [
+    "sparkle_1.ogg",
+    "sparkle_2.ogg"
+   ]
   },
   "breeze": {
    "perk": "perk_breeze",
@@ -378,50 +486,50 @@
  "music": {
   "tracks": {
    "farm_spring": {
-    "file": "",
+    "file": "farm_spring.ogg",
     "volume": -14,
     "from": [
-     "music/farm_spring.*"
+     "music/seasons_for_now.ogg"
     ],
     "what": "the farm in spring: light, cheerful"
    },
    "farm_summer": {
-    "file": "",
+    "file": "farm_summer.ogg",
     "volume": -14,
     "from": [
-     "music/farm_summer.*"
+     "music/seasons_for_now.ogg"
     ],
     "what": "the farm in summer: sunny, a bit livelier"
    },
    "farm_autumn": {
-    "file": "",
+    "file": "farm_autumn.ogg",
     "volume": -14,
     "from": [
-     "music/farm_autumn.*"
+     "music/seasons_for_now.ogg"
     ],
     "what": "the farm in autumn: warm, cosy"
    },
    "farm_winter": {
-    "file": "",
+    "file": "farm_winter.ogg",
     "volume": -14,
     "from": [
-     "music/farm_winter.*"
+     "music/seasons_for_now.ogg"
     ],
     "what": "the farm in winter: calm, a little magical"
    },
    "quiz": {
-    "file": "",
+    "file": "quiz.ogg",
     "volume": -18,
     "from": [
-     "music/quiz.*"
+     "music/quizzes_for_now.ogg"
     ],
     "what": "Time Quiz: quiet, helps thinking (no words)"
    },
    "rest": {
-    "file": "",
+    "file": "rest.ogg",
     "volume": -18,
     "from": [
-     "music/rest.*"
+     "music/quizzes_for_now.ogg"
     ],
     "what": "Rest sums: calm, steady"
    }
@@ -437,5 +545,161 @@
    "rest": "rest"
   }
  },
- "credits": []
+ "credits": [
+  {
+   "what": "Interface Sounds (clicks, opening, closing, right, wrong)",
+   "author": "Kenney",
+   "licence": "CC0 1.0",
+   "source": "https://kenney.nl/assets/interface-sounds",
+   "files": [
+    "sfx/tap_1.ogg",
+    "sfx/tap_2.ogg",
+    "sfx/tap_3.ogg",
+    "sfx/open_1.ogg",
+    "sfx/open_2.ogg",
+    "sfx/open_3.ogg",
+    "sfx/close_1.ogg",
+    "sfx/close_2.ogg",
+    "sfx/close_3.ogg",
+    "sfx/right_1.ogg",
+    "sfx/right_2.ogg",
+    "sfx/wrong_1.ogg",
+    "sfx/wrong_2.ogg",
+    "sfx/rest_right_1.ogg",
+    "sfx/rest_right_2.ogg",
+    "sfx/rest_right_3.ogg",
+    "sfx/rest_wrong_1.ogg",
+    "sfx/rest_wrong_2.ogg",
+    "sfx/tired_1.ogg",
+    "sfx/tired_2.ogg",
+    "sfx/streak_1.ogg",
+    "sfx/streak_2.ogg",
+    "sfx/rainbow_1.ogg",
+    "sfx/rainbow_2.ogg",
+    "sfx/sparkle_1.ogg",
+    "sfx/sparkle_2.ogg"
+   ]
+  },
+  {
+   "what": "RPG Audio (chopping, pots, coins, pages, cloth)",
+   "author": "Kenney",
+   "licence": "CC0 1.0",
+   "source": "https://kenney.nl/assets/rpg-audio",
+   "files": [
+    "sfx/weed_1.ogg",
+    "sfx/weed_2.ogg",
+    "sfx/weed_3.ogg",
+    "sfx/chop_1.ogg",
+    "sfx/cook_1.ogg",
+    "sfx/cook_2.ogg",
+    "sfx/cook_3.ogg",
+    "sfx/craft_1.ogg",
+    "sfx/craft_2.ogg",
+    "sfx/craft_3.ogg",
+    "sfx/craft_4.ogg",
+    "sfx/coin_1.ogg",
+    "sfx/coin_2.ogg",
+    "sfx/collect_1.ogg",
+    "sfx/page_1.ogg",
+    "sfx/page_2.ogg",
+    "sfx/page_3.ogg",
+    "sfx/book_1.ogg",
+    "sfx/coin_shower_1.ogg"
+   ]
+  },
+  {
+   "what": "Impact Sounds (wood, digging, footsteps, metal)",
+   "author": "Kenney",
+   "licence": "CC0 1.0",
+   "source": "https://kenney.nl/assets/impact-sounds",
+   "files": [
+    "sfx/harvest_1.ogg",
+    "sfx/harvest_2.ogg",
+    "sfx/harvest_3.ogg",
+    "sfx/plant_1.ogg",
+    "sfx/plant_2.ogg",
+    "sfx/plant_3.ogg",
+    "sfx/dig_1.ogg",
+    "sfx/dig_2.ogg",
+    "sfx/dig_3.ogg",
+    "sfx/chop_2.ogg",
+    "sfx/chop_3.ogg",
+    "sfx/smith_1.ogg",
+    "sfx/smith_2.ogg",
+    "sfx/smith_3.ogg",
+    "sfx/build_1.ogg",
+    "sfx/build_2.ogg",
+    "sfx/build_3.ogg"
+   ]
+  },
+  {
+   "what": "Music Jingles (celebrations, medals, new levels)",
+   "author": "Kenney",
+   "licence": "CC0 1.0",
+   "source": "https://kenney.nl/assets/music-jingles",
+   "files": [
+    "sfx/celebrate_1.ogg",
+    "sfx/celebrate_2.ogg",
+    "sfx/celebrate_3.ogg",
+    "sfx/celebrate_4.ogg",
+    "sfx/levelup_1.ogg",
+    "sfx/levelup_2.ogg",
+    "sfx/levelup_3.ogg",
+    "sfx/medal_1.ogg",
+    "sfx/medal_2.ogg",
+    "sfx/medal_3.ogg"
+   ]
+  },
+  {
+   "what": "Thunder (short clip cut from 'Rain and storm 2')",
+   "author": "BigSoundBank (Joseph Sardin)",
+   "licence": "CC0 1.0",
+   "source": "https://bigsoundbank.com (Rain and storm 2, ID 0740)",
+   "files": [
+    "sfx/lightning_1.ogg"
+   ]
+  },
+  {
+   "what": "Farm music, all seasons (cozy farm music; temporary)",
+   "author": "Zane Little",
+   "licence": "CC0 1.0",
+   "source": "https://opengameart.org",
+   "files": [
+    "music/farm_spring.ogg",
+    "music/farm_summer.ogg",
+    "music/farm_autumn.ogg",
+    "music/farm_winter.ogg"
+   ]
+  },
+  {
+   "what": "Quiz and Rest music (temporary)",
+   "author": "Kevin MacLeod (incompetech.com)",
+   "licence": "CC BY 4.0",
+   "source": "https://incompetech.com",
+   "files": [
+    "music/quiz.ogg",
+    "music/rest.ogg"
+   ]
+  },
+  {
+   "what": "Annoyed hen (hens perk sound)",
+   "author": "Joseph Sardin (BigSoundBank)",
+   "licence": "CC0 1.0",
+   "source": "https://bigsoundbank.com/annoyed-hen-s0453.html",
+   "files": [
+    "sfx/chicken_1.ogg"
+   ]
+  },
+  {
+   "what": "Water splashes (3 of 6 'Short Water Splashes', converted to ogg)",
+   "author": "ezwa (pdsounds.org), cut by qubodup",
+   "licence": "CC0 1.0",
+   "source": "https://opengameart.org/content/6-short-water-splashes",
+   "files": [
+    "sfx/water_1.ogg",
+    "sfx/water_2.ogg",
+    "sfx/water_3.ogg"
+   ]
+  }
+ ]
 }

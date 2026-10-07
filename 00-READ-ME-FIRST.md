@@ -186,6 +186,9 @@ and `godot-prototype/tools/setup_godot.sh` for cloud sessions. No game changes; 
 
 7 Oct 2026 (group A): the five small fixes A1–A5 are in the code (see the log); `web-build/` does **not** match the code now.
 
+7 Oct 2026 (sounds): sound files from `sound-inbox/` imported (see §F). `web-build/` does not match the code until it is
+re-exported with the sounds.
+
 7 Oct 2026 (cloud check): a fresh cloud session was set up and verified (smoke test, bot, screenshot); the cloud notes in
 this file and `CLAUDE.md` were corrected (see the log). No game changes; `web-build/` still matches the code.
 
@@ -251,7 +254,18 @@ Done: `scripts/sound.gd` (autoload `Sound`) plays everything from `data/sounds.j
 on/off (per device), 🎼 Credits (sounds, music, fonts). Everyday sounds for everyone; the fun extras belong to perks (animal
 voices = *Farm sounds*, now re-described; thunder, streak, coin shower, party popper, rainbow, sparkles, breeze). Until
 files are there, the game's own little sounds stand in (tap, right, wrong, harvest, coin, build, level, medal, lightning).
-**Waiting:** the files. This cloud machine cannot reach kenney.nl, opengameart.org, bigsoundbank.com or incompetech.com (7 Oct
+**Update 7 Oct 2026 (afternoon):** the parent put files into `sound-inbox/`: the four Kenney packs, two temporary music tracks
+(`music/seasons_for_now.ogg` for all four seasons, `music/quizzes_for_now.ogg` for Time Quiz and Rest; trailing silence trimmed,
+originals kept beside them) and a thunder clip cut from BigSoundBank's "Rain and storm 2" (`extras/thunder.ogg`, CC0).
+`import_sounds.py` ran again later: 83 files are in `assets/sounds/`; 31 of 40 effects (now with hen and water splashes) and all 6
+music tracks have files. **Still missing:** cow, sheep, goat, pony, bees, cat, birds, `extras/party`, `extras/wind` (stand-ins
+until then). `sound-inbox/` was tidied (`originals/`, `unused/`, see its README). The Mudchute farm animals (cow, sheep) are in
+`unused/` because they are CC-BY-SA (share-alike); use them only if the parent accepts that licence. The BigSoundBank/OpenGameArt
+CC0 cow and sheep are better. The two "for now" tracks are credited: farm = Zane Little (OpenGameArt, CC0), quiz/Rest = Kevin MacLeod (incompetech, CC BY 4.0,
+credit shown in ⚙️ Settings → 🎼 Credits). The parent didn't say which exact tracks, so the credits name the artists and sites only;
+add the track titles to `sound-inbox/SOURCES.json` if known.
+The Godot import has been run (7 Oct 2026, Godot 4.7.2 on the Mac's Linux shell; 77 sfx files and 6 music files imported without errors). Nobody has listened yet (volumes in `data/sounds.json`).
+**Earlier note:** this cloud machine cannot reach kenney.nl, opengameart.org, bigsoundbank.com or incompetech.com (7 Oct
 2026). Either the parent downloads what `sound-inbox/README.md` lists into `sound-inbox/` (four Kenney packs, 12 single
 sounds, 6 music loops — the parent picks the music), or allows those four domains for cloud sessions; then run
 `python3 tools/import_sounds.py` and `$G --headless --path . --import`, listen, and adjust volumes in `data/sounds.json`.
