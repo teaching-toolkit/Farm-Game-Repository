@@ -9,7 +9,7 @@
  "shuffleAnswers": true,
  "knowledgeReviewShare": 0.25,
  "parentPoolShare": 0.75,
- "note": "knowledgeReviewShare = share of Time Quiz questions that are reviews of knowledge cards the child already learned (0 turns it off); the rest come from the parent's packs in quiz_packs/. It is the starting value: each farm can change it in ⚙️ Settings. Rest sums come from the learning kit (learnkit/curriculum/math.json): mathCategories = the categories practised (addsub, muldiv, numbers, fractions, decimals, measures, powers — add one when the child is ready); restTimerScale stretches every time limit (1.5 = half as much time again). Right and quick gives the full energy, slower restSlowShare of it. showPlaceNames shows name labels under the places on the map. quizOptions = how many answers a Time Quiz question shows (3 or 4; a question with fewer answers shows all it has). language = the language of the quiz texts: en, or de (data/i18n/quiz-de.json; what is not translated yet stays English). Every question has an id (CON-003 …), see tools/quiz_ids.py. dynamicDifficulty = new goals ask a bit more when the farm is strong and a bit less when it is slow (see meta.flex in farm-progression.json); it can also be switched in ⚙️ Settings.",
+ "note": "knowledgeReviewShare = share of Time Quiz questions that are reviews of knowledge cards the child already learned (0 turns it off); the rest come from the parent's packs in quiz_packs/. It is the starting value: each farm can change it in ⚙️ Settings. Rest sums come from the learning kit (learnkit/curriculum/math.json): mathCategories = the categories practised (addsub, muldiv, numbers, fractions, decimals, measures, powers — add one when the child is ready); restTimerScale stretches every time limit (1.5 = half as much time again). Right and quick gives the full energy, slower restSlowShare of it. showPlaceNames shows name labels under the places on the map. quizOptions = how many answers a Time Quiz question shows (3 or 4; a question with fewer answers shows all it has). language = the language of the quiz texts: en, or de (data/i18n/quiz-de.json; what is not translated yet stays English). Every question has an id (CON-003 …), see tools/quiz_ids.py. parentPassword opens the grown-up part of ⚙️ Settings (question share, dynamic difficulty, learning record, new game) for 5 minutes; parentHint is shown under the box (for now it is the password itself; change the password later and the hint becomes a reminder). It only keeps a child out: the web build is public, so this is not a secret. dynamicDifficulty = new goals ask a bit more when the farm is strong and a bit less when it is slow (see meta.flex in farm-progression.json); it can also be switched in ⚙️ Settings.",
  "showCheatButton": true,
  "restSlowShare": 0.5,
  "showPlaceNames": false,
@@ -20,5 +20,7 @@
  "mathCurriculum": "res://learnkit/curriculum/math.json",
  "quizOptions": 4,
  "language": "en",
+ "parentPassword": "farm",
+ "parentHint": "farm",
  "dynamicDifficulty": false
 }

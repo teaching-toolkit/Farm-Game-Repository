@@ -234,7 +234,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - Saves live in Godot's user folder, one folder per player: `players/<name>/farm_save.json` and `learning.json` (on a Mac:
   `~/Library/Application Support/Godot/app_userdata/Farm Quiz Game (prototype)/`).
 - Screenshots and tests: `--player=Name`, `--newgame`, `--timestep=N`, `--spot=storage`, `--patch=K`, `--unlock=id,id`,
-  `--give=item:5`, `--water=1` (carried water), `--menu` (⚙️ Settings), `--celebrate=id`, `--postcard`, `--perks=all` (or a list of perk ids), `--rainbow`, `--rest`, `--qid=PIC-004`
+  `--give=item:5`, `--water=1` (carried water), `--menu` (⚙️ Settings), `--grownup` (its grown-up part open), `--password` (the password box), `--celebrate=id`, `--postcard`, `--perks=all` (or a list of perk ids), `--rainbow`, `--rest`, `--qid=PIC-004`
   (one Time Quiz question), `--lang=de` (quiz texts in German), `--shot=file.png`.
 
 ## Changing content (no code needed)
@@ -259,6 +259,10 @@ yard until the house is built). `addons` place the things built on a place (`dx`
     slow right answer gives;
   - `mathCurriculum` — the curriculum file (`learnkit/curriculum/math.json`: levels, times, repetition, medals, kind words);
   - `showPlaceNames` — name labels under the places on the map (off: no words on the map);
+  - `parentPassword`, `parentHint` — the password for the grown-up part of ⚙️ Settings (question share, dynamic difficulty,
+    learning record, new game; open for 5 minutes once typed, not case-sensitive) and the hint shown under the box. For now the
+    hint is the password itself ("farm"); change the password later and the hint becomes a reminder. Only a child lock: the
+    web build is public;
   - `avoidRepeatWithin`, `showCheatButton`.
 
 ## Automated checks

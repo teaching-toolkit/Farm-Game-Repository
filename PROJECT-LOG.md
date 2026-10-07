@@ -32,6 +32,7 @@ For what the game *is* now, read `farm-quiz-game-master-design-document.md`; for
 | **Answers** (7 Oct 2026) | Sounds and music for everyone from the start; extra fun sounds (animal noises on tap and by themselves, paired effects like the Rest lightning) are kept for perks. Sound and music licences: CC0 and CC-BY, with a credits page. The game starts with one wheat seed = one plant. German: Claude drafts, the parent proofreads. |
 | **Group A: small fixes** (7 Oct 2026) | **A1** Planting: when water was short, the plant count dropped to what the water allowed, and with one plant per patch the water cost became 0, so its cubes vanished and "Plant" just went grey; now the water a full patch needs is shown, the missing cubes hollow. **A2** Tapping an overgrown patch opens the field sheet with a note: "Patch 4 is not ready yet: it is still overgrown with weeds" and what clears it (or what is needed first). The what-is-in-the-way logic moved from `iso_field.gd` to `G.patch_wild`. **A3** The new-perk pop-up and the album say why a perk came ("You harvested 40 times!", or the favour). **A4** No dark-green forest floor; the trees stand on the meadow; the outline stays as the tap area (faint dashed line in the layout editor, rebuilt). **A5** ⚙️ Settings: "Where the Time Quiz questions come from", ➖/➕ in 5 % steps, saved per farm (`S.review_share`); `knowledgeReviewShare` is the starting value. New screenshot flags `--water=N`, `--menu`; smoke test checks the share. Found: a parse error in a test script makes the smoke test hang silently (tip in READ-ME §4.2). Web build not re-exported. |
 | **Upgrade benefits (H1)** (7 Oct 2026) | `progression/upgrade-benefits-ideas.md`: 119 of ~240 upgrade effects only save energy, and 48 upgrades do nothing else. 15 other kinds of benefit (which the engine already has, which need code), a suggested rule (first tier saves energy, later tiers do something else; gear helps with seasons and shows on the farmer) and one idea per upgrade. For the parent to choose; no data changed. |
+| **Grown-up lock** (7 Oct 2026) | The parent wants grown-up settings protected by a simple password whose hint is, for now, the password itself (later the password changes and the hint becomes a reminder). ⚙️ Settings: "Who is playing" and the log stay open; "🔒 Grown-up settings" asks for `parentPassword` (settings.json, now "farm", not case-sensitive, hint `parentHint`), then the question share, the learning record, dynamic difficulty and "Start a new game" are open for 5 minutes ("🔒 Lock again" closes them). Flags `--grownup`, `--password`; smoke test checks it. |
 
 ---
 
@@ -121,8 +122,9 @@ For what the game *is* now, read `farm-quiz-game-master-design-document.md`; for
 - Cutting down an orchard tree costs 3 energy and gives a log and 2 sticks. (1.3.8)
 - "The water bar in the planting window doesn't show the empty cubes" meant the case where water is short (the cubes vanished).
   (A1, 7 Oct 2026)
-- The knowledge-review share is kept per farm (not per device) and goes in 5 % steps; the Settings menu stays open to the
-  child for now. (A5, 7 Oct 2026)
+- The knowledge-review share is kept per farm (not per device) and goes in 5 % steps. (A5, 7 Oct 2026)
+- The grown-up lock: password "farm"; "Who is playing" and the log stay open to the child; once typed it stays open for 5
+  minutes. (7 Oct 2026)
 
 ---
 

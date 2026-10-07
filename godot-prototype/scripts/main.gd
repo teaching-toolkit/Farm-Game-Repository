@@ -117,6 +117,8 @@ func _parse_args() -> void:
 			G.quiz_tr = G.quiz.load_texts("res://data/i18n/quiz-%s.json" % a.substr(7))
 		elif a == "--rest": call_deferred("_show_rest")
 		elif a == "--menu": call_deferred("_show_menu")            # screenshots: ⚙️ Settings
+		elif a == "--grownup": _grownup_until = 1e12                # screenshots: grown-up settings open
+		elif a == "--password": call_deferred("_ask_password")     # screenshots: the grown-up password box
 		elif a.begins_with("--card="): call_deferred("_show_card", a.substr(7))
 		elif a.begins_with("--patch="): call_deferred("_on_patch", "field", int(a.substr(8)))
 		elif a.begins_with("--pests="): G.S["pests"] = float(a.substr(8))
@@ -1680,12 +1682,61 @@ func _show_menu() -> void:
 	var box := _open_modal("⚙️ Settings")
 	if G.player != "": box.add_child(UI.soft_button("👤 %s — someone else is playing" % G.player, _ask_player, true, 18))
 	else: box.add_child(UI.soft_button("👤 Who is playing?", _ask_player, true, 18))
+	box.add_child(UI.soft_button("📜 What happened (log)", _open_log, true, 18))
+	if not _grownup_open():
+		box.add_child(UI.button("🔒 Grown-up settings", _ask_password, true, UI.BLUE, 18))
+		return
+	box.add_child(UI.label("🔓 Grown-up settings (open for a few minutes)", 17, UI.MUTED, true))
 	_part_review_share(box)
 	box.add_child(UI.label("Question packs and the size of Rest sums are set in data/settings.json and data/quiz_packs/.", 15, UI.MUTED, true))
-	box.add_child(UI.soft_button("📜 What happened (log)", _open_log, true, 18))
 	box.add_child(UI.soft_button("📊 Learning record (sums and questions)", _show_learning, true, 18))
 	box.add_child(UI.soft_button("%s 🎚️ Prices fit my farm (dynamic difficulty)" % ("✅" if G.flex_on() else "⬜"), _toggle_flex, true, 16))
 	box.add_child(UI.button("🗑️ Start a new game (deletes the save)", _reset, true, UI.RED, 17))
+	box.add_child(UI.soft_button("🔒 Lock again", _lock_grownup, true, 16))
+
+## The grown-up part of Settings: opened with parentPassword (data/settings.json), stays open for GROWNUP_SECONDS.
+const GROWNUP_SECONDS := 300.0
+var _grownup_until := 0.0
+
+func _grownup_open() -> bool:
+	return Time.get_ticks_msec() / 1000.0 < _grownup_until
+
+func _lock_grownup() -> void:
+	_grownup_until = 0.0
+	_close_modal()
+	_show_menu()
+
+func _ask_password() -> void:
+	var box := _open_modal("🔒 For grown-ups")
+	box.add_child(UI.label("Please type the password.", 18, UI.INK, true))
+	var le := LineEdit.new()
+	le.placeholder_text = "Password"
+	le.custom_minimum_size = Vector2(0, 58)
+	le.add_theme_font_size_override("font_size", 26)
+	box.add_child(le)
+	var hint := str(G.settings.get("parentHint", ""))
+	if hint != "": box.add_child(UI.label("Hint: " + hint, 16, UI.MUTED, true))
+	var msg := UI.label("", 16, UI.RED, true)
+	var ok := UI.button("Open 🔓", _check_password.bind(le, msg), true, UI.GREEN, 22)
+	ok.custom_minimum_size = Vector2(0, 58)
+	le.text_submitted.connect(func(_t): _check_password(le, msg))
+	box.add_child(ok)
+	box.add_child(msg)
+	box.add_child(UI.soft_button("⬅️ Back", func(): _close_modal(); _show_menu(), true, 16))
+	le.call_deferred("grab_focus")
+
+func _check_password(le: LineEdit, msg: Label) -> void:
+	if _password_ok(le.text):
+		_grownup_until = Time.get_ticks_msec() / 1000.0 + GROWNUP_SECONDS
+		_close_modal()
+		_show_menu()
+	else:
+		msg.text = "That's not it. Try again."
+		le.text = ""
+
+## Not case-sensitive, spaces at the ends ignored (easy to type on an iPad).
+func _password_ok(t: String) -> bool:
+	return t.strip_edges().to_lower() == str(G.settings.get("parentPassword", "farm")).strip_edges().to_lower()
 
 ## Settings: where the Time Quiz questions come from — reviews of the cards read, or the parent's packs (5% steps).
 func _part_review_share(box: Control) -> void:

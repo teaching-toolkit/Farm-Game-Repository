@@ -209,8 +209,8 @@ Questions still open with the parent are marked ❓.
 
 A1 planting water bar shows its missing cubes · A2 tapping an overgrown patch says which one, why and what clears it · A3 perks
 say why they came · A4 no dark-green forest floor · A5 the knowledge-review share in ⚙️ Settings. Details in `PROJECT-LOG.md`.
-Still open: ❓ should parent settings (A5, dynamic difficulty, new game) be protected from the child (e.g. hold a button
-3 seconds)? For now they are open.
+Parent's answer: protect them with a simple password → done 7 Oct 2026: the grown-up part of ⚙️ Settings (question share,
+dynamic difficulty, learning record, new game) asks for `parentPassword` (now "farm"; the hint shows it for now).
 
 ### B. The opening (parent's list)
 

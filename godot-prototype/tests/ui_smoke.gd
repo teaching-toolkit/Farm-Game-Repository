@@ -251,9 +251,15 @@ func _ready() -> void:
 	G.set_review_share(1.4); var rs2: float = G.review_share()
 	G.S.erase("review_share")
 	print("r9 review share: start %.2f -> 0.52 gives %.2f, 1.4 gives %.2f, back to %.2f" % [rs0, rs1, rs2, G.review_share()])
+	print("r9 grown-up lock: open at start %s, 'Farm ' %s, 'cow' %s" % [M._grownup_open(), M._password_ok("Farm "), M._password_ok("cow")])
 	M._show_menu()
 	await _frames(2)
 	M._close_modal()
+	M._grownup_until = 1e12
+	M._show_menu()
+	await _frames(2)
+	M._close_modal()
+	M._grownup_until = 0.0
 	M._open_sheet("album")
 	await _frames(2)
 	M._close_sheet()

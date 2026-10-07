@@ -129,7 +129,7 @@ only thing that moves time.
 
 - **Where questions come from.** Mostly from the **question packs** the parent switched on (`activePacks` in
   `data/settings.json`; packs are files in `data/quiz_packs/`). A share of the questions (25 % to start, `knowledgeReviewShare`;
-  the parent changes it per farm in ⚙️ Settings, in 5 % steps) are reviews of knowledge cards the child has already learned
+  the parent changes it per farm in the grown-up part of ⚙️ Settings, in 5 % steps) are reviews of knowledge cards the child has already learned
   (§4.2); when no card is due, a pack question takes the place. A question asked lately does not come back within
   the next few (`avoidRepeatWithin`, 3).
 - **Spaced repetition per question.** The learning record keeps every question: answered wrong, it comes back after 3
@@ -250,6 +250,9 @@ disappears and never floods.
   question with its id and text, and download the record again.
 - **Settings** for the parent (`data/settings.json`): which packs, how many answers, the share of card reviews, the language,
   the maths categories and timing, dynamic difficulty, place names on the map, the test cheat buttons.
+- **The grown-up part of ⚙️ Settings** (the question share, the learning record, dynamic difficulty, a new game) is behind a
+  simple password (`parentPassword`, with a hint under the box) and stays open for 5 minutes; "Who is playing" and the log
+  stay open to the child. It is a child lock, not a secret.
 
 ### 4.5 Languages
 
