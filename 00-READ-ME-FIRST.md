@@ -170,8 +170,8 @@ Round 8 is finished and delivered (design 1.3.8, data v0.8; see `PROJECT-LOG.md`
 documents reorganised into the design document 2.0, the log and this file. The web build in `web-build/` matches the current
 code. **Nothing is half-done in the code.**
 
-Waiting on the parent: picking the round 8 pictures (see open task 1), and setting up the GitHub repos and trying the two
-double-click scripts on the Mac (open task 2).
+Waiting on the parent: picking the round 8 pictures (open task W1), and the GitHub access and the two double-click scripts
+on the Mac (W2).
 
 7 Oct 2026 (after 2.0): added `Build web version.command`, `Publish web version.command`, `CLAUDE.md`, the root `.gitignore`
 and `godot-prototype/tools/setup_godot.sh` for cloud sessions. No game changes; `web-build/` still matches the code.
@@ -183,41 +183,108 @@ this file and `CLAUDE.md` were corrected (see the log). No game changes; `web-bu
 
 ## 6. Open tasks
 
-Roughly in order of priority. Ask the parent before starting the bigger ones.
+Grouped by theme; the groups are in the planned order (A first). Ask the parent before starting the bigger ones.
+Questions still open with the parent are marked ❓.
 
-1. **Round 8 pictures.** 29 sheets (283 pictures) were generated in OpenArt; the parent saves the best version of each into
-   `art-inbox/` under the names in `art-inbox/ROUND8-PICK-LIST.md`. Then: `python3 tools/import_art.py all`, check them on the
-   map with screenshots (sizes in `data/map_layout.json` may need adjusting — the layout editor helps), rebuild the layout editor
-   (`tools/make_layout_editor.py`) and the web build. Sheets whose objects come out in the wrong order: fix
-   `tools/art_sheets.json` or skip objects with `-`. In `art-inbox/ART_LIST.csv` these 280 pictures have the status
-   `generated - pick sheetNN-….png` until their sheet is in `art-inbox/`; run `python3 tools/art_list.py` afterwards and they
-   turn `done`.
-2. **GitHub repos and the double-click scripts.** Create the private repo (mirror of this folder) and the public web repo
-   (§4.7), turn on GitHub Pages, then try `Build web version.command` and `Publish web version.command` on the Mac for the
-   first time (both written and tested in Linux, not yet run on the Mac). Point the iPad's Home Screen app at the Pages link.
-3. **Play-test round 8 on the iPad** and collect the parent's findings (pace, how the picture questions feel, stoking, loads,
-   the bar explanations).
-4. **Dynamic difficulty** (design §10.6) is built but **off by default**. Tune it with play-testing; ideas noted: look at the
+### Waiting on the parent
+
+- **W1. Round 8 pictures.** 29 sheets (283 pictures) were generated in OpenArt; the parent saves the best version of each into
+  `art-inbox/` under the names in `art-inbox/ROUND8-PICK-LIST.md` (sheets 25–42 are not there yet). Then:
+  `python3 tools/import_art.py all`, check them on the map with screenshots (sizes in `data/map_layout.json` may need
+  adjusting — the layout editor helps), rebuild the layout editor (`tools/make_layout_editor.py`) and the web build. Sheets
+  whose objects come out in the wrong order: fix `tools/art_sheets.json` or skip objects with `-`. In `art-inbox/ART_LIST.csv`
+  these 280 pictures have the status `generated - pick sheetNN-….png` until their sheet is in `art-inbox/`; run
+  `python3 tools/art_list.py` afterwards and they turn `done`.
+- **W2. GitHub repos and the double-click scripts.** The private repo exists. Still to do: the public web repo (§4.7), GitHub
+  Pages, the first run of `Build web version.command` and `Publish web version.command` on the Mac, the iPad Home Screen link.
+  **Cloud sessions cannot push yet** (7 Oct 2026: 403, the Claude GitHub App has read but no write access to the private
+  repo); the branch `claude/farm-game-setup-verify-bdm09s` with the cloud-check doc fixes waits to be pushed and opened as a PR.
+- **W3. Play-test round 8 on the iPad** and collect the parent's findings (pace, picture questions, stoking, loads, the bar
+  explanations).
+
+### A. Small fixes and clarity (parent's list, 7 Oct 2026)
+
+- **A1. Water bar in the planting window** doesn't show the empty cubes (the other bars do).
+- **A2. Tapping a patch that isn't ready** in a field that is (e.g. the 4th patch of the Home Field) should say which patch it
+  is and why it can't be used yet (still overgrown with weeds; what clears it).
+- **A3. Say why a perk was given.** The "new perk" pop-up shows the perk's effect ("Confetti when you harvest everything at
+  once"), which reads like the reason; it should also say what earned it ("You harvested 40 times!"). Same in the album.
+- **A4. No dark-green forest overlay.** Drop the diagonal dark-green area over the grass (`FOREST`/`FOREST_SHADE` in
+  `farm_map.gd`); the trees alone mark the forest and spread over the space it used to cover. The forest must stay tappable.
+- **A5. Knowledge-review share in ⚙️ Settings** (`knowledgeReviewShare`, now only in `data/settings.json`): a control for the
+  share of Time Quiz questions that come from the cards read vs. the parent's packs. ❓ protect parent settings from the child?
+
+### B. The opening (parent's list)
+
+- **B1. Start with one usable patch and one wheat seed**; every other patch overgrown. Changes the first minutes of the game:
+  re-check the first goals, the bot's numbers, the explorer's start and decision 4 in the log (5 seeds). ❓ one seed = one
+  plant or one patch's worth?
+
+### C. Rest (parent's list)
+
+- **C1. A start screen before the sums** (from the energy bar or the bed/tent): where the child stands in the category (level,
+  progress to the next), the medals so far and an empty slot for the next one with a short description, and a
+  "Ready, set, go!" start button.
+- **C2. The question left on screen when the child goes back to the farm doesn't count** for the spaced repetition (no
+  "wrong", no "slow", no change to its interval).
+
+### D. Every window as a grid (parent's list)
+
+- **D1.** The planting window, and then every window with actions, uses a grid of tiles like the store and the market.
+  Done before E so each text is touched once.
+
+### E. Languages (parent's list; replaces the old "German" task)
+
+- **E1. A language setting in ⚙️** that switches the *whole* game: interface, items, places, recipes, cards, card questions,
+  quiz packs. Modular: one file per language (`data/i18n/<lang>.json`), an id for every text, English as the fallback, so a
+  new language is just a new file. The quiz packs already work this way (`quiz-de.json`). ❓ who translates.
+- **E2. German texts** for everything (about 80 interface lines in the scripts, every name and description in
+  `farm-progression.json`, the 67 cards and their 201 questions).
+
+### F. Sound and music (parent's list)
+
+- **F1. Sound effects for everything a game usually has** (taps, buttons, harvest, sell, coins, build, right/wrong answer,
+  new thing, level up, animals, water, chopping, digging, footsteps …), open-licence files (CC0 preferred). Today the game makes
+  a few sounds itself, only with the "Farm sounds" perk. ❓ sounds for everyone, perk dropped or changed.
+- **F2. Background music**: open-licence tracks that fit the game, by situation (farm by season, Time Quiz, Rest,
+  celebrations), with gentle cross-fades. ❓ licence; parent listens to a shortlist first.
+- **F3. Settings:** music on/off (and separately the sound effects). Keep the web build small (Ogg, short loops).
+
+### G. The farmer as an actor (parent's list)
+
+- **G1. Pantomime.** After a tap, the farmer walks to the place and acts out what was ordered (kneeling and pulling weeds,
+  sowing, fetching the bucket from the pond and carrying it to the field and emptying it …). The game's numbers have already
+  changed; the farmer only catches up. A new tap stops the act (gets up, puts things down) and walks to the new place.
+- **G2. Built to grow:** acts as data (a list of steps: walk to, pose, hold a prop, repeat, sound), one player for all acts,
+  props as small 3D pieces in the hand; adding an act or a prop needs no new code. Ties in with F (step sounds) and H.
+
+### H. Upgrades that do more than save energy (parent's list)
+
+- **H1. A list of other kinds of benefits** for the upgrades (many now only cut energy): more harvest, better quality/price,
+  faster growing, fewer pests, more storage, new recipes, longer freshness, luck, things the farmer can show … For the parent
+  to choose from before any data changes.
+
+### Later (older tasks)
+
+1. **Dynamic difficulty** (design §10.6) is built but **off by default**. Tune it with play-testing; ideas noted: look at the
    time per goal rather than only the pace; vary *which* dish an order wants rather than how much; a parent's slider for
    strength. `meta.flex` in the data holds every number.
-5. **German.** The quiz packs are translated (`data/i18n/quiz-de.json`); the 201 card questions (`KNW-…`) and the whole
-   interface are not. Plan: an id for every interface text and one file per language, the same pattern as the quiz.
-6. **"Make your farmer" screen** at the start (the farmer's look is already data, `data/avatar.json`; keep it per player);
-   gear visible on the farmer; merchants walking about.
-7. **Orchard and greenhouse** still use a square patch grid inside their sheets; give them diamond rows like the fields.
-8. **Explorer value-check notes** for `rope_straw`, `compost`, `steel` and `jam` (recipes whose value change falls outside the
+2. **"Make your farmer" screen** at the start (the farmer's look is already data, `data/avatar.json`; keep it per player);
+   gear visible on the farmer (fits G2's props); merchants walking about.
+3. **Orchard and greenhouse** still use a square patch grid inside their sheets; give them diamond rows like the fields.
+4. **Explorer value-check notes** for `rope_straw`, `compost`, `steel` and `jam` (recipes whose value change falls outside the
    expected band) — check whether their inputs or prices should change.
-9. **Pixie chest** mini-game (an old idea for random rewards) — not built.
-10. **Still-open design questions** (from the old documents):
+5. **Pixie chest** mini-game (an old idea for random rewards) — not built.
+6. **Still-open design questions** (from the old documents):
    - village projects (bundles with substitutes) — still a maybe;
    - cider is alcoholic; rename it "apple must" for young players?
    - art for the 67 card pages, gear and pests; album pictures for favours came in round 8;
    - play-test with real 8-year-olds: how many review questions they tolerate, whether 30 questions per season feels right,
      whether pest pressure is noticeable but not annoying;
    - the assumptions listed in `PROJECT-LOG.md` §2.6.
-11. **Keep an eye on the public web build.** Everything in it (game data, quiz packs, pictures) can be downloaded by anyone
-    with the link. Fine for now (parent's decision, 7 Oct 2026); revisit if content becomes personal (e.g. the child's name,
-    photos, the learning record) or if the art should not be shared. Options then: a private host or a password-protected one.
+7. **Keep an eye on the public web build.** Everything in it (game data, quiz packs, pictures) can be downloaded by anyone
+   with the link. Fine for now (parent's decision, 7 Oct 2026); revisit if content becomes personal (e.g. the child's name,
+   photos, the learning record) or if the art should not be shared. Options then: a private host or a password-protected one.
 
 ---
 
