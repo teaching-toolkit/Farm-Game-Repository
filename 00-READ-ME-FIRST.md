@@ -217,8 +217,8 @@ Questions still open with the parent are marked ❓.
 ### B. The opening (parent's list)
 
 - **B1. Start with one usable patch and one wheat seed**; every other patch overgrown. Changes the first minutes of the game:
-  re-check the first goals, the bot's numbers, the explorer's start and decision 4 in the log (5 seeds). ❓ one seed = one
-  plant or one patch's worth?
+  re-check the first goals, the bot's numbers, the explorer's start and decision 4 in the log (5 seeds). One seed = **one
+  plant** (parent, 7 Oct 2026); make sure the first goals and the market still keep the child moving.
 
 ### C. Rest (parent's list)
 
@@ -237,17 +237,20 @@ Questions still open with the parent are marked ❓.
 
 - **E1. A language setting in ⚙️** that switches the *whole* game: interface, items, places, recipes, cards, card questions,
   quiz packs. Modular: one file per language (`data/i18n/<lang>.json`), an id for every text, English as the fallback, so a
-  new language is just a new file. The quiz packs already work this way (`quiz-de.json`). ❓ who translates.
-- **E2. German texts** for everything (about 80 interface lines in the scripts, every name and description in
+  new language is just a new file. The quiz packs already work this way (`quiz-de.json`).
+- **E2. German texts** (Claude drafts in simple, child-friendly German; the parent proofreads) for everything (about 80 interface lines in the scripts, every name and description in
   `farm-progression.json`, the 67 cards and their 201 questions).
 
 ### F. Sound and music (parent's list)
 
 - **F1. Sound effects for everything a game usually has** (taps, buttons, harvest, sell, coins, build, right/wrong answer,
   new thing, level up, animals, water, chopping, digging, footsteps …), open-licence files (CC0 preferred). Today the game makes
-  a few sounds itself, only with the "Farm sounds" perk. ❓ sounds for everyone, perk dropped or changed.
+  a few sounds itself, only with the "Farm sounds" perk. Parent's decision (7 Oct 2026): the basic sounds and music are on
+  from the start; the optional, extra-fun sounds are held back as **perks** (not only Ella's), often paired with something to
+  see, like the lightning for quick Rest sums: animals that make a sound when tapped and now and then by themselves, etc.
 - **F2. Background music**: open-licence tracks that fit the game, by situation (farm by season, Time Quiz, Rest,
-  celebrations), with gentle cross-fades. ❓ licence; parent listens to a shortlist first.
+  celebrations), with gentle cross-fades. Licences: CC0 and CC-BY (parent, 7 Oct 2026), with a credits page in ⚙️; every file's
+  source, author and licence recorded next to it. The parent listens to a shortlist first. Ask before downloading.
 - **F3. Settings:** music on/off (and separately the sound effects). Keep the web build small (Ogg, short loops).
 
 ### G. The farmer as an actor (parent's list)
