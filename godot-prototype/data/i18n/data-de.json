@@ -2325,7 +2325,7 @@
  },
  "nodes/sq_cold_shepherd/reward/picture": {
   "en": "Little Tom, grinning and warm, holding up a bundle of your firewood",
-  "de": ""
+  "de": "Der kleine Tom grinst, ist warm und hält ein Bündel von deinem Brennholz hoch"
  },
  "nodes/lucky_horseshoe/name": {
   "en": "Tom's lucky horseshoe",
@@ -2345,7 +2345,7 @@
  },
  "nodes/sq_lost_goat/reward/picture": {
   "en": "Granny Maud laughing, hugging her muddy goat on the rope you found it with",
-  "de": ""
+  "de": "Oma Maud lacht und umarmt ihre schmutzige Ziege an dem Seil, mit dem du sie gefunden hast"
  },
  "nodes/straw_hat/name": {
   "en": "Straw Hat",
@@ -2365,7 +2365,7 @@
  },
  "nodes/sq_twins_porridge/reward/picture": {
   "en": "The twins beaming, each holding a bowl of your porridge (some on their noses)",
-  "de": ""
+  "de": "Die Zwillinge strahlen, jeder mit einer Schüssel von deinem Haferbrei (ein bisschen auf der Nase)"
  },
  "nodes/sq_miller_basket/name": {
   "en": "The miller's daughter needs a basket",
@@ -2377,7 +2377,7 @@
  },
  "nodes/sq_miller_basket/reward/picture": {
   "en": "Ella twirling with your new basket full of flowers",
-  "de": ""
+  "de": "Ella dreht sich mit deinem neuen Korb voller Blumen im Kreis"
  },
  "nodes/brass_bell/name": {
   "en": "Ella's brass bell",
@@ -2397,7 +2397,7 @@
  },
  "nodes/sq_washing_line/reward/picture": {
   "en": "Hilde smiling, holding the end of your new rope line full of flapping sheets",
-  "de": ""
+  "de": "Hilde lächelt und hält das Ende deiner neuen Wäscheleine voller flatternder Laken"
  },
  "nodes/wind_chime/name": {
   "en": "Hilde's wind chime",
@@ -2417,7 +2417,7 @@
  },
  "nodes/sq_sick_neighbour/reward/picture": {
   "en": "Old Jan sitting up in bed, cheeks pink, holding your bowl of tomato soup",
-  "de": ""
+  "de": "Der alte Jan sitzt im Bett, mit rosa Backen, und hält deine Schüssel Tomatensuppe"
  },
  "nodes/sq_bridge/name": {
   "en": "Mend the footbridge",
@@ -2429,7 +2429,7 @@
  },
  "nodes/sq_bridge/reward/picture": {
   "en": "Ferryman Otto waving a plank from your mended footbridge as children skip across",
-  "de": ""
+  "de": "Fährmann Otto winkt mit einem Brett von deinem reparierten Steg, während Kinder darüber hüpfen"
  },
  "nodes/bird_feeder/name": {
   "en": "Otto's bird feeder",
@@ -2449,7 +2449,7 @@
  },
  "nodes/sq_healer_honey/reward/picture": {
   "en": "Healer Wren smiling, holding a jar of your honey up to the light",
-  "de": ""
+  "de": "Die Heilerin Wren lächelt und hält ein Glas von deinem Honig ins Licht"
  },
  "nodes/lavender_bunch/name": {
   "en": "Wren's lavender",
@@ -2469,7 +2469,7 @@
  },
  "nodes/sq_stray_kitten/reward/picture": {
   "en": "The ginger kitten curled up asleep in the straw bed you made for her",
-  "de": ""
+  "de": "Das rote Kätzchen schläft eingerollt in dem Strohbett, das du ihm gemacht hast"
  },
  "nodes/sq_apprentice/name": {
   "en": "The smith's apprentice is short of nails",
@@ -2481,7 +2481,7 @@
  },
  "nodes/sq_apprentice/reward/picture": {
   "en": "Apprentice Bo proudly holding up a gate made with your nails",
-  "de": ""
+  "de": "Der Lehrling Bo hält stolz ein Tor hoch, das er mit deinen Nägeln gebaut hat"
  },
  "nodes/sq_baby_blanket/name": {
   "en": "A blanket for the newborn",
@@ -2493,7 +2493,7 @@
  },
  "nodes/sq_baby_blanket/reward/picture": {
   "en": "A happy new mum holding her baby wrapped in your wool blanket",
-  "de": ""
+  "de": "Eine glückliche Mama hält ihr Baby, eingewickelt in deine Wolldecke"
  },
  "nodes/sq_harvest_dance/name": {
   "en": "Cider for the harvest dance",
@@ -2505,7 +2505,7 @@
  },
  "nodes/sq_harvest_dance/reward/picture": {
   "en": "Fiddler Rosa raising a mug of your cider at the harvest dance",
-  "de": ""
+  "de": "Die Geigerin Rosa hebt beim Erntetanz einen Becher von deinem Apfelmost"
  },
  "nodes/sq_chapel_roof/name": {
   "en": "Fix the chapel roof",
@@ -2517,7 +2517,7 @@
  },
  "nodes/sq_chapel_roof/reward/picture": {
   "en": "Bell-ringer Ansel holding your last roof plank, waving from the dry chapel",
-  "de": ""
+  "de": "Der Glöckner Ansel hält dein letztes Dachbrett und winkt aus der trockenen Kapelle"
  },
  "nodes/sq_school_window/name": {
   "en": "The schoolroom window is broken",
@@ -2529,7 +2529,7 @@
  },
  "nodes/sq_school_window/reward/picture": {
   "en": "Teacher Ines and her pupils holding up your new glass pane",
-  "de": ""
+  "de": "Die Lehrerin Ines und ihre Schüler halten deine neue Glasscheibe hoch"
  },
  "nodes/sq_wedding_cake/name": {
   "en": "A wedding needs a cake",
@@ -2541,7 +2541,7 @@
  },
  "nodes/sq_wedding_cake/reward/picture": {
   "en": "The bride and groom holding your cake between them, laughing",
-  "de": ""
+  "de": "Braut und Bräutigam halten deinen Kuchen zwischen sich und lachen"
  },
  "nodes/sq_night_watch/name": {
   "en": "A lantern for the night watchman",
@@ -2553,7 +2553,7 @@
  },
  "nodes/sq_night_watch/reward/picture": {
   "en": "Night watchman Pieter holding your glowing lantern on the town wall",
-  "de": ""
+  "de": "Der Nachtwächter Pieter hält deine leuchtende Laterne auf der Stadtmauer"
  },
  "nodes/sq_long_voyage/name": {
   "en": "Pickles for a long voyage",
@@ -2565,7 +2565,7 @@
  },
  "nodes/sq_long_voyage/reward/picture": {
   "en": "Sailor Mei waving a jar of your pickles from the deck of her boat",
-  "de": ""
+  "de": "Die Seefahrerin Mei winkt vom Deck ihres Bootes mit einem Glas von deinem Eingelegten"
  },
  "nodes/sq_poet_scarf/name": {
   "en": "A rainbow scarf for the little poet",
@@ -2577,7 +2577,7 @@
  },
  "nodes/sq_poet_scarf/reward/picture": {
   "en": "Little poet Kit reciting proudly in your rainbow scarf",
-  "de": ""
+  "de": "Der kleine Dichter Kit trägt stolz ein Gedicht vor, in deinem Regenbogenschal"
  },
  "nodes/sq_painter_saffron/name": {
   "en": "Golden paint for the painter",
@@ -2589,7 +2589,7 @@
  },
  "nodes/sq_painter_saffron/reward/picture": {
   "en": "Painter Lucia holding a brush dipped in your golden saffron paint",
-  "de": ""
+  "de": "Die Malerin Lucia hält einen Pinsel, getaucht in deine goldene Safranfarbe"
  },
  "nodes/sq_school_garden/name": {
   "en": "Seeds for the school garden",
@@ -2601,7 +2601,7 @@
  },
  "nodes/sq_school_garden/reward/picture": {
   "en": "The school children each holding up one of your rainbow carrots",
-  "de": ""
+  "de": "Die Schulkinder halten jedes eine deiner Regenbogenkarotten hoch"
  },
  "nodes/sq_theatre_cheese/name": {
   "en": "Cheese for the travelling theatre",
@@ -2613,7 +2613,7 @@
  },
  "nodes/sq_theatre_cheese/reward/picture": {
   "en": "The lead actor taking a bow while holding your cheese wheel high",
-  "de": ""
+  "de": "Der Hauptdarsteller verbeugt sich und hält deinen Käselaib hoch"
  },
  "nodes/sq_orphanage_jam/name": {
   "en": "Jam for the orphanage",
@@ -2625,7 +2625,7 @@
  },
  "nodes/sq_orphanage_jam/reward/picture": {
   "en": "Matron Elsie holding your jam jar while the children cheer with sandwiches",
-  "de": ""
+  "de": "Hausmutter Elsie hält dein Marmeladenglas, während die Kinder mit Butterbroten jubeln"
  },
  "nodes/sq_lamp_maker/name": {
   "en": "Oil for the old lamp-maker",
@@ -2637,7 +2637,7 @@
  },
  "nodes/sq_lamp_maker/reward/picture": {
   "en": "Old lamp-maker Ferdinand holding a lamp filled with your olive oil, glowing",
-  "de": ""
+  "de": "Der alte Lampenmacher Ferdinand hält eine leuchtende Lampe mit deinem Olivenöl"
  },
  "nodes/sq_elders_feast/name": {
   "en": "A feast for the village elders",
@@ -2649,7 +2649,7 @@
  },
  "nodes/sq_elders_feast/reward/picture": {
   "en": "Elder Agnes holding up your tapenade bowl as the elders laugh around the table",
-  "de": ""
+  "de": "Die Älteste Agnes hält deine Schüssel Tapenade hoch, und die Ältesten lachen am Tisch"
  },
  "nodes/sq_festival_flags/name": {
   "en": "Dye the festival flags",
@@ -2661,7 +2661,7 @@
  },
  "nodes/sq_festival_flags/reward/picture": {
   "en": "Mayor Juno holding a string of your dyed flags over the village square",
-  "de": ""
+  "de": "Bürgermeisterin Juno hält eine Kette deiner gefärbten Fahnen über den Dorfplatz"
  },
  "nodes/sq_village_well/name": {
   "en": "Rebuild the village well",
@@ -2673,7 +2673,7 @@
  },
  "nodes/sq_village_well/reward/picture": {
   "en": "Young Sami holding a brimming bucket from the well you rebuilt",
-  "de": ""
+  "de": "Der junge Sami hält einen randvollen Eimer aus dem Brunnen, den du wieder aufgebaut hast"
  },
  "nodes/sq_telescope/name": {
   "en": "The astronomer's telescope",
@@ -2685,7 +2685,7 @@
  },
  "nodes/sq_telescope/reward/picture": {
   "en": "Astronomer Vega holding your telescope, pointing happily at the stars",
-  "de": ""
+  "de": "Die Sternforscherin Vega hält dein Fernrohr und zeigt fröhlich zu den Sternen"
  },
  "nodes/sq_healer_garden/name": {
   "en": "Herbs for the healer's garden",
@@ -2697,7 +2697,7 @@
  },
  "nodes/sq_healer_garden/reward/picture": {
   "en": "Healer Wren kneeling in her new herb garden, holding a bunch of your herbs",
-  "de": ""
+  "de": "Die Heilerin Wren kniet in ihrem neuen Kräutergarten und hält einen Strauß von deinen Kräutern"
  },
  "nodes/book_basics/name": {
   "en": "The Little Farm Book",
@@ -2869,7 +2869,7 @@
  },
  "nodes/k_wheat/page": {
   "en": "Every seed needs three things to grow: soil, water and time. Farmers sow wheat seeds in loose soil and water them. The green stalks grow tall, turn golden, and then they are cut. Each stalk gives grain, to eat or to sow again, and a dry stem called straw.",
-  "de": ""
+  "de": "Jeder Samen braucht drei Dinge zum Wachsen: Erde, Wasser und Zeit. Bauern säen Weizenkörner in lockere Erde und gießen sie. Die grünen Halme wachsen hoch, werden golden und werden dann geschnitten. Jeder Halm gibt Körner, zum Essen oder zum neu Säen, und einen trockenen Stängel, das Stroh."
  },
  "nodes/k_wheat/questions/0/q": {
   "en": "What three things does a seed need to grow?",
@@ -2941,7 +2941,7 @@
  },
  "nodes/k_fire/page": {
   "en": "A fire needs three things: fuel to burn, air, and heat. Build it inside a ring of stones, and light small dry twigs before you add thicker sticks. Never leave a fire alone. To put it out, pour on water or cover it with soil, which keeps the air away.",
-  "de": ""
+  "de": "Ein Feuer braucht drei Dinge: Brennstoff, Luft und Hitze. Mach es in einem Ring aus Steinen und zünde kleine trockene Zweige an, bevor du dickere Stöcke dazulegst. Lass ein Feuer nie allein. Zum Löschen gießt du Wasser darauf oder deckst es mit Erde zu, so kommt keine Luft mehr heran."
  },
  "nodes/k_fire/questions/0/q": {
   "en": "What three things does every fire need?",
@@ -3013,7 +3013,7 @@
  },
  "nodes/k_roots/page": {
   "en": "With carrots and onions, we eat the part under the ground: a carrot's root and an onion's round bulb. Their green leaves above the ground use sunlight to make food for the plant. They grow more slowly than leafy plants like lettuce. Pull them up when the green tops are big.",
-  "de": ""
+  "de": "Bei Karotten und Zwiebeln essen wir den Teil unter der Erde: die Wurzel der Karotte und die runde Knolle der Zwiebel. Ihre grünen Blätter über der Erde machen mit Sonnenlicht Nahrung für die Pflanze. Sie wachsen langsamer als Blattpflanzen wie Salat. Zieh sie heraus, wenn das grüne Kraut groß ist."
  },
  "nodes/k_roots/questions/0/q": {
   "en": "Which part of a carrot do we eat?",
@@ -3085,7 +3085,7 @@
  },
  "nodes/k_rope/page": {
   "en": "Rope is made from fibres, the thin, tough threads inside plant stems like flax or straw. First you twist the fibres into strands. Then you twist the strands together the other way, so the rope does not unwind. The more strands you use, the stronger the rope.",
-  "de": ""
+  "de": "Seil macht man aus Fasern, den dünnen, zähen Fäden in Pflanzenstängeln wie Flachs oder Stroh. Zuerst drehst du die Fasern zu Strängen. Dann drehst du die Stränge andersherum zusammen, damit sich das Seil nicht aufdreht. Je mehr Stränge, desto stärker das Seil."
  },
  "nodes/k_rope/questions/0/q": {
   "en": "Why twist the strands together the other way?",
@@ -3157,7 +3157,7 @@
  },
  "nodes/k_tools/page": {
   "en": "The first tools were made of stone. A sharp flake chipped off a stone makes a knife. Tie a stone to a wooden handle with rope to make an axe; the handle lets you swing much harder. People used stone tools for a very, very long time, called the Stone Age.",
-  "de": ""
+  "de": "Die ersten Werkzeuge waren aus Stein. Ein scharfer Splitter, von einem Stein abgeschlagen, ist ein Messer. Binde einen Stein mit einem Seil an einen Holzstiel, dann hast du eine Axt; mit dem Stiel kannst du viel kräftiger schwingen. Die Menschen haben sehr, sehr lange Steinwerkzeuge benutzt: in der Steinzeit."
  },
  "nodes/k_tools/questions/0/q": {
   "en": "Why tie a stone axe head onto a handle?",
@@ -3229,7 +3229,7 @@
  },
  "nodes/k_weeds/page": {
   "en": "Weeds are wild plants that grow where we don't want them. They steal water, light and food from our crops. Their seeds blow in on the wind and can wait in the soil for years. Pull weeds out with their roots, and use a border or a cover of straw to keep new ones away.",
-  "de": ""
+  "de": "Unkraut sind wilde Pflanzen, die dort wachsen, wo wir sie nicht haben wollen. Sie stehlen unseren Pflanzen Wasser, Licht und Nahrung. Ihre Samen fliegen mit dem Wind herbei und können jahrelang in der Erde warten. Reiß Unkraut mit den Wurzeln aus, und halte neues mit einer Einfassung oder einer Decke aus Stroh fern."
  },
  "nodes/k_weeds/questions/0/q": {
   "en": "Why are weeds bad for your crops?",
@@ -3301,7 +3301,7 @@
  },
  "nodes/k_water/page": {
   "en": "Rain soaks down through the soil and is stored deep underground. This water is called groundwater. A well is a deep hole that reaches it, and a deeper well reaches more water. A winch, which is a roller with a handle, makes lifting the heavy bucket much easier.",
-  "de": ""
+  "de": "Regen sickert durch die Erde und wird tief unter dem Boden gespeichert. Dieses Wasser heißt Grundwasser. Ein Brunnen ist ein tiefes Loch, das bis dorthin reicht, und ein tieferer Brunnen erreicht mehr Wasser. Eine Seilwinde, eine Rolle mit einer Kurbel, macht das Hochziehen des schweren Eimers viel leichter."
  },
  "nodes/k_water/questions/0/q": {
   "en": "Where does the water in a well come from?",
@@ -3373,7 +3373,7 @@
  },
  "nodes/k_soil/page": {
   "en": "Roots need air and water in the soil to grow. Digging breaks up hard soil, so roots can grow deep and more plants fit in one bed. Worms help too, because their tunnels loosen the soil. But stamping on a bed packs it hard again.",
-  "de": ""
+  "de": "Wurzeln brauchen Luft und Wasser in der Erde, um zu wachsen. Umgraben bricht harte Erde auf, so können die Wurzeln tief wachsen und mehr Pflanzen passen in ein Beet. Auch Würmer helfen, denn ihre Gänge lockern die Erde. Aber wenn man auf einem Beet herumtrampelt, wird es wieder hart."
  },
  "nodes/k_soil/questions/0/q": {
   "en": "Why do roots grow better in loose soil?",
@@ -3445,7 +3445,7 @@
  },
  "nodes/k_ash/page": {
   "en": "Wood ash from the fire holds minerals, like potassium, that plants need. Sprinkle a little on your beds to feed your crops. Plants growing close together need extra food, called fertilizer. But be careful: too much ash can harm plants.",
-  "de": ""
+  "de": "Holzasche aus dem Feuer enthält Mineralstoffe wie Kalium, die Pflanzen brauchen. Streu ein bisschen auf deine Beete, um deine Pflanzen zu füttern. Pflanzen, die dicht beieinander wachsen, brauchen extra Nahrung, den Dünger. Aber Vorsicht: Zu viel Asche kann Pflanzen schaden."
  },
  "nodes/k_ash/questions/0/q": {
   "en": "Why sprinkle wood ash on your beds?",
@@ -3517,7 +3517,7 @@
  },
  "nodes/k_chickens/page": {
   "en": "Hens eat grain and seeds, and they scratch the ground to find bugs. They need fresh water every day and a dry coop with straw, where they sleep safe from foxes. Hens lay eggs, and a hen does not need a rooster to lay them.",
-  "de": ""
+  "de": "Hühner fressen Körner und Samen und scharren im Boden nach Käfern. Sie brauchen jeden Tag frisches Wasser und einen trockenen Stall mit Stroh, wo sie sicher vor dem Fuchs schlafen. Hühner legen Eier, und dafür braucht eine Henne keinen Hahn."
  },
  "nodes/k_chickens/questions/0/q": {
   "en": "Where should your hens sleep at night?",
@@ -3589,7 +3589,7 @@
  },
  "nodes/k_birds/page": {
   "en": "Birds love to eat freshly sown seeds, and rabbits nibble young plants. A scarecrow looks like a person, so it frightens birds, but things that flap or move scare them even better. A fence keeps rabbits out. Remember: the more plants you grow, the more hungry visitors come.",
-  "de": ""
+  "de": "Vögel fressen gern frisch gesäte Samen, und Kaninchen knabbern an jungen Pflanzen. Eine Vogelscheuche sieht aus wie ein Mensch und erschreckt die Vögel, aber Dinge, die flattern oder sich bewegen, verjagen sie noch besser. Ein Zaun hält Kaninchen draußen. Denk daran: Je mehr Pflanzen du anbaust, desto mehr hungrige Besucher kommen."
  },
  "nodes/k_birds/questions/0/q": {
   "en": "Which scarecrow will keep birds away best?",
@@ -3661,7 +3661,7 @@
  },
  "nodes/k_grinding/page": {
   "en": "Flour is grain that has been ground into powder. You crush the grain between two heavy stones called a quern; later, people built mills to do it. The hard outside of the grain, called bran, and the soft inside both get crushed. It takes lots of turning by hand, but then you can make bread and pancakes.",
-  "de": ""
+  "de": "Mehl ist Korn, das zu Pulver gemahlen wurde. Man zerreibt das Korn zwischen zwei schweren Steinen, einer Handmühle; später bauten die Menschen Mühlen dafür. Die harte Schale des Korns, die Kleie, und das weiche Innere werden beide zermahlen. Es braucht viel Drehen von Hand, aber dann kannst du Brot und Pfannkuchen machen."
  },
  "nodes/k_grinding/questions/0/q": {
   "en": "How is grain turned into flour?",
@@ -3733,7 +3733,7 @@
  },
  "nodes/k_market/page": {
   "en": "At the market, people buy and sell. Things that are rare, or take lots of work to make, cost more. When you turn cheap things into something better, like flour into bread, it is worth more. A fair price is good for the buyer and the seller, and money is just a handy way to swap work.",
-  "de": ""
+  "de": "Auf dem Markt kaufen und verkaufen die Leute. Was selten ist oder viel Arbeit macht, kostet mehr. Wenn du aus billigen Sachen etwas Besseres machst, zum Beispiel aus Mehl Brot, ist es mehr wert. Ein fairer Preis ist gut für den, der kauft, und für den, der verkauft, und Geld ist einfach ein praktischer Weg, Arbeit zu tauschen."
  },
  "nodes/k_market/questions/0/q": {
   "en": "Why does a loaf of bread cost more than its flour?",
@@ -3805,7 +3805,7 @@
  },
  "nodes/k_timber/page": {
   "en": "Wood has lines running along it, called the grain. With an axe and wedges you can split a log along the grain into planks. A saw cuts thinner planks and wastes less wood. Wood is strongest along the grain, and trees take many years to grow, so never waste it.",
-  "de": ""
+  "de": "Holz hat Linien, die der Länge nach verlaufen, die Maserung. Mit Axt und Keilen kannst du einen Holzscheit entlang der Maserung in Bretter spalten. Eine Säge schneidet dünnere Bretter und verschwendet weniger Holz. Holz ist entlang der Maserung am stärksten, und Bäume brauchen viele Jahre zum Wachsen, also verschwende es nie."
  },
  "nodes/k_timber/questions/0/q": {
   "en": "What is the grain of wood?",
@@ -3877,7 +3877,7 @@
  },
  "nodes/k_clay/page": {
   "en": "Clay is very fine, sticky earth that you can shape when it is wet. Unfired clay gets soft in the rain and crumbles. Baked in a very hot oven called a kiln, it turns hard for good, and water can't soften it again. That is how we make bricks and jars.",
-  "de": ""
+  "de": "Lehm ist sehr feine, klebrige Erde, die man formen kann, wenn sie nass ist. Ungebrannter Lehm wird im Regen weich und zerbröckelt. In einem sehr heißen Ofen, dem Brennofen, gebacken, wird er für immer hart, und Wasser kann ihn nicht mehr aufweichen. So macht man Ziegel und Krüge."
  },
  "nodes/k_clay/questions/0/q": {
   "en": "When is clay easiest to shape?",
@@ -3949,7 +3949,7 @@
  },
  "nodes/k_charcoal/page": {
   "en": "Charcoal is made by heating wood with very little air, so it can't burn up. The water and smoke leave the wood, and the black part that stays behind is called carbon. Charcoal burns hotter and cleaner than wood, so smiths and glassmakers love it.",
-  "de": ""
+  "de": "Holzkohle entsteht, wenn man Holz mit ganz wenig Luft erhitzt, damit es nicht verbrennt. Wasser und Rauch gehen aus dem Holz heraus, und der schwarze Teil, der übrig bleibt, heißt Kohlenstoff. Holzkohle brennt heißer und sauberer als Holz, darum lieben Schmiede und Glasmacher sie."
  },
  "nodes/k_charcoal/questions/0/q": {
   "en": "How is charcoal made?",
@@ -4021,7 +4021,7 @@
  },
  "nodes/k_building/page": {
   "en": "A building needs a strong base, called a foundation, so it doesn't sink. The walls hold up the roof, and a sloped roof lets rain run off. Triangles make a wooden frame stiff. Every door and window needs a strong beam above it.",
-  "de": ""
+  "de": "Ein Gebäude braucht einen festen Grund, das Fundament, damit es nicht einsinkt. Die Wände tragen das Dach, und von einem schrägen Dach läuft der Regen ab. Dreiecke machen ein Holzgerüst stabil. Über jeder Tür und jedem Fenster braucht es einen starken Balken."
  },
  "nodes/k_building/questions/0/q": {
   "en": "Why does a roof slope?",
@@ -4093,7 +4093,7 @@
  },
  "nodes/k_thatch/page": {
   "en": "Thatch is a roof made of straw or reeds, packed tightly in thick layers. It sits on a steep roof, so rain runs down the outside and the inside stays dry. A good thatched roof lasts many years, and it keeps the house warm in winter.",
-  "de": ""
+  "de": "Ein Strohdach ist ein Dach aus Stroh oder Schilf, dicht gepackt in dicken Schichten. Es liegt auf einem steilen Dach, so läuft der Regen außen herunter und innen bleibt es trocken. Ein gutes Strohdach hält viele Jahre, und im Winter hält es das Haus warm."
  },
  "nodes/k_thatch/questions/0/q": {
   "en": "Why is a thatched roof built steep?",
@@ -4165,7 +4165,7 @@
  },
  "nodes/k_compost/page": {
   "en": "Compost is made when tiny living things, like bacteria, fungi and worms, break down old plants, straw and manure. They turn it all into dark, crumbly food for the soil. The heap needs air and a little water, and turning it with a fork makes it work faster. All their busy work makes the heap warm inside!",
-  "de": ""
+  "de": "Kompost entsteht, wenn winzige Lebewesen wie Bakterien, Pilze und Würmer alte Pflanzen, Stroh und Mist zersetzen. Sie machen daraus dunkle, krümelige Nahrung für die Erde. Der Haufen braucht Luft und ein bisschen Wasser, und wenn du ihn mit einer Gabel umsetzt, geht es schneller. Von all ihrer fleißigen Arbeit wird der Haufen innen warm!"
  },
  "nodes/k_compost/questions/0/q": {
   "en": "Who turns old plants into compost?",
@@ -4237,7 +4237,7 @@
  },
  "nodes/k_bread/page": {
   "en": "A sourdough starter is flour and water where wild yeast lives. Yeast is a tiny living thing that eats the sugar in flour and makes bubbles of gas. The bubbles make the dough rise. A hot oven sets the bubbles in place, so the bread is soft inside.",
-  "de": ""
+  "de": "Sauerteig ist Mehl und Wasser, in dem wilde Hefe lebt. Hefe ist ein winziges Lebewesen, das den Zucker im Mehl frisst und Gasbläschen macht. Die Bläschen lassen den Teig aufgehen. Ein heißer Ofen hält die Bläschen fest, darum ist das Brot innen weich."
  },
  "nodes/k_bread/questions/0/q": {
   "en": "Your bread did not rise. What was missing?",
@@ -4309,7 +4309,7 @@
  },
  "nodes/k_stove/page": {
   "en": "A stove keeps the fire inside a box with a chimney. The heat goes into the pot, and the smoke goes out through the chimney. A stove uses less wood than an open fire, and it is safer. It is perfect for soups and stews that simmer, which means bubble gently, for a long time.",
-  "de": ""
+  "de": "Ein Herd hält das Feuer in einem Kasten mit Kamin. Die Hitze geht in den Topf, und der Rauch zieht durch den Kamin hinaus. Ein Herd braucht weniger Holz als ein offenes Feuer und ist sicherer. Er ist perfekt für Suppen und Eintöpfe, die lange köcheln, also leise blubbern."
  },
  "nodes/k_stove/questions/0/q": {
   "en": "Where does the smoke from a stove go?",
@@ -4381,7 +4381,7 @@
  },
  "nodes/k_cows/page": {
   "en": "Cows eat grass and clover, and their stomach has four parts. Later they bring the food back up and chew it again, which is called chewing the cud. A cow gives milk after she has had a calf. Cows drink lots of water and need a dry barn with bedding.",
-  "de": ""
+  "de": "Kühe fressen Gras und Klee, und ihr Magen hat vier Teile. Später holen sie das Futter wieder hoch und kauen es noch einmal, das nennt man Wiederkäuen. Eine Kuh gibt Milch, nachdem sie ein Kalb bekommen hat. Kühe trinken viel Wasser und brauchen eine trockene Scheune mit Stroh zum Liegen."
  },
  "nodes/k_cows/questions/0/q": {
   "en": "Your cow is lying down, chewing, with no food nearby. What is she doing?",
@@ -4453,7 +4453,7 @@
  },
  "nodes/k_butter/page": {
   "en": "Fresh milk has cream in it, the fatty part, and it rises to the top. If you shake or churn the cream for a long time, the tiny drops of fat stick together into butter. The thin milk left over is called buttermilk.",
-  "de": ""
+  "de": "Frische Milch enthält Rahm, den fetten Teil, und der steigt nach oben. Wenn du den Rahm lange schüttelst oder butterst, kleben die winzigen Fetttröpfchen zu Butter zusammen. Die dünne Milch, die übrig bleibt, heißt Buttermilch."
  },
  "nodes/k_butter/questions/0/q": {
   "en": "Where does the cream go in a pail of fresh milk?",
@@ -4525,7 +4525,7 @@
  },
  "nodes/k_bees/page": {
   "en": "Bees visit flowers to collect sweet nectar and dusty pollen. They carry pollen from flower to flower, which is called pollination, so plants can make fruit and seeds. Bees turn nectar into honey, store it in wax combs, and need water to drink, too.",
-  "de": ""
+  "de": "Bienen fliegen zu Blumen, um süßen Nektar und staubigen Pollen zu sammeln. Sie tragen den Pollen von Blüte zu Blüte, das nennt man Bestäubung, und so können Pflanzen Früchte und Samen machen. Bienen machen aus Nektar Honig, lagern ihn in Wachswaben, und sie brauchen auch Wasser zum Trinken."
  },
  "nodes/k_bees/questions/0/q": {
   "en": "Why do your apple trees need bees?",
@@ -4597,7 +4597,7 @@
  },
  "nodes/k_honey/page": {
   "en": "A honeycomb is made of six-sided wax cells full of honey. Crush the comb and strain it through a cloth: the honey drips out, and the wax stays behind. Beeswax makes candles and keeps things waterproof. Honey keeps for years without going bad.",
-  "de": ""
+  "de": "Eine Honigwabe besteht aus sechseckigen Wachszellen voller Honig. Zerdrück die Wabe und gieß sie durch ein Tuch: Der Honig tropft heraus, und das Wachs bleibt zurück. Aus Bienenwachs macht man Kerzen, und es macht Dinge wasserdicht. Honig hält jahrelang, ohne schlecht zu werden."
  },
  "nodes/k_honey/questions/0/q": {
   "en": "What shape are the cells in a honeycomb?",
@@ -4669,7 +4669,7 @@
  },
  "nodes/k_salt/page": {
   "en": "Food spoils when tiny germs grow in it, and germs need water to grow. Salt pulls the water out of food, so the germs can't grow. That is why salted, dried and pickled foods keep for a long time. Salt comes from the sea or from salt mines.",
-  "de": ""
+  "de": "Essen verdirbt, wenn winzige Keime darin wachsen, und Keime brauchen Wasser zum Wachsen. Salz zieht das Wasser aus dem Essen, dann können die Keime nicht wachsen. Darum halten gesalzene, getrocknete und eingelegte Sachen lange. Salz kommt aus dem Meer oder aus Salzbergwerken."
  },
  "nodes/k_salt/questions/0/q": {
   "en": "Why does salted food keep for a long time?",
@@ -4741,7 +4741,7 @@
  },
  "nodes/k_mucking/page": {
   "en": "Animals make dung, and when it mixes with their old bedding straw we call it muck. Mucking out means cleaning the muck away, and it keeps the animals clean and healthy. Rotted manure is rich food for the fields. What is waste for animals is food for plants!",
-  "de": ""
+  "de": "Tiere machen Dung, und wenn er sich mit ihrem alten Stroh mischt, nennen wir das Mist. Ausmisten heißt, den Mist wegzuräumen, und das hält die Tiere sauber und gesund. Verrotteter Mist ist reiche Nahrung für die Felder. Was für die Tiere Abfall ist, ist für die Pflanzen Futter!"
  },
  "nodes/k_mucking/questions/0/q": {
   "en": "Why do you muck out the barn?",
@@ -4813,7 +4813,7 @@
  },
  "nodes/k_feed/page": {
   "en": "Hens eat grain and seeds. Cows and sheep eat grass, clover and hay, which is dried grass. Leftover vegetables and oilcake, the pressed seeds left after making oil, can be feed too. Every animal needs clean water, and too much of one food is not healthy.",
-  "de": ""
+  "de": "Hühner fressen Körner und Samen. Kühe und Schafe fressen Gras, Klee und Heu, das ist getrocknetes Gras. Übriges Gemüse und Ölkuchen, die gepressten Samen vom Ölmachen, können auch Futter sein. Jedes Tier braucht sauberes Wasser, und zu viel von einem einzigen Futter ist nicht gesund."
  },
  "nodes/k_feed/questions/0/q": {
   "en": "What do cows and sheep mostly eat?",
@@ -4885,7 +4885,7 @@
  },
  "nodes/k_rotation/page": {
   "en": "Don't grow the same crop in the same bed year after year. The soil gets tired, and that crop's pests move in. Changing the crop each time is called rotation. Beans, peas and clover are special: they put a plant food called nitrogen back into the soil.",
-  "de": ""
+  "de": "Bau nicht Jahr für Jahr dieselbe Pflanze im selben Beet an. Die Erde wird müde, und die Schädlinge dieser Pflanze ziehen ein. Wenn man jedes Mal eine andere Pflanze nimmt, nennt man das Fruchtwechsel. Bohnen, Erbsen und Klee sind besonders: Sie bringen eine Pflanzennahrung namens Stickstoff zurück in die Erde."
  },
  "nodes/k_rotation/questions/0/q": {
   "en": "What is crop rotation?",
@@ -4957,7 +4957,7 @@
  },
  "nodes/k_seasons/page": {
   "en": "The year has four seasons: spring, summer, autumn and winter. They happen because the Earth is tilted, or leaning, as it travels around the Sun. In winter the days are short and cold, so plants grow slowly. Seeds sprout in spring, crops ripen in summer, and we harvest in autumn.",
-  "de": ""
+  "de": "Das Jahr hat vier Jahreszeiten: Frühling, Sommer, Herbst und Winter. Es gibt sie, weil die Erde schräg steht, während sie um die Sonne reist. Im Winter sind die Tage kurz und kalt, darum wachsen Pflanzen langsam. Im Frühling keimen die Samen, im Sommer reift die Ernte, und im Herbst ernten wir."
  },
  "nodes/k_seasons/questions/0/q": {
   "en": "Why do we have seasons?",
@@ -5029,7 +5029,7 @@
  },
  "nodes/k_frost/page": {
   "en": "In winter, water in the soil freezes into ice. Ice takes up more space than water, so it pushes stones up a little every year; this is called frost heave. That is why farmers find new stones every spring. They piled them up to build stone walls and paths.",
-  "de": ""
+  "de": "Im Winter gefriert das Wasser in der Erde zu Eis. Eis braucht mehr Platz als Wasser, darum schiebt es Steine jedes Jahr ein bisschen nach oben; das nennt man Frosthebung. Deshalb finden Bauern jeden Frühling neue Steine. Sie haben sie aufgeschichtet und daraus Steinmauern und Wege gebaut."
  },
  "nodes/k_frost/questions/0/q": {
   "en": "Why do new stones appear in your field each spring?",
@@ -5101,7 +5101,7 @@
  },
  "nodes/k_pond/page": {
   "en": "A pond collects rainwater and keeps it for dry days. Ducks, frogs and dragonflies make their homes there. Clay at the bottom holds the water in, because water can't soak through it. Farmers also soak flax stems in ponds to loosen their fibres, which is called retting.",
-  "de": ""
+  "de": "Ein Teich sammelt Regenwasser und hebt es für trockene Tage auf. Enten, Frösche und Libellen wohnen dort. Lehm am Boden hält das Wasser fest, weil Wasser nicht durch Lehm sickern kann. Bauern weichen auch Flachsstängel im Teich ein, damit sich die Fasern lösen; das nennt man Rösten."
  },
  "nodes/k_pond/questions/0/q": {
   "en": "Why does a pond need clay at the bottom?",
@@ -5173,7 +5173,7 @@
  },
  "nodes/k_trees/page": {
   "en": "A tree grows from a seed or from a young tree called a sapling. It takes many years to grow big. In a woodlot, cut just a few trees at a time and plant new ones, so wood never runs out. Once a fruit tree is grown, it gives fruit every year.",
-  "de": ""
+  "de": "Ein Baum wächst aus einem Samen oder aus einem jungen Baum, einem Bäumchen. Es dauert viele Jahre, bis er groß ist. In einem Waldstück fällt man immer nur ein paar Bäume und pflanzt neue, damit das Holz nie ausgeht. Wenn ein Obstbaum groß ist, trägt er jedes Jahr Früchte."
  },
  "nodes/k_trees/questions/0/q": {
   "en": "How can your woodlot never run out of wood?",
@@ -5245,7 +5245,7 @@
  },
  "nodes/k_iron/page": {
   "en": "Iron ore is a rock with iron hidden inside it. When it is heated very, very hot with charcoal, the iron comes out of the rock; this is called smelting. Hot iron glows and can be hammered into shape. When it cools, iron is hard and strong.",
-  "de": ""
+  "de": "Eisenerz ist ein Stein, in dem Eisen versteckt ist. Wenn man es mit Holzkohle sehr, sehr heiß macht, kommt das Eisen aus dem Stein heraus; das nennt man Schmelzen. Heißes Eisen glüht, und man kann es mit dem Hammer formen. Wenn es abkühlt, ist Eisen hart und stark."
  },
  "nodes/k_iron/questions/0/q": {
   "en": "What is iron ore?",
@@ -5317,7 +5317,7 @@
  },
  "nodes/k_smithing/page": {
   "en": "A smith heats iron until it glows, then hammers it into shape on an anvil, a heavy iron block. Dipping the hot tool quickly into water is called quenching, and it makes the tool harder. Iron tools last much longer than stone tools.",
-  "de": ""
+  "de": "Ein Schmied erhitzt Eisen, bis es glüht, und hämmert es dann auf einem Amboss, einem schweren Eisenblock, in Form. Wenn man das heiße Werkzeug schnell in Wasser taucht, nennt man das Abschrecken, und es macht das Werkzeug härter. Eisenwerkzeuge halten viel länger als Steinwerkzeuge."
  },
  "nodes/k_smithing/questions/0/q": {
   "en": "What is an anvil?",
@@ -5389,7 +5389,7 @@
  },
  "nodes/k_nails/page": {
   "en": "Nails hold wooden boards together. Before people had nails, they cut joints: ends that fit together like puzzle pieces. They held the joints tight with wooden pegs. A saw makes straight, thin planks that are good for building.",
-  "de": ""
+  "de": "Nägel halten Holzbretter zusammen. Bevor es Nägel gab, haben die Menschen Verbindungen geschnitten: Enden, die wie Puzzleteile ineinanderpassen. Mit Holzdübeln haben sie die Verbindungen festgehalten. Eine Säge macht gerade, dünne Bretter, die gut zum Bauen sind."
  },
  "nodes/k_nails/questions/0/q": {
   "en": "How did people join wood before they had nails?",
@@ -5461,7 +5461,7 @@
  },
  "nodes/k_wind/page": {
   "en": "Wind is moving air, and it pushes the sails of a windmill round and round. The sails turn a shaft, which is a long pole, and the shaft drives gears that turn heavy millstones. That way, wind can grind flour or pump water, with no people or animals doing the turning.",
-  "de": ""
+  "de": "Wind ist bewegte Luft, und er dreht die Flügel einer Windmühle rundherum. Die Flügel drehen eine Welle, eine lange Stange, und die Welle treibt Zahnräder an, die schwere Mühlsteine drehen. So kann der Wind Mehl mahlen oder Wasser pumpen, ohne dass Menschen oder Tiere drehen müssen."
  },
  "nodes/k_wind/questions/0/q": {
   "en": "What makes windmill sails turn?",
@@ -5533,7 +5533,7 @@
  },
  "nodes/k_irrigation/page": {
   "en": "Irrigation means bringing water to crops through channels or pipes. Water always flows downhill, so the channel must slope down toward the crops. Watering at the roots wastes less water than splashing the leaves. A watering can with a long spout helps you aim right at the roots.",
-  "de": ""
+  "de": "Bewässerung heißt, Wasser durch Gräben oder Rohre zu den Pflanzen zu bringen. Wasser fließt immer bergab, darum muss der Graben zu den Pflanzen hin abfallen. An den Wurzeln zu gießen verschwendet weniger Wasser, als die Blätter zu bespritzen. Eine Gießkanne mit langem Ausguss hilft dir, genau auf die Wurzeln zu zielen."
  },
  "nodes/k_irrigation/questions/0/q": {
   "en": "Your field is higher than the pond. Why won't channel water reach it?",
@@ -5605,7 +5605,7 @@
  },
  "nodes/k_wool/page": {
   "en": "Sheep grow thick wool, and once a year it is cut off. This is called shearing, and it doesn't hurt, just like a haircut. The wool is cleaned, combed and twisted on a spindle into yarn. Spinning turns short, fluffy fibres into long, strong thread.",
-  "de": ""
+  "de": "Schafe bekommen dicke Wolle, und einmal im Jahr wird sie abgeschnitten. Das nennt man Scheren, und es tut nicht weh, wie beim Haareschneiden. Die Wolle wird gewaschen, gekämmt und auf einer Spindel zu Garn gedreht. Beim Spinnen werden aus kurzen, flauschigen Fasern lange, starke Fäden."
  },
  "nodes/k_wool/questions/0/q": {
   "en": "Does shearing hurt a sheep?",
@@ -5677,7 +5677,7 @@
  },
  "nodes/k_weaving/page": {
   "en": "Cloth is woven on a loom. Long threads called the warp are stretched tight. Another thread, the weft, goes over and under them, back and forth, back and forth. The tighter the weaving, the stronger the cloth.",
-  "de": ""
+  "de": "Stoff wird auf einem Webstuhl gewebt. Lange Fäden, die Kette, werden straff gespannt. Ein anderer Faden, der Schuss, geht darüber und darunter, hin und her, hin und her. Je dichter gewebt, desto stärker der Stoff."
  },
  "nodes/k_weaving/questions/0/q": {
   "en": "What is stretched tight on the loom?",
@@ -5749,7 +5749,7 @@
  },
  "nodes/k_flax/page": {
   "en": "Flax is a plant with long fibres inside its stem. The stems are soaked until the fibres come loose, which is called retting. Then the fibres are beaten, combed, spun into thread and woven into linen cloth. Flax seeds give linseed oil.",
-  "de": ""
+  "de": "Flachs ist eine Pflanze mit langen Fasern im Stängel. Die Stängel werden eingeweicht, bis sich die Fasern lösen; das nennt man Rösten. Dann werden die Fasern geklopft, gekämmt, zu Faden gesponnen und zu Leinenstoff gewebt. Aus Flachssamen macht man Leinöl."
  },
  "nodes/k_flax/questions/0/q": {
   "en": "What cloth is made from flax?",
@@ -5821,7 +5821,7 @@
  },
  "nodes/k_press/page": {
   "en": "A press squeezes fruit or seeds very hard when you turn its big wooden screw. Apples give juice, and sunflower and flax seeds give oil. What is left over, called pomace or oilcake, can feed animals or go on the compost.",
-  "de": ""
+  "de": "Eine Presse drückt Obst oder Samen ganz fest zusammen, wenn du ihre große Holzschraube drehst. Äpfel geben Saft, und Sonnenblumen- und Flachssamen geben Öl. Was übrig bleibt, der Trester oder Ölkuchen, kann Tiere füttern oder auf den Kompost."
  },
  "nodes/k_press/questions/0/q": {
   "en": "What comes out when you press apples?",
@@ -5893,7 +5893,7 @@
  },
  "nodes/k_sugar/page": {
   "en": "Sugar beets store sugar in their big roots. Their juice is squeezed out and boiled, so the water goes off as steam and sugar crystals are left behind. Before sugar was common, people sweetened their food mostly with honey.",
-  "de": ""
+  "de": "Zuckerrüben speichern Zucker in ihren großen Wurzeln. Ihr Saft wird ausgepresst und gekocht, so geht das Wasser als Dampf weg, und Zuckerkristalle bleiben übrig. Bevor es überall Zucker gab, haben die Menschen ihr Essen meistens mit Honig gesüßt."
  },
  "nodes/k_sugar/questions/0/q": {
   "en": "Where does a sugar beet store its sugar?",
@@ -5965,7 +5965,7 @@
  },
  "nodes/k_ferment/page": {
   "en": "Microbes are tiny living things, too small to see, like yeasts and bacteria. Some of them change food in a good way, which is called fermentation. Yeast turns the sugar in apple juice into cider, and bacteria turn milk into yogurt. These good microbes keep the bad ones away, so the food keeps longer.",
-  "de": ""
+  "de": "Mikroben sind winzige Lebewesen, zu klein zum Sehen, zum Beispiel Hefen und Bakterien. Manche verändern Essen auf gute Weise; das nennt man Gärung. Hefe macht aus dem Zucker im Apfelsaft Apfelmost, und Bakterien machen aus Milch Joghurt. Diese guten Mikroben halten die schlechten fern, darum hält das Essen länger."
  },
  "nodes/k_ferment/questions/0/q": {
   "en": "What turns apple juice into cider?",
@@ -6037,7 +6037,7 @@
  },
  "nodes/k_cheese/page": {
   "en": "To make cheese, you thicken milk with cultures, which are friendly bacteria, and rennet. The milk splits into soft lumps called curds and a watery liquid called whey. The curds are pressed into a round wheel and aged in a cool cellar, which makes the taste stronger. Ten litres of milk make only about one kilo of cheese.",
-  "de": ""
+  "de": "Für Käse macht man Milch mit Kulturen, das sind freundliche Bakterien, und Lab dick. Die Milch trennt sich in weiche Klümpchen, den Bruch, und eine wässrige Flüssigkeit, die Molke. Der Bruch wird zu einem runden Laib gepresst und in einem kühlen Keller gereift, so wird der Geschmack stärker. Aus zehn Litern Milch wird nur etwa ein Kilo Käse."
  },
  "nodes/k_cheese/questions/0/q": {
   "en": "When milk thickens for cheese, what does it split into?",
@@ -6109,7 +6109,7 @@
  },
  "nodes/k_cellar/page": {
   "en": "Cold slows down the germs that spoil food. A cellar dug into the ground stays cool and dark all year, even in summer. Potatoes, carrots, apples and cheese can keep there for months. Cool and dark is the rule!",
-  "de": ""
+  "de": "Kälte bremst die Keime, die Essen verderben. Ein Keller, in die Erde gegraben, bleibt das ganze Jahr kühl und dunkel, sogar im Sommer. Kartoffeln, Karotten, Äpfel und Käse halten dort monatelang. Kühl und dunkel, so lautet die Regel!"
  },
  "nodes/k_cellar/questions/0/q": {
   "en": "Why does food keep longer in a cool cellar?",
@@ -6181,7 +6181,7 @@
  },
  "nodes/k_pickling/page": {
   "en": "Vinegar is made when bacteria turn cider into a sour acid. Vegetables kept in vinegar and salt are called pickles. They don't spoil, because the germs that spoil food can't live in sour acid. People pickled food for the winter and for long trips at sea.",
-  "de": ""
+  "de": "Essig entsteht, wenn Bakterien aus Apfelmost eine saure Säure machen. Gemüse in Essig und Salz nennt man Eingelegtes. Es verdirbt nicht, weil die Keime, die Essen verderben, in saurer Säure nicht leben können. Die Menschen haben Essen für den Winter und für lange Seereisen eingelegt."
  },
  "nodes/k_pickling/questions/0/q": {
   "en": "How is vinegar made?",
@@ -6253,7 +6253,7 @@
  },
  "nodes/k_double_dig/page": {
   "en": "Double digging means loosening the soil two spade-depths deep and mixing in compost. Then roots can grow deeper, and more plants fit in the bed. It is hard work, but you only do it once. If you never step on the bed, it stays loose for years.",
-  "de": ""
+  "de": "Doppelt umgraben heißt, die Erde zwei Spatentiefen tief zu lockern und Kompost hineinzumischen. Dann können die Wurzeln tiefer wachsen, und mehr Pflanzen passen ins Beet. Es ist harte Arbeit, aber man macht es nur einmal. Wenn du nie auf das Beet trittst, bleibt es jahrelang locker."
  },
  "nodes/k_double_dig/questions/0/q": {
   "en": "How deep do you loosen the soil when double digging?",
@@ -6325,7 +6325,7 @@
  },
  "nodes/k_pests/page": {
   "en": "Slugs, caterpillars, mice and birds all like to eat our crops. But pests have enemies: ladybirds eat aphids (tiny green bugs), owls and cats catch mice, and ducks gobble up slugs. A garden with many different plants has more of these helpers. And remember, more crops bring more pests.",
-  "de": ""
+  "de": "Schnecken, Raupen, Mäuse und Vögel fressen gern unsere Pflanzen. Aber Schädlinge haben Feinde: Marienkäfer fressen Blattläuse (winzige grüne Tierchen), Eulen und Katzen fangen Mäuse, und Enten verschlingen Schnecken. Ein Garten mit vielen verschiedenen Pflanzen hat mehr von diesen Helfern. Und denk daran: Mehr Pflanzen bringen mehr Schädlinge."
  },
  "nodes/k_pests/questions/0/q": {
   "en": "Slugs are eating your lettuce. Which helper could you bring?",
@@ -6397,7 +6397,7 @@
  },
  "nodes/k_steel/page": {
   "en": "Steel is iron with a tiny bit of carbon mixed in, and the carbon comes from charcoal. Steel is harder and springier than iron. It keeps a sharp edge and doesn't break easily. Making steel needs a very hot furnace.",
-  "de": ""
+  "de": "Stahl ist Eisen mit ein ganz kleines bisschen Kohlenstoff darin, und der Kohlenstoff kommt aus der Holzkohle. Stahl ist härter und federnder als Eisen. Er bleibt scharf und bricht nicht so leicht. Um Stahl zu machen, braucht man einen sehr heißen Ofen."
  },
  "nodes/k_steel/questions/0/q": {
   "en": "What is steel made of?",
@@ -6469,7 +6469,7 @@
  },
  "nodes/k_glass/page": {
   "en": "Glass is made by melting sand, with a little plant ash to help, in a very hot furnace. Melted glass flows like honey, so it can be shaped. Then it must cool slowly, or it may crack. Glass lets light through but keeps the wind and rain out.",
-  "de": ""
+  "de": "Glas macht man, indem man Sand, mit ein bisschen Pflanzenasche als Hilfe, in einem sehr heißen Ofen schmilzt. Geschmolzenes Glas fließt wie Honig, so kann man es formen. Dann muss es langsam abkühlen, sonst kann es springen. Glas lässt Licht durch, hält aber Wind und Regen draußen."
  },
  "nodes/k_glass/questions/0/q": {
   "en": "What is glass mainly made from?",
@@ -6541,7 +6541,7 @@
  },
  "nodes/k_greenhouse/page": {
   "en": "In a greenhouse, sunlight shines through the glass and warms the air and soil inside. The glass keeps the warm air in, so plants can grow even when it is cold outside. People grow tender plants there, which are plants that don't like cold. They also start early seedlings in spring.",
-  "de": ""
+  "de": "In einem Gewächshaus scheint das Sonnenlicht durch das Glas und wärmt die Luft und die Erde drinnen. Das Glas hält die warme Luft fest, so können Pflanzen wachsen, auch wenn es draußen kalt ist. Man zieht dort empfindliche Pflanzen, die keine Kälte mögen. Im Frühling zieht man dort auch frühe Keimlinge vor."
  },
  "nodes/k_greenhouse/questions/0/q": {
   "en": "Why is it warm inside a greenhouse?",
@@ -6613,7 +6613,7 @@
  },
  "nodes/k_masonry/page": {
   "en": "Bricks are laid in rows with mortar, a sticky paste that dries hard, between them. Each row overlaps the joins in the row below. This pattern is called a bond, and it makes the wall strong. Brick walls don't burn or rot, and they keep a house warm.",
-  "de": ""
+  "de": "Ziegel werden in Reihen gelegt, mit Mörtel dazwischen, einer klebrigen Masse, die hart trocknet. Jede Reihe überdeckt die Fugen der Reihe darunter. Dieses Muster nennt man Verband, und es macht die Mauer stark. Ziegelmauern brennen und verrotten nicht, und sie halten ein Haus warm."
  },
  "nodes/k_masonry/questions/0/q": {
   "en": "Why does each row of bricks overlap the row below?",
@@ -6685,7 +6685,7 @@
  },
  "nodes/k_orchard/page": {
   "en": "Fruit trees are pruned, or trimmed, in winter. Cutting out old branches and branches that cross lets light and air into the tree, so it makes better fruit. In spring, bees pollinate the blossoms, and in autumn the apples are ripe.",
-  "de": ""
+  "de": "Obstbäume werden im Winter geschnitten. Wenn man alte Äste und Äste, die sich kreuzen, herausschneidet, kommen Licht und Luft in den Baum, und er trägt besseres Obst. Im Frühling bestäuben die Bienen die Blüten, und im Herbst sind die Äpfel reif."
  },
  "nodes/k_orchard/questions/0/q": {
   "en": "Why cut out crossing branches?",
@@ -6757,7 +6757,7 @@
  },
  "nodes/k_olives/page": {
   "en": "Olives picked straight from the tree taste far too bitter to eat. They are cured, which means soaked in salty water for weeks, until they taste good. Pressed olives give us olive oil. Olive trees can live for hundreds of years.",
-  "de": ""
+  "de": "Oliven, die man direkt vom Baum pflückt, schmecken viel zu bitter zum Essen. Sie werden eingelegt, also wochenlang in Salzwasser eingeweicht, bis sie gut schmecken. Gepresste Oliven geben uns Olivenöl. Olivenbäume können Hunderte von Jahren alt werden."
  },
  "nodes/k_olives/questions/0/q": {
   "en": "Why are fresh olives soaked in salty water?",
@@ -6829,7 +6829,7 @@
  },
  "nodes/k_pasta/page": {
   "en": "Pasta is flour and egg, or flour and water, kneaded into a dough. Kneading means pressing and folding, and it builds gluten, which makes the dough stretchy. The dough is rolled thin and cut into shapes. Fresh pasta cooks in just a few minutes in boiling water.",
-  "de": ""
+  "de": "Nudeln sind Mehl und Ei oder Mehl und Wasser, zu einem Teig geknetet. Kneten heißt drücken und falten, und dabei entsteht Gluten, das den Teig dehnbar macht. Der Teig wird dünn ausgerollt und in Formen geschnitten. Frische Nudeln kochen in nur ein paar Minuten in sprudelndem Wasser."
  },
  "nodes/k_pasta/questions/0/q": {
   "en": "What makes pasta dough stretchy?",
@@ -6901,7 +6901,7 @@
  },
  "nodes/k_hardwood/page": {
   "en": "Hardwoods like oak and beech come from trees with broad, flat leaves, and they grow slowly. Their wood is heavy and strong, so it is good for tools, barrels and machine parts. Softwoods come from conifers, trees with needles and cones like pines, and they grow faster.",
-  "de": ""
+  "de": "Harthölzer wie Eiche und Buche kommen von Bäumen mit breiten, flachen Blättern, und sie wachsen langsam. Ihr Holz ist schwer und stark, darum ist es gut für Werkzeug, Fässer und Maschinenteile. Weichhölzer kommen von Nadelbäumen mit Nadeln und Zapfen, wie Kiefern, und sie wachsen schneller."
  },
  "nodes/k_hardwood/questions/0/q": {
   "en": "Why make a barrel from oak?",
@@ -6973,7 +6973,7 @@
  },
  "nodes/k_deep_soil/page": {
   "en": "Humus is the dark, rotted part of soil, made from old plants. It holds water like a sponge and feeds plants slowly. In deep soil full of humus, many plants can grow close together.",
-  "de": ""
+  "de": "Humus ist der dunkle, verrottete Teil der Erde, aus alten Pflanzen. Er hält Wasser wie ein Schwamm und füttert Pflanzen langsam. In tiefer Erde voller Humus können viele Pflanzen dicht beieinander wachsen."
  },
  "nodes/k_deep_soil/questions/0/q": {
   "en": "What is humus made from?",
@@ -7045,7 +7045,7 @@
  },
  "nodes/k_mulch/page": {
   "en": "Mulch is a blanket of straw, leaves or wood chips laid on top of the soil. It keeps water in the ground and stops weeds, because they get no light. It protects the soil from frost. Slowly, the mulch rots and turns into humus.",
-  "de": ""
+  "de": "Mulch ist eine Decke aus Stroh, Laub oder Holzschnitzeln, die oben auf die Erde gelegt wird. Er hält das Wasser im Boden und stoppt Unkraut, weil es kein Licht bekommt. Er schützt die Erde vor Frost. Langsam verrottet der Mulch und wird zu Humus."
  },
  "nodes/k_mulch/questions/0/q": {
   "en": "How does mulch stop weeds?",
@@ -7117,7 +7117,7 @@
  },
  "nodes/k_dyes/page": {
   "en": "Many plants give colour: madder roots and beets make red, onion skins make yellow, and woad makes blue. You boil the plant in water to make a dye bath, then soak the yarn in it. Adding a fixer, called a mordant, makes the colour stay.",
-  "de": ""
+  "de": "Viele Pflanzen geben Farbe: Krappwurzeln und Rüben machen Rot, Zwiebelschalen machen Gelb, und Färberwaid macht Blau. Du kochst die Pflanze in Wasser zu einem Färbebad und weichst dann das Garn darin ein. Mit einem Beizmittel bleibt die Farbe haften."
  },
  "nodes/k_dyes/questions/0/q": {
   "en": "Which plant gives a blue dye?",
@@ -7189,7 +7189,7 @@
  },
  "nodes/k_colour_mixing/page": {
   "en": "Red, yellow and blue are the main dye colours. Mix two of them to make a new colour. Red and yellow make orange, yellow and blue make green, and red and blue make purple. Mix all three together and you get brown.",
-  "de": ""
+  "de": "Rot, Gelb und Blau sind die wichtigsten Färbefarben. Misch zwei davon, und du bekommst eine neue Farbe. Rot und Gelb ergeben Orange, Gelb und Blau ergeben Grün, und Rot und Blau ergeben Lila. Misch alle drei zusammen, und du bekommst Braun."
  },
  "nodes/k_colour_mixing/questions/0/q": {
   "en": "Which two dye colours make green?",
@@ -7261,7 +7261,7 @@
  },
  "nodes/k_worms/page": {
   "en": "Earthworms eat dead leaves and compost. What they leave behind is called castings, and it is the richest food for soil. Their tunnels let air and water into the ground. In a worm bin, worms turn kitchen scraps into castings.",
-  "de": ""
+  "de": "Regenwürmer fressen tote Blätter und Kompost. Was sie hinterlassen, heißt Wurmhumus, und das ist die beste Nahrung für die Erde. Ihre Gänge lassen Luft und Wasser in den Boden. In einer Wurmkiste machen Würmer aus Küchenresten Wurmhumus."
  },
  "nodes/k_worms/questions/0/q": {
   "en": "What are worm castings?",
@@ -7333,7 +7333,7 @@
  },
  "nodes/k_seed_saving/page": {
   "en": "Heirloom plants are old kinds that grow true from their own seeds: the new plants come out just like the parent. Let your best plants flower, and collect the seeds when they are dry. Keep them cool and dry until next year. Seed libraries share old kinds of seeds, so they don't disappear.",
-  "de": ""
+  "de": "Alte Sorten sind Pflanzen, die aus ihren eigenen Samen wieder gleich wachsen: Die neuen Pflanzen werden genau wie die Mutterpflanze. Lass deine besten Pflanzen blühen und sammle die Samen, wenn sie trocken sind. Bewahre sie bis zum nächsten Jahr kühl und trocken auf. Samenbibliotheken teilen alte Samensorten, damit sie nicht verschwinden."
  },
  "nodes/k_seed_saving/questions/0/q": {
   "en": "Which plants should you save seeds from?",
@@ -7405,7 +7405,7 @@
  },
  "nodes/k_saffron/page": {
   "en": "Saffron comes from a purple crocus flower. Inside each flower are three red threads, called stigmas, and they are picked by hand. It takes about 150 flowers to make just one gram, so saffron is very precious. A pinch colours food a golden yellow.",
-  "de": ""
+  "de": "Safran kommt aus einer lila Krokusblüte. In jeder Blüte sind drei rote Fäden, die Narben, und sie werden von Hand gepflückt. Für nur ein Gramm braucht man etwa 150 Blüten, darum ist Safran sehr kostbar. Eine Prise färbt Essen goldgelb."
  },
  "nodes/k_saffron/questions/0/q": {
   "en": "Why does saffron cost so much?",
@@ -7477,7 +7477,7 @@
  },
  "nodes/k_master_baking/page": {
   "en": "For light cakes, flour is ground twice and sifted until it is very fine. Beating eggs traps tiny air bubbles. Creaming, or beating, butter and sugar together makes a cake soft. The oven must be evenly hot, not too hot, so the inside bakes before the outside burns.",
-  "de": ""
+  "de": "Für lockere Kuchen wird Mehl zweimal gemahlen und gesiebt, bis es ganz fein ist. Beim Schlagen von Eiern werden winzige Luftbläschen eingefangen. Wenn man Butter und Zucker cremig rührt, wird ein Kuchen weich. Der Ofen muss gleichmäßig heiß sein, nicht zu heiß, damit das Innere gebacken ist, bevor das Äußere verbrennt."
  },
  "nodes/k_master_baking/questions/0/q": {
   "en": "Why beat the eggs for a cake?",
@@ -7549,7 +7549,7 @@
  },
  "nodes/k_wind_pump/page": {
   "en": "A wind pump uses its turning sails to move a pump rod up and down. Each stroke lifts water from deep underground into a tank. It works day and night, whenever the wind blows, with nobody pumping by hand.",
-  "de": ""
+  "de": "Eine Windpumpe bewegt mit ihren drehenden Flügeln eine Pumpstange auf und ab. Jeder Hub hebt Wasser aus der Tiefe in einen Tank. Sie arbeitet Tag und Nacht, wann immer der Wind weht, ohne dass jemand von Hand pumpt."
  },
  "nodes/k_wind_pump/questions/0/q": {
   "en": "What makes a wind pump work?",
@@ -7621,7 +7621,7 @@
  },
  "nodes/k_living_soil/page": {
   "en": "Healthy soil is alive! One spoonful holds billions of tiny living things, like bacteria and fungi, and worms live there too. Fungi grow long, thin threads that help roots find water. Feed the soil with compost and don't dig it too much, and it stays alive.",
-  "de": ""
+  "de": "Gesunde Erde lebt! In einem Löffel stecken Milliarden winziger Lebewesen wie Bakterien und Pilze, und auch Würmer wohnen dort. Pilze bilden lange, dünne Fäden, die den Wurzeln helfen, Wasser zu finden. Füttere die Erde mit Kompost und grab sie nicht zu viel um, dann bleibt sie lebendig."
  },
  "nodes/k_living_soil/questions/0/q": {
   "en": "How many tiny living things are in a spoonful of healthy soil?",
