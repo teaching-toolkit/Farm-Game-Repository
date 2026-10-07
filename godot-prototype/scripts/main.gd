@@ -118,6 +118,7 @@ func _parse_args() -> void:
 		elif a.begins_with("--card="): call_deferred("_show_card", a.substr(7))
 		elif a.begins_with("--patch="): call_deferred("_on_patch", "field", int(a.substr(8)))
 		elif a.begins_with("--pests="): G.S["pests"] = float(a.substr(8))
+		elif a.begins_with("--water="): G.S["water"] = float(a.substr(8))   # screenshots: carried water
 		elif a.begins_with("--timestep="): G.S["step"] = int(a.substr(11))   # e.g. 95 = winter (screenshots only)
 		elif a.begins_with("--stepat="): step_at = int(a.substr(9))
 		elif a.begins_with("--sheet="): call_deferred("_open_sheet", a.substr(8))
@@ -1423,8 +1424,10 @@ func _sheet_patch(a: String, i: int) -> void:
 			row.add_child(v)
 			var plants := int(plan["plants"])
 			v.add_child(UI.label("%s   %s   ⏳%d" % [n["name"], "🌱".repeat(maxi(plants, 0)) if plants > 0 else "—", int(n.get("grow", 0))], 17, UI.INK, true))
-			var c := {"water": float(plan["water"]), "energy": float(plan["energy"])}
-			var base := {"water": float(plan["water_base"]), "energy": float(plan["energy_base"])}
+			# short of water: show the water a full patch needs, so the missing cubes show up hollow
+			var short: bool = plan["reasons"].has("water")
+			var c := {"water": float(plan["water_full" if short else "water"]), "energy": float(plan["energy"])}
+			var base := {"water": float(plan["water_full_base" if short else "water_base"]), "energy": float(plan["energy_base"])}
 			var cr := UI.hbox(10)
 			cr.add_child(_costs(c, base))
 			cr.add_child(UI.label("🌰 %d" % G.down(G.seed_have(cid)), 16, UI.INK if G.seed_have(cid) >= 1.0 else UI.RED))

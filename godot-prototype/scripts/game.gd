@@ -966,7 +966,8 @@ func plant_plan(a: String, cid: String) -> Dictionary:
 	var e := ecost("plant", 1.0) * m("energy:field") if a != "orchard" or not n.has("regrow") else ecost("plant", 1.0)
 	var buy := 0
 	return {"plants": k, "max": want, "reasons": reasons, "water": wper * k, "energy": e, "buy_seeds": buy, "coins": buy * seed_cost,
-		"water_base": float(n.get("water", 0)) * k, "energy_base": 1.0}
+		"water_base": float(n.get("water", 0)) * k, "energy_base": 1.0,
+		"water_full": wper * want, "water_full_base": float(n.get("water", 0)) * want}   # for a full patch: shows what is missing
 
 func plant(a: String, i: int, cid: String) -> bool:
 	if not patch_usable(a, i): return false
