@@ -217,7 +217,7 @@ static func action_button(cat: String, cb: Callable, enabled := true, color := G
 ## A grey button with an hourglass and the number of Time Quiz questions still to wait. Pressing it opens the quiz.
 static func wait_button(questions: int, cb: Callable, size := 17) -> Button:
 	var b := button("⏳ %d" % maxi(1, questions), cb, true, Color("a59c8a"), size)
-	b.tooltip_text = TranslationServer.translate("Wait %d Time Quiz question%s") % [questions, "" if questions == 1 else "s"]
+	b.tooltip_text = (TranslationServer.translate("Wait %d Time Quiz question") if questions == 1 else TranslationServer.translate("Wait %d Time Quiz questions")) % questions
 	b.custom_minimum_size = Vector2(86, 48)
 	return b
 

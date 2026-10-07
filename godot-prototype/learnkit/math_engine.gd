@@ -813,7 +813,7 @@ func _gen(lv: Dictionary) -> Array:
 				var res15 := a15 + b15 if plus else a15 - b15
 				if a15 >= 0 and res15 >= 0: continue
 				var t15 := "%d %s %d" % [a15, "+" if plus else "-", b15]
-				out.append([t15, res15, t15 + " = ?", tr("on the number line: start at %d, go %d %s") % [a15, b15, "right" if plus else "left"]])
+				out.append([t15, res15, t15 + " = ?", (tr("on the number line: start at %d, go %d to the right") if plus else tr("on the number line: start at %d, go %d to the left")) % [a15, b15]])
 		"roots":
 			for a16 in range(1, 21): out.append(["√%d" % (a16 * a16), a16, "√%d = ?" % (a16 * a16), "%d × %d = %d" % [a16, a16, a16 * a16]])
 	return out

@@ -1202,7 +1202,7 @@ func _time_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> voi
 	if info.get("rain", false):
 		msg += tr(" 🌧️ It rained.")
 		_after_close.append(tr("🌧️ Rain! The fields are watered — planting costs no water until the next question."))
-	if int(info.get("removed", 0)) > 0: msg += tr(" 🧍 The scarecrow chased off %d pest%s.") % [int(info["removed"]), "" if int(info["removed"]) == 1 else "s"]
+	if int(info.get("removed", 0)) > 0: msg += (tr(" 🧍 The scarecrow chased off %d pest.") if int(info["removed"]) == 1 else tr(" 🧍 The scarecrow chased off %d pests.")) % int(info["removed"])
 	if float(info.get("eat_share", 0.0)) >= 0.005: msg += tr(" 🐦 Pests ate %d%% of what is growing.") % int(round(float(info["eat_share"]) * 100.0))
 	after.add_child(UI.label(msg, 17, UI.MUTED, true))
 	var row := UI.hbox(8)
@@ -1323,7 +1323,7 @@ func _rest_go() -> void:
 	box.move_child(cd, at)
 	_rest["count"] = cd
 	call_deferred("_fit_modal")
-	for w in ["Set…", "Go! 🏁"]:
+	for w in [tr("Set…"), tr("Go! 🏁")]:
 		await get_tree().create_timer(0.6).timeout
 		if _rest.get("count") != cd: return            # the child left already
 		cd.text = w
@@ -2741,7 +2741,7 @@ func _part_library() -> void:
 		row.add_child(UI.wait_button(maxi(1, G.up(G.read_needed(rc) - float(G.S["read_progress"]))), _show_time_quiz))
 		content.add_child(row)
 	var due: int = G.due_cards().size()
-	if due > 0: content.add_child(UI.label(tr("🔁 %d card%s due for a review — they'll show up in the Time Quiz.") % [due, "" if due == 1 else "s"], 16, UI.BLUE, true))
+	if due > 0: content.add_child(UI.label((tr("🔁 %d card due for a review — it will show up in the Time Quiz.") if due == 1 else tr("🔁 %d cards due for a review — they'll show up in the Time Quiz.")) % due, 16, UI.BLUE, true))
 	for bid in G.nodes:
 		if G.nodes[bid]["type"] != "book" or not G.done(bid): continue
 		var bn2: Dictionary = G.nodes[bid]
@@ -2777,7 +2777,7 @@ func _card_tile(cid: String) -> PanelContainer:
 			_tile_button(t, UI.wait_button(maxi(1, G.up(G.read_needed(cid) - float(G.S["read_progress"]))), _show_time_quiz))
 		"readable":
 			var rq: int = G.up(G.read_needed(cid) * G.m("read"))
-			t.add_child(UI.label(tr("Reading takes %d question%s") % [rq, "" if rq == 1 else "s"], 15, UI.MUTED, true))
+			t.add_child(UI.label((tr("Reading takes %d question") if rq == 1 else tr("Reading takes %d questions")) % rq, 15, UI.MUTED, true))
 			_tile_button(t, UI.button(tr("📖 Read"), _start_reading.bind(cid), G.S["reading"] == "", UI.BLUE, 20))
 		"prereq":
 			var miss := []

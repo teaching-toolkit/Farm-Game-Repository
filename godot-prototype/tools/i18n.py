@@ -91,10 +91,21 @@ def learn_texts():
     for key, v in C.get("comments", {}).items():
         if isinstance(v, list):
             for i, s in enumerate(v): put(f"comments/{key}/{i}", s)
+        elif isinstance(v, dict):
+            for k2, s in v.items(): put(f"comments/{key}/{k2}", s)
         else: put(f"comments/{key}", v)
     for i, r in enumerate(C.get("ranks", [])): put(f"ranks/{i}/title", r.get("title"))
     for k, m in C.get("medals", {}).items(): put(f"medals/{k}/name", m.get("name"))
     return out
+
+SLOT = re.compile(r"%[-+0-9.]*[sdf%]|\{[a-z_A-Z]+\}")
+
+def slots_ok(en, tr):
+    """A translation must keep the same %s / %d / %% and {placeholders} as the English (in any order for {…})."""
+    a, b = SLOT.findall(en), SLOT.findall(tr)
+    fa = [x for x in a if x.startswith("%")]
+    fb = [x for x in b if x.startswith("%")]
+    return fa == fb and sorted(x for x in a if x.startswith("{")) == sorted(x for x in b if x.startswith("{"))
 
 def load(path):
     return json.load(open(path, encoding="utf-8")) if os.path.exists(path) else {}
@@ -121,6 +132,7 @@ def main():
             if k != "_unused" and k not in ui and v: unused[k] = v
         if unused: new["_unused"] = unused
         miss_ui = sum(1 for k in ui if not new[k])
+        bad = [k for k in ui if new[k] and not slots_ok(k, new[k])]
         # data and rest sums
         report = [f"ui {len(ui) - miss_ui}/{len(ui)}"]
         outs = [(p, new)]
@@ -138,11 +150,14 @@ def main():
                     stale += 1
                 nk[path] = entry
             done = sum(1 for e in nk.values() if e[lang])
+            bad += [p for p, e in nk.items() if e[lang] and not slots_ok(e["en"], e[lang])]
             report.append(f"{kind} {done}/{len(nk)}" + (f" ({stale} to re-check)" if stale else ""))
             if done < len(nk): missing_any = True
             outs.append((pk, nk))
         if miss_ui: missing_any = True
         print(f"{lang}: " + ", ".join(report))
+        for k in bad: print(f"  ⚠️  {lang}: the %s/%d/{{…}} slots differ from the English in: {k[:90]!r}")
+        if bad: missing_any = True
         if not check:
             for path, d in outs: save(path, d)
     if check and missing_any: sys.exit(1)

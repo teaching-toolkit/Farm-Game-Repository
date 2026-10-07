@@ -18,6 +18,7 @@ signal gained(source: String, got: Dictionary, lost: Dictionary)
 signal sold(item: String, n: float, coins: float)   # coins fly to the purse (perk), a jingle
 signal celebrate(id: String)     # a new building, tool or helper: the big pop-up with confetti
 
+const SEASON_WORDS := ["spring", "summer", "autumn", "winter"]   # i18n (shown with tr(): "It's spring!")
 const SAVE_PATH := "user://farm_save.json"          # the farm from before players had names
 const PLAYERS_DIR := "user://players"               # players/<name>/farm_save.json and learning.json
 const LAST_PLAYER := "user://last_player.txt"
@@ -812,7 +813,7 @@ func unlock(id: String) -> bool:
 		# one step at a time: pay it, get what it gives, and the node is done after the last one
 		var i := step_index(id)
 		if step_wait_left(id) > 0:
-			say(tr("⏳ %s: the next step can start in %d question%s.") % [nodes[id]["name"], step_wait_left(id), "" if step_wait_left(id) == 1 else "s"])
+			say((tr("⏳ %s: the next step can start in %d question.") if step_wait_left(id) == 1 else tr("⏳ %s: the next step can start in %d questions.")) % [nodes[id]["name"], step_wait_left(id)])
 			return false
 		pay(node_cost(id))
 		var got := {}
@@ -1489,7 +1490,7 @@ func start_recipe(rid: String) -> bool:
 	else:
 		running.append({"recipe": rid, "left": t, "n": n})
 		S["running"][root] = running
-		say(tr("⏳ %s: ready in %d question%s.") % [r.get("name", iname(r["outputs"].keys()[0])), up(t), "" if up(t) == 1 else "s"])
+		say((tr("⏳ %s: ready in %d question.") if up(t) == 1 else tr("⏳ %s: ready in %d questions.")) % [r.get("name", iname(r["outputs"].keys()[0])), up(t)])
 	_job("make", rid, 1.0)
 	var hit := false
 	for th in meta.get("practice", {}).get("thresholds", []):
@@ -1692,7 +1693,7 @@ func eat(k: String) -> bool:
 	if b == null or count(k) < 1.0: return false
 	take(k, 1.0)
 	S["buff"] = {"mult": float(b["energy"]), "until": S["step"] + int(b["questions"]), "item": k}
-	say(tr("😋 Yum! Work costs %d%% less energy for %d question%s.") % [int(round((1.0 - float(b["energy"])) * 100)), int(b["questions"]), "" if int(b["questions"]) == 1 else "s"])
+	say((tr("😋 Yum! Work costs %d%% less energy for %d question.") if int(b["questions"]) == 1 else tr("😋 Yum! Work costs %d%% less energy for %d questions.")) % [int(round((1.0 - float(b["energy"])) * 100)), int(b["questions"])])
 	save_game(); changed.emit()
 	return true
 
@@ -1719,7 +1720,7 @@ func start_reading(cid: String) -> bool:
 	if S["reading"] != "" and S["reading"] != cid:
 		say(tr("📖 You're already reading \"%s\". One book page at a time!") % nodes[S["reading"]]["name"]); return false
 	S["reading"] = cid; S["read_progress"] = 0.0
-	say(tr("📖 Reading \"%s\": it takes %d Time Quiz question%s.") % [nodes[cid]["name"], up(read_needed(cid) * m("read")), "" if up(read_needed(cid) * m("read")) == 1 else "s"])
+	say((tr("📖 Reading \"%s\": it takes %d Time Quiz question.") if up(read_needed(cid) * m("read")) == 1 else tr("📖 Reading \"%s\": it takes %d Time Quiz questions.")) % [nodes[cid]["name"], up(read_needed(cid) * m("read"))])
 	save_game(); changed.emit()
 	return true
 
@@ -2107,7 +2108,7 @@ func _season_change(sn: int) -> void:
 			var to: String = fr.get("spoilsTo", {}).get("animal" if animal_items.has(k) else "plant", "compost")
 			add_item(to, lost, true)
 			spoiled[k] = lost
-	var msg := tr("%s It's %s! %s") % [str(meta["seasons"]["mods"][nm].get("emoji", "")), nm, str(meta["seasons"]["mods"][nm].get("abundance", ""))]
+	var msg := tr("%s It's %s! %s") % [str(meta["seasons"]["mods"][nm].get("emoji", "")), tr(nm), str(meta["seasons"]["mods"][nm].get("abundance", ""))]
 	say(msg)
 	if not spoiled.is_empty():
 		var parts := []
