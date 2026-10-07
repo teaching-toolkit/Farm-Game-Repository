@@ -256,7 +256,16 @@ files are there, the game's own little sounds stand in (tap, right, wrong, harve
 sounds, 6 music loops — the parent picks the music), or allows those four domains for cloud sessions; then run
 `python3 tools/import_sounds.py` and `$G --headless --path . --import`, listen, and adjust volumes in `data/sounds.json`.
 
-### G. The farmer as an actor (parent's list)
+### G. The farmer as an actor (parent's list) — done 7 Oct 2026; poses can be tuned by eye
+
+Done: `scripts/actor.gd` plays acts from `data/acts.json` (25 poses, 9 props, 14 acts: weed, plant, harvest, dig, chop,
+build, cook, craft, collect, water, sell, read, rest, cheer). The farmer has knees, a bending waist and hands that hold
+props (bucket, seed bag, basket, axe, hammer, shovel, spoon, book, coin, all made of simple shapes). Hooked in: what arrives
+from a patch, recipe, animal or water; planting; reading; Rest; selling; celebrations; new things built. A new act or a tap
+on the ground stops the one playing. To look at an act: `--act=plant@patch0` (or `@<place>`) with `--shotframes=N`;
+all poses side by side: `res://tests/pose_sheet.tscn`. Still open: the parent watches the acts on the iPad and says which
+look wrong or too fast (each is a few numbers in `data/acts.json`).
+
 
 - **G1. Pantomime.** After a tap, the farmer walks to the place and acts out what was ordered (kneeling and pulling weeds,
   sowing, fetching the bucket from the pond and carrying it to the field and emptying it …). The game's numbers have already

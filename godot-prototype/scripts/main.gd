@@ -48,6 +48,7 @@ var goal_id := ""
 var _queued := false
 var _scroll_tw: Tween
 var shot_path := ""
+var shot_at := 45              # the frame the screenshot is taken at (--shotframes=N)
 var shot_frames := 0
 var step_at := -1
 var _fx_queue: Array = []      # things that arrived while a pop-up was open: they fly to the store when it closes
@@ -71,6 +72,7 @@ func _ready() -> void:
 	G.offer_cards.connect(_show_gift)
 	G.sold.connect(_on_sold)
 	Sound.perk_on = func(id): return G.perk_on(id)
+	if map.actor: map.actor.resolve = _act_place
 	var amb := Timer.new()          # now and then an animal on the farm makes itself heard (perk "Farm sounds")
 	amb.wait_time = 30.0
 	amb.timeout.connect(_animal_ambience.bind(amb))
@@ -119,6 +121,8 @@ func _parse_args() -> void:
 		elif a == "--quiz": call_deferred("_show_time_quiz")
 		elif a.begins_with("--qid="): call_deferred("_show_quiz_id", a.substr(6))     # screenshots: one Time Quiz question
 		elif a == "--rest": call_deferred("_show_rest")
+		elif a.begins_with("--shotframes="): shot_at = int(a.substr(13))
+		elif a.begins_with("--act="): call_deferred("_test_act", a.substr(6))   # screenshots: --act=weed@patch0, --act=cook@kitchen
 		elif a == "--restgo": call_deferred("_rest_go")              # screenshots: past the Rest start page (after --rest)
 		elif a == "--menu": call_deferred("_show_menu")            # screenshots: ⚙️ Settings
 		elif a == "--grownup": _grownup_until = 1e12                # screenshots: grown-up settings open
@@ -161,7 +165,7 @@ func _process(_d: float) -> void:
 	if shot_path != "":
 		shot_frames += 1
 		if shot_frames == step_at: G.step_time()
-		if shot_frames == 45:
+		if shot_frames == shot_at:
 			var img := get_viewport().get_texture().get_image()
 			img.save_png(shot_path)
 			print("saved ", shot_path)
@@ -573,7 +577,10 @@ func _in_chapter(id: String) -> bool:
 
 # ------------------------------------------------------------------ things flying to the store
 func _on_gained(source: String, got: Dictionary, lost: Dictionary = {}) -> void:
-	if not got.is_empty(): _sfx(_gain_sound(source, got))
+	if not got.is_empty():
+		var kind := _gain_sound(source, got)
+		_sfx(kind)
+		_act_for_gain(source, kind)
 	var pieces := []
 	var bounce := []
 	for k in got:
@@ -1037,6 +1044,7 @@ func _show_celebration() -> void:
 	if modal.visible or _celebrations.is_empty(): return
 	var id: String = _celebrations.pop_front()
 	_sfx("celebrate")
+	if map.avatar: _act("cheer", map.avatar.feet)
 	var perk := id.begins_with("perk:")
 	var n: Dictionary = G.perk_def(id.substr(5)) if perk else G.nodes[id]
 	var box := _open_modal(tr("✨ A new perk!") if perk else tr("✨ New!"))
@@ -1240,6 +1248,7 @@ func _time_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> voi
 func _show_rest() -> void:
 	var box := _open_modal(tr("😴 Rest"))
 	Sound.music("rest")
+	_act("rest", map.stand_point(_map_sid("living")))
 	var beds: Array = Spots.HOTSPOT_ART.get("living", []).filter(func(id): return G.nodes.has(id) and G.done(id))
 	beds.reverse()
 	var bed: Texture2D = Art.first("interior", beds)
@@ -1399,6 +1408,43 @@ func _lightning() -> void:
 	lt.start(_rest["pad"].ans_box.get_global_rect().get_center())
 	_sfx("lightning")
 
+## For screenshots and tests: an act at a patch ("weed@patch3") or a place ("cook@kitchen").
+func _test_act(arg: String) -> void:
+	_close_modal()
+	var parts := arg.split("@")
+	var where: Vector2 = map.patch_point(0, 0)
+	if parts.size() > 1:
+		if parts[1].begins_with("patch"): where = map.patch_point(0, int(parts[1].substr(5)))
+		else: where = map.stand_point(_map_sid(parts[1]))
+	_act(parts[0], where)
+
+## The farmer acts it out (scripts/actor.gd). The numbers have changed already; the farmer only catches up.
+func _act(name: String, where: Vector2) -> void:
+	if map and map.actor: map.actor.perform(name, where)
+
+## Where the farmer works on a patch: the patch itself on a field, the orchard or the greenhouse otherwise.
+func _patch_place(a: String, i: int) -> Vector2:
+	if a == "field": return map.patch_point(i / 9, i % 9)
+	return map.stand_point(_map_sid("orchard" if a == "orchard" else "greenhouse"))
+
+## A place name in an act ("water", "spot:<id>") as a point on the farm.
+func _act_place(name: String):
+	if name == "water": return map.stand_point(_map_sid("well" if G.done("well_2") else "pond"))
+	if name.begins_with("spot:"): return map.stand_point(_map_sid(name.substr(5)))
+	return null
+
+## What arrived tells what was done, and where: act it out there.
+func _act_for_gain(source: String, kind: String) -> void:
+	var act: String = {"harvest": "harvest", "weed": "weed", "dig": "dig", "chop": "chop", "cook": "cook", "craft": "craft",
+		"smith": "build", "build": "build", "collect": "collect", "water": "water"}.get(kind, "")
+	if act == "": return
+	var parts := source.split(":")
+	match parts[0]:
+		"patch": _act(act, _patch_place(parts[1], int(parts[2])))
+		"recipe": _act(act, map.stand_point(_map_sid(Spots.spot_of(G, str(G.recipes[parts[1]]["station"])))))
+		"animal", "node": _act(act, map.stand_point(_map_sid(Spots.spot_of(G, parts[1]))))
+		"water": _act(act, _act_place("water"))
+
 ## Which sound fits what just arrived: from a patch (harvest, weeds, stones, wood), a recipe (by its kind of work),
 ## animals, water, a building step.
 func _gain_sound(source: String, got: Dictionary) -> String:
@@ -1452,6 +1498,7 @@ func _sfx(name: String) -> void:
 ## Something was sold: a jingle, and coins fly into the purse (perk "Coin shower").
 func _on_sold(_k: String, n: float, _coins: float) -> void:
 	_sfx("coin")
+	_act("sell", map.stand_point(_map_sid("market")))
 	if not G.perk_on("perk_coins"): return
 	_sfx("coin_shower")
 	var cs = Fx.CoinShower.new()
@@ -1672,6 +1719,7 @@ func _do_plant(a: String, i: int, cid: String) -> void:
 		return
 	if G.plant(a, i, cid):
 		_sfx("plant")
+		_act("plant", _patch_place(a, i))
 		_close_sheet()
 
 ## No water left: a drop with a red line through it, and the bucket to fetch more from the pond.
@@ -2247,7 +2295,9 @@ func _go_spot(sid: String) -> void:
 	_pulse(sid)
 
 func _do_unlock(id: String) -> void:
-	G.unlock(id)
+	if G.unlock(id):
+		var land: bool = str(G.nodes[id].get("type", "")) == "land"
+		_act("dig" if land else "build", map.stand_point(_map_sid(Spots.spot_of(G, id))))
 
 # ------------------------------------------------------------------ what a place shows
 ## A locked place with nothing within reach: only a weathered sign and a promise.
@@ -2863,6 +2913,7 @@ func _part_library() -> void:
 func _start_reading(cid: String) -> void:
 	if G.start_reading(cid):
 		_sfx("page")
+		_act("read", map.stand_point(_map_sid("library")))
 		_card_page(cid)
 
 ## A knowledge card as a tile: what it is about, where it stands (learned with stars, quiz waiting, being read, can be read,

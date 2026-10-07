@@ -14,6 +14,7 @@ const UI = preload("res://scripts/ui.gd")
 const Slot = preload("res://scripts/slot.gd")
 const IsoField = preload("res://scripts/iso_field.gd")
 const Avatar = preload("res://scripts/avatar.gd")
+const Actor = preload("res://scripts/actor.gd")
 const Fx = preload("res://scripts/fx.gd")
 const LAYOUT_PATH := "res://data/map_layout.json"
 const GRASS := {"spring": Color("9cc86a"), "summer": Color("b3c95c"), "autumn": Color("c4b46a"), "winter": Color("dfe8e6")}
@@ -45,6 +46,7 @@ var _cat := {"state": "", "until": 0.0, "target": Vector2.ZERO, "frame": 0.0}
 var _cat_sort := 0.0
 var road_badge: PanelContainer
 var avatar                    # the farmer: walks to wherever the player taps (scripts/avatar.gd)
+var actor                     # … and acts out what the player did there (scripts/actor.gd, data/acts.json)
 var perk_fx                   # butterflies, sparkles, rainbow, season breeze (fx.gd MapFx)
 var astar := AStarGrid2D.new()
 var _grid_sig := ""
@@ -167,6 +169,9 @@ func _ready() -> void:
 	avatar.map = self
 	avatar.feet = Vector2(float(L.get("avatar", {}).get("x", 417)), float(L.get("avatar", {}).get("y", 262)))
 	_sort_in(avatar, avatar.feet.y)
+	actor = Actor.new()
+	actor.avatar = avatar
+	add_child(actor)
 	resized.connect(_layout)
 	_layout()
 
@@ -255,6 +260,11 @@ func spot_point(sid: String) -> Vector2:
 			var b := pts[pts.size() - 1].clamp(Vector2.ZERO, design)
 			return (a + b) / 2.0
 	return design / 2.0
+
+## Where the farmer stands to do something at a place: just in front of it.
+func stand_point(sid: String) -> Vector2:
+	if slots.has(sid): return slots[sid].anchor + Vector2(0, 14)
+	return spot_point(sid)
 
 ## Middle of patch k of field f, in farm coordinates.
 func patch_point(f: int, k: int) -> Vector2:
@@ -884,14 +894,17 @@ func _cat_tick(delta: float) -> void:
 # ------------------------------------------------------------------ the farmer walking about
 ## The grass (or road, or forest floor) was tapped at p (farm coordinates): the farmer walks there.
 func ground_tapped(p: Vector2) -> void:
+	if actor: actor.stop()
 	if avatar: avatar.walk_to(p)
 
 func _walk_to_spot(sid: String) -> void:
 	if avatar == null or not slots.has(sid): return
+	if actor: actor.stop()
 	avatar.walk_to(slots[sid].anchor + Vector2(0, 14))
 
 func _walk_to_patch(_a: String, k: int, fv) -> void:
 	if avatar == null: return
+	if actor: actor.stop()
 	avatar.walk_to(fv.position + fv.patch_center(k))
 
 func _cell(p: Vector2) -> Vector2i:

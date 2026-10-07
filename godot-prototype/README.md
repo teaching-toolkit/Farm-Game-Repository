@@ -207,7 +207,8 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   a season breeze. Each can be switched off in the album.
 - **🧑‍🌾 The farmer** walks to wherever you tap — on the grass, to a place (its sheet opens at once) or to the edge of a field —
   around buildings, pens, fields and the forest; tap the farmer to get a wave. A little 3D figure (`scripts/avatar.gd`) whose
-  look is data (`data/avatar.json`: skin, hair, shirt, trousers, shoes, hat), ready for a "make your farmer" screen.
+  look is data (`data/avatar.json`: skin, hair, shirt, trousers, shoes, hat), ready for a "make your farmer" screen. After
+  each action it acts it out (weeding, sowing, chopping, cooking …; `data/acts.json`); a new tap interrupts.
 - **🪙 Selling** — the store tiles say exactly what you get: `1 🥣 = 4 🪙`, `5 🥕 = 10 🪙`. Made things pay more than their
   ingredients (more for more different ingredients); the market pays a little less for a big pile of the same thing and
   forgets it again over a few questions, so selling different things pays best.
@@ -306,7 +307,8 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   belongs to, the buildings with an inside (`INTERIORS`), and which pictures an upgrade chain uses; `scripts/iso_field.gd` — a field at
   an angle (diamond patches, pests, scarecrow looks, rain); `scripts/field_view.gd` — the square patch grid still used inside the
   orchard and greenhouse sheets; `scripts/art.gd` — pictures with emoji fallback; `scripts/ui.gd` — styles.
-- `scripts/avatar.gd` — the farmer (a 3D figure drawn into a picture on the map) + `data/avatar.json` (its look); `scripts/fx.gd` —
+- `scripts/avatar.gd` — the farmer (a 3D figure drawn into a picture on the map) + `data/avatar.json` (its look); `scripts/actor.gd` — the farmer acting things out (`data/acts.json`; try
+  `--act=weed@patch0`, poses side by side in `tests/pose_sheet.tscn`); `scripts/fx.gd` —
   perk effects (sounds made in code, lightning, flying coins, butterflies, sparkles, rainbow, season breeze).
 - `scripts/sound.gd` — sound effects and music (autoload `Sound`, from `data/sounds.json`); `scripts/i18n.gd` — languages
   (`data/i18n/`).

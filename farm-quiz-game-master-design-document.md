@@ -941,7 +941,10 @@ front. Only a picture's visible pixels react to taps, so a tall roof never steal
 A little farmer walks to wherever the player taps — on the grass, to a place (its sheet opens at once), to the edge of a field —
 and finds the way round buildings, pens, ponds and fields; tapped, it waves and hops. It is a small 3D figure made of simple
 shapes, toon-shaded and drawn into the 2D map (`scripts/avatar.gd`); its look is data (`data/avatar.json`: skin, hair, shirt,
-trousers, shoes, hat). **(planned)** a "make your farmer" screen at the start, the look kept per player, gear visible on the
+trousers, shoes, hat). After each action the farmer goes there and acts it out — kneels and pulls weeds, fetches water at
+the pond and sows, picks with a basket, chops, hammers, stirs the pot, reads, sits to rest, cheers. The game has already
+counted the result; the farmer only catches up, and a new tap stops the act at once. Acts, poses and the props in the
+farmer's hands are data (`data/acts.json`), so new ones need no code. **(planned)** a "make your farmer" screen at the start, the look kept per player, gear visible on the
 farmer, merchants walking about.
 
 ### 13.6 For young readers
@@ -993,6 +996,7 @@ Everything about the content is data, so the game can be rebalanced without code
 | `data/i18n/quiz-<lang>.json` | quiz texts by question id |
 | `data/settings.json` | the parent's settings (§4.4) |
 | `data/avatar.json` | the farmer's look |
+| `data/acts.json` | what the farmer acts out: poses, props, acts |
 | `learnkit/curriculum/math.json` | the maths curriculum |
 
 `progression/progression-explorer.html` browses the tree, simulates a playthrough (pacing, Rest per hour, pets, storage and
