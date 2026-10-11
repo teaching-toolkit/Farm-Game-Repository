@@ -1,18 +1,17 @@
 # 👉 READ ME FIRST — for a new chat or another AI
 
 This file is the starting point. Read it fully before touching anything; it says what the project is, how the folder is laid
-out, how to work on it, where we left off and what is still open. Last updated: **7 October 2026** (after round 8 and the
-2.0 tidy-up).
+out, how to work on it, where we left off and what is still open. Last updated: **9 October 2026** (to-do list moved to `TODO.md`; the parent's notes of 9 Oct sorted into it).
 
 ---
 
 ## ⚠️ Standing rule for every conversation: keep the log and the to-do list up to date
 
-This file's **§6 Open tasks** is the project's to-do list, and `PROJECT-LOG.md` is its history. Any chat or AI that works on
+**`TODO.md`** is the project's to-do list, and `PROJECT-LOG.md` is its history. Any chat or AI that works on
 this project **must keep both current as it goes, not just at the end**:
 
-- **Start of a session:** read this file and the log, then say which open task(s) you are working on.
-- **During the session:** whenever something is finished, started, dropped, split up or newly discovered, update §6 straight
+- **Start of a session:** read this file, `TODO.md` and the log, then say which open task(s) you are working on.
+- **During the session:** whenever something is finished, started, dropped, split up or newly discovered, update `TODO.md` straight
   away (tick off or remove done tasks, add new ones, reword changed ones). Add a row to `PROJECT-LOG.md` for every change to
   the game, the data, the tools or a decision, and add any new unconfirmed assumption to its §2.6. Do not wait to be asked and
   do not save it all for the end; a chat can stop at any time.
@@ -20,7 +19,7 @@ this project **must keep both current as it goes, not just at the end**:
   date at the top, and mention in your last message what you changed in the log and the to-do list.
 - If the code, data or web build changed, say so in §5 (for example whether `web-build/` matches the current code).
 
-A task that is not written down here does not exist for the next chat.
+A task that is not written down in `TODO.md` does not exist for the next chat.
 
 ---
 
@@ -44,12 +43,14 @@ and keep the game's own texts simple enough for a young reader.
 ## 2. What to read, in order
 
 1. **This file.**
-2. `farm-quiz-game-master-design-document.md` — what the game is and why (v2.0; describes the design as built; marks
+2. `TODO.md` — the to-do list and the plan: what is open, in which order, and the decisions waiting on the parent.
+3. `farm-quiz-game-master-design-document.md` — what the game is and why (v2.0; describes the design as built; marks
    *(planned)* and *(idea)*). No history or to-dos in it on purpose.
-3. `PROJECT-LOG.md` — the history version by version, every decision taken, assumptions still to confirm.
-4. `godot-prototype/README.md` — how to run, test and change the prototype; the picture folders; every setting.
-5. `godot-prototype/learnkit/README.md` — the learning kit (Rest sums, quiz engine, learning record, question ids).
-6. The numbers: `godot-prototype/data/farm-progression.json` (open `progression/progression-explorer.html` to browse it).
+4. `PROJECT-LOG.md` — the history version by version, every decision taken, assumptions still to confirm.
+5. `godot-prototype/README.md` — how to run, test and change the prototype; the picture folders; every setting.
+6. `godot-prototype/learnkit/README.md` — the learning kit (Rest sums, quiz engine, learning record, question ids).
+7. If the task is about the story: `story/README.md`, then `story/00-premise.md`, `story/book-file.md`, `story/game-hooks.md`.
+8. The numbers: `godot-prototype/data/farm-progression.json` (open `progression/progression-explorer.html` to browse it).
    **The data wins** if it and a document disagree.
 
 ---
@@ -59,7 +60,9 @@ and keep the game's own texts simple enough for a young reader.
 | Folder / file | What it is |
 |---|---|
 | `00-READ-ME-FIRST.md` | this file |
+| `TODO.md` | **the to-do list and plan** (open tasks only; done ones go to the log) |
 | `PROJECT-LOG.md` | history and decisions |
+| `planning/` | the parent's raw notes, kept word for word (`2026-10-09-parent-notes.md`); `TODO.md` points into them |
 | `farm-quiz-game-master-design-document.md` | the design (v2.0) |
 | `godot-prototype/` | **the game** — Godot project (`project.godot`), `scripts/`, `data/`, `learnkit/`, `assets/`, `tests/`, `tools/`, `fonts/` |
 | `Build web version.command` | **double-click on the Mac** to re-export the game into `web-build/` (needs Godot.app and its export templates installed once) |
@@ -68,6 +71,7 @@ and keep the game's own texts simple enough for a young reader.
 | `.gitignore` | what the private repo leaves out (`.godot/` caches, `web-build/`, big archive screenshots, `.DS_Store`) |
 | `web-build/` | its own **public** git repo, ignored by the private one; the latest web export (put online on any HTTPS host; see the prototype README) |
 | `progression/` | the progression explorer (`progression-explorer.html`) with a copy of the current data |
+| `story/` | **the story**: premise, book file, world, characters, outline, texts (see `story/README.md`; worked in rounds, nothing built into the game yet) |
 | `art-inbox/` | generated sprite sheets waiting to be cut (`sheetN-….png`), `ART_LIST.csv` (every picture still needed, with prompts), `ROUND8-PICK-LIST.md` |
 | `Claude outputs/` | a transfer folder for update bundles (`*.tgz`); temporary, nothing depends on it |
 | `reference-art/` | style references and a free asset pack (not used in the game) |
@@ -155,7 +159,9 @@ call (background processes die when the call ends); then check that `web-build/i
 - Never handle passwords, tokens or credentials. Ask before downloading files or deleting anything.
 - Pictures: OpenArt project "Farm Quiz Game", model **Nano Banana 2 Lite at 1K**, sprite sheets of several objects, **3
   versions per sheet**, with an earlier sheet as the style reference. Only about two generations run at a time.
-- No words on the map; whole numbers on screen; short, simple texts; nothing that punishes the child.
+- No words on the map; whole numbers on screen; short, simple texts; nothing that punishes the child. **One deliberate exception**
+  (parent, 8 Oct 2026, planned for the medicine chapter): skipping the cheap plant check at Wren's and using a wrong plant puts the farmer
+  in bed, poisoned (energy and all coins gone, double energy costs while recovering). See `story/game-design-round4.md` §C.
 
 ---
 
@@ -168,7 +174,7 @@ call (background processes die when the call ends); then check that `web-build/i
   `cd web-build && git init -b main && git remote add origin https://github.com/<you>/<public-repo>.git`). GitHub Pages serves it
   (Settings → Pages → Deploy from a branch → `main`, root). `Publish web version.command` replaces the history with one commit
   each time, because `index.pck` (~50 MB) and `index.wasm` (~40 MB) change with every build and would make the repo grow fast.
-- Everything in the web build (data, quiz packs, pictures) is public to anyone with the link (accepted for now; see §6).
+- Everything in the web build (data, quiz packs, pictures) is public to anyone with the link (accepted for now; see `TODO.md`, Z7).
 
 ---
 
@@ -192,129 +198,17 @@ re-exported with the sounds.
 7 Oct 2026 (cloud check): a fresh cloud session was set up and verified (smoke test, bot, screenshot); the cloud notes in
 this file and `CLAUDE.md` were corrected (see the log). No game changes; `web-build/` still matches the code.
 
+8 Oct 2026 (story, rounds 0–4 part 1): `story/` holds the premise, book file, world bible, character files, research notes and the story-delivery design. Nothing in the game or its data has changed; `web-build/` matches the code as before.
+
+9 Oct 2026 (planning): the to-do list moved out of this file into `TODO.md`; the finished groups A–G were already in the log, their leftovers became tasks (W4, W5, W8). The parent's new notes (16 game ideas, 8 story notes; raw in `planning/`) were sorted into `TODO.md` by area, with a proposed order, a queue of decisions (contradictions with existing rules flagged ⚠️) and a first batch of title ideas. No game, data or code changes; `web-build/` is unchanged.
+
 ---
 
-## 6. Open tasks
+## 6. Open tasks → `TODO.md`
 
-Grouped by theme; the groups are in the planned order (A first). Ask the parent before starting the bigger ones.
-Questions still open with the parent are marked ❓.
-
-### Waiting on the parent
-
-- **W1. Round 8 pictures.** 29 sheets (283 pictures) were generated in OpenArt; the parent saves the best version of each into
-  `art-inbox/` under the names in `art-inbox/ROUND8-PICK-LIST.md` (sheets 25–42 are not there yet). Then:
-  `python3 tools/import_art.py all`, check them on the map with screenshots (sizes in `data/map_layout.json` may need
-  adjusting — the layout editor helps), rebuild the layout editor (`tools/make_layout_editor.py`) and the web build. Sheets
-  whose objects come out in the wrong order: fix `tools/art_sheets.json` or skip objects with `-`. In `art-inbox/ART_LIST.csv`
-  these 280 pictures have the status `generated - pick sheetNN-….png` until their sheet is in `art-inbox/`; run
-  `python3 tools/art_list.py` afterwards and they turn `done`.
-- **W2. GitHub repos and the double-click scripts.** The private repo exists. Still to do: the public web repo (§4.7), GitHub
-  Pages, the first run of `Build web version.command` and `Publish web version.command` on the Mac, the iPad Home Screen link.
-  Cloud sessions can push to the private repo (a 403 on 7 Oct 2026 went away once the Claude GitHub App had write access).
-- **W3. Play-test round 8 on the iPad** and collect the parent's findings (pace, picture questions, stoking, loads, the bar
-  explanations).
-
-### A. Small fixes and clarity (parent's list, 7 Oct 2026) — done 7 Oct 2026, waiting for the parent's check
-
-A1 planting water bar shows its missing cubes · A2 tapping an overgrown patch says which one, why and what clears it · A3 perks
-say why they came · A4 no dark-green forest floor · A5 the knowledge-review share in ⚙️ Settings. Details in `PROJECT-LOG.md`.
-Parent's answer: protect them with a simple password → done 7 Oct 2026: the grown-up part of ⚙️ Settings (question share,
-dynamic difficulty, learning record, new game) asks for `parentPassword` (now "farm"; the hint shows it for now).
-
-### B. The opening (parent's list) — done 7 Oct 2026, waiting for the parent's check
-
-B1: the game starts with **one** cleared patch and **one** wheat seed (one plant). The missing two patches come from a new first
-clearing job, *Clear the thistles (2 patches)* (4 steps, 6 energy). Bot: chapter 3 after ~280–300, chapter 5 after 629–752
-questions (same range as before); explorer: 21.2 h, 1,417 Time Quiz answers.
-
-### C. Rest (parent's list) — done 7 Oct 2026, waiting for the parent's check
-
-C1 a start page (category and title, level and progress, the section's medals and an empty slot for the next one with what
-it takes, best streak, "🏁 Ready, set, go!" with a countdown). C2 a sum left on screen when the child goes back to the farm
-leaves no trace in the learning record (`pick_state`/`abandon` in the learning kit).
-
-### D. Every window as a grid (parent's list) — done 7 Oct 2026, waiting for the parent's check
-
-Tiles with the button at the bottom (`_tile` + `_tile_button` in `main.gd`): station recipes, planting (one tile per crop),
-weeds and stones on a patch, goals and optional upgrades (`_node_grid`, two per row), polish, animals (collect, muck out),
-library cards (`_card_tile`). Still lists: the woodpile's "+ Stick" chips, "Weed all / Pick stones", the quest book.
-
-### E. Languages (parent's list) — done 7 Oct 2026, waiting for the parent's proofreading
-
-E1 the system: ⚙️ Settings → 🇬🇧 English / 🇩🇪 Deutsch (per device) switches the whole game; files per language in `data/i18n/`;
-`tools/i18n.py` keeps them complete. E2 German: all 560 interface texts, 2,492 game texts (names, descriptions, 67 card pages,
-201 card questions with answers and explanations, perks, postcards …) and 125 Rest-sum texts, drafted by Claude in simple
-German with "du". **For the parent:** proofread (easiest in the game with the language on Deutsch, or in `data/i18n/*-de.json`);
-❓ Swiss spelling — "ss" instead of "ß" (the quiz packs and the new texts use "ß" for now; one command can switch all)?
-
-### F. Sound and music (parent's list) — system done 7 Oct 2026; waiting for the sound files
-
-Done: `scripts/sound.gd` (autoload `Sound`) plays everything from `data/sounds.json` — 40 effects and 6 music tracks
-(farm by season, Time Quiz, Rest), music cross-fades, a Music and an Effects bus, ⚙️ Settings: 🎵 Music on/off, 🔔 Sounds
-on/off (per device), 🎼 Credits (sounds, music, fonts). Everyday sounds for everyone; the fun extras belong to perks (animal
-voices = *Farm sounds*, now re-described; thunder, streak, coin shower, party popper, rainbow, sparkles, breeze). Until
-files are there, the game's own little sounds stand in (tap, right, wrong, harvest, coin, build, level, medal, lightning).
-**Update 7 Oct 2026 (afternoon):** the parent put files into `sound-inbox/`: the four Kenney packs, two temporary music tracks
-(`music/seasons_for_now.ogg` for all four seasons, `music/quizzes_for_now.ogg` for Time Quiz and Rest; trailing silence trimmed,
-originals kept beside them) and a thunder clip cut from BigSoundBank's "Rain and storm 2" (`extras/thunder.ogg`, CC0).
-`import_sounds.py` ran again later: 83 files are in `assets/sounds/`; 31 of 40 effects (now with hen and water splashes) and all 6
-music tracks have files. **Still missing:** cow, sheep, goat, pony, bees, cat, birds, `extras/party`, `extras/wind` (stand-ins
-until then). `sound-inbox/` was tidied (`originals/`, `unused/`, see its README). The Mudchute farm animals (cow, sheep) are in
-`unused/` because they are CC-BY-SA (share-alike); use them only if the parent accepts that licence. The BigSoundBank/OpenGameArt
-CC0 cow and sheep are better. The two "for now" tracks are credited: farm = Zane Little (OpenGameArt, CC0), quiz/Rest = Kevin MacLeod (incompetech, CC BY 4.0,
-credit shown in ⚙️ Settings → 🎼 Credits). The parent didn't say which exact tracks, so the credits name the artists and sites only;
-add the track titles to `sound-inbox/SOURCES.json` if known.
-The Godot import has been run (7 Oct 2026, Godot 4.7.2 on the Mac's Linux shell; 77 sfx files and 6 music files imported without errors). Nobody has listened yet (volumes in `data/sounds.json`).
-**Earlier note:** this cloud machine cannot reach kenney.nl, opengameart.org, bigsoundbank.com or incompetech.com (7 Oct
-2026). Either the parent downloads what `sound-inbox/README.md` lists into `sound-inbox/` (four Kenney packs, 12 single
-sounds, 6 music loops — the parent picks the music), or allows those four domains for cloud sessions; then run
-`python3 tools/import_sounds.py` and `$G --headless --path . --import`, listen, and adjust volumes in `data/sounds.json`.
-
-### G. The farmer as an actor (parent's list) — done 7 Oct 2026; poses can be tuned by eye
-
-Done: `scripts/actor.gd` plays acts from `data/acts.json` (25 poses, 9 props, 14 acts: weed, plant, harvest, dig, chop,
-build, cook, craft, collect, water, sell, read, rest, cheer). The farmer has knees, a bending waist and hands that hold
-props (bucket, seed bag, basket, axe, hammer, shovel, spoon, book, coin, all made of simple shapes). Hooked in: what arrives
-from a patch, recipe, animal or water; planting; reading; Rest; selling; celebrations; new things built. A new act or a tap
-on the ground stops the one playing. To look at an act: `--act=plant@patch0` (or `@<place>`) with `--shotframes=N`;
-all poses side by side: `res://tests/pose_sheet.tscn`. Still open: the parent watches the acts on the iPad and says which
-look wrong or too fast (each is a few numbers in `data/acts.json`).
-
-
-- **G1. Pantomime.** After a tap, the farmer walks to the place and acts out what was ordered (kneeling and pulling weeds,
-  sowing, fetching the bucket from the pond and carrying it to the field and emptying it …). The game's numbers have already
-  changed; the farmer only catches up. A new tap stops the act (gets up, puts things down) and walks to the new place.
-- **G2. Built to grow:** acts as data (a list of steps: walk to, pose, hold a prop, repeat, sound), one player for all acts,
-  props as small 3D pieces in the hand; adding an act or a prop needs no new code. Ties in with F (step sounds) and H.
-
-### H. Upgrades that do more than save energy (parent's list)
-
-- **H1. A list of other kinds of benefits** for the upgrades (many now only cut energy): more harvest, better quality/price,
-  faster growing, fewer pests, more storage, new recipes, longer freshness, luck, things the farmer can show … For the parent
-  to choose from before any data changes. **Written:** `progression/upgrade-benefits-ideas.md` (7 Oct 2026); waiting for the
-  parent's choice.
-
-### Later (older tasks)
-
-1. **Dynamic difficulty** (design §10.6) is built but **off by default**. Tune it with play-testing; ideas noted: look at the
-   time per goal rather than only the pace; vary *which* dish an order wants rather than how much; a parent's slider for
-   strength. `meta.flex` in the data holds every number.
-2. **"Make your farmer" screen** at the start (the farmer's look is already data, `data/avatar.json`; keep it per player);
-   gear visible on the farmer (fits G2's props); merchants walking about.
-3. **Orchard and greenhouse** still use a square patch grid inside their sheets; give them diamond rows like the fields.
-4. **Explorer value-check notes** for `rope_straw`, `compost`, `steel` and `jam` (recipes whose value change falls outside the
-   expected band) — check whether their inputs or prices should change.
-5. **Pixie chest** mini-game (an old idea for random rewards) — not built.
-6. **Still-open design questions** (from the old documents):
-   - village projects (bundles with substitutes) — still a maybe;
-   - cider is alcoholic; rename it "apple must" for young players?
-   - art for the 67 card pages, gear and pests; album pictures for favours came in round 8;
-   - play-test with real 8-year-olds: how many review questions they tolerate, whether 30 questions per season feels right,
-     whether pest pressure is noticeable but not annoying;
-   - the assumptions listed in `PROJECT-LOG.md` §2.6.
-7. **Keep an eye on the public web build.** Everything in it (game data, quiz packs, pictures) can be downloaded by anyone
-   with the link. Fine for now (parent's decision, 7 Oct 2026); revisit if content becomes personal (e.g. the child's name,
-   photos, the learning record) or if the art should not be shared. Options then: a private host or a password-protected one.
+The to-do list has its own file since 9 October 2026: **`TODO.md`** (in this folder). It holds the plan at a glance (the
+proposed order), what is waiting on the parent, the queue of decisions with Claude's recommendations, and every open task by
+area. Finished tasks are recorded in `PROJECT-LOG.md` and removed from `TODO.md`.
 
 ---
 

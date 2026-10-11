@@ -7,7 +7,8 @@ not its history and not the work still to do:
 
 | Looking for … | Read |
 |---|---|
-| Where the project stands, how to work on it, the open tasks | `00-READ-ME-FIRST.md` (same folder) |
+| Where the project stands, how to work on it | `00-READ-ME-FIRST.md` (same folder) |
+| The open tasks and the plan | `TODO.md` (same folder) |
 | What was done when, and the decisions taken along the way | `PROJECT-LOG.md` (same folder) |
 | How to run, test and change the Godot prototype | `godot-prototype/README.md` |
 | The learning kit (Rest sums, quiz engine, learning record) | `godot-prototype/learnkit/README.md` |
@@ -1080,5 +1081,5 @@ record, kept when a new game starts). In the browser they live in that browser o
 
 ---
 
-*End of the master design document. History and decisions: `PROJECT-LOG.md`. Open tasks: `00-READ-ME-FIRST.md`.*
+*End of the master design document. History and decisions: `PROJECT-LOG.md`. Open tasks: `TODO.md`.*
 

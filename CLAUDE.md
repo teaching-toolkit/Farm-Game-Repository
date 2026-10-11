@@ -1,10 +1,13 @@
 # Farm Quiz Game: start here
 
 Before doing anything, read `00-READ-ME-FIRST.md` fully. It explains the project, the folder, how to run and test
-the game, the rules the parent has set, and the to-do list (§6).
+the game, the rules the parent has set; then read `TODO.md` (the to-do list and plan).
 
-**Standing rule:** keep `PROJECT-LOG.md` and the to-do list in `00-READ-ME-FIRST.md` §6 up to date *as you work*,
+**Standing rule:** keep `PROJECT-LOG.md` and the to-do list `TODO.md` up to date *as you work*,
 not just at the end (details at the top of `00-READ-ME-FIRST.md`).
+
+**Story work:** read `story/README.md` first (labels ✅ decided · 💡 proposed · ❓ open · 🔒 hidden), and keep the files in
+`story/` current as you go, like the log and the to-do list.
 
 ## In a cloud session (fresh Linux machine)
 
