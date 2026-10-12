@@ -23,7 +23,7 @@ ROOT = os.path.dirname(HERE)
 ASSETS = os.path.join(ROOT, "assets")
 
 layout = json.load(open(os.path.join(ROOT, "data", "map_layout.json"), encoding="utf-8"))
-spots_src = open(os.path.join(ROOT, "scripts", "spots.gd"), encoding="utf-8").read()
+spots_src = open(os.path.join(ROOT, "game", "farm", "spots.gd"), encoding="utf-8").read()
 
 
 def const_block(name):

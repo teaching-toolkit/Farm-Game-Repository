@@ -63,8 +63,9 @@ needs & energy, resources, seasons & weather, story, rewards, world, avatar, ui,
 similar unlocking, building, energy, time and books); every kit must make sense for it, farm-only rules stay in the farm. Done in nine
 slices that don't change the game, each checked by a **golden run** (the bot plays a fixed-seed game; the farm's state after every
 question must match):
-- **R0** safety net (`--seed`, golden run, save fixtures, an interface test driver, screenshot flags out of `main.gd`) · **R1** folders
-  (`kits/`, `game/farm/`) · **R2** farm content out of code (places, pets, chapters → data) · **R3** core (modifiers, conditions, clock)
+- ✅ **R0** safety net (`--seed`, golden run, save fixtures, an interface test driver, screenshot flags out of `main.gd`; done 12 Oct 2026,
+  `bash tests/check_all.sh`) · ✅ **R1** folders
+  (`kits/`, `game/farm/`; done 12 Oct 2026) · **R2** farm content out of code (places, pets, chapters → data) · **R3** core (modifiers, conditions, clock)
   · **R4** `game.gd` split into systems behind the same `Game` front door (was T1) · **R5** `main.gd` split into a composition root,
   hosts and one script per place (was T1) · **R6** map: generic vs farm, pests drawn once · **R7** saves with versions and upgrade steps ·
   **R8** data files split, a data checker, pacing from the real engine.
@@ -453,7 +454,7 @@ Things that don't exist yet (the forest screen before chapter 5) aren't visible 
 
 - **P1. Other characters as avatars** [#11]: the travelling merchant first (M7: walks or drives in, his cart, coins fly to him); the
   story's **Visits** (Greenstem, Granny Maud, the miller, Wren, Master Quill, Lark, Captain Mei; `story/story-delivery.md` §7). Same
-  system as the farmer (`scripts/avatar.gd`, `data/avatar.json`, `data/acts.json`). No words on the map: they are known by their look.
+  system as the farmer (`kits/avatar/avatar.gd`, `data/avatar.json`, `data/acts.json`). No words on the map: they are known by their look.
 - **P2. "Make your farmer" screen** at the start (the look is already data, `data/avatar.json`; kept per player). Needed for the
   gender-open farmer. (Was "Later 2".)
 - **P3. Gear visible on the farmer** (fits the acts' props; upgrade idea 15). (Was "Later 2".)
@@ -540,7 +541,7 @@ Decided in Round 4 ✅ (six chapters; chapter 5 *Healing* with the badger; ~25 h
 Quiz question each; the Wren check and the poisoning exception).
 
 - **S1. Six chapters in the data**: renumber (old 5 → 6), the badger as a placeholder, `pet_alpaca` and `import_broker` re-pointed to
-  `pet_badger`, `sq_healer_garden`, `sq_lamp_maker` and `copper_still` into chapter 5; pet lists in `scripts/game.gd` (two places); bot and
+  `pet_badger`, `sq_healer_garden`, `sq_lamp_maker` and `copper_still` into chapter 5; pet lists in `game/farm/game.gd` (two places); bot and
   explorer re-run. 💡 From the outline: `pet_tortoise` to require `pond`, `pet_alpaca` to require `river_meadow_drain` (decide in I6).
 - **S2. Pets visible and their job board level 1–2** (they walk and act; today's bonuses become level 1). 🔗 J4 (the playback shows their
   work), M5 (the pony carries to market).

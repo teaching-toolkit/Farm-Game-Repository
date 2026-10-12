@@ -19,8 +19,8 @@ STYLE = ("Bright, friendly mobile-game cartoon, thick rounded dark outlines, fla
          "chunky cute proportions, three-quarter top-down view (isometric, like Hay Day), standing on a flat diamond-shaped footprint "
          "about twice as wide as deep, small soft shadow, isolated on plain white background, no text.")
 
-# places on the map and their upgrade chains, read from scripts/spots.gd (ART_CHAINS)
-spots_src = open(os.path.join(ROOT, "scripts", "spots.gd"), encoding="utf-8").read()
+# places on the map and their upgrade chains, read from game/farm/spots.gd (ART_CHAINS)
+spots_src = open(os.path.join(ROOT, "game", "farm", "spots.gd"), encoding="utf-8").read()
 chains_src = spots_src.split("const ART_CHAINS")[1].split("}")[0]
 chains = {m.group(1): re.findall(r'"(\w+)"', m.group(2)) for m in re.finditer(r'"(\w+)": \[([^\]]*)\]', chains_src)}
 

@@ -259,8 +259,8 @@ rough (S ≈ one session, M ≈ two, L ≈ three or four).
 
 | Slice | What | Fixes | Size |
 |---|---|---|---|
-| **R0. Safety net** | `--seed=` for all randomness; the golden run (bot fingerprint per question); save fixtures; the interface test driver, with the smoke test moved onto it; the screenshot flags moved out of `main.gd` | P8, P10 | M |
-| **R1. Folders** | `kits/` and `game/farm/`; move the files that are already separate (learnkit → `kits/learn`, ui, avatar and actor, sound, i18n, art); fix the `preload` paths | – | S |
+| **R0. Safety net** ✅ 12 Oct 2026 | `--seed=` for all randomness; the golden run (bot fingerprint per question); save fixtures; the interface test driver, with the smoke test moved onto it; the screenshot flags moved out of `main.gd` | P8, P10 | M |
+| **R1. Folders** ✅ 12 Oct 2026 | `kits/` and `game/farm/`; move the files that are already separate (learnkit → `kits/learn`, ui, avatar and actor, sound, i18n, art); fix the `preload` paths | – | S |
 | **R2. Content out of code** | places, insides, picture chains, ruins, pens, bench, pets and animals, the chapter rule → data files | P3 | S |
 | **R3. Core** | modifiers, conditions, rng, events, the clock (with the systems registered in today's exact order) | P4 | M |
 | **R4. Rules split** | `game.gd` → systems (progression, knowledge, items & trade, crafting, needs, resources, seasons, rewards, farm: fields, animals …) behind the same `Game` front door; today's function names keep working | P1 | L |

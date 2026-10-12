@@ -5,7 +5,7 @@ extends SceneTree
 ## slow at first, and become quick after a few right answers.
 
 func _init() -> void:
-	var M = load("res://learnkit/math_engine.gd").new()
+	var M = load("res://kits/learn/math_engine.gd").new()
 	M.load_curriculum()
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 7

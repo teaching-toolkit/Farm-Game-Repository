@@ -1,4 +1,5 @@
 {
+ "your new bunny": "deinem neuen Häschen",
  "map_layout.json missing, broken or old — using an empty farm": "map_layout.json fehlt, ist kaputt oder alt — der Hof bleibt leer",
  "Pests eat about this much of what is growing, every question.": "So viel von dem, was wächst, fressen die Schädlinge bei jeder Frage.",
  "Nothing here yet.": "Hier ist noch nichts.",
@@ -109,7 +110,6 @@
  "summer": "Sommer",
  "autumn": "Herbst",
  "winter": "Winter",
- "your new bunny": "deinem neuen Häschen",
  "Water: tap to carry more from the pond or the well.": "Wasser: Tippe, um mehr vom Teich oder Brunnen zu holen.",
  "Rest: answer sums to get energy back (sleep, food, a sip of water).": "Ausruhen: Löse Rechnungen, um wieder Energie zu bekommen (Schlaf, Essen, ein Schluck Wasser).",
  "Album: pets, friends, postcards, perks, acorns": "Album: Haustiere, Freunde, Postkarten, Extras, Eicheln",
@@ -238,7 +238,7 @@
  "(no name yet)": "(noch kein Name)",
  "The file: ": "Die Datei: ",
  "📂 Open the folder": "📂 Ordner öffnen",
- "Copy it out to look at it or change it (learnkit/tools/learning-editor.html opens it), then paste it back in.": "Kopiere ihn heraus, um ihn anzuschauen oder zu ändern (learnkit/tools/learning-editor.html öffnet ihn), und füge ihn dann wieder ein.",
+ "Copy it out to look at it or change it (kits/learn/tools/learning-editor.html opens it), then paste it back in.": "Kopiere ihn heraus, um ihn anzuschauen oder zu ändern (kits/learn/tools/learning-editor.html öffnet ihn), und füge ihn dann wieder ein.",
  "📋 Copy the record": "📋 Lernstand kopieren",
  "Paste a learning record here …": "Füge hier einen Lernstand ein …",
  "📥 Use the pasted record": "📥 Eingefügten Lernstand verwenden",

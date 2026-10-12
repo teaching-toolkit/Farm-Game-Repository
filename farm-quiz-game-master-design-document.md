@@ -12,7 +12,7 @@ not its history and not the work still to do:
 | The open tasks and the plan | `TODO.md` (same folder) |
 | What was done when, and the decisions taken along the way | `PROJECT-LOG.md` (same folder) |
 | How to run, test and change the Godot prototype | `godot-prototype/README.md` |
-| The learning kit (Rest sums, quiz engine, learning record) | `godot-prototype/learnkit/README.md` |
+| The learning kit (Rest sums, quiz engine, learning record) | `godot-prototype/kits/learn/README.md` |
 | Every number (items, buildings, recipes, costs, rules) | `godot-prototype/data/farm-progression.json` (the explorer in `progression/` shows it) |
 
 **The data is the source of truth for numbers.** The numbers quoted here are the current ones; if the data and this
@@ -207,7 +207,7 @@ second currency.
 ### 4.3 Rest — energy from mental arithmetic
 
 Tapping the energy bar opens **Rest** (sleep, food, a sip of water). The child types answers to sums on a number pad (or the
-keyboard). The sums come from the **learning kit** (`learnkit/`), a self-contained part that any game can use.
+keyboard). The sums come from the **learning kit** (`kits/learn/`), a self-contained part that any game can use.
 
 - **A start page first.** Rest opens on a page that shows where the child stands: the category and its title (🌰 Seed …
   🏔️ Mighty oak), the section and level ("level 2 of 13: 🐥 Take away up to 5") with a bar for how far along it is, the
@@ -220,7 +220,7 @@ keyboard). The sums come from the **learning kit** (`learnkit/`), a self-contain
   is tapped; then the right sum is shown, with the steps for a tricky one (13 − 5: 13 − 3 = 10, 10 − 2 = 8).
 - **Energy.** A quick right answer gives the full energy per Rest answer (§5.1), a slower right one half
   (`restSlowShare`), a wrong one nothing. Rest stops by itself when energy is full.
-- **The curriculum** (`learnkit/curriculum/math.json`), planned from class 1 to about class 7 (Swiss Lehrplan 21 and the
+- **The curriculum** (`kits/learn/curriculum/math.json`), planned from class 1 to about class 7 (Swiss Lehrplan 21 and the
   *Schweizer Zahlenbuch*): **7 categories** — Plus & minus, Times & divide, Numbers, Fractions, Decimals & percent,
   Measures, Powers & minus numbers — with **76 levels**. Each category has two sections:
   - **⚡ By heart** — facts to recall at once (8 + 5, 6 × 7, 1/2 of 16). Quick = 2.5–3 s, plus ½ s for every extra digit
@@ -256,7 +256,7 @@ disappears and never floods.
   level with its medals and the dates they were won.
 - **⚙️ → 📊 Learning record** shows a summary, opens the folder, copies the record out and pastes one back in (the way to
   edit it in the web version), and chooses the maths categories.
-- **The editor page** `learnkit/tools/learning-editor.html` opens a record in any browser: tick or untick medals, choose where
+- **The editor page** `kits/learn/tools/learning-editor.html` opens a record in any browser: tick or untick medals, choose where
   a child starts ("Start here" passes the levels before it), choose the categories, change or delete tasks, see every quiz
   question with its id and text, and download the record again.
 - **Settings** for the parent (`data/settings.json`): which packs, how many answers, the share of card reviews, the language,
@@ -946,7 +946,7 @@ front. Only a picture's visible pixels react to taps, so a tall roof never steal
 
 A little farmer walks to wherever the player taps — on the grass, to a place (its sheet opens at once), to the edge of a field —
 and finds the way round buildings, pens, ponds and fields; tapped, it waves and hops. It is a small 3D figure made of simple
-shapes, toon-shaded and drawn into the 2D map (`scripts/avatar.gd`); its look is data (`data/avatar.json`: skin, hair, shirt,
+shapes, toon-shaded and drawn into the 2D map (`kits/avatar/avatar.gd`); its look is data (`data/avatar.json`: skin, hair, shirt,
 trousers, shoes, hat). After each action the farmer goes there and acts it out — kneels and pulls weeds, fetches water at
 the pond and sows, picks with a basket, chops, hammers, stirs the pot, reads, sits to rest, cheers. The game has already
 counted the result; the farmer only catches up, and a new tap stops the act at once. Acts, poses and the props in the
@@ -1006,7 +1006,7 @@ Everything about the content is data, so the game can be rebalanced without code
 | `data/settings.json` | the parent's settings (§4.4) |
 | `data/avatar.json` | the farmer's look |
 | `data/acts.json` | what the farmer acts out: poses, props, acts |
-| `learnkit/curriculum/math.json` | the maths curriculum |
+| `kits/learn/curriculum/math.json` | the maths curriculum |
 
 `progression/progression-explorer.html` browses the tree, simulates a playthrough (pacing, Rest per hour, pets, storage and
 value checks) and keeps a copy of the current data.
@@ -1015,11 +1015,12 @@ value checks) and keeps a copy of the current data.
 
 | Part | Does |
 |---|---|
-| `scripts/game.gd` (autoload `Game`) | the rules engine: time, energy, water, fields, weeds, pests, animals, stations, fuel, knowledge, polish, gear, seasons, freshness, luck, gifts, jobs, dynamic difficulty, saves |
-| `scripts/main.gd` | the interface: bars, sheets, inside windows, quizzes, album, settings |
-| `scripts/farm_map.gd`, `slot.gd`, `iso_field.gd`, `spots.gd` | the one-screen map, a place, a field, which data node belongs where |
-| `scripts/art.gd`, `ui.gd`, `fx.gd`, `avatar.gd`, `sound.gd`, `i18n.gd` | pictures with emoji fallback, styles and explanations, perk effects, the farmer |
-| `learnkit/` | the learning kit — learner record, spaced repetition, maths engine, quiz engine, timer, number pad; reusable in any Godot game |
+| `game/farm/game.gd` (autoload `Game`) | the rules engine: time, energy, water, fields, weeds, pests, animals, stations, fuel, knowledge, polish, gear, seasons, freshness, luck, gifts, jobs, dynamic difficulty, saves |
+| `game/farm/main.gd` | the interface: bars, sheets, inside windows, quizzes, album, settings |
+| `game/farm/map/` (`farm_map.gd`, `slot.gd`, `iso_field.gd`), `game/farm/spots.gd`, `game/farm/ui/field_view.gd` | the one-screen map, a place, a field, which data node belongs where, the patch grid |
+| `game/farm/fx.gd`, `game/farm/dev/dev_flags.gd` | perk effects drawn over the farm; the test and screenshot flags |
+| `kits/ui/` (`art.gd`, `ui.gd`), `kits/avatar/` (`avatar.gd`, `actor.gd`), `kits/audio/` (`sound.gd`, `synth.gd`), `kits/i18n/i18n.gd` | pictures with emoji fallback, styles and explanations, the farmer, sound and music, languages (reusable parts, 12 Oct 2026) |
+| `kits/learn/` | the learning kit — learner record, spaced repetition, maths engine, quiz engine, timer, number pad; reusable in any Godot game |
 
 ### 15.4 Saves
 
@@ -1031,7 +1032,7 @@ record, kept when a new game starts). In the browser they live in that browser o
 - `tests/ui_smoke.tscn` clicks through the opening and checks the systems; `tests/bot.tscn` lets a greedy bot play the rules
   engine through the chapters (`--flex` with dynamic difficulty); `tests/learn_sim.gd` lets a pretend child practise Rest sums.
 - `tools/quiz_ids.py` (question ids and translation files), `tools/import_art.py` (cut sprite sheets), `tools/art_list.py`
-  (picture list), `tools/make_layout_editor.py` (layout editor), `learnkit/tools/make_editor.py` (learning-record editor).
+  (picture list), `tools/make_layout_editor.py` (layout editor), `kits/learn/tools/make_editor.py` (learning-record editor).
 - How to run all of these: `godot-prototype/README.md` and `00-READ-ME-FIRST.md`.
 
 ---
@@ -1045,7 +1046,7 @@ record, kept when a new game starts). In the browser they live in that browser o
 | **question** (as a unit of time) | one right Time Quiz answer = one step of farm time |
 | **pack** | a file of Time Quiz questions on one topic, chosen by the parent |
 | **card** | one idea of farm knowledge; learned by reading and a short quiz; unlocks or boosts |
-| **learning kit** | the reusable part with the learning record, sums, quiz engine and timer (`learnkit/`) |
+| **learning kit** | the reusable part with the learning record, sums, quiz engine and timer (`kits/learn/`) |
 | **learning record** | one child's progress on every sum and question (`learning.json`) |
 | **chapter** | one of five stages of the game, each ending with a pet |
 | **goal** | a story step in the quest book |

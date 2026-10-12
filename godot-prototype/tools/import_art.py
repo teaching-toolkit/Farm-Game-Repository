@@ -28,7 +28,7 @@ Drop shadows: the generator paints a light grey shadow meant for a white page. T
 see-through dark blue (SHADOW_COLOR below) so it darkens the grass instead of looking like a pale stain.
 
 Needs Python 3 with Pillow and numpy (pip install pillow numpy). scipy is used when present.
-Names follow the data ids, so the game picks the picture up by itself (see scripts/art.gd).
+Names follow the data ids, so the game picks the picture up by itself (see kits/ui/art.gd).
 """
 import os
 import sys

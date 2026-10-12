@@ -1,6 +1,9 @@
 extends Node
 ## Headless play-test: a greedy bot plays the rules engine and reports progress.
-## Run:  godot --headless --path . res://tests/bot.tscn
+## Run:  godot --headless --path . res://tests/bot.tscn -- [--chapter=5] [--seed=1] [--golden=FILE] [--save-at=3:FILE]
+##   --seed=N        the same game every time (the rules engine's random numbers, clock and learning record; see Game.now)
+##   --golden=FILE   writes one fingerprint line per step of time; tests/golden.sh compares it with tests/golden/
+##   --save-at=C:FILE  writes the save when chapter C is reached (test fixtures, tests/fixtures/)
 var G
 var log_lines := []
 var max_iters := 900
@@ -11,6 +14,9 @@ var asked := 0           # Time Quiz questions asked (with accuracy < 1 more tha
 var quiz_rng := RandomNumberGenerator.new()   # separate from the game's own random numbers
 var trace := 0           # --trace=N prints what happens during the first N questions (to check the opening)
 var pace_sum := {}      # chapter -> [sum of pace, questions]: tells meta.flex.basePace
+var golden_path := ""
+var golden := []        # fingerprint lines
+var save_at := {}       # chapter -> file
 
 func _ready() -> void:
 	G = get_node("/root/Game")
@@ -20,6 +26,11 @@ func _ready() -> void:
 		if a == "--flex": flex = true
 		if a.begins_with("--trace="): trace = int(a.substr(8))
 		if a.begins_with("--accuracy="): accuracy = clampf(float(a.substr(11)), 0.05, 1.0)
+		if a.begins_with("--seed="): quiz_rng.seed = int(a.substr(7)) + 1
+		if a.begins_with("--golden="): golden_path = a.substr(9)
+		if a.begins_with("--save-at="):
+			var parts := a.substr(10).split(":", true, 1)
+			if parts.size() == 2: save_at[int(parts[0])] = parts[1]
 	G.reset_game()
 	if flex: G.S["dynamic"] = true
 	G.offer_cards.connect(func(c): G.pick_gift(c[0]))
@@ -33,6 +44,11 @@ func _ready() -> void:
 		_turn()
 		if st0 < trace and G.S["step"] != st0:
 			print("q%d -> energy %.1f water %.1f coins %.1f seeds %s plots %d wheat %.1f" % [G.S["step"], G.S["energy"], G.S["water"], G.S["coins"], G.S["seeds"], G.plots(), G.count("wheat")])
+		if G.S["step"] != st0 and golden_path != "": golden.append(_fingerprint())
+		if save_at.has(G.chapter()):
+			G.save_to(save_at[G.chapter()])
+			print("saved chapter %d at step %d to %s" % [G.chapter(), G.S["step"], save_at[G.chapter()]])
+			save_at.erase(G.chapter())
 		if G.S["step"] != st0 and int(G.S["step"]) % 20 == 0 and G.S.has("pace"):
 			print("pace_sample step %d goals %d unlocked %d chapter %d pace %.1f" % [G.S["step"], G.S["goals"], G.S["unlocked"].size(), G.chapter(), float(G.S["pace"])])
 		if G.S["step"] != st0 and G.S.has("pace"):
@@ -41,6 +57,10 @@ func _ready() -> void:
 		if it % 200 == 0:
 			print("iter %d step %d ch %d unlocked %d cards %d coins %d energy %d season %s" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.cards_learned(), int(G.S["coins"]), int(G.S["energy"]), G.season()])
 	print("DONE iters %d steps %d chapter %d unlocked %d cards %d goals %d coins %d ms %d" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.cards_learned(), G.S["goals"], int(G.S["coins"]), Time.get_ticks_msec() - t0])
+	if golden_path != "":
+		var gf := FileAccess.open(golden_path, FileAccess.WRITE)
+		if gf: gf.store_string("\n".join(golden) + "\n")
+		print("golden run: %d lines written to %s" % [golden.size(), golden_path])
 	if accuracy < 1.0: print("Time Quiz questions asked %d for %d steps of time (first-try accuracy %.2f)" % [asked, G.S["step"], accuracy])
 	var pets := []
 	for p in ["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony"]:
@@ -81,6 +101,19 @@ func _ready() -> void:
 	print("cards by status: ", cs, " reading: ", G.S["reading"], " books: ", G.books_owned(), "/", G.g("bookSlots", 1))
 	print("last log: ", G.S["log"].slice(-8))
 	get_tree().quit()
+
+## One line per step of time: the main numbers in words (they should stay the same through a restructuring) and a
+## short hash of the whole state (changes whenever the save layout changes, which is fine when on purpose).
+func _fingerprint() -> String:
+	var inv := {}
+	for k in G.S["inv"]:
+		if G.count(k) != 0.0: inv[k] = snappedf(G.count(k), 0.01)
+	var unl: Array = G.S["unlocked"].keys()
+	unl.sort()
+	return "q%d ch%d coins %.2f energy %.2f water %.2f goals %d unlocked %d %s inv %s state %s" % [G.S["step"], G.chapter(),
+		float(G.S["coins"]), float(G.S["energy"]), float(G.S["water"]), int(G.S["goals"]), unl.size(),
+		",".join(unl).md5_text().substr(0, 8), JSON.stringify(inv, "", true).md5_text().substr(0, 8),
+		JSON.stringify(G.S, "", true).md5_text().substr(0, 8)]
 
 ## All tree spots are taken: cut down a tree (of a kind planted twice) when a goal needs the fruit of a tree not planted yet.
 func _maybe_cut_tree(a: String) -> void:

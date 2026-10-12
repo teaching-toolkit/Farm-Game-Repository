@@ -1,5 +1,5 @@
 {
-  "note": "The player's farmer on the map: a little 3D figure made of simple shapes (scripts/avatar.gd). Every part is its own slot, so a 'make your farmer' screen at the start can change them later; a player's choice is kept in their farm save (S.look) and falls back to 'default'. Colours are hex. hair.style: short | long | pigtails | bun | none. shirt.style: tee | long. trousers.style: trousers | overalls | shorts. hat.style: none | straw | cap.",
+  "note": "The player's farmer on the map: a little 3D figure made of simple shapes (kits/avatar/avatar.gd). Every part is its own slot, so a 'make your farmer' screen at the start can change them later; a player's choice is kept in their farm save (S.look) and falls back to 'default'. Colours are hex. hair.style: short | long | pigtails | bun | none. shirt.style: tee | long. trousers.style: trousers | overalls | shorts. hat.style: none | straw | cap.",
   "default": {
     "skin": "#f1c7a0",
     "cheeks": "#f29a9a",

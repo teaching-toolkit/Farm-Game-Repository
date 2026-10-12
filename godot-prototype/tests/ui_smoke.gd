@@ -1,23 +1,25 @@
 extends Node
 ## UI smoke test: clicks through the opening like a child would.
-const Spots = preload("res://scripts/spots.gd")
+const Spots = preload("res://game/farm/spots.gd")
 var G
 var M
+var D      # the UI test driver: the tests talk to the screen only through it (tests/ui_driver.gd)
 
 func _ready() -> void:
 	G = get_node("/root/Game")
 	G.reset_game()
 	M = load("res://main.tscn").instantiate()
 	add_child(M)
+	D = preload("res://tests/ui_driver.gd").new(M)
 	await _frames(3)
-	M._close_modal()
+	D.close_modal()
 	# 1) open the book and pass the first card's quiz
-	M._show_card("k_wheat")
+	D.show_card("k_wheat")
 	await _frames(2)
 	await _click_through(func(): return G.done("k_wheat"))
 	print("k_wheat learned: ", G.done("k_wheat"), " crop_wheat open: ", G.done("crop_wheat"))
 	# 2) plant wheat in patch 1
-	M._on_patch("field", 0)
+	D.tap_patch("field", 0)
 	await _frames(2)
 	var planted := _press_text("🌱")
 	await _frames(2)
@@ -25,38 +27,38 @@ func _ready() -> void:
 	# 3) answer three Time Quiz questions
 	var s0: int = G.S["step"]
 	for k in range(3):
-		M._show_time_quiz()
+		D.show_time_quiz()
 		await _frames(2)
 		await _click_through(func(): return G.S["step"] > s0 + k, 250)   # only a right first try moves time
 	print("time steps: ", G.S["step"] - s0)
-	M._close_modal()
+	D.close_modal()
 	# 4) rest a little: type the answer on the number pad, once quick and once too slow
 	G.S["energy"] = 2.0
-	M._show_rest()
+	D.show_rest()
 	await _frames(2)
-	var start_page: bool = M._rest.has("start") and not M._rest.has("pad")
-	M._rest_go()
+	var start_page: bool = D.rest_state().has("start") and not D.rest_state().has("pad")
+	D.rest_go()
 	await get_tree().create_timer(2.0).timeout      # ready … set … go!
 	var e0: float = G.S["energy"]
-	var pad = M._rest["pad"]
+	var pad = D.rest_state()["pad"]
 	for ch in str(pad.question["answer"]): pad.key(ch)
 	var e1: float = G.S["energy"]
 	await get_tree().create_timer(0.9).timeout
 	pad.timer.shift(30.0)                            # pretend the child took a long time
 	for ch in str(pad.question["answer"]): pad.key(ch)
 	var e2: float = G.S["energy"]
-	M._close_modal()
+	D.close_modal()
 	var wr: String = await _wrong_rest()
 	print("rest energy: ", e0, " -> quick ", e1, " -> slow ", e2, "  (wrong-answer path: ", wr, ")  start page first: ", start_page)
 	# r9: a sum left unanswered (back to the farm) leaves no trace in the learning record
-	M._show_rest()
+	D.show_rest()
 	await _frames(1)
 	var mr: Dictionary = G.math.rec(G._learn())
 	var before_left := [int(mr.get("n", 0)), int(mr.get("turn", 0)), int(mr.get("since_new", 0)), mr["items"].size()]
-	M._rest_go()
+	D.rest_go()
 	await get_tree().create_timer(2.0).timeout
-	var sum_shown: bool = not M._rest["pad"].question.is_empty()
-	M._close_modal()
+	var sum_shown: bool = not D.rest_state()["pad"].question.is_empty()
+	D.close_modal()
 	await _frames(2)
 	var after_left := [int(mr.get("n", 0)), int(mr.get("turn", 0)), int(mr.get("since_new", 0)), mr["items"].size()]
 	print("r9 rest left mid-sum: question shown %s, record %s -> %s (same: %s)" % [sum_shown, before_left, after_left, before_left == after_left])
@@ -64,13 +66,13 @@ func _ready() -> void:
 	var w0: float = G.S["water"]
 	G.S["water"] = 0.0
 	G.fetch_water()
-	print("fetch water: 0 -> ", G.S["water"], " (was ", w0, ")  mystery barn: ", M._mystery("barn"), "  road open: ", M._is_open("road"))
-	M._open_spot("road")
+	print("fetch water: 0 -> ", G.S["water"], " (was ", w0, ")  mystery barn: ", D.mystery("barn"), "  road open: ", D.is_open("road"))
+	D.open_spot("road")
 	await _frames(2)
-	M._open_spot("barn")
+	D.open_spot("barn")
 	await _frames(2)
-	print("barn sheet title: ", M.sheet_title.text, "  pond: ", M._is_open("pond"))
-	M._close_sheet()
+	print("barn sheet title: ", D.sheet_title(), "  pond: ", D.is_open("pond"))
+	D.close_sheet()
 	# 4c) pests eat a share: put many pests on the farm, step time, and see the birds come when the pop-up closes
 	G.S["patches"][0]["crop"] = "crop_wheat"
 	G.S["patches"][0]["plants"] = 3.0
@@ -79,7 +81,7 @@ func _ready() -> void:
 	G.S["pests"] = 12.0
 	var info: Dictionary = G.step_time()
 	print("pests eat share: ", snappedf(float(info.get("eat_share", 0.0)), 0.001), " eaten: ", info.get("eaten", {}), " plants now ", snappedf(float(G.S["patches"][0]["plants"]), 0.01))
-	M._play_fx()
+	D.play_fx()
 	await _frames(5)
 	# 4d) clearing in steps, straw cannot be sold, gathering arrives at once, later fields are a mystery
 	var s0w: int = G.step_index("clear_weeds")
@@ -115,11 +117,11 @@ func _ready() -> void:
 		G.pick_gift(gid)
 	print("r6: plots ", p0, " -> ", p1, " (new patch quality ", q_new, ")  no seeds -> plants ", plan0["plants"], "  wheat per plant ≈ ", snappedf(tot / 200.0, 0.01),
 		"  scarecrow step ", st_ok, " then '", why, "'  water ", w_before, " -> ", w_after, " after a question  gift cards active ", G.S["gift_active"].size(), "/", G.S["gift_owned"].size(),
-		"  celebrations queued ", M._celebrations.size(), "  slug ", G.slug("Mia Lou!"))
-	M._on_patch("field", 12)
+		"  celebrations queued ", D.celebrations().size(), "  slug ", G.slug("Mia Lou!"))
+	D.tap_patch("field", 12)
 	await _frames(1)
-	print("later field patch opens: ", M.sheet_kind, "  ruins_workshop at: ", Spots.spot_of(G, "ruins_workshop"), "  mystery workshop: ", M._mystery("workshop"))
-	M._close_sheet()
+	print("later field patch opens: ", D.sheet_kind(), "  ruins_workshop at: ", Spots.spot_of(G, "ruins_workshop"), "  mystery workshop: ", D.mystery("workshop"))
+	D.close_sheet()
 	# 4f) round 7: Rest levels and repetition, market demand, prices, postcards, perks, the farmer
 	G.L = {}
 	var r0: Dictionary = G.arith_info()
@@ -172,15 +174,15 @@ func _ready() -> void:
 	print("r7 postcards: friends ", f0, " -> ", f1, "  postcard from '", pc.get("from", ""), "' choices ", pc.get("offer", []).size(), " (pending ", pend0, " -> ", G.S["gift_pending"].size(), ")",
 		"  butterflies perk ", G.perk_on("perk_butterflies"), "  shop gone: ", not G.has_method("buy_gift"))
 	if not pc.is_empty(): G.pick_gift(pc["offer"][0])
-	print("r7 album postcards ", G.S["postcards"].size(), "  celebrations queued ", M._celebrations)
-	M._close_modal()
-	M._celebrations.clear()
-	var av = M.map.avatar
+	print("r7 album postcards ", G.S["postcards"].size(), "  celebrations queued ", D.celebrations())
+	D.close_modal()
+	D.celebrations().clear()
+	var av = D.map().avatar
 	var a0: Vector2 = av.feet
-	var path: PackedVector2Array = M.map.find_path(a0, Vector2(600, 900))
+	var path: PackedVector2Array = D.map().find_path(a0, Vector2(600, 900))
 	av.walk_to(Vector2(330, 330))
 	await get_tree().create_timer(1.0).timeout
-	print("r7 farmer: at ", a0, " path to the barn side ", path.size(), " points, walked to ", av.feet, " moving ", av.moving, "  in objects: ", av.get_parent() == M.map.objects)
+	print("r7 farmer: at ", a0, " path to the barn side ", path.size(), " points, walked to ", av.feet, " moving ", av.moving, "  in objects: ", av.get_parent() == D.map().objects)
 	# 4h) round 8: quiz ids, 3-4 options, picture questions, translations; stoking; bigger loads; rooting out; dynamic prices
 	var ids := {}
 	var dup := 0
@@ -219,13 +221,13 @@ func _ready() -> void:
 		"  PIC-004 pictures ", shown["pictures"], " img '", shown["img"], "' right '", shown["answers"][shown["correct"]]["text"], "'",
 		"  German: '", shown_de["q"], "' / '", shown_de["answers"][shown_de["correct"]]["text"], "'",
 		"  CON-001 filled to ", con_q["answers"].size(), "  record key PIC-004: ", G._learn()["quiz"]["items"].has("PIC-004"))
-	M._show_time_quiz()
+	D.show_time_quiz()
 	await _frames(2)
-	M._close_modal()
-	M._question(M.modal_box, shown, func(_ft): pass)
+	D.close_modal()
+	D.show_question(D.modal_box(), shown, func(_ft): pass)
 	await _frames(2)
-	print("r8 picture buttons: ", M.modal_box.get_child_count(), " rows in the quiz box")
-	M._close_modal()
+	print("r8 picture buttons: ", D.modal_box().get_child_count(), " rows in the quiz box")
+	D.close_modal()
 	G.S["woodpile"] = 0.0
 	G.add_item("stick", 10.0)
 	G.S["unlocked"]["campfire"] = true; G.S["unlocked"]["tin_pot"] = true; G._dirty()
@@ -282,51 +284,51 @@ func _ready() -> void:
 	var m0: bool = snd.music_on
 	snd.set_music(false); snd.set_music(m0)
 	print("r9 sounds: names missing %s, buses Music %d SFX %d" % [names_missing, AudioServer.get_bus_index("Music"), AudioServer.get_bus_index("SFX")])
-	print("r9 grown-up lock: open at start %s, 'Farm ' %s, 'cow' %s" % [M._grownup_open(), M._password_ok("Farm "), M._password_ok("cow")])
-	M._show_menu()
+	print("r9 grown-up lock: open at start %s, 'Farm ' %s, 'cow' %s" % [D.grownup_open(), D.password_ok("Farm "), D.password_ok("cow")])
+	D.show_menu()
 	await _frames(2)
-	M._close_modal()
-	M._grownup_until = 1e12
-	M._show_menu()
+	D.close_modal()
+	D.set_grownup_open(true)
+	D.show_menu()
 	await _frames(2)
-	M._close_modal()
-	M._grownup_until = 0.0
-	M._open_sheet("album")
+	D.close_modal()
+	D.set_grownup_open(false)
+	D.open_sheet("album")
 	await _frames(2)
-	M._close_sheet()
+	D.close_sheet()
 	# 5) visit every place on the map and every page
 	var n := 0
-	for sid in M.map.slots:
-		M._open_spot(sid)
+	for sid in D.map().slots:
+		D.open_spot(sid)
 		await _frames(1)
 		n += 1
 	for k in ["spot:field", "goals", "album", "log"]:
-		M._open_sheet(k)
+		D.open_sheet(k)
 		await _frames(1)
-	M._goal_pressed()
+	D.press_goal()
 	await _frames(2)
-	print("places ok: ", n, " sheet open: ", M.sheet.visible, " goal: ", M.goal_id, " log: ", G.S["log"].slice(-3))
+	print("places ok: ", n, " sheet open: ", D.sheet_visible(), " goal: ", D.goal_id(), " log: ", G.S["log"].slice(-3))
 	# 6) buildings with an inside: pretend they stand, open each inside and one corner, and come back
-	M._close_sheet()
+	D.close_sheet()
 	for b in ["cottage", "barn_1", "workshop_1"]:
 		G.S["unlocked"][b] = true
 	G._dirty()
-	M._refresh()
+	D.refresh()
 	await _frames(2)
 	var insides := []
 	for parent in ["home", "barn", "workshop"]:
-		M._open_spot(parent)
+		D.open_spot(parent)
 		await _frames(2)
-		var opened: bool = M.modal.visible
+		var opened: bool = D.modal_visible()
 		var corners: Array = Spots.INTERIORS[parent]["members"]
-		M._enter_corner(corners[1], parent)
+		D.enter_corner(corners[1], parent)
 		await _frames(2)
-		var sheet_ok: bool = M.sheet.visible and M.sheet_kind == "spot:" + corners[1]
-		M._close_sheet()
+		var sheet_ok: bool = D.sheet_visible() and D.sheet_kind() == "spot:" + corners[1]
+		D.close_sheet()
 		await _frames(2)
-		insides.append("%s inside:%s corner:%s back:%s" % [parent, opened, sheet_ok, M.modal.visible])
-		M._close_modal()
-	print("insides: ", insides, " house visible: ", M.map.slots["home"].visible, " tent hidden: ", not M.map.slots["living"].visible)
+		insides.append("%s inside:%s corner:%s back:%s" % [parent, opened, sheet_ok, D.modal_visible()])
+		D.close_modal()
+	print("insides: ", insides, " house visible: ", D.map().slots["home"].visible, " tent hidden: ", not D.map().slots["living"].visible)
 	get_tree().quit()
 
 func _atext_ok(q: Dictionary) -> bool:
@@ -344,8 +346,8 @@ func _buttons(node: Node, out: Array) -> void:
 
 func _press_text(t: String) -> bool:
 	var bs := []
-	_buttons(M.modal_box, bs)
-	_buttons(M.content, bs)
+	_buttons(D.modal_box(), bs)
+	_buttons(D.content(), bs)
 	for b in bs:
 		if b.text.contains(t):
 			b.emit_signal("pressed"); return true
@@ -355,7 +357,7 @@ func _click_through(goal: Callable, tries := 40) -> void:
 	for _i in range(tries):
 		if goal.call(): return
 		var bs := []
-		_buttons(M.modal_box, bs)
+		_buttons(D.modal_box(), bs)
 		var pressed := false
 		var nxt: Button = null
 		for b in bs:
@@ -374,14 +376,14 @@ func _click_through(goal: Callable, tries := 40) -> void:
 			await get_tree().create_timer(0.8).timeout
 
 func _wrong_rest() -> String:
-	M._show_rest()
+	D.show_rest()
 	await _frames(1)
-	M._rest_go()
+	D.rest_go()
 	await get_tree().create_timer(2.0).timeout
 	var before: float = G.S["energy"]
-	var pad = M._rest["pad"]
+	var pad = D.rest_state()["pad"]
 	pad.typed = "99999"              # surely wrong
 	pad.enter()
 	var ok: bool = float(G.S["energy"]) == before and str(pad.fb_lbl.text).begins_with("❌")
-	M._close_modal()
+	D.close_modal()
 	return "ok" if ok else "FAILED"

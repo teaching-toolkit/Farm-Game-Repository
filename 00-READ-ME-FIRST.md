@@ -47,7 +47,7 @@ sounds, pictures, the map layout).
 Background, read only the parts a task needs: `farm-quiz-game-master-design-document.md` (what the game is and why; v2.0;
 marks *(planned)* and *(idea)*; no history or to-dos), `PROJECT-LOG.md` (history, decisions, assumptions still to confirm),
 `godot-prototype/README.md` (how to run, test and change the prototype; every setting and test flag),
-`godot-prototype/learnkit/README.md` (Rest sums, quiz engine, learning record, question ids) and `story/README.md` (the story).
+`godot-prototype/kits/learn/README.md` (Rest sums, quiz engine, learning record, question ids) and `story/README.md` (the story).
 The numbers are in `godot-prototype/data/farm-progression.json` (browse them in `progression/progression-explorer.html`).
 **The data wins** if it and a document disagree.
 
@@ -62,7 +62,7 @@ The numbers are in `godot-prototype/data/farm-progression.json` (browse them in 
 | `PROJECT-LOG.md` | history and decisions |
 | `planning/` | the parent's raw notes and the decision rounds, kept word for word; **the architecture plan** (`2026-10-12-architecture-plan.md`); `TODO.md` points into them |
 | `farm-quiz-game-master-design-document.md` | the design (v2.0) |
-| `godot-prototype/` | **the game** — Godot project (`project.godot`), `scripts/`, `data/`, `learnkit/`, `assets/`, `tests/`, `tools/`, `fonts/` |
+| `godot-prototype/` | **the game** — Godot project (`project.godot`), `kits/` (reusable parts: learn, ui, avatar, audio, i18n), `game/farm/` (this game's rules and screens), `data/`, `assets/`, `tests/`, `tools/`, `fonts/` |
 | `Build web version.command` | **double-click on the Mac** to re-export the game into `web-build/` (needs Godot.app and its export templates installed once) |
 | `Publish web version.command` | **double-click on the Mac** to push `web-build/` to the public GitHub repo as one fresh commit (see §4.7) |
 | `CLAUDE.md` | short pointer that Claude Code loads by itself: start with the session skill |
@@ -176,6 +176,10 @@ rename to *Hazelwood Harvest*. No game, data or code changes yet; `web-build/` i
 12 Oct 2026 (phase 1 built): round 8 pictures imported; version 0.9.0 *Hazelwood Harvest* (shown in ⚙️ Settings); German with
 "ss"; only a right first try moves time; design document 2.1. Smoke test and bot pass. **`web-build/` matches the code** (exported
 12 Oct 2026, 89 MB `index.pck`). Next: the parent tests 0.9.0 on the iPad (publish with `Publish web version.command`), then phase 2.
+
+12 Oct 2026 (phase 2, R0): the safety net for the restructuring: `--seed`, the golden run, save fixtures, the UI test driver,
+screenshot flags in `game/farm/dev/dev_flags.gd`, `tests/check_all.sh`. No change to the game; `web-build/` still matches it.
+R1 done too: the code now lives in `kits/` (reusable parts) and `game/farm/` (this game). Next: R2 (farm content out of code).
 
 ---
 

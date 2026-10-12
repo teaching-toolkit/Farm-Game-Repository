@@ -38,6 +38,7 @@ Always edit the real files in the folder, never the copy.
 After any change to the game, run all three, and read the whole output:
 
 ```bash
+timeout 178 bash tests/check_all.sh      # smoke test + save fixtures + golden run + translations in one go (~75 s)
 timeout 170 $G --headless --path . --audio-driver Dummy res://tests/ui_smoke.tscn
 timeout 170 $G --headless --path . --audio-driver Dummy res://tests/bot.tscn -- --chapter=5 --iters=1100
 timeout 170 $G --headless --path . --audio-driver Dummy -s res://tests/learn_sim.gd     # when Rest or the curriculum changed
@@ -55,6 +56,11 @@ What a pass looks like:
   anything. If the change is meant to alter the pace, say by how much and update the numbers here and in the prototype README.
   A new mechanic needs the bot to learn it, or the bot no longer tests the game. `--trace=N` prints the first N questions;
   `--flex` plays with dynamic difficulty; `--accuracy=0.8` misses a share of first tries in the Time Quiz.
+- **Golden run** (`tests/golden.sh`, part of `check_all.sh`): the bot plays seeds 1 and 2 to chapter 5 (741 and 639 steps,
+  12 Oct 2026) and must match `tests/golden/` step by step. A restructuring that changes it changed the rules: find out why
+  before going on. Only a change to rules or numbers made on purpose is recorded anew (`bash tests/golden.sh --record`), and
+  the log says so.
+- **Save fixtures** (`tests/fixtures_test.tscn`): every save in `tests/fixtures/` loads, plays on and saves unchanged.
 - **Texts changed:** `python3 tools/i18n.py --check` exits with 0.
 - **Progression data changed:** `python3 tools/sync_progression.py`, then the explorer check. From the project root, in one
   call (a server started in the background dies when the call ends):
@@ -68,7 +74,7 @@ What a pass looks like:
   It prints the playthrough hours, answers, checks and pets; compare them with `00-READ-ME-FIRST.md` §7. It needs Playwright
   (there in cloud sessions; if it is missing on the linked computer, say so rather than skipping silently).
 
-The bot and the smoke test leave their farm in the default save.
+Without `--seed` the bot and the smoke test leave their farm in the default save; with `--seed=N` they leave the device alone.
 
 ## 3. Look at it
 
@@ -80,7 +86,7 @@ xvfb-run -a -s "-screen 0 1280x1400x24" $G --path . --resolution 834x1194 --rend
   -- --newgame --timestep=20 --shot=OUT.png [--spot=kitchen] [--lang=de] [--qid=PIC-004] [--rest] [--menu]
 ```
 
-Put `--newgame` first, or use `--player=Shots`, otherwise the screenshot shows the bot's farm. Then open the picture and look:
+Put `--seed=1` first (a fresh farm, the same every time, nothing saved), or `--newgame` / `--player=Shots`, otherwise the screenshot shows the bot's farm. Then open the picture and look:
 do texts fit, are there words on the map, are all numbers whole, would an 8-year-old understand it?
 On a linked computer, save screenshots to `Farm game/Claude outputs/screens/` and stage them to view (git ignores that
 folder; it is for transfers).
@@ -108,7 +114,7 @@ Adapted from *systematic-debugging* in obra/superpowers (MIT).
 
 ## 6. Independent review of bigger changes
 
-For a new mechanic, a change to the save data, a change to the game rules in `scripts/game.gd`, or more than about 150 changed
+For a new mechanic, a change to the save data, a change to the game rules in `game/farm/game.gd`, or more than about 150 changed
 lines: start a fresh subagent that did not write the code and give it
 
 - the changed files or the diff, the task text and its plan from `TODO.md`, and the design document's section;

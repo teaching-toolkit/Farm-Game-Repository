@@ -38,13 +38,13 @@ before any work starts.
 |---|---|
 | A code change or a new mechanic | First `planning/2026-10-12-architecture-plan.md` (where code goes and the restructuring under way; later `godot-prototype/ARCHITECTURE.md`); then the design document's section for it (list the headings first: `grep -n '^#' farm-quiz-game-master-design-document.md`), the parts of `godot-prototype/README.md` it touches, then the scripts |
 | Questions, cards, texts, German, numbers, sounds, pictures | `claude-skills/farm-game-content/SKILL.md` |
-| Rest sums, the quiz engine, the learning record | `godot-prototype/learnkit/README.md` |
+| Rest sums, the quiz engine, the learning record | `godot-prototype/kits/learn/README.md` |
 | The story | `story/README.md`, then the files it points to (keep its labels ✅ 💡 ❓ 🔒) |
 | Why something is the way it is | `PROJECT-LOG.md` §2 (search it; don't read it whole) |
 | Pace and balancing | `godot-prototype/data/farm-progression.json` and the explorer. **The data wins** if it and a document disagree |
 
 For any long file: list its headings with `grep -n '^#'`, then read only the sections you need. In the two big scripts
-(`scripts/main.gd` about 3,100 lines, `scripts/game.gd` about 2,400 lines), find functions with `grep -n '^func'` and read
+(`game/farm/main.gd` about 3,100 lines, `game/farm/game.gd` about 2,400 lines), find functions with `grep -n '^func'` and read
 those. Never edit anything in `archive/`.
 
 Then say in one line which task(s) from `TODO.md` you are working on.

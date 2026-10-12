@@ -70,10 +70,10 @@ A running list. Nothing here is built yet. Before anything is built, the parent 
 
 - `data/farm-progression.json`: `chapters` goes from 5 to 6; a new pet node (`pet_badger`); about 70–100 new nodes (medicine
   chapter); sidequest names and blurbs; chapter numbers of later nodes shift.
-- `scripts/game.gd`: pet lists are hard-coded (lines near 363 and 1907: `pet_bunny … pet_alpaca`); a pet-automation tick.
-- `scripts/main.gd`: the top-right row (`_open_pantry` → story scroll), `_show_welcome` (the start story), `_on_patch` and
+- `game/farm/game.gd`: pet lists are hard-coded (lines near 363 and 1907: `pet_bunny … pet_alpaca`); a pet-automation tick.
+- `game/farm/main.gd`: the top-right row (`_open_pantry` → story scroll), `_show_welcome` (the start story), `_on_patch` and
   `_part_patch_note` (first-tap problem stories), the new forest screen.
-- New: `data/story.json`, `scripts/story.gd`, `assets/story/`, `data/i18n/story-de.json`.
+- New: `data/story.json`, `game/farm/story.gd`, `assets/story/`, `data/i18n/story-de.json`.
 - Tests: the bot needs to dismiss story boxes; the smoke test opens the scroll; a check that every story trigger exists.
 - Docs: design document (after decisions, marked *(planned)*), progression explorer data.
 

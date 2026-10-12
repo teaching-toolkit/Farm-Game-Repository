@@ -4,12 +4,12 @@
     python3 tools/i18n.py            (from the godot-prototype folder)
     python3 tools/i18n.py --check    only report (nothing written); exit code 1 if a language misses texts
 
-Interface: every literal in tr("…") or T("…") in scripts/*.gd and learnkit/*.gd  →  data/i18n/ui-<lang>.json
+Interface: every literal in tr("…") or T("…") in kits/**/*.gd and game/**/*.gd  →  data/i18n/ui-<lang>.json
     {"English text": "translation"}. A new text is added with "" (= still English); texts no longer in the code move
     to "_unused" (kept for a while, so a reworded text can take its old translation back by hand).
 Game data: names, descriptions, card pages and questions, steps, album pictures, postcards … (the rules below)
     →  data/i18n/data-<lang>.json   {"nodes/crop_wheat/name": {"en": "Wheat", "de": "Weizen"}}
-Rest sums: level names, kind words, titles, medals in learnkit/curriculum/math.json  →  data/i18n/learn-<lang>.json
+Rest sums: level names, kind words, titles, medals in kits/learn/curriculum/math.json  →  data/i18n/learn-<lang>.json
 When the English of a data text changes, its entry gets "stale": true: the old translation is still used until someone
 checks it and removes the flag. Languages come from data/i18n/languages.json; English is the source and needs no file.
 """
@@ -25,9 +25,13 @@ def gd_unescape(s):
 
 def ui_texts():
     out = {}
-    for d in ("scripts", "learnkit"):
-        for f in sorted(os.listdir(os.path.join(ROOT, d))):
-            if not f.endswith(".gd"): continue
+    gd = []
+    for top in ("kits", "game"):
+        for root, dirs, fs in os.walk(os.path.join(ROOT, top)):
+            dirs.sort()
+            gd += [(os.path.relpath(root, ROOT), f) for f in sorted(fs) if f.endswith(".gd")]
+    for d, f in gd:
+        if True:
             src = "\n".join(l for l in open(os.path.join(ROOT, d, f), encoding="utf-8").read().split("\n") if not l.lstrip().startswith("#"))
             for m in CALL.finditer(src):
                 out.setdefault(gd_unescape(m.group(1)), f"{d}/{f}")
@@ -79,7 +83,7 @@ def data_texts():
     return out
 
 def learn_texts():
-    C = json.load(open(os.path.join(ROOT, "learnkit", "curriculum", "math.json"), encoding="utf-8"))
+    C = json.load(open(os.path.join(ROOT, "kits", "learn", "curriculum", "math.json"), encoding="utf-8"))
     out = {}
     def put(path, v):
         if has_words(v): out[path] = v

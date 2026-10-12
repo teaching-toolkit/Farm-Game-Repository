@@ -1,7 +1,7 @@
 extends Control
 ## Shows every pose of data/acts.json on its own farmer (big), with a prop where it fits, and saves a picture.
 ## Run: DISPLAY=:99 godot --path . res://tests/pose_sheet.tscn -- --shot=poses.png   (needs a screen, e.g. xvfb-run)
-const Avatar = preload("res://scripts/avatar.gd")
+const Avatar = preload("res://kits/avatar/avatar.gd")
 const PROP_FOR := {"pull_a": "", "sow_a": "seed_bag", "pour": "bucket", "dip": "bucket", "pick": "basket", "dig_a": "shovel",
 	"dig_b": "shovel", "chop_up": "axe", "chop_down": "axe", "hammer_up": "hammer", "hammer_down": "hammer", "stir_a": "spoon",
 	"stir_b": "spoon", "show": "coin", "read": "book"}

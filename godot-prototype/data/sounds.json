@@ -1,5 +1,5 @@
 {
- "note": "Every sound the game plays (scripts/sound.gd). sfx.<name>: files in assets/sounds/sfx/ (one picked at random), volume in dB, synth = a sound the game makes itself while there is no file, perk = only while that perk is on, from = where tools/import_sounds.py finds the files in ../sound-inbox/ (glob patterns), what = when it plays. music.tracks: one file each in assets/sounds/music/ (loops); music.play: which track for which situation (the farm by season). credits: filled by tools/import_sounds.py from sound-inbox/SOURCES.json; shown in ⚙️ Settings.",
+ "note": "Every sound the game plays (kits/audio/sound.gd). sfx.<name>: files in assets/sounds/sfx/ (one picked at random), volume in dB, synth = a sound the game makes itself while there is no file, perk = only while that perk is on, from = where tools/import_sounds.py finds the files in ../sound-inbox/ (glob patterns), what = when it plays. music.tracks: one file each in assets/sounds/music/ (loops); music.play: which track for which situation (the farm by season). credits: filled by tools/import_sounds.py from sound-inbox/SOURCES.json; shown in ⚙️ Settings.",
  "sfx": {
   "tap": {
    "synth": "tick",

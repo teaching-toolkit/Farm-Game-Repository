@@ -73,12 +73,12 @@ neighbour. Where everything stands, and how big it is, comes from `data/map_layo
 
 ## Pictures (assets/)
 The game looks for a picture named after the data id and uses the emoji when there is none — add pictures one at a time, no code needed
-(see `scripts/art.gd`):
+(see `kits/ui/art.gd`):
 - `assets/map/<id>.png` — buildings and places (`tent.png`, `well_1.png` …; or the place name: `market.png`, `forest.png`).
   A picture is named after the **first** stage it stands for and later upgrades keep it until they get their own: the final
   farmhouse is `cottage.png`, the barn `barn_1.png`, the workshop `workshop_1.png`, the warehouse `shed.png`.
 - `assets/plots/<place>.png` — `pond.png` (dug out), `pond_wild.png` (at the start) and `home.png` (the house plot before the
-  house). Pens have no picture of their own any more (a generic fence and ground; see `PENS` in `scripts/spots.gd`).
+  house). Pens have no picture of their own any more (a generic fence and ground; see `PENS` in `game/farm/spots.gd`).
 - `assets/ruins/stone_wall.png`, `wood_wall.png` — one side of a ruined wall (like a fence side) for buildings not built yet;
   `deco/rubble.png`, `planks.png` lie about. Without them the broken fences are used.
 - `assets/addons/<id>.png` — things built on a place, shown when built (`coop_2`, `nest_boxes`, `beehive`, `bee_house` …).
@@ -101,11 +101,11 @@ The game looks for a picture named after the data id and uses the emoji when the
 - Variants (the game picks one per spot, so the map doesn't repeat): `deco/weed_1..9`, `deco/debris_1..9` (stones, sticks),
   `deco/post_1..4` (lone fence posts in the gaps of broken fences), `deco/grass_1..9` (grass tufts), `fences/stick_broken_2/3`,
   `tiles/grass_2..4` (made from `tiles/grass.png`: turned or mirrored, a little lusher or drier), `tiles/overgrown_2/3`.
-  The grass texture is drawn at half size (`GRASS_SCALE` in `scripts/farm_map.gd`). Earth tiles (`ground/…`) lose the grass
+  The grass texture is drawn at half size (`GRASS_SCALE` in `game/farm/map/farm_map.gd`). Earth tiles (`ground/…`) lose the grass
   rim the generator paints round them and get a wide soft edge when `import_art.py` cuts them.
 - `assets/map/workbench_empty.png` and `assets/tools/<tool>.png` — the workbench at the workshop place and the tools that appear
   on it once made (rope, stone hammer, flint knife, stone axe, wooden shovel, rake, saw, iron hammer; where each lies: `BENCH` in
-  `scripts/spots.gd`). Inside the workshop they hang on the wall once the tool rack is built.
+  `game/farm/spots.gd`). Inside the workshop they hang on the wall once the tool rack is built.
 - `assets/ui/clock_face.png`, `clock_hour.png`, `clock_minute.png` — the Time Quiz clock (hands pointing up, hub at the bottom);
   without them a clock is drawn.
 - `assets/items/<item id>.png` — optional pictures of items (for things flying to the store and the pantry); emojis otherwise.
@@ -164,7 +164,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - **⚡ / 😴 Rest** — tap the energy button and answer sums on the number pad (or the keyboard). The moment the typed number is
   right it is taken — no ✔ needed; a wrong number only counts when ✔ is pressed, then the right sum is shown, with the steps
   for a tricky one (13 − 5: 13 − 3 = 10, 10 − 2 = 8). A quick right answer (2.5 s for a sum learned by heart, more for longer
-  ones) gives the full energy, a slower one half. The sums come from the **learning kit** (`learnkit/`): levels from 1 + 1 to
+  ones) gives the full energy, a slower one half. The sums come from the **learning kit** (`kits/learn/`): levels from 1 + 1 to
   32 − 17 and on to times tables, fractions and more in later years, spaced repetition for every sum, an easy one now and then
   when it is hard going, and medals for every level (🥉 passed, 🥈 every sum quick, 🥇 still quick a week later; in the album).
   Better home, bed, pillow and water bottle give more per answer.
@@ -206,7 +206,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   where you tap, farm sounds, rainbows after rain, lightning on quick sums, a streak flame, a coin shower, harvest confetti and
   a season breeze. Each can be switched off in the album.
 - **🧑‍🌾 The farmer** walks to wherever you tap — on the grass, to a place (its sheet opens at once) or to the edge of a field —
-  around buildings, pens, fields and the forest; tap the farmer to get a wave. A little 3D figure (`scripts/avatar.gd`) whose
+  around buildings, pens, fields and the forest; tap the farmer to get a wave. A little 3D figure (`kits/avatar/avatar.gd`) whose
   look is data (`data/avatar.json`: skin, hair, shirt, trousers, shoes, hat), ready for a "make your farmer" screen. After
   each action it acts it out (weeding, sowing, chopping, cooking …; `data/acts.json`); a new tap interrupts.
 - **🪙 Selling** — the store tiles say exactly what you get: `1 🥣 = 4 🪙`, `5 🥕 = 10 🪙`. Made things pay more than their
@@ -233,7 +233,11 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   Hide both by setting `"showCheatButton": false` in `data/settings.json`.
 - ⚙️ → **Start a new game** deletes this player's farm (the learning record stays).
 - Saves live in Godot's user folder, one folder per player: `players/<name>/farm_save.json` and `learning.json` (on a Mac:
-  `~/Library/Application Support/Godot/app_userdata/Farm Quiz Game (prototype)/`).
+  `~/Library/Application Support/Godot/app_userdata/Hazelwood Harvest/`; farms played before the rename on 12 Oct 2026 stay in
+  `…/Farm Quiz Game (prototype)/` and can be copied over by hand. The web version keeps its saves in the browser, unaffected by the name).
+- `--seed=N` (tests, bot, screenshots): the same seed gives the same game. The rules engine takes all its random numbers from
+  it, its clock moves with the questions instead of the wall clock, and it neither reads nor writes saves or learning records
+  on the device. The flags are read in `game/farm/dev/dev_flags.gd` (the screen) and `Game._test_args()` (the rules).
 - Screenshots and tests: `--player=Name`, `--newgame`, `--timestep=N`, `--spot=storage`, `--patch=K`, `--unlock=id,id`,
   `--give=item:5`, `--water=1` (carried water), `--menu` (⚙️ Settings), `--grownup` (its grown-up part open), `--password` (the password box), `--celebrate=id`, `--postcard`, `--perks=all` (or a list of perk ids), `--rainbow`, `--rest` (the Rest start page; add `--restgo` for the sums), `--qid=PIC-004`
   (one Time Quiz question), `--lang=de` (quiz texts in German), `--shot=file.png`.
@@ -247,12 +251,12 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   a picture above it; `pool` = more wrong answers of the same kind to fill questions up. Add a file and list its id in
   `activePacks`. **After adding or changing questions run `python3 tools/quiz_ids.py`**: it gives new questions their id
   (never change or reuse one) and updates `data/i18n/quiz-en.json` and `quiz-de.json` (German texts; empty = still English).
-- **Sound and music** (`data/sounds.json`, played by `scripts/sound.gd`, the autoload `Sound`): every effect by name
+- **Sound and music** (`data/sounds.json`, played by `kits/audio/sound.gd`, the autoload `Sound`): every effect by name
   (`Sound.play("harvest")`) with its files in `assets/sounds/sfx/`, a volume, a stand-in sound the game makes itself
   (`synth`) and an optional `perk`; music tracks in `assets/sounds/music/` and which one plays where (`music.play`: the
   farm per season, `quiz`, `rest`). New files: put them in `../sound-inbox/` with a line in its `SOURCES.json` (licence!),
   run `python3 tools/import_sounds.py`, then import in Godot. Music and effects can be switched off in ⚙️ Settings.
-- **Languages** (`data/i18n/`, see `scripts/i18n.gd`): `languages.json` lists them; per language `ui-<lang>.json` (interface:
+- **Languages** (`data/i18n/`, see `kits/i18n/i18n.gd`): `languages.json` lists them; per language `ui-<lang>.json` (interface:
   English text → translation), `data-<lang>.json` and `learn-<lang>.json` (game data and Rest sums: `{"path": {"en", "<lang>"}}`)
   and `quiz-<lang>.json` (packs). In the scripts every text the player sees is wrapped in `tr("…")` (`TranslationServer.translate`
   in static functions); tables of texts are marked `# i18n` and shown with `tr()`. **After changing any text run
@@ -270,7 +274,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
     `powers`; a parent can also tick them in ⚙️ → 📊 Learning record);
   - `restTimerScale` — stretches every time limit (1.5 = half as much time again); `restSlowShare` — the share of the energy a
     slow right answer gives;
-  - `mathCurriculum` — the curriculum file (`learnkit/curriculum/math.json`: levels, times, repetition, medals, kind words);
+  - `mathCurriculum` — the curriculum file (`kits/learn/curriculum/math.json`: levels, times, repetition, medals, kind words);
   - `showPlaceNames` — name labels under the places on the map (off: no words on the map);
   - `parentPassword`, `parentHint` — the password for the grown-up part of ⚙️ Settings (question share, dynamic difficulty,
     learning record, new game; open for 5 minutes once typed, not case-sensitive) and the hint shown under the box. For now the
@@ -284,9 +288,17 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   the number changes from run to run; `--flex` plays with dynamic difficulty on; `--trace=N` prints what happens during the first N questions;
   `--accuracy=0.8` misses a share of first tries (only a right first try moves time) and reports how many questions it was asked; it prints
   its pace, which `meta.flex.basePace` is taken from).
+- `bash tests/check_all.sh` — all quick checks in one go (about 2 minutes): smoke test, save fixtures, golden run, translations.
+- `bash tests/golden.sh` — the golden run: the bot plays seeds 1 and 2 to chapter 5 and every step of time is compared with
+  `tests/golden/` (coins, energy, water, goals, what is unlocked, the store). A restructuring must leave it unchanged. `--strict`
+  also compares a hash of the whole save; `--record` records new golden runs after a change to the rules or numbers on purpose.
+  Bot flags for it: `--seed=N`, `--golden=FILE`, `--save-at=CHAPTER:FILE` (writes a save fixture).
+- `godot --headless --path . res://tests/fixtures_test.tscn -- --seed=1` — every save in `tests/fixtures/` still loads, plays
+  on for 10 steps and saves unchanged; a save in an older layout is completed when loaded.
 - `godot --headless --path . res://tests/ui_smoke.tscn` — clicks through the opening (first card, planting, Time Quiz, Rest,
   every place on the map, quest book, album, log) and checks the sums, the market, postcards, perks, the farmer, quiz ids,
-  answers and pictures, German texts, stoking, carrying, rooting out and dynamic prices.
+  answers and pictures, German texts, stoking, carrying, rooting out and dynamic prices. It reaches the screen only through
+  `tests/ui_driver.gd`, so splitting `main.gd` changes the driver, not the test.
 - `godot --headless --path . -s res://tests/learn_sim.gd` — a pretend child practises 2,500 Rest sums: when is each level passed?
 - Screenshots: `godot --path . --resolution 834x1194 -- --shot=out.png [--spot=kitchen] [--spot=home] [--quiz] [--goal]`
   (`--demo=1` fast-forwards with the cheat; `--timestep=95` jumps to question 95, i.e. winter, to check the seasons).
@@ -299,23 +311,23 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - The pixie chest mini-game is not in yet; the farmer is a first prototype (one look, no "make your farmer" screen yet).
 
 ## Files
-- `scripts/game.gd` — rules engine (autoload `Game`): data, time, energy, fields, weeds, stones, pests, animals, stations,
+- `game/farm/game.gd` — rules engine (autoload `Game`): data, time, energy, fields, weeds, stones, pests, animals, stations,
   firewood, knowledge, polish, gear, seasons, freshness, luck, gift cards, jobs, acorns, cheat.
-- `scripts/main.gd` — the interface (top bar, map, sheets, the inside windows, quizzes); `farm_map.tscn` + `scripts/farm_map.gd` — the
+- `game/farm/main.gd` — the interface (top bar, map, sheets, the inside windows, quizzes); `game/farm/map/farm_map.tscn` + `farm_map.gd` — the
   one-screen map, built from `data/map_layout.json` (ground, forest, road, house yard, fields with shadows and fence, pens, places,
-  add-ons and decorations sorted by their feet; scaled to fit the screen); `scripts/slot.gd` — one place (stands on its footprint,
-  taps only on its pixels, draws its footprint until it has a picture); `scripts/spots.gd` — which place or corner each data node
-  belongs to, the buildings with an inside (`INTERIORS`), and which pictures an upgrade chain uses; `scripts/iso_field.gd` — a field at
-  an angle (diamond patches, pests, scarecrow looks, rain); `scripts/field_view.gd` — the square patch grid still used inside the
-  orchard and greenhouse sheets; `scripts/art.gd` — pictures with emoji fallback; `scripts/ui.gd` — styles.
-- `scripts/avatar.gd` — the farmer (a 3D figure drawn into a picture on the map) + `data/avatar.json` (its look); `scripts/actor.gd` — the farmer acting things out (`data/acts.json`; try
-  `--act=weed@patch0`, poses side by side in `tests/pose_sheet.tscn`); `scripts/fx.gd` —
+  add-ons and decorations sorted by their feet; scaled to fit the screen); `game/farm/map/slot.gd` — one place (stands on its footprint,
+  taps only on its pixels, draws its footprint until it has a picture); `game/farm/spots.gd` — which place or corner each data node
+  belongs to, the buildings with an inside (`INTERIORS`), and which pictures an upgrade chain uses; `game/farm/map/iso_field.gd` — a field at
+  an angle (diamond patches, pests, scarecrow looks, rain); `game/farm/ui/field_view.gd` — the square patch grid still used inside the
+  orchard and greenhouse sheets; `kits/ui/art.gd` — pictures with emoji fallback; `kits/ui/ui.gd` — styles.
+- `kits/avatar/avatar.gd` — the farmer (a 3D figure drawn into a picture on the map) + `data/avatar.json` (its look); `kits/avatar/actor.gd` — the farmer acting things out (`data/acts.json`; try
+  `--act=weed@patch0`, poses side by side in `tests/pose_sheet.tscn`); `game/farm/fx.gd` —
   perk effects (sounds made in code, lightning, flying coins, butterflies, sparkles, rainbow, season breeze).
-- `scripts/sound.gd` — sound effects and music (autoload `Sound`, from `data/sounds.json`); `scripts/i18n.gd` — languages
+- `kits/audio/sound.gd` — sound effects and music (autoload `Sound`, from `data/sounds.json`); `kits/i18n/i18n.gd` — languages
   (`data/i18n/`).
-- `learnkit/` — the learning kit, usable in any Godot game: learning records, the maths curriculum and engine, question packs,
-  spaced repetition, the timer and the number pad window; `learnkit/tools/learning-editor.html` views and edits a record in any
-  browser. See `learnkit/README.md`.
+- `kits/learn/` — the learning kit, usable in any Godot game: learning records, the maths curriculum and engine, question packs,
+  spaced repetition, the timer and the number pad window; `kits/learn/tools/learning-editor.html` views and edits a record in any
+  browser. See `kits/learn/README.md`.
 - `export_presets.cfg` — the Web export (single-threaded, installable to the Home Screen, portrait).
 - `tools/` (not exported with the game) — `import_art.py` + `art_sheets.json` (cut sprite sheets), `art_list.py` (picture list),
   `default_layout.py` (first map layout), `make_layout_editor.py` + `layout_editor_template.html` → `layout-editor.html` (layout editor).

@@ -6,7 +6,7 @@ description: Use when adding or changing content in the Farm Quiz Game (this pro
 # Farm Quiz Game: changing content
 
 Run the tools from `godot-prototype/`. Full formats: `godot-prototype/README.md` ("Changing content", "Pictures", "Moving and
-resizing things on the map") and `godot-prototype/learnkit/README.md` ("Questions: ids, answers, pictures, languages").
+resizing things on the map") and `godot-prototype/kits/learn/README.md` ("Questions: ids, answers, pictures, languages").
 After any content change, run the checks (`claude-skills/farm-game-check/SKILL.md`) and add a row to `PROJECT-LOG.md`
 (`claude-skills/farm-game-session/SKILL.md` §4).
 

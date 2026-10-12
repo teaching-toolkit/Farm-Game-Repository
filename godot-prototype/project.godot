@@ -23,8 +23,8 @@ general/text_to_speech=true
 
 [autoload]
 
-Game="*res://scripts/game.gd"
-Sound="*res://scripts/sound.gd"
+Game="*res://game/farm/game.gd"
+Sound="*res://kits/audio/sound.gd"
 
 [display]
 
