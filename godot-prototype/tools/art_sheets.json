@@ -268,6 +268,7 @@
    "animals/pet_pony",
    "animals/pet_alpaca",
    "animals/animal_bees",
+   "-",
    "pests/bird",
    "pests/rabbit"
   ],
@@ -598,6 +599,7 @@
    "items/linseed",
    "items/linseed_oil",
    "items/quartz",
+   "-",
    "items/relic",
    "items/honey_cake"
   ]

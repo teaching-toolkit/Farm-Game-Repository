@@ -21,7 +21,7 @@ fail() {
   pause_and_exit 1
 }
 
-echo "🌾 Farm Quiz Game: building the web version"
+echo "🌾 Hazelwood Harvest: building the web version"
 echo "   Project: $PROJECT"
 echo
 

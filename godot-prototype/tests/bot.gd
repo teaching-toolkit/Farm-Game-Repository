@@ -6,6 +6,9 @@ var log_lines := []
 var max_iters := 900
 var target_chapter := 4
 var flex := false
+var accuracy := 1.0       # --accuracy=0.8: share of Time Quiz questions answered right at the first try (only those move time)
+var asked := 0           # Time Quiz questions asked (with accuracy < 1 more than the steps of time)
+var quiz_rng := RandomNumberGenerator.new()   # separate from the game's own random numbers
 var trace := 0           # --trace=N prints what happens during the first N questions (to check the opening)
 var pace_sum := {}      # chapter -> [sum of pace, questions]: tells meta.flex.basePace
 
@@ -16,6 +19,7 @@ func _ready() -> void:
 		if a.begins_with("--chapter="): target_chapter = int(a.substr(10))
 		if a == "--flex": flex = true
 		if a.begins_with("--trace="): trace = int(a.substr(8))
+		if a.begins_with("--accuracy="): accuracy = clampf(float(a.substr(11)), 0.05, 1.0)
 	G.reset_game()
 	if flex: G.S["dynamic"] = true
 	G.offer_cards.connect(func(c): G.pick_gift(c[0]))
@@ -37,6 +41,7 @@ func _ready() -> void:
 		if it % 200 == 0:
 			print("iter %d step %d ch %d unlocked %d cards %d coins %d energy %d season %s" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.cards_learned(), int(G.S["coins"]), int(G.S["energy"]), G.season()])
 	print("DONE iters %d steps %d chapter %d unlocked %d cards %d goals %d coins %d ms %d" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.cards_learned(), G.S["goals"], int(G.S["coins"]), Time.get_ticks_msec() - t0])
+	if accuracy < 1.0: print("Time Quiz questions asked %d for %d steps of time (first-try accuracy %.2f)" % [asked, G.S["step"], accuracy])
 	var pets := []
 	for p in ["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony"]:
 		if G.done(p): pets.append(p)
@@ -254,4 +259,7 @@ func _turn() -> void:
 	# eat a dish now and then
 	for k in G.S["inv"].keys():
 		if G.items[k].has("buff") and G.count(k) > 3 and G.S["buff"].is_empty(): G.eat(k)
+	# only a right first try moves time: with --accuracy below 1 some questions are asked without moving it
+	asked += 1
+	while accuracy < 1.0 and quiz_rng.randf() >= accuracy: asked += 1
 	G.step_time()

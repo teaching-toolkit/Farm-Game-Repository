@@ -46,6 +46,12 @@ For what the game *is* now, read `farm-quiz-game-master-design-document.md`; for
 | **Story: Round 4 part 2** (8 Oct 2026) | `story/game-design-round4.md`: six chapters planned (new chapter 5 *Healing* with the badger; the 52 nodes of the old chapter 5 become chapter 6; `pet_alpaca` and `import_broker` would require `pet_badger`; two favours and the Herb Drying Loft move to chapter 5); pets get a job board (WHEN → DO cards in four levels, one action per Time Quiz question; today's pet bonuses become level 1); the medicine chapter (still-room ruin, stations, eleven simplified real remedies checked in part against EMA and Tox Info Suisse, look-alikes as a game, safety wording); the forest screen. Proposals only; no game changes. |
 | **Story: Round 5** (8 Oct 2026) | `story/outline/ladder.md`: the six-chapter ladder written with the children's-story skill (core sentence, failure, charge and lever per chapter; about ten beats per chapter tied to game nodes, the unmissable ones on each pet's required path; frame lines; running snags). Low point in chapter 5, the bend in chapter 6. Proposes two new pet requirements (tortoise ← pond, alpaca ← River Meadow). No game changes. |
 | **To-do list moved; new notes sorted** (9 Oct 2026) | The to-do list left `00-READ-ME-FIRST.md` §6 for its own file, `TODO.md` (referenced from the READ-ME, `CLAUDE.md`, `story/README.md` and the design document). The finished groups A–G were already recorded here; their open leftovers became tasks: the parent's checks (W4), German proofreading and the ß/ss question (W5), the missing sounds (W8). One leftover recorded only in the old list: group D did not convert the woodpile's "+ Stick" chips, "Weed all / Pick stones" and the quest book to grids. The parent's notes of 9 Oct 2026 (16 game ideas: village market trips with carrying limits and item weights, wellbeing parameters, a simple start with interfaces unlocked in sequence, an energy model with penalties, sustainability, the economy and bronze coins, coin animations, the field sign, Rest walk, the Time Quiz replay, villagers as avatars, notifications, read-aloud switch, version numbers, straw and seed pictures; 8 story notes: curriculum, epilogue, opening panels and the grandchildren frame, flexible plot details, the player never in pictures, the silhouette, a title, the curriculum smuggled into cards) kept word for word in `planning/2026-10-09-parent-notes.md` and sorted into `TODO.md` by area, with a proposed order, a decision queue (clashes with existing rules marked ⚠️, each with a recommendation), stale facts found in the design document (J7), and 20 title ideas. No game, data or code changes. |
+| **Working instructions into skill files** (11 Oct 2026) | How to work on the project moved into three skill files in `claude-skills/`: `farm-game-session` (what to read for which task instead of every document in full, planning bigger steps, keeping the record, git in Cowork vs cloud), `farm-game-check` (Godot setup, smoke test, bot, learner simulation, explorer, screenshots; evidence before claims and debugging by root cause, both adapted from obra/superpowers (MIT); an independent review of bigger changes; web export) and `farm-game-content` (questions, cards, texts and German, numbers, settings, sounds, pictures, layout). `CLAUDE.md` and `00-READ-ME-FIRST.md` §2 and §4.1–4.5 now point to them instead of repeating them; references in `TODO.md` updated. They sit in `claude-skills/`, not `.claude/skills/`, because remote tools may not write into `.claude/`; `CLAUDE.md` points to them, so Claude Code finds them anyway. Proposed T1 (split `main.gd` and `game.gd`). No game, data or code changes. |
+| **Decision rounds 1–5** (10–12 Oct 2026) | Five rounds of questions and the parent's answers on the notes of 9 Oct (kept word for word in `planning/2026-10-1*-answers-round-*.md`). The decisions are listed in §2.8; `TODO.md` was rebuilt around them (new areas: D paper-first, Y skills and quality; the market, energy, nature and story tasks rewritten; open follow-ups in its §2). The U section and the trip-energy note of 9 Oct, missing from the copy that reached the repo, were restored. No game, data or code changes. |
+| **Round 6 and the architecture plan** (12 Oct 2026) | Round 6 answered (beginner's mistakes only in field and animal work, every saving explained in the world's terms; the buildings that raise the Lord's share; a collector from the story; winter kale; reuse for a quarry/mine/smithy spin-off). The code was read and measured, and `planning/2026-10-12-architecture-plan.md` written: core, kits and the farm in three layers; ten problems found (two files of 3,136 and 2,376 lines, the interface writing the save directly in 74 places, farm content in code, one hand-written time step, unversioned saves, the rules written twice (Godot and the explorer's JavaScript), one 320 KB data file, tests calling private functions, duplicated pest drawing, no fixed random seed); nine slices R0–R8 that don't change the game, each checked by a seeded "golden run". `TODO.md` T2, §0 and §2 updated. No game, data or code changes. |
+| **Round 7: the implementation plan** (12 Oct 2026) | The parent answered the plan's decisions: pacing from the real engine (the explorer refreshed by a script the parent can run; a nice-to-have), interface fixes after the split except J1, J10, J11, the project renamed *Hazelwood Harvest* (folder unchanged), the spin-off very hypothetical; Pieter the night watchman collects the Lord's share; the winter crops by chapter as proposed. `TODO.md` §0 became the implementation plan (twelve phases, each ending with a working game, a version and an iPad test) and §2 is empty. The round 8 pictures arrived in `art-inbox/` (29 OpenArt downloads, not yet named or imported). No game, data or code changes. |
+| **Phase 1: round 8 pictures imported** (12 Oct 2026) | Godot 4.7.2 (arm64), Xvfb and the art packages set up in the Mac's Linux shell; baseline checks pass (smoke test; bot reaches chapter 5 at question 686). The 30 OpenArt downloads in `art-inbox/` identified by eye and renamed to `sheet25-…` – `sheet53-…` (two versions of the add-ons sheet came: the one with the red-roofed coop is used, the other kept as `sheet30-addons-alt.png`). `tools/art_sheets.json`: a lone bee on the animals sheet and a second quartz crystal on items-9 are skipped (`-`). 283 pictures cut into `assets/` (animals, pests, crops, map buildings, add-ons, interiors, friends' portraits, album pictures, items); `ART_LIST.csv` now lists every picture as done; layout editor rebuilt (90 pictures). Screenshots in `archive/screenshots/2026-10-12-round8-pictures/`. Noticed: the *tin pot* item picture is a bucket. |
+| **Phase 1: version 0.9.0** (12 Oct 2026) | **J1** the Godot project is called *Hazelwood Harvest* (`config/name`) with `config/version` 0.9.0; ⚙️ Settings and 🎼 Credits show "Hazelwood Harvest · version 0.9.0 · data 0.8" (`_version_text()` in `main.gd`); the web page title and Home-Screen name follow. **J10** only a right first try in the Time Quiz moves time: after a wrong first pick the child keeps trying, sees the "why", time stays ("⏸️ Time stays where it is…"); the question comes back right after the next one (`Game.retry_after_next()`, `S.retry_q`; pack questions and card reviews). Smoke test: its click-through skips the ⬅️ button and goes on with "Next question" after a wrong first try; new check r10 (back after one other: true). Bot: `--accuracy=P` misses a share of first tries with its own random numbers and reports the questions asked (default 1.0, so pace numbers are unchanged). **J11** German: all 219 "ß" in `data/i18n/*-de.json` became "ss". **J7** design document: 2.1, renamed, the first-try rule, 1 starting seed, bot ranges, perk sounds, German done, version numbers (§15.1); the tortoise's description said "+1 💧 per question" but the effect is per water trip: fixed in the data and German. Checks: smoke test passes; bot chapter 5 at 866, 850, 690 (the unchanged code gave 771, 858 too: the spread is wider than the documented 680–800; ranges updated in the check skill and the prototype README). Web build exported (`index.pck` 89 MB with the new pictures). The `.command` files got their run permission back after a text edit. |
 
 ---
 
@@ -186,6 +192,96 @@ For what the game *is* now, read `farm-quiz-game-master-design-document.md`; for
   roughly sensible. The player (Fenna) is never shown in story pictures; where it helps, a backlit farmer's silhouette with a hat,
   seen from behind. (Parent, 9 Oct 2026)
 
+
+### 2.8 Decisions of 10–12 October 2026 (parent; rounds 1–7, sources in `planning/`)
+
+**Rules that change**
+- All systems run from the start in the background; each becomes visible and open to the player at a certain point; until then it is
+  frozen or works unexplained, chosen per system (weight: works hidden; sustainability: frozen; the forest screen doesn't exist before
+  chapter 5).
+- **The Time Quiz may give and drain energy** (replaces "the Time Quiz never gives energy"); the bulk of energy still comes from Rest.
+- **Natural consequences** (over-use, neglecting health) are allowed, last a while and can always be corrected; nothing is lost for good,
+  Helpers never leave (replaces "nothing that punishes the child"; the poisoning stays).
+- **Quality is back:** three levels, Lumpy / Proper / Fancy, German Naja / Tiptop / Picobello! (replaces "Quality stars: no", §2.4);
+  every skill rank raises the chances a bit. No beginner's mishaps when making things (a Lumpy result is the mistake); in field and
+  animal work beginners sometimes lose a little (drop an egg). Every saving from training, upgrades or knowledge is explained in the
+  world's terms ("you drop the eggs less often now").
+- **Only a right first try** in the Time Quiz moves time; after a wrong first try the child keeps trying until right and sees the
+  explanation, but time doesn't move. A wrongly answered question comes back right after the next one. The market trip's question too.
+- **Coins:** 100 bronze = 1 gold (like Rappen and Franken); bronze first, gold once numbers are big; still whole numbers on screen.
+- German uses **"ss"**, never "ß".
+
+**Economy and market**
+- No merchant at the start: one stalk, one plant, seed saved from the harvest (the grain is the seed; every crop can make its own seed,
+  biennials by staying in the ground through a winter; each technique learned from a card); seeds of unlocked crops can always be bought.
+- The first trip to the village is forced by carrot seeds (none anywhere); a handful of seeds is cheap, an axle expensive (barter with the
+  travelling merchant for the first cart).
+- Trip: pack (in the store) → confirm at the village signpost (energy) → exactly one Time Quiz question → the market square → home.
+  Empty-bag trips allowed. Deliveries ride in the bag and take room.
+- The travelling merchant comes now and then (more often with a better road), has a big cart, pays a little less, can be tapped to see
+  what he buys and how full his cart is; later merchants come after every question.
+- Gatekeeping: the village distrusts the farmer and the whole family, and is poor (scarcity); trust per person plus a village reputation
+  changes what is on offer and the price; Granny Maud and Greenstem kind from the start; favour rewards as surprises.
+- Prices: realistic (today's Swiss prices for familiar goods, old-world ratios for the rest); market prices change at each season (supply
+  and demand, favour, quality, possibly dynamic difficulty); goal costs never change once shown.
+- Crafts: deliveries and unlocks stay; made things (tools, baskets, pots, rope …) can also be made again and sold.
+- Skills: practice is tracked (hidden at first), and mastery lowers inputs, energy and time; specialising and buying the rest should pay.
+  Eight families: planting and harvesting, animal tending, cooking and baking, fibre and weaving, woodwork and construction, pottery and
+  glass, smithing, healing and preserving. Every rank saves inputs (diminishing; more for construction and crafting) and raises quality
+  chances; field and animal work gain less, mostly fewer beginner's mistakes. Replaces the practice stars. Details: `TODO.md` Y2.
+- **The Lord's share** from chapter 2 or 3: due each season, grows with the number of plantable patches regardless of yield, the fraction
+  rising each chapter; buildings that produce or process count too (mills, lumbermill, smithy, kiln, press, workshop, the barn with
+  animals; by level; not home, storage, pens, pet corner); the collector is **Pieter the night watchman**, forced to do it, who warms to you; a person from the village collects at the gate at the end of each
+  season; while unpaid, nothing else can be bought. The Lord's climb-down in chapter 6 comes through Quill's numbers.
+- Store: compact tiles with small text, a filter row, no sell buttons; packing by selecting in the store; the bag icon in the top bar fills;
+  the bag window lists what is packed by room taken.
+
+**Energy and wellbeing**
+- The home sets the base; parameters dial it (×0.7–×1.3) and set gain or drain per question. Sleep → energy per right sum; food and
+  strength → the maximum (strength also carrying); friends, calm, play → gain or drain. The bed is shown plainly as "+1 ⚡ per right sum".
+- The drain starts in chapter 2 with the face; grows with how much runs on the farm and how much is carried; at most about 1.5 right sums'
+  worth per question; parameters sink slowly with a warning and recover a little faster; at zero energy the drain stops.
+- Helping someone shifts the per-question rate up for a while. Play: instruments, art, parties, visits to other farms (a visit works like a trip).
+- The dashboard opens by tapping the farmer and from an icon in the top bar.
+
+**Nature and seasons**
+- Sustainability covers the forest edge (trees, sticks, stones), water and clay; later herbs and the woodlot. Trees become stumps and grow
+  back; over-cutting shows. Loose stones run out; frost stones stay; clay refills slowly. Introduced by a note in the grandmother's book
+  (chapter 2–3).
+- Seasons look different (trees, grass); winter has muted colours and snow that falls and stays; patches must be cleared of snow to plant;
+  fewer winter crops (a few hardy ones, a new winter wheat, a winter kale that only pays in winter; the rest "too cold", greenhouse once built; crops in the ground at a
+  quarter speed); one shader for snow caps and seasonal colours (new pictures only for bare trees); a text at the start of each season.
+
+**Interface**
+- The field sign goes; whole-field actions sit at the bottom of the patch window. Read aloud: off / button / automatic. Coins fly for
+  everyone (the Coin shower perk becomes the fancy version).
+- After the Time Quiz: a fixed short pause, then rain first, plants flicking through their stages, pests, merchants; the energy change
+  animated last; any tap jumps to the end.
+- Top bar: the Time Quiz clock moves into it (bottom right), and the bottom bar goes (the map grows); the next goal's text fills the space between the energy bar and the bag;
+  cheat buttons only via a grown-up setting (floating top left; +50 bronze; skip a pending card quiz). Notifications stack from the top
+  like a phone's and can be swiped away.
+- Upgrades: "first tier saves energy, later tiers do something visible" is a rule of thumb, not a rule.
+
+**Architecture**
+- Split the two big scripts before the big systems; first a study of how to keep the project easy to maintain and to reuse its parts
+  for other games (an avatar walking on a screen, background parameters, Sims-style health). The reusable parts (avatar and acts,
+  wellbeing, the clock and playback, store and carrying, story pieces, interface parts) become kits, as long as that doesn't make upkeep
+  harder. The reuse target: a spin-off where another character starts a quarry, mine and smithy at the other end of Hazelwood (round 6).
+- (Round 7) Pacing comes from the real engine (the bot); the explorer shows data and the bot's report, refreshed by a script the parent can
+  run. Interface fixes after the split, except version number, first-try rule and "ss". The Godot project is renamed *Hazelwood Harvest*
+  (folder unchanged). The spin-off is very hypothetical: kits only as general as the farm needs. Winter crops: winter wheat and onions in
+  chapter 1, beans and winter kale in chapter 2, cloches and greenhouse in chapter 4. The plan: `TODO.md` §0, twelve phases.
+
+**Story**
+- The outline's five questions: all kept (low point, the Lord's letter, the cousin's accusation, the unsaid thing, awe on the first night).
+  The cousin is a girl (default). The chapter 6 bend triggers automatically, like every chapter end.
+- No epilogue chapter: after chapter 6 and the last frame scene, free play outside the story; its goals may still tie up loose ends.
+- The grandchildren have heard the farm story many times, but it always stopped at the Fair; the barn is told for the first time.
+  Opening panels can be skipped from the second viewing on.
+- Story pictures never show the farmer: through the farmer's eyes (sometimes a hand reaching from the camera) or a backlit silhouette.
+- The travelling merchant first passes by on the road. No in-world framing needed for modern knowledge in the Time Quiz.
+- Title: **Hazelwood Harvest**, the same in German.
+
 ---
 
 ## 3. How the work has been done
@@ -195,5 +291,6 @@ For what the game *is* now, read `farm-quiz-game-master-design-document.md`; for
   updates the documents.
 - Code changes reach the project directly (Cowork sessions edit the folder on the Mac; cloud sessions commit to the private
   GitHub repo). The older way, bundles in `Claude outputs/<name>.tgz`, is no longer needed.
+- Since 11 Oct 2026 the way of working is written down in `claude-skills/` (see `00-READ-ME-FIRST.md` §2).
 - Pictures are generated in OpenArt (project "Farm Quiz Game"); the parent downloads the chosen versions into `art-inbox/` by
   hand, and `tools/import_art.py all` cuts them in.

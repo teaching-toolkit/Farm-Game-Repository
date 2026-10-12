@@ -1,77 +1,107 @@
 # To-do list — Farm Quiz Game
 
 The project's to-do list and plan. Moved out of `00-READ-ME-FIRST.md` §6 on **9 October 2026**; finished tasks live in
-`PROJECT-LOG.md`, not here. **Last updated: 9 October 2026** (the parent's notes of 9 Oct sorted in; nothing built yet).
+`PROJECT-LOG.md`, not here. **Last updated: 12 October 2026, evening** (phase 1 built and checked; seven rounds of the parent's decisions, 10–12 Oct, worked in; the
+architecture plan written; §0 is now the implementation plan; nothing built yet).
 
 **Standing rule** (from `00-READ-ME-FIRST.md`): keep this file current *as you work*. Tick off or remove done tasks (and add a
 row to `PROJECT-LOG.md`), add new ones, reword changed ones. A task that is not written here does not exist for the next chat.
 
 **Labels** (as in `story/`): ✅ decided by the parent · 💡 proposed by Claude · ❓ open question · ⚠️ a clash with an existing rule,
 decision or file · 🔗 depends on / ties in with.
-**Sources:** `[#1]`…`[#16]` (game) and `[#S1]`…`[#S8]` (story) are the paragraphs of the parent's notes of 9 Oct 2026, kept word for
-word in `planning/2026-10-09-parent-notes.md`. Older tasks keep their old ids (W1, H1, I5 …); the old "Later" list is now Z1–Z7.
+**Sources:** `[#1]`…`[#16]` (game) and `[#S1]`…`[#S8]` (story) are the paragraphs of the parent's notes of 9 Oct 2026
+(`planning/2026-10-09-parent-notes.md`). `[R1]`…`[R7]` are the seven decision rounds of 10–12 Oct 2026, Claude's questions with the
+parent's answers, kept word for word in `planning/2026-10-1*-answers-round-*.md`. The decisions are summarised in
+`PROJECT-LOG.md` §2.8 and built into the tasks below. Older tasks keep their old ids (W1, H1, I5 …); the old "Later" list is Z1–Z7.
 
 ---
 
-## 0. The plan at a glance 💡
+## 0. The implementation plan ✅ (agreed 12 Oct 2026, R7)
 
-Proposed order. Each step lists what must be settled first. Nothing here is fixed; the parent re-orders as wanted.
+Twelve phases. **Every phase ends with a game that works**, a version number, a web build and (where the child sees something new) a
+play-test on the iPad. Sizes are rough: one session ≈ one longer chat. Two tracks run **alongside** the code from phase 2 on: the
+**paper designs** (D1–D4, written before the phase that builds them) and the **story** (Rounds 6–7: texts, German).
 
-| Step | What | Tasks | Waits for |
-|---|---|---|---|
-| 0 | Housekeeping: this file, the log, the notes sorted | done 9 Oct 2026 | – |
-| 1 | **The parent:** pictures, play-test, checks, the decision queue, the curriculum list | W1–W7, §2 | – |
-| 2 | **Small fixes the child will notice** (each on its own, then one web build to test) | J1–J7 | Q-J1, Q-J2 for J2/J6 |
-| 3 | **Story Round 5 answers and Round 6 "loop back"**, now also covering the new systems (village and market, wellbeing, nature, epilogue, opening panels, picture rules, title) — on paper | I5, I6, I9–I13 | the parent's answers |
-| 4 | **Foundations in the code:** what unlocks when (with frozen hidden numbers), item weight/bulk, the economy pass and coin kinds | O1–O3, M1–M4 | step 3 for the story reasons; Q-M decisions |
-| 5 | **Story engine + chapter 1 texts** (panels, 📜 scroll, bubbles, frame) | I7, I8a, I9 | step 3 |
-| 6 | **Market trips, merchants who visit, people as avatars, coin animations** | M5–M10, P1, M3 | step 4 |
-| 7 | **Six chapters in the data; pets visible and job board level 1–2** | S1, S2 | step 5 |
-| 8 | **Wellbeing and the energy model**, with its books and cards | L1–L7, K4 | O1–O3; Q-L decisions |
-| 9 | **Nature and sustainability** | N1–N5 | O1–O3; Q-N decisions |
-| 10 | **Medicine chapter and the forest screen** | S3, S4 | steps 7–9 (they share the energy, carrying and nature rules) |
-| 11 | **Epilogue; pets' job board level 3–4** | I10, S5 | step 10 |
-| always | **Curriculum:** map the frameworks onto cards and questions, as soon as the parent's list is there | K1–K6 | W6 |
+| Phase | What | Tasks | Version · test | Size |
+|---|---|---|---|---|
+| **1. Ready to build** | Godot set up in the Mac's Linux shell; **the round 8 pictures** sorted, imported and checked on the map; version numbers; "ss"; the first-try rule; the game renamed **Hazelwood Harvest**; stale facts in the design document | ✅ done 12 Oct 2026, except the iPad test (W3) | **0.9.0** · iPad | 2–3 |
+| **2. Restructuring** | Slices R0–R8 of the architecture plan, none of which changes the game: safety net and golden run, folders, content out of code, core, rules split, interface split, map, versioned saves, data split, pacing from the real engine, the explorer updated by a script | T2 | 0.9.x · golden run, no iPad test needed | 10–14 |
+| **3. Interface in the new structure** | Whole-field section (no field sign), Rest walk, the playback after the quiz, phone-like notifications, read-aloud setting, the new top bar (no bottom bar), cheat buttons, **the season shader** (snow caps, muted winter, golden autumn: looks only) | J2–J6, J8, J9, N7 | **0.10** · iPad | 3–4 |
+| **4. Foundations** | What is shown when (frozen/hidden per system); item weights; **quality**; **skills and ranks**; **bronze and gold** and the realistic prices (after D3) | O1–O3, M4, Y1, Y2, M1, M2 | 0.11 · bot and explorer | 4–6 |
+| **5. Story engine** | Opening panels and frame, the 📜 scroll, bubbles, first-tap stories, chapter 1 texts (needs Rounds 6–7) | I8a, I9, I7 (ch 1) | 0.12 · iPad | 3–4 |
+| **6. Store and market** | The store as a grid with filters and packing; the bag; the signpost, trips and the market square; the travelling merchant as a figure; trust; coin animations; season prices | M11, M5–M9, M3, M8, M12, P1 | **0.13** · iPad | 5–7 |
+| **7. The new chapter 1** | One stalk, saving seed, crafts to sell, hay, winter wheat and onions, the first trip for carrot seeds, the axle and the first cart (D2 first) | D2, U1–U5 (ch 1), M14 | **0.14** · iPad (the big one: the whole new start) | 4–6 |
+| **8. Six chapters, pets, the Lord's share** | Renumbering, the badger placeholder, pets visible with job board levels 1–2, **the Lord's share with Pieter** from chapter 2/3, the rest of the chapters re-checked for the new economy | S1, S2, M13, I6 parts | 0.15 · iPad | 5–7 |
+| **9. Wellbeing and energy** | The energy model, the six parameters, the face and the dashboard, drain and happy boosts, the body-and-mind books | L1–L8, K4 (part) | 0.16 · iPad | 4–6 |
+| **10. Nature and winter** | Resources that deplete and regrow (trees ↔ stumps, stones, clay, water), advice and floors, snow that settles and must be cleared, winter sowing (winter kale in chapter 2), the season texts | N1–N6, N8, U5 (rest) | 0.17 · iPad | 4–5 |
+| **11. Medicine and the forest** | Chapter 5: the still-room, remedies, the Healer's Herbal, the Wren check, the forest screen | S3, S4 | 0.18 · iPad | 6–8 |
+| **12. Free play** | After chapter 6: loose-end goals, job board levels 3–4, more side quests and perks | I10, S5 | **1.0** · iPad | 3–4 |
+| always | Curriculum (when the parent's list is there), sounds, upgrades' benefits (H1, alongside phase 4), the parent's checks and proofreading | K1–K5, W5, W8, H1 | – | – |
 
-Why this order: the small fixes give the child something new soon and need no big decisions. Every big new system (market, wellbeing,
-nature) leans on three shared foundations (what unlocks when, item weights, a sane economy), so those come first. The story engine comes
-before the market because the market's limits need a story reason the player is told. The medicine chapter comes late because it is
-where carrying, energy, nature and the forest all meet.
+**Why this order.** Phase 1 clears what is waiting (the pictures) and the three changes that don't touch the big scripts, so the child
+gets something new right away. Phase 2 comes next because every later phase adds code, and adding it to the restructured game is
+cheaper and safer than restructuring later. Phase 3 brings the visible interface fixes as soon as there is a good place for them.
+Phase 4 builds the shared foundations (what is shown when, weights, quality, skills, money) that the market, chapter 1, wellbeing and
+nature all use. The story engine (5) precedes the market (6) because the market's limits need story reasons the player is told, and
+both precede the new chapter 1 (7), whose whole shape depends on the first trip. Chapters, pets and the Lord's share (8) come once the
+economy works; wellbeing (9) and nature (10) once there is a farm big enough to strain; the medicine chapter (11) last among the systems,
+because it is where carrying, energy, skills, nature and the forest all meet.
 
-**Every game change also needs** (from `00-READ-ME-FIRST.md` §4.5): German through `tools/i18n.py`; the smoke test; the bot (it must learn
-any new mechanic, e.g. market trips); the explorer (pace in hours, Time Quiz and Rest answers per hour); the design document; a log row.
+**Rules for every phase:** plan bigger steps in this file before building (the session skill §3); one slice at a time, each passing the
+checks; the bot learns every new mechanic; the explorer gets updated by its script; the design document describes the game as it is;
+a log row per change; `web-build/` exported at the end of the phase.
+
+**Every game change also needs** (details: `claude-skills/farm-game-check/SKILL.md` and `claude-skills/farm-game-content/SKILL.md`):
+German through `tools/i18n.py`; the smoke test; the bot (it must learn any new mechanic, e.g. market trips, packing, the Lord's share);
+the explorer (pace in hours, Time Quiz and Rest answers per hour); the design document; a log row. **Old saves must keep loading.**
+
+**T2. Architecture and restructuring** ✅ (R5, R6). **Plan written: `planning/2026-10-12-architecture-plan.md`** (read it before any
+code work). In short: a small **core** (data loading, modifiers, conditions, the clock, versioned saves, events, a seedable random
+source), **kits** that each do one job and know nothing about farming (learn, progression, knowledge, items & trade, crafting & skills,
+needs & energy, resources, seasons & weather, story, rewards, world, avatar, ui, audio, i18n), and **the farm** on top. Reuse target ✅
+(R6): a **spin-off** where another character starts a **quarry, mine and smithy** from scratch at the other end of Hazelwood (less story,
+similar unlocking, building, energy, time and books); every kit must make sense for it, farm-only rules stay in the farm. Done in nine
+slices that don't change the game, each checked by a **golden run** (the bot plays a fixed-seed game; the farm's state after every
+question must match):
+- **R0** safety net (`--seed`, golden run, save fixtures, an interface test driver, screenshot flags out of `main.gd`) · **R1** folders
+  (`kits/`, `game/farm/`) · **R2** farm content out of code (places, pets, chapters → data) · **R3** core (modifiers, conditions, clock)
+  · **R4** `game.gd` split into systems behind the same `Game` front door (was T1) · **R5** `main.gd` split into a composition root,
+  hosts and one script per place (was T1) · **R6** map: generic vs farm, pests drawn once · **R7** saves with versions and upgrade steps ·
+  **R8** data files split, a data checker, pacing from the real engine.
+- ✅ Decided (R7): **pacing from the real engine**: the bot reports hours, questions and Rest answers per chapter; the explorer no longer
+  simulates its own copy of the rules but shows the data and that report, refreshed by **a script the parent can run** (a double-click
+  `Update explorer.command`, like the web build's) whenever the game has changed; the explorer is a nice-to-have, not a priority.
+  **The interface fixes come after the split**, except J1, J10, J11. **The Godot project is renamed *Hazelwood Harvest*** in phase 1; the
+  folder stays `godot-prototype/`. The spin-off games are **very hypothetical**: kits are only as general as the farm needs, cleanly
+  separated so that reuse stays possible.
+- Afterwards: `godot-prototype/ARCHITECTURE.md` from the plan; a "where new code goes" section in `claude-skills/farm-game-session`.
 
 ---
 
 ## 1. Waiting on the parent
 
-- **W1. Round 8 pictures.** 29 sheets (283 pictures) were generated in OpenArt; the parent saves the best version of each into
-  `art-inbox/` under the names in `art-inbox/ROUND8-PICK-LIST.md` (sheets 25–42 are not there yet). Then:
-  `python3 tools/import_art.py all`, check them on the map with screenshots (sizes in `data/map_layout.json` may need
-  adjusting — the layout editor helps), rebuild the layout editor (`tools/make_layout_editor.py`) and the web build. Sheets
-  whose objects come out in the wrong order: fix `tools/art_sheets.json` or skip objects with `-`. In `art-inbox/ART_LIST.csv`
-  these 280 pictures have the status `generated - pick sheetNN-….png` until their sheet is in `art-inbox/`; run
-  `python3 tools/art_list.py` afterwards and they turn `done`. (Includes the straw picture, sheet 45: see R1.)
-- **W2. GitHub repos and the double-click scripts.** The private repo exists. Still to do: the public web repo
+- **W1. Round 8 pictures:** ✅ imported 12 Oct 2026 (log). Left for the parent: look at them in the game; the second version of the
+  add-ons sheet is kept as `art-inbox/sheet30-addons-alt.png` (rename it to `sheet30-addons.png` and re-import to swap).
+- **W2. GitHub repos and the double-click scripts.** ⚠️ With the round 8 pictures `web-build/index.pck` is 89 MB; GitHub refuses
+  files over 100 MB, so the next big batch of pictures needs a plan (compressing the pictures for the web, or Git LFS). The private repo exists. Still to do: the public web repo
   (`00-READ-ME-FIRST.md` §4.7), GitHub Pages, the first run of `Build web version.command` and `Publish web version.command` on the
   Mac, the iPad Home Screen link. Cloud sessions can push to the private repo (a 403 on 7 Oct 2026 went away once the Claude GitHub
   App had write access).
 - **W3. Play-test round 8 on the iPad** and collect the findings (pace, picture questions, stoking, loads, the bar explanations).
-  Several of the 9 Oct notes ([#8]–[#12]) came from this; keep adding.
+  Several notes of 9–12 Oct came from this (J2–J5, J8–J10); keep adding.
 - **W4. Check what was built on 7 Oct 2026** (details in `PROJECT-LOG.md`):
   - A1–A5 small fixes (planting water bar, overgrown patch note, why a perk came, no dark forest floor, the question share) and the
     grown-up lock (password "farm", hint shows it for now; later a real password and a reminder as the hint).
-  - B1 the opening: one cleared patch, one wheat seed, the new *Clear the thistles* job.
+  - B1 the opening: one cleared patch, one wheat seed, the new *Clear the thistles* job (the opening changes again with D2).
   - C1 the Rest start page, C2 a sum left on screen leaves no trace.
-  - D every window as a grid. Not converted (on purpose so far, ❓ convert?): the woodpile's "+ Stick" chips, "Weed all / Pick
-    stones" (they move anyway with J2), the quest book.
+  - D every window as a grid. Not converted: the woodpile's "+ Stick" chips, "Weed all / Pick stones" (they move with J2), the quest
+    book. The store becomes a compact grid anyway (M11).
   - G the farmer's acts: watch them on the iPad and say which look wrong or too fast (each is a few numbers in `data/acts.json`).
-- **W5. German.** Proofread (easiest in the game with the language on Deutsch, or in `data/i18n/*-de.json`).
-  ❓ **"ss" instead of "ß"?** The game's German uses "ß" for now (quiz packs and Claude's drafts); one command can switch everything.
-  💡 Your general writing preference is Swiss "ss", so the recommendation is to switch (see Q-X1).
+- **W5. German proofreading** (easiest in the game with the language on Deutsch, or in `data/i18n/*-de.json`). ✅ "ss", never "ß":
+  switched everywhere on 12 Oct 2026.
 - **W6. The curriculum** [#S1]: find out what the curriculum is and which broad frameworks of knowledge to prioritise; the parent
-  provides these frameworks and the critical knowledge. Unblocks K2–K6.
-- **W7. Answer the decision queue (§2)** and the five Round 5 questions (I5). The ones marked **blocking** hold up the next step.
+  provides these frameworks and the critical knowledge ("I will let you know when I've made some progress", R1). Unblocks K2–K5.
+- **W7. Answer the open questions in §2.**
 - **W8. Sounds still missing** (system done 7 Oct; 83 files in `assets/sounds/`, 31 of 40 effects and all 6 music tracks): cow,
   sheep, goat, pony, bees, cat, birds, `extras/party`, `extras/wind` (stand-ins play until then). The Mudchute cow and sheep in
   `sound-inbox/unused/` are CC-BY-SA (share-alike): use only if the parent accepts that licence; the BigSoundBank/OpenGameArt CC0
@@ -83,484 +113,450 @@ any new mechanic, e.g. market trips); the explorer (pace in hours, Time Quiz and
 
 ---
 
-## 2. Decisions needed (the queue)
+## 2. Open questions
 
-Each item: the question, why it comes up (often a clash with something already decided), the options, and Claude's recommendation
-(💡). **Blocking** = the next step cannot start well without it. Answers go into `PROJECT-LOG.md` §2 and the task they belong to.
-
-### Interface
-
-- **Q-J1 (blocking J2). Where do the field's own things go when the field sign is removed?** [#8] The field sheet (opened from the
-  sign) holds more than "Weed all / Pick stones": the pests and scarecrow bars, and field-level goals (patch levels, edging). 💡 All of it
-  moves to a section **"🟩 The whole field"** at the bottom of the patch window: whole-field actions as tiles (harvest all, weed all,
-  pick all stones, …), then the field's upgrades, then the pests line.
-- **Q-J2 (blocking J6). Read aloud on/off** [#13]: does "off" hide the 🔊 buttons, or is the wish an **automatic** read-aloud that can
-  be switched on? 💡 One grown-up setting with three choices: *off* (no 🔊 buttons) · *button* (as now) · *automatic* (reads each
-  question and card page when it opens; the 🔊 button stays to repeat).
-
-### Money and market ([#1], [#6], [#7])
-
-- **Q-M1 (blocking M6). Does the market trip exist from the very first minutes?** ⚠️ [#3] wants the start very simple, and today the
-  very first purchase (more wheat seeds) happens in minute 2–5. A trip with energy, carrying limits and a once-per-question rule is a
-  lot to learn there. 💡 The **seed seller on foot keeps coming to the farm** in early chapter 1 (the data and the story already say
-  "only the seed seller with her basket gets through" the muddy track); the **village sign** appears a little later (e.g. after the
-  first porridge or the first harvest sold), with a short story box.
-- **Q-M2 (blocking M6). What does a trip cost in time?** [#1] says "only available once per time unit" and "requires a time unit to
-  pass". Two readings: (a) a trip may happen **once per Time Quiz question** (the question you just answered is the walk); (b) a trip
-  **uses up** a question, like entering the forest (✅ forest: one question in, one out). 💡 (a): selling should not feel expensive,
-  and (b) would make the child answer a question just to sell one porridge.
-- **Q-M3 (blocking M6). When is the energy for a trip taken?** The parent asked "What do you think?" 💡 **Yes to your idea**, with
-  three details so it stays light: (1) the **first** sale or purchase in a time unit opens the trip and takes a flat trip cost (e.g.
-  2–3 ⚡), shown on that first button ("🚶 3⚡") so it is never a surprise; (2) after that, selling and buying cost no more energy until
-  the next question, only **carrying room**; (3) a small "🎒 8/12" bar in the store and market shows what room is left, both ways.
-  When the room is used up, the buttons grey out with ⏳ (as you described), and tapping ⏳ opens the Time Quiz. No extra screens, no
-  "plan your trip" step.
-- **Q-M4. One carrying limit or two?** [#1] limits both what you bring to the village and what you bring back. 💡 The same capacity
-  each way, counted separately (you can carry a full load there and a full load back).
-- **Q-M5. Do dish deliveries (porridge for the merchant, soups, the Fair tables) need a trip and carrying room?** 💡 No: a delivery is
-  its own errand with its own energy (as now) and story scene; it never competes with selling. Otherwise a story beat could be blocked
-  by a full bag.
-- **Q-M6 (blocking M8). The gatekeeping logic** [#1]: why can you not buy everything in the village at once? The parent's open
-  question, with the ideas so far: favour with travelling merchants (the old logic: they come out to you); dishes for merchants and
-  craftspeople (✅ what the data does now: 18 deliveries open 14 merchants); a village wary of outsiders; things on sale but at
-  outsider prices so high they are not even shown (the parent's own idea, "not really my favourite"). More options:
-  - (a) **The village is poor.** Lord Wexley's rising shares squeezed Hazelwood too (`story/world/hazelwood.md`: "the market is
-    thin"). Little is for sale because little is made. As your farm grows, the village grows with it, and more traders come (the
-    story already says "the village prospers because the farm does").
-  - (b) **Trust, with a story reason.** You are "the child from the burnt farm", and 💡 the Lord made sure no one in his lands would
-    take the family on (`story/00-premise.md` §3). Sellers fear the steward. A dish, a favour or a friend vouching is what changes a
-    seller's mind. This is the existing dish mechanic with a reason the player is told.
-  - (c) **Knowledge.** The seller shows only what you know how to grow or use (crops already need their card: `crop_wheat` needs
-    `k_wheat`). "What would you do with saffron, child?"
-  - (d) **Distance.** Special seeds and heavy goods must be ordered from far away and come only when the road lets a cart through (the
-    road ladder already gates heavy carts).
-  - 💡 **Recommendation:** keep the gates the data already has and give each one its story reason: **dishes = trust** (b), **the
-    road = what can be brought to you** (d), **cards = what you can use** (c), and (a) as the background of the whole village strand.
-    Two separate axes fall out of it: *what* you may buy (trust, cards) and *where* you buy it (in the village on foot, or at your
-    gate once the road is good). Little data has to change. Outsider prices (the parent's idea) not used.
-- **Q-M7. Coins smaller than one** [#6]. ⚠️ Clashes with the rule "whole numbers on screen, no decimals anywhere" (design §5.8, parent's
-  rule in `00-READ-ME-FIRST.md` §4.6). [#6] itself points at a way out: a **small bronze coin**. 💡 Two coin kinds, both always whole
-  (e.g. 🪙 3 and 🟤 4), with **10 bronze = 1 coin**: no decimal point anywhere, and it teaches tens and ones (it also fits the bunches of
-  10 in [#7]). Later, a grown-up setting could show money as decimals (3.40) for a child who is learning decimals (the maths
-  curriculum has *Decimals & percent*).
-- **Q-M8. Prices that change over the game** [#6] (wheat cheaper to buy and less profitable to sell as quantities grow). ⚠️ Rule from
-  dynamic difficulty: "a price never changes in front of the child"; and recipes are meant to be learnable. 💡 Change base prices only at
-  **a chapter start**, with a one-line story reason ("More farms sow wheat again; the miller pays less"), and switch to bigger units
-  (a sack of 10 seeds) at the same moment, so a price never changes mid-goal.
-- **Q-M9. The coin animation for everyone vs the *Coin shower* perk** [#7]. ⚠️ The perk "coins fly into the purse when selling" (earned
-  for 8 different things sold) is exactly what [#7] wants for everyone. 💡 Plain coins fly for everyone; the perk becomes the fancy
-  version (a shower, sparkle and its sound).
-
-### Wellbeing and energy ([#2], [#3], [#4])
-
-- **Q-L1 (blocking L). Hidden but working, or frozen until shown?** ⚠️ [#2] has effects work before the player can see them ("doesn't
-  have any insight into why helping others lets them recover more quickly"); [#3] holds hidden numbers **still** until their interface
-  is unlocked. 💡 **Good effects may work hidden** (a pleasant mystery the books later explain); **bad effects only once something is
-  visible** (fairness: the child must be able to see why things got harder).
-- **Q-L2 (blocking L). Optional, yet with penalties that grow with the farm?** ⚠️ [#2] calls the whole wellbeing side optional ("you can
-  go through the whole game without these boosts and buffers"); [#4] wants penalties that grow with the farm if you neglect yourself.
-  If the penalties only start once the dashboard is unlocked, a clever child would simply never read those books. 💡 From a fixed point
-  in the game (e.g. chapter 2, when the farm gets bigger), a **single simple face** appears on the farmer or in the top bar (🙂/😐/😩)
-  with a one-line reason when tapped; the penalties can start then, capped so that ignoring them makes the game **slower, never stuck**.
-  The books open the **details and the levers** (the dashboard). So the boosts are optional; noticing the face is not.
-- **Q-L3. Energy from time passing** [#4] (a better bed or a mindfulness practice gives a little energy per time unit). ⚠️ Design rule
-  "the Time Quiz never gives energy" (§1.5), and the decision "the lever is energy per Rest answer" (log §2.3): energy is what the
-  arithmetic earns. A trickle per question takes away from Rest. 💡 Allow a **small** trickle (and amend the rule), and re-check that
-  Rest answers per hour stay in their band (§10.5); or, instead, a "well rested" bonus on the next Rest round. Parent's choice.
-- **Q-L4. Energy draining with time; the maximum shrinking** [#4]. ⚠️ Rules "nothing punishes the child" and "soft pressure, never
-  loss". 💡 Allowed with floors: a drain never takes energy below a quarter of the maximum; the maximum never shrinks below the home's
-  base; every penalty names its cause and at least one cheap fix.
-- **Q-L5. The bed: per Rest answer (now) or per time unit ([#4])?** Today the beds give +1/+2/+3 ⚡ **per Rest answer**. 💡 Keep that, and
-  let passive rest come from new things (a mindfulness practice, the sun room …), so the existing balance holds.
-- **Q-L6. Where does the dashboard open?** [#2] asks: a symbol in the top-right bar, or a natural place on the farm. 💡 **Tap the
-  farmer** (today a tap only makes the farmer wave): "how you are doing" opens. Second choice: the bed in the house. The top bar is
-  already full (coins, water, energy, season, 🎒→📜, 📖, 🖼️, ⚙️).
-- **Q-L7. The chapter 5 low point and the wellbeing system.** The outline has you collapse from overwork in chapter 5 as a story beat
-  with no penalty (`story/outline/ladder.md` 5.7). With a wellbeing system that beat could be felt in the game too. 💡 Keep the beat
-  story-only, and let it be the moment the dashboard's "rest" and "calm" levers open (Wren and the badger teach them).
-
-### Nature and sustainability ([#5])
-
-- **Q-N1 (blocking N). Over-use vs "basic materials any time".** ⚠️ Decision of design 1.2: sticks, stones and fibre are always
-  available at the forest edge (the campfire must never be impossible). 💡 Yields fall with over-use but **never below a floor**, and the
-  floor is always enough for the basics.
-- **Q-N2. Do the Helpers leave again if the land is over-used?** ⚠️ The world's rule 2 (`story/world/shell-and-magic.md`): "they leave
-  when the Bargain is broken"; the game's rule: animals never leave, nothing is lost. 💡 They never leave; a Helper **stops one job and
-  looks at you** (a thought bubble) until the balance is back.
-
-### Story ([#S2], [#S3], [#S5], [#S6])
-
-- **Q-I1. Where does the epilogue sit?** [#S2] The last frame scene ("tell him I was never angry") is the emotional end. An epilogue
-  played after it would weaken it. 💡 The epilogue is played **before** the last frame: after the alpaca the farm runs in full, the loose
-  ends are tied, and when the player is ready they tap **"Tell the end of the story"** (the last frame); after that, free play.
-- **Q-I2. The grandchildren "have heard it many times"** [#S3] vs the frame's ending, where the truth is told (premise §6; ladder,
-  Frame 6). If they know the story, what is new at the end? 💡 They have heard the farm story many times, but you always stopped at the
-  Fair. Tonight, for the first time, you tell what happened in the barn. Their blurting ("Is this the part where the goat eats the
-  ribbon?") is about the farm, never the secret.
-- **Q-I3. "Skippable when replaying"** [#S3]: replaying = a new game by the same player, or any second time on the device? 💡 A *Skip*
-  button from the second time a player sees the panels; everything stays re-readable in the 📜 scroll.
-- **Q-I4. The player never in a picture** [#S5]: ⚠️ ladder 3.4 ("the player glimpses Mumyo in the picture; you look the other way")
-  and the bedside frame pictures would show you. 💡 Painted pictures are seen **through your eyes**, or show the backlit silhouette from
-  behind ([#S6]); avatars drawn by the game with the player's own look (village-square scenes, visits) are fine.
-- **Q-I5. The travelling merchant's beat** (ladder 1.6: "the travelling merchant at your campfire: first porridge") ⚠️ vs [#1] (the
-  merchants are not at the farm at the start). 💡 He passes by on the road once, as a story Visit: he is *travelling*. The delivery stays.
-- **Q-I6. Bringing modern knowledge into an old-world setting** [#S8] (atoms, galaxies, world history in a pre-industrial world
-  without any of that science). 💡 Two voices: **Lark** (immortal, Wit-like, says true things as jokes) knows things nobody else does;
-  and a **"Today we know …"** line at the end of a card, as the medicine cards already plan ("Today: ask a grown-up or a doctor").
-  The grandparent in the frame can add one too.
-
-### Other
-
-- **Q-X1. "ss" or "ß" in the game's German?** (W5) 💡 "ss".
-- **Q-X2. Straw from grass** [#15]: botanically, cut and dried grass is **hay**; straw is the dry stalk of a cereal after the grain is
-  threshed. 💡 Either (a) a **meadow-grass crop that gives hay** (fodder and bedding; and hay matters to the story: the fire began in
-  the hay) while straw stays a by-product of wheat and oats, or (b) a cereal grown mainly for straw (rye was the classic thatching
-  straw). (a) is the better lesson.
-- **Q-X3. Replaying many questions at once** [#10]: if the child answers ten questions in a row, the replay must not last ten times as
-  long. 💡 At most about 3 seconds in all; steps run faster when many passed.
+None right now: everything asked between 9 and 12 Oct is answered (`PROJECT-LOG.md` §2.8). New questions go here as the phases bring
+them up, each with a 💡 recommendation.
 
 ---
 
-## 3. Interface and feel (J) — small, can be done one by one
+## 3. Paper first (D) — before the big systems are built
 
-- **J1. Version numbers** [#14]. Show the game's version in ⚙️ Settings (and in 🎼 Credits); make versions a thing if they are not
-  yet. Today there is **no game version**: `project.godot` has none, the data says `"version": "0.8"`, the design document 2.0, the
-  rounds are counted in the log. 💡 One game version (e.g. **0.9.0** next), set in one place (`project.godot` →
-  `application/config/version`), bumped with every web build, written in each log row, shown as "Version 0.9.0 · data 0.8 · 9 Oct
-  2026". It also tells the parent whether the iPad really loaded the new web build (the web export has a service worker that caches).
-  Do this first, before the other J tasks.
-- **J2. Whole-field actions without the field sign** [#8]. Today, when the player taps the field sign for a whole-field job (weeding,
-  picking rocks …), the farmer walks to the **sign** and acts there, which makes no sense; the farmer must go to the **field**. Fix:
-  remove the field sign; when a patch is tapped, the bottom of its window has a titled section for the whole field ("🟩 The whole
-  field" 💡) with *Harvest all*, *Pick all weeds*, *Pick all stones* and so on. 🔗 Q-J1 (where the pests bar and field upgrades go).
-  Notes: today *Weed all* and *Pick stones* are in `_part_field` (`main.gd`), *Harvest all* in `_part_area` and at the storage basket
-  (`_harvest_everything`); the art `deco/signpost.png` ("Field signpost, Home Field") goes unused; this applies to all three fields.
-  💡 The farmer walks patch to patch while acting (the acts in `data/acts.json` can repeat).
-- **J3. Rest: the farmer goes home** [#9]. When the energy bar is tapped and Rest starts, the farmer should walk to the tent or house.
-  Note: the code already starts a "rest" act at the house (`main.gd` ~line 1251, `_act("rest", … "living")`), but the Rest window
-  covers the farm, so it is not seen, or it does not work. Check on the iPad; 💡 let the farmer walk first and open the window when
-  the farmer arrives (or after about half a second).
-- **J4. The farm stands still during the Time Quiz, then catches up** [#10]. The quiz takes so much space and focus that the child
-  misses what happens on the farm. So: while the quiz is open, nothing on the farm changes. After "⬅️ Back to the farm", wait half a
-  second to a second, then play what the questions did, **step by step**: e.g. after three questions the wheat goes from sapling to
-  middle to ripe; weeds grow back if they were due; signs appear or disappear as the numbers changed. Notes: the game already plays the
-  pests after the quiz (`_play_fx` → `map.play_pending()`), so the replay can grow from there; the rules engine needs to record a small
-  snapshot per question during the quiz. 🔗 Q-X3 (cap the length); later the same replay shows the pets' work per question (S2) and
-  merchant arrivals (M7), so it is a foundation, not just polish.
-- **J5. Notifications** [#12]. Can be tapped or swiped away (some stay longer than needed, some are about right); a bit smaller, and
-  off to the right to begin with. Today (`_toast` in `main.gd`): every note stays 6.5 s (bar hints 3 s), max 3 at a time, centred above
-  the bottom bar, and taps go through them (`MOUSE_FILTER_IGNORE`). 💡 Tap or swipe right removes one; a duration per kind (short for
-  "too tired", longer for news); smaller cards on the right; same look family as the speech bubbles planned for barks
-  (`story/story-delivery.md`). ⚠️ The Time Quiz clock is bottom right: keep the notes above it.
-- **J6. Read aloud on/off in the grown-up settings** [#13]. 🔗 Q-J2. Today 🔊 buttons in the Time Quiz (question and answers) and on
-  card pages (`_speak` in `main.gd`). Later the story boxes need it too (I8).
-- **J7. Stale facts found in the documents** (found 9 Oct 2026 while sorting; fix in the design document):
-  - §5.4 says "The game starts with 5 wheat seeds" (it is 1 since B1).
-  - §10.3 tortoise bonus "+1 💧 every water trip" vs `story/game-design-round4.md` "+1 💧 per question": check the data, fix the wrong one.
-  - §11.3 "The sounds are made by the game itself (no sound files)" and §13.6 "(planned) the whole interface in German": both outdated.
-  - §10.5 "all five pets after about 700" (the bot stops before the alpaca; `00-READ-ME-FIRST.md` §4.2 is right).
-  - §1.1 premise (tent, bucket, pot, one seed, a box with a book) vs the story (bucket, pot and book come in Berit's box; the seed is
-    found on the one live patch; the tent is borrowed). Fix together with I9.
-  - `story/characters/lark.md` has Lark turn up "the day the market stall opens" (chapter 2); the ladder has him walk up the new
-    gravel road (`road_3`, 2.5). Pick one.
+- **D1. The design document's *(planned)* chapters**, one per new system, describing the game as it will be (not the change):
+  the energy model and wellbeing (L), trips, packing and the store (M), quality and skills (Y), seeds (U), money, prices and the
+  Lord's share (M), sustainability and seasons (N), what is shown when (O). Including the rule changes decided in R1–R4 (§2.8 of the
+  log): the Time Quiz can give and drain energy; natural consequences instead of "nothing punishes"; quality stars are back; deliveries
+  ride in the bag; a right *first* try moves time.
+- **D2. The new chapter 1 as a sequence on paper** ✅ (R3): one stalk grows into one plant → a card about saving seed (the grain is
+  the seed) → a few patches of wheat, porridge (clearing more patches before the village is fine) → crafts from what is at hand: fibre
+  rope, reed or wicker baskets, the first clay → the farmer avoids the village until something forces a trip: **carrot seeds** (there
+  are no carrots anywhere, so a first seed must be bought; carrots only flower in their second year) → the first trip: sell crafts and
+  porridge, buy carrot seeds → the travelling merchant passes by; barter for an **axle** (expensive); the first cart → the bunny comes
+  home. Output: every node, its cost, card and unlock, with first numbers; then checked in the explorer before any data changes.
+- **D3. A realistic price table** ✅ (R1, R2): today's Swiss prices for things the child knows (bread, eggs, milk, a basket, a
+  hammer), old-world ratios for the rest; how much wheat a bowl of porridge really takes; seeds sold by the bag (a handful is cheap); an
+  axle is expensive. In bronze (100 bronze = 1 gold). 🔗 M1, Y2 (the novice/master rule for what is worth making).
+- **D4. The hidden/frozen/visible table, complete** (O1): every system, what it does before it is shown, and when it is shown. Start:
+
+  | System | Before it is shown | Shown when |
+  |---|---|---|
+  | Item weight and carrying | works, unexplained (the bag simply fills) | the first market trip |
+  | Energy drain and wellbeing | frozen | chapter 2 (the face appears) |
+  | The bed's energy | shown plainly from chapter 1 ("+1 ⚡ per right sum"); that it goes through *sleep* is never said | – |
+  | Happy boost from helping | works, unexplained | a book explains it |
+  | Sustainability (forest, water, clay) | frozen | chapter 2–3, through a note in the grandmother's book |
+  | Market prices changing | frozen | the first season with market news |
+  | Merchant favour and trust | works, unexplained | the merchant says so ("for you, a better price") |
+  | Skills and practice | works, unexplained | the first rank-up (Y2) |
+  | The Lord's share | does not exist | chapter 2 or 3 (M13) |
+  | Forest screen | does not exist, not even visible | chapter 5 |
 
 ---
 
-## 4. Pictures (R)
+## 4. Interface and feel (J) — small, can be done one by one
 
-- **R1. Straw needs its own picture** [#15]. One is generated and waiting to be picked (`items/straw.png`, sheet 45; part of W1). Also:
-  straw, wheat and flour all use the emoji 🌾, so wherever a picture is missing they look the same. 💡 Give straw and flour their own
-  stand-in emoji.
-- **R2. A picture for seeds** [#16]. Seeds are not items in the game (they are a separate count, `S["seeds"]` per crop, bought from the
-  seed merchant), so nothing draws them today. 💡 One "seed bag" picture with the crop's small picture on it, rather than 22 seed
-  pictures. 🔗 M4 (seeds need a weight too).
-- **R3. Rules for story pictures** [#S5], [#S6]: the farmer (Fenna, working name) is **never** in a painted picture, because the
-  player makes their own farmer, boy or girl. Where it helps, the **silhouette of a farmer with a farmer's hat, seen from behind, the
-  light coming from the front**, dark enough to fit any hair, skin, hairstyle or gender. Add to `story/story-delivery.md` and to the
-  prompt rules for `ART_LIST.csv`. 🔗 Q-I4.
+- **J2. Whole-field actions without the field sign** [#8] ✅ (R1). Today the farmer walks to the **sign** for a whole-field job and acts
+  there. Remove the field sign; at the bottom of a patch's window a titled section **"The whole field"** with *Harvest all*, *Pick all
+  weeds*, *Pick all stones* (and *Clear the snow*, N6), then the field's upgrades, then the pests line. The farmer walks to the field
+  (patch to patch while acting). Notes: today *Weed all* / *Pick stones* are in `_part_field`, *Harvest all* in `_part_area` and at the
+  storage basket (`_harvest_everything`) in `main.gd`; `deco/signpost.png` goes unused; all three fields.
+- **J3. Rest: the farmer goes home** [#9]. When Rest starts, the farmer walks to the tent or house. The code already starts a "rest" act
+  at the house (`main.gd` ~line 1251), but the Rest window covers the farm. Check on the iPad; 💡 open the window when the farmer
+  arrives (or after about half a second).
+- **J4. Back on the farm after the Time Quiz** [#10] ✅ (R2, R3). While the quiz is open, nothing on the farm changes. After "Back to
+  the farm": a fixed short pause (0.7–1 s, the same after one question or eight), then the changes play, mostly together, some
+  staggered: **rain first** (if it rained; a big global event that draws attention), then the **plants flick quickly through every
+  in-between stage** (sped-up time, not a jump), together with weeds, pests and a travelling merchant coming down the road; the **energy
+  change** gets its own animation (e.g. the bar pulses and a "−4" floats up and fades), so it is noticed but easy to ignore once known;
+  short explanations pop up. ✅ Order (R5): 0–0.7 s pause → about 1 s of rain if it rained → plants flicking through their stages (about
+  0.3 s each) together with weeds, pests and an arriving merchant → last the energy bar's pulse and floating number, short notes. **Any tap
+  jumps to the end.** Notes: the pests are already played after the quiz (`_play_fx` →
+  `map.play_pending()`); the rules engine must record a small snapshot per question. Later the same playback shows the pets' work (S2).
+- **J5. Notifications like a phone's** [#12] ✅ (R4): they stack from the top, just below the top bar; a swipe sends one away if it
+  doesn't leave fast enough; smaller; a duration per kind. Today (`_toast` in `main.gd`): 6.5 s each (bar hints 3 s), max 3, centred above
+  the bottom bar, taps go through them (`MOUSE_FILTER_IGNORE`). Same look family as the barks' speech bubbles (`story/story-delivery.md`).
+- **J6. Read aloud in the grown-up settings** [#13] ✅ (R1): one setting with three choices: *off* (no 🔊 buttons) · *button* (as now)
+  · *automatic* (reads each question and card page as it opens; the 🔊 button stays to repeat). Today: 🔊 in the Time Quiz and on card
+  pages (`_speak` in `main.gd`). Later the story boxes too (I8).
+- **J7. Stale facts left** (the rest fixed 12 Oct 2026): the design document's §1.1 premise (tent, bucket, pot, one seed, a box with a
+  book) vs the story (bucket, pot and book come in Berit's box; the seed is found on the one live patch; the tent is borrowed): fix
+  together with I9. `story/characters/lark.md` has Lark turn up "the day the market stall opens" (chapter 2); the ladder has him walk up
+  the new gravel road (`road_3`, 2.5): pick one in I6.
+- **J8. A new top bar** ✅ (R4; the parent checked: there is plenty of space). The **Time Quiz button moves up**: the green circle with
+  the watch face hangs from the bottom edge of the bar in the right corner. The **next goal's text** fills the whole width and height
+  between the energy bar and the 🎒 bag icon. The 🎒 bag with its fill bar (M11), 📜 scroll, 📖, 🖼️, ⚙️; the wellbeing face or icon is
+  fitted in when it appears (L4). ✅ (R5) **The bottom bar goes**, and the map grows by its height (the layout editor's frame changes
+  with it).
+- **J9. Cheat buttons** ✅ (R4): the cheat button and the +100 button leave the bar for good. A grown-up setting switches them on or off;
+  when on, they float below the bar in the top-left corner. The coin button gives **+50 bronze**. New: a cheat to **skip the quiz of
+  any knowledge card waiting for its quiz**.
+
+---
+
+## 5. Pictures (R)
+
+- **R1. Straw needs its own picture** [#15]. Generated, waiting to be picked (`items/straw.png`, sheet 45; part of W1). Straw, wheat
+  and flour all use the emoji 🌾: give straw and flour their own stand-in emoji. Hay (U1) needs a picture too.
+- **R2. Seeds** [#16]. For grains, beans and peas the harvest *is* the seed (U2), so no seed picture is needed there. For the others
+  (carrot, onion, beet …): 💡 one "seed bag" picture with the crop's small picture on it, rather than one picture per crop.
+- **R3. Rules for story pictures** ✅ [#S5], [#S6], (R1): the farmer is **never** in a painted picture. Pictures are seen through the
+  farmer's eyes (a few panels may show **a hand reaching out from the camera**), or show the **silhouette of a farmer with a hat, from
+  behind, backlit**. Avatars drawn by the game in the player's own look (village-square scenes, visits) are fine. Add to
+  `story/story-delivery.md` and the prompt rules for `ART_LIST.csv`.
+- **R4. New map pictures:** the **signpost with a village symbol** by the road (M6); the **carrying device standing beside it**: backpack,
+  basket, later cart, each in a few fill levels (filled with generic sacks, so one set works for any load); the travelling merchant's
+  **cart** in fill levels; **trees, stumps and saplings** at the forest edge (N3); **bare trees** for winter (N7).
 - Art for the 67 card pages, gear and pests: see Z6.
 
 ---
 
-## 5. Money and the market (M)
+## 6. Crops and items (U)
 
-### The economy
+- **U1. Hay as its own crop** ✅ (R1) [#15]: a meadow-grass crop that gives **hay** (cut grass gives hay, not straw; and the fire began in
+  the hay). Straw stays a by-product of wheat and oats. Hay and straw are partly interchangeable (✅ table, R2):
 
-- **M1. A critical pass on the economy** [#6]. A pizza that costs more than 100 coins is implausible (today: porridge 4, roast carrots 7,
-  omelette 16, honey cake 49, apple pie 72, **pizza 166**, cheese board 212). The cause is the pricing rule (`meta.pricing`): worth of the
-  inputs × (1.25 + 0.1 per different input) + extras, applied **again at every stage**, so long chains grow like compound interest. The
-  parent's ideas: make base ingredients cheaper; wheat cheaper to buy and less profitable to sell as the game goes on (Q-M8); keep the
-  simple start (1 coin to buy, 1 coin to sell); later, in bigger quantities, e.g. **10 seeds for 2 coins** and selling wheat at a slim
-  margin of about **10 %**. 💡 Also look at the rule itself: a smaller mark-up for dishes made from dishes, or a mark-up added rather than
-  multiplied, so the top of the chain lands in a believable range. Include the explorer's value-check notes for `rope_straw`, `compost`,
-  `steel` and `jam` (recipes whose value change falls outside the expected band; was "Later 4"). Re-run the explorer and the bot; check
-  that dynamic difficulty (`meta.flex`) still fits.
-- **M2. Coins smaller than one** [#6]: "at some point we may need decimals for money, something like cents, shown as a smaller bronze
-  coin in the animations". 🔗 Q-M7 (💡 10 bronze = 1 coin, both whole). Needs: the coin display in the top bar, prices on tiles, the
-  rounding rule (§5.8: stocks down, costs up) for two kinds.
-- **M3. Coin animations** [#7]: when paying, the coins fly to the merchant; when selling, they come from the merchant. More than 10 coins
-  fly in tight bunches of 10 (the parent's example: 27 coins → three clusters flying; 💡 read as 10 + 10 + 7). 🔗 P1 (a merchant figure
-  to fly to), M2 (bronze coins: bunches of ten bronze become one coin, a place-value lesson), Q-M9 (the *Coin shower* perk).
+  | Use | Hay | Straw |
+  |---|---|---|
+  | Animal food | good | poor (filler) |
+  | Bedding | yes | yes |
+  | Compost | yes | yes |
+  | Thatched roof, beehive skeps | no | yes |
+  | Mulch | no (its seeds bring weeds) | yes |
 
-### The market
-
-- **M4. Every thing gets a weight (bulk)** [#1]: each object, seed and raw material needs an attribute for how hard it is to carry
-  (how bulky or heavy). Seeds are not items today (R2), so they need their own (very light). 💡 A few classes are enough (feather,
-  light, normal, bulky, heavy) rather than exact numbers; straw is a nice example of light but bulky; logs, stones, iron ore are heavy
-  (which is also why heavy carts need the gravel road: the road data already says so).
-- **M5. How much the farmer can carry** [#1], [#2]: a number for the farmer's carrying, set by what they carry with (the parent names
-  baskets, better backpacks and postcards, i.e. the postcard gifts such as *Deep pockets*) and, later, by **strength** (L2). The game
-  already has carrying gear for gathering (Gathering Basket, Wicker Pack, Canvas and Frame Rucksacks; `meta.carry`, "gathering takes 2
-  loads per tap"): 💡 the same gear sets the market load, so nothing new needs drawing. Later helpers that lift the limit: the
-  wheelbarrow, the hand cart, and the **pony** (its planned job card "carry surplus to market and sell it", S2).
-- **M6. The village sign and the market trip** [#1]. The merchants should not have their carts at the farm from the start. Instead, a
-  **sign** right next to the road, pointing to the top-right corner, with a **village symbol** on it (no words, as on the whole map).
-  Tapping it opens a window with the option to go to the market. Rules:
-  - The trip is possible **once per time unit**; at first, buying and selling needs a time unit to pass (🔗 Q-M2).
-  - What you can **buy** is severely limited at first, because you have to carry it back; what you can **sell** is limited too.
-  - Postcards, baskets, better backpacks and so on raise how much you can take to the village and bring back (M5).
-  - **Selling stays in the store window** (as now); when you have sold as much as this time unit allows, the sell buttons grey out
-    with an ⏳. The same for buying.
-  - The trip **costs energy**; the parent's proposal: the default trip energy is taken at the first sale (e.g. one bowl of porridge),
-    then buying and selling are free in energy for the rest of that turn. Buying and selling should cost time and energy without being
-    tedious to handle. 🔗 Q-M3 (💡 yes, with the trip cost shown on the first button and a carrying bar).
-  - It becomes available after the Time Quiz (i.e. per question answered).
-  - ⚠️ 🔗 Q-M1 (not in the first minutes), Q-M4 (two limits), Q-M5 (deliveries apart). Today the market stall, book cart, notice
-    board and later the Import Broker stand by the road at the top right of the map (`data/map_layout.json`), and every merchant is "always
-    there" (`seed_1`: "Always there, always takes coins"). The book cart (the books!) moves to the village too, so books need room in the
-    bag. The *Market Stall* building (+10 % selling, chapter 2) needs a new meaning (💡 your own stall on market day in the village).
-- **M7. Merchants come to your gate when the road is good** [#1]: once the road is improved, the travelling merchant now and then puts
-  his cart next to your farm. **Slightly** random when; the better the road, the shorter the wait between visits. While the cart is
-  there, no trip is needed (💡 and no carrying limit). 🔗 the road ladder (`road_1` … `road_5`), J4 (show his arrival in the replay), P1
-  (he walks or drives in as a figure). ⚠️ Random timing is fine with "time only moves with answers" as long as it is counted in
-  questions, never in real time.
-- **M8. What you may buy, and why** [#1]: at the market, why only some seeds at first, when surely someone would sell more advanced
-  seeds? 🔗 Q-M6 (the gatekeeping decision). Whatever is chosen gets told in the story (I6).
-- **M9. A picture of the market square** [#1]: a preview of what the market square screen looks like, even though the player does not
-  go there yet at the beginning. 💡 The same painted village-square background that the planned delivery scenes use
-  (`story/story-delivery.md` §7), so one picture serves both.
-- **M10. Notice board and Import Broker.** 💡 Decide where they stand once M6 is decided (the notice board's little jobs and favours
-  are a village thing; the Import Broker came with the pony and the paved road).
+  Straw is unsellable today (`noSell`); ❓ can hay be sold? (💡 yes, to the village's animal keepers.)
+- **U2. Seeds from your own harvest** ✅ (R2, R3, R4):
+  - The harvested **grain is the seed** (wheat, oats, beans, peas …): one item you can plant, mill or cook. No conversion step. Medieval
+    fields gave about 3–5 grains back per grain sown, so about 5 is honest (an ear has 30–50 grains).
+  - **Every crop can make its own seed.** Carrots, onions, beets and other biennials only flower in their second year: a plant left to
+    seed must **stay in the ground through one winter**, then gives a lot of seed in spring. Meanwhile the patch grows nothing else.
+  - Each way of making seed is **learned from a knowledge card** first (K4).
+  - **Seeds of every unlocked crop can always be bought**; buying is mostly for starting a new crop.
+  - The **Seed Library** (chapter 5) keeps only its heirloom role. Data: seeds are a separate count today (`S["seeds"]`); grains become
+    plantable items; the others get seed items.
+- **U3. Quality on items** (Y1): crops, dishes, crafts and medicine exist in three qualities; raw materials (sticks, stones, clay …)
+  don't. The store shows them on one tile (M11).
+- **U5. Winter crops** ✅ (R5, R6): **winter wheat**, a new crop, sown in autumn or winter, slow through the winter (a quarter speed),
+  its seed bought first and then saved from its own harvest; **winter kale or cabbage**, a new crop that grows so slowly and gives so
+  little that it only pays in winter. ✅ (R7) **Chapter 1:** winter wheat (a card in *The Little Farm Book*, "Wheat for winter: sow in
+  autumn", seed bought on a village trip; the first autumn's season text points to it; the first winter comes near the end of chapter 1)
+  and onions. **Chapter 2:** the beans count as broad beans; **winter kale** comes with the cows and *Soil & Seasons*, as winter fodder
+  and winter food. **Chapter 4:** the glass cloches and the greenhouse let anything grow in winter. 🔗 N6.
+- **U4. Made things to sell** ✅ (R2): deliveries and unlocks stay as they are (a fine crafted pot can replace a dish here and there).
+  New: tools, baskets, pots, rope and other made things can be made **again and again and sold**. The first one made still unlocks what it
+  unlocks. The early game leans on crafts from what is at hand (rope, reed baskets, clay pots, later herbs and medicine) as much as on food.
 
 ---
 
-## 6. Wellbeing and the energy model (L) — "a bit like The Sims" [#2], [#4]
+## 7. Money and the market (M)
 
-Optional depth: the whole game can be played without using these boosts and buffers ✅ [#2] (🔗 Q-L2 for how that fits the penalties).
+### Money and prices
 
-- **L1. The energy model on paper first** [#4]. Energy is shaped in three ways: (1) the **maximum**; (2) the energy per right **Rest**
-  answer (quick or slow); (3) **natural rest per time unit**, zero by default, which things like a better bed or a mindfulness practice
-  can make a small but meaningful passive gain (time passes and some energy comes back for free). So far the game has only ways to
-  *raise* (1) and (2). Now also the factors that **lower** the energy per answer, the maximum and the passive rest, possibly even
-  **negative energy per time unit**. 🔗 Q-L3, Q-L4, Q-L5. Write the formula and its numbers in the design document as *(planned)*
-  before any code; check it in the explorer.
-- **L2. Which body and mind numbers** [#2]: a parameter for **strength**, which could be the same as **endurance** (and feeds carrying,
-  M5); one for **happiness**; one for **emotional regulation** or mental health. Aggregated through a function, they shape the energy:
-  how fast it comes back and how high it can go. The parent wants to think about which parameters make sense. 💡 A first list, each
-  with a lever the game already has or can easily have:
-  - **Sleep** (bed, pillow, a regular rest, a warm house: the cold house already gives −25 % Rest in winter)
-  - **Food** (variety: eating the same dish again and again vs a mix; the game has dishes and food bonuses)
-  - **Strength / endurance** (carrying, walking, a little training)
-  - **Friends** (favours, visits, letters, the Fair: the village strand; "being kind to others feels good")
-  - **Calm** (breathing, sitting still, the forest, the night sky; mindfulness)
-  - **Play** (doing something just for fun: 🔒 in the story, the farmer's buried need is exactly this, Mumyo's mischief; a strong fit)
-  Kept positive and gentle in wording: no labels like "unhealthy" on the child's farmer; low values read as "low battery", never as
-  failure.
-- **L3. Hidden at first, opened by reading** [#2]: at first the player sees none of it and has no idea why, for example, helping others
-  makes the farmer recover faster. To open the **health and mind dashboard**, the player reads books and passes their quizzes. At first
-  there is little to see; with each book more numbers appear and more can be improved, again by reading: things like **meditation** or
-  **endurance training** become available step by step. 🔗 K4 (the books), Q-L1.
-- **L4. Where the dashboard opens** [#2]: a symbol in the top-right bar (maybe the easiest) or a natural place on the game screen.
-  🔗 Q-L6 (💡 tap the farmer).
-- **L5. Things that pull energy down** [#4]: unhealthy habits; things that grow with the size of the farm or with how much you carry.
-  The idea: the more you build, grow, harvest, water and automate, the more you must balance it by looking after yourself (a good bed,
-  being kind to others so you feel good, and so on). If you don't, the energy per answer gets low, each time unit costs energy, the
-  maximum may shrink. 💡 Examples that fit the world: long working stretches without a rest; always the same food; nobody visited in a
-  long time; carrying too much; a cold house (exists). ⚠️ 🔗 Q-L2, Q-L4. Note: the game already scales the work (energy per job grows
-  about twelvefold from chapter 1 to 5), so the new pressure must not double that; balance them together.
-- **L6. Knowledge cards for modern life** [#2]: this side lets the game carry many more knowledge cards relevant to modern life (sleep,
-  movement, food, feelings, friendship, calm). 🔗 K1–K6, Q-I6.
-- **L7. Story ties** 💡: Berit's note *Rest the field. Rest yourself.* (ch 2); the badger's "tea first" (ch 5); Wren's "You never stop, do
-  you?"; the running snag "Do you ever stop?". The farmer's flaw (never stopping) becomes something the player can *feel* in the
-  numbers, and the cure is the story's cure. 🔗 Q-L7.
+- **M1. The economy, rebuilt on realistic prices** [#6] ✅ (R1, R2). Today pizza costs 166 coins because the pricing rule
+  (`meta.pricing`) multiplies the mark-up again at every stage (porridge 4, omelette 16, honey cake 49, apple pie 72, pizza 166,
+  cheese board 212). New: prices from D3 (Swiss prices for familiar goods, old-world ratios for the rest), then adjusted so the game
+  works; the formula's mark-up for dishes made from dishes made smaller, or added instead of multiplied. Include the explorer's
+  value-check notes for `rope_straw`, `compost`, `steel` and `jam` (was "Later 4"). 💡 The rule from Y2: for a made thing, the market's
+  price lies between what it costs a beginner to make (inputs + energy + time) and what it costs a master, so buying beats making for a
+  beginner and making pays for a master. Re-run the explorer and the bot; re-check dynamic difficulty (`meta.flex`).
+- **M2. Bronze and gold coins** ✅ (R1): **100 bronze = 1 gold**, like Rappen and Franken (a real-world skill). The game starts in bronze
+  only; gold appears once numbers get big; from then on both are shown (2 🟡 35 🟤). Whole numbers on screen stay. Needs: the top bar,
+  prices on tiles, the rounding rule (§5.8: stocks down, costs up) for two coins; the +50 bronze cheat (J9).
+- **M3. Coin animations** [#7] ✅ (R1): paying, the coins fly to the merchant; selling, they come from him; more than 10 fly in tight bunches
+  of 10 (27 → 10 + 10 + 7). Plain flying coins for everyone; the *Coin shower* perk becomes the fancy version (a shower, sparkle, sound).
+  🔗 P1 (a merchant figure), M2 (bunches of bronze).
+- **M12. Prices that change** ✅ (R1): announced at **each change of season** (a short news line, together with the season's text, N8):
+  supply and demand, the season itself, and possibly dynamic difficulty. Also per person: a merchant who likes you gives a better price
+  (M8); better quality fetches more (Y1). Costs of goals (buildings, books) never change once shown.
+- **M13. The Lord's share** ✅ (R4). From **chapter 2 or 3** (until then the farm is under the Lord's radar: a ruined, abandoned plot).
+  Due each season; **it grows with the number of plantable patches, whatever they yield** (the logic that drove the family to extract more
+  and more); the fraction **rises chapter by chapter**, as in the origin story; in chapter 6 the Lord asks for "a half" again, and Quill's
+  numbers bring it down to "a tenth". **If it can't be paid, nothing else can be bought until it is.** Never stuck: seeds can be self-made
+  and selling still works. ✅ (R5) Counted per cleared patch on what the Lord assumes it should give (a patch resting under clover counts
+  too), **and per building** ✅ (R6): the ones that produce or process (mills, lumbermill, smithy, kiln, press, workshop, the barn once it holds
+  animals), each by its level; not the home, storage, pens or the pet corner. **A person from the village comes to the gate at the end of
+  each season** to collect (✅ R7: **Pieter the night watchman**). While unpaid, anything bought with coins is blocked; selling, making, farming, trips and
+  barter go on. Never more than about a quarter of a typical season's sales at the planned pace. 🔗 N (the pressure to over-use the land).
+- **M14. What coins are spent on, again and again** ✅ (R4): books, animals, materials the farm can't make (iron ore, salt, glass,
+  sand), parts (axle, wheels, nails), the coin part of buildings, first seeds of a new crop, the Lord's share (M13), and **made things
+  bought instead of made** (a beginner buys a hammer; a master smith makes and sells them; Y2). 💡 Small services too: borrowing a donkey
+  for a trip, a helper, repairs (R1 mentions the donkey as a favour from someone you helped).
 
----
+### The market trip
 
-## 7. Nature and sustainability (N) [#5]
-
-- **N1. The aim**: the game and the story address farming's impact on the environment and sustainability. There is already the slow
-  reveal of what made the land dry (`story/world/lease-and-collapse.md`: each link of the chain is a game system). On top, **numbers
-  about sustainability are introduced at some point**.
-- **N2. Which resources** 💡: the parent names **water** and **gathering wood and rocks from the forest**. Others that fit: **soil**
-  (already in the game: crop rotation, tired and rested soil, compost), **forest herbs** in the medicine chapter (the real foragers' rule
-  "take only a third"), the **woodlot and lumbermill** (replanting; **coppicing hazel**, which fits a village called Hazelwood).
-- **N3. Advice, then consequences**: after too much use, a resource gets a **recommendation** (how much is sustainable); if the player
-  ignores it, the yield declines or other bad things happen. 🔗 Q-N1 (never below a floor), Q-N2 (Helpers do not leave). Maybe there are
-  other or better ways (the parent is open): 💡 e.g. the pond level visibly drops; the forest edge shows stumps instead of trees; a Helper
-  pauses a job; Berit's book has the old rule for each.
-- **N4. Hidden until introduced** [#5], [#3]: until then the sustainability numbers run in the background, nailed to a harmless fixed
-  value. 🔗 O2.
-- **N5. Woven into the story** ✅ "It should definitely be woven into the story": the world's Bargain (`shell-and-magic.md` rule 3: "the
-  people take only what the land can give back"); the family's old mistakes (forest edge cut, spring pond drained) are exactly what an
-  over-using player would repeat in small; the North Field resting in chapter 4 (your first *no* to the steward) could become a real
-  choice in the game; the Lord's letter asking for *a half* again in chapter 6. 🔗 I6.
-
----
-
-## 8. Opening and what unlocks when (O) [#3]
-
-With all the extra things to consider and optimise, the game must **start very simple, with very few options**, and new options,
-possibilities and windows are unlocked or shown in sequence. ✅ idea, 💡 details.
-
-- **O1. An unlock schedule for the interface.** List every button, bar, icon and window the child can see, and say when each appears
-  (the parent's example: after the Home Field is cleared completely, a window that was not there before becomes available). Start with an
-  audit of what the very first screen shows today (top bar: coins, water, energy, season bar, 🎒, 📖, 🖼️, ⚙️; bottom bar: next goal, Time
-  Quiz clock; the market stall and carts by the road …). The game already follows "only what matters now" for goals and places; this
-  extends it to the interface itself. One table in the design document; the data says what triggers each.
-- **O2. The engine runs from the start, the numbers wait.** Everything that computes and aggregates (wellbeing, sustainability, carrying
-  …) is there from the beginning; until its window is unlocked, it holds its numbers at a constant and does not change them. 🔗 Q-L1 (good
-  effects may still act hidden).
-- **O3. Triggers.** 💡 Reuse the story's trigger language (`story/story-delivery.md` §6: `done:<node>`, `chapter:<n>`, `step>=<n>`,
-  `seen:<id>` …) so that unlocks and story pieces share one system, and an unlock can come with a story box that explains it.
-
----
-
-## 9. People on the farm (P)
-
-- **P1. Other characters as avatars** [#11] (e.g. the merchant). Same system as the farmer (`scripts/avatar.gd`, looks from
-  `data/avatar.json`, acts from `data/acts.json`). Combines with: the story's **Visits** (villagers walk onto the farm:
-  Greenstem, Granny Maud, the miller, Wren, Master Quill, Lark, Captain Mei; `story/story-delivery.md` §7), merchants walking about
-  (was in "Later 2"), the merchant's cart at the gate (M7) and coins flying to him (M3). ⚠️ No words on the map: they are recognised by
-  their look.
-- **P2. "Make your farmer" screen** at the start (the farmer's look is already data, `data/avatar.json`; keep it per player). Needed
-  for the gender-open farmer ✅ and for the silhouette rule (R3). (Was "Later 2".)
-- **P3. Gear visible on the farmer** (fits the acts' props; upgrade idea 15 in `progression/upgrade-benefits-ideas.md`). (Was "Later 2".)
+- **M4. Every thing gets a weight (bulk)** [#1]: how hard it is to carry. Works hidden from the start (D4). 💡 A few classes (feather,
+  light, normal, bulky, heavy) rather than exact numbers; straw is light but bulky; logs, stones and iron ore are heavy. Seed items too.
+- **M5. Carrying and the trip's energy** [#1], [#2]: how much the farmer can carry depends on the carrying device (backpack → basket →
+  cart; the existing carrying gear for gathering can count too), and on **strength** (L2). The trip's energy is a farmer number too: a
+  flat cost that gets cheaper with a better road, a better cart, boots, strength, or a borrowed donkey (a favour). Later: the wheelbarrow,
+  the hand cart, the **pony** (job card "carry surplus to market and sell it", S2).
+  💡 The room counts **each way separately** (a full load there, a full load back), the same size both ways (proposed in R1; the
+  answer reshaped the trip and didn't say; confirm when D1 is written).
+- **M6. The village signpost and the trip** ✅ (R1–R4) [#1]. No merchant at the farm at the start, and no market needed at first (D2).
+  A **signpost** by the road at the top right, pointing to the village, with a village symbol. Beside it stands the current carrying
+  device (R4), filling up as you pack. The trip:
+  1. **Pack** in the store (M11): the bag fills; nothing is spent yet.
+  2. **Confirm** at the signpost: the trip's **energy** is taken, and **exactly one Time Quiz question** opens (the walk; the rule "time
+     only moves with right answers" stays; a wrong first try doesn't move time, as everywhere).
+  3. The **market square** opens straight away (not the farm): sell what you brought, deliver dishes or goods for goals, buy within the
+     room left. Unsold goods come home.
+  4. **Back home** with the usual short pause (J4).
+  Trips with an empty bag (only to buy) are allowed. **Deliveries ride in the bag and take room** like anything else (✅ R1; this replaces
+  the earlier proposal to keep them out of the bag).
+- **M7. The travelling merchant** ✅ (R1, R3): comes to the gate **now and then** (slightly random; more often the better the road). No
+  trip, no energy. **Tap him** to see what he will buy and how much room his cart has left; his cart fills up visibly as you sell. He has a
+  big cart, so it is the easy way to sell in bulk; ✅ he pays a little less than the market (his cut). **Barter** with him early (the axle
+  for the first cart, D2). Later upgrades make merchants come very regularly (they leave and arrive again after every question), which
+  stands for a settled trade. His first appearance: he **passes by on the road once** as a story moment (✅ R1).
+- **M8. Trust and why the village sells only some things** ✅ (R1, R2): the village **distrusts** the farmer: the farm burnt down, and
+  the whole family was distrusted (that is part of why it scattered; nobody in the village is related to the farmer). The village is also
+  **poor**: the Lord squeezed everyone, and others dug their wells too deep. Poverty sharpens the distrust (a scarcity mindset). What
+  wins them over: the farmer **turning burnt, barren land around** and being **kind without expecting anything back**. Mechanics:
+  **each person has their own trust**, plus a **village-wide reputation** that rises as the farm visibly recovers; trust changes **what is
+  on offer** and **the price**. Granny Maud and young Greenstem are kind from the start. Favour rewards come as **surprises**, not promised on
+  the button. The existing gates stay: dishes and goods delivered = trust; the road = who can bring goods to your gate; cards = what you
+  can use.
+- **M9. The market square picture** [#1]: one painted village square, used for trips and for the delivery scenes
+  (`story/story-delivery.md` §7); a first look at it can be shown before the first trip.
+- **M10. Notice board and Import Broker:** decide where they stand now that the market is in the village (the notice board's little jobs
+  and favours; the broker came with the pony and the paved road).
+- **M11. The store and packing** ✅ (R2–R4):
+  - **The store** is a compact grid of small tiles: picture, a **short text in a smaller font**, count, a stale badge, small dots for the
+    quality levels. **No sell buttons.** A **row of filters** on top (the categories at first: food, crafts and tools, materials, crops …;
+    a filter row leaves room for other filters later).
+  - **Tapping a tile** opens a small panel: eat, compost, feed, and **🎒 + 1 / + all** (💡 accepted by silence in R4).
+  - **Packing doesn't take things out of the store**: they stay there marked as packed (a small 🎒 on the tile), can be unpacked any time
+    for free, and can still be eaten until you leave (💡 accepted by silence in R4).
+  - The **🎒 bag icon** in the top bar fills as you pack: 💡 a thin bar under it, like the energy and water bars (accepted by silence);
+    the numbers ("8 of 12") in the bag window.
+  - **Tapping the bag icon, or the carrying device beside the signpost,** opens the bag window: a grid of what is packed, **sorted by how
+    much room each thing takes**, where things can be taken out again.
 
 ---
 
-## 10. Knowledge and curriculum (K) [#S8], [#S1]
+## 8. Skills and quality (Y)
 
-A **secondary** goal ✅: it must not overshadow the main ones (a game that is fun, not overwhelming, still challenging; a story that is
-interesting, well made and makes you care). Use it wherever it does not conflict.
+- **Y1. Quality** ✅ (R2, R3, R5): three levels, **Lumpy / Proper / Fancy**; German **Naja / Tiptop / Picobello!**. Mostly predictable from the tools, the
+  ingredients' quality and practice (Y2), with a small chance of one level up or down; the recipe tile shows what to expect before you
+  make it; every skill rank raises the chances a bit (Y2). Crops (from soil, weeds, patch level), dishes, crafts and medicine have it; raw materials don't. Lumpy sells for about 60 %,
+  Fancy for about 150 %. Some key deliveries ask for at least Proper; the badger's "really good medicine" (`story/game-design-round4.md`
+  §C) is simply **Fancy**. ⚠️ Reverses the old decision "Quality stars: no" (log §2.4). Upgrade idea 12 in
+  `progression/upgrade-benefits-ideas.md` becomes real.
+- **Y2. Skills and mastery** ✅ (R4, R5). The parent: honing a skill (and better tools and buildings) lowers energy and raises
+  carrying, as decided, but some learning also means **less waste of inputs** (fewer reeds for the same basket), and less time and
+  energy. Becoming good at everything is possible in theory, but it should pay to **specialise**, master some areas first and **buy the
+  rest** (making steel from bought iron ore is possible, but needs much knowledge, training and upgraded tools, so it only pays on the
+  metal path). Practice is **tracked even when not visible**, "in a way that doesn't get out of hand", usable without losing detail.
+  - **Eight families** ✅: planting and harvesting · animal tending · cooking and baking · fibre and weaving · woodwork and construction
+    · pottery and glass · smithing · healing and preserving. Every batch (or job) counts for its family, so similar work trains it too.
+  - **Five ranks** (💡, accepted by silence in R5): Beginner → Handy → Skilled → Expert → Master. A rank needs a number of batches (e.g.
+    10 / 30 / 80 / 200) and, from Skilled on, a gate the game already has: a card (Skilled), a tool tier (Expert), a station or building
+    (Master), so grinding cheap recipes can't make a master early.
+  - **What every rank brings** ✅ (R5):
+    - **fewer inputs at every rank**, with diminishing returns, and **more for construction and crafting** than for cooking or healing;
+    - **a bit better quality chances at every rank**, Master included;
+    - plus Handy: less energy; Master: faster.
+    - Field and animal work gain **less** from training (buildings, tools and books already cover much), mostly through **fewer
+      beginner's mistakes** (dropped eggs, a seedling pulled with the weeds) and better quality.
+  - **How savings show:** amounts stay exact underneath (the game already works that way); a saving that hasn't reached a whole piece yet
+    shows as the faint grey cubes the cost bars already use for upgrade savings, so no decimals appear.
+  - **Every saving says why** ✅ (R6): when training, an upgrade or new knowledge reduces the inputs, time or energy, a line explains it in
+    the world's terms ("You drop the eggs less often now", "Your hands know baskets: 5 reeds instead of 6").
+  - **No beginner's mishaps when making things** ✅ (R6): there, a beginner's "mistake" is a Lumpy result; materials are not lost.
+  - **Shown when it first matters:** the first rank-up comes with a small celebration ("Your hands know baskets now"); then the rank
+    shows on recipe tiles and a skills page appears (in the farmer's dashboard or the album).
+  - **No fading, no hard limit** on how many families reach Master; time and energy limit it naturally.
+  - **The price rule** (M1): a made thing's market price lies between a beginner's cost to make it and a master's, so buying pays for a
+    beginner and making pays for a master.
+  - **Replaces the per-station practice stars** that exist today (`meta.practice`: −5 % energy per star at 10/40/120 uses).
+  - First numbers go into D1 and are tuned in the explorer.
 
-- **K1. The frameworks** ✅ the parent provides them (W6). Examples the parent gave: broad frameworks that make it easy for a child to
-  slot new facts in. **What the world is made of**: molecules, crystalline structures, metals. **Nested scales**: molecules are made of
-  atoms, atoms of electrons, protons and neutrons; the other way, the planet is part of the solar system, part of a galaxy, a galaxy
-  cluster, the universe. **History** of our world in broad strokes only. **Facts about the body** that are not just nice to know but
-  fundamental, so that learning at school gets easier. Ways for an eight-year-old to understand chemistry, physics and any other
+---
+
+## 9. Wellbeing and the energy model (L) — "a bit like The Sims" [#2], [#4]
+
+✅ All systems run from the start; wellbeing is frozen until chapter 2 (D4). ✅ The Time Quiz may now **give and drain** energy (R1:
+symbolic; the bulk of energy still comes from the arithmetic; health and kindness are mostly there to **prevent** drain, which grows
+with the farm). ✅ Natural consequences instead of "nothing punishes" (R1; L7).
+
+- **L1. The energy model** ✅ (R2, R3): the **home sets the base** (energy maximum and energy per right sum, as today: tent 20/5 …
+  farmhouse sun room 65/9); the **parameters work like a dial on top** (e.g. ×0.7 to ×1.3; how much is base and how much dial can be
+  shifted later) and also set the **gain or drain per Time Quiz question** (0 by default). Write the formula and its numbers into the
+  design document (D1) before any code; check it in the explorer.
+- **L2. The parameters** ✅ (R1, R3): **sleep** → energy per right sum (the bed feeds it); **food** (variety) and **strength** → the
+  maximum (strength also carrying, M5); **friends**, **calm** and **play** → gain or drain per question. The face on the farmer shows the
+  overall mood. **Play** gives reasons to build or buy a musical instrument, something for making art, to throw a party at the farm now
+  and then, or to say yes to an invitation to visit another farm (costs time and energy, gives nothing back at once). ✅ A visit works
+  like a market trip: a scene that costs a question and energy.
+- **L3. Opened by reading** [#2]: at first the player sees none of the parameters and has no idea why, for example, helping someone makes
+  the farmer feel better. Books and their quizzes open the **dashboard** and, step by step, more numbers and more ways to improve them
+  (meditation, endurance training …). 🔗 K4.
+- **L4. Where it opens** ✅ (R1, R4): tapping **the farmer**, and an icon in the top bar (fitted in when it appears, J8).
+- **L5. The drain** ✅ (R2, R3): starts in **chapter 2**, together with the face; grows mostly with **how much runs on the farm and how
+  much you carry** (other candidates kept open: buildings, animals, patches, chapter); its **maximum is about 1.5 right sums' worth per
+  question** (so the strain stays the same across the game; it rarely gets that bad); parameters **sink slowly, with a warning** from the
+  face, and **recover a little faster** than they sank; **at zero energy the drain stops**, no debt. The energy change after the quiz is
+  always shown (J4).
+- **L6. The happy boost** ✅ (R2): helping someone shifts the per-question rate upwards for a while (e.g. 0 → a small gain for a few
+  questions; −2 → +1), calibrated per chapter.
+- **L7. Natural consequences** ✅ (R1): setbacks are allowed when they follow naturally (chopping too much wood, using too much water,
+  neglecting your health); they last a while, and the player can always correct course and recover. The game doesn't impose them on
+  purpose, and doesn't pull its punches either. Nothing is lost for good; Helpers never leave. Replaces "nothing that punishes the child"
+  in `00-READ-ME-FIRST.md` §4.6 (the poisoning stays as decided).
+- **L8. Story ties** 💡: Berit's note *Rest the field. Rest yourself.* (ch 2); the badger's "tea first"; Wren's "You never stop, do you?";
+  ✅ the chapter 5 low point (you collapse from overwork) stays a story beat and is the moment the dashboard's rest and calm levers open.
+
+---
+
+## 10. Nature, sustainability and seasons (N) [#5]
+
+- **N1. The aim** ✅: the game and the story address farming's impact on the environment. The slow reveal of what made the land dry
+  stays (`story/world/lease-and-collapse.md`); on top, numbers about sustainability, **frozen until a note in the grandmother's book in
+  chapter 2–3** (D4).
+- **N2. Which resources** ✅ (R1): the forest edge (sticks, stones), **water**, **clay**; later forest herbs ("take only a third") and the
+  woodlot (hazel coppicing). Metal and big stones come from the market, so sustainability doesn't apply there.
+- **N3. Trees, stumps, saplings** ✅ (R1, R2): felling trees at the forest edge is the early source of logs. Trees become stumps, stumps
+  saplings, saplings trees again over a number of questions, fairly quickly; cut too many in a short time and the corner shows mostly
+  stumps, almost no full trees and too few saplings, and the wood yield drops. Needs the pictures (R4).
+- **N4. Stones and clay** ✅ (R2): loose stones at the forest edge slowly run out and don't come back; frost stones in the fields stay;
+  big amounts come from the quarry merchant. The clay pit refills slowly.
+- **N5. Advice, then consequences** ✅: over-use gets a recommendation first (the book, a Helper's look); ignoring it lowers yields to a
+  **floor that always covers the basics** (the campfire is never impossible), and a Helper **pauses one job and gives you a look** until
+  the balance is back. Helpers never leave. 🔗 L7, M13 (the Lord's share pushes towards over-use, as it did for the family).
+- **N6. Winter** ✅ (R4): **snow falls like rain and then stays**; patches must be **cleared of snow** before planting (a whole-field
+  action, J2); fewer crops in winter ✅ (R5): outdoors only a few hardy crops can be sown (✅ winter wheat, onions, beans as broad beans,
+  winter kale; U5); every other crop's tile shows ❄️ "too cold to sow", with "try the greenhouse" only once a greenhouse exists; crops already in the ground grow at **a
+  quarter** of their speed. The greenhouse and the cloches get a real job. **Winter wheat** becomes a new crop (U5).
+- **N7. Seasons you can see** ✅ (R4): trees and grass look visibly different each season; winter is not just snow but **muted colours**;
+  a cheap way to put **snow on every roof** without a new picture for each building. ✅ (R5) **One shader over all map pictures**:
+  snow caps on every top edge (roofs, trees, fences), muted colours in winter, green turned golden in autumn; new pictures only where a
+  shader can't fake it (bare deciduous trees in winter, R4).
+- **N8. A text at the start of each season** ✅ (R4): what changes now (growth, weeds, pests, rain, what can be sown), together with the
+  market news (M12).
+
+---
+
+## 11. Opening and what unlocks when (O) [#3]
+
+✅ (R1) All systems are in place from the very beginning, running in the background; each becomes visible and open to the player at a
+certain point. Until then it is either **frozen** at a stable value or its influence is **real but unexplained**, chosen per system (D4).
+Things that don't exist yet (the forest screen before chapter 5) aren't visible at all.
+
+- **O1. An unlock schedule for the interface:** every button, bar, icon and window, and when it appears (example: after the Home Field
+  is cleared completely, a window opens that wasn't there before). Start with an audit of the first screen. 🔗 D4, J8.
+- **O2. The engine runs from the start, the numbers wait** (frozen or hidden, per D4).
+- **O3. Triggers:** 💡 reuse the story's trigger language (`story/story-delivery.md` §6: `done:<node>`, `chapter:<n>`, `step>=<n>`,
+  `seen:<id>` …) so unlocks and story pieces share one system, and an unlock can come with a story box that explains it.
+
+---
+
+## 12. People on the farm (P)
+
+- **P1. Other characters as avatars** [#11]: the travelling merchant first (M7: walks or drives in, his cart, coins fly to him); the
+  story's **Visits** (Greenstem, Granny Maud, the miller, Wren, Master Quill, Lark, Captain Mei; `story/story-delivery.md` §7). Same
+  system as the farmer (`scripts/avatar.gd`, `data/avatar.json`, `data/acts.json`). No words on the map: they are known by their look.
+- **P2. "Make your farmer" screen** at the start (the look is already data, `data/avatar.json`; kept per player). Needed for the
+  gender-open farmer. (Was "Later 2".)
+- **P3. Gear visible on the farmer** (fits the acts' props; upgrade idea 15). (Was "Later 2".)
+
+---
+
+## 13. Knowledge and curriculum (K) [#S8], [#S1]
+
+A **secondary** goal ✅: never at the cost of a fun, not overwhelming, still challenging game and a story that makes you care.
+✅ (R1) No in-world framing is needed for modern knowledge: the Time Quiz questions can be shown without any context.
+
+- **K1. The frameworks** ✅ come from the parent (W6). The parent's examples: what the world is made of (molecules, crystalline structures,
+  metals); nested scales (atoms → electrons, protons, neutrons; planet → solar system → galaxy → galaxy cluster → universe); history of
+  our world in broad strokes; fundamental facts about the body. Ways for an eight-year-old to understand chemistry, physics and any
   framework that makes learning easier.
-- **K2. Map hooks in the existing cards** (can start before K1 arrives) 💡: go through the 67 cards and 201 card questions (KNW-001…201)
-  and note where a framework fits. Hooks already in the game: photosynthesis (every crop; the parent's own example — check whether it is
-  in already); compost and decomposers (soil life); bread rising (yeast is alive); smelting iron and making steel (metals, melting);
-  quartz found in a stone (crystals); salt (crystals); glass from sand (melting, cooling); dyes and colour mixing (light); water carried,
-  rain, evaporation; the moonstones "fallen from the sky" (meteorites, the solar system); the first night under the stars (ch 1 awe); the
-  medicine chapter (the body); the wellbeing books (L6).
-- **K3. Augment the cards**: add a question to an existing card, or add to a card, so the framework attaches to it. Rules: new
-  questions get new ids through `tools/quiz_ids.py`; never change or reuse an id; German through `tools/i18n.py`.
-- **K4. New books** 💡: a *body and mind* book (or two) that opens the wellbeing dashboard (L3); a *land and water* book for
-  sustainability (N); *The Healer's Herbal* (already planned for chapter 5, `story/game-design-round4.md` §C). Each with a price,
-  chapter and cards like the other 12 books.
-- **K5. The external pool**: whatever cannot be made to fit goes into the Time Quiz question packs (one pack per framework or school
-  topic), which is fine. But the more lives inside the game, the stronger the child's own motivation, because the relevance is obvious.
-- **K6. How it is voiced** 🔗 Q-I6 (Lark; "Today we know …").
+- **K2. Map hooks in the existing 67 cards and 201 card questions** (can start before K1): photosynthesis (the parent's example; check
+  whether it is in already); compost and soil life; bread rising (yeast is alive); smelting and steel (metals, melting); quartz and salt
+  (crystals); glass from sand; dyes and colour mixing (light); rain and evaporation; the moonstones "fallen from the sky" (meteorites,
+  the solar system); the first night under the stars; the medicine chapter (the body); the wellbeing books.
+- **K3. Augment the cards:** add a question to a card or add to a card. New ids through `tools/quiz_ids.py`; never change or reuse an id;
+  German through `tools/i18n.py`.
+- **K4. New books and cards:** body and mind (opens the wellbeing dashboard, L3); land and water (sustainability, N); *The Healer's Herbal*
+  (chapter 5); **saving seed** (grain is seed; letting biennials flower through a winter; U2); 💡 crafts books for the skill families (Y2).
+- **K5. The external pool:** what can't be fitted into cards goes into Time Quiz packs (one per framework or school topic). The more lives
+  in the game, the stronger the motivation, because the relevance is obvious.
 
 ---
 
-## 11. Upgrades (H)
+## 14. Upgrades (H)
 
-- **H1. Upgrades that do more than save energy.** Written: `progression/upgrade-benefits-ideas.md` (7 Oct 2026: 119 of ~240 effects
-  only save energy; 15 other kinds of benefit; a suggested rule; one idea per upgrade). Waiting for the parent's choice. 🔗 Choose
-  together with L (beds, pillows, the house: per-Rest vs passive energy, Q-L5) and M5 (baskets and packs as market carrying).
+- **H1. Upgrades that do more than save energy.** `progression/upgrade-benefits-ideas.md` (119 of ~240 effects only save energy; 15
+  other kinds; one idea per upgrade). ✅ (R2) As a **rule of thumb, not a hard rule**: the first tier often saves energy, but sometimes
+  does something else (a better basket carries more); later tiers do something visible. Next: go through the 48 energy-only upgrades
+  together, now with quality (Y1), carrying (M5), skills (Y2) and the sleep parameter (L2) available as benefits.
 
 ---
 
-## 12. Story (I) — files in `story/`, worked in rounds (see `story/README.md`)
+## 15. Story (I) — files in `story/`, worked in rounds (see `story/README.md`)
 
 - **I4 (leftovers of Round 4).** Plant facts still to be fully checked and reviewed by the parent before anything ships. Rename
   `sq_chapel_roof` to the village hall (texts, German, picture prompt "waving from the dry chapel").
-- **I5. Round 5: outline** (`story/outline/ladder.md`, draft 1 of 8 Oct 2026). ❓ Five questions for the parent at its end: the low
-  point in chapter 5 (too close to the poisoning?); the Lord's letter and climb-down in chapter 6; the cousin's accusation at the Fair
-  and her answer (is the cousin a girl?); the one thing left unsaid at the night garden; awe on the first night with the tune. Also
-  still open: the chapter 6 bend as a tap or a text (`story/story-delivery.md`).
-- **I6. Round 6: loop back** (reconcile story and game). Now also: the village strand and the market's gatekeeping (Q-M6, M8: dishes as
-  trust, the Lord's word, the poor village); the travelling merchant's beat (Q-I5); wellbeing as the farmer's flaw made playable (L7);
-  sustainability in the story (N5); the principle below (I13); where Lark appears (J7).
-- **I7. Round 7: texts** (chapter 1 first, read aloud, then German through `tools/i18n.py`).
-- **I8. Round 8: build.** (a) `data/story.json`, the story box, the 📜 scroll (replaces 🎒), first-tap problem stories, frame scenes;
-  (b) then pets' jobs, the medicine chapter, favour-giver renames, pictures (`ART_LIST.csv`); tests and web build. (The game parts are
-  listed in §13, S1–S5.)
-- **I9. The opening: story panels and the frame** [#S3]. The current opening text (the farm burned down, only a tent is left) does not
-  fit the story (`_show_welcome` in `main.gd`: "Your farm burned down. All that's left: a tent, an old bucket …"; `well_1`: "All that is
-  left: a small dented bucket"). The game will start with a few **story panels**: pictures and text, **skippable when replaying**, that
-  explain the situation the player is in. This includes the larger **frame**: grandchildren looking up at the player, asking to hear
-  the story again; a story they have heard many times, but they want it one more time. **Between chapters** the grandchildren poke the
-  player to go on; some **blurt out foreshadowing** (they know the story: "Is this the part where …?") and get **hushed** by the others.
-  🔗 Q-I2 (what is new at the end), Q-I3 (skipping), R3 (no player in the panels). ⚠️ Keep what the current welcome *teaches* (tap places;
-  the ❓ Time Quiz moves time; tap ⚡ to rest): it must survive somewhere (💡 as the first story boxes' second line, or a short tip
-  after the panels). Blurts must never spoil a 🔒 truth.
-- **I10. An epilogue chapter** [#S2]. The last chapter brings the alpaca at the very end; afterwards there should be things to do:
-  loose ends to tie up, enjoying everything built on the farm, **putting the Helpers to use**. Needs more story material, and more side
-  quests and optional things: add-ons, perks and so on. 🔗 Q-I1 (where it sits). 💡 Loose ends the files already leave open: the cousin
-  and the family after the Fair; the Lord's answer and Master Quill; Greenstem and Wren; the letters home; the miller; Lark naming the
-  squirrel; the night garden. ⚠️ The thing left unsaid at the night garden is meant to stay unsaid (ladder 6.11, carried to Minena): the
-  epilogue must not solve Mumyo. The pets' job board levels 3–4 (S5) give the "putting the Helpers to use" part real play.
-- **I11. Pictures for the story follow R3** [#S5], [#S6] (the player never shown; the backlit silhouette from behind where it helps).
-- **I12. A title** [#S7]. "Farm game" needs a better name, ideally the name of the story. First batch below, deliberately varied. 💡
-  It has to work in English and German (or have both), and the farmer's name must not be in it (the player renames the farmer). Before
-  deciding: check that no well-known game or book already uses it.
-- **I13. Plot details in the game are flexible** ✅ [#S4]: the details of the game's plot events so far may be changed to fit the story,
-  as long as the pacing of the game stays roughly sensible. (Recorded in `PROJECT-LOG.md` §2.7.)
-
-### Title ideas, first batch (I12) 💡
-
-| Title | Kind | Note |
-|---|---|---|
-| **Moonedge** | place name | the farm's name in the story; short, mysterious; German *Mondrand* |
-| **Small Is Plenty** | the theme | the first line of Berit's book; German *Klein ist genug* |
-| **One Grain Left** | the opening image | the stalk with one grain; German *Ein Korn übrig* |
-| **The Farm at the Forest's Edge** | plain storybook | German *Der Hof am Waldrand* |
-| **Tell Us About the Farm** | the frame | what the grandchildren ask |
-| **The Helpers Come Home** | the quiet goal | six pets coming home |
-| **Bells in the Hay** | the mystery | hints at Mumyo and the fire without saying it |
-| **Hazelwood Harvest** | cosy, alliterative | the village and the Fair |
-| **Ash & Clover** | before and after | the burnt farm and the land healed |
-| **Seed by Seed** | the method | German *Korn um Korn* |
-| **Before the Frost** | a deadline | the mother's first letter |
-| **The Farm Book** | an object | Berit's book, handed on |
-| **Moonstone Farm** | the world | the glowing stones in the first field |
-| **What the Bunny Kept** | playful mystery | the first small secret |
-| **Enough** | one word | the theme, bold; harder to search for |
-| **Answer the Clock** | the mechanic | the Time Quiz clock that moves the farm |
-| **Wie der Hof zurückkam** | German first | "How the farm came back" |
-| **The Long Way Back to Moonedge** | journey | |
-| **Tend** | one verb | farm, people, yourself |
-| **Sit Down, Farmer** | funny, the bend | the farmer who never stops |
+- **I5. Round 5: outline** — the five questions are answered ✅ (R1): the low point in chapter 5 stays; the Lord's letter stays, and his
+  climb-down comes **through Quill's numbers**; the cousin's accusation at the Fair stays, and **the cousin is a girl** (the default for
+  now); the thing left unsaid at the night garden stays; awe on the first night stays. ✅ The chapter 6 bend triggers **automatically**,
+  like every chapter end (no *Sit down / Tell* tap). Update `story/outline/ladder.md` in Round 6.
+- **I6. Round 6: loop back** (reconcile story and game), now with everything decided 10–12 Oct:
+  - the **collector** of the Lord's share ✅ **Pieter the night watchman** (R7): the village's nearest thing to an official, made to do
+    it, dislikes it, warms to you; his favour in chapter 4; he has seen a tiny light over the marsh (the night garden);
+  - the village's **distrust of the whole family** and its **poverty** (M8); the farmer's kindness without expecting anything back;
+  - the **Lord's share from chapter 2 or 3** (M13): ✅ Pieter collects at the gate at the end of each
+    season; Quill comes in chapter 4 to count patches and buildings himself; the rising fraction mirrors the origin story; the ladder's
+    beats 4.1 and 6.1 adjust;
+  - the **new chapter 1** (D2): no merchant, the farmer avoids the village; the travelling merchant **passes by on the road** (replaces
+    ladder 1.6 "at your campfire"); the reason for the first trip;
+  - crafts as a strand next to food (U4); the sustainability note in Berit's book (N1); wellbeing as the farmer's flaw made playable (L8);
+  - **no epilogue chapter** (I10);
+  - where Lark first appears (J7).
+- **I7. Round 7: texts** (chapter 1 first, read aloud, then German through `tools/i18n.py`; "ss").
+- **I8. Round 8: build.** (a) `data/story.json`, the story box, the 📜 scroll, first-tap problem stories, frame scenes; (b) then pets'
+  jobs, the medicine chapter, favour-giver renames, pictures (`ART_LIST.csv`); tests and web build.
+- **I9. The opening: story panels and the frame** [#S3] ✅. The current opening text (the farm burnt down, only a tent is left;
+  `_show_welcome` in `main.gd`, and `well_1`) doesn't fit the story. The game starts with a few **story panels** (pictures and text) that
+  explain the situation, including the frame: grandchildren looking up at you, asking for the story again, one they have heard many times.
+  ✅ They know the farm story, but **you always stopped at the Fair**: tonight, for the first time, you tell what happened in the barn.
+  Between chapters they poke you to go on; some **blurt out foreshadowing** ("Is this the part where …?") and get **hushed** (about the farm,
+  never the secret). ✅ A **Skip** button from a player's second viewing on; everything stays re-readable in the 📜 scroll. Keep what the
+  current welcome teaches (tap places; the Time Quiz moves time; tap ⚡ to rest) somewhere.
+- **I10. Free play after chapter 6** ✅ (R1, R2): **no epilogue as story.** The last frame scene plays when chapter 6 ends; after that,
+  free play, outside the grandparent's story. Free-play goals still show a short box when they tie up a loose end (the cousin and the
+  family, the Lord and Quill, Greenstem and Wren, the letters home, the miller, Lark naming the squirrel), without the grandchildren.
+  The night garden's unsaid thing stays unsaid. More side quests, add-ons and perks; the pets' job board levels 3–4 give "putting the
+  Helpers to use" real play.
+- **I11. Story pictures follow R3.**
+- **I12. The title** ✅ (R1, R2): **Hazelwood Harvest**, the same name in German. A quick web search found no game of that name (only a
+  town festival in Missouri, "Hazelwood Harvestfest"); still to check: the app stores. Then rename the game (`project.godot`, the web
+  page title, the documents).
+- **I13. Plot details in the game are flexible** ✅ [#S4] as long as the pacing stays sensible.
 
 ---
 
-## 13. Six chapters, the pets' jobs, medicine, the forest (S) — from `story/game-design-round4.md` §E
+## 16. Six chapters, the pets' jobs, medicine, the forest (S) — from `story/game-design-round4.md` §E
 
 Decided in Round 4 ✅ (six chapters; chapter 5 *Healing* with the badger; ~25 hours fine; job board to level 4; forest in and out a Time
-Quiz question each; the Wren check and the poisoning exception). Build order:
+Quiz question each; the Wren check and the poisoning exception).
 
 - **S1. Six chapters in the data**: renumber (old 5 → 6), the badger as a placeholder, `pet_alpaca` and `import_broker` re-pointed to
   `pet_badger`, `sq_healer_garden`, `sq_lamp_maker` and `copper_still` into chapter 5; pet lists in `scripts/game.gd` (two places); bot and
-  explorer re-run. 💡 From the outline: `pet_tortoise` to require `pond`, `pet_alpaca` to require `river_meadow_drain` (I5/I6 decide).
-- **S2. Pets visible and their job board level 1–2** (they walk and act; today's bonuses become level 1). 🔗 J4 (replay shows their
+  explorer re-run. 💡 From the outline: `pet_tortoise` to require `pond`, `pet_alpaca` to require `river_meadow_drain` (decide in I6).
+- **S2. Pets visible and their job board level 1–2** (they walk and act; today's bonuses become level 1). 🔗 J4 (the playback shows their
   work), M5 (the pony carries to market).
 - **S3. The medicine chapter**: the still-room (`ruins_stillroom`), stations, remedies, *The Healer's Herbal* (K4), the Wren check and
-  the poisoning. 🔗 L (energy), N2 (herbs: take only a third).
-- **S4. The forest screen.** 🔗 M5 (the basket's room), N (over-picking), L (energy).
+  the poisoning; the badger needs **Fancy** medicine (Y1). 🔗 L (energy), N2 (herbs: take only a third), Y2 (the Healing family).
+- **S4. The forest screen** (doesn't exist and isn't visible before chapter 5). 🔗 M5 (the basket's room), N (over-picking), L (energy).
 - **S5. Pets' job board levels 3–4** (WHEN cards, a second rule), if play-testing says the child wants them; a parent setting could
-  switch the WHEN cards off. 🔗 I10 (the epilogue uses them).
+  switch the WHEN cards off. 🔗 I10 (free play uses them).
 
 ---
 
-## 14. Later (Z) — parked, older tasks
+## 17. Later (Z) — parked, older tasks
 
 - **Z1. Dynamic difficulty** (design §10.6) is built but **off by default**. Tune it with play-testing; ideas noted: look at the time
   per goal rather than only the pace; vary *which* dish an order wants rather than how much; a parent's slider for strength. `meta.flex`
-  in the data holds every number. 🔗 M1 (re-check after the economy pass). (Was Later 1.)
+  in the data holds every number. 🔗 M1, M12 (prices may follow it). (Was Later 1.)
 - **Z2.** Was Later 2: now P2 (make your farmer), P3 (gear visible) and P1 (merchants walking about).
 - **Z3. Orchard and greenhouse** still use a square patch grid inside their sheets; give them diamond rows like the fields. (Was Later 3.)
 - **Z4.** Was Later 4 (explorer value-check notes): now part of M1.

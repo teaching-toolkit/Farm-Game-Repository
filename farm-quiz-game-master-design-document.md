@@ -1,6 +1,7 @@
-# Farm Quiz Game — Master Design Document
+# Hazelwood Harvest — Master Design Document
 
-**Version 2.0 · 7 October 2026 · describes game data v0.8 and the Godot prototype as built**
+**Version 2.1 · 12 October 2026 · describes game version 0.9.0 (data v0.8) as built** (the game was called *Farm Quiz Game* until
+0.9.0)
 
 This document describes the game: what it is, how it plays, and why it is made this way. It describes the current design,
 not its history and not the work still to do:
@@ -125,8 +126,10 @@ A chapter takes about one to five hours of play; the whole game about 20 hours (
 
 ### 4.1 The Time Quiz — the farm's clock
 
-The ❓ button (an old clock) at the bottom right opens the Time Quiz. One right answer = one step of farm time. It is the
-only thing that moves time.
+The ❓ button (an old clock) at the bottom right opens the Time Quiz. **One answer that is right at the first try = one step
+of farm time.** It is the only thing that moves time. After a wrong first pick the child keeps trying until the right answer
+and its "why" show, but time stays where it was, and that question comes back right after the next one (a pack question as
+well as a card review).
 
 - **Where questions come from.** Mostly from the **question packs** the parent switched on (`activePacks` in
   `data/settings.json`; packs are files in `data/quiz_packs/`). A share of the questions (25 % to start, `knowledgeReviewShare`;
@@ -145,7 +148,7 @@ only thing that moves time.
   (`items/carrot`, `animals/animal_cow`) with an emoji that stands in until the picture exists.
 - **Feedback.** A wrong pick greys out and shows a short hint ("Hens lay something you can cook for breakfast"); the right
   one turns green with a one-line "why". Wrong answers can be retried (`wrongAnswer: retry`); only the first try counts for
-  the repetition.
+  the repetition and only a right first try moves time.
 - **Read aloud.** 🔊 reads the question and the answers where the device has a voice.
 - **Every question has an id** that never changes and is never reused: a pack code and a number (`CON-003`, `PIC-012`);
   the knowledge cards' questions are `KNW-001` … `KNW-201`. The learning record and the translations use the id, so the
@@ -270,7 +273,8 @@ farm's names and descriptions, the knowledge cards and their questions, the quiz
 and the read-aloud voice. English is written in the code and the data; every other language is a set of files in
 `data/i18n/` (`ui-<lang>.json` for the interface, `data-<lang>.json` for the game data, `learn-<lang>.json` for the Rest
 sums, `quiz-<lang>.json` for the packs). A text not translated yet shows in English. A new language is a new set of files
-and a line in `data/i18n/languages.json`; `tools/i18n.py` collects every text into them.
+and a line in `data/i18n/languages.json`; `tools/i18n.py` collects every text into them. German follows Swiss spelling:
+"ss", never "ß".
 
 ---
 
@@ -350,8 +354,8 @@ Only seeds you have can be planted; seeds are bought from the **seed merchant**,
 a stall, a shop and a nursery (§10.4). New crops come a few at a time: some need a better road (beans the ditch, sunflowers
 the kerbstones, herbs the row of trees), some a present for the seed seller (onion sets for two bowls of porridge, lettuce
 for vegetable soup, beets for pancakes, flax for a honey oat cake, berry bushes for a cake). Heirloom seeds come from the
-Import Broker in packets; the Seed Library (chapter 5) lets heirlooms give their own seeds back. The game starts with 5
-wheat seeds.
+Import Broker in packets; the Seed Library (chapter 5) lets heirlooms give their own seeds back. The game starts with 1
+wheat seed (and one cleared patch).
 
 ### 5.5 Materials and the store
 
@@ -761,7 +765,8 @@ Whole game: about **21 hours**, 1,400 Time Quiz answers, 1,400 Rest answers, 67 
 333 goals + 41 automatic, 28 favours (about 3 hours on top), 141 items, 106 recipes; upgrades save about 38 % of the energy.
 The simulation rests on guesses (25 seconds per Time Quiz question, 3 per action, 5 per Rest answer, a player using 60 % of
 their capacity) that play-tests should replace. The test bot (`tests/bot.gd`) plays the real rules engine: chapter 3 after
-about 300–400 questions, all five pets after about 700.
+about 290–530 questions and chapter 5 (the first four pets; it stops before the alpaca) after about 690–870, in runs of
+12 Oct 2026 (it plays randomly). `--accuracy=0.8` lets it miss a share of first tries, which costs extra questions.
 
 ### 10.6 Dynamic difficulty — prices that fit the farm *(built, off by default)*
 
@@ -835,7 +840,7 @@ earned it) before what it does.
 | 🎉 Harvest party | confetti when you harvest everything | 40 harvests |
 | 🍃 Season breeze | petals, fluff, leaves or snow | a whole year |
 
-Each can be switched off in the album. The sounds are made by the game itself (no sound files).
+Each can be switched off in the album. Their sounds come with them (§11.2b).
 
 ### 11.4 Luck and lucky finds
 
@@ -954,7 +959,7 @@ farmer, merchants walking about.
 - **Short sentences**, everyday words, one idea per line; numbers whole (§5.8).
 - **🔊 Read aloud** for quiz questions and card pages, where the device has a voice.
 - **Big touch targets**, nothing that punishes slowness (§4.3), nothing that dies or is lost for good.
-- **(planned)** the whole interface in German (§4.5).
+- The whole game in **English and German** (§4.5).
 
 ---
 
@@ -983,6 +988,9 @@ farmer, merchants walking about.
 - **Godot 4.7** (standard, GDScript), Compatibility renderer, portrait 834×1194, stretched to fit.
 - Runs on a computer from the editor, and **in the browser** as a single-threaded web export (`web-build/`) that any HTTPS static
   host can serve; on the iPad it is added to the Home Screen and runs full-screen like an app.
+- **Version numbers:** the game's version is set once in `godot-prototype/project.godot` (`application/config/version`), bumped
+  with every web build and shown with the data's version in ⚙️ Settings and 🎼 Credits ("Hazelwood Harvest · version 0.9.0 · data
+  0.8"), so the parent can see which build the iPad has loaded.
 - The earlier HTML5 prototype (1.0–1.1) is kept in `archive/html-prototype/` for reference only.
 
 ### 15.2 Data first

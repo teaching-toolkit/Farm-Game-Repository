@@ -27,7 +27,7 @@ func _ready() -> void:
 	for k in range(3):
 		M._show_time_quiz()
 		await _frames(2)
-		await _click_through(func(): return G.S["step"] > s0 + k)
+		await _click_through(func(): return G.S["step"] > s0 + k, 250)   # only a right first try moves time
 	print("time steps: ", G.S["step"] - s0)
 	M._close_modal()
 	# 4) rest a little: type the answer on the number pad, once quick and once too slow
@@ -209,6 +209,12 @@ func _ready() -> void:
 		if str(q.get("id", "")) == "CON-001": con = q
 	var con_q: Dictionary = G._shuffled_q(con, "", 0, false)
 	G.time_result(shown, true)
+	# J10: a question answered wrong at the first try comes back right after the next one
+	var qa: Dictionary = G.next_time_question()
+	G.retry_after_next(qa)
+	var qb: Dictionary = G.next_time_question()
+	var qc: Dictionary = G.next_time_question()
+	print("r10 first-try rule: wrong one back after one other: ", qb.get("id", "") != qa.get("id", "") and qc.get("id", "") == qa.get("id", ""))
 	print("r8 quiz: ", ids.size(), " ids, doubles ", dup, "  options per question ", opts, "  picture questions ", pics, "/60",
 		"  PIC-004 pictures ", shown["pictures"], " img '", shown["img"], "' right '", shown["answers"][shown["correct"]]["text"], "'",
 		"  German: '", shown_de["q"], "' / '", shown_de["answers"][shown_de["correct"]]["text"], "'",
@@ -345,17 +351,24 @@ func _press_text(t: String) -> bool:
 			b.emit_signal("pressed"); return true
 	return false
 
-func _click_through(goal: Callable) -> void:
-	for _i in range(40):
+func _click_through(goal: Callable, tries := 40) -> void:
+	for _i in range(tries):
 		if goal.call(): return
 		var bs := []
 		_buttons(M.modal_box, bs)
 		var pressed := false
+		var nxt: Button = null
 		for b in bs:
+			if b.disabled: continue
 			var t: String = b.text
-			if t.begins_with("✖") or t.begins_with("🔊") or t.begins_with("Back") or t.begins_with("Next question"): continue
+			if t.begins_with("Next question"):
+				nxt = b
+				continue
+			if t.begins_with("✖") or t.begins_with("🔊") or t.begins_with("Back") or t.begins_with("⬅️"): continue
 			b.emit_signal("pressed"); pressed = true
 			break
+		if not pressed and nxt != null:   # a wrong first try does not move time: go on to the next question
+			nxt.emit_signal("pressed"); pressed = true
 		await _frames(2)
 		if not pressed:
 			await get_tree().create_timer(0.8).timeout

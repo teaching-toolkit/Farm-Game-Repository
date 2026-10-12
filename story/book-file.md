@@ -164,3 +164,11 @@ Full profiles in `characters/`. One line each here, to check that the spines cla
   an epilogue after the alpaca (I10), opening story panels with the grandchildren, who have heard the story many times, poke you between
   chapters and blurt foreshadowing that gets hushed (I9), a title (I12, 20 ideas). Questions raised: Q-I1 to Q-I6 in `../TODO.md` §2
   (where the epilogue sits; what is new at the end if they know the story; ladder 3.4 and 1.6 vs the new rules).
+- **10–12 Oct 2026, four decision rounds** (`../planning/2026-10-1*-answers-round-*.md`; summary in `../PROJECT-LOG.md` §2.8): the
+  ladder's five questions all kept (the cousin is a girl; the Lord's climb-down through Quill's numbers); the chapter 6 bend triggers
+  automatically; no epilogue chapter, free play after chapter 6 outside the frame; the grandchildren know the farm story but it always
+  stopped at the Fair, so the barn is told for the first time; story pictures through the farmer's eyes (sometimes a hand reaching from
+  the camera) or a backlit silhouette; the village distrusts the whole family and is poor (scarcity); the farmer wins it over by turning
+  the land around and being kind without expecting anything back; the Lord's share becomes a real payment from chapter 2 or 3, growing
+  with the patches and chapter by chapter; chapter 1 starts without any merchant, and carrot seeds force the first trip; title
+  **Hazelwood Harvest**. Round 6 works these into the ladder and the world files.

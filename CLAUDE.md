@@ -1,31 +1,14 @@
 # Farm Quiz Game: start here
 
-Before doing anything, read `00-READ-ME-FIRST.md` fully. It explains the project, the folder, how to run and test
-the game, the rules the parent has set; then read `TODO.md` (the to-do list and plan).
+How to work on this project lives in three skill files in `claude-skills/` (ordinary files; read them like any other):
 
-**Standing rule:** keep `PROJECT-LOG.md` and the to-do list `TODO.md` up to date *as you work*,
-not just at the end (details at the top of `00-READ-ME-FIRST.md`).
+1. **Always first:** `claude-skills/farm-game-session/SKILL.md`: what to read for which task (not everything), how to plan
+   bigger steps, how to keep the log and the to-do list current, and git.
+2. **Before saying a change works, and to set up Godot on a fresh cloud machine:** `claude-skills/farm-game-check/SKILL.md`.
+3. **For questions, cards, texts and German, numbers, sounds, pictures, the map layout:** `claude-skills/farm-game-content/SKILL.md`.
 
-**Story work:** read `story/README.md` first (labels ✅ decided · 💡 proposed · ❓ open · 🔒 hidden), and keep the files in
-`story/` current as you go, like the log and the to-do list.
+**Standing rule:** keep `TODO.md` and `PROJECT-LOG.md` up to date *as you work*, not just at the end (details: the session
+skill, §4). **Story work:** read `story/README.md` first and keep the files in `story/` current as you go.
 
-## In a cloud session (fresh Linux machine)
-
-```bash
-bash godot-prototype/tools/setup_godot.sh              # Godot only (enough for the tests)
-bash godot-prototype/tools/setup_godot.sh --screens --art --web   # + screenshots, art import, web export
-G=$HOME/godot/Godot_v4.7.2-stable_linux.x86_64          # the script prints the exact path
-cd godot-prototype && $G --headless --path . --import    # first time: import resources
-```
-
-Then run the checks in `00-READ-ME-FIRST.md` §4.2. `web-build/` is **not** in this repo (it is a separate public repo
-the parent publishes from the Mac), so a cloud session does not need to export it unless asked.
-
-Cloud gotchas (found 7 Oct 2026):
-- Godot comes from **github.com** releases, which redirect to `release-assets.githubusercontent.com`. If the network
-  policy is ever restricted, those two hosts must be allowed (not tuxfamily or godotengine.org).
-- Screenshots need a virtual screen; `xvfb-run` starts and stops one for you (READ-ME §4.3).
-- The bot and the smoke test save their farm into the default player's save, so a later screenshot shows *their* farm.
-  Pass `--newgame` (first) for a fresh start, or `--player=Shots` to use a separate player.
-- "ALSA … ERR_CANT_OPEN" / "All audio drivers failed" and "RIDs … leaked" warnings at exit are harmless (no sound card,
-  test scenes quitting); `--audio-driver Dummy` silences the first.
+`web-build/` is **not** in this repo (it is a separate public repo the parent publishes from the Mac), so a cloud session does
+not need to export it unless asked.

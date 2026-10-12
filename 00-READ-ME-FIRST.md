@@ -1,31 +1,22 @@
 # 👉 READ ME FIRST — for a new chat or another AI
 
-This file is the starting point. Read it fully before touching anything; it says what the project is, how the folder is laid
-out, how to work on it, where we left off and what is still open. Last updated: **9 October 2026** (to-do list moved to `TODO.md`; the parent's notes of 9 Oct sorted into it).
+This file is the starting point for a new chat or another AI: what the project is, how the folder is laid out, the parent's
+rules and where we left off. **How to work on the project** (what to read, the checks, changing content) lives in three skill
+files in `claude-skills/`; see §2. Last updated: **12 October 2026** (phase 1 built: version 0.9.0).
 
 ---
 
 ## ⚠️ Standing rule for every conversation: keep the log and the to-do list up to date
 
-**`TODO.md`** is the project's to-do list, and `PROJECT-LOG.md` is its history. Any chat or AI that works on
-this project **must keep both current as it goes, not just at the end**:
-
-- **Start of a session:** read this file, `TODO.md` and the log, then say which open task(s) you are working on.
-- **During the session:** whenever something is finished, started, dropped, split up or newly discovered, update `TODO.md` straight
-  away (tick off or remove done tasks, add new ones, reword changed ones). Add a row to `PROJECT-LOG.md` for every change to
-  the game, the data, the tools or a decision, and add any new unconfirmed assumption to its §2.6. Do not wait to be asked and
-  do not save it all for the end; a chat can stop at any time.
-- **End of a session (or before a long pause):** update §5 "Where we left off" and §7 "Key numbers", set the "Last updated"
-  date at the top, and mention in your last message what you changed in the log and the to-do list.
-- If the code, data or web build changed, say so in §5 (for example whether `web-build/` matches the current code).
-
-A task that is not written down in `TODO.md` does not exist for the next chat.
+**`TODO.md`** is the project's to-do list, and `PROJECT-LOG.md` is its history. Keep both current **as you go, not just at the
+end**: a chat can stop at any time, and a task that is not written down in `TODO.md` does not exist for the next chat. What to
+update when, and what to do at the end of a session: `claude-skills/farm-game-session/SKILL.md` §4.
 
 ---
 
 ## 1. The project in a few lines
 
-**Farm Quiz Game** — an educational farming game for an **8-year-old**, played on an **iPad held upright**. The player
+**Hazelwood Harvest** (until 0.9.0 *Farm Quiz Game*) — an educational farming game for an **8-year-old**, played on an **iPad held upright**. The player
 rebuilds a burnt-down farm from a tent and one wheat seed to a master farm, over five chapters, each ending with a pet
 coming home (bunny, tortoise, goat, pony, alpaca). Learning *is* the economy:
 
@@ -40,18 +31,25 @@ and keep the game's own texts simple enough for a young reader.
 
 ---
 
-## 2. What to read, in order
+## 2. What to read
 
-1. **This file.**
-2. `TODO.md` — the to-do list and the plan: what is open, in which order, and the decisions waiting on the parent.
-3. `farm-quiz-game-master-design-document.md` — what the game is and why (v2.0; describes the design as built; marks
-   *(planned)* and *(idea)*). No history or to-dos in it on purpose.
-4. `PROJECT-LOG.md` — the history version by version, every decision taken, assumptions still to confirm.
-5. `godot-prototype/README.md` — how to run, test and change the prototype; the picture folders; every setting.
-6. `godot-prototype/learnkit/README.md` — the learning kit (Rest sums, quiz engine, learning record, question ids).
-7. If the task is about the story: `story/README.md`, then `story/00-premise.md`, `story/book-file.md`, `story/game-hooks.md`.
-8. The numbers: `godot-prototype/data/farm-progression.json` (open `progression/progression-explorer.html` to browse it).
-   **The data wins** if it and a document disagree.
+Don't read every document in full: together they are over 180 KB. Start with:
+
+1. **This file:** the standing rule above, §1, §4.6 (the parent's rules) and §5 (where we left off).
+2. **`TODO.md`:** §0 (the plan at a glance) and §1 (waiting on the parent), then only the section of your task.
+3. **`claude-skills/farm-game-session/SKILL.md`:** what else to read for which kind of task, how to plan bigger steps, how to
+   keep the record, git.
+
+The other two skills come in when needed: `claude-skills/farm-game-check/SKILL.md` (set up Godot, run the checks, screenshots,
+debugging, review, web export) and `claude-skills/farm-game-content/SKILL.md` (questions, cards, texts and German, numbers,
+sounds, pictures, the map layout).
+
+Background, read only the parts a task needs: `farm-quiz-game-master-design-document.md` (what the game is and why; v2.0;
+marks *(planned)* and *(idea)*; no history or to-dos), `PROJECT-LOG.md` (history, decisions, assumptions still to confirm),
+`godot-prototype/README.md` (how to run, test and change the prototype; every setting and test flag),
+`godot-prototype/learnkit/README.md` (Rest sums, quiz engine, learning record, question ids) and `story/README.md` (the story).
+The numbers are in `godot-prototype/data/farm-progression.json` (browse them in `progression/progression-explorer.html`).
+**The data wins** if it and a document disagree.
 
 ---
 
@@ -62,12 +60,13 @@ and keep the game's own texts simple enough for a young reader.
 | `00-READ-ME-FIRST.md` | this file |
 | `TODO.md` | **the to-do list and plan** (open tasks only; done ones go to the log) |
 | `PROJECT-LOG.md` | history and decisions |
-| `planning/` | the parent's raw notes, kept word for word (`2026-10-09-parent-notes.md`); `TODO.md` points into them |
+| `planning/` | the parent's raw notes and the decision rounds, kept word for word; **the architecture plan** (`2026-10-12-architecture-plan.md`); `TODO.md` points into them |
 | `farm-quiz-game-master-design-document.md` | the design (v2.0) |
 | `godot-prototype/` | **the game** — Godot project (`project.godot`), `scripts/`, `data/`, `learnkit/`, `assets/`, `tests/`, `tools/`, `fonts/` |
 | `Build web version.command` | **double-click on the Mac** to re-export the game into `web-build/` (needs Godot.app and its export templates installed once) |
 | `Publish web version.command` | **double-click on the Mac** to push `web-build/` to the public GitHub repo as one fresh commit (see §4.7) |
-| `CLAUDE.md` | short pointer for Claude Code cloud sessions: read this file, keep the log and to-do list current, set up Godot |
+| `CLAUDE.md` | short pointer that Claude Code loads by itself: start with the session skill |
+| `claude-skills/` | **how to work on the project**, three skill files: `farm-game-session` (what to read, planning, keeping the record, git), `farm-game-check` (set up Godot, checks, screenshots, debugging, review, web export), `farm-game-content` (questions, texts and German, numbers, sounds, pictures, layout) |
 | `.gitignore` | what the private repo leaves out (`.godot/` caches, `web-build/`, big archive screenshots, `.DS_Store`) |
 | `web-build/` | its own **public** git repo, ignored by the private one; the latest web export (put online on any HTTPS host; see the prototype README) |
 | `progression/` | the progression explorer (`progression-explorer.html`) with a copy of the current data |
@@ -83,74 +82,24 @@ and keep the game's own texts simple enough for a young reader.
 
 ### 4.1 Where things run
 
-- The parent's folder is on their **Mac** (`~/Documents/files/diverses/Kinder zeug/Wissensspiele/Farm game`). In a Claude
-  Cowork session it is connected as **"Farm game"** and appears in the device shell as `$HOME/mnt/Farm game`.
-- So far the work ran in that device shell (a Linux VM on the Mac): a Godot binary at `$HOME/godot/Godot_v4.7.2-stable_linux.arm64`
-  (with web export templates installed), a work copy of the project at `$HOME/work/proj`, and helper scripts
-  `$HOME/install_update.sh` and `$HOME/shot.sh`. **These live outside the parent's folder and may be gone in a new session** —
-  check with `ls $HOME`; if missing, download Godot 4.7.2 (Linux, arm64, standard) and its export templates again, and copy
-  `godot-prototype/` to a work folder.
-- Edit the real files in `godot-prototype/` (they are what the parent opens). Deleting files in the parent's folder needs
-  their permission each session; prefer moving things to `archive/`.
+- The parent's folder is on their **Mac** (`~/Documents/files/diverses/Kinder zeug/Wissensspiele/Farm game`). In a Cowork
+  session (a chat linked to the Mac) it is connected as **"Farm game"** and appears in the device shell as `$HOME/mnt/Farm game`.
+  Edit the real files there (they are what the parent opens). Deleting files in the parent's folder needs their permission
+  each session; prefer moving things to `archive/`.
+- **Claude Code cloud sessions** work on the private GitHub repo (a mirror of this folder, §4.7), starting from an empty machine.
+- Setting up Godot and running it in either place: `claude-skills/farm-game-check/SKILL.md` §1.
 
-- **Claude Code cloud sessions** work on the private GitHub repo (a mirror of this folder). The machine starts empty, so first run
-  `bash godot-prototype/tools/setup_godot.sh` (Godot only; add `--screens` for Xvfb, `--art` for Pillow/numpy/scipy, `--web` for
-  the web export templates, ~1 GB download), then import once: `cd godot-prototype && $G --headless --path . --import`.
-  Tested 7 Oct 2026: smoke test, bot, screenshot and web export all work this way. `web-build/` is not in the private repo.
-  Godot downloads from github.com (redirected to `release-assets.githubusercontent.com`); a restricted network policy must
-  allow those two hosts. Cloud gotchas (screenshots, saves left by the bot, harmless warnings): see `CLAUDE.md`.
+### 4.2–4.5 Checks, screenshots, web export, after changing content
 
-### 4.2 Run the checks (from the project folder; `G` = the Godot binary)
+Moved into the skills on 11 October 2026, so each instruction lives in one place:
 
-```bash
-timeout 170 $G --headless --path . res://tests/ui_smoke.tscn                 # interface smoke test: expect 0 errors
-timeout 170 $G --headless --path . res://tests/bot.tscn -- --chapter=5 --iters=1100   # bot plays; add --flex for dynamic difficulty
-timeout 170 $G --headless --path . -s res://tests/learn_sim.gd               # pretend child practises Rest sums
-```
+- the checks (smoke test, bot, learner simulation, explorer), screenshots, debugging, review and the web export →
+  `claude-skills/farm-game-check/SKILL.md`;
+- what to run after changing questions, texts, numbers, sounds, pictures or the layout → `claude-skills/farm-game-content/SKILL.md`;
+- every test flag and data format → `godot-prototype/README.md`.
 
-Expected now: smoke test passes; the bot reaches chapter 3 after about 290–415 questions and chapter 5 (with the first four
-pets; the alpaca is chapter 5's own goal, which the bot stops before) after about 680–800. The bot plays randomly, so the
-number changes from run to run (7 Oct 2026, cloud: 678, 715, 763, 774, 689, 793; earlier 729). A bot run takes about 75 seconds.
-The smoke test prints its findings and ends with a few "leaked" warnings; those are harmless.
-(`--check-only` reports "Identifier not found: Sound" for scripts that use the `Sound` autoload; that one is expected.)
-If the smoke test prints **nothing** and only stops at the timeout, a script has a parse error (the test then hangs instead
-of failing). Find it with `$G --headless --path . --check-only -s res://tests/ui_smoke.gd` (or the script you changed).
-
-### 4.3 Screenshots
-
-Need a virtual screen (Xvfb): `DISPLAY=:99 $G --path . --resolution 834x1194 --rendering-driver opengl3 -- --shot=out.png [--spot=kitchen] [--timestep=20] [--qid=PIC-004] [--lang=de]`.
-`--timestep=20` skips the welcome pop-up. All flags: prototype README, *Testing shortcuts*.
-
-In a cloud session, `xvfb-run` starts and stops the virtual screen for you:
-
-```bash
-xvfb-run -a -s "-screen 0 1280x1400x24" $G --path . --resolution 834x1194 --rendering-driver opengl3 --audio-driver Dummy -- --newgame --timestep=20 --shot=out.png
-```
-
-Put `--newgame` **first** when you want the start of the game: the bot and the smoke test leave their farm in the default
-save, and without it the screenshot shows that farm (or use `--player=Shots` to keep screenshots on their own player).
-
-### 4.4 Web export
-
-The parent can do this alone: double-click `Build web version.command` (Mac), then `Publish web version.command` (§4.7). The command below is what it runs, for AI sessions.
-
-
-`timeout 170 $G --headless --path . --export-release Web ../web-build/index.html` — run it in the foreground in **one**
-call (background processes die when the call ends); then check that `web-build/index.pck` changed. The export filter in
-`export_presets.cfg` must include every data folder (`data/i18n/*.json` was added in round 8).
-
-### 4.5 After changing content
-
-- Quiz questions: run `python3 tools/quiz_ids.py` (gives new questions ids, updates `data/i18n/`). Never change or reuse an id.
-- Any text the player sees (code or data): run `python3 tools/i18n.py`, then translate what it reports as missing (German
-  files in `data/i18n/`; see the prototype README, *Languages*). New interface text in the code goes inside `tr("…")`.
-- Progression data: run `python3 tools/sync_progression.py` (copies it to `progression/` and into the explorer), then check it in
-  the explorer. In a cloud session the explorer runs headless: `cd ../progression && python3 -m http.server 8765 &` then
-  `NODE_PATH=$(npm root -g) node ../godot-prototype/tools/explorer_check.js http://localhost:8765/progression-explorer.html`
-  (prints the playthrough hours, answers and checks).
-- New pictures in `art-inbox/`: `python3 tools/import_art.py all` (needs Pillow, numpy, scipy); then `python3 tools/art_list.py`.
-- Update the design document (describe the game, not the change), add a row to `PROJECT-LOG.md`, and update §5–7 of this file
-  (see the standing rule at the top: do this as you go, not only at the end).
+The parent can build and publish the web version alone: double-click `Build web version.command`, then
+`Publish web version.command` (§4.7).
 
 ### 4.6 Rules the parent has set
 
@@ -159,7 +108,10 @@ call (background processes die when the call ends); then check that `web-build/i
 - Never handle passwords, tokens or credentials. Ask before downloading files or deleting anything.
 - Pictures: OpenArt project "Farm Quiz Game", model **Nano Banana 2 Lite at 1K**, sprite sheets of several objects, **3
   versions per sheet**, with an earlier sheet as the style reference. Only about two generations run at a time.
-- No words on the map; whole numbers on screen; short, simple texts; nothing that punishes the child. **One deliberate exception**
+- No words on the map; whole numbers on screen (also with bronze and gold coins); short, simple texts; German with "ss", never "ß".
+- **Natural consequences, never stuck** (parent, 10 Oct 2026; replaces "nothing that punishes the child"): setbacks that follow
+  naturally (over-using the land, neglecting health) are allowed, last a while and can always be corrected; nothing is lost for good,
+  Helpers never leave. See `PROJECT-LOG.md` §2.8. **One deliberate exception** on top
   (parent, 8 Oct 2026, planned for the medicine chapter): skipping the cheap plant check at Wren's and using a wrong plant puts the farmer
   in bed, poisoned (energy and all coins gone, double energy costs while recovering). See `story/game-design-round4.md` §C.
 
@@ -201,6 +153,29 @@ this file and `CLAUDE.md` were corrected (see the log). No game changes; `web-bu
 8 Oct 2026 (story, rounds 0–4 part 1): `story/` holds the premise, book file, world bible, character files, research notes and the story-delivery design. Nothing in the game or its data has changed; `web-build/` matches the code as before.
 
 9 Oct 2026 (planning): the to-do list moved out of this file into `TODO.md`; the finished groups A–G were already in the log, their leftovers became tasks (W4, W5, W8). The parent's new notes (16 game ideas, 8 story notes; raw in `planning/`) were sorted into `TODO.md` by area, with a proposed order, a queue of decisions (contradictions with existing rules flagged ⚠️) and a first batch of title ideas. No game, data or code changes; `web-build/` is unchanged.
+
+11 Oct 2026 (working instructions): how to work on the project moved into three skill files in `claude-skills/`
+(`farm-game-session`, `farm-game-check`, `farm-game-content`). `CLAUDE.md` and §2 and §4 of this file now point to them instead
+of repeating them, and a session no longer reads every document in full. No game, data or code changes; `web-build/` is unchanged.
+
+12 Oct 2026 (decisions): five rounds of questions and the parent's answers (10–12 Oct; word for word in `planning/`) settled the
+market trips, packing and the store, bronze and gold coins, realistic prices, the Lord's share, quality, skills, the energy model and
+wellbeing, skills, sustainability and seasons, the top bar, the Time Quiz's first-try rule, an architecture study before splitting the
+big scripts, and the story's open questions. Listed in
+`PROJECT-LOG.md` §2.8; `TODO.md` rebuilt around them (next: the open questions in its §2, then everything on paper, step 3). No game,
+data or code changes; `web-build/` is unchanged.
+
+12 Oct 2026 (architecture): round 6 answered; the code read and measured, and the restructuring planned in
+`planning/2026-10-12-architecture-plan.md` (core, kits, the farm; nine slices that don't change the game, checked by a seeded golden
+run). Read it before any code work. No game, data or code changes; `web-build/` is unchanged.
+
+12 Oct 2026 (implementation plan): the plan's decisions answered; `TODO.md` §0 is now the implementation plan in twelve phases.
+Phase 1 starts: the round 8 pictures (in `art-inbox/`, not yet named or imported), version numbers, "ss", the first-try rule, the
+rename to *Hazelwood Harvest*. No game, data or code changes yet; `web-build/` is unchanged.
+
+12 Oct 2026 (phase 1 built): round 8 pictures imported; version 0.9.0 *Hazelwood Harvest* (shown in ⚙️ Settings); German with
+"ss"; only a right first try moves time; design document 2.1. Smoke test and bot pass. **`web-build/` matches the code** (exported
+12 Oct 2026, 89 MB `index.pck`). Next: the parent tests 0.9.0 on the iPad (publish with `Publish web version.command`), then phase 2.
 
 ---
 

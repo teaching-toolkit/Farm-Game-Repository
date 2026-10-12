@@ -65,11 +65,11 @@
  },
  "categories/0/sections/1/levels/0/name": {
   "en": "Big number plus a small one",
-  "de": "Große Zahl plus kleine"
+  "de": "Grosse Zahl plus kleine"
  },
  "categories/0/sections/1/levels/1/name": {
   "en": "Big number minus a small one",
-  "de": "Große Zahl minus kleine"
+  "de": "Grosse Zahl minus kleine"
  },
  "categories/0/sections/1/levels/2/name": {
   "en": "Plus whole tens",
@@ -85,19 +85,19 @@
  },
  "categories/0/sections/1/levels/5/name": {
   "en": "Two big numbers (+)",
-  "de": "Zwei große Zahlen (+)"
+  "de": "Zwei grosse Zahlen (+)"
  },
  "categories/0/sections/1/levels/6/name": {
   "en": "Two big numbers (-)",
-  "de": "Zwei große Zahlen (-)"
+  "de": "Zwei grosse Zahlen (-)"
  },
  "categories/0/sections/1/levels/7/name": {
   "en": "Big sums with a carry",
-  "de": "Große Rechnungen mit Übertrag"
+  "de": "Grosse Rechnungen mit Übertrag"
  },
  "categories/0/sections/1/levels/8/name": {
   "en": "Big take-aways with borrowing",
-  "de": "Großes Minus mit Entbündeln"
+  "de": "Grosses Minus mit Entbündeln"
  },
  "categories/0/sections/1/levels/9/name": {
   "en": "Fill up to a hundred",
@@ -185,11 +185,11 @@
  },
  "categories/1/sections/1/levels/2/name": {
   "en": "Big times small",
-  "de": "Groß mal klein"
+  "de": "Gross mal klein"
  },
  "categories/1/sections/1/levels/3/name": {
   "en": "Share out big numbers",
-  "de": "Große Zahlen teilen"
+  "de": "Grosse Zahlen teilen"
  },
  "categories/1/sections/1/levels/4/name": {
   "en": "Divide with a rest",
@@ -197,7 +197,7 @@
  },
  "categories/1/sections/1/levels/5/name": {
   "en": "Two big numbers times",
-  "de": "Zwei große Zahlen mal"
+  "de": "Zwei grosse Zahlen mal"
  },
  "categories/1/sections/1/levels/6/name": {
   "en": "Hundreds times small",
@@ -245,7 +245,7 @@
  },
  "categories/2/sections/1/levels/3/name": {
   "en": "Double and half of big numbers",
-  "de": "Doppelt und halb bei großen Zahlen"
+  "de": "Doppelt und halb bei grossen Zahlen"
  },
  "categories/3/name": {
   "en": "Fractions",
@@ -285,7 +285,7 @@
  },
  "categories/3/sections/1/levels/1/name": {
   "en": "Add pieces of the same size",
-  "de": "Gleich große Teile zusammenzählen"
+  "de": "Gleich grosse Teile zusammenzählen"
  },
  "categories/3/sections/1/levels/2/name": {
   "en": "Make it simpler",
@@ -325,7 +325,7 @@
  },
  "categories/5/name": {
   "en": "Measures",
-  "de": "Größen"
+  "de": "Grössen"
  },
  "categories/5/sections/0/name": {
   "en": "By heart",
@@ -385,7 +385,7 @@
  },
  "categories/6/sections/1/levels/1/name": {
   "en": "Bigger minus numbers",
-  "de": "Größere Minuszahlen"
+  "de": "Grössere Minuszahlen"
  },
  "comments/booster/0": {
   "en": "Here's an easy one! 💪",
@@ -473,7 +473,7 @@
  },
  "ranks/4/title": {
   "en": "🌲 Tall tree",
-  "de": "🌲 Großer Baum"
+  "de": "🌲 Grosser Baum"
  },
  "ranks/5/title": {
   "en": "🏔️ Mighty oak",

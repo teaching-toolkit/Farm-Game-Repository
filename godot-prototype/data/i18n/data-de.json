@@ -165,7 +165,7 @@
  },
  "nodes/road_1/desc": {
   "en": "The old road is mud and potholes. Only the seed seller with her basket gets through.",
-  "de": "Die alte Straße ist voller Matsch und Schlaglöcher. Nur die Samenverkäuferin mit ihrem Korb kommt durch."
+  "de": "Die alte Strasse ist voller Matsch und Schlaglöcher. Nur die Samenverkäuferin mit ihrem Korb kommt durch."
  },
  "nodes/road_1b/name": {
   "en": "Lay brushwood over the mud",
@@ -189,7 +189,7 @@
  },
  "nodes/road_2b/desc": {
   "en": "A ditch along the road drains the puddles: the bean grower's cart can come now.",
-  "de": "Ein Graben neben der Straße lässt die Pfützen ablaufen: Jetzt kann der Wagen des Bohnenbauern kommen."
+  "de": "Ein Graben neben der Strasse lässt die Pfützen ablaufen: Jetzt kann der Wagen des Bohnenbauern kommen."
  },
  "nodes/road_3/name": {
   "en": "Gravel road",
@@ -197,7 +197,7 @@
  },
  "nodes/road_3/desc": {
   "en": "A firm gravel road: heavy carts with clay and iron ore can reach your farm, and the seed shop delivers.",
-  "de": "Eine feste Kiesstraße: Schwere Wagen mit Lehm und Eisenerz erreichen deinen Hof, und der Samenladen liefert."
+  "de": "Eine feste Kiesstrasse: Schwere Wagen mit Lehm und Eisenerz erreichen deinen Hof, und der Samenladen liefert."
  },
  "nodes/road_3/steps/0/name": {
   "en": "Spread the gravel bed",
@@ -209,7 +209,7 @@
  },
  "nodes/road_3b/name": {
   "en": "Edge the road with kerbstones",
-  "de": "Die Straße mit Randsteinen einfassen"
+  "de": "Die Strasse mit Randsteinen einfassen"
  },
  "nodes/road_3b/desc": {
   "en": "Kerbstones keep the gravel in place: the sunflower seller from the hills dares the trip.",
@@ -225,23 +225,23 @@
  },
  "nodes/road_4b/name": {
   "en": "Plant trees along the road",
-  "de": "Bäume entlang der Straße pflanzen"
+  "de": "Bäume entlang der Strasse pflanzen"
  },
  "nodes/road_4b/desc": {
   "en": "A row of young trees gives shade and shelter: the herb woman walks over from the next valley.",
-  "de": "Eine Reihe junger Bäume gibt Schatten und Schutz: Die Kräuterfrau kommt zu Fuß aus dem Nachbartal herüber."
+  "de": "Eine Reihe junger Bäume gibt Schatten und Schutz: Die Kräuterfrau kommt zu Fuss aus dem Nachbartal herüber."
  },
  "nodes/road_5/name": {
   "en": "Paved road & bridge",
-  "de": "Gepflasterte Straße & Brücke"
+  "de": "Gepflasterte Strasse & Brücke"
  },
  "nodes/road_5/desc": {
   "en": "A paved road with a stone bridge: guild wagons and travellers from far away find your farm.",
-  "de": "Eine gepflasterte Straße mit einer Steinbrücke: Zunftwagen und Reisende von weit her finden deinen Hof."
+  "de": "Eine gepflasterte Strasse mit einer Steinbrücke: Zunftwagen und Reisende von weit her finden deinen Hof."
  },
  "nodes/road_5/steps/0/name": {
   "en": "Lay the road bed",
-  "de": "Den Straßenunterbau legen"
+  "de": "Den Strassenunterbau legen"
  },
  "nodes/road_5/steps/1/name": {
   "en": "Set the paving stones",
@@ -265,7 +265,7 @@
  },
  "nodes/hands/desc": {
   "en": "Plant, harvest and pull weeds by hand.",
-  "de": "Pflanzen, ernten und Unkraut ausreißen mit den Händen."
+  "de": "Pflanzen, ernten und Unkraut ausreissen mit den Händen."
  },
  "nodes/rock/name": {
   "en": "Rock",
@@ -277,11 +277,11 @@
  },
  "nodes/bucket/name": {
   "en": "Watering Scoop",
-  "de": "Gießschöpfer"
+  "de": "Giessschöpfer"
  },
  "nodes/bucket/desc": {
   "en": "Waters the plants. Plants use their full water cost.",
-  "de": "Gießt die Pflanzen. Pflanzen brauchen ihr ganzes Wasser."
+  "de": "Giesst die Pflanzen. Pflanzen brauchen ihr ganzes Wasser."
  },
  "nodes/seed_1/name": {
   "en": "Seed Merchant",
@@ -365,11 +365,11 @@
  },
  "nodes/clear_thistles/name": {
   "en": "Clear the thistles (2 patches)",
-  "de": "Disteln ausreißen (2 Beete)"
+  "de": "Disteln ausreissen (2 Beete)"
  },
  "nodes/clear_thistles/desc": {
   "en": "Takes 4 steps, one tap each; every step gives something back. After the first 2 steps the 2 patches can be planted; the other steps make them better (bigger harvests, fewer weeds).",
-  "de": "Dauert 4 Schritte, je ein Tippen; jeder Schritt bringt etwas zurück. Nach den ersten 2 Schritten kannst du die 2 Beete bepflanzen; die anderen Schritte machen sie besser (größere Ernte, weniger Unkraut)."
+  "de": "Dauert 4 Schritte, je ein Tippen; jeder Schritt bringt etwas zurück. Nach den ersten 2 Schritten kannst du die 2 Beete bepflanzen; die anderen Schritte machen sie besser (grössere Ernte, weniger Unkraut)."
  },
  "nodes/clear_thistles/steps/0/name": {
   "en": "Cut the thistles",
@@ -377,7 +377,7 @@
  },
  "nodes/clear_thistles/steps/1/name": {
   "en": "Pull out the roots",
-  "de": "Die Wurzeln ausreißen"
+  "de": "Die Wurzeln ausreissen"
  },
  "nodes/clear_thistles/steps/2/name": {
   "en": "Pick out the stones",
@@ -389,11 +389,11 @@
  },
  "nodes/clear_weeds/name": {
   "en": "Pull the weeds (2 patches)",
-  "de": "Das Unkraut ausreißen (2 Beete)"
+  "de": "Das Unkraut ausreissen (2 Beete)"
  },
  "nodes/clear_weeds/desc": {
   "en": "Takes 5 steps, one tap each; every step gives something back. After the first 2 steps the 2 patches can be planted; the other steps make them better (bigger harvests, fewer weeds).",
-  "de": "Dauert 5 Schritte, je ein Tippen; jeder Schritt bringt etwas zurück. Nach den ersten 2 Schritten kannst du die 2 Beete bepflanzen; die anderen Schritte machen sie besser (größere Ernte, weniger Unkraut)."
+  "de": "Dauert 5 Schritte, je ein Tippen; jeder Schritt bringt etwas zurück. Nach den ersten 2 Schritten kannst du die 2 Beete bepflanzen; die anderen Schritte machen sie besser (grössere Ernte, weniger Unkraut)."
  },
  "nodes/clear_weeds/steps/0/name": {
   "en": "Cut the tall weeds",
@@ -401,7 +401,7 @@
  },
  "nodes/clear_weeds/steps/1/name": {
   "en": "Pull out the roots",
-  "de": "Die Wurzeln ausreißen"
+  "de": "Die Wurzeln ausreissen"
  },
  "nodes/clear_weeds/steps/2/name": {
   "en": "Pick out the stones",
@@ -453,11 +453,11 @@
  },
  "nodes/clear_rocks/desc": {
   "en": "Takes 5 steps, one tap each; every step gives something back. After the first 2 steps the 2 patches can be planted; the other steps make them better (bigger harvests, fewer weeds).",
-  "de": "Dauert 5 Schritte, je ein Tippen; jeder Schritt bringt etwas zurück. Nach den ersten 2 Schritten kannst du die 2 Beete bepflanzen; die anderen Schritte machen sie besser (größere Ernte, weniger Unkraut)."
+  "de": "Dauert 5 Schritte, je ein Tippen; jeder Schritt bringt etwas zurück. Nach den ersten 2 Schritten kannst du die 2 Beete bepflanzen; die anderen Schritte machen sie besser (grössere Ernte, weniger Unkraut)."
  },
  "nodes/clear_rocks/steps/0/name": {
   "en": "Dig out the big rocks",
-  "de": "Die großen Felsen ausgraben"
+  "de": "Die grossen Felsen ausgraben"
  },
  "nodes/clear_rocks/steps/1/name": {
   "en": "Lever out the boulder",
@@ -469,7 +469,7 @@
  },
  "nodes/clear_rocks/steps/3/name": {
   "en": "Pull the weeds",
-  "de": "Das Unkraut ausreißen"
+  "de": "Das Unkraut ausreissen"
  },
  "nodes/clear_rocks/steps/4/name": {
   "en": "Rake the soil",
@@ -481,7 +481,7 @@
  },
  "nodes/clear_stumps/desc": {
   "en": "Takes 5 steps, one tap each; every step gives something back. After the first 2 steps the 2 patches can be planted; the other steps make them better (bigger harvests, fewer weeds).",
-  "de": "Dauert 5 Schritte, je ein Tippen; jeder Schritt bringt etwas zurück. Nach den ersten 2 Schritten kannst du die 2 Beete bepflanzen; die anderen Schritte machen sie besser (größere Ernte, weniger Unkraut)."
+  "de": "Dauert 5 Schritte, je ein Tippen; jeder Schritt bringt etwas zurück. Nach den ersten 2 Schritten kannst du die 2 Beete bepflanzen; die anderen Schritte machen sie besser (grössere Ernte, weniger Unkraut)."
  },
  "nodes/clear_stumps/steps/0/name": {
   "en": "Chop the stumps",
@@ -493,7 +493,7 @@
  },
  "nodes/clear_stumps/steps/2/name": {
   "en": "Pull the weeds",
-  "de": "Das Unkraut ausreißen"
+  "de": "Das Unkraut ausreissen"
  },
  "nodes/clear_stumps/steps/3/name": {
   "en": "Pick the stones",
@@ -533,7 +533,7 @@
  },
  "nodes/well_3/desc": {
   "en": "A winch and a bigger bucket: 6 💧 a trip, holds 36.",
-  "de": "Eine Seilwinde und ein größerer Eimer: 6 💧 pro Gang, fasst 36."
+  "de": "Eine Seilwinde und ein grösserer Eimer: 6 💧 pro Gang, fasst 36."
  },
  "nodes/coop_1/name": {
   "en": "Chicken Coop",
@@ -617,7 +617,7 @@
  },
  "nodes/pet_bunny/desc": {
   "en": "Pet 1 (default name Pip; the player can rename). Bonus: every carrot harvest gives +1 carrot.",
-  "de": "Haustier 1 (heißt zuerst Pip; du kannst es umbenennen). Bonus: Jede Karottenernte bringt +1 Karotte."
+  "de": "Haustier 1 (heisst zuerst Pip; du kannst es umbenennen). Bonus: Jede Karottenernte bringt +1 Karotte."
  },
  "nodes/cottage_walls/name": {
   "en": "Cottage · log walls",
@@ -625,7 +625,7 @@
  },
  "nodes/cottage_walls/desc": {
   "en": "Big builds go up in stages; the slot shows the progress.",
-  "de": "Große Bauten entstehen in Stufen; der Platz zeigt, wie weit sie sind."
+  "de": "Grosse Bauten entstehen in Stufen; der Platz zeigt, wie weit sie sind."
  },
  "nodes/cottage_roof/name": {
   "en": "Cottage · thatched roof",
@@ -765,7 +765,7 @@
  },
  "nodes/shed/desc": {
   "en": "First chapter-2 build: room for 25 of each item, so bigger projects fit.",
-  "de": "Der erste Bau in Kapitel 2: Platz für 25 von jeder Sache, damit größere Vorhaben hineinpassen."
+  "de": "Der erste Bau in Kapitel 2: Platz für 25 von jeder Sache, damit grössere Vorhaben hineinpassen."
  },
  "nodes/shed/steps/0/name": {
   "en": "Raise the beams",
@@ -805,7 +805,7 @@
  },
  "nodes/barn_1/desc": {
   "en": "Shelter for big animals. Cows can move in.",
-  "de": "Ein Dach für große Tiere. Kühe können einziehen."
+  "de": "Ein Dach für grosse Tiere. Kühe können einziehen."
  },
  "nodes/barn_1/steps/0/name": {
   "en": "Lay the stones",
@@ -920,8 +920,8 @@
   "de": "Die Schildkröte kommt nach Hause"
  },
  "nodes/pet_tortoise/desc": {
-  "en": "Pet 2 (default name Mossy). Bonus: finds a hidden spring (+1 💧 per question).",
-  "de": "Haustier 2 (heißt zuerst Mossy). Bonus: findet eine versteckte Quelle (+1 💧 pro Frage)."
+  "en": "Pet 2 (default name Mossy). Bonus: finds a hidden spring (+1 💧 every water trip).",
+  "de": "Haustier 2 (heisst zuerst Mossy). Bonus: findet eine versteckte Quelle (+1 💧 bei jedem Wasserholen)."
  },
  "nodes/smithy_chimney/name": {
   "en": "Smithy · chimney",
@@ -973,7 +973,7 @@
  },
  "nodes/iron_knife/desc": {
   "en": "Fine dicing: sauces, pasta. Prep −20% energy.",
-  "de": "Feines Schneiden: Soßen, Nudeln. Vorbereiten −20% Energie."
+  "de": "Feines Schneiden: Sossen, Nudeln. Vorbereiten −20% Energie."
  },
  "nodes/iron_hammer/name": {
   "en": "Iron Hammer",
@@ -981,7 +981,7 @@
  },
  "nodes/iron_hammer/desc": {
   "en": "Nails! Needed for bigger buildings. Building −20% energy.",
-  "de": "Nägel! Nötig für größere Gebäude. Bauen −20% Energie."
+  "de": "Nägel! Nötig für grössere Gebäude. Bauen −20% Energie."
  },
  "nodes/saw/name": {
   "en": "Saw",
@@ -993,7 +993,7 @@
  },
  "nodes/watering_can/name": {
   "en": "Watering Can",
-  "de": "Gießkanne"
+  "de": "Giesskanne"
  },
  "nodes/watering_can/desc": {
   "en": "Water goes to the roots, not the path: plants need 25% less water.",
@@ -1025,7 +1025,7 @@
  },
  "nodes/rain_barrel/desc": {
   "en": "A big barrel by the well: holds 15 more and every trip brings 1 more.",
-  "de": "Ein großes Fass beim Brunnen: fasst 15 mehr, und jeder Gang bringt 1 mehr."
+  "de": "Ein grosses Fass beim Brunnen: fasst 15 mehr, und jeder Gang bringt 1 mehr."
  },
  "nodes/rain_barrel/steps/0/name": {
   "en": "Fit the planks",
@@ -1041,7 +1041,7 @@
  },
  "nodes/coop_2/name": {
   "en": "Bigger Coop",
-  "de": "Größerer Hühnerstall"
+  "de": "Grösserer Hühnerstall"
  },
  "nodes/barn_2/name": {
   "en": "Barn · cellar",
@@ -1177,7 +1177,7 @@
  },
  "nodes/press/desc": {
   "en": "A big wooden screw: oil from seeds, juice from fruit and beets.",
-  "de": "Eine große Holzschraube: Öl aus Samen, Saft aus Obst und Rüben."
+  "de": "Eine grosse Holzschraube: Öl aus Samen, Saft aus Obst und Rüben."
  },
  "nodes/press/steps/0/name": {
   "en": "Raise the beams",
@@ -1197,7 +1197,7 @@
  },
  "nodes/stove_2/desc": {
   "en": "Sauces, jam, sugar reduction.",
-  "de": "Soßen, Marmelade, Zucker einkochen."
+  "de": "Sossen, Marmelade, Zucker einkochen."
  },
  "nodes/oven_2/name": {
   "en": "Oven · iron door",
@@ -1313,7 +1313,7 @@
  },
  "nodes/pet_goat/desc": {
   "en": "Pet 3 (default name Bramble). Bonus: nibbles weeds (weeds −15%) and leaves compost (1 per 4 questions).",
-  "de": "Haustier 3 (heißt zuerst Bramble). Bonus: knabbert Unkraut (Unkraut −15%) und hinterlässt Kompost (1 alle 4 Fragen)."
+  "de": "Haustier 3 (heisst zuerst Bramble). Bonus: knabbert Unkraut (Unkraut −15%) und hinterlässt Kompost (1 alle 4 Fragen)."
  },
  "nodes/kiln_2/name": {
   "en": "Brickworks",
@@ -1321,7 +1321,7 @@
  },
  "nodes/kiln_2/desc": {
   "en": "Five chambers instead of two: bricks, jars and charcoal in bulk.",
-  "de": "Fünf Kammern statt zwei: Ziegel, Krüge und Holzkohle in großen Mengen."
+  "de": "Fünf Kammern statt zwei: Ziegel, Krüge und Holzkohle in grossen Mengen."
  },
  "nodes/kiln_2/steps/0/name": {
   "en": "Lay the bricks",
@@ -1337,7 +1337,7 @@
  },
  "nodes/forge_2/desc": {
   "en": "Hot enough for steel.",
-  "de": "Heiß genug für Stahl."
+  "de": "Heiss genug für Stahl."
  },
  "nodes/forge_2/steps/0/name": {
   "en": "Lay the bricks",
@@ -1633,7 +1633,7 @@
  },
  "nodes/pet_pony/desc": {
   "en": "Pet 4 (default name Hazel). Bonus: pulls the market cart (+10% on everything sold).",
-  "de": "Haustier 4 (heißt zuerst Hazel). Bonus: zieht den Marktwagen (+10% auf alles Verkaufte)."
+  "de": "Haustier 4 (heisst zuerst Hazel). Bonus: zieht den Marktwagen (+10% auf alles Verkaufte)."
  },
  "nodes/crop_saffron/name": {
   "en": "Saffron Crocus",
@@ -1841,7 +1841,7 @@
  },
  "nodes/pet_alpaca/desc": {
   "en": "Pet 5 (default name Alfie). Bonus: soft fleece, 1 wool every 4 questions.",
-  "de": "Haustier 5 (heißt zuerst Alfie). Bonus: weiches Vlies, 1 Wolle alle 4 Fragen."
+  "de": "Haustier 5 (heisst zuerst Alfie). Bonus: weiches Vlies, 1 Wolle alle 4 Fragen."
  },
  "nodes/wild_edge/name": {
   "en": "Field Edge & Woods",
@@ -1849,7 +1849,7 @@
  },
  "nodes/wild_edge/desc": {
   "en": "Always open: gather sticks, pick stones, pull wild weeds. What you gather comes at once; each spot refills after a Time Quiz question. Costs energy, never coins.",
-  "de": "Immer offen: Stöcke sammeln, Steine aufsammeln, wildes Unkraut ausreißen. Was du sammelst, kommt sofort; jede Stelle füllt sich nach einer Frage im Zeit-Quiz wieder. Kostet Energie, nie Münzen."
+  "de": "Immer offen: Stöcke sammeln, Steine aufsammeln, wildes Unkraut ausreissen. Was du sammelst, kommt sofort; jede Stelle füllt sich nach einer Frage im Zeit-Quiz wieder. Kostet Energie, nie Münzen."
  },
  "nodes/stick_hoe/name": {
   "en": "Stick Hoe",
@@ -1921,7 +1921,7 @@
  },
  "nodes/patch_channel/desc": {
   "en": "Water flows from the pond to the roots: field water −15%.",
-  "de": "Das Wasser fließt vom Teich zu den Wurzeln: Feldwasser −15%."
+  "de": "Das Wasser fliesst vom Teich zu den Wurzeln: Feldwasser −15%."
  },
  "nodes/patch_deep/name": {
   "en": "Deep-worked beds",
@@ -2169,7 +2169,7 @@
  },
  "nodes/bellows/desc": {
   "en": "Hotter fire: the forge needs half the charcoal.",
-  "de": "Heißeres Feuer: Die Schmiede braucht nur die halbe Holzkohle."
+  "de": "Heisseres Feuer: Die Schmiede braucht nur die halbe Holzkohle."
  },
  "nodes/grindstone/name": {
   "en": "Grindstone",
@@ -2305,7 +2305,7 @@
  },
  "nodes/paved_yard/desc": {
   "en": "Dry feet everywhere: harvesting and animal work −10% energy.",
-  "de": "Überall trockene Füße: Ernten und Tierpflege −10% Energie."
+  "de": "Überall trockene Füsse: Ernten und Tierpflege −10% Energie."
  },
  "nodes/copper_still/name": {
   "en": "Herb Drying Loft",
@@ -2693,11 +2693,11 @@
  },
  "nodes/sq_healer_garden/desc": {
   "en": "Reward: a picture for the album — Healer Wren kneeling in her new herb garden, holding a bunch of your herbs.",
-  "de": "Belohnung: ein Bild fürs Album — Die Heilerin Wren kniet in ihrem neuen Kräutergarten und hält einen Strauß von deinen Kräutern."
+  "de": "Belohnung: ein Bild fürs Album — Die Heilerin Wren kniet in ihrem neuen Kräutergarten und hält einen Strauss von deinen Kräutern."
  },
  "nodes/sq_healer_garden/reward/picture": {
   "en": "Healer Wren kneeling in her new herb garden, holding a bunch of your herbs",
-  "de": "Die Heilerin Wren kniet in ihrem neuen Kräutergarten und hält einen Strauß von deinen Kräutern"
+  "de": "Die Heilerin Wren kniet in ihrem neuen Kräutergarten und hält einen Strauss von deinen Kräutern"
  },
  "nodes/book_basics/name": {
   "en": "The Little Farm Book",
@@ -2869,7 +2869,7 @@
  },
  "nodes/k_wheat/page": {
   "en": "Every seed needs three things to grow: soil, water and time. Farmers sow wheat seeds in loose soil and water them. The green stalks grow tall, turn golden, and then they are cut. Each stalk gives grain, to eat or to sow again, and a dry stem called straw.",
-  "de": "Jeder Samen braucht drei Dinge zum Wachsen: Erde, Wasser und Zeit. Bauern säen Weizenkörner in lockere Erde und gießen sie. Die grünen Halme wachsen hoch, werden golden und werden dann geschnitten. Jeder Halm gibt Körner, zum Essen oder zum neu Säen, und einen trockenen Stängel, das Stroh."
+  "de": "Jeder Samen braucht drei Dinge zum Wachsen: Erde, Wasser und Zeit. Bauern säen Weizenkörner in lockere Erde und giessen sie. Die grünen Halme wachsen hoch, werden golden und werden dann geschnitten. Jeder Halm gibt Körner, zum Essen oder zum neu Säen, und einen trockenen Stängel, das Stroh."
  },
  "nodes/k_wheat/questions/0/q": {
   "en": "What three things does a seed need to grow?",
@@ -2941,7 +2941,7 @@
  },
  "nodes/k_fire/page": {
   "en": "A fire needs three things: fuel to burn, air, and heat. Build it inside a ring of stones, and light small dry twigs before you add thicker sticks. Never leave a fire alone. To put it out, pour on water or cover it with soil, which keeps the air away.",
-  "de": "Ein Feuer braucht drei Dinge: Brennstoff, Luft und Hitze. Mach es in einem Ring aus Steinen und zünde kleine trockene Zweige an, bevor du dickere Stöcke dazulegst. Lass ein Feuer nie allein. Zum Löschen gießt du Wasser darauf oder deckst es mit Erde zu, so kommt keine Luft mehr heran."
+  "de": "Ein Feuer braucht drei Dinge: Brennstoff, Luft und Hitze. Mach es in einem Ring aus Steinen und zünde kleine trockene Zweige an, bevor du dickere Stöcke dazulegst. Lass ein Feuer nie allein. Zum Löschen giesst du Wasser darauf oder deckst es mit Erde zu, so kommt keine Luft mehr heran."
  },
  "nodes/k_fire/questions/0/q": {
   "en": "What three things does every fire need?",
@@ -2965,11 +2965,11 @@
  },
  "nodes/k_fire/questions/1/q": {
   "en": "Your big sticks won't catch fire. What should you light first?",
-  "de": "Deine großen Stöcke fangen kein Feuer. Was solltest du zuerst anzünden?"
+  "de": "Deine grossen Stöcke fangen kein Feuer. Was solltest du zuerst anzünden?"
  },
  "nodes/k_fire/questions/1/why": {
   "en": "Small dry twigs catch fire easily and then help the bigger sticks burn.",
-  "de": "Kleine trockene Zweige brennen leicht an und helfen dann den größeren Stöcken beim Brennen."
+  "de": "Kleine trockene Zweige brennen leicht an und helfen dann den grösseren Stöcken beim Brennen."
  },
  "nodes/k_fire/questions/1/answers/0": {
   "en": "Small dry twigs",
@@ -2997,7 +2997,7 @@
  },
  "nodes/k_fire/questions/2/answers/1": {
   "en": "The soil makes the fire hotter",
-  "de": "Die Erde macht das Feuer heißer"
+  "de": "Die Erde macht das Feuer heisser"
  },
  "nodes/k_fire/questions/2/answers/2": {
   "en": "The soil burns up like fuel",
@@ -3013,7 +3013,7 @@
  },
  "nodes/k_roots/page": {
   "en": "With carrots and onions, we eat the part under the ground: a carrot's root and an onion's round bulb. Their green leaves above the ground use sunlight to make food for the plant. They grow more slowly than leafy plants like lettuce. Pull them up when the green tops are big.",
-  "de": "Bei Karotten und Zwiebeln essen wir den Teil unter der Erde: die Wurzel der Karotte und die runde Knolle der Zwiebel. Ihre grünen Blätter über der Erde machen mit Sonnenlicht Nahrung für die Pflanze. Sie wachsen langsamer als Blattpflanzen wie Salat. Zieh sie heraus, wenn das grüne Kraut groß ist."
+  "de": "Bei Karotten und Zwiebeln essen wir den Teil unter der Erde: die Wurzel der Karotte und die runde Knolle der Zwiebel. Ihre grünen Blätter über der Erde machen mit Sonnenlicht Nahrung für die Pflanze. Sie wachsen langsamer als Blattpflanzen wie Salat. Zieh sie heraus, wenn das grüne Kraut gross ist."
  },
  "nodes/k_roots/questions/0/q": {
   "en": "Which part of a carrot do we eat?",
@@ -3033,7 +3033,7 @@
  },
  "nodes/k_roots/questions/0/answers/2": {
   "en": "The little white flowers",
-  "de": "Die kleinen weißen Blüten"
+  "de": "Die kleinen weissen Blüten"
  },
  "nodes/k_roots/questions/1/q": {
   "en": "What do the green leaves of a carrot do?",
@@ -3061,11 +3061,11 @@
  },
  "nodes/k_roots/questions/2/why": {
   "en": "Big green tops mean the root below has had time to grow big too.",
-  "de": "Großes grünes Kraut bedeutet, dass auch die Wurzel darunter Zeit hatte, groß zu werden."
+  "de": "Grosses grünes Kraut bedeutet, dass auch die Wurzel darunter Zeit hatte, gross zu werden."
  },
  "nodes/k_roots/questions/2/answers/0": {
   "en": "The green tops are big",
-  "de": "Das grüne Kraut ist groß"
+  "de": "Das grüne Kraut ist gross"
  },
  "nodes/k_roots/questions/2/answers/1": {
   "en": "The leaves are still small and new",
@@ -3229,7 +3229,7 @@
  },
  "nodes/k_weeds/page": {
   "en": "Weeds are wild plants that grow where we don't want them. They steal water, light and food from our crops. Their seeds blow in on the wind and can wait in the soil for years. Pull weeds out with their roots, and use a border or a cover of straw to keep new ones away.",
-  "de": "Unkraut sind wilde Pflanzen, die dort wachsen, wo wir sie nicht haben wollen. Sie stehlen unseren Pflanzen Wasser, Licht und Nahrung. Ihre Samen fliegen mit dem Wind herbei und können jahrelang in der Erde warten. Reiß Unkraut mit den Wurzeln aus, und halte neues mit einer Einfassung oder einer Decke aus Stroh fern."
+  "de": "Unkraut sind wilde Pflanzen, die dort wachsen, wo wir sie nicht haben wollen. Sie stehlen unseren Pflanzen Wasser, Licht und Nahrung. Ihre Samen fliegen mit dem Wind herbei und können jahrelang in der Erde warten. Reiss Unkraut mit den Wurzeln aus, und halte neues mit einer Einfassung oder einer Decke aus Stroh fern."
  },
  "nodes/k_weeds/questions/0/q": {
   "en": "Why are weeds bad for your crops?",
@@ -3269,7 +3269,7 @@
  },
  "nodes/k_weeds/questions/1/answers/2": {
   "en": "You forgot to water it",
-  "de": "Du hast vergessen, es zu gießen"
+  "de": "Du hast vergessen, es zu giessen"
  },
  "nodes/k_weeds/questions/2/q": {
   "en": "Your bed is clean now. How can you keep new weeds away?",
@@ -3285,7 +3285,7 @@
  },
  "nodes/k_weeds/questions/2/answers/1": {
   "en": "Water the bare soil every day",
-  "de": "Die nackte Erde jeden Tag gießen"
+  "de": "Die nackte Erde jeden Tag giessen"
  },
  "nodes/k_weeds/questions/2/answers/2": {
   "en": "Plant your crops far apart",
@@ -3301,7 +3301,7 @@
  },
  "nodes/k_water/page": {
   "en": "Rain soaks down through the soil and is stored deep underground. This water is called groundwater. A well is a deep hole that reaches it, and a deeper well reaches more water. A winch, which is a roller with a handle, makes lifting the heavy bucket much easier.",
-  "de": "Regen sickert durch die Erde und wird tief unter dem Boden gespeichert. Dieses Wasser heißt Grundwasser. Ein Brunnen ist ein tiefes Loch, das bis dorthin reicht, und ein tieferer Brunnen erreicht mehr Wasser. Eine Seilwinde, eine Rolle mit einer Kurbel, macht das Hochziehen des schweren Eimers viel leichter."
+  "de": "Regen sickert durch die Erde und wird tief unter dem Boden gespeichert. Dieses Wasser heisst Grundwasser. Ein Brunnen ist ein tiefes Loch, das bis dorthin reicht, und ein tieferer Brunnen erreicht mehr Wasser. Eine Seilwinde, eine Rolle mit einer Kurbel, macht das Hochziehen des schweren Eimers viel leichter."
  },
  "nodes/k_water/questions/0/q": {
   "en": "Where does the water in a well come from?",
@@ -3317,7 +3317,7 @@
  },
  "nodes/k_water/questions/0/answers/1": {
   "en": "The sea, flowing under the farm",
-  "de": "Vom Meer, das unter dem Hof fließt"
+  "de": "Vom Meer, das unter dem Hof fliesst"
  },
  "nodes/k_water/questions/0/answers/2": {
   "en": "Ice melting at the bottom of the hole",
@@ -3337,7 +3337,7 @@
  },
  "nodes/k_water/questions/1/answers/1": {
   "en": "Use a bigger bucket",
-  "de": "Einen größeren Eimer nehmen"
+  "de": "Einen grösseren Eimer nehmen"
  },
  "nodes/k_water/questions/1/answers/2": {
   "en": "Cover it with straw",
@@ -3421,7 +3421,7 @@
  },
  "nodes/k_soil/questions/2/why": {
   "en": "Feet squeeze the soil tight, so roots struggle to grow.",
-  "de": "Füße drücken die Erde fest zusammen, dann haben es die Wurzeln schwer."
+  "de": "Füsse drücken die Erde fest zusammen, dann haben es die Wurzeln schwer."
  },
  "nodes/k_soil/questions/2/answers/0": {
   "en": "It gets packed hard",
@@ -3533,7 +3533,7 @@
  },
  "nodes/k_chickens/questions/0/answers/1": {
   "en": "Out in the open field all night",
-  "de": "Die ganze Nacht draußen auf dem Feld"
+  "de": "Die ganze Nacht draussen auf dem Feld"
  },
  "nodes/k_chickens/questions/0/answers/2": {
   "en": "Down by the pond",
@@ -3589,7 +3589,7 @@
  },
  "nodes/k_birds/page": {
   "en": "Birds love to eat freshly sown seeds, and rabbits nibble young plants. A scarecrow looks like a person, so it frightens birds, but things that flap or move scare them even better. A fence keeps rabbits out. Remember: the more plants you grow, the more hungry visitors come.",
-  "de": "Vögel fressen gern frisch gesäte Samen, und Kaninchen knabbern an jungen Pflanzen. Eine Vogelscheuche sieht aus wie ein Mensch und erschreckt die Vögel, aber Dinge, die flattern oder sich bewegen, verjagen sie noch besser. Ein Zaun hält Kaninchen draußen. Denk daran: Je mehr Pflanzen du anbaust, desto mehr hungrige Besucher kommen."
+  "de": "Vögel fressen gern frisch gesäte Samen, und Kaninchen knabbern an jungen Pflanzen. Eine Vogelscheuche sieht aus wie ein Mensch und erschreckt die Vögel, aber Dinge, die flattern oder sich bewegen, verjagen sie noch besser. Ein Zaun hält Kaninchen draussen. Denk daran: Je mehr Pflanzen du anbaust, desto mehr hungrige Besucher kommen."
  },
  "nodes/k_birds/questions/0/q": {
   "en": "Which scarecrow will keep birds away best?",
@@ -3689,7 +3689,7 @@
  },
  "nodes/k_grinding/questions/1/why": {
   "en": "Bran is the tough outer skin of each grain.",
-  "de": "Kleie ist die zähe äußere Haut jedes Korns."
+  "de": "Kleie ist die zähe äussere Haut jedes Korns."
  },
  "nodes/k_grinding/questions/1/answers/0": {
   "en": "The hard outside of the grain",
@@ -3813,7 +3813,7 @@
  },
  "nodes/k_timber/questions/0/why": {
   "en": "Grain means the lines in wood, which show the way it splits.",
-  "de": "Maserung heißt die Linien im Holz, sie zeigen, wie es sich spaltet."
+  "de": "Maserung heisst die Linien im Holz, sie zeigen, wie es sich spaltet."
  },
  "nodes/k_timber/questions/0/answers/0": {
   "en": "The lines that run along it",
@@ -3825,7 +3825,7 @@
  },
  "nodes/k_timber/questions/0/answers/2": {
   "en": "The bark on the outside",
-  "de": "Die Rinde außen"
+  "de": "Die Rinde aussen"
  },
  "nodes/k_timber/questions/1/q": {
   "en": "Why use a saw for thin planks instead of an axe?",
@@ -3853,7 +3853,7 @@
  },
  "nodes/k_timber/questions/2/why": {
   "en": "A tree needs many years to grow big enough for planks.",
-  "de": "Ein Baum braucht viele Jahre, bis er groß genug für Bretter ist."
+  "de": "Ein Baum braucht viele Jahre, bis er gross genug für Bretter ist."
  },
  "nodes/k_timber/questions/2/answers/0": {
   "en": "Trees take many years to grow",
@@ -3877,7 +3877,7 @@
  },
  "nodes/k_clay/page": {
   "en": "Clay is very fine, sticky earth that you can shape when it is wet. Unfired clay gets soft in the rain and crumbles. Baked in a very hot oven called a kiln, it turns hard for good, and water can't soften it again. That is how we make bricks and jars.",
-  "de": "Lehm ist sehr feine, klebrige Erde, die man formen kann, wenn sie nass ist. Ungebrannter Lehm wird im Regen weich und zerbröckelt. In einem sehr heißen Ofen, dem Brennofen, gebacken, wird er für immer hart, und Wasser kann ihn nicht mehr aufweichen. So macht man Ziegel und Krüge."
+  "de": "Lehm ist sehr feine, klebrige Erde, die man formen kann, wenn sie nass ist. Ungebrannter Lehm wird im Regen weich und zerbröckelt. In einem sehr heissen Ofen, dem Brennofen, gebacken, wird er für immer hart, und Wasser kann ihn nicht mehr aufweichen. So macht man Ziegel und Krüge."
  },
  "nodes/k_clay/questions/0/q": {
   "en": "When is clay easiest to shape?",
@@ -3921,7 +3921,7 @@
  },
  "nodes/k_clay/questions/2/q": {
   "en": "Your unfired clay pot was left out in the rain. What happens?",
-  "de": "Dein ungebrannter Lehmtopf stand draußen im Regen. Was passiert?"
+  "de": "Dein ungebrannter Lehmtopf stand draussen im Regen. Was passiert?"
  },
  "nodes/k_clay/questions/2/why": {
   "en": "Unfired clay soaks up rain and falls apart.",
@@ -3949,7 +3949,7 @@
  },
  "nodes/k_charcoal/page": {
   "en": "Charcoal is made by heating wood with very little air, so it can't burn up. The water and smoke leave the wood, and the black part that stays behind is called carbon. Charcoal burns hotter and cleaner than wood, so smiths and glassmakers love it.",
-  "de": "Holzkohle entsteht, wenn man Holz mit ganz wenig Luft erhitzt, damit es nicht verbrennt. Wasser und Rauch gehen aus dem Holz heraus, und der schwarze Teil, der übrig bleibt, heißt Kohlenstoff. Holzkohle brennt heißer und sauberer als Holz, darum lieben Schmiede und Glasmacher sie."
+  "de": "Holzkohle entsteht, wenn man Holz mit ganz wenig Luft erhitzt, damit es nicht verbrennt. Wasser und Rauch gehen aus dem Holz heraus, und der schwarze Teil, der übrig bleibt, heisst Kohlenstoff. Holzkohle brennt heisser und sauberer als Holz, darum lieben Schmiede und Glasmacher sie."
  },
  "nodes/k_charcoal/questions/0/q": {
   "en": "How is charcoal made?",
@@ -3965,7 +3965,7 @@
  },
  "nodes/k_charcoal/questions/0/answers/1": {
   "en": "Burning wood in a big, open bonfire",
-  "de": "Holz wird in einem großen, offenen Feuer verbrannt"
+  "de": "Holz wird in einem grossen, offenen Feuer verbrannt"
  },
  "nodes/k_charcoal/questions/0/answers/2": {
   "en": "Soaking wood in the pond",
@@ -3977,11 +3977,11 @@
  },
  "nodes/k_charcoal/questions/1/why": {
   "en": "Charcoal gives a hotter, cleaner fire, which smiths need to work metal.",
-  "de": "Holzkohle gibt ein heißeres, saubereres Feuer, und das brauchen Schmiede, um Metall zu bearbeiten."
+  "de": "Holzkohle gibt ein heisseres, saubereres Feuer, und das brauchen Schmiede, um Metall zu bearbeiten."
  },
  "nodes/k_charcoal/questions/1/answers/0": {
   "en": "It burns hotter and cleaner",
-  "de": "Sie brennt heißer und sauberer"
+  "de": "Sie brennt heisser und sauberer"
  },
  "nodes/k_charcoal/questions/1/answers/1": {
   "en": "It burns slower and cooler",
@@ -4089,11 +4089,11 @@
  },
  "nodes/k_thatch/desc": {
   "en": "Thatch is a roof of tightly packed straw or reeds laid in thick layers on a steep roof so rain runs down the outside.",
-  "de": "Ein Strohdach besteht aus dicht gepacktem Stroh oder Schilf in dicken Schichten auf einem steilen Dach, damit der Regen außen herunterläuft."
+  "de": "Ein Strohdach besteht aus dicht gepacktem Stroh oder Schilf in dicken Schichten auf einem steilen Dach, damit der Regen aussen herunterläuft."
  },
  "nodes/k_thatch/page": {
   "en": "Thatch is a roof made of straw or reeds, packed tightly in thick layers. It sits on a steep roof, so rain runs down the outside and the inside stays dry. A good thatched roof lasts many years, and it keeps the house warm in winter.",
-  "de": "Ein Strohdach ist ein Dach aus Stroh oder Schilf, dicht gepackt in dicken Schichten. Es liegt auf einem steilen Dach, so läuft der Regen außen herunter und innen bleibt es trocken. Ein gutes Strohdach hält viele Jahre, und im Winter hält es das Haus warm."
+  "de": "Ein Strohdach ist ein Dach aus Stroh oder Schilf, dicht gepackt in dicken Schichten. Es liegt auf einem steilen Dach, so läuft der Regen aussen herunter und innen bleibt es trocken. Ein gutes Strohdach hält viele Jahre, und im Winter hält es das Haus warm."
  },
  "nodes/k_thatch/questions/0/q": {
   "en": "Why is a thatched roof built steep?",
@@ -4165,7 +4165,7 @@
  },
  "nodes/k_compost/page": {
   "en": "Compost is made when tiny living things, like bacteria, fungi and worms, break down old plants, straw and manure. They turn it all into dark, crumbly food for the soil. The heap needs air and a little water, and turning it with a fork makes it work faster. All their busy work makes the heap warm inside!",
-  "de": "Kompost entsteht, wenn winzige Lebewesen wie Bakterien, Pilze und Würmer alte Pflanzen, Stroh und Mist zersetzen. Sie machen daraus dunkle, krümelige Nahrung für die Erde. Der Haufen braucht Luft und ein bisschen Wasser, und wenn du ihn mit einer Gabel umsetzt, geht es schneller. Von all ihrer fleißigen Arbeit wird der Haufen innen warm!"
+  "de": "Kompost entsteht, wenn winzige Lebewesen wie Bakterien, Pilze und Würmer alte Pflanzen, Stroh und Mist zersetzen. Sie machen daraus dunkle, krümelige Nahrung für die Erde. Der Haufen braucht Luft und ein bisschen Wasser, und wenn du ihn mit einer Gabel umsetzt, geht es schneller. Von all ihrer fleissigen Arbeit wird der Haufen innen warm!"
  },
  "nodes/k_compost/questions/0/q": {
   "en": "Who turns old plants into compost?",
@@ -4217,7 +4217,7 @@
  },
  "nodes/k_compost/questions/2/answers/0": {
   "en": "Tiny living things are busy working",
-  "de": "Winzige Lebewesen arbeiten fleißig"
+  "de": "Winzige Lebewesen arbeiten fleissig"
  },
  "nodes/k_compost/questions/2/answers/1": {
   "en": "The sun heats the middle",
@@ -4237,7 +4237,7 @@
  },
  "nodes/k_bread/page": {
   "en": "A sourdough starter is flour and water where wild yeast lives. Yeast is a tiny living thing that eats the sugar in flour and makes bubbles of gas. The bubbles make the dough rise. A hot oven sets the bubbles in place, so the bread is soft inside.",
-  "de": "Sauerteig ist Mehl und Wasser, in dem wilde Hefe lebt. Hefe ist ein winziges Lebewesen, das den Zucker im Mehl frisst und Gasbläschen macht. Die Bläschen lassen den Teig aufgehen. Ein heißer Ofen hält die Bläschen fest, darum ist das Brot innen weich."
+  "de": "Sauerteig ist Mehl und Wasser, in dem wilde Hefe lebt. Hefe ist ein winziges Lebewesen, das den Zucker im Mehl frisst und Gasbläschen macht. Die Bläschen lassen den Teig aufgehen. Ein heisser Ofen hält die Bläschen fest, darum ist das Brot innen weich."
  },
  "nodes/k_bread/questions/0/q": {
   "en": "Your bread did not rise. What was missing?",
@@ -4285,7 +4285,7 @@
  },
  "nodes/k_bread/questions/2/why": {
   "en": "The hot oven firms the dough around the bubbles, so they stay.",
-  "de": "Der heiße Ofen macht den Teig um die Bläschen herum fest, so bleiben sie."
+  "de": "Der heisse Ofen macht den Teig um die Bläschen herum fest, so bleiben sie."
  },
  "nodes/k_bread/questions/2/answers/0": {
   "en": "The heat sets the bubbles",
@@ -4305,7 +4305,7 @@
  },
  "nodes/k_stove/desc": {
   "en": "A stove keeps the fire inside a box with a chimney, so heat goes into the pot and smoke goes outside.",
-  "de": "Ein Herd hält das Feuer in einem Kasten mit Kamin, so geht die Hitze in den Topf und der Rauch nach draußen."
+  "de": "Ein Herd hält das Feuer in einem Kasten mit Kamin, so geht die Hitze in den Topf und der Rauch nach draussen."
  },
  "nodes/k_stove/page": {
   "en": "A stove keeps the fire inside a box with a chimney. The heat goes into the pot, and the smoke goes out through the chimney. A stove uses less wood than an open fire, and it is safer. It is perfect for soups and stews that simmer, which means bubble gently, for a long time.",
@@ -4357,7 +4357,7 @@
  },
  "nodes/k_stove/questions/2/why": {
   "en": "To simmer means to bubble gently, so food cooks slowly.",
-  "de": "Köcheln heißt leise blubbern, so gart das Essen langsam."
+  "de": "Köcheln heisst leise blubbern, so gart das Essen langsam."
  },
  "nodes/k_stove/questions/2/answers/0": {
   "en": "Bubble gently for a long time",
@@ -4453,7 +4453,7 @@
  },
  "nodes/k_butter/page": {
   "en": "Fresh milk has cream in it, the fatty part, and it rises to the top. If you shake or churn the cream for a long time, the tiny drops of fat stick together into butter. The thin milk left over is called buttermilk.",
-  "de": "Frische Milch enthält Rahm, den fetten Teil, und der steigt nach oben. Wenn du den Rahm lange schüttelst oder butterst, kleben die winzigen Fetttröpfchen zu Butter zusammen. Die dünne Milch, die übrig bleibt, heißt Buttermilch."
+  "de": "Frische Milch enthält Rahm, den fetten Teil, und der steigt nach oben. Wenn du den Rahm lange schüttelst oder butterst, kleben die winzigen Fetttröpfchen zu Butter zusammen. Die dünne Milch, die übrig bleibt, heisst Buttermilch."
  },
  "nodes/k_butter/questions/0/q": {
   "en": "Where does the cream go in a pail of fresh milk?",
@@ -4481,7 +4481,7 @@
  },
  "nodes/k_butter/questions/1/why": {
   "en": "Shaking makes tiny drops of fat bump together and stick into butter.",
-  "de": "Beim Schütteln stoßen winzige Fetttröpfchen zusammen und kleben zu Butter zusammen."
+  "de": "Beim Schütteln stossen winzige Fetttröpfchen zusammen und kleben zu Butter zusammen."
  },
  "nodes/k_butter/questions/1/answers/0": {
   "en": "The fat drops stick together",
@@ -4501,7 +4501,7 @@
  },
  "nodes/k_butter/questions/2/why": {
   "en": "After the butter forms, the thin liquid left behind is buttermilk.",
-  "de": "Wenn die Butter fertig ist, heißt die dünne Flüssigkeit, die übrig bleibt, Buttermilch."
+  "de": "Wenn die Butter fertig ist, heisst die dünne Flüssigkeit, die übrig bleibt, Buttermilch."
  },
  "nodes/k_butter/questions/2/answers/0": {
   "en": "Buttermilk",
@@ -4525,7 +4525,7 @@
  },
  "nodes/k_bees/page": {
   "en": "Bees visit flowers to collect sweet nectar and dusty pollen. They carry pollen from flower to flower, which is called pollination, so plants can make fruit and seeds. Bees turn nectar into honey, store it in wax combs, and need water to drink, too.",
-  "de": "Bienen fliegen zu Blumen, um süßen Nektar und staubigen Pollen zu sammeln. Sie tragen den Pollen von Blüte zu Blüte, das nennt man Bestäubung, und so können Pflanzen Früchte und Samen machen. Bienen machen aus Nektar Honig, lagern ihn in Wachswaben, und sie brauchen auch Wasser zum Trinken."
+  "de": "Bienen fliegen zu Blumen, um süssen Nektar und staubigen Pollen zu sammeln. Sie tragen den Pollen von Blüte zu Blüte, das nennt man Bestäubung, und so können Pflanzen Früchte und Samen machen. Bienen machen aus Nektar Honig, lagern ihn in Wachswaben, und sie brauchen auch Wasser zum Trinken."
  },
  "nodes/k_bees/questions/0/q": {
   "en": "Why do your apple trees need bees?",
@@ -4553,7 +4553,7 @@
  },
  "nodes/k_bees/questions/1/why": {
   "en": "Bees collect sweet nectar from flowers and turn it into honey.",
-  "de": "Bienen sammeln süßen Nektar von Blumen und machen daraus Honig."
+  "de": "Bienen sammeln süssen Nektar von Blumen und machen daraus Honig."
  },
  "nodes/k_bees/questions/1/answers/0": {
   "en": "Nectar",
@@ -4597,7 +4597,7 @@
  },
  "nodes/k_honey/page": {
   "en": "A honeycomb is made of six-sided wax cells full of honey. Crush the comb and strain it through a cloth: the honey drips out, and the wax stays behind. Beeswax makes candles and keeps things waterproof. Honey keeps for years without going bad.",
-  "de": "Eine Honigwabe besteht aus sechseckigen Wachszellen voller Honig. Zerdrück die Wabe und gieß sie durch ein Tuch: Der Honig tropft heraus, und das Wachs bleibt zurück. Aus Bienenwachs macht man Kerzen, und es macht Dinge wasserdicht. Honig hält jahrelang, ohne schlecht zu werden."
+  "de": "Eine Honigwabe besteht aus sechseckigen Wachszellen voller Honig. Zerdrück die Wabe und giess sie durch ein Tuch: Der Honig tropft heraus, und das Wachs bleibt zurück. Aus Bienenwachs macht man Kerzen, und es macht Dinge wasserdicht. Honig hält jahrelang, ohne schlecht zu werden."
  },
  "nodes/k_honey/questions/0/q": {
   "en": "What shape are the cells in a honeycomb?",
@@ -4741,7 +4741,7 @@
  },
  "nodes/k_mucking/page": {
   "en": "Animals make dung, and when it mixes with their old bedding straw we call it muck. Mucking out means cleaning the muck away, and it keeps the animals clean and healthy. Rotted manure is rich food for the fields. What is waste for animals is food for plants!",
-  "de": "Tiere machen Dung, und wenn er sich mit ihrem alten Stroh mischt, nennen wir das Mist. Ausmisten heißt, den Mist wegzuräumen, und das hält die Tiere sauber und gesund. Verrotteter Mist ist reiche Nahrung für die Felder. Was für die Tiere Abfall ist, ist für die Pflanzen Futter!"
+  "de": "Tiere machen Dung, und wenn er sich mit ihrem alten Stroh mischt, nennen wir das Mist. Ausmisten heisst, den Mist wegzuräumen, und das hält die Tiere sauber und gesund. Verrotteter Mist ist reiche Nahrung für die Felder. Was für die Tiere Abfall ist, ist für die Pflanzen Futter!"
  },
  "nodes/k_mucking/questions/0/q": {
   "en": "Why do you muck out the barn?",
@@ -4849,7 +4849,7 @@
  },
  "nodes/k_feed/questions/1/answers/1": {
   "en": "A sweet cake baked for the farm animals",
-  "de": "Ein süßer Kuchen, für die Hoftiere gebacken"
+  "de": "Ein süsser Kuchen, für die Hoftiere gebacken"
  },
  "nodes/k_feed/questions/1/answers/2": {
   "en": "Hay soaked in oil",
@@ -4893,7 +4893,7 @@
  },
  "nodes/k_rotation/questions/0/why": {
   "en": "Rotation means growing a different crop in the bed each time.",
-  "de": "Fruchtwechsel heißt, jedes Mal eine andere Pflanze im Beet anzubauen."
+  "de": "Fruchtwechsel heisst, jedes Mal eine andere Pflanze im Beet anzubauen."
  },
  "nodes/k_rotation/questions/0/answers/0": {
   "en": "Changing the crop in a bed each time",
@@ -4905,7 +4905,7 @@
  },
  "nodes/k_rotation/questions/0/answers/2": {
   "en": "Planting all your crops in a big circle",
-  "de": "Alle Pflanzen in einem großen Kreis setzen"
+  "de": "Alle Pflanzen in einem grossen Kreis setzen"
  },
  "nodes/k_rotation/questions/1/q": {
   "en": "Which plants put nitrogen back into the soil?",
@@ -4973,7 +4973,7 @@
  },
  "nodes/k_seasons/questions/0/answers/1": {
   "en": "The Sun gets bigger in summer",
-  "de": "Die Sonne wird im Sommer größer"
+  "de": "Die Sonne wird im Sommer grösser"
  },
  "nodes/k_seasons/questions/0/answers/2": {
   "en": "The Earth gets closer to the Sun in summer",
@@ -5173,7 +5173,7 @@
  },
  "nodes/k_trees/page": {
   "en": "A tree grows from a seed or from a young tree called a sapling. It takes many years to grow big. In a woodlot, cut just a few trees at a time and plant new ones, so wood never runs out. Once a fruit tree is grown, it gives fruit every year.",
-  "de": "Ein Baum wächst aus einem Samen oder aus einem jungen Baum, einem Bäumchen. Es dauert viele Jahre, bis er groß ist. In einem Waldstück fällt man immer nur ein paar Bäume und pflanzt neue, damit das Holz nie ausgeht. Wenn ein Obstbaum groß ist, trägt er jedes Jahr Früchte."
+  "de": "Ein Baum wächst aus einem Samen oder aus einem jungen Baum, einem Bäumchen. Es dauert viele Jahre, bis er gross ist. In einem Waldstück fällt man immer nur ein paar Bäume und pflanzt neue, damit das Holz nie ausgeht. Wenn ein Obstbaum gross ist, trägt er jedes Jahr Früchte."
  },
  "nodes/k_trees/questions/0/q": {
   "en": "How can your woodlot never run out of wood?",
@@ -5221,7 +5221,7 @@
  },
  "nodes/k_trees/questions/2/why": {
   "en": "Once a fruit tree is grown, it gives a harvest year after year.",
-  "de": "Wenn ein Obstbaum groß ist, gibt er Jahr für Jahr eine Ernte."
+  "de": "Wenn ein Obstbaum gross ist, gibt er Jahr für Jahr eine Ernte."
  },
  "nodes/k_trees/questions/2/answers/0": {
   "en": "It gives fruit every year",
@@ -5245,7 +5245,7 @@
  },
  "nodes/k_iron/page": {
   "en": "Iron ore is a rock with iron hidden inside it. When it is heated very, very hot with charcoal, the iron comes out of the rock; this is called smelting. Hot iron glows and can be hammered into shape. When it cools, iron is hard and strong.",
-  "de": "Eisenerz ist ein Stein, in dem Eisen versteckt ist. Wenn man es mit Holzkohle sehr, sehr heiß macht, kommt das Eisen aus dem Stein heraus; das nennt man Schmelzen. Heißes Eisen glüht, und man kann es mit dem Hammer formen. Wenn es abkühlt, ist Eisen hart und stark."
+  "de": "Eisenerz ist ein Stein, in dem Eisen versteckt ist. Wenn man es mit Holzkohle sehr, sehr heiss macht, kommt das Eisen aus dem Stein heraus; das nennt man Schmelzen. Heisses Eisen glüht, und man kann es mit dem Hammer formen. Wenn es abkühlt, ist Eisen hart und stark."
  },
  "nodes/k_iron/questions/0/q": {
   "en": "What is iron ore?",
@@ -5269,11 +5269,11 @@
  },
  "nodes/k_iron/questions/1/q": {
   "en": "What does smelting mean?",
-  "de": "Was heißt Schmelzen?"
+  "de": "Was heisst Schmelzen?"
  },
  "nodes/k_iron/questions/1/why": {
   "en": "Smelting uses great heat and charcoal to get iron out of rock.",
-  "de": "Beim Schmelzen holt man mit großer Hitze und Holzkohle das Eisen aus dem Gestein."
+  "de": "Beim Schmelzen holt man mit grosser Hitze und Holzkohle das Eisen aus dem Gestein."
  },
  "nodes/k_iron/questions/1/answers/0": {
   "en": "Heating ore so the iron comes out",
@@ -5281,7 +5281,7 @@
  },
  "nodes/k_iron/questions/1/answers/1": {
   "en": "Hammering hot iron into new shapes",
-  "de": "Heißes Eisen in neue Formen hämmern"
+  "de": "Heisses Eisen in neue Formen hämmern"
  },
  "nodes/k_iron/questions/1/answers/2": {
   "en": "Cooling iron in water",
@@ -5293,11 +5293,11 @@
  },
  "nodes/k_iron/questions/2/why": {
   "en": "Glowing hot iron is soft enough to shape; cold iron is hard.",
-  "de": "Glühend heißes Eisen ist weich genug zum Formen; kaltes Eisen ist hart."
+  "de": "Glühend heisses Eisen ist weich genug zum Formen; kaltes Eisen ist hart."
  },
  "nodes/k_iron/questions/2/answers/0": {
   "en": "When it is glowing hot",
-  "de": "Wenn es glühend heiß ist"
+  "de": "Wenn es glühend heiss ist"
  },
  "nodes/k_iron/questions/2/answers/1": {
   "en": "When it is ice cold",
@@ -5317,7 +5317,7 @@
  },
  "nodes/k_smithing/page": {
   "en": "A smith heats iron until it glows, then hammers it into shape on an anvil, a heavy iron block. Dipping the hot tool quickly into water is called quenching, and it makes the tool harder. Iron tools last much longer than stone tools.",
-  "de": "Ein Schmied erhitzt Eisen, bis es glüht, und hämmert es dann auf einem Amboss, einem schweren Eisenblock, in Form. Wenn man das heiße Werkzeug schnell in Wasser taucht, nennt man das Abschrecken, und es macht das Werkzeug härter. Eisenwerkzeuge halten viel länger als Steinwerkzeuge."
+  "de": "Ein Schmied erhitzt Eisen, bis es glüht, und hämmert es dann auf einem Amboss, einem schweren Eisenblock, in Form. Wenn man das heisse Werkzeug schnell in Wasser taucht, nennt man das Abschrecken, und es macht das Werkzeug härter. Eisenwerkzeuge halten viel länger als Steinwerkzeuge."
  },
  "nodes/k_smithing/questions/0/q": {
   "en": "What is an anvil?",
@@ -5325,7 +5325,7 @@
  },
  "nodes/k_smithing/questions/0/why": {
   "en": "The smith lays hot iron on the anvil and hammers it into shape.",
-  "de": "Der Schmied legt heißes Eisen auf den Amboss und hämmert es in Form."
+  "de": "Der Schmied legt heisses Eisen auf den Amboss und hämmert es in Form."
  },
  "nodes/k_smithing/questions/0/answers/0": {
   "en": "A heavy iron block to hammer on",
@@ -5333,7 +5333,7 @@
  },
  "nodes/k_smithing/questions/0/answers/1": {
   "en": "A big hammer for hitting iron",
-  "de": "Ein großer Hammer zum Schlagen von Eisen"
+  "de": "Ein grosser Hammer zum Schlagen von Eisen"
  },
  "nodes/k_smithing/questions/0/answers/2": {
   "en": "A bucket of cold water for cooling",
@@ -5341,7 +5341,7 @@
  },
  "nodes/k_smithing/questions/1/q": {
   "en": "Why does a smith dip a hot tool into water?",
-  "de": "Warum taucht ein Schmied ein heißes Werkzeug in Wasser?"
+  "de": "Warum taucht ein Schmied ein heisses Werkzeug in Wasser?"
  },
  "nodes/k_smithing/questions/1/why": {
   "en": "Cooling it quickly in water, called quenching, makes the tool harder.",
@@ -5437,7 +5437,7 @@
  },
  "nodes/k_nails/questions/2/why": {
   "en": "Straight, even planks fit together neatly when you build.",
-  "de": "Gerade, gleichmäßige Bretter passen beim Bauen ordentlich zusammen."
+  "de": "Gerade, gleichmässige Bretter passen beim Bauen ordentlich zusammen."
  },
  "nodes/k_nails/questions/2/answers/0": {
   "en": "It cuts straight, thin planks",
@@ -5481,7 +5481,7 @@
  },
  "nodes/k_wind/questions/0/answers/2": {
   "en": "Water flowing downhill",
-  "de": "Wasser, das bergab fließt"
+  "de": "Wasser, das bergab fliesst"
  },
  "nodes/k_wind/questions/1/q": {
   "en": "How do the sails turn the heavy millstones?",
@@ -5517,7 +5517,7 @@
  },
  "nodes/k_wind/questions/2/answers/1": {
   "en": "Wind makes the flour sweeter",
-  "de": "Wind macht das Mehl süßer"
+  "de": "Wind macht das Mehl süsser"
  },
  "nodes/k_wind/questions/2/answers/2": {
   "en": "It grinds best with no wind",
@@ -5533,7 +5533,7 @@
  },
  "nodes/k_irrigation/page": {
   "en": "Irrigation means bringing water to crops through channels or pipes. Water always flows downhill, so the channel must slope down toward the crops. Watering at the roots wastes less water than splashing the leaves. A watering can with a long spout helps you aim right at the roots.",
-  "de": "Bewässerung heißt, Wasser durch Gräben oder Rohre zu den Pflanzen zu bringen. Wasser fließt immer bergab, darum muss der Graben zu den Pflanzen hin abfallen. An den Wurzeln zu gießen verschwendet weniger Wasser, als die Blätter zu bespritzen. Eine Gießkanne mit langem Ausguss hilft dir, genau auf die Wurzeln zu zielen."
+  "de": "Bewässerung heisst, Wasser durch Gräben oder Rohre zu den Pflanzen zu bringen. Wasser fliesst immer bergab, darum muss der Graben zu den Pflanzen hin abfallen. An den Wurzeln zu giessen verschwendet weniger Wasser, als die Blätter zu bespritzen. Eine Giesskanne mit langem Ausguss hilft dir, genau auf die Wurzeln zu zielen."
  },
  "nodes/k_irrigation/questions/0/q": {
   "en": "Your field is higher than the pond. Why won't channel water reach it?",
@@ -5541,11 +5541,11 @@
  },
  "nodes/k_irrigation/questions/0/why": {
   "en": "Water flows downhill, so it can't climb up to a higher field.",
-  "de": "Wasser fließt bergab, darum kann es nicht zu einem höheren Feld hinaufklettern."
+  "de": "Wasser fliesst bergab, darum kann es nicht zu einem höheren Feld hinaufklettern."
  },
  "nodes/k_irrigation/questions/0/answers/0": {
   "en": "Water only flows downhill",
-  "de": "Wasser fließt nur bergab"
+  "de": "Wasser fliesst nur bergab"
  },
  "nodes/k_irrigation/questions/0/answers/1": {
   "en": "The channel is too short",
@@ -5557,7 +5557,7 @@
  },
  "nodes/k_irrigation/questions/1/q": {
   "en": "Where is the best place to pour water on a plant?",
-  "de": "Wohin gießt man Wasser bei einer Pflanze am besten?"
+  "de": "Wohin giesst man Wasser bei einer Pflanze am besten?"
  },
  "nodes/k_irrigation/questions/1/why": {
   "en": "Water at the roots goes where the plant drinks, with less waste.",
@@ -5577,11 +5577,11 @@
  },
  "nodes/k_irrigation/questions/2/q": {
   "en": "Why does a watering can have a long spout?",
-  "de": "Warum hat eine Gießkanne einen langen Ausguss?"
+  "de": "Warum hat eine Giesskanne einen langen Ausguss?"
  },
  "nodes/k_irrigation/questions/2/why": {
   "en": "The spout lets you pour exactly where the roots are.",
-  "de": "Mit dem Ausguss kannst du genau dorthin gießen, wo die Wurzeln sind."
+  "de": "Mit dem Ausguss kannst du genau dorthin giessen, wo die Wurzeln sind."
  },
  "nodes/k_irrigation/questions/2/answers/0": {
   "en": "To aim water at the roots",
@@ -5817,11 +5817,11 @@
  },
  "nodes/k_press/desc": {
   "en": "A press squeezes fruit or seeds very hard with a big screw.",
-  "de": "Eine Presse drückt Obst oder Samen mit einer großen Schraube ganz fest zusammen."
+  "de": "Eine Presse drückt Obst oder Samen mit einer grossen Schraube ganz fest zusammen."
  },
  "nodes/k_press/page": {
   "en": "A press squeezes fruit or seeds very hard when you turn its big wooden screw. Apples give juice, and sunflower and flax seeds give oil. What is left over, called pomace or oilcake, can feed animals or go on the compost.",
-  "de": "Eine Presse drückt Obst oder Samen ganz fest zusammen, wenn du ihre große Holzschraube drehst. Äpfel geben Saft, und Sonnenblumen- und Flachssamen geben Öl. Was übrig bleibt, der Trester oder Ölkuchen, kann Tiere füttern oder auf den Kompost."
+  "de": "Eine Presse drückt Obst oder Samen ganz fest zusammen, wenn du ihre grosse Holzschraube drehst. Äpfel geben Saft, und Sonnenblumen- und Flachssamen geben Öl. Was übrig bleibt, der Trester oder Ölkuchen, kann Tiere füttern oder auf den Kompost."
  },
  "nodes/k_press/questions/0/q": {
   "en": "What comes out when you press apples?",
@@ -5829,7 +5829,7 @@
  },
  "nodes/k_press/questions/0/why": {
   "en": "Squeezing apples hard pushes out their sweet juice.",
-  "de": "Wenn man Äpfel fest zusammendrückt, kommt ihr süßer Saft heraus."
+  "de": "Wenn man Äpfel fest zusammendrückt, kommt ihr süsser Saft heraus."
  },
  "nodes/k_press/questions/0/answers/0": {
   "en": "Juice",
@@ -5869,11 +5869,11 @@
  },
  "nodes/k_press/questions/2/why": {
   "en": "Turning a big screw pushes the press down with great force.",
-  "de": "Wenn man eine große Schraube dreht, drückt die Presse mit großer Kraft nach unten."
+  "de": "Wenn man eine grosse Schraube dreht, drückt die Presse mit grosser Kraft nach unten."
  },
  "nodes/k_press/questions/2/answers/0": {
   "en": "By turning a big screw",
-  "de": "Indem man eine große Schraube dreht"
+  "de": "Indem man eine grosse Schraube dreht"
  },
  "nodes/k_press/questions/2/answers/1": {
   "en": "By heating it in the oven",
@@ -5893,7 +5893,7 @@
  },
  "nodes/k_sugar/page": {
   "en": "Sugar beets store sugar in their big roots. Their juice is squeezed out and boiled, so the water goes off as steam and sugar crystals are left behind. Before sugar was common, people sweetened their food mostly with honey.",
-  "de": "Zuckerrüben speichern Zucker in ihren großen Wurzeln. Ihr Saft wird ausgepresst und gekocht, so geht das Wasser als Dampf weg, und Zuckerkristalle bleiben übrig. Bevor es überall Zucker gab, haben die Menschen ihr Essen meistens mit Honig gesüßt."
+  "de": "Zuckerrüben speichern Zucker in ihren grossen Wurzeln. Ihr Saft wird ausgepresst und gekocht, so geht das Wasser als Dampf weg, und Zuckerkristalle bleiben übrig. Bevor es überall Zucker gab, haben die Menschen ihr Essen meistens mit Honig gesüsst."
  },
  "nodes/k_sugar/questions/0/q": {
   "en": "Where does a sugar beet store its sugar?",
@@ -5901,7 +5901,7 @@
  },
  "nodes/k_sugar/questions/0/why": {
   "en": "Sugar beets keep their sugar in their big white roots.",
-  "de": "Zuckerrüben bewahren ihren Zucker in ihren großen weißen Wurzeln auf."
+  "de": "Zuckerrüben bewahren ihren Zucker in ihren grossen weissen Wurzeln auf."
  },
  "nodes/k_sugar/questions/0/answers/0": {
   "en": "In its root",
@@ -5937,11 +5937,11 @@
  },
  "nodes/k_sugar/questions/2/q": {
   "en": "How did people sweeten food before sugar was common?",
-  "de": "Womit haben die Menschen gesüßt, bevor es überall Zucker gab?"
+  "de": "Womit haben die Menschen gesüsst, bevor es überall Zucker gab?"
  },
  "nodes/k_sugar/questions/2/why": {
   "en": "Honey was the main sweetener long before sugar was easy to get.",
-  "de": "Honig war das wichtigste Süßungsmittel, lange bevor man leicht an Zucker kam."
+  "de": "Honig war das wichtigste Süssungsmittel, lange bevor man leicht an Zucker kam."
  },
  "nodes/k_sugar/questions/2/answers/0": {
   "en": "With honey",
@@ -6021,7 +6021,7 @@
  },
  "nodes/k_ferment/questions/2/answers/1": {
   "en": "It is kept in the hot sun",
-  "de": "Es wird in der heißen Sonne aufbewahrt"
+  "de": "Es wird in der heissen Sonne aufbewahrt"
  },
  "nodes/k_ferment/questions/2/answers/2": {
   "en": "All the germs have been boiled away",
@@ -6145,7 +6145,7 @@
  },
  "nodes/k_cellar/questions/1/answers/1": {
   "en": "It has big windows",
-  "de": "Er hat große Fenster"
+  "de": "Er hat grosse Fenster"
  },
  "nodes/k_cellar/questions/1/answers/2": {
   "en": "It is next to the stove",
@@ -6197,7 +6197,7 @@
  },
  "nodes/k_pickling/questions/0/answers/1": {
   "en": "Salt is stirred into hot water",
-  "de": "Salz wird in heißes Wasser gerührt"
+  "de": "Salz wird in heisses Wasser gerührt"
  },
  "nodes/k_pickling/questions/0/answers/2": {
   "en": "Lemons are squeezed",
@@ -6253,7 +6253,7 @@
  },
  "nodes/k_double_dig/page": {
   "en": "Double digging means loosening the soil two spade-depths deep and mixing in compost. Then roots can grow deeper, and more plants fit in the bed. It is hard work, but you only do it once. If you never step on the bed, it stays loose for years.",
-  "de": "Doppelt umgraben heißt, die Erde zwei Spatentiefen tief zu lockern und Kompost hineinzumischen. Dann können die Wurzeln tiefer wachsen, und mehr Pflanzen passen ins Beet. Es ist harte Arbeit, aber man macht es nur einmal. Wenn du nie auf das Beet trittst, bleibt es jahrelang locker."
+  "de": "Doppelt umgraben heisst, die Erde zwei Spatentiefen tief zu lockern und Kompost hineinzumischen. Dann können die Wurzeln tiefer wachsen, und mehr Pflanzen passen ins Beet. Es ist harte Arbeit, aber man macht es nur einmal. Wenn du nie auf das Beet trittst, bleibt es jahrelang locker."
  },
  "nodes/k_double_dig/questions/0/q": {
   "en": "How deep do you loosen the soil when double digging?",
@@ -6293,7 +6293,7 @@
  },
  "nodes/k_double_dig/questions/1/answers/2": {
   "en": "You never need to water again",
-  "de": "Man muss nie wieder gießen"
+  "de": "Man muss nie wieder giessen"
  },
  "nodes/k_double_dig/questions/2/q": {
   "en": "How do you keep a double-dug bed loose for years?",
@@ -6301,7 +6301,7 @@
  },
  "nodes/k_double_dig/questions/2/why": {
   "en": "Feet pack the soil hard, so walk on the paths instead.",
-  "de": "Füße machen die Erde hart, darum geh lieber auf den Wegen."
+  "de": "Füsse machen die Erde hart, darum geh lieber auf den Wegen."
  },
  "nodes/k_double_dig/questions/2/answers/0": {
   "en": "Never step on it",
@@ -6397,7 +6397,7 @@
  },
  "nodes/k_steel/page": {
   "en": "Steel is iron with a tiny bit of carbon mixed in, and the carbon comes from charcoal. Steel is harder and springier than iron. It keeps a sharp edge and doesn't break easily. Making steel needs a very hot furnace.",
-  "de": "Stahl ist Eisen mit ein ganz kleines bisschen Kohlenstoff darin, und der Kohlenstoff kommt aus der Holzkohle. Stahl ist härter und federnder als Eisen. Er bleibt scharf und bricht nicht so leicht. Um Stahl zu machen, braucht man einen sehr heißen Ofen."
+  "de": "Stahl ist Eisen mit ein ganz kleines bisschen Kohlenstoff darin, und der Kohlenstoff kommt aus der Holzkohle. Stahl ist härter und federnder als Eisen. Er bleibt scharf und bricht nicht so leicht. Um Stahl zu machen, braucht man einen sehr heissen Ofen."
  },
  "nodes/k_steel/questions/0/q": {
   "en": "What is steel made of?",
@@ -6445,7 +6445,7 @@
  },
  "nodes/k_steel/questions/2/why": {
   "en": "Charcoal is mostly carbon, and a little mixes into the hot iron.",
-  "de": "Holzkohle ist größtenteils Kohlenstoff, und ein bisschen davon mischt sich in das heiße Eisen."
+  "de": "Holzkohle ist grösstenteils Kohlenstoff, und ein bisschen davon mischt sich in das heisse Eisen."
  },
  "nodes/k_steel/questions/2/answers/0": {
   "en": "Charcoal",
@@ -6465,11 +6465,11 @@
  },
  "nodes/k_glass/desc": {
   "en": "Glass is made by melting sand in a very hot furnace until it flows like honey, then shaping it and letting it cool slowly.",
-  "de": "Glas entsteht, wenn man Sand in einem sehr heißen Ofen schmilzt, bis er wie Honig fließt, ihn dann formt und langsam abkühlen lässt."
+  "de": "Glas entsteht, wenn man Sand in einem sehr heissen Ofen schmilzt, bis er wie Honig fliesst, ihn dann formt und langsam abkühlen lässt."
  },
  "nodes/k_glass/page": {
   "en": "Glass is made by melting sand, with a little plant ash to help, in a very hot furnace. Melted glass flows like honey, so it can be shaped. Then it must cool slowly, or it may crack. Glass lets light through but keeps the wind and rain out.",
-  "de": "Glas macht man, indem man Sand, mit ein bisschen Pflanzenasche als Hilfe, in einem sehr heißen Ofen schmilzt. Geschmolzenes Glas fließt wie Honig, so kann man es formen. Dann muss es langsam abkühlen, sonst kann es springen. Glas lässt Licht durch, hält aber Wind und Regen draußen."
+  "de": "Glas macht man, indem man Sand, mit ein bisschen Pflanzenasche als Hilfe, in einem sehr heissen Ofen schmilzt. Geschmolzenes Glas fliesst wie Honig, so kann man es formen. Dann muss es langsam abkühlen, sonst kann es springen. Glas lässt Licht durch, hält aber Wind und Regen draussen."
  },
  "nodes/k_glass/questions/0/q": {
   "en": "What is glass mainly made from?",
@@ -6477,7 +6477,7 @@
  },
  "nodes/k_glass/questions/0/why": {
   "en": "Sand melted in a very hot furnace becomes glass.",
-  "de": "Sand, der in einem sehr heißen Ofen geschmolzen wird, wird zu Glas."
+  "de": "Sand, der in einem sehr heissen Ofen geschmolzen wird, wird zu Glas."
  },
  "nodes/k_glass/questions/0/answers/0": {
   "en": "Melted sand",
@@ -6517,11 +6517,11 @@
  },
  "nodes/k_glass/questions/2/why": {
   "en": "Glass is clear, so light comes in while wind and rain stay out.",
-  "de": "Glas ist durchsichtig, so kommt Licht herein, während Wind und Regen draußen bleiben."
+  "de": "Glas ist durchsichtig, so kommt Licht herein, während Wind und Regen draussen bleiben."
  },
  "nodes/k_glass/questions/2/answers/0": {
   "en": "It lets light in and keeps rain out",
-  "de": "Es lässt Licht herein und hält den Regen draußen"
+  "de": "Es lässt Licht herein und hält den Regen draussen"
  },
  "nodes/k_glass/questions/2/answers/1": {
   "en": "It keeps the house dark",
@@ -6541,7 +6541,7 @@
  },
  "nodes/k_greenhouse/page": {
   "en": "In a greenhouse, sunlight shines through the glass and warms the air and soil inside. The glass keeps the warm air in, so plants can grow even when it is cold outside. People grow tender plants there, which are plants that don't like cold. They also start early seedlings in spring.",
-  "de": "In einem Gewächshaus scheint das Sonnenlicht durch das Glas und wärmt die Luft und die Erde drinnen. Das Glas hält die warme Luft fest, so können Pflanzen wachsen, auch wenn es draußen kalt ist. Man zieht dort empfindliche Pflanzen, die keine Kälte mögen. Im Frühling zieht man dort auch frühe Keimlinge vor."
+  "de": "In einem Gewächshaus scheint das Sonnenlicht durch das Glas und wärmt die Luft und die Erde drinnen. Das Glas hält die warme Luft fest, so können Pflanzen wachsen, auch wenn es draussen kalt ist. Man zieht dort empfindliche Pflanzen, die keine Kälte mögen. Im Frühling zieht man dort auch frühe Keimlinge vor."
  },
  "nodes/k_greenhouse/questions/0/q": {
   "en": "Why is it warm inside a greenhouse?",
@@ -6561,7 +6561,7 @@
  },
  "nodes/k_greenhouse/questions/0/answers/2": {
   "en": "The plants breathe out lots of hot air",
-  "de": "Die Pflanzen atmen viel heiße Luft aus"
+  "de": "Die Pflanzen atmen viel heisse Luft aus"
  },
  "nodes/k_greenhouse/questions/1/q": {
   "en": "What are tender plants?",
@@ -6601,7 +6601,7 @@
  },
  "nodes/k_greenhouse/questions/2/answers/2": {
   "en": "Out in the frosty field",
-  "de": "Draußen auf dem frostigen Feld"
+  "de": "Draussen auf dem frostigen Feld"
  },
  "nodes/k_masonry/name": {
   "en": "Brick houses",
@@ -6773,7 +6773,7 @@
  },
  "nodes/k_olives/questions/0/answers/1": {
   "en": "They are too sweet to eat",
-  "de": "Sie sind zu süß zum Essen"
+  "de": "Sie sind zu süss zum Essen"
  },
  "nodes/k_olives/questions/0/answers/2": {
   "en": "They are too dry to eat",
@@ -6829,7 +6829,7 @@
  },
  "nodes/k_pasta/page": {
   "en": "Pasta is flour and egg, or flour and water, kneaded into a dough. Kneading means pressing and folding, and it builds gluten, which makes the dough stretchy. The dough is rolled thin and cut into shapes. Fresh pasta cooks in just a few minutes in boiling water.",
-  "de": "Nudeln sind Mehl und Ei oder Mehl und Wasser, zu einem Teig geknetet. Kneten heißt drücken und falten, und dabei entsteht Gluten, das den Teig dehnbar macht. Der Teig wird dünn ausgerollt und in Formen geschnitten. Frische Nudeln kochen in nur ein paar Minuten in sprudelndem Wasser."
+  "de": "Nudeln sind Mehl und Ei oder Mehl und Wasser, zu einem Teig geknetet. Kneten heisst drücken und falten, und dabei entsteht Gluten, das den Teig dehnbar macht. Der Teig wird dünn ausgerollt und in Formen geschnitten. Frische Nudeln kochen in nur ein paar Minuten in sprudelndem Wasser."
  },
  "nodes/k_pasta/questions/0/q": {
   "en": "What makes pasta dough stretchy?",
@@ -7061,7 +7061,7 @@
  },
  "nodes/k_mulch/questions/0/answers/1": {
   "en": "It makes the soil too hot",
-  "de": "Er macht die Erde zu heiß"
+  "de": "Er macht die Erde zu heiss"
  },
  "nodes/k_mulch/questions/0/answers/2": {
   "en": "It makes the soil too wet",
@@ -7069,7 +7069,7 @@
  },
  "nodes/k_mulch/questions/1/q": {
   "en": "It's a hot, dry week. How does mulch help?",
-  "de": "Es ist eine heiße, trockene Woche. Wie hilft Mulch?"
+  "de": "Es ist eine heisse, trockene Woche. Wie hilft Mulch?"
  },
  "nodes/k_mulch/questions/1/why": {
   "en": "Mulch covers the soil like a blanket, so less water dries up.",
@@ -7233,7 +7233,7 @@
  },
  "nodes/k_colour_mixing/questions/2/q": {
   "en": "You pour red, yellow and blue together. What colour now?",
-  "de": "Du gießt Rot, Gelb und Blau zusammen. Welche Farbe jetzt?"
+  "de": "Du giesst Rot, Gelb und Blau zusammen. Welche Farbe jetzt?"
  },
  "nodes/k_colour_mixing/questions/2/why": {
   "en": "Mixing all three main colours makes brown.",
@@ -7245,7 +7245,7 @@
  },
  "nodes/k_colour_mixing/questions/2/answers/1": {
   "en": "White",
-  "de": "Weiß"
+  "de": "Weiss"
  },
  "nodes/k_colour_mixing/questions/2/answers/2": {
   "en": "Pink",
@@ -7261,7 +7261,7 @@
  },
  "nodes/k_worms/page": {
   "en": "Earthworms eat dead leaves and compost. What they leave behind is called castings, and it is the richest food for soil. Their tunnels let air and water into the ground. In a worm bin, worms turn kitchen scraps into castings.",
-  "de": "Regenwürmer fressen tote Blätter und Kompost. Was sie hinterlassen, heißt Wurmhumus, und das ist die beste Nahrung für die Erde. Ihre Gänge lassen Luft und Wasser in den Boden. In einer Wurmkiste machen Würmer aus Küchenresten Wurmhumus."
+  "de": "Regenwürmer fressen tote Blätter und Kompost. Was sie hinterlassen, heisst Wurmhumus, und das ist die beste Nahrung für die Erde. Ihre Gänge lassen Luft und Wasser in den Boden. In einer Wurmkiste machen Würmer aus Küchenresten Wurmhumus."
  },
  "nodes/k_worms/questions/0/q": {
   "en": "What are worm castings?",
@@ -7425,7 +7425,7 @@
  },
  "nodes/k_saffron/questions/0/answers/2": {
   "en": "It grows on big, tall trees",
-  "de": "Er wächst auf großen, hohen Bäumen"
+  "de": "Er wächst auf grossen, hohen Bäumen"
  },
  "nodes/k_saffron/questions/1/q": {
   "en": "Which part of the crocus is saffron?",
@@ -7477,7 +7477,7 @@
  },
  "nodes/k_master_baking/page": {
   "en": "For light cakes, flour is ground twice and sifted until it is very fine. Beating eggs traps tiny air bubbles. Creaming, or beating, butter and sugar together makes a cake soft. The oven must be evenly hot, not too hot, so the inside bakes before the outside burns.",
-  "de": "Für lockere Kuchen wird Mehl zweimal gemahlen und gesiebt, bis es ganz fein ist. Beim Schlagen von Eiern werden winzige Luftbläschen eingefangen. Wenn man Butter und Zucker cremig rührt, wird ein Kuchen weich. Der Ofen muss gleichmäßig heiß sein, nicht zu heiß, damit das Innere gebacken ist, bevor das Äußere verbrennt."
+  "de": "Für lockere Kuchen wird Mehl zweimal gemahlen und gesiebt, bis es ganz fein ist. Beim Schlagen von Eiern werden winzige Luftbläschen eingefangen. Wenn man Butter und Zucker cremig rührt, wird ein Kuchen weich. Der Ofen muss gleichmässig heiss sein, nicht zu heiss, damit das Innere gebacken ist, bevor das Äussere verbrennt."
  },
  "nodes/k_master_baking/questions/0/q": {
   "en": "Why beat the eggs for a cake?",
@@ -7501,15 +7501,15 @@
  },
  "nodes/k_master_baking/questions/1/q": {
   "en": "Your cake burned outside but stayed raw inside. Why?",
-  "de": "Dein Kuchen ist außen verbrannt und innen roh geblieben. Warum?"
+  "de": "Dein Kuchen ist aussen verbrannt und innen roh geblieben. Warum?"
  },
  "nodes/k_master_baking/questions/1/why": {
   "en": "Steady, gentle heat lets the middle bake before the outside burns.",
-  "de": "Gleichmäßige, sanfte Hitze lässt die Mitte backen, bevor das Äußere verbrennt."
+  "de": "Gleichmässige, sanfte Hitze lässt die Mitte backen, bevor das Äussere verbrennt."
  },
  "nodes/k_master_baking/questions/1/answers/0": {
   "en": "The oven was too hot",
-  "de": "Der Ofen war zu heiß"
+  "de": "Der Ofen war zu heiss"
  },
  "nodes/k_master_baking/questions/1/answers/1": {
   "en": "The flour was too fine",
@@ -7589,7 +7589,7 @@
  },
  "nodes/k_wind_pump/questions/1/answers/2": {
   "en": "Water flows uphill by itself",
-  "de": "Das Wasser fließt von selbst bergauf"
+  "de": "Das Wasser fliesst von selbst bergauf"
  },
  "nodes/k_wind_pump/questions/2/q": {
   "en": "When does a wind pump fill the tank?",
@@ -7689,7 +7689,7 @@
  },
  "nodes/straw_sandals/desc": {
   "en": "Your feet stop hurting: walking jobs −5% energy.",
-  "de": "Deine Füße tun nicht mehr weh: Laufarbeiten −5% Energie."
+  "de": "Deine Füsse tun nicht mehr weh: Laufarbeiten −5% Energie."
  },
  "nodes/wooden_clogs/name": {
   "en": "Wooden Clogs",
@@ -7697,7 +7697,7 @@
  },
  "nodes/wooden_clogs/desc": {
   "en": "Dry feet in the mud: walking jobs −10% energy.",
-  "de": "Trockene Füße im Matsch: Laufarbeiten −10% Energie."
+  "de": "Trockene Füsse im Matsch: Laufarbeiten −10% Energie."
  },
  "nodes/hobnail_boots/name": {
   "en": "Hobnail Boots",
@@ -7873,7 +7873,7 @@
  },
  "nodes/stick_fence/desc": {
   "en": "Crooked sticks tied with string round the Home Field: better than nothing — a few pests stay out.",
-  "de": "Krumme Stöcke, mit Schnur ums Hausfeld gebunden: besser als nichts — ein paar Schädlinge bleiben draußen."
+  "de": "Krumme Stöcke, mit Schnur ums Hausfeld gebunden: besser als nichts — ein paar Schädlinge bleiben draussen."
  },
  "nodes/wattle_fence/name": {
   "en": "Woven Wattle Fence",
@@ -7901,7 +7901,7 @@
  },
  "nodes/picket_fence/desc": {
   "en": "A neat, low row of pointed stakes with no gaps between them: mice and rabbits stay out, and you can still see the whole field.",
-  "de": "Eine ordentliche, niedrige Reihe spitzer Pfähle ohne Lücken: Mäuse und Kaninchen bleiben draußen, und du siehst trotzdem das ganze Feld."
+  "de": "Eine ordentliche, niedrige Reihe spitzer Pfähle ohne Lücken: Mäuse und Kaninchen bleiben draussen, und du siehst trotzdem das ganze Feld."
  },
  "nodes/picket_fence/steps/0/name": {
   "en": "Fit the planks",
@@ -8037,7 +8037,7 @@
  },
  "nodes/flying_shuttle/desc": {
   "en": "The shuttle shoots across by itself: weaving −20% energy. (Choice slot: only one item per station works at a time — swap any time.)",
-  "de": "Der Webschütze schießt von selbst hinüber: Weben −20% Energie. (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
+  "de": "Der Webschütze schiesst von selbst hinüber: Weben −20% Energie. (Auswahlplatz: Pro Ort wirkt nur eine Sache gleichzeitig — du kannst jederzeit tauschen.)"
  },
  "nodes/wide_beam/name": {
   "en": "Wide Loom Beam",
@@ -8113,7 +8113,7 @@
  },
  "nodes/polish_rootout/name": {
   "en": "Root out the weeds",
-  "de": "Unkraut mit der Wurzel ausreißen"
+  "de": "Unkraut mit der Wurzel ausreissen"
  },
  "nodes/polish_rootout/desc": {
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly. The weeds you root out go to the store as plant fibre (more each time).",
@@ -8657,7 +8657,7 @@
  },
  "items/tomato_sauce/name": {
   "en": "Tomato Sauce",
-  "de": "Tomatensoße"
+  "de": "Tomatensosse"
  },
  "items/fresh_pasta/name": {
   "en": "Fresh Pasta",
@@ -8981,7 +8981,7 @@
  },
  "items/honey_cake/desc": {
   "en": "A cake sweetened with honey instead of sugar.",
-  "de": "Ein Kuchen, der mit Honig statt mit Zucker gesüßt ist."
+  "de": "Ein Kuchen, der mit Honig statt mit Zucker gesüsst ist."
  },
  "recipes/porridge/verb": {
   "en": "Cook",
@@ -9433,11 +9433,11 @@
  },
  "recipes/pull_wild_weeds/name": {
   "en": "Pull wild weeds",
-  "de": "Wildes Unkraut ausreißen"
+  "de": "Wildes Unkraut ausreissen"
  },
  "recipes/pull_wild_weeds/verb": {
   "en": "Pull",
-  "de": "Ausreißen"
+  "de": "Ausreissen"
  },
  "recipes/chop_deadwood/name": {
   "en": "Chop deadwood",
@@ -9553,7 +9553,7 @@
  },
  "meta/seasons/mods/spring/abundance": {
   "en": "Weeds sprout everywhere (more fibre).",
-  "de": "Überall sprießt Unkraut (mehr Fasern)."
+  "de": "Überall spriesst Unkraut (mehr Fasern)."
  },
  "meta/seasons/mods/summer/abundance": {
   "en": "Bees fly all day: +30% honeycomb.",
@@ -9589,7 +9589,7 @@
  },
  "meta/luck/events/5/text": {
   "en": "It rained: no watering needed, and the well fills a little.",
-  "de": "Es hat geregnet: kein Gießen nötig, und der Brunnen füllt sich ein bisschen."
+  "de": "Es hat geregnet: kein Giessen nötig, und der Brunnen füllt sich ein bisschen."
  },
  "meta/luck/events/6/text": {
   "en": "Bumper crop: double harvest!",
@@ -9725,7 +9725,7 @@
  },
  "meta/giftCards/pool/13/name": {
   "en": "Busy Bees",
-  "de": "Fleißige Bienen"
+  "de": "Fleissige Bienen"
  },
  "meta/giftCards/pool/13/desc": {
   "en": "+10% honeycomb.",
@@ -9817,7 +9817,7 @@
  },
  "meta/jobs/templates/1/text": {
   "en": "Pull {n} weeds",
-  "de": "Reiß {n} Unkräuter aus"
+  "de": "Reiss {n} Unkräuter aus"
  },
  "meta/jobs/templates/2/text": {
   "en": "Make {n} {item}",

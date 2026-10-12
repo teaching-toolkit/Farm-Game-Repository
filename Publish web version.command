@@ -11,7 +11,7 @@ cd "$(dirname "$0")/web-build" 2>/dev/null || { echo "❌ No web-build folder ne
 pause_and_exit() { echo; read -r -p "Press Enter to close this window..." _; exit "${1:-0}"; }
 fail() { echo; echo "❌ $1"; pause_and_exit 1; }
 
-echo "🌾 Farm Quiz Game: publishing the web version"
+echo "🌾 Hazelwood Harvest: publishing the web version"
 echo
 
 if [ ! -d .git ]; then

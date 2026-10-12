@@ -1,5 +1,5 @@
 extends Control
-## Farm Quiz Game — the farm-map interface, made for an iPad held upright (834×1194 design size).
+## Hazelwood Harvest (the farm quiz game) — the farm-map interface, made for an iPad held upright (834×1194 design size).
 ## Tap a place on the map (house, kitchen, coop, market stall …) and a sheet slides up with everything you can do there.
 ## Pictures come from assets/ when they exist (see scripts/art.gd); emojis stand in for the rest.
 const UI = preload("res://scripts/ui.gd")
@@ -1215,9 +1215,16 @@ func _show_time_quiz(forced: Dictionary = {}) -> void:
 	box.add_child(after)
 	_question(qbox, q, _time_answered.bind(q, after))
 
+## Only a right FIRST try moves farm time one step. After a wrong first pick the child keeps trying until the right answer
+## (and its "why") shows, but time stays where it was, and the question comes back right after the next one.
 func _time_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> void:
 	if q.get("review", false): G.record_card_answer(q, first_try)
 	else: G.time_result(q, first_try)
+	if not first_try:
+		G.retry_after_next(q)
+		after.add_child(UI.label(tr("⏸️ Time stays where it is: only a right first answer moves the farm on. This question comes back soon."), 17, UI.MUTED, true))
+		_time_quiz_buttons(after)
+		return
 	var info: Dictionary = G.step_time()
 	var msg := tr("⏳ Time moves on: question %d.") % G.S["step"]
 	if info.get("rain_stopped", false) and G.perk_on("perk_rainbow"):
@@ -1230,6 +1237,9 @@ func _time_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> voi
 	if int(info.get("removed", 0)) > 0: msg += (tr(" 🧍 The scarecrow chased off %d pest.") if int(info["removed"]) == 1 else tr(" 🧍 The scarecrow chased off %d pests.")) % int(info["removed"])
 	if float(info.get("eat_share", 0.0)) >= 0.005: msg += tr(" 🐦 Pests ate %d%% of what is growing.") % int(round(float(info["eat_share"]) * 100.0))
 	after.add_child(UI.label(msg, 17, UI.MUTED, true))
+	_time_quiz_buttons(after)
+
+func _time_quiz_buttons(after: VBoxContainer) -> void:
 	var row := UI.hbox(8)
 	var nb := UI.button(tr("Next question ▶"), _show_time_quiz, true, UI.GREEN, 21)
 	nb.custom_minimum_size = Vector2(0, 56)
@@ -1915,6 +1925,7 @@ func _show_menu() -> void:
 	sr.add_child(UI.soft_button(tr("🎼 Credits"), _show_credits, true, 17))
 	box.add_child(sr)
 	box.add_child(UI.soft_button(tr("📜 What happened (log)"), _open_log, true, 18))
+	box.add_child(UI.label(_version_text(), 14, UI.MUTED, true))
 	if not _grownup_open():
 		box.add_child(UI.button(tr("🔒 Grown-up settings"), _ask_password, true, UI.BLUE, 18))
 		return
@@ -1952,7 +1963,14 @@ func _show_credits() -> void:
 		if str(c.get("source", "")) != "": v.add_child(UI.label(str(c["source"]), 14, UI.BLUE, true))
 		box.add_child(pc)
 	box.add_child(UI.label(tr("Fonts: Andika (SIL International) and Noto Color Emoji (Google), both under the SIL Open Font License."), 15, UI.MUTED, true))
+	box.add_child(UI.label(_version_text(), 14, UI.MUTED, true))
 	box.add_child(UI.soft_button(tr("⬅️ Back"), func(): _close_modal(); _show_menu(), true, 16))
+
+## The game's name and version (project.godot) and the data's version, e.g. "Hazelwood Harvest · version 0.9.0 · data 0.8".
+## Shown in ⚙️ Settings and the credits, so the parent can see which build the iPad has loaded.
+func _version_text() -> String:
+	return tr("%s · version %s · data %s") % [str(ProjectSettings.get_setting("application/config/name", "")),
+		str(ProjectSettings.get_setting("application/config/version", "?")), str(G.meta.get("version", "?"))]
 
 ## Switches the language and builds the screen again in it (the farm stays as it is).
 func _set_language(code: String) -> void:

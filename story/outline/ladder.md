@@ -156,7 +156,15 @@ The grandchildren crowd round your bed: "Tell us about the farm that burned down
 - The Lord's letter (6.1) and his answer (6.8) are story only; they change no numbers (the lease is not a game system). ❓ Or should the
   Fair ribbons be what persuades him?
 
-## Questions for the parent ❓
+## Questions for the parent ✅ answered (10 Oct 2026, `../../planning/2026-10-10-answers-round-1.md`)
+
+All five kept: the low point, the Lord's letter (his climb-down comes **through Quill's numbers**), the cousin's accusation (the cousin
+is **a girl**, default for now), the unsaid thing, the awe on the first night. Also decided: the chapter 6 bend triggers **automatically**,
+like every chapter end (no tap); **no epilogue chapter** (free play after chapter 6, outside the frame); the travelling merchant first
+**passes by on the road** (changes 1.6); the **Lord's share is a real payment from chapter 2 or 3** (changes 4.1 and 6.1); see
+`../../TODO.md` I5, I6. To be worked into this ladder in Round 6.
+
+The questions as asked:
 
 1. The **low point** in chapter 5 (you collapse from overwork, Wren and the badger make you rest): right, or too close to the poisoning?
 2. The **Lord's letter** in chapter 6 (back to *a half*) and his climb-down (*a tenth*): yes, or keep the Lord out of the ending?

@@ -1,5 +1,5 @@
 extends Node
-## Farm Quiz Game — rules engine (autoload "Game").
+## Hazelwood Harvest (the farm quiz game) — rules engine (autoload "Game").
 ## Reads res://data/farm-progression.json and runs everything: time (one Time Quiz answer = one step),
 ## energy & Rest, fields, crops, weeds, frost stones, pests, animals & muck, stations & firewood,
 ## knowledge cards & the library, polish (endless upgrades), gear, seasons & freshness, luck,
@@ -1825,6 +1825,15 @@ func due_cards() -> Array:
 
 ## The next Time Quiz question: mostly the parent's packs, sometimes a due knowledge review.
 func next_time_question() -> Dictionary:
+	# a question answered wrong at the first try comes back right after the next one (retry_after_next)
+	var rq: Dictionary = S.get("retry_q", {})
+	if not rq.is_empty():
+		if int(rq.get("wait", 0)) <= 0:
+			S["retry_q"] = {}
+			var again := _retry_question(rq)
+			if not again.is_empty(): return again
+		else:
+			rq["wait"] = int(rq["wait"]) - 1
 	var share := review_share()
 	if share > 0.0 and rng.randf() < share:
 		var due := due_cards()
@@ -1852,6 +1861,26 @@ func next_time_question() -> Dictionary:
 	while recent.size() > int(settings.get("avoidRepeatWithin", 3)): recent.pop_front()
 	var src: Dictionary = pack_questions[pick]
 	var q2 := _shuffled_q(src, "", pick, false)
+	q2["wrong_text"] = q2["wrong"]
+	q2["source"] = tr("⏳ Time Quiz")
+	return q2
+
+## A Time Quiz question answered wrong at the first try: ask it again right after the next question.
+func retry_after_next(q: Dictionary) -> void:
+	S["retry_q"] = {"review": q.get("review", false), "card": str(q.get("card", "")), "qi": int(q.get("qi", 0)), "wait": 1}
+
+func _retry_question(rq: Dictionary) -> Dictionary:
+	var qi := int(rq.get("qi", 0))
+	if rq.get("review", false):
+		var cid := str(rq.get("card", ""))
+		if not nodes.has(cid): return {}
+		var qs: Array = nodes[cid].get("questions", [])
+		if qi < 0 or qi >= qs.size(): return {}
+		var q := _shuffled_q(qs[qi], cid, qi, true)
+		q["source"] = tr("📚 Review: ") + nodes[cid]["name"]
+		return q
+	if qi < 0 or qi >= pack_questions.size(): return {}
+	var q2 := _shuffled_q(pack_questions[qi], "", qi, false)
 	q2["wrong_text"] = q2["wrong"]
 	q2["source"] = tr("⏳ Time Quiz")
 	return q2

@@ -8,7 +8,7 @@
   ]
  },
  "CON-002": {
-  "q": "Welcher Kontinent ist der größte?",
+  "q": "Welcher Kontinent ist der grösste?",
   "answers": [
    "Asien",
    "Europa",
@@ -185,7 +185,7 @@
  "PIC-005": {
   "q": "Was bekommen wir von einer Kuh?",
   "right": "Ja! Kühe geben Milch.",
-  "wrong": "Denk an etwas Weißes, das man trinken kann.",
+  "wrong": "Denk an etwas Weisses, das man trinken kann.",
   "answers": [
    "Milch",
    "Eier",
@@ -207,7 +207,7 @@
  "PIC-007": {
   "q": "Was machen Bienen?",
   "right": "Ja! Bienen machen Honig aus Blütennektar.",
-  "wrong": "Bienen besuchen Blumen und machen etwas Süßes.",
+  "wrong": "Bienen besuchen Blumen und machen etwas Süsses.",
   "answers": [
    "Honig",
    "Eier",
@@ -217,8 +217,8 @@
  },
  "PIC-008": {
   "q": "Was ist das?",
-  "right": "Richtig! Ein großer orangefarbener Kürbis.",
-  "wrong": "Es ist groß, rund und orange.",
+  "right": "Richtig! Ein grosser orangefarbener Kürbis.",
+  "wrong": "Es ist gross, rund und orange.",
   "answers": [
    "Kürbis",
    "Tomate",
@@ -316,7 +316,7 @@
  },
  "PIC-017": {
   "q": "Woraus ist ein Ziegelstein gemacht?",
-  "right": "Ja! Ziegel sind Lehm, der in einem heißen Ofen gebrannt wird.",
+  "right": "Ja! Ziegel sind Lehm, der in einem heissen Ofen gebrannt wird.",
   "wrong": "Bevor es gebrannt wird, ist es weiche, klebrige Erde.",
   "answers": [
    "Lehm",
@@ -327,7 +327,7 @@
  },
  "PIC-018": {
   "q": "Was wird aus Sand gemacht?",
-  "right": "Richtig! Glas ist Sand, der in einem sehr heißen Feuer geschmolzen wird.",
+  "right": "Richtig! Glas ist Sand, der in einem sehr heissen Feuer geschmolzen wird.",
   "wrong": "Es ist durchsichtig, man kann hindurchschauen.",
   "answers": [
    "Glas",
