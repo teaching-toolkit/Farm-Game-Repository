@@ -56,13 +56,29 @@ func sell(k: String, q: float) -> bool:
 	if not _at_square(): return false
 	var n := minf(q, floorf(G.trip.packed(k) + 0.0001))
 	if n < 1.0 or not G.inventory.sellable(k): return false
+	return _sell_units(k, n, 1.0)
+
+## Sells n whole units to the travelling merchant at the gate (no trip, no packing): the village price less his cut, as much as his cart takes.
+func sell_gate(k: String, q: float) -> bool:
+	if not G.gate.here():
+		G.say(tr("🛒 The merchant is not here."))
+		return false
+	var n := minf(q, float(G.gate.can_take(k)))
+	if n < 1.0 or not G.gate.wants(k): return false
+	if _sell_units(k, n, float(G.gate.data().get("cut", 0.85))):
+		G.gate.put_in_cart(G.inventory.load_of(k, n))
+		return true
+	return false
+
+## The selling itself: the best grade first, the market pays less for a pile of the same thing; `cut` is what a middleman keeps back.
+func _sell_units(k: String, n: float, cut: float) -> bool:
 	var gs := G.inventory.take_best(k, int(n))
 	var got := 0.0
 	for i in range(int(n)):
-		got += full_price(k, int(gs[i]) if i < gs.size() else -1) * demand_factor(k)
+		got += full_price(k, int(gs[i]) if i < gs.size() else -1) * demand_factor(k) * cut
 		market_sold()[k] = float(market_sold().get(k, 0.0)) + 1.0
 	G.S["coins"] += got
-	G.trip.sold(k, n)
+	if cut >= 0.999: G.trip.sold(k, n)
 	G.rewards.job_progress("sell", k, n)
 	var msg := tr("🪙 Sold %d %s for %s") % [int(n), G.iname(k), G.money(got)]
 	if demand_factor(k) < 0.999: msg += tr(". The market has plenty of %s now — it pays less for a while. Different things sell best!") % G.iname(k)
@@ -112,6 +128,10 @@ func buy_seeds(cid: String, q: int) -> bool:
 func buy_item(merchant: String, k: String, q: int) -> bool:
 	if not _at_square(): return false
 	var room := G.trip.can_buy(G.inventory.weight_of(k))
+	var shelf := int(floorf(G.needs.storage_cap() - G.inventory.count(k) + 0.0001))      # what the store at home can still take
+	if shelf < q:
+		if shelf < 1: G.say(tr("🧺 Your store is full of that.")); return false
+		q = shelf
 	if room < q:
 		if room < 1: G.say(tr("🎒 No room to carry that home.")); return false
 		q = room

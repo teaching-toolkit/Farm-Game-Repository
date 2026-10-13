@@ -1,0 +1,12 @@
+{
+  "gate": {
+    "note": "The travelling merchant at the gate (TODO M7). He comes only where a cart can come (minRoad), with `chance` at the end of a question (+ perRoadLevel for each better road level), stays `stay` questions, buys the kinds in `cats` without a trip and without energy at the village price x `cut`, until his cart (base + perRoadLevel x (road level - 1) load units) is full. A new visit starts with an empty cart.",
+    "minRoad": 2,
+    "chance": 0.07,
+    "perRoadLevel": 0.03,
+    "stay": 3,
+    "cut": 0.85,
+    "cart": {"base": 30, "perRoadLevel": 15},
+    "cats": ["crop", "ingredient", "dish", "animal", "craft", "textile", "find"]
+  }
+}

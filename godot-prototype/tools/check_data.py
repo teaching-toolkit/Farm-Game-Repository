@@ -216,6 +216,16 @@ for f in TR.get("storeFilters", []):
 for c in {it.get("category", "") for it in ITEMS.values()}:
     if c and c not in _filter_cats and c not in ("seed",): warn("trip", f"items of category {c!r} are in no store filter (they show under All only)")
 
+# ---------------------------------------------------------------- the travelling merchant (rules/50-gate.json)
+GT = META.get("gate", {})
+if not GT: err("gate", "no 'gate' in rules/50-gate.json")
+if not 0 < float(GT.get("chance", 0)) <= 1: err("gate", "chance must be between 0 and 1")
+if not 0 < float(GT.get("cut", 0)) <= 1: err("gate", "cut (the share of the village price he pays) must be between 0 and 1")
+if int(GT.get("stay", 0)) < 1: err("gate", "stay must be at least 1 question")
+_cats = {it.get("category", "") for it in ITEMS.values()}
+for c in GT.get("cats", []):
+    if c not in _cats: err("gate", f"category {c!r} has no items")
+
 # ---------------------------------------------------------------- quality (rules/47-quality.json)
 Qd = META.get("quality", {})
 cats_known = {it.get("category") for it in ITEMS.values()}

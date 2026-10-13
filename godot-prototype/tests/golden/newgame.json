@@ -11,6 +11,12 @@
 	"cold": false,
 	"early_patches": {},
 	"energy": 10.0,
+	"gate": {
+		"cart": 0.0,
+		"here": false,
+		"until": 0.0,
+		"visits": 0.0
+	},
 	"gh": [],
 	"gift_active": [],
 	"gift_owned": [],

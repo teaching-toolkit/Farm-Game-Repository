@@ -254,7 +254,9 @@ func _trip() -> void:
 		if afford >= 1: G.trade.buy_seeds(cid, mini(int(want_seeds[cid]), afford))
 	for mid_k in want_buy:
 		var need_n := ceili(float(_needed_items().get(mid_k[1], 1.0)) - G.inventory.count(mid_k[1]))
+		var c0: float = G.inventory.count(mid_k[1])
 		G.trade.buy_item(mid_k[0], mid_k[1], maxi(1, need_n))
+		if "--trips" in OS.get_cmdline_user_args() and G.S["step"] > 280: print("   buy %s %d (need %d) had %.0f now %.0f room %d coins %d cap %d" % [mid_k[1], maxi(1, need_n), need_n, c0, G.inventory.count(mid_k[1]), G.trip.can_buy(G.inventory.weight_of(mid_k[1])), int(G.S["coins"]), int(G.needs.storage_cap())])
 	for mid_k in want_barter:
 		G.trade.barter(mid_k[0], mid_k[1])
 	G.trip.leave()
@@ -412,7 +414,7 @@ func _turn() -> void:
 	for mid in G.nodes:
 		if G.nodes[mid]["type"] != "merchant" or not G.done(mid): continue
 		for k in G.nodes[mid].get("sells", {}):
-			if need.has(k) and G.inventory.count(k) < float(need[k]) and (G.S["coins"] > 900 or not G.S["seen"].has(k)): want_buy.append([mid, k])
+			if need.has(k) and G.inventory.count(k) < float(need[k]) and (G.S["coins"] > 900 or not G.S["seen"].has(k)) and G.inventory.count(k) < G.needs.storage_cap() - 0.5: want_buy.append([mid, k])
 		for k in G.nodes[mid].get("barter", {}):
 			if need.has(k) and G.inventory.count(k) < 1: want_barter.append([mid, k])
 	# unlock what we can: main goals first, then optional upgrades and gear, polish once
@@ -422,6 +424,12 @@ func _turn() -> void:
 		if G.progression.is_open(id) and G.progression.can_unlock(id)["ok"]:
 			if n.get("optional", false) and n["type"] == "sidequest" and G.S["energy"] < 15: continue
 			G.progression.unlock(id)
+	if G.gate.here():      # the travelling merchant at the gate buys without a trip
+		for k in want_sell.keys():
+			var before: float = G.inventory.count(k)
+			if G.gate.wants(k): G.trade.sell_gate(k, float(want_sell[k]))
+			want_sell[k] = float(want_sell[k]) - (before - G.inventory.count(k))
+			if float(want_sell[k]) < 1.0: want_sell.erase(k)
 	_trip()
 	for pid in G.polish_ids:
 		if G.crafting.polish_open(pid) and G.crafting.polish_level(pid) < 1.0 and G.pace.missing_cost(G.crafting.polish_cost(pid)).is_empty(): G.crafting.do_polish(pid)

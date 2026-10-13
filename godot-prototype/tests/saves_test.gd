@@ -28,7 +28,7 @@ func _ready() -> void:
 	_check(int(G.S["version"]) == G.SAVE_VERSION, "a new game has the current version (%d)" % G.SAVE_VERSION)
 	# every system's defaults are in a new game, and no two systems own the same key
 	var seen := {}
-	for sys in [G, G.seasons, G.inventory, G.needs, G.progression, G.fields, G.animals, G.crafting, G.knowledge, G.rewards, G.trade, G.reveal, G.story, G.trip]:
+	for sys in [G, G.seasons, G.inventory, G.needs, G.progression, G.fields, G.animals, G.crafting, G.knowledge, G.rewards, G.trade, G.reveal, G.story, G.trip, G.gate]:
 		for k in sys.save_defaults():
 			_check(not seen.has(k), "save key %s has one owner" % k)
 			seen[k] = true

@@ -3,6 +3,7 @@ class_name FarmUiWaterRoad
 ## The well (carrying water) and the road.
 
 const UI = preload("res://kits/ui/ui.gd")
+const Art = preload("res://kits/ui/art.gd")
 
 
 var M: FarmMain   # the main screen: its widgets and the other parts
@@ -42,6 +43,7 @@ func _fetch_water() -> void:
 
 ## The road: how good it is, and who can come along it to the market.
 func part_road() -> void:
+	if G.gate.here(): _part_gate()
 	var lv := int(round(G.g("roadLevel", 1.0)))
 	var rc := UI.card(Color("f6efe0"))
 	var rv := UI.vbox(4)
@@ -67,3 +69,30 @@ func part_road() -> void:
 		if road_only and not other: blocked += 1
 	if blocked > 0: rv.add_child(UI.label(tr("🚧 %s can't get through yet — a better road lets them come.") % "🧑‍🌾".repeat(mini(blocked, 5)), 16, UI.RED, true))
 	M.content.add_child(rc)
+
+## The travelling merchant at the gate: what he buys from the store (no packing, no trip), a little cheaper than the village, until his cart is full.
+func _part_gate() -> void:
+	M.widgets.section(tr("🛒 The travelling merchant"), tr("He buys a lot at once, at a little less than the village pays. He stays for a few questions."))
+	var head := UI.hbox(10)
+	head.add_child(UI.label("🛒", 28))
+	var bv := UI.vbox(2)
+	bv.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bv.add_child(UI.label(tr("His cart: %s of %s room used") % [str(snappedf(G.gate.cart_size() - G.gate.cart_room(), 0.1)).trim_suffix(".0"), str(int(G.gate.cart_size()))], 16))
+	bv.add_child(UI.bar(G.gate.fill(), 240, 12, UI.AMBER if G.gate.fill() < 0.999 else UI.RED))
+	head.add_child(bv)
+	M.content.add_child(head)
+	var ks: Array = G.S["inv"].keys().filter(func(k): return G.gate.wants(k) and G.inventory.count(k) >= 1.0)
+	if ks.is_empty():
+		M.content.add_child(UI.label(tr("He has nothing to buy from you right now."), 16, UI.MUTED, true))
+		return
+	var grid := M.widgets.grid()
+	M.content.add_child(grid)
+	for k in ks:
+		var q: int = G.gate.can_take(k)
+		var em := G.iemoji(k)
+		var v := M.widgets.tile(Art.first("items", [k]), em, "%s\n%d" % [G.iname(k), G.down(G.inventory.count(k))])
+		var row := HFlowContainer.new()
+		row.add_child(UI.soft_button("1 %s = %s" % [em, G.money(G.gate.price(k))], G.trade.sell_gate.bind(k, 1.0), q >= 1, 17))
+		if q > 1: row.add_child(UI.soft_button("%d %s = %s" % [q, em, G.money(G.gate.price(k, q))], G.trade.sell_gate.bind(k, 999.0), true, 17))
+		v.add_child(row)
+		grid.add_child(v.get_meta("panel"))

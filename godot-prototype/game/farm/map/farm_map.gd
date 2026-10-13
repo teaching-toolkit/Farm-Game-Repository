@@ -414,6 +414,35 @@ func set_field_badge(text: String) -> void:
 	field_badge.size = s
 	if fields.size() > 0: field_badge.position = fields[0].position + Vector2(fields[0].size.x / 2.0 - s.x / 2.0, -s.y * 0.2)
 
+## The travelling merchant's cart stands at the gate while he is there (it rolls in from the road's far end); a tap on it opens the road's window.
+var gate_cart: TextureRect
+
+func set_gate(here: bool) -> void:
+	if not here:
+		if gate_cart != null:
+			gate_cart.queue_free()
+			gate_cart = null
+		return
+	if gate_cart != null: return
+	var tex: Texture2D = Art.first("map", ["bookcart"])
+	if tex == null: return
+	gate_cart = TextureRect.new()
+	gate_cart.texture = tex
+	gate_cart.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	gate_cart.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	gate_cart.size = Vector2(70, 70)
+	gate_cart.mouse_filter = Control.MOUSE_FILTER_STOP
+	gate_cart.gui_input.connect(func(e): if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT: spot_tapped.emit("road"))
+	var rd: Dictionary = L.get("ground", {}).get("road", {})
+	var from := spot_point("road") + Vector2(160, -60)
+	if rd.has("points"):
+		var pts := ground._pts(rd["points"])
+		from = pts[pts.size() - 1].clamp(Vector2.ZERO, design)
+	var at := spot_point("road") - gate_cart.size / 2.0 + Vector2(0, 10)
+	gate_cart.position = from - gate_cart.size / 2.0
+	critters.sort_in(gate_cart, at.y + gate_cart.size.y)
+	create_tween().tween_property(gate_cart, "position", at, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
 func set_road_badge(text: String) -> void:
 	road_badge.get_child(0).text = text
 	road_badge.visible = text != ""

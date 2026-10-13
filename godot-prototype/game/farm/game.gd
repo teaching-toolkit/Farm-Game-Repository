@@ -102,6 +102,7 @@ var quality: FarmQuality
 var skills: FarmSkills
 var story: FarmStory
 var trip: FarmTrip
+var gate: FarmGate
 
 func _init() -> void:
 	seasons = FarmSeasons.new(self)
@@ -120,6 +121,7 @@ func _init() -> void:
 	skills = FarmSkills.new(self)
 	story = FarmStory.new(self)
 	trip = FarmTrip.new(self)
+	gate = FarmGate.new(self)
 
 # ------------------------------------------------------------------ start, seed and clock
 
@@ -299,7 +301,7 @@ func save_defaults() -> Dictionary:
 ## Everything a save holds in a new game: the Game's keys and every system's.
 func all_save_defaults() -> Dictionary:
 	var d := save_defaults()
-	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story, trip]:
+	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story, trip, gate]:
 		d.merge(sys.save_defaults())
 	return d
 
@@ -531,6 +533,7 @@ func setup_clock() -> void:
 	clock.register("reading", knowledge.tick_reading)
 	clock.register("home_fuel", crafting.tick_home_fuel)
 	clock.register("market", trade.tick_market)
+	clock.register("gate", gate.step)
 	clock.register("wear", func(_i): crafting.wear_polish("question"))     # polish that wears with time
 	clock.register("neighbour_gift", rewards.step_neighbour_gift)
 	clock.register("luck", rewards.expire_luck_boosts)

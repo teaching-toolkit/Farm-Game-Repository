@@ -435,6 +435,7 @@ func refresh() -> void:
 	goal_id = goalbar.next_goal()
 	for sid in map.slots: mapview.update_slot(sid)
 	map.set_road_badge(mapview.badge("road"))
+	map.set_gate(G.gate.here())
 	map.set_field_badge(mapview.badge("field"))
 	map.critters.set_critters(mapview.critter_spec())
 	map.farmcat.set_cat(G.done("barn_cat"))
