@@ -5,133 +5,156 @@
    "accuracy": 1.0,
    "chapters": [
     {
-     "actions": 1833,
+     "actions": 2666,
      "chapter": 1,
      "complete": true,
-     "hours": 2.81,
-     "hoursTotal": 2.81,
+     "hours": 4.66,
+     "hoursTotal": 4.66,
      "knowledgeQuestions": 2,
      "pet": "pet_bunny",
-     "questions": 125,
-     "restAnswers": 295
+     "questions": 245,
+     "restAnswers": 524
     },
     {
-     "actions": 3315,
+     "actions": 3766,
      "chapter": 2,
      "complete": true,
-     "hours": 4.49,
-     "hoursTotal": 7.3,
+     "hours": 5.95,
+     "hoursTotal": 10.61,
      "knowledgeQuestions": 0,
      "pet": "pet_tortoise",
-     "questions": 166,
-     "restAnswers": 413
+     "questions": 294,
+     "restAnswers": 556
     },
     {
-     "actions": 4199,
+     "actions": 3679,
      "chapter": 3,
      "complete": true,
-     "hours": 5.56,
-     "hoursTotal": 12.86,
+     "hours": 5.35,
+     "hoursTotal": 15.96,
      "knowledgeQuestions": 0,
      "pet": "pet_goat",
-     "questions": 193,
-     "restAnswers": 516
+     "questions": 232,
+     "restAnswers": 488
     },
     {
-     "actions": 3755,
+     "actions": 4355,
      "chapter": 4,
      "complete": true,
-     "hours": 4.43,
-     "hoursTotal": 17.29,
+     "hours": 5.49,
+     "hoursTotal": 21.45,
      "knowledgeQuestions": 0,
      "pet": "pet_pony",
-     "questions": 119,
-     "restAnswers": 339
+     "questions": 199,
+     "restAnswers": 347
     },
     {
-     "actions": 0,
+     "actions": 955,
      "chapter": 5,
+     "complete": true,
+     "hours": 1.19,
+     "hoursTotal": 22.64,
+     "knowledgeQuestions": 0,
+     "pet": "pet_badger",
+     "questions": 47,
+     "restAnswers": 50
+    },
+    {
+     "actions": 3645,
+     "chapter": 6,
      "complete": false,
-     "hours": 0.0,
-     "hoursTotal": 17.29,
+     "hours": 4.37,
+     "hoursTotal": 27.01,
      "knowledgeQuestions": 0,
      "pet": "pet_alpaca",
-     "questions": 0,
-     "restAnswers": 0
+     "questions": 150,
+     "restAnswers": 209
     }
    ],
    "label": "bot, seed 1, accuracy 1.00",
-   "reachedChapter": 5,
+   "reachedChapter": 6,
    "seed": 1,
-   "stoppedAtStep": 603
+   "stoppedAtStep": 1167
   },
   {
    "accuracy": 1.0,
    "chapters": [
     {
-     "actions": 1833,
+     "actions": 2453,
      "chapter": 1,
      "complete": true,
-     "hours": 2.81,
-     "hoursTotal": 2.81,
+     "hours": 4.23,
+     "hoursTotal": 4.23,
      "knowledgeQuestions": 2,
      "pet": "pet_bunny",
-     "questions": 122,
-     "restAnswers": 309
+     "questions": 220,
+     "restAnswers": 470
     },
     {
-     "actions": 4518,
+     "actions": 2841,
      "chapter": 2,
      "complete": true,
-     "hours": 6.38,
-     "hoursTotal": 9.19,
+     "hours": 4.37,
+     "hoursTotal": 8.6,
      "knowledgeQuestions": 0,
      "pet": "pet_tortoise",
-     "questions": 262,
-     "restAnswers": 575
+     "questions": 209,
+     "restAnswers": 396
     },
     {
-     "actions": 4758,
+     "actions": 4159,
      "chapter": 3,
      "complete": true,
-     "hours": 6.32,
-     "hoursTotal": 15.51,
+     "hours": 5.96,
+     "hoursTotal": 14.56,
      "knowledgeQuestions": 0,
      "pet": "pet_goat",
-     "questions": 226,
-     "restAnswers": 569
+     "questions": 252,
+     "restAnswers": 535
     },
     {
-     "actions": 3875,
+     "actions": 3595,
      "chapter": 4,
      "complete": true,
-     "hours": 4.64,
-     "hoursTotal": 20.15,
+     "hours": 4.65,
+     "hoursTotal": 19.21,
      "knowledgeQuestions": 0,
      "pet": "pet_pony",
-     "questions": 131,
-     "restAnswers": 358
+     "questions": 169,
+     "restAnswers": 345
     },
     {
-     "actions": 0,
+     "actions": 1012,
      "chapter": 5,
+     "complete": true,
+     "hours": 1.25,
+     "hoursTotal": 20.46,
+     "knowledgeQuestions": 0,
+     "pet": "pet_badger",
+     "questions": 47,
+     "restAnswers": 60
+    },
+    {
+     "actions": 65047,
+     "chapter": 6,
      "complete": false,
-     "hours": 0.0,
-     "hoursTotal": 20.15,
+     "hours": 82.19,
+     "hoursTotal": 102.65,
      "knowledgeQuestions": 0,
      "pet": "pet_alpaca",
-     "questions": 0,
-     "restAnswers": 0
+     "questions": 3419,
+     "restAnswers": 3055
     }
    ],
    "label": "bot, seed 2, accuracy 1.00",
-   "reachedChapter": 5,
+   "reachedChapter": 6,
    "seed": 2,
-   "stoppedAtStep": 741
+   "stoppedAtStep": 4316
   }
  ],
  "targetPetHours": {
   "pet_alpaca": 25.5,
+  "pet_badger": 21.0,
   "pet_bunny": 1.0,
   "pet_goat": 10.0,
   "pet_pony": 17.5,
@@ -143,6 +166,6 @@
   "secondsPerRest": 5.0,
   "secondsPerStep": 25.0
  },
- "version": "0.10.0",
+ "version": "0.19.0",
  "what": "Pacing of the greedy test bot playing the real rules engine (tests/bot.gd). Hours use the timing of meta.pacing. The bot is not a child: it always knows what it needs and works through the farm in sweeps. Trust the Time Quiz and Rest answers most; its actions are counted as one per saved change and include many small ones that a child would batch (Harvest all …)."
 }
