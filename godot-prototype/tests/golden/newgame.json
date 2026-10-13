@@ -42,6 +42,13 @@
 				0.0,
 				1.0
 			]
+		],
+		"wheat": [
+			[
+				0.0,
+				1.0,
+				1.0
+			]
 		]
 	},
 	"jobs": [
@@ -195,13 +202,12 @@
 	"recent_q": [],
 	"revealed": {},
 	"running": {},
-	"seeds": {
-		"crop_wheat": 1.0
-	},
+	"seeds": {},
 	"seen": {
 		"stick": true,
 		"stone": true,
-		"tin_pot": true
+		"tin_pot": true,
+		"wheat": true
 	},
 	"skill_rank": {
 		"animals": 0.0,

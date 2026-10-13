@@ -6,12 +6,11 @@
   "energy": 10,
   "inventory": {
     "tin_pot": 1,
+    "wheat": 1,
     "stick": 3,
     "stone": 3
   },
-  "seeds": {
-    "crop_wheat": 1
-  },
+  "seeds": {},
   "unlocked": [
     "tent",
     "well_1",

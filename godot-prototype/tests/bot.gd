@@ -357,6 +357,7 @@ func _turn() -> void:
 						for k in need:
 							if k.begins_with("tag:") and (G.items[y].get("tags", []) as Array).has(k.substr(4)): short = maxf(short, float(need[k]) - G.inventory.count_tag(k.substr(4)))
 						if short > best + 0.01 and short > 0.0: best = short; pick = c
+				if cs.has("crop_wheat") and G.inventory.count("wheat") < 3.0 * G.fields.plants_per_patch("field") + 4.0 and G.fields.seed_have("crop_wheat") >= 1.0: pick = "crop_wheat"      # the grain is the seed: grow enough of it
 				if G.fields.seed_have(pick) < float(G.fields.plants_per_patch("field")) and not G.nodes[pick].has("seedItem"):
 					want_seeds[pick] = maxi(int(want_seeds.get(pick, 0)), maxi(1, G.fields.plants_per_patch("field") * 8))      # seeds come from the village now: a bulk, a trip costs a question
 				if G.fields.plant_plan("field", pick)["plants"] >= 1: G.fields.plant("field", i, pick)
@@ -409,6 +410,7 @@ func _turn() -> void:
 	if G.S["coins"] < coins_need + 300:
 		for k in G.S["inv"].keys():
 			var keep := 6.0 + float(need.get(k, 0.0))
+			if k == "wheat": keep = maxf(keep, 3.0 * G.fields.plants_per_patch("field") + 4.0)      # seed for the next sowing
 			if G.inventory.count(k) > keep and G.inventory.sellable(k): want_sell[k] = floorf(G.inventory.count(k) - keep)
 	# buy missing raw items from merchants
 	for mid in G.nodes:
