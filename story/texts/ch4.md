@@ -59,13 +59,13 @@ On the village square the builders eat pizza at long tables under paper lanterns
 ## c4_pony · beat · The pony comes home
 *When:* `done:pet_pony`
 
-Page 1. A pony stands at your gate and poses, one hoof forward, as if somebody were painting her. Then she lets you load a sack, a crate and a very large order for Hazelwood. She walks down the road as if she owns it.
+Page 1. A pony stands at your gate and poses, one hoof forward. Then she lets you load a sack, a crate and a big order for the village. She walks down the road as if she owns it.
 
-> Ein Pony steht an deinem Tor und posiert, einen Huf vorgestellt, als würde jemand es malen. Dann lässt es dich einen Sack, eine Kiste und eine sehr grosse Bestellung für Hazelwood aufladen. Es geht die Strasse hinunter, als gehörte sie ihm.
+> Ein Pony steht an deinem Tor und posiert, einen Huf vorgestellt. Dann lässt es dich einen Sack, eine Kiste und eine grosse Bestellung fürs Dorf aufladen. Es geht die Strasse hinunter, als gehörte sie ihm.
 
-Page 2. On the village square, people stop. They look at the pony, then at the order, then at you. Somebody says your name. Your own name, not your family's. And the fourth line comes back: “Strong pony brings the world its bread.”
+Page 2. On the square, people stop. They look at the pony, then the order, then you. Somebody says your name. Your own name, not your family's. The fourth line comes back: “Strong pony brings the world its bread.”
 
-> Auf dem Dorfplatz bleiben die Leute stehen. Sie schauen das Pony an, dann die Bestellung, dann dich. Jemand sagt deinen Namen. Deinen eigenen Namen, nicht den deiner Familie. Und die vierte Zeile fällt dir ein: „Starkes Pony bringt der Welt ihr Brot.“
+> Auf dem Platz bleiben die Leute stehen. Sie schauen das Pony an, die Bestellung, dich. Jemand sagt deinen Namen. Deinen eigenen Namen, nicht den deiner Familie. Die vierte Zeile fällt dir ein: „Starkes Pony bringt der Welt ihr Brot.“
 
 ## c4_quill_out · beat · Quill rides home
 *When:* `seen:c4_pony`

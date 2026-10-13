@@ -107,13 +107,13 @@ Quill rides up with a new paper and, for the first time, a small smile. “With 
 ## c6_alpaca · beat · The alpaca comes home
 *When:* `done:pet_alpaca`
 
-Page 1. An alpaca stands at the gate, very tall and very polite. She looks at you. Then she lifts her head and hums one long, strange note, the note that woke the whole farm that night. Nobody was hurt because of her.
+Page 1. An alpaca stands at the gate, very tall and very polite. She lifts her head and hums one long, strange note, the note that woke the whole farm that night. Nobody was hurt because of her.
 
-> Ein Alpaka steht am Tor, sehr gross und sehr höflich. Es schaut dich an. Dann hebt es den Kopf und summt einen langen, seltsamen Ton, den Ton, der in jener Nacht den ganzen Hof geweckt hat. Seinetwegen wurde niemand verletzt.
+> Ein Alpaka steht am Tor, sehr gross und sehr höflich. Es hebt den Kopf und summt einen langen, seltsamen Ton, den Ton, der in jener Nacht den ganzen Hof geweckt hat. Seinetwegen wurde niemand verletzt.
 
-Page 2. She spits, politely, on principle. And the last line of the rhyme comes back, whole: “Soft alpaca guards all things.” You say it. You say all of it, from the very first line. Your voice does not wobble.
+Page 2. She spits, politely, on principle. The last line of the rhyme comes back, whole: “Soft alpaca guards all things.” You say all of it, from the very first line. Your voice does not wobble.
 
-> Es spuckt, höflich, aus Prinzip. Und die letzte Zeile des Reims fällt dir wieder ein, ganz: „Weiches Alpaka wacht über alles.“ Du sagst sie. Du sagst alles, von der allerersten Zeile an. Deine Stimme wackelt nicht.
+> Es spuckt, höflich, aus Prinzip. Die letzte Zeile des Reims fällt dir wieder ein, ganz: „Weiches Alpaka wacht über alles.“ Du sagst alles, von der allerersten Zeile an. Deine Stimme wackelt nicht.
 
 ## c6_supper · beat · The Fair supper
 *When:* `seen:c6_alpaca`

@@ -12128,12 +12128,12 @@
   "de": "Das Pony kommt heim"
  },
  "story/c4_pony/pages/0/text": {
-  "en": "A pony stands at your gate and poses, one hoof forward, as if somebody were painting her. Then she lets you load a sack, a crate and a very large order for Hazelwood. She walks down the road as if she owns it.",
-  "de": "Ein Pony steht an deinem Tor und posiert, einen Huf vorgestellt, als würde jemand es malen. Dann lässt es dich einen Sack, eine Kiste und eine sehr grosse Bestellung für Hazelwood aufladen. Es geht die Strasse hinunter, als gehörte sie ihm."
+  "en": "A pony stands at your gate and poses, one hoof forward. Then she lets you load a sack, a crate and a big order for the village. She walks down the road as if she owns it.",
+  "de": "Ein Pony steht an deinem Tor und posiert, einen Huf vorgestellt. Dann lässt es dich einen Sack, eine Kiste und eine grosse Bestellung fürs Dorf aufladen. Es geht die Strasse hinunter, als gehörte sie ihm."
  },
  "story/c4_pony/pages/1/text": {
-  "en": "On the village square, people stop. They look at the pony, then at the order, then at you. Somebody says your name. Your own name, not your family's. And the fourth line comes back: “Strong pony brings the world its bread.”",
-  "de": "Auf dem Dorfplatz bleiben die Leute stehen. Sie schauen das Pony an, dann die Bestellung, dann dich. Jemand sagt deinen Namen. Deinen eigenen Namen, nicht den deiner Familie. Und die vierte Zeile fällt dir ein: „Starkes Pony bringt der Welt ihr Brot.“"
+  "en": "On the square, people stop. They look at the pony, then the order, then you. Somebody says your name. Your own name, not your family's. The fourth line comes back: “Strong pony brings the world its bread.”",
+  "de": "Auf dem Platz bleiben die Leute stehen. Sie schauen das Pony an, die Bestellung, dich. Jemand sagt deinen Namen. Deinen eigenen Namen, nicht den deiner Familie. Die vierte Zeile fällt dir ein: „Starkes Pony bringt der Welt ihr Brot.“"
  },
  "story/c4_quill_out/text": {
   "en": "Quill rides back to the manor with his ledger full. At the gate he stops. “The farm gives back more than it takes,” he says, as if it were a question. “The Lord will want to know.” Then he goes, and you cannot tell what he meant.",
@@ -12380,12 +12380,12 @@
   "de": "Das Alpaka kommt heim"
  },
  "story/c6_alpaca/pages/0/text": {
-  "en": "An alpaca stands at the gate, very tall and very polite. She looks at you. Then she lifts her head and hums one long, strange note, the note that woke the whole farm that night. Nobody was hurt because of her.",
-  "de": "Ein Alpaka steht am Tor, sehr gross und sehr höflich. Es schaut dich an. Dann hebt es den Kopf und summt einen langen, seltsamen Ton, den Ton, der in jener Nacht den ganzen Hof geweckt hat. Seinetwegen wurde niemand verletzt."
+  "en": "An alpaca stands at the gate, very tall and very polite. She lifts her head and hums one long, strange note, the note that woke the whole farm that night. Nobody was hurt because of her.",
+  "de": "Ein Alpaka steht am Tor, sehr gross und sehr höflich. Es hebt den Kopf und summt einen langen, seltsamen Ton, den Ton, der in jener Nacht den ganzen Hof geweckt hat. Seinetwegen wurde niemand verletzt."
  },
  "story/c6_alpaca/pages/1/text": {
-  "en": "She spits, politely, on principle. And the last line of the rhyme comes back, whole: “Soft alpaca guards all things.” You say it. You say all of it, from the very first line. Your voice does not wobble.",
-  "de": "Es spuckt, höflich, aus Prinzip. Und die letzte Zeile des Reims fällt dir wieder ein, ganz: „Weiches Alpaka wacht über alles.“ Du sagst sie. Du sagst alles, von der allerersten Zeile an. Deine Stimme wackelt nicht."
+  "en": "She spits, politely, on principle. The last line of the rhyme comes back, whole: “Soft alpaca guards all things.” You say all of it, from the very first line. Your voice does not wobble.",
+  "de": "Es spuckt, höflich, aus Prinzip. Die letzte Zeile des Reims fällt dir wieder ein, ganz: „Weiches Alpaka wacht über alles.“ Du sagst alles, von der allerersten Zeile an. Deine Stimme wackelt nicht."
  },
  "story/c6_supper/title": {
   "en": "The Fair supper",
