@@ -369,10 +369,7 @@ them up, each with a 💡 recommendation.
   can use.
 - **M9. The market square picture** [#1]: one painted village square, used for trips and for the delivery scenes
   (`story/story-delivery.md` §7); a first look at it can be shown before the first trip.
-- **M10. Notice board and Import Broker:** (the data checker found 13 Oct 2026: seven reward nodes have the slot `board` and so land at the field place, because
-  `places.json` has no rule for it: `lucky_horseshoe`, `brass_bell`, `wind_chime`, `bird_feeder`, `lavender_bunch`, `sq_stray_kitten`, `barn_cat`; decide here whether they belong to the
-  notice board.) Decide where they stand now that the market is in the village (the notice board's little jobs
-  and favours; the broker came with the pony and the paved road).
+- **M10. Notice board and Import Broker** ✅ 💡 (13 Oct 2026): the seven small reward nodes with the slot `board` (`lucky_horseshoe`, `brass_bell`, `wind_chime`, `bird_feeder`, `lavender_bunch`, `sq_stray_kitten`, `barn_cat`) stand at the **field** place, as they did by default; now written down in `places.json` (`nodeSpots.slots.board`), so the data checker no longer warns. The broker came with the pony (chapter 4) and the paved road and trades in the village square. Move the seven to a notice board spot if the parent wants one.
 - **M11. The store and packing** ✅ (R2–R4):
   - **The store** is a compact grid of small tiles: picture, a **short text in a smaller font**, count, a stale badge, small dots for the
     quality levels. **No sell buttons.** A **row of filters** on top (the categories at first: food, crafts and tools, materials, crops …;

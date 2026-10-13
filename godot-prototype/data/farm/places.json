@@ -131,6 +131,7 @@
     "slotPrefixes": {"gear:": "living", "tool:": "ws_tools"},
     "slots": {
       "living": "living",
+      "board": "field",
       "library": "library",
       "kitchen": "kitchen",
       "well": "well",
