@@ -1,0 +1,32 @@
+{
+  "pets": {
+    "note": "The pets' jobs (TODO S2). Level 1 is the pet's bonus from its node (always on, nothing changes). Level 2 opens when the NEXT pet has come home (the last pet has no level 2 yet): then the child chooses one of the pet's jobs on the job board, and the pet does it once every question (the same step as everything else; no questions, no work). A job that cannot run just waits (💤 nothing to do, 📦 the store is full). kinds: weeds and stones (take `amount` from the patch that has most; stones go into the store), water (adds `amount` to the water), makes (an item, `rate` per question, whole units arrive). `first`: what a pet with only its level 1 does for the eye: every `every` questions it walks to `place` ('water', 'field', 'spot:<place>') and shows its emoji.",
+    "jobs": {
+      "pet_bunny": [
+        {"id": "weeds", "name": "Pull weeds", "emoji": "🌿", "kind": "weeds", "amount": 1, "desc": "Pulls a weed on the patch that has most."},
+        {"id": "stones", "name": "Pick stones", "emoji": "🪨", "kind": "stones", "amount": 1, "desc": "Picks a stone from the stoniest patch."}
+      ],
+      "pet_tortoise": [
+        {"id": "water", "name": "Bring water", "emoji": "💧", "kind": "water", "amount": 1, "desc": "Brings a little water every question."},
+        {"id": "stones", "name": "Pick stones", "emoji": "🪨", "kind": "stones", "amount": 1, "desc": "Picks a stone from the stoniest patch."}
+      ],
+      "pet_goat": [
+        {"id": "weeds", "name": "Graze weeds", "emoji": "🌿", "kind": "weeds", "amount": 1, "desc": "Eats the weeds on the patch that has most."},
+        {"id": "compost", "name": "Make compost", "emoji": "🟫", "kind": "makes", "item": "compost", "rate": 0.5, "desc": "Leaves a little compost."}
+      ],
+      "pet_pony": [
+        {"id": "log", "name": "Haul logs", "emoji": "🪵", "kind": "makes", "item": "log", "rate": 0.25, "desc": "Drags a log in from the woodlot."},
+        {"id": "stick", "name": "Fetch sticks", "emoji": "🌿", "kind": "makes", "item": "stick", "rate": 0.5, "desc": "Fetches sticks."}
+      ],
+      "pet_badger": [
+        {"id": "herbs", "name": "Gather herbs", "emoji": "🌿", "kind": "makes", "item": "herbs", "rate": 0.34, "desc": "Finds herbs at the edge of the wood."},
+        {"id": "compost", "name": "Make compost", "emoji": "🟫", "kind": "makes", "item": "compost", "rate": 0.5, "desc": "Digs old leaves into compost."}
+      ]
+    },
+    "first": {
+      "pet_tortoise": {"emoji": "💧", "place": "water", "every": 1},
+      "pet_goat": {"emoji": "🌿", "place": "field", "every": 4},
+      "pet_alpaca": {"emoji": "🧶", "place": "spot:pets", "every": 4}
+    }
+  }
+}

@@ -10514,5 +10514,85 @@
  "meta/postcards/messages/3": {
   "en": "Dear {player}, I was so happy to hear about {news}. I hope this helps on the farm!",
   "de": "Hallo {player}, ich habe mich so gefreut, von {news} zu hören. Ich hoffe, das hilft dir auf dem Hof!"
+ },
+ "meta/pets/jobs/pet_bunny/0/name": {
+  "en": "Pull weeds",
+  "de": "Unkraut zupfen"
+ },
+ "meta/pets/jobs/pet_bunny/0/desc": {
+  "en": "Pulls a weed on the patch that has most.",
+  "de": "Zupft ein Unkraut auf dem Beet, das am meisten hat."
+ },
+ "meta/pets/jobs/pet_bunny/1/name": {
+  "en": "Pick stones",
+  "de": "Steine auflesen"
+ },
+ "meta/pets/jobs/pet_bunny/1/desc": {
+  "en": "Picks a stone from the stoniest patch.",
+  "de": "Liest einen Stein vom steinigsten Beet auf."
+ },
+ "meta/pets/jobs/pet_tortoise/0/name": {
+  "en": "Bring water",
+  "de": "Wasser bringen"
+ },
+ "meta/pets/jobs/pet_tortoise/0/desc": {
+  "en": "Brings a little water every question.",
+  "de": "Bringt bei jeder Frage ein wenig Wasser."
+ },
+ "meta/pets/jobs/pet_tortoise/1/name": {
+  "en": "Pick stones",
+  "de": "Steine auflesen"
+ },
+ "meta/pets/jobs/pet_tortoise/1/desc": {
+  "en": "Picks a stone from the stoniest patch.",
+  "de": "Liest einen Stein vom steinigsten Beet auf."
+ },
+ "meta/pets/jobs/pet_goat/0/name": {
+  "en": "Graze weeds",
+  "de": "Unkraut abweiden"
+ },
+ "meta/pets/jobs/pet_goat/0/desc": {
+  "en": "Eats the weeds on the patch that has most.",
+  "de": "Frisst das Unkraut auf dem Beet, das am meisten hat."
+ },
+ "meta/pets/jobs/pet_goat/1/name": {
+  "en": "Make compost",
+  "de": "Kompost machen"
+ },
+ "meta/pets/jobs/pet_goat/1/desc": {
+  "en": "Leaves a little compost.",
+  "de": "Lässt ein wenig Kompost fallen."
+ },
+ "meta/pets/jobs/pet_pony/0/name": {
+  "en": "Haul logs",
+  "de": "Baumstämme ziehen"
+ },
+ "meta/pets/jobs/pet_pony/0/desc": {
+  "en": "Drags a log in from the woodlot.",
+  "de": "Zieht einen Baumstamm aus dem Holzlager heran."
+ },
+ "meta/pets/jobs/pet_pony/1/name": {
+  "en": "Fetch sticks",
+  "de": "Stöcke holen"
+ },
+ "meta/pets/jobs/pet_pony/1/desc": {
+  "en": "Fetches sticks.",
+  "de": "Holt Stöcke."
+ },
+ "meta/pets/jobs/pet_badger/0/name": {
+  "en": "Gather herbs",
+  "de": "Kräuter sammeln"
+ },
+ "meta/pets/jobs/pet_badger/0/desc": {
+  "en": "Finds herbs at the edge of the wood.",
+  "de": "Findet Kräuter am Waldrand."
+ },
+ "meta/pets/jobs/pet_badger/1/name": {
+  "en": "Make compost",
+  "de": "Kompost machen"
+ },
+ "meta/pets/jobs/pet_badger/1/desc": {
+  "en": "Digs old leaves into compost.",
+  "de": "Gräbt altes Laub zu Kompost um."
  }
 }

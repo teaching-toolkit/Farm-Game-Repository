@@ -231,6 +231,24 @@ else:
     for k in ("patchValue", "buildingValue", "maxOfSales", "floor", "maxSeasons", "easedFraction"):
         if k not in LD: err("lord", f"{k} is missing")
 
+# ---------------------------------------------------------------- the pets' jobs (rules/54-pets.json)
+PT = META.get("pets", {})
+if not PT: warn("pets", "rules/54-pets.json is missing")
+else:
+    for pid, jobs in PT.get("jobs", {}).items():
+        if pid not in N or N[pid].get("type") != "pet": err("pets", f"jobs: {pid} is not a pet")
+        ids = [j.get("id") for j in jobs]
+        if len(set(ids)) != len(ids): err(f"pets {pid}", "two jobs with the same id")
+        for j in jobs:
+            w = f"pets {pid} job {j.get('id')}"
+            if j.get("kind") not in ("weeds", "stones", "water", "makes"): err(w, f"kind {j.get('kind')!r} is not weeds, stones, water or makes")
+            if j.get("kind") == "makes" and j.get("item") not in ITEMS: err(w, f"item {j.get('item')} is not an item")
+            if j.get("kind") == "makes" and not float(j.get("rate", 0)) > 0: err(w, "makes needs a rate above 0")
+            if not j.get("name") or not j.get("emoji"): err(w, "needs a name and an emoji")
+    for pid, f in PT.get("first", {}).items():
+        if pid not in N or N[pid].get("type") != "pet": err("pets", f"first: {pid} is not a pet")
+        if not f.get("emoji") or not f.get("place") or int(f.get("every", 0)) < 1: err(f"pets {pid}", "first needs an emoji, a place and every >= 1")
+
 # ---------------------------------------------------------------- the travelling merchant (rules/50-gate.json)
 GT = META.get("gate", {})
 if not GT: err("gate", "no 'gate' in rules/50-gate.json")

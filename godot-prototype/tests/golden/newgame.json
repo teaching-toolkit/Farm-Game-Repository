@@ -201,6 +201,11 @@
 	"perks": {},
 	"pests": 0.0,
 	"pet_names": {},
+	"pets": {
+		"acc": {},
+		"job": {},
+		"last": {}
+	},
 	"polish": {},
 	"postcards": [],
 	"rain": false,

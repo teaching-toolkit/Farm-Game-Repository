@@ -59,7 +59,29 @@ func part_pets() -> void:
 		row.add_child(UI.label("%s %s — %s" % [n.get("emoji", ""), G.S["pet_names"].get(pid, n.get("defaultName", "")), M.widgets.effect_text(n.get("effects", {}))], 17, UI.INK, true))
 		row.add_child(UI.soft_button(tr("✏️ Name"), M.welcome.show_name.bind(pid, str(G.S["pet_names"].get(pid, n.get("defaultName", "")))), true, 15))
 		M.content.add_child(row)
+		_job_board(pid)
 	if not any: M.content.add_child(UI.label(tr("Your first pet, a bunny, comes home at the end of chapter 1."), 16, UI.MUTED, true))
+
+## A pet's job board (TODO S2): level 2 lets the child choose what the pet does every question; what it did last time, or why it could not.
+func _job_board(pid: String) -> void:
+	var jobs: Array = G.pets.jobs_of(pid)
+	if jobs.is_empty(): return
+	if G.pets.level(pid) < 2:
+		M.content.add_child(UI.label(tr("   Level 2: a job of its own comes when the next pet comes home."), 14, UI.MUTED, true))
+		return
+	var cur := G.pets.job_id(pid)
+	var bx := HFlowContainer.new()
+	bx.add_theme_constant_override("h_separation", 6)
+	for j in jobs:
+		var on: bool = j["id"] == cur
+		bx.add_child(UI.button("%s%s %s" % ["✔ " if on else "", j["emoji"], tr(str(j["name"]))], G.pets.choose.bind(pid, j["id"]), not on, UI.GREEN if on else UI.AMBER, 16))
+	M.content.add_child(bx)
+	var last := G.pets.last(pid)
+	if not last.is_empty():
+		var jb: Dictionary = G.pets.job(pid, str(last.get("job", "")))
+		var txt := tr("   Last question: %s") % tr(str(jb.get("name", "")))
+		if not last["ok"]: txt = tr("   Last question: 📦 the store is full") if last.get("why", "") == "full" else tr("   Last question: 💤 nothing to do")
+		M.content.add_child(UI.label(txt, 14, UI.MUTED, true))
 
 func part_jobs() -> void:
 	M.widgets.section(tr("📋 Little jobs"), tr("A few coins and a bit of luck for each."))

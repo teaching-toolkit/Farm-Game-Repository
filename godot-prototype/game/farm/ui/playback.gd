@@ -21,6 +21,7 @@ var playing := false
 var speed := 1.0          # 0 = no waiting (tests)
 var _before := {}
 var _rain := false
+var _pet_acts := []
 var _after := Callable()
 var _catcher: Control
 var _run := 0
@@ -32,6 +33,7 @@ func _init(main: FarmMain) -> void:
 
 func _on_step(info: Dictionary) -> void:
 	if held and info.get("rain", false): _rain = true
+	if held: _pet_acts = info.get("pet_acts", [])      # the pets show what they did in the last question
 
 ## The Time Quiz opened: from now on the screen keeps the old state until the playback.
 func begin() -> void:
@@ -69,9 +71,23 @@ func play(after: Callable) -> void:
 	_pulse_changes()
 	if not await _wait(FLICK, me): return
 	M.map.play_pending()                              # pests, the scarecrow
+	_play_pets()
 	if not await _wait(LAST, me): return
 	playing = false
 	_end()
+
+## The pets walk to where they worked and show it (a weed, a drop, a log), or a 💤 / 📦 when they could not.
+func _play_pets() -> void:
+	var acts := _pet_acts
+	_pet_acts = []
+	for a in acts:
+		var where = null
+		if a.has("area"): where = M.feedback.patch_place(str(a["area"]), int(a["idx"]))
+		elif a.has("place"):
+			var pl := str(a["place"])
+			if pl == "field": where = M.feedback.patch_place("field", 0)
+			else: where = M.feedback.act_place(pl)
+		if where != null: M.map.critters.visit(str(a["pet"]), where, str(a["emoji"]))
 
 ## Any tap: jump to the end (the new state at once, no more animations).
 func finish() -> void:

@@ -43,6 +43,7 @@ func set_critters(spec: Dictionary) -> void:
 				c = UI.label(e[0], 22)
 			c.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			c.position = _spot_point(sid)
+			c.set_meta("pid", str(e[2]) if e.size() > 2 else "")
 			c.set_meta("left", bool(e[3]) if e.size() > 3 else false)   # e = [emoji, picture, node id, faces left (the node's "facesLeft")]
 			sort_in(c, c.position.y + c.size.y)
 			arr.append(c)
@@ -83,7 +84,7 @@ func tick(delta: float) -> void:
 	_hop_t = 0.0
 	for sid in by_place:
 		for c in by_place[sid]:
-			if not is_instance_valid(c) or randf() > 0.45: continue
+			if not is_instance_valid(c) or c.get_meta("busy", false) or randf() > 0.45: continue
 			var target := _spot_point(sid)
 			if c is TextureRect and absf(target.x - c.position.x) > 2.0:
 				(c as TextureRect).flip_h = (target.x < c.position.x) != bool(c.get_meta("left", false))
@@ -96,3 +97,27 @@ func tick(delta: float) -> void:
 			tw.parallel().tween_property(c, "rotation", tilt, 0.2)
 			tw.tween_property(c, "position", target, 0.2)
 			tw.parallel().tween_property(c, "rotation", 0.0, 0.2)
+
+## A pet walks to a place on the farm, shows what it does (an emoji bubble) and walks back.
+func visit(pid: String, where: Vector2, emoji: String) -> void:
+	for sid in by_place:
+		for c in by_place[sid]:
+			if not is_instance_valid(c) or str(c.get_meta("pid", "")) != pid: continue
+			var home: Vector2 = c.position
+			c.set_meta("busy", true)
+			var target := where - Vector2(c.size.x / 2.0, c.size.y)
+			if c is TextureRect: (c as TextureRect).flip_h = (target.x < home.x) != bool(c.get_meta("left", false))
+			var b := UI.label(emoji, 22)
+			b.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			b.position = Vector2(c.size.x / 2.0 - 12.0, -26.0)
+			b.visible = false
+			c.add_child(b)
+			sort_in(c, target.y + c.size.y)
+			var tw := map.create_tween()
+			tw.tween_property(c, "position", target, 0.6).set_trans(Tween.TRANS_SINE)
+			tw.tween_callback(func(): if is_instance_valid(b): b.visible = true)
+			tw.tween_interval(0.7)
+			tw.tween_callback(func(): if is_instance_valid(b): b.queue_free())
+			tw.tween_property(c, "position", home, 0.6).set_trans(Tween.TRANS_SINE)
+			tw.tween_callback(func(): if is_instance_valid(c): c.set_meta("busy", false); sort_in(c, home.y + c.size.y))
+			return

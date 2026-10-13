@@ -820,6 +820,13 @@ Everything is a **node** in the data with `requires` (other nodes) and a `cost`.
 | 5 | 🦡 Badger (Bracken) | *(placeholder: 12 herbs, 2 honey)* | — | +1 herb per herb harvest *(in phase 12 the Healer's Chest, a tea set and remedies)* |
 | 6 | 🦙 Alpaca (Alfie) | Golden Honey Cake + Rainbow Roast | Rainbow Quilt | a little wool every question |
 
+**The pets' jobs *(built, phase 8: levels 1 and 2)*.** Level 1 is the bonus in the table (always on). **Level 2** opens when the *next* pet has come home (the last pet has none yet): the pet's window in the
+pet corner then shows its job board, two jobs to choose from (✔ marks the one it does), and the pet does it **once every question**, in the same step as everything else (no questions, no work):
+bunny and goat pull weeds (the patch with most), bunny and tortoise pick stones (they arrive in the store), tortoise brings 1 💧, goat and badger make compost (every other question), pony hauls
+logs (every fourth question) or fetches sticks (every second), badger gathers herbs (every third question). A job that cannot run just waits: 💤 nothing to do, 📦 the store is full; the board says
+what happened in the last question. After the Time Quiz the pets **walk to where they worked** (a patch, the pond, the pet corner), show an emoji and walk back; a pet at level 1 shows its bonus now and
+then (the tortoise 💧, the goat 🌿, the alpaca 🧶). *(Planned: WHEN cards and the second rule, levels 3 and 4: TODO S5.)* Data: `rules/54-pets.json`; system `G.pets`.
+
 The child names each pet (or keeps the default). Each pet adds a little luck for good, walks about the pet corner, and its
 arrival brings a celebration and a chance of a postcard. The fifth pet needs the most branches at once: fine flour, honey,
 butter, eggs, saffron and walnuts for the cake; rainbow carrots, golden beets, onions, olive oil and herbs for the roast;
