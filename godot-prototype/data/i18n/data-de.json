@@ -2837,11 +2837,11 @@
  },
  "nodes/sq_free_family/desc": {
   "en": "Reward: a picture for the album — the whole family at the long table, and your cousin passing you the bread.",
-  "de": "Belohnung: ein Bild für das Album – die ganze Familie am langen Tisch, und dein Cousin reicht dir das Brot."
+  "de": "Belohnung: ein Bild für das Album – die ganze Familie am langen Tisch, und deine Cousine reicht dir das Brot."
  },
  "nodes/sq_free_family/reward/picture": {
   "en": "The whole family at the long table, your cousin passing you the bread",
-  "de": "Die ganze Familie am langen Tisch, dein Cousin reicht dir das Brot"
+  "de": "Die ganze Familie am langen Tisch, deine Cousine reicht dir das Brot"
  },
  "nodes/sq_free_quill/name": {
   "en": "Everything to count for Quill",
@@ -11847,6 +11847,118 @@
   "en": "The note in the book flutters in the wind. It says what it always says.",
   "de": "Der Zettel im Buch flattert im Wind. Er sagt, was er immer sagt."
  },
+ "story/c2_letter/title": {
+  "en": "A letter from home",
+  "de": "Ein Brief von zu Hause"
+ },
+ "story/c2_letter/pages/0/text": {
+  "en": "The river barge brings a letter. Mei from the barge nods, hands it over and rows on. The writing is round and quick: your mother's.",
+  "de": "Der Flusskahn bringt einen Brief. Mei vom Kahn nickt dir zu, reicht ihn herüber und rudert weiter. Die Schrift ist rund und schnell: die deiner Mutter."
+ },
+ "story/c2_letter/pages/1/text": {
+  "en": "“Come home before the frost, my love. The house is small, but the table is long. Your cousin asks after you.” You fold the letter very small. The frost is far away. Isn't it?",
+  "de": "„Komm heim vor dem Frost, mein Schatz. Das Haus ist klein, aber der Tisch ist lang. Deine Cousine fragt nach dir.“ Du faltest den Brief ganz klein. Der Frost ist noch weit weg. Oder?"
+ },
+ "story/c2_walls/text": {
+  "en": "The walls of the cottage stand. You built them alone, and it shows. One leans a little to the left. You step back, look at them for a long time, and decide that they are perfect.",
+  "de": "Die Wände der Hütte stehen. Du hast sie allein gebaut, und man sieht es. Eine neigt sich ein bisschen nach links. Du trittst zurück, schaust sie lange an und beschliesst, dass sie perfekt sind."
+ },
+ "story/c2_walls/title": {
+  "en": "Crooked walls",
+  "de": "Schiefe Wände"
+ },
+ "story/c2_greenstem/title": {
+  "en": "Young Greenstem",
+  "de": "Der junge Grünspross"
+ },
+ "story/c2_greenstem/pages/0/text": {
+  "en": "A boy waits at your gate with a basket of herbs bigger than his arms. “You're the Moonedge one,” he says. “You used to carry a bucket bigger than you.” You did.",
+  "de": "Ein Junge wartet an deinem Tor, einen Korb Kräuter im Arm, der grösser ist als seine Arme. „Du bist die vom Mondrand“, sagt er. „Du hast mal einen Eimer getragen, der grösser war als du.“ Stimmt."
+ },
+ "story/c2_greenstem/pages/1/text": {
+  "en": "“Why is that wall crooked? Does it hurt when you hammer? Did you know sage is good for a cough?” He asks too many questions. You find, to your surprise, that you do not mind.",
+  "de": "„Warum ist die Wand schief? Tut es weh, wenn man hämmert? Wusstest du, dass Salbei gut gegen Husten ist?“ Er stellt zu viele Fragen. Du merkst zu deiner Überraschung, dass es dir nichts ausmacht."
+ },
+ "story/c2_stumps/text": {
+  "en": "So many stumps, for such a small farm. Their tops are clean and flat. Someone cut the forest back, long ago, and nobody planted anything in its place.",
+  "de": "So viele Baumstümpfe für so einen kleinen Hof. Ihre Schnittflächen sind glatt und eben. Jemand hat den Wald vor langer Zeit zurückgeschnitten, und nichts wurde an seiner Stelle gepflanzt."
+ },
+ "story/c2_stumps/title": {
+  "en": "Too many stumps",
+  "de": "Zu viele Stümpfe"
+ },
+ "story/c2_lark/title": {
+  "en": "A visitor on the new road",
+  "de": "Ein Besucher auf der neuen Strasse"
+ },
+ "story/c2_lark/pages/0/text": {
+  "en": "A man walks up the new gravel road as if he had always walked it. He sits on your fence and watches you work. “Lark,” he says. Then he says nothing at all for a while.",
+  "de": "Ein Mann geht die neue Kiesstrasse herauf, als wäre er sie schon immer gegangen. Er setzt sich auf deinen Zaun und sieht dir bei der Arbeit zu. „Lark“, sagt er. Dann sagt er eine Weile gar nichts."
+ },
+ "story/c2_lark/pages/1/text": {
+  "en": "You stack a crate. He stacks one too, a little crooked. “Probably fine,” he says. It is. Mostly. When you look again, the fence is empty and both crates are still standing.",
+  "de": "Du stapelst eine Kiste. Er stapelt auch eine, ein bisschen schief. „Wahrscheinlich in Ordnung“, sagt er. Ist es auch. Meistens. Als du wieder hinschaust, ist der Zaun leer, und beide Kisten stehen noch."
+ },
+ "story/c2_barn/title": {
+  "en": "Where the fire began",
+  "de": "Wo das Feuer anfing"
+ },
+ "story/c2_barn/pages/0/text": {
+  "en": "You clear the last black beam from the barn. Then you stop. The burn does not start at the roof, where lightning would strike. It starts low, in the corner where the hay was kept.",
+  "de": "Du räumst den letzten schwarzen Balken aus der Scheune. Dann hältst du inne. Der Brand beginnt nicht am Dach, wo ein Blitz einschlagen würde. Er beginnt unten, in der Ecke, wo das Heu lag."
+ },
+ "story/c2_barn/pages/1/text": {
+  "en": "You sit back on your heels. Lightning does not start low. Something else began this. You do not know what. And you find that you do not want to know. Not yet.",
+  "de": "Du setzt dich auf die Fersen. Ein Blitz fängt nicht unten an. Etwas anderes hat das hier begonnen. Du weisst nicht, was. Und du merkst, dass du es nicht wissen willst. Noch nicht."
+ },
+ "story/c2_compost/text": {
+  "en": "Behind the barn is a compost pit, clean and dry, its edges squared with flat stones. Someone cared about this. Scratched on the lid: “Feed the ground and it feeds you. — B.”",
+  "de": "Hinter der Scheune liegt eine Kompostgrube, sauber und trocken, mit flachen Steinen eingefasst. Jemand hat sich darum gekümmert. In den Deckel ist geritzt: „Füttere den Boden, und er füttert dich. — B.“"
+ },
+ "story/c2_compost/title": {
+  "en": "A tidy pit",
+  "de": "Eine ordentliche Grube"
+ },
+ "story/c2_cottage/text": {
+  "en": "A real roof, before the frost. You sit under it while the first rain taps on the tiles. Then you take a sheet of paper and write home: “I'm staying a bit longer.” Your hand shakes only a little.",
+  "de": "Ein richtiges Dach, vor dem Frost. Du sitzt darunter, während der erste Regen auf die Ziegel klopft. Dann nimmst du ein Blatt Papier und schreibst nach Hause: „Ich bleibe noch ein bisschen.“ Deine Hand zittert nur ein wenig."
+ },
+ "story/c2_cottage/title": {
+  "en": "A roof before the frost",
+  "de": "Ein Dach vor dem Frost"
+ },
+ "story/c2_tortoise/title": {
+  "en": "The tortoise comes home",
+  "de": "Die Schildkröte kommt heim"
+ },
+ "story/c2_tortoise/pages/0/text": {
+  "en": "Something very slow is crossing the yard. A tortoise, moving like a stone that has decided to travel. She goes straight to the pond and sits down where the spring first rose.",
+  "de": "Etwas sehr Langsames überquert den Hof. Eine Schildkröte, die sich bewegt wie ein Stein, der beschlossen hat zu reisen. Sie geht geradewegs zum Teich und setzt sich dorthin, wo die Quelle zuerst aufstieg."
+ },
+ "story/c2_tortoise/pages/1/text": {
+  "en": "You sit down beside her and wait. The pond fills a little, then a little more. Nothing is hurried. And the second line of the old rhyme comes back to you: “Slow shell keeps the water clean.”",
+  "de": "Du setzt dich neben sie und wartest. Der Teich füllt sich ein bisschen, dann noch ein bisschen. Nichts wird gehetzt. Und die zweite Zeile des alten Reims fällt dir wieder ein: „Langer Panzer hält das Wasser rein.“"
+ },
+ "story/c2_hook/text": {
+  "en": "In the new barn frame you find an old iron hook. It is black with soot, and it was made to hold a lantern. “If it was not lightning,” you think, “then what?” You hang the hook back up. Carefully.",
+  "de": "Im neuen Scheunengerüst findest du einen alten Eisenhaken. Er ist schwarz vor Russ und wurde gemacht, um eine Laterne zu halten. „Wenn es kein Blitz war“, denkst du, „was dann?“ Du hängst den Haken wieder auf. Vorsichtig."
+ },
+ "story/c2_hook/title": {
+  "en": "A blackened hook",
+  "de": "Ein geschwärzter Haken"
+ },
+ "story/c2_frame2/title": {
+  "en": "Back in the room",
+  "de": "Zurück im Zimmer"
+ },
+ "story/c2_frame2/pages/0/text": {
+  "en": "Back in the room, somebody has fallen asleep on the floor. “Did you find out who started it?” asks Minena. “Not then,” you say. “I didn't want to.”",
+  "de": "Zurück im Zimmer ist jemand auf dem Boden eingeschlafen. „Hast du herausgefunden, wer es angezündet hat?“, fragt Minena. „Damals nicht“, sagst du. „Ich wollte es nicht.“"
+ },
+ "story/c2_frame2/pages/1/text": {
+  "en": "“And the man on the fence? Was he funny?” “Very.” “Was that good?” “It made him hard to talk to,” you say, and nobody understands. That is all right.",
+  "de": "„Und der Mann auf dem Zaun? War der lustig?“ „Sehr.“ „War das gut?“ „Es hat ihn schwer zu verstehen gemacht“, sagst du, und niemand versteht. Das ist in Ordnung."
+ },
  "story/c3_pieter/title": {
   "en": "The night watchman",
   "de": "Der Nachtwächter"
@@ -11870,6 +11982,178 @@
  "story/c3_k_pieter/text": {
   "en": "Far down the road, a lantern waves at you. Pieter. You wave back.",
   "de": "Weit unten auf der Strasse winkt eine Laterne dir zu. Pieter. Du winkst zurück."
+ },
+ "story/c3_letter/text": {
+  "en": "Another letter comes from the river barge. Your mother writes: “Stay if you must. Your cousin asks after you.” You read the last line again. To you it sounds like a warning.",
+  "de": "Wieder kommt ein Brief vom Flusskahn. Deine Mutter schreibt: „Bleib, wenn du musst. Deine Cousine fragt nach dir.“ Du liest die letzte Zeile noch einmal. Für dich klingt sie wie eine Warnung."
+ },
+ "story/c3_letter/title": {
+  "en": "Stay if you must",
+  "de": "Bleib, wenn du musst"
+ },
+ "story/c3_miller/text": {
+  "en": "On the bridge, the miller glares down at the stream. It is still very low. He glares at you, too, just in case.",
+  "de": "Auf der Brücke starrt der Müller böse auf den Bach hinunter. Er ist immer noch sehr niedrig. Dich starrt er auch an, nur für alle Fälle."
+ },
+ "story/c3_miller/title": {
+  "en": "The miller on the bridge",
+  "de": "Der Müller auf der Brücke"
+ },
+ "story/c3_forge/text": {
+  "en": "Old Odinson lights the forge and young Bo works the bellows. They show you how to hold the tongs. “Good hands,” says Odinson, which is the most he has said all day. Bo grins at the fire.",
+  "de": "Der alte Odinson zündet die Esse an, und der junge Bo bedient den Blasebalg. Sie zeigen dir, wie man die Zange hält. „Gute Hände“, sagt Odinson, und das ist das Meiste, was er heute gesagt hat. Bo grinst ins Feuer."
+ },
+ "story/c3_forge/title": {
+  "en": "Clang",
+  "de": "Klang"
+ },
+ "story/c3_bell/title": {
+  "en": "A very small bell",
+  "de": "Ein ganz kleines Glöckchen"
+ },
+ "story/c3_bell/pages/0/text": {
+  "en": "In the old mill, on a rusty nail, hangs a bell. It is far too small for a cow. It is far too small for anything. It sways, just a little, though there is no wind.",
+  "de": "In der alten Mühle hängt an einem rostigen Nagel ein Glöckchen. Es ist viel zu klein für eine Kuh. Es ist viel zu klein für alles. Es schwingt ein wenig, obwohl kein Wind geht."
+ },
+ "story/c3_bell/pages/1/text": {
+  "en": "In the dust beneath it you think you see tiny footprints. You look the other way. You are quite sure that you looked the other way.",
+  "de": "Im Staub darunter glaubst du winzige Fussabdrücke zu sehen. Du schaust weg. Du bist ziemlich sicher, dass du weggeschaut hast."
+ },
+ "story/c3_stream/text": {
+  "en": "The stream runs clear again. On the bridge the miller looks down at the water. Then at you. He nods once, a very small nod. That is his whole apology, and you take it.",
+  "de": "Der Bach fliesst wieder klar. Auf der Brücke schaut der Müller auf das Wasser hinunter. Dann zu dir. Er nickt einmal, ein ganz kleines Nicken. Das ist seine ganze Entschuldigung, und du nimmst sie an."
+ },
+ "story/c3_stream/title": {
+  "en": "The stream runs again",
+  "de": "Der Bach fliesst wieder"
+ },
+ "story/c3_dance/text": {
+  "en": "You work the cider while the village dances. Mugs float above the heads. One falls, you catch it, and you laugh out loud. Somewhere close by, something goes tink, like a very small bell. You do not look.",
+  "de": "Du schenkst den Most aus, während das Dorf tanzt. Becher schweben über den Köpfen. Einer fällt, du fängst ihn und lachst laut auf. Ganz in der Nähe macht etwas „tink“, wie ein ganz kleines Glöckchen. Du schaust nicht hin."
+ },
+ "story/c3_dance/title": {
+  "en": "The harvest dance",
+  "de": "Der Erntetanz"
+ },
+ "story/c3_goat/title": {
+  "en": "The goat comes home",
+  "de": "Die Ziege kommt heim"
+ },
+ "story/c3_goat/pages/0/text": {
+  "en": "A goat trots up the path and straight into the brambles nobody could clear. Crunch. Munch. She eats thistles as if they were sweets. You open your mouth to stop her. Then you let her.",
+  "de": "Eine Ziege trabt den Pfad herauf, geradewegs in die Brombeeren, die niemand roden konnte. Knirsch. Mampf. Sie frisst Disteln, als wären es Bonbons. Du öffnest den Mund, um sie aufzuhalten. Dann lässt du sie."
+ },
+ "story/c3_goat/pages/1/text": {
+  "en": "The third line of the old rhyme comes back, and you say it with your mouth still open: “Brave goat clears the bramble bed.” The goat looks at your hat. Her eyes are thoughtful.",
+  "de": "Die dritte Zeile des alten Reims fällt dir wieder ein, und du sagst sie mit noch offenem Mund: „Mutige Ziege räumt das Dornenbett.“ Die Ziege schaut auf deinen Hut. Ihre Augen sind nachdenklich."
+ },
+ "story/c3_goat_out/text": {
+  "en": "In the morning the scarecrow is wearing your hat. Nobody saw who put it there. Under the hat there is a letter: “Your cousin may come to visit.” You take your hat back. It is still warm.",
+  "de": "Am Morgen trägt die Vogelscheuche deinen Hut. Niemand hat gesehen, wer ihn ihr aufgesetzt hat. Unter dem Hut liegt ein Brief: „Deine Cousine kommt vielleicht zu Besuch.“ Du nimmst deinen Hut zurück. Er ist noch warm."
+ },
+ "story/c3_goat_out/title": {
+  "en": "A scarecrow in your hat",
+  "de": "Eine Vogelscheuche in deinem Hut"
+ },
+ "story/c3_frame3/text": {
+  "en": "“Were you scared of the cousin?” asks somebody from under a blanket. “More than of any imp,” you say. “What's an imp?” “Shh!” say three children at once. “That comes later!”",
+  "de": "„Hattest du Angst vor der Cousine?“, fragt jemand unter einer Decke. „Mehr als vor jedem Kobold“, sagst du. „Was ist ein Kobold?“ „Psst!“, machen drei Kinder gleichzeitig. „Das kommt später!“"
+ },
+ "story/c3_frame3/title": {
+  "en": "Back in the room",
+  "de": "Zurück im Zimmer"
+ },
+ "story/c4_quill/title": {
+  "en": "Master Quill",
+  "de": "Meister Quill"
+ },
+ "story/c4_quill/pages/0/text": {
+  "en": "A thin man stands at your gate with a ledger under his arm. He does not smile, and he does not look unkind either. He looks like someone who counts. “Master Quill,” he says. “The Lord's steward.”",
+  "de": "Ein dünner Mann steht an deinem Tor, ein Hauptbuch unter dem Arm. Er lächelt nicht, aber unfreundlich sieht er auch nicht aus. Er sieht aus wie jemand, der zählt. „Meister Quill“, sagt er. „Der Verwalter des Herrn.“"
+ },
+ "story/c4_quill/pages/1/text": {
+  "en": "“The old farm smokes again,” he says, and looks at your chimney. “The Lord wishes to know why.” You tell him: because somebody lives here. He writes that down.",
+  "de": "„Der alte Hof raucht wieder“, sagt er und schaut auf deinen Schornstein. „Der Herr möchte wissen, warum.“ Du sagst es ihm: weil hier jemand wohnt. Er schreibt es auf."
+ },
+ "story/c4_count/title": {
+  "en": "Quill counts",
+  "de": "Quill zählt"
+ },
+ "story/c4_count/pages/0/text": {
+  "en": "Quill counts everything. Cows, sacks, windows, nails. He counts the hens twice, because one moved. Every number goes into his ledger, written with a very sharp pencil.",
+  "de": "Quill zählt alles. Kühe, Säcke, Fenster, Nägel. Die Hühner zählt er zweimal, weil eins weitergelaufen ist. Jede Zahl kommt in sein Hauptbuch, geschrieben mit einem sehr spitzen Bleistift."
+ },
+ "story/c4_count/pages/1/text": {
+  "en": "Later you find two ledger pages folded into a paper boat on the pond. Somewhere, a very small bell tinkles. Quill is not amused. You are, a little.",
+  "de": "Später findest du zwei Seiten aus dem Hauptbuch, zu einem Papierboot gefaltet, auf dem Teich. Irgendwo klingelt ein ganz kleines Glöckchen. Quill findet das nicht lustig. Du ein bisschen schon."
+ },
+ "story/c4_lease/text": {
+  "en": "In a rusty tin under the glasshouse stones lies the old lease: “… a half of all that the land gives.” A half! You take out the burnt page from the workshop and hold it beside it. The red number is the same.",
+  "de": "In einer rostigen Dose unter den Steinen des Glashauses liegt der alte Pachtvertrag: „… die Hälfte von allem, was das Land gibt.“ Die Hälfte! Du holst die verbrannte Seite aus der Werkstatt und hältst sie daneben. Die rote Zahl ist dieselbe."
+ },
+ "story/c4_lease/title": {
+  "en": "The old lease",
+  "de": "Der alte Pachtvertrag"
+ },
+ "story/c4_no/title": {
+  "en": "Your first no",
+  "de": "Dein erstes Nein"
+ },
+ "story/c4_no/pages/0/text": {
+  "en": "Quill is at the gate again. “The Lord's share,” he says, “as before.” You look at the North Field, resting under clover. “No,” you say. Your voice is smaller than you hoped, but it does not shake.",
+  "de": "Quill steht wieder am Tor. „Der Anteil des Herrn“, sagt er, „wie bisher.“ Du schaust auf das Nordfeld, das unter Klee ruht. „Nein“, sagst du. Deine Stimme ist kleiner, als du gehofft hast, aber sie zittert nicht."
+ },
+ "story/c4_no/pages/1/text": {
+  "en": "Quill's pencil stops. On the fence, Lark swings his legs. “You've counted the cows,” he tells Quill. “Have you counted the clover? It counts you.” Quill writes that down too, by mistake.",
+  "de": "Quills Bleistift hält an. Auf dem Zaun baumelt Lark mit den Beinen. „Du hast die Kühe gezählt“, sagt er zu Quill. „Hast du den Klee gezählt? Er zählt dich.“ Quill schreibt auch das auf, aus Versehen."
+ },
+ "story/c4_library/text": {
+  "en": "You step into the new library room and stop. Somebody has sorted all your books by weight. The heaviest lies at the bottom, the lightest on top. Lark sits on the heaviest, reading the lightest. “Probably fine,” he says.",
+  "de": "Du trittst in das neue Bibliothekszimmer und bleibst stehen. Jemand hat alle deine Bücher nach Gewicht sortiert. Das schwerste liegt unten, das leichteste oben. Lark sitzt auf dem schwersten und liest das leichteste. „Wahrscheinlich in Ordnung“, sagt er."
+ },
+ "story/c4_library/title": {
+  "en": "Sorted by weight",
+  "de": "Nach Gewicht sortiert"
+ },
+ "story/c4_pizza/text": {
+  "en": "On the village square the builders eat pizza at long tables under paper lanterns. You sit between Bo and Greenstem. Someone passes you the biggest slice. Tonight, nobody asks whose family you are.",
+  "de": "Auf dem Dorfplatz essen die Bauleute Pizza an langen Tischen unter Papierlaternen. Du sitzt zwischen Bo und Grünspross. Jemand reicht dir das grösste Stück. Heute Abend fragt niemand, zu welcher Familie du gehörst."
+ },
+ "story/c4_pizza/title": {
+  "en": "Pizza night",
+  "de": "Pizza-Abend"
+ },
+ "story/c4_pony/title": {
+  "en": "The pony comes home",
+  "de": "Das Pony kommt heim"
+ },
+ "story/c4_pony/pages/0/text": {
+  "en": "A pony stands at your gate and poses, one hoof forward, as if somebody were painting her. Then she lets you load a sack, a crate and a very large order for Hazelwood. She walks down the road as if she owns it.",
+  "de": "Ein Pony steht an deinem Tor und posiert, einen Huf vorgestellt, als würde jemand es malen. Dann lässt es dich einen Sack, eine Kiste und eine sehr grosse Bestellung für Hazelwood aufladen. Es geht die Strasse hinunter, als gehörte sie ihm."
+ },
+ "story/c4_pony/pages/1/text": {
+  "en": "On the village square, people stop. They look at the pony, then at the order, then at you. Somebody says your name. Your own name, not your family's. And the fourth line comes back: “Strong pony brings the world its bread.”",
+  "de": "Auf dem Dorfplatz bleiben die Leute stehen. Sie schauen das Pony an, dann die Bestellung, dann dich. Jemand sagt deinen Namen. Deinen eigenen Namen, nicht den deiner Familie. Und die vierte Zeile fällt dir ein: „Starkes Pony bringt der Welt ihr Brot.“"
+ },
+ "story/c4_quill_out/text": {
+  "en": "Quill rides back to the manor with his ledger full. At the gate he stops. “The farm gives back more than it takes,” he says, as if it were a question. “The Lord will want to know.” Then he goes, and you cannot tell what he meant.",
+  "de": "Quill reitet mit vollem Hauptbuch zum Herrenhaus zurück. Am Tor hält er an. „Der Hof gibt mehr zurück, als er nimmt“, sagt er, als wäre es eine Frage. „Der Herr wird das wissen wollen.“ Dann reitet er davon, und du kannst nicht sagen, was er gemeint hat."
+ },
+ "story/c4_quill_out/title": {
+  "en": "Quill rides home",
+  "de": "Quill reitet heim"
+ },
+ "story/c4_frame4/title": {
+  "en": "Back in the room",
+  "de": "Zurück im Zimmer"
+ },
+ "story/c4_frame4/pages/0/text": {
+  "en": "“Was the Lord a villain?” asks Minena. You think about it for a long time. “He was afraid,” you say. “That's worse, sometimes.”",
+  "de": "„War der Herr ein Bösewicht?“, fragt Minena. Du denkst lange darüber nach. „Er hatte Angst“, sagst du. „Das ist manchmal schlimmer.“"
+ },
+ "story/c4_frame4/pages/1/text": {
+  "en": "Nobody says anything. Then the smallest one whispers, “Afraid of what?” “Of a number,” you say. “Now go to sleep.” They do not. Not yet.",
+  "de": "Niemand sagt etwas. Dann flüstert die Kleinste: „Wovor?“ „Vor einer Zahl“, sagst du. „Und jetzt schlaft.“ Sie schlafen nicht. Noch nicht."
  },
  "story/c5_cough/title": {
   "en": "A cough in Hazelwood",
@@ -11967,9 +12251,17 @@
   "en": "A letter with a seal",
   "de": "Ein Brief mit Siegel"
  },
+ "story/c5_frame5/text": {
+  "en": "“Did you get better?” asks Minena. “Badgers make very slow tea,” you say. “By the time it was ready, I was.” Somebody laughs. Somebody yawns. Somebody asks if badgers have teapots.",
+  "de": "„Bist du wieder gesund geworden?“, fragt Minena. „Dachse machen sehr langsamen Tee“, sagst du. „Als er fertig war, war ich es auch.“ Jemand lacht. Jemand gähnt. Jemand fragt, ob Dachse Teekannen haben."
+ },
+ "story/c5_frame5/title": {
+  "en": "Back in the room",
+  "de": "Zurück im Zimmer"
+ },
  "story/c6_free_family/text": {
-  "en": "Your cousin pushes the pie across the table and looks at his plate. “I should have said it differently, that day.” “Yes,” you say. Then you pass the bread, and that is how it is mended.",
-  "de": "Dein Cousin schiebt den Kuchen über den Tisch und schaut auf seinen Teller. „Ich hätte es damals anders sagen sollen.“ „Ja“, sagst du. Dann reichst du das Brot weiter, und so wird es wieder gut."
+  "en": "Your cousin pushes the pie across the table and looks at her plate. “I should have said it differently, that day.” “Yes,” you say. Then you pass the bread, and that is how it is mended.",
+  "de": "Deine Cousine schiebt den Kuchen über den Tisch und schaut auf ihren Teller. „Ich hätte es damals anders sagen sollen.“ „Ja“, sagst du. Dann reichst du das Brot weiter, und so wird es wieder gut."
  },
  "story/c6_free_family/title": {
   "en": "The long table",
@@ -12014,6 +12306,118 @@
  "story/c6_free_garden/title": {
   "en": "For the night garden",
   "de": "Für den Nachtgarten"
+ },
+ "story/c6_lord/text": {
+  "en": "A rider brings a letter with a red seal. Your farm prospers, it says, so the share goes back to a half, “as before.” You read it twice. Inside you, an old pattern sits up and stretches.",
+  "de": "Ein Reiter bringt einen Brief mit rotem Siegel. Dein Hof gedeihe, steht darin, also gehe der Anteil zurück auf die Hälfte, „wie bisher“. Du liest ihn zweimal. In dir setzt sich ein altes Muster auf und streckt sich."
+ },
+ "story/c6_lord/title": {
+  "en": "The Lord's letter",
+  "de": "Der Brief des Herrn"
+ },
+ "story/c6_broker/text": {
+  "en": "A new trader unpacks his cart on the square. He has a hat, a tune and a very familiar face. “Barter?” he says. “Yes!” He winks. You decide to stop wondering who he looks like.",
+  "de": "Ein neuer Händler packt auf dem Platz seinen Karren aus. Er hat einen Hut, eine Melodie und ein sehr bekanntes Gesicht. „Tauschen?“, sagt er. „Ja!“ Er zwinkert. Du beschliesst, nicht mehr darüber nachzudenken, wem er ähnlich sieht."
+ },
+ "story/c6_broker/title": {
+  "en": "The Import Broker",
+  "de": "Der Einfuhrhändler"
+ },
+ "story/c6_garden/text": {
+  "en": "Where the marsh was, white flowers open at dusk. Hundreds of them, glowing softly. Somewhere in the dark, very quietly, bells. Nobody comes out to meet you. You stand there a long time and do not say a word.",
+  "de": "Wo der Sumpf war, öffnen sich in der Dämmerung weisse Blumen. Hunderte, die sanft leuchten. Irgendwo im Dunkeln, ganz leise, Glöckchen. Niemand kommt heraus, um dich zu treffen. Du stehst lange da und sagst kein Wort."
+ },
+ "story/c6_garden/title": {
+  "en": "White flowers at dusk",
+  "de": "Weisse Blumen in der Dämmerung"
+ },
+ "story/c6_fair_letter/text": {
+  "en": "A last letter from the river barge: “We're coming to the Fair. All of us. Even your cousin.” You put it in your pocket and keep touching it all day.",
+  "de": "Ein letzter Brief vom Flusskahn: „Wir kommen zum Fest. Alle. Auch deine Cousine.“ Du steckst ihn in die Tasche und fasst den ganzen Tag danach."
+ },
+ "story/c6_fair_letter/title": {
+  "en": "We're coming to the Fair",
+  "de": "Wir kommen zum Fest"
+ },
+ "story/c6_fair_tables/text": {
+  "en": "The tables at the Fair fill up. Everybody brought something: Pieter a lantern cake, Greenstem a basket of mint, the miller, with a face like thunder, a sack of flour. The whole village works with you.",
+  "de": "Die Tische beim Fest füllen sich. Alle haben etwas mitgebracht: Pieter einen Laternenkuchen, Grünspross einen Korb Minze, der Müller mit einem Gesicht wie ein Gewitter einen Sack Mehl. Das ganze Dorf arbeitet mit dir."
+ },
+ "story/c6_fair_tables/title": {
+  "en": "The tables fill",
+  "de": "Die Tische füllen sich"
+ },
+ "story/c6_crisis/text": {
+  "en": "The Fair is bright and loud. Then your cousin stands up in front of everyone. “You were in the barn that night,” she says. “I saw you run out, crying about lights.” The whole square goes quiet.",
+  "de": "Das Fest ist hell und laut. Dann steht deine Cousine vor allen auf. „Du warst in jener Nacht in der Scheune“, sagt sie. „Ich habe dich herausrennen sehen, und du hast von Lichtern geschrien.“ Der ganze Platz wird still."
+ },
+ "story/c6_crisis/title": {
+  "en": "At the Fair",
+  "de": "Auf dem Fest"
+ },
+ "story/c6_bend/title": {
+  "en": "Sit down",
+  "de": "Setz dich"
+ },
+ "story/c6_bend/pages/0/text": {
+  "en": "You want to run. Instead you sit down on the nearest bench. Your hands are cold. Then you tell it: the lights in the dark, the lantern on the hook, the running, the shouting that nobody believed.",
+  "de": "Du willst weglaufen. Stattdessen setzt du dich auf die nächste Bank. Deine Hände sind kalt. Dann erzählst du es: die Lichter im Dunkeln, die Laterne am Haken, das Rennen, das Schreien, dem niemand glaubte."
+ },
+ "story/c6_bend/pages/1/text": {
+  "en": "It is very quiet. Then your cousin sits down beside you. “I saw the lights too,” she says. “Nobody believed me either.” Somebody passes you a cup. Somebody passes her one, too.",
+  "de": "Es ist ganz still. Dann setzt sich deine Cousine neben dich. „Ich habe die Lichter auch gesehen“, sagt sie. „Mir hat auch niemand geglaubt.“ Jemand reicht dir einen Becher. Jemand reicht ihr auch einen."
+ },
+ "story/c6_quill_answer/text": {
+  "en": "Quill rides up with a new paper and, for the first time, a small smile. “With my numbers in hand, the Lord sets the share at a tenth, as in the old days.” He tips his hat. “They were very good numbers.”",
+  "de": "Quill reitet mit einem neuen Papier heran und, zum ersten Mal, einem kleinen Lächeln. „Mit meinen Zahlen in der Hand setzt der Herr den Anteil auf ein Zehntel, wie in alten Zeiten.“ Er tippt an seinen Hut. „Es waren sehr gute Zahlen.“"
+ },
+ "story/c6_quill_answer/title": {
+  "en": "The Lord's answer",
+  "de": "Die Antwort des Herrn"
+ },
+ "story/c6_alpaca/title": {
+  "en": "The alpaca comes home",
+  "de": "Das Alpaka kommt heim"
+ },
+ "story/c6_alpaca/pages/0/text": {
+  "en": "An alpaca stands at the gate, very tall and very polite. She looks at you. Then she lifts her head and hums one long, strange note, the note that woke the whole farm that night. Nobody was hurt because of her.",
+  "de": "Ein Alpaka steht am Tor, sehr gross und sehr höflich. Es schaut dich an. Dann hebt es den Kopf und summt einen langen, seltsamen Ton, den Ton, der in jener Nacht den ganzen Hof geweckt hat. Seinetwegen wurde niemand verletzt."
+ },
+ "story/c6_alpaca/pages/1/text": {
+  "en": "She spits, politely, on principle. And the last line of the rhyme comes back, whole: “Soft alpaca guards all things.” You say it. You say all of it, from the very first line. Your voice does not wobble.",
+  "de": "Es spuckt, höflich, aus Prinzip. Und die letzte Zeile des Reims fällt dir wieder ein, ganz: „Weiches Alpaka wacht über alles.“ Du sagst sie. Du sagst alles, von der allerersten Zeile an. Deine Stimme wackelt nicht."
+ },
+ "story/c6_supper/title": {
+  "en": "The Fair supper",
+  "de": "Das Festessen"
+ },
+ "story/c6_supper/pages/0/text": {
+  "en": "The long table, the lanterns, the whole village. You sit down at last, and nobody needs you to stand. You set a place for Lark without a word. He has to sit very still for a moment.",
+  "de": "Der lange Tisch, die Laternen, das ganze Dorf. Du setzt dich endlich hin, und niemand braucht dich im Stehen. Du deckst einen Platz für Lark, ohne ein Wort. Er muss einen Moment ganz still sitzen."
+ },
+ "story/c6_supper/pages/1/text": {
+  "en": "The goat eats the blue ribbon. Somebody starts to sing. You know the tune. You sing it, too.",
+  "de": "Die Ziege frisst die blaue Schleife. Jemand beginnt zu singen. Du kennst die Melodie. Du singst mit."
+ },
+ "story/c6_ajar/text": {
+  "en": "That night you walk to the edge of the dark garden. You came to say something. You stand there a long time. Somewhere in the white flowers a tiny bell moves, and is still. You go home. It is not time yet.",
+  "de": "In dieser Nacht gehst du zum Rand des dunklen Gartens. Du bist gekommen, um etwas zu sagen. Du stehst lange da. Irgendwo zwischen den weissen Blumen bewegt sich ein winziges Glöckchen und ist still. Du gehst heim. Es ist noch nicht Zeit."
+ },
+ "story/c6_ajar/title": {
+  "en": "The edge of the night garden",
+  "de": "Am Rand des Nachtgartens"
+ },
+ "story/c6_frame6/title": {
+  "en": "The end of the story",
+  "de": "Das Ende der Geschichte"
+ },
+ "story/c6_frame6/pages/0/text": {
+  "en": "The grandchildren are asleep, all but Minena. “Tell me the imp was real,” she whispers. You tell her the truth, all of it, quietly, the way it happened.",
+  "de": "Die Enkelkinder schlafen, alle ausser Minena. „Sag mir, dass der Kobold echt war“, flüstert sie. Du erzählst ihr die Wahrheit, alles, leise, so wie es geschah."
+ },
+ "story/c6_frame6/pages/1/text": {
+  "en": "“If you ever meet a little fellow with bells,” you say, “tell him I was never angry.” Minena nods, very seriously. That night she dreams of a melody, and in the morning she hums it.",
+  "de": "„Wenn du je einem kleinen Kerl mit Glöckchen begegnest“, sagst du, „sag ihm, ich war nie böse.“ Minena nickt sehr ernst. In dieser Nacht träumt sie von einer Melodie, und am Morgen summt sie sie."
  },
  "chapters/0/name": {
   "en": "Ashes",

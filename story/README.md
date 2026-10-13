@@ -42,7 +42,7 @@ texture; read aloud is the final test).
 | 4 | Game design pass. Part 1: story delivery. Part 2: pets' jobs, medicine, forest, six chapters (`game-design-round4.md`) | done 8 Oct 2026 |
 | 5 | Outline (ladder with cliffhangers) | draft 1 written 8 Oct 2026 (`outline/ladder.md`); five questions for the parent |
 | 6 | Loop back: story and game reconciled | – |
-| 7 | Texts, chapter 1 first, read aloud; German | chapter 1 written 13 Oct 2026 (`texts/ch1.md`), built into the game (phase 5); chapters 2–6 follow their builds |
+| 7 | Texts, chapter 1 first, read aloud; German | chapter 1 written 13 Oct 2026 (`texts/ch1.md`), built into the game (phase 5); chapters 2–6 and the frames written and built 13 Oct 2026 (`texts/ch2.md` … `ch6.md`, 💡 until read) |
 | 8 | Build into the game | – |
 
 ## Working agreements

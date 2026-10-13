@@ -87,3 +87,10 @@ Page 2. He sets out two cups. “Tea first,” he seems to say. You sit down. Fo
 A boy runs up the road with a letter. The seal is red wax, pressed with a heavy ring. “From the Lord,” he pants. You do not open it yet. The badger looks at it, and then at you, and says nothing.
 
 > Ein Junge rennt die Strasse herauf, einen Brief in der Hand. Das Siegel ist aus rotem Wachs, mit einem schweren Ring gedrückt. „Vom Herrn“, keucht er. Du öffnest ihn noch nicht. Der Dachs sieht ihn an, dann dich, und sagt nichts.
+
+## c5_frame5 · frame · Back in the room
+*When:* `seen:c5_letter`
+
+“Did you get better?” asks Minena. “Badgers make very slow tea,” you say. “By the time it was ready, I was.” Somebody laughs. Somebody yawns. Somebody asks if badgers have teapots.
+
+> „Bist du wieder gesund geworden?“, fragt Minena. „Dachse machen sehr langsamen Tee“, sagst du. „Als er fertig war, war ich es auch.“ Jemand lacht. Jemand gähnt. Jemand fragt, ob Dachse Teekannen haben.

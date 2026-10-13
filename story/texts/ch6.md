@@ -5,9 +5,9 @@ Phase 12 (13 Oct 2026). Source of `godot-prototype/data/farm/story/30-chapter-6.
 ## c6_free_family · moment · The long table
 *When:* `done:sq_free_family`
 
-Your cousin pushes the pie across the table and looks at his plate. “I should have said it differently, that day.” “Yes,” you say. Then you pass the bread, and that is how it is mended.
+Your cousin pushes the pie across the table and looks at her plate. “I should have said it differently, that day.” “Yes,” you say. Then you pass the bread, and that is how it is mended.
 
-> Dein Cousin schiebt den Kuchen über den Tisch und schaut auf seinen Teller. „Ich hätte es damals anders sagen sollen.“ „Ja“, sagst du. Dann reichst du das Brot weiter, und so wird es wieder gut.
+> Deine Cousine schiebt den Kuchen über den Tisch und schaut auf ihren Teller. „Ich hätte es damals anders sagen sollen.“ „Ja“, sagst du. Dann reichst du das Brot weiter, und so wird es wieder gut.
 
 ## c6_free_quill · moment · Quill counts
 *When:* `done:sq_free_quill`
@@ -43,3 +43,103 @@ Lark holds out the cake. The squirrel takes it with both hands. “Nutmeg,” La
 You set the bowl down at the edge of the garden. You open your mouth. You close it again. Far off, very softly, a very small bell rings twice. You nod, and walk home in the dark, and you are not afraid.
 
 > Du stellst die Schale am Rand des Gartens ab. Du öffnest den Mund. Du schliesst ihn wieder. Weit weg läutet, ganz leise, eine ganz kleine Glocke zweimal. Du nickst und gehst im Dunkeln heim, und du hast keine Angst.
+
+## c6_lord · beat · The Lord's letter
+*When:* `chapter:6`
+
+A rider brings a letter with a red seal. Your farm prospers, it says, so the share goes back to a half, “as before.” You read it twice. Inside you, an old pattern sits up and stretches.
+
+> Ein Reiter bringt einen Brief mit rotem Siegel. Dein Hof gedeihe, steht darin, also gehe der Anteil zurück auf die Hälfte, „wie bisher“. Du liest ihn zweimal. In dir setzt sich ein altes Muster auf und streckt sich.
+
+## c6_broker · beat · The Import Broker
+*When:* `done:import_broker`
+
+A new trader unpacks his cart on the square. He has a hat, a tune and a very familiar face. “Barter?” he says. “Yes!” He winks. You decide to stop wondering who he looks like.
+
+> Ein neuer Händler packt auf dem Platz seinen Karren aus. Er hat einen Hut, eine Melodie und ein sehr bekanntes Gesicht. „Tauschen?“, sagt er. „Ja!“ Er zwinkert. Du beschliesst, nicht mehr darüber nachzudenken, wem er ähnlich sieht.
+
+## c6_garden · beat · White flowers at dusk
+*When:* `done:river_meadow_drain`
+
+Where the marsh was, white flowers open at dusk. Hundreds of them, glowing softly. Somewhere in the dark, very quietly, bells. Nobody comes out to meet you. You stand there a long time and do not say a word.
+
+> Wo der Sumpf war, öffnen sich in der Dämmerung weisse Blumen. Hunderte, die sanft leuchten. Irgendwo im Dunkeln, ganz leise, Glöckchen. Niemand kommt heraus, um dich zu treffen. Du stehst lange da und sagst kein Wort.
+
+## c6_fair_letter · beat · We're coming to the Fair
+*When:* `done:d_fair_cheese`
+
+A last letter from the river barge: “We're coming to the Fair. All of us. Even your cousin.” You put it in your pocket and keep touching it all day.
+
+> Ein letzter Brief vom Flusskahn: „Wir kommen zum Fest. Alle. Auch deine Cousine.“ Du steckst ihn in die Tasche und fasst den ganzen Tag danach.
+
+## c6_fair_tables · moment · The tables fill
+*When:* `seen:c6_fair_letter`
+
+The tables at the Fair fill up. Everybody brought something: Pieter a lantern cake, Greenstem a basket of mint, the miller, with a face like thunder, a sack of flour. The whole village works with you.
+
+> Die Tische beim Fest füllen sich. Alle haben etwas mitgebracht: Pieter einen Laternenkuchen, Grünspross einen Korb Minze, der Müller mit einem Gesicht wie ein Gewitter einen Sack Mehl. Das ganze Dorf arbeitet mit dir.
+
+## c6_crisis · beat · At the Fair
+*When:* `done:d_fair_cloth`
+
+The Fair is bright and loud. Then your cousin stands up in front of everyone. “You were in the barn that night,” she says. “I saw you run out, crying about lights.” The whole square goes quiet.
+
+> Das Fest ist hell und laut. Dann steht deine Cousine vor allen auf. „Du warst in jener Nacht in der Scheune“, sagt sie. „Ich habe dich herausrennen sehen, und du hast von Lichtern geschrien.“ Der ganze Platz wird still.
+
+## c6_bend · beat · Sit down
+*When:* `seen:c6_crisis`
+
+Page 1. You want to run. Instead you sit down on the nearest bench. Your hands are cold. Then you tell it: the lights in the dark, the lantern on the hook, the running, the shouting that nobody believed.
+
+> Du willst weglaufen. Stattdessen setzt du dich auf die nächste Bank. Deine Hände sind kalt. Dann erzählst du es: die Lichter im Dunkeln, die Laterne am Haken, das Rennen, das Schreien, dem niemand glaubte.
+
+Page 2. It is very quiet. Then your cousin sits down beside you. “I saw the lights too,” she says. “Nobody believed me either.” Somebody passes you a cup. Somebody passes her one, too.
+
+> Es ist ganz still. Dann setzt sich deine Cousine neben dich. „Ich habe die Lichter auch gesehen“, sagt sie. „Mir hat auch niemand geglaubt.“ Jemand reicht dir einen Becher. Jemand reicht ihr auch einen.
+
+## c6_quill_answer · beat · The Lord's answer
+*When:* `done:farmhouse_sunroom`
+
+Quill rides up with a new paper and, for the first time, a small smile. “With my numbers in hand, the Lord sets the share at a tenth, as in the old days.” He tips his hat. “They were very good numbers.”
+
+> Quill reitet mit einem neuen Papier heran und, zum ersten Mal, einem kleinen Lächeln. „Mit meinen Zahlen in der Hand setzt der Herr den Anteil auf ein Zehntel, wie in alten Zeiten.“ Er tippt an seinen Hut. „Es waren sehr gute Zahlen.“
+
+## c6_alpaca · beat · The alpaca comes home
+*When:* `done:pet_alpaca`
+
+Page 1. An alpaca stands at the gate, very tall and very polite. She looks at you. Then she lifts her head and hums one long, strange note, the note that woke the whole farm that night. Nobody was hurt because of her.
+
+> Ein Alpaka steht am Tor, sehr gross und sehr höflich. Es schaut dich an. Dann hebt es den Kopf und summt einen langen, seltsamen Ton, den Ton, der in jener Nacht den ganzen Hof geweckt hat. Seinetwegen wurde niemand verletzt.
+
+Page 2. She spits, politely, on principle. And the last line of the rhyme comes back, whole: “Soft alpaca guards all things.” You say it. You say all of it, from the very first line. Your voice does not wobble.
+
+> Es spuckt, höflich, aus Prinzip. Und die letzte Zeile des Reims fällt dir wieder ein, ganz: „Weiches Alpaka wacht über alles.“ Du sagst sie. Du sagst alles, von der allerersten Zeile an. Deine Stimme wackelt nicht.
+
+## c6_supper · beat · The Fair supper
+*When:* `seen:c6_alpaca`
+
+Page 1. The long table, the lanterns, the whole village. You sit down at last, and nobody needs you to stand. You set a place for Lark without a word. He has to sit very still for a moment.
+
+> Der lange Tisch, die Laternen, das ganze Dorf. Du setzt dich endlich hin, und niemand braucht dich im Stehen. Du deckst einen Platz für Lark, ohne ein Wort. Er muss einen Moment ganz still sitzen.
+
+Page 2. The goat eats the blue ribbon. Somebody starts to sing. You know the tune. You sing it, too.
+
+> Die Ziege frisst die blaue Schleife. Jemand beginnt zu singen. Du kennst die Melodie. Du singst mit.
+
+## c6_ajar · beat · The edge of the night garden
+*When:* `seen:c6_supper`
+
+That night you walk to the edge of the dark garden. You came to say something. You stand there a long time. Somewhere in the white flowers a tiny bell moves, and is still. You go home. It is not time yet.
+
+> In dieser Nacht gehst du zum Rand des dunklen Gartens. Du bist gekommen, um etwas zu sagen. Du stehst lange da. Irgendwo zwischen den weissen Blumen bewegt sich ein winziges Glöckchen und ist still. Du gehst heim. Es ist noch nicht Zeit.
+
+## c6_frame6 · frame · The end of the story
+*When:* `seen:c6_ajar`
+
+Page 1. The grandchildren are asleep, all but Minena. “Tell me the imp was real,” she whispers. You tell her the truth, all of it, quietly, the way it happened.
+
+> Die Enkelkinder schlafen, alle ausser Minena. „Sag mir, dass der Kobold echt war“, flüstert sie. Du erzählst ihr die Wahrheit, alles, leise, so wie es geschah.
+
+Page 2. “If you ever meet a little fellow with bells,” you say, “tell him I was never angry.” Minena nods, very seriously. That night she dreams of a melody, and in the morning she hums it.
+
+> „Wenn du je einem kleinen Kerl mit Glöckchen begegnest“, sagst du, „sag ihm, ich war nie böse.“ Minena nickt sehr ernst. In dieser Nacht träumt sie von einer Melodie, und am Morgen summt sie sie.
