@@ -2,7 +2,7 @@
 
 This file is the starting point for a new chat or another AI: what the project is, how the folder is laid out, the parent's
 rules and where we left off. **How to work on the project** (what to read, the checks, changing content) lives in three skill
-files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2 under way: R0–R4 done).
+files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2 under way: R0–R5 done).
 
 ---
 
@@ -193,7 +193,12 @@ is now a list of registered systems in today's order (`Game._setup_clock()`). No
 13 Oct 2026 (phase 2, R4): `game.gd` (2,460 lines) is split: the autoload `Game` (now `class_name FarmGame`, about 500 lines) is the front door;
 the rules are 11 systems in `godot-prototype/game/farm/systems/` (own README), reached as `G.<system>.<function>` (e.g. `G.inventory.add_item`,
 `G.fields.plant`); `main.gd`, the tests and the dev flags were rewritten by a script to call them that way. No change to the game (golden
-runs identical, also strict; bot, smoke test, screenshots unchanged); `web-build/` still matches it. Next: R5 (`main.gd` split).
+runs identical, also strict; bot, smoke test, screenshots unchanged); `web-build/` still matches it.
+
+13 Oct 2026 (phase 2, R5): `main.gd` (3,108 lines) is split: it is now the 400-line composition root (`FarmMain`: builds the screen and
+refreshes it); the interface's jobs are 25 parts in `godot-prototype/game/farm/ui/` (and `ui/places/`; own README), reached as `M.<part>.<function>`
+(e.g. `M.modals.open_modal`, `M.patches.on_patch`). Same method as R4. No change to the game: all checks pass, the golden runs are identical, and 21
+screens (sheets, pop-ups, Rest, quiz, menu, album, cards, English and German) look the same as before. `web-build/` still matches the code. Next: R6 (map).
 
 ---
 

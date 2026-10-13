@@ -305,7 +305,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - `godot --headless --path . res://tests/ui_smoke.tscn` — clicks through the opening (first card, planting, Time Quiz, Rest,
   every place on the map, quest book, album, log) and checks the sums, the market, postcards, perks, the farmer, quiz ids,
   answers and pictures, German texts, stoking, carrying, rooting out and dynamic prices. It reaches the screen only through
-  `tests/ui_driver.gd`, so splitting `main.gd` changes the driver, not the test.
+  `tests/ui_driver.gd`, so changes to the screen's parts change the driver, not the test.
 - `godot --headless --path . -s res://tests/learn_sim.gd` — a pretend child practises 2,500 Rest sums: when is each level passed?
 - Screenshots: `godot --path . --resolution 834x1194 -- --shot=out.png [--spot=kitchen] [--spot=home] [--quiz] [--goal]`
   (`--demo=1` fast-forwards with the cheat; `--timestep=95` jumps to question 95, i.e. winter, to check the seasons).
@@ -321,7 +321,8 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - `game/farm/game.gd` — the rules engine's front door (autoload `Game`): data, saves, the effects table, one step of time and the signals;
   `game/farm/systems/*.gd` — the rules, one script per system (seasons, inventory, needs, pace, progression, fields, animals, crafting,
   trade, knowledge, rewards), reached as `G.<system>.<function>` (see `game/farm/systems/README.md`); `kits/core/` — modifiers, conditions, rng, clock.
-- `game/farm/main.gd` — the interface (top bar, map, sheets, the inside windows, quizzes); `game/farm/map/farm_map.tscn` + `farm_map.gd` — the
+- `game/farm/main.gd` — the interface's composition root (top bar, map, bottom bar; refreshes the screen); `game/farm/ui/*.gd` — the
+  parts of the interface, one script per job (sheets, pop-ups, quizzes, Rest, cards, the places' sheets, menus; see `game/farm/ui/README.md`); `game/farm/map/farm_map.tscn` + `farm_map.gd` — the
   one-screen map, built from `data/map_layout.json` (ground, forest, road, house yard, fields with shadows and fence, pens, places,
   add-ons and decorations sorted by their feet; scaled to fit the screen); `game/farm/map/slot.gd` — one place (stands on its footprint,
   taps only on its pixels, draws its footprint until it has a picture); `game/farm/spots.gd` + `data/farm/places.json` — which place or corner each data node

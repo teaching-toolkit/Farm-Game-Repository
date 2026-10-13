@@ -36,6 +36,14 @@ func start_reading(cid: String) -> bool:
 	G.save_game(); G.changed.emit()
 	return true
 
+## Has the player opened this card's page since it was started (so a card waiting for its quiz can go straight to the quiz)?
+func page_seen(cid: String) -> bool:
+	return G.S.get("read_seen", {}).has(cid)
+
+func mark_page_seen(cid: String) -> void:
+	if not G.S.has("read_seen"): G.S["read_seen"] = {}
+	G.S["read_seen"][cid] = true
+
 func tick_reading(_info := {}) -> void:
 	var cid: String = G.S["reading"]
 	if cid == "": return

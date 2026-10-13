@@ -56,7 +56,7 @@ A running list. Nothing here is built yet. Before anything is built, the parent 
 - The barn is rebuilt in chapter 2 (`barn_1`–`barn_3`), so nothing hidden can stay "where the barn stood".
 
 ### Found in the critical pass (7 Oct 2026) 💡
-- **Start texts:** `_show_welcome` says "Your farm burned down. All that's left: a tent, an old bucket …, one wheat seed — and a box with
+- **Start texts:** `welcome.show_welcome` says "Your farm burned down. All that's left: a tent, an old bucket …, one wheat seed — and a box with
   a book in it", and `well_1` says "All that is left: a small dented bucket". The story now has the bucket, pot and book come in Berit's
   box, and the seed found on the one live patch. Both texts get rewritten in Round 7.
 - **Mumyo glimpses:** some story pictures (about one per chapter) show Mumyo half-hidden; the art list must say so, and Fenna looks away.
@@ -70,9 +70,9 @@ A running list. Nothing here is built yet. Before anything is built, the parent 
 
 - `data/farm-progression.json`: `chapters` goes from 5 to 6; a new pet node (`pet_badger`); about 70–100 new nodes (medicine
   chapter); sidequest names and blurbs; chapter numbers of later nodes shift.
-- `game/farm/game.gd`: pet lists are hard-coded (lines near 363 and 1907: `pet_bunny … pet_alpaca`); a pet-automation tick.
-- `game/farm/main.gd`: the top-right row (`_open_pantry` → story scroll), `_show_welcome` (the start story), `_on_patch` and
-  `_part_patch_note` (first-tap problem stories), the new forest screen.
+- `game/farm/game.gd` and `game/farm/systems/`: the pets come from `chapters[].pet` in the data (since R2); a pet-automation tick.
+- `game/farm/ui/` (the interface, since R5): the top-right row (`sheets.open_pantry` → story scroll), `welcome.show_welcome` (the start story),
+  `patches.on_patch` and `patches.part_patch_note` (first-tap problem stories), the new forest screen.
 - New: `data/story.json`, `game/farm/story.gd`, `assets/story/`, `data/i18n/story-de.json`.
 - Tests: the bot needs to dismiss story boxes; the smoke test opens the scroll; a check that every story trigger exists.
 - Docs: design document (after decisions, marked *(planned)*), progression explorer data.

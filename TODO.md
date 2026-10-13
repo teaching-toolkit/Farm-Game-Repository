@@ -1,7 +1,7 @@
 # To-do list — Farm Quiz Game
 
 The project's to-do list and plan. Moved out of `00-READ-ME-FIRST.md` §6 on **9 October 2026**; finished tasks live in
-`PROJECT-LOG.md`, not here. **Last updated: 13 October 2026** (phase 1 built and checked, version 0.9.0; phase 2, the restructuring, under way: R0–R4 done, next R5; seven rounds of the
+`PROJECT-LOG.md`, not here. **Last updated: 13 October 2026** (phase 1 built and checked, version 0.9.0; phase 2, the restructuring, under way: R0–R5 done, next R6; seven rounds of the
 parent's decisions, 10–12 Oct, worked in; §0 is the implementation plan).
 
 **Standing rule** (from `00-READ-ME-FIRST.md`): keep this file current *as you work*. Tick off or remove done tasks (and add a
@@ -68,8 +68,8 @@ question must match):
   (`kits/`, `game/farm/`; done 12 Oct 2026) · ✅ **R2** farm content out of code (done 13 Oct 2026: `data/farm/places.json`; pets, animals and
   the chapter rule now come from the nodes and `chapters[].pet`; checked by `tests/places_test.tscn`, which is part of `check_all.sh`) · ✅ **R3** core
   (done 13 Oct 2026: `kits/core/` modifiers, conditions, rng, clock; events come with R4, saves with R7, data loading with R8) · ✅ **R4** `game.gd` split into 11 systems in `game/farm/systems/` (done 13 Oct 2026; `G.<system>.<function>`; see its README; left: the lists of
-  node types `GOAL_TYPES` in `main.gd`, `NOT_AUTO`, `MAIN_TYPES`, `DEFAULT_CAT` in `game.gd` → data, with R8) · **R5** `main.gd` split into a composition root,
-  hosts and one script per place (was T1) · **R6** map: generic vs farm, pests drawn once · **R7** saves with versions and upgrade steps ·
+  node types `GOAL_TYPES` in `main.gd`, `NOT_AUTO`, `MAIN_TYPES`, `DEFAULT_CAT` in `game.gd` → data, with R8) · ✅ **R5** `main.gd` split into a composition root and 25 parts in `game/farm/ui/`
+  (done 13 Oct 2026; own README; the generic hosts become kits with phase 3) (was T1) · **R6** map: generic vs farm, pests drawn once · **R7** saves with versions and upgrade steps ·
   **R8** data files split, a data checker, pacing from the real engine.
 - ✅ Decided (R7): **pacing from the real engine**: the bot reports hours, questions and Rest answers per chapter; the explorer no longer
   simulates its own copy of the rules but shows the data and that report, refreshed by **a script the parent can run** (a double-click
@@ -161,10 +161,10 @@ them up, each with a 💡 recommendation.
 - **J2. Whole-field actions without the field sign** [#8] ✅ (R1). Today the farmer walks to the **sign** for a whole-field job and acts
   there. Remove the field sign; at the bottom of a patch's window a titled section **"The whole field"** with *Harvest all*, *Pick all
   weeds*, *Pick all stones* (and *Clear the snow*, N6), then the field's upgrades, then the pests line. The farmer walks to the field
-  (patch to patch while acting). Notes: today *Weed all* / *Pick stones* are in `_part_field`, *Harvest all* in `_part_area` and at the
-  storage basket (`_harvest_everything`) in `main.gd`; `deco/signpost.png` goes unused; all three fields.
+  (patch to patch while acting). Notes: today *Weed all* / *Pick stones* are in `patches.part_field`, *Harvest all* in `patches.part_area` and at the
+  storage basket (`pantry._harvest_everything`), in `game/farm/ui/`; `deco/signpost.png` goes unused; all three fields.
 - **J3. Rest: the farmer goes home** [#9]. When Rest starts, the farmer walks to the tent or house. The code already starts a "rest" act
-  at the house (`main.gd` ~line 1251), but the Rest window covers the farm. Check on the iPad; 💡 open the window when the farmer
+  at the house (`rest.show_rest` in `game/farm/ui/rest.gd`), but the Rest window covers the farm. Check on the iPad; 💡 open the window when the farmer
   arrives (or after about half a second).
 - **J4. Back on the farm after the Time Quiz** [#10] ✅ (R2, R3). While the quiz is open, nothing on the farm changes. After "Back to
   the farm": a fixed short pause (0.7–1 s, the same after one question or eight), then the changes play, mostly together, some
@@ -173,17 +173,17 @@ them up, each with a 💡 recommendation.
   change** gets its own animation (e.g. the bar pulses and a "−4" floats up and fades), so it is noticed but easy to ignore once known;
   short explanations pop up. ✅ Order (R5): 0–0.7 s pause → about 1 s of rain if it rained → plants flicking through their stages (about
   0.3 s each) together with weeds, pests and an arriving merchant → last the energy bar's pulse and floating number, short notes. **Any tap
-  jumps to the end.** Notes: the pests are already played after the quiz (`_play_fx` →
+  jumps to the end.** Notes: the pests are already played after the quiz (`mapview.play_fx` →
   `map.play_pending()`); the rules engine must record a small snapshot per question. Later the same playback shows the pets' work (S2).
 - **J5. Notifications like a phone's** [#12] ✅ (R4): they stack from the top, just below the top bar; a swipe sends one away if it
-  doesn't leave fast enough; smaller; a duration per kind. Today (`_toast` in `main.gd`): 6.5 s each (bar hints 3 s), max 3, centred above
+  doesn't leave fast enough; smaller; a duration per kind. Today (`notes.toast` in `game/farm/ui/notes.gd`): 6.5 s each (bar hints 3 s), max 3, centred above
   the bottom bar, taps go through them (`MOUSE_FILTER_IGNORE`). Same look family as the barks' speech bubbles (`story/story-delivery.md`).
 - **J6. Read aloud in the grown-up settings** [#13] ✅ (R1): one setting with three choices: *off* (no 🔊 buttons) · *button* (as now)
   · *automatic* (reads each question and card page as it opens; the 🔊 button stays to repeat). Today: 🔊 in the Time Quiz and on card
-  pages (`_speak` in `main.gd`). Later the story boxes too (I8).
+  pages (`timequiz.speak` in `game/farm/ui/timequiz.gd`). Later the story boxes too (I8).
 - **J12. The pet corner shows a raw key.** The sheet lists each pet with its bonus; the tortoise's reads "Mossy — fetchWater +1" (the effect key,
   not words; the bunny's reads properly, "+1 carrot per harvest"). Found 13 Oct 2026 while checking R2; the same in the old code. 💡 Give the
-  pet effects readable lines (`_effect_text` in `main.gd`, German through `tools/i18n.py`) and check the goat's and the pony's too.
+  pet effects readable lines (`widgets.effect_text` in `game/farm/ui/widgets.gd`, German through `tools/i18n.py`) and check the goat's and the pony's too.
 - **J7. Stale facts left** (the rest fixed 12 Oct 2026): the design document's §1.1 premise (tent, bucket, pot, one seed, a box with a
   book) vs the story (bucket, pot and book come in Berit's box; the seed is found on the one live patch; the tent is borrowed): fix
   together with I9. `story/characters/lark.md` has Lark turn up "the day the market stall opens" (chapter 2); the ladder has him walk up
@@ -521,7 +521,7 @@ A **secondary** goal ✅: never at the cost of a fun, not overwhelming, still ch
 - **I8. Round 8: build.** (a) `data/story.json`, the story box, the 📜 scroll, first-tap problem stories, frame scenes; (b) then pets'
   jobs, the medicine chapter, favour-giver renames, pictures (`ART_LIST.csv`); tests and web build.
 - **I9. The opening: story panels and the frame** [#S3] ✅. The current opening text (the farm burnt down, only a tent is left;
-  `_show_welcome` in `main.gd`, and `well_1`) doesn't fit the story. The game starts with a few **story panels** (pictures and text) that
+  `welcome.show_welcome` in `game/farm/ui/welcome.gd`, and `well_1`) doesn't fit the story. The game starts with a few **story panels** (pictures and text) that
   explain the situation, including the frame: grandchildren looking up at you, asking for the story again, one they have heard many times.
   ✅ They know the farm story, but **you always stopped at the Fair**: tonight, for the first time, you tell what happened in the barn.
   Between chapters they poke you to go on; some **blurt out foreshadowing** ("Is this the part where …?") and get **hushed** (about the farm,

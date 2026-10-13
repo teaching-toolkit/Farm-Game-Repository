@@ -44,7 +44,7 @@ before any work starts.
 | Pace and balancing | `godot-prototype/data/farm-progression.json` and the explorer. **The data wins** if it and a document disagree |
 
 For any long file: list its headings with `grep -n '^#'`, then read only the sections you need. In the two big scripts
-(`game/farm/main.gd` about 3,100 lines; the rules are in `game/farm/systems/*.gd`, 100–400 lines each, see its README), find functions with
+(the rules are in `game/farm/systems/*.gd` and the interface in `game/farm/ui/*.gd`, 50–400 lines each, see their READMEs; `main.gd` is the 400-line composition root), find functions with
 `grep -n '^func'` and read those. Never edit anything in `archive/`.
 
 Then say in one line which task(s) from `TODO.md` you are working on.
@@ -62,7 +62,7 @@ A step is "bigger" if it adds a mechanic, touches more than two scripts, or chan
 3. Build in small slices. Each slice passes the checks (`farm-game-check`) before the next one starts.
 4. Prefer new systems in new scripts over making `main.gd` and `game.gd` even longer. **Where new code goes:** a rule goes into the system of
    `game/farm/systems/` that owns the thing (or a new system file there; it registers its per-step work in `Game.setup_clock()`); shared parts
-   (modifiers, conditions, rng, clock) are in `kits/core/`; a screen or interface part goes into its own script, not into `main.gd`; content
+   (modifiers, conditions, rng, clock) are in `kits/core/`; a screen or interface part goes into its own script in `game/farm/ui/` (see its README), not into `main.gd`; content
    (places, pets, numbers, texts) is data, not code. Call other systems as `G.<system>.<function>`.
 
 Small fixes (one script, no new rules) need no written plan.
