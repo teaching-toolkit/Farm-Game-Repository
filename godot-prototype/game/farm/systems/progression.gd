@@ -217,6 +217,7 @@ func finish_unlock(id: String, auto: bool) -> void:
 			if n.has("perk"): G.rewards.give_perk(str(n["perk"]))
 		elif id.begins_with("library_"):
 			G.rewards.offer_gift(G.rewards.news_text("library"))
+		if t == "sidequest" or t == "delivery": G.well.helped()
 		if t in G.MAIN_TYPES:
 			G.S["goals"] = int(G.S["goals"]) + 1
 			if int(G.S["goals"]) % 12 == 0: G.rewards.offer_gift(G.rewards.news_text("goals"))

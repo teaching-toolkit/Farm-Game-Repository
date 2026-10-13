@@ -1,0 +1,24 @@
+{
+  "well": {
+    "note": "Wellbeing (TODO L1-L8, design document 5.1b). Six parameters from 0 to 1, each 0.5 at the start and frozen at 0.5 until `fromChapter`. Every question each one moves `down` / `up` towards its target. A target is `floor` plus what the farm gives: `stat` (the sum of that key in the effects.add of the things that are built), `dishes` x the number of different dishes among the last `dishWindow` eaten, `ranks` x the skill ranks, `friend` x the friends made, `reputation` x the village's reputation level, `load` x the load of the farm (negative: a busy farm is less calm). Outputs: the energy maximum x (dialLow + dialSpan x (food + strength) / 2), the energy per Rest answer x (dialLow + dialSpan x sleep), and an energy change per question = boost - drain, drain = load x (1 - mood)^2 x maxDrainSums x (energy per Rest answer), mood = mean of friends, calm and play. The drain stops at zero energy. Load = x / (x + loadHalf), x = patches + 2 x animals + 2 x the levels of producing buildings.",
+    "fromChapter": 2,
+    "start": 0.5,
+    "down": 0.01,
+    "up": 0.015,
+    "dialLow": 0.7,
+    "dialSpan": 0.6,
+    "maxDrainSums": 1.5,
+    "loadHalf": 30,
+    "dishWindow": 6,
+    "boost": {"sums": 0.2, "questions": 6},
+    "faces": [[0.75, "😄"], [0.55, "🙂"], [0.4, "😐"], [0.25, "😟"], [0.0, "😣"]],
+    "params": {
+      "sleep": {"emoji": "😴", "name": "Sleep", "floor": 0.4, "stat": "well_sleep", "hint": "A good bed, a pillow, a warm hearth."},
+      "food": {"emoji": "🍽️", "name": "Food", "floor": 0.35, "dishes": 0.1, "hint": "Eat many different dishes."},
+      "strength": {"emoji": "💪", "name": "Strength", "floor": 0.35, "ranks": 0.05, "stat": "well_strength", "hint": "Practise: every skill rank makes you stronger."},
+      "friends": {"emoji": "🤝", "name": "Friends", "floor": 0.3, "friend": 0.07, "reputation": 0.02, "hint": "Help your neighbours."},
+      "calm": {"emoji": "🧘", "name": "Calm", "floor": 0.65, "load": -0.35, "stat": "well_calm", "hint": "A busy farm is a worry. Quiet things help."},
+      "play": {"emoji": "🎵", "name": "Play", "floor": 0.3, "stat": "well_play", "hint": "Music, drawing, a party, a visit."}
+    }
+  }
+}

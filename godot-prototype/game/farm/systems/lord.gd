@@ -48,7 +48,7 @@ func _patches(a: String) -> int:
 	return G.fields.area(a).size()
 
 ## A building or station that produces or processes counts by its level: its place in the chain of upgrades.
-func _building_level(id: String) -> int:
+func building_level(id: String) -> int:
 	var n: Dictionary = G.nodes[id]
 	var counts: bool = n.has("effects") and (n["effects"] as Dictionary).has("produces")
 	if n["type"] == "station" and (data().get("stationCats", []) as Array).has(str(n.get("cat", ""))): counts = true
@@ -68,7 +68,7 @@ func assumed() -> float:
 	var levels := 0
 	for id in G.S["unlocked"]:
 		if not G.nodes.has(id) or G.superseded(id): continue
-		levels += _building_level(id)
+		levels += building_level(id)
 	return t + float(levels) * float(data().get("buildingValue", 0))
 
 ## The share for one season, in bronze (rounded to whole 10).

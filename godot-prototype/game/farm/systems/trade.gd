@@ -220,6 +220,7 @@ func eat(k: String) -> bool:
 	var b = G.items[k].get("buff", null)
 	if b == null or G.inventory.count(k) < 1.0: return false
 	G.inventory.take(k, 1.0)
+	G.well.ate(k)
 	G.S["buff"] = {"mult": float(b["energy"]), "until": G.S["step"] + int(b["questions"]), "item": k}
 	G.say((tr("😋 Yum! Work costs %d%% less energy for %d question.") if int(b["questions"]) == 1 else tr("😋 Yum! Work costs %d%% less energy for %d questions.")) % [int(round((1.0 - float(b["energy"])) * 100)), int(b["questions"])])
 	G.save_game(); G.changed.emit()

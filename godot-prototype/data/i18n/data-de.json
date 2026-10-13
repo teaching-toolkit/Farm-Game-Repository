@@ -10594,5 +10594,53 @@
  "meta/pets/jobs/pet_badger/1/desc": {
   "en": "Digs old leaves into compost.",
   "de": "Gräbt altes Laub zu Kompost um."
+ },
+ "meta/well/params/sleep/name": {
+  "en": "Sleep",
+  "de": "Schlaf"
+ },
+ "meta/well/params/sleep/hint": {
+  "en": "A good bed, a pillow, a warm hearth.",
+  "de": "Ein gutes Bett, ein Kissen, ein warmer Kamin."
+ },
+ "meta/well/params/food/name": {
+  "en": "Food",
+  "de": "Essen"
+ },
+ "meta/well/params/food/hint": {
+  "en": "Eat many different dishes.",
+  "de": "Iss viele verschiedene Gerichte."
+ },
+ "meta/well/params/strength/name": {
+  "en": "Strength",
+  "de": "Kraft"
+ },
+ "meta/well/params/strength/hint": {
+  "en": "Practise: every skill rank makes you stronger.",
+  "de": "Übe: Jede Fähigkeitsstufe macht dich stärker."
+ },
+ "meta/well/params/friends/name": {
+  "en": "Friends",
+  "de": "Freunde"
+ },
+ "meta/well/params/friends/hint": {
+  "en": "Help your neighbours.",
+  "de": "Hilf deinen Nachbarn."
+ },
+ "meta/well/params/calm/name": {
+  "en": "Calm",
+  "de": "Ruhe"
+ },
+ "meta/well/params/calm/hint": {
+  "en": "A busy farm is a worry. Quiet things help.",
+  "de": "Ein grosser Hof ist eine Sorge. Stille Dinge helfen."
+ },
+ "meta/well/params/play/name": {
+  "en": "Play",
+  "de": "Spiel"
+ },
+ "meta/well/params/play/hint": {
+  "en": "Music, drawing, a party, a visit.",
+  "de": "Musik, Zeichnen, ein Fest, ein Besuch."
  }
 }

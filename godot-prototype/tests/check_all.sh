@@ -52,6 +52,9 @@ grep -q "^LORD OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/pets_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^PETS|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^PETS OK/✔ the pets'"'"' jobs/; s/^PETS FAILED/✘ the pets'"'"' jobs/'
 grep -q "^PETS OK" "$LOG" || FAIL=1
+"$G" --headless --path . res://tests/well_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
+grep -E "^WELL|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^WELL OK/✔ wellbeing/; s/^WELL FAILED/✘ wellbeing/'
+grep -q "^WELL OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/crops_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^CROPS|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^CROPS OK/✔ hay and winter wheat/; s/^CROPS FAILED/✘ hay and winter wheat/'
 grep -q "^CROPS OK" "$LOG" || FAIL=1

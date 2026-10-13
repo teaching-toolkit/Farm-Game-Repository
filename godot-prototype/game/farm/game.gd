@@ -106,6 +106,7 @@ var trip: FarmTrip
 var gate: FarmGate
 var lord: FarmLord
 var pets: FarmPets
+var well: FarmWell
 var trust: FarmTrust
 
 func _init() -> void:
@@ -128,6 +129,7 @@ func _init() -> void:
 	gate = FarmGate.new(self)
 	lord = FarmLord.new(self)
 	pets = FarmPets.new(self)
+	well = FarmWell.new(self)
 	trust = FarmTrust.new(self)
 
 # ------------------------------------------------------------------ start, seed and clock
@@ -308,7 +310,7 @@ func save_defaults() -> Dictionary:
 ## Everything a save holds in a new game: the Game's keys and every system's.
 func all_save_defaults() -> Dictionary:
 	var d := save_defaults()
-	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story, trip, gate, lord, pets]:
+	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story, trip, gate, lord, pets, well]:
 		d.merge(sys.save_defaults())
 	return d
 
@@ -535,6 +537,7 @@ func setup_clock() -> void:
 	clock.register("rain", seasons.step_rain)
 	clock.register("producers", inventory.step_producers)
 	clock.register("pets", pets.step)
+	clock.register("well", well.step)
 	clock.register("crops", fields.step_crops)
 	clock.register("weeds", fields.tick_weeds_stones)
 	clock.register("pests", fields.step_pests)
@@ -583,6 +586,7 @@ func counter(name: String) -> float:
 		"trips": return float(S["trips"])
 		"packed": return float(trip.contents().size())
 		"skill_ranks": return float(skills.total_ranks())
+		"well_mood": return well.overall()
 		"lord_owed": return lord.owed()
 		"lord_paid": return float(S["lord"]["paid"])
 		"lord_shares": return float(S["lord"]["shares"])

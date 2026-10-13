@@ -14,7 +14,7 @@ func save_defaults() -> Dictionary:
 # ------------------------------------------------------------------ effects
 
 func energy_max() -> float:
-	return G.g("energyMax", 20.0) + 3.0 * G.S["acorns"].size()
+	return (G.g("energyMax", 20.0) + 3.0 * G.S["acorns"].size()) * G.well.max_mult()
 
 func water_cap() -> float:
 	return G.g("waterCap", 20.0)
@@ -25,7 +25,7 @@ func storage_cap() -> float:
 func rest_per_answer() -> float:
 	var v := G.g("energyPerRest", 5.0)
 	if G.S.get("cold", false): v *= float(G.meta.get("rest", {}).get("coldHouseMult", 0.75))
-	return v
+	return v * G.well.rest_mult()
 
 # ------------------------------------------------------------------ energy & costs
 

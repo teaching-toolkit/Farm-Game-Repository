@@ -267,5 +267,11 @@
 		"wild_edge": true
 	},
 	"water": 4.0,
+	"well": {
+		"boost_until": 0.0,
+		"eaten": [],
+		"last_delta": 0.0,
+		"v": {}
+	},
 	"woodpile": 0.0
 }

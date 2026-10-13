@@ -72,6 +72,7 @@ func _ready() -> void:
 			if G.progression.is_open(id) and not G.done(id) and not G.nodes[id].get("optional", false):
 				print("   open: %s (%s) %s" % [id, G.nodes[id]["type"], G.progression.can_unlock(id)["why"]])
 	if "--trips" in OS.get_cmdline_user_args(): print("hand cart: %s, axles left %d" % [str(G.S["unlocked"].has("hand_cart")), int(G.inventory.count("axle"))])
+	if "--well" in OS.get_cmdline_user_args(): print("WELL values: %s  face %s  dial max x%.2f rest x%.2f  load %.2f" % [str(G.S["well"]["v"]), G.well.face(), G.well.max_mult(), G.well.rest_mult(), G.well.farm_load()])
 	print("DONE iters %d steps %d chapter %d unlocked %d cards %d goals %d coins %d ms %d" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.progression.cards_learned(), G.S["goals"], int(G.S["coins"]), Time.get_ticks_msec() - t0])
 	_close_chapter(G.chapter() > int(_row["chapter"]))
 	if report_path != "": _write_report()
