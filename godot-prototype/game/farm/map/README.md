@@ -16,3 +16,8 @@ is which comes from `data/farm/places.json`.
 | `../ui/field_view.gd` | the square patch grid in the orchard and greenhouse sheets (no pests: they only bother the fields) |
 
 Not made into a reusable kit (`kits/world`): that waits for a second game that needs it (architecture plan §4.2, decision d).
+
+
+## The season on the pictures (`season.gd`, N7)
+
+`FarmSeasonLook` puts one shader (`kits/ui/season.gdshader`) on every picture of the map: snow caps on every top edge and muted colours in winter, golden greens in autumn. `apply_tree` runs once when the map is built (words, panels, buttons and the farmer are left out); a node with the meta `flat` (soil, the layer of plants) gets the muted winter without caps and without the golden shift. `ground.set_season` sets the season. A picture made later calls `FarmSeasonLook.shade(node)`.

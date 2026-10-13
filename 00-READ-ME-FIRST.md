@@ -2,7 +2,7 @@
 
 This file is the starting point for a new chat or another AI: what the project is, how the folder is laid out, the parent's
 rules and where we left off. **How to work on the project** (what to read, the checks, changing content) lives in three skill
-files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2, the restructuring, is done: R0–R8).
+files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2, the restructuring, is done: R0–R8; phase 3, the interface, is built: version 0.10.0).
 
 ---
 
@@ -212,6 +212,8 @@ exact node order, `rules/` by system; loader `kits/core/data.gd`, Python `tools/
 effect and condition exists; part of `check_all.sh`; 0 errors, 7 warnings). The bot writes a pacing report (`--report=FILE`) that the explorer's Pacing tab shows; the new
 double-click **`Update explorer.command`** refreshes the explorer (checks the data, lets the bot play seeds 1 and 2, about 3 minutes). No change to the game: all checks pass,
 golden runs identical. `web-build/` still matches the code. **Phase 2 is finished.** Next: phase 3 (the interface in the new structure: J2–J6, J8, J9, N7; version 0.10).
+
+13 Oct 2026 (phase 3, version 0.10.0): the interface work is built: new top bar without a bottom bar (J8), cheat buttons and read aloud as device settings (J9, J6), phone-like notifications (J5), no field sign: *The whole field* in the patch window (J2), the farmer walks home before Rest (J3), the playback after the Time Quiz (J4), the season shader with snow caps and golden autumn (N7). All checks pass, golden runs identical. **Needs the iPad** (publish with `Publish web version.command`; `web-build/` does NOT match the code yet): the timing of the Rest walk and of the playback, swiping a notification, the shader on the real screen (snow caps look right on roofs, fences and trees?). Next: phase 4 (foundations, D-papers first).
 
 ---
 

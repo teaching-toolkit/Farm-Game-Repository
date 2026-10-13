@@ -103,6 +103,7 @@ func _ready() -> void:
 	front = _layer()
 	front.draw.connect(_draw_fence.bind(front, true))
 	labels = _layer()
+	labels.set_meta("flat", true)         # plants, weeds and stones: no snow caps, no golden autumn (see season.gd)
 	for k in order:
 		var p: IsoPatch = patches[k]
 		var t := Control.new()
@@ -521,6 +522,7 @@ class IsoPatch extends Control:
 		dc = Vector2(size.x / 2.0, size.y - tw * 0.25 - tw * 0.1)
 		position = centre_in_field - dc
 		mouse_filter = Control.MOUSE_FILTER_PASS
+		set_meta("flat", true)               # the soil: muted in winter, no snow caps (see season.gd)
 		pic = TextureRect.new()
 		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		pic.stretch_mode = TextureRect.STRETCH_SCALE

@@ -240,6 +240,7 @@ func _place_overlays() -> void:
 		tr.size = Vector2(w, h)
 		tr.position = pic.position + Vector2(float(o["x"]) * pic.size.x, float(o["y"]) * pic.size.y) - Vector2(w, h) / 2.0
 		add_child(tr)
+		FarmSeasonLook.shade(tr)
 		move_child(tr, pic.get_index() + 1)
 		_over_nodes.append(tr)
 

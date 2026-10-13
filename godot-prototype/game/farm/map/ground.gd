@@ -296,6 +296,7 @@ func _textured(poly: PackedVector2Array, tex: Texture2D, tint: Color) -> void:
 
 func set_season(s: String, fence: int) -> void:
 	if map.perk_fx: map.perk_fx.set_season(s)
+	FarmSeasonLook.set_season(s)              # snow caps, muted or golden pictures (N7)
 	if s != map.season or fence != fence_level:
 		map.season = s
 		fence_level = fence

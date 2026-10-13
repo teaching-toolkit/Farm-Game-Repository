@@ -175,6 +175,8 @@ func _ready() -> void:
 	actor = Actor.new()
 	actor.avatar = avatar
 	add_child(actor)
+	FarmSeasonLook.apply_tree(flat)
+	FarmSeasonLook.apply_tree(objects, [avatar])        # the season on every picture (N7); the farmer keeps his own colours
 	resized.connect(_layout)
 	_layout()
 
