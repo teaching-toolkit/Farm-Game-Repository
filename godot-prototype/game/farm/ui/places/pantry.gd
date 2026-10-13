@@ -137,7 +137,7 @@ func _store_tile(k: String) -> Control:
 	pc.gui_input.connect(func(e): if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT: item_panel(k))
 	return pc
 
-## What can be done with one thing from the store: eat, stack the fire, pack it for the trip, sell it (until the trip takes selling over).
+## What can be done with one thing from the store: eat, stack the fire, pack it for the trip (selling happens in the village).
 func item_panel(k: String) -> void:
 	if not G.items.has(k): return
 	var it: Dictionary = G.items[k]
@@ -167,10 +167,7 @@ func item_panel(k: String) -> void:
 		row.add_child(_act_button(tr("🎒 + all that fits") if fit > 1 else "🎒 +all", G.trip.pack.bind(k, 9999), k, fit >= 1))
 		if pk > 0: row.add_child(_act_button("↩ −1", G.trip.unpack.bind(k, 1), k))
 	if G.inventory.sellable(k):
-		var em := str(it.get("emoji", "📦"))
-		var have: int = G.down(q)
-		row.add_child(_act_button("1 %s = %s" % [em, G.money(G.trade.sell_total(k, 1))], G.trade.sell.bind(k, 1.0), k))
-		if have > 1: row.add_child(_act_button("%d %s = %s" % [have, em, G.money(G.trade.sell_total(k, have))], G.trade.sell.bind(k, 999.0), k))
+		box.add_child(UI.label(tr("🪙 Sells for about %s each — pack it and take it to the village.") % G.money(G.trade.sell_total(k, 1)), 15, UI.MUTED, true))
 		if G.trade.demand_factor(k) < 0.999: box.add_child(UI.label(tr("↓ lots sold lately — pays less for a while"), 13, Color("b5562b"), true))
 	box.add_child(row)
 	if pk > 0 or fit > 0: box.add_child(UI.label(tr("🎒 packed: %d · room in the bag: %d") % [pk, int(G.trip.room() / maxf(0.05, G.inventory.weight_of(k)))], 14, UI.MUTED, true))

@@ -20,6 +20,8 @@ emits the signals the interface listens to (`changed`, `toast`, `gained`, `sold`
 | `reveal` | what is shown when: `shown(id)`, once shown always shown (rules in `data/farm/rules/60-reveal.json`) | the Game (conditions), the interface |
 | `quality` | grades (Lumpy / Proper / Fancy): the chances, the expected grade of a crop or a recipe, the price factor (`rules/47-quality.json`) | inventory, fields, crafting, trade |
 | `skills` | eight skill families, ranks from batches and gates, what a rank changes (`rules/48-skills.json`) | crafting, fields, animals, needs, quality |
+| `story` | which story piece is ready and in what order (kinds, rationing, seen, taps; data in `data/farm/story/`) | the Game (conditions), the interface (`ui/storybox.gd`) |
+| `trip` | the bag (packing, capacity from the carrying thing, load) and the market trip (energy, the walk, the village square, what is bought on the way home; `rules/49-trip.json`) | inventory, trade, progression, the interface |
 | `knowledge` | knowledge cards, the library, reading, card quizzes, the Time Quiz (next question, retries, results) | rewards, progression, pace |
 | `rewards` | luck, gift cards, little jobs, golden acorns, perks | crafting, fields, inventory, seasons |
 

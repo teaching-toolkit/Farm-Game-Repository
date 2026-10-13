@@ -110,6 +110,7 @@ func goal_lists(sid: String) -> Array:
 	return [main, opt, soon]
 
 func _part_main_goals(sid: String, main: Array) -> void:
+	if sid == "market": main = main.filter(func(id): return G.nodes[id]["type"] != "delivery")      # orders are handed over on the village square (part_market)
 	if main.is_empty(): return
 	M.widgets.section(tr("🤝 Favours for neighbours") if sid == "board" else (tr("📦 Orders to deliver") if sid == "market" else tr("🔨 To do here")),
 		tr("Help someone: the reward is a picture for your album, and a bit of luck.") if sid == "board" else "")

@@ -56,6 +56,7 @@ func _ready() -> void:
 	var t1: float = G.trade.sell_total("carrot", 1)
 	_check(is_equal_approx(t1, base * 1.5), "the next one to sell is Fancy (%.2f)" % t1)
 	var coins0: float = G.S["coins"]
+	G.trip.test_square()
 	G.trade.sell("carrot", 5.0)
 	var paid: float = G.S["coins"] - coins0
 	_check(paid > base * 5.0 * 1.0 and G.inventory.grades("carrot").get(2, 0.0) == 0.0 and G.inventory.count("carrot") == 2.0, "five sold: the four Fancy and one Proper (paid %.1f), two Proper left" % paid)

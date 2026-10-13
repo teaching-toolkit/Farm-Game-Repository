@@ -46,8 +46,15 @@ func sell_total(k: String, n: int) -> float:
 		t += full_price(k, int(gs[i]) if i < gs.size() else -1) * demand_factor(k, float(i))
 	return t
 
+## Selling, buying and bartering happen on the village square (a trip, G.trip), with what is in the bag.
+func _at_square() -> bool:
+	if G.trip.at_square(): return true
+	G.say(tr("🏘️ That is done in the village: pack your bag and go."))
+	return false
+
 func sell(k: String, q: float) -> bool:
-	var n := minf(q, floorf(G.inventory.count(k) + 0.0001))
+	if not _at_square(): return false
+	var n := minf(q, floorf(G.trip.packed(k) + 0.0001))
 	if n < 1.0 or not G.inventory.sellable(k): return false
 	var gs := G.inventory.take_best(k, int(n))
 	var got := 0.0
@@ -55,6 +62,7 @@ func sell(k: String, q: float) -> bool:
 		got += full_price(k, int(gs[i]) if i < gs.size() else -1) * demand_factor(k)
 		market_sold()[k] = float(market_sold().get(k, 0.0)) + 1.0
 	G.S["coins"] += got
+	G.trip.sold(k, n)
 	G.rewards.job_progress("sell", k, n)
 	var msg := tr("🪙 Sold %d %s for %s") % [int(n), G.iname(k), G.money(got)]
 	if demand_factor(k) < 0.999: msg += tr(". The market has plenty of %s now — it pays less for a while. Different things sell best!") % G.iname(k)
@@ -87,30 +95,44 @@ func recipe_worth(rid: String) -> Vector2:
 	return Vector2(a, b)
 
 func buy_seeds(cid: String, q: int) -> bool:
+	if not _at_square(): return false
+	var room := G.trip.can_buy(G.inventory.seed_weight())
+	if room < q:
+		if room < 1: G.say(tr("🎒 No room to carry that home.")); return false
+		q = room
 	var c := float(G.nodes[cid].get("seedCost", 0)) * q
 	if G.S["coins"] + 0.0001 < c: G.say(tr("🪙 Not enough coins.")); return false
 	G.S["coins"] -= c
 	G.S["seeds"][cid] = float(G.S["seeds"].get(cid, 0.0)) + q
+	G.trip.note_bought(G.inventory.seed_weight() * q)
 	if G.rewards.roll(G.rewards.luck_event("seed_bargain")): G.S["seeds"][cid] = float(G.S["seeds"][cid]) + 1.0; G.say(tr("🎁 The seed merchant adds one for free."))
 	G.save_game(); G.changed.emit()
 	return true
 
 func buy_item(merchant: String, k: String, q: int) -> bool:
+	if not _at_square(): return false
+	var room := G.trip.can_buy(G.inventory.weight_of(k))
+	if room < q:
+		if room < 1: G.say(tr("🎒 No room to carry that home.")); return false
+		q = room
 	var price := float(G.nodes[merchant].get("sells", {}).get(k, 0)) * q
 	if G.S["coins"] + 0.0001 < price: G.say(tr("🪙 Not enough coins.")); return false
 	G.S["coins"] -= price
 	G.buying = true
 	G.inventory.add_item(k, q)
 	G.buying = false
+	G.trip.note_bought(G.inventory.weight_of(k) * q)
 	G.save_game(); G.changed.emit()
 	return true
 
 func barter(merchant: String, k: String) -> bool:
+	if not _at_square(): return false
 	var b: Dictionary = G.nodes[merchant].get("barter", {}).get(k, {})
 	var c := {}
 	for x in b: c[x] = float(b[x])
 	if not G.pace.pay(c): G.say(tr("Missing what the trader wants.")); return false
 	var q := float(G.nodes[merchant].get("barterGives", {}).get(k, 1))
+	G.trip.note_bought(G.inventory.weight_of(k) * q)
 	G.buying = true
 	G.inventory.add_item(k, q)
 	G.buying = false

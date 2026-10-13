@@ -120,6 +120,9 @@ func can_unlock(id: String) -> Dictionary:
 	if G.done(id): return {"ok": false, "why": tr("already done")}
 	var mr := missing_reqs(id)
 	if not mr.is_empty(): return {"ok": false, "why": "needs " + ", ".join(mr)}
+	if G.nodes[id]["type"] == "delivery":      # handed over in the village, from the bag
+		if not G.trip.at_square(): return {"ok": false, "why": tr("Deliveries are handed over in the village.")}
+		if not G.trip.bag_covers(G.pace.node_cost(id)): return {"ok": false, "why": tr("It is not all in your bag.")}
 	if step_wait_left(id) > 0: return {"ok": false, "why": "wait", "wait": step_wait_left(id)}
 	var mc := G.pace.missing_cost(G.pace.node_cost(id))
 	if not mc.is_empty():
@@ -175,7 +178,9 @@ func unlock(id: String) -> bool:
 			G.save_game(); G.changed.emit()
 			return true
 	else:
-		G.pace.pay(G.pace.node_cost(id))
+		var dcost: Dictionary = G.pace.node_cost(id)
+		G.pace.pay(dcost)
+		if G.nodes[id]["type"] == "delivery": G.trip.spend_from_bag(dcost)
 	finish_unlock(id, false)
 	return true
 

@@ -67,6 +67,10 @@ func _ready() -> void:
 			pace_sum[G.chapter()] = [float(ps[0]) + float(G.S["pace"]), int(ps[1]) + 1]
 		if it % 200 == 0:
 			print("iter %d step %d ch %d unlocked %d cards %d coins %d energy %d season %s" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.progression.cards_learned(), int(G.S["coins"]), int(G.S["energy"]), G.seasons.season()])
+	if "--stuck" in OS.get_cmdline_user_args():
+		for id in G.nodes:
+			if G.progression.is_open(id) and not G.done(id) and not G.nodes[id].get("optional", false):
+				print("   open: %s (%s) %s" % [id, G.nodes[id]["type"], G.progression.can_unlock(id)["why"]])
 	print("DONE iters %d steps %d chapter %d unlocked %d cards %d goals %d coins %d ms %d" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.progression.cards_learned(), G.S["goals"], int(G.S["coins"]), Time.get_ticks_msec() - t0])
 	_close_chapter(G.chapter() > int(_row["chapter"]))
 	if report_path != "": _write_report()
@@ -193,6 +197,74 @@ func _deep_need(k: String, need: Dictionary) -> bool:
 			if G.recipes[rid]["outputs"].has(n) and G.recipes[rid].get("inputs", {}).has(k): return true
 	return false
 
+## The orders (deliveries) that are open, whose items the store holds.
+func _ready_orders() -> Array:
+	var out := []
+	for id in G.nodes:
+		if G.nodes[id]["type"] != "delivery" or G.done(id) or not G.progression.is_open(id): continue
+		if not G.progression.missing_reqs(id).is_empty(): continue
+		if G.pace.missing_cost(G.pace.node_cost(id)).is_empty(): out.append(id)
+	return out
+
+## A market trip when there is something to do in the village: pack (orders first, then the surplus that sells best per load),
+## go (the walk is one question), then deliver, buy, barter, sell, and come home.
+func _trip() -> void:
+	var orders := _ready_orders()
+	var sell_value := 0.0
+	for k in want_sell: sell_value += G.inventory.value_of(k) * float(want_sell[k])
+	# a trip costs a question and energy: not with empty pockets (seeds and goods cost coins), and not every turn
+	var budget: float = float(G.S["coins"]) + sell_value
+	var seeds_ok := false
+	for cid in want_seeds:
+		if budget >= 4.0 * float(G.nodes[cid].get("seedCost", 1)): seeds_ok = true
+	var errands: bool = seeds_ok or not want_buy.is_empty() or not want_barter.is_empty() or not orders.is_empty()
+	var sell_load := 0.0
+	for k in want_sell: sell_load += G.inventory.load_of(k, float(want_sell[k]))
+	var near_cap := false      # a full store wastes harvests: go before it overflows
+	for k in want_sell:
+		if G.inventory.count(k) >= G.needs.storage_cap() - 3.0: near_cap = true
+	var selling: bool = sell_value >= 150.0 and (sell_load >= 0.6 * G.trip.capacity() or near_cap or G.S["step"] - last_trip >= 12)
+	if not errands and not selling: return
+	if orders.is_empty() and G.S["step"] - last_trip < 3: return
+	if G.S["energy"] < float(G.trip.energy_cost()) + 6.0: return
+	G.trip.unpack_all()
+	for id in orders:
+		var c: Dictionary = G.pace.node_cost(id)
+		if G.trip.can_pack_cost(c): G.trip.pack_cost(c)
+	var ks: Array = want_sell.keys()
+	ks.sort_custom(func(a, b): return G.inventory.value_of(a) / maxf(0.05, G.inventory.weight_of(a)) > G.inventory.value_of(b) / maxf(0.05, G.inventory.weight_of(b)))
+	for k in ks: G.trip.pack(k, int(want_sell[k]))
+	if not G.trip.go(): return
+	trips_done += 1
+	if trips_done % 25 == 0 or trips_done < 6: print("trip %d at q%d ch%d: orders %d seeds %s buy %d barter %d sell %d coins %d" % [trips_done, G.S["step"], G.chapter(), orders.size(), str(want_seeds), want_buy.size(), want_barter.size(), int(sell_value), int(G.S["coins"])])
+	last_trip = G.S["step"]
+	asked += 1
+	while accuracy < 1.0 and quiz_rng.randf() >= accuracy: asked += 1
+	G.step_time()                       # the walk: one question answered right at the first try
+	G.trip.arrive()
+	for id in orders:
+		if G.progression.can_unlock(id)["ok"]: G.progression.unlock(id)
+	if "--trips" in OS.get_cmdline_user_args(): print("   q%d coins before %d, packed %s load %.1f/%d, want_sell %s" % [G.S["step"], int(G.S["coins"]), str(G.trip.contents()), G.trip.load_now(), int(G.trip.capacity()), str(want_sell)])
+	for k in G.trip.contents().keys():          # sell first (coins for the shopping), what an order still needs stays
+		if G.inventory.sellable(k) and not _held_for_order(k, orders): G.trade.sell(k, G.trip.packed(k))
+	var seed_budget: float = float(G.S["coins"]) * 0.6 / maxf(1.0, float(want_seeds.size()))      # not all the coins on seeds, and not one crop only
+	if "--trips" in OS.get_cmdline_user_args(): print("   q%d coins after selling %d (bag %s)" % [G.S["step"], int(G.S["coins"]), str(G.trip.contents())])
+	for cid in want_seeds:
+		var afford := int(floorf(seed_budget / maxf(1.0, float(G.nodes[cid].get("seedCost", 1)))))
+		if afford >= 1: G.trade.buy_seeds(cid, mini(int(want_seeds[cid]), afford))
+	for mid_k in want_buy:
+		var need_n := ceili(float(_needed_items().get(mid_k[1], 1.0)) - G.inventory.count(mid_k[1]))
+		G.trade.buy_item(mid_k[0], mid_k[1], maxi(1, need_n))
+	for mid_k in want_barter:
+		G.trade.barter(mid_k[0], mid_k[1])
+	G.trip.leave()
+
+## Is the item packed for an order that was not handed over (it should not be sold)?
+func _held_for_order(k: String, orders: Array) -> bool:
+	for id in orders:
+		if not G.done(id) and G.pace.node_cost(id).has(k): return true
+	return false
+
 func _rest() -> void:
 	var guard := 0
 	while G.S["energy"] < G.needs.energy_max() - G.needs.rest_per_answer() and guard < 40:
@@ -237,7 +309,16 @@ func _needed_items() -> Dictionary:
 	need["fertilizer_hint"] = 0
 	return need
 
+# What the bot wants from the village this turn (seeds to plant, things the goals need, orders to deliver, surplus to sell); the trip comes at the end of the turn.
+var want_seeds := {}
+var want_buy := []        # [merchant, item]
+var want_barter := []     # [merchant, item]
+var want_sell := {}       # item -> units
+var last_trip := -99      # the step of the last trip
+var trips_done := 0
+
 func _turn() -> void:
+	want_seeds = {}; want_buy = []; want_barter = []; want_sell = {}
 	if G.S["energy"] < 8: _rest()
 	# knowledge
 	for cid in G.card_ids:
@@ -275,7 +356,7 @@ func _turn() -> void:
 							if k.begins_with("tag:") and (G.items[y].get("tags", []) as Array).has(k.substr(4)): short = maxf(short, float(need[k]) - G.inventory.count_tag(k.substr(4)))
 						if short > best + 0.01 and short > 0.0: best = short; pick = c
 				if G.fields.seed_have(pick) < float(G.fields.plants_per_patch("field")) and not G.nodes[pick].has("seedItem"):
-					G.trade.buy_seeds(pick, maxi(1, G.fields.plants_per_patch("field") * 2))      # seeds come from the market now
+					want_seeds[pick] = maxi(int(want_seeds.get(pick, 0)), maxi(1, G.fields.plants_per_patch("field") * 8))      # seeds come from the village now: a bulk, a trip costs a question
 				if G.fields.plant_plan("field", pick)["plants"] >= 1: G.fields.plant("field", i, pick)
 	for a in ["orchard", "gh"]:
 		for i in range(G.fields.area(a).size()):
@@ -290,7 +371,7 @@ func _turn() -> void:
 				for c in cs:
 					for y in G.nodes[c].get("yields", {}):
 						if _deep_need(y, need_o) and G.inventory.count(y) < 3.0: pick = c
-				if G.fields.seed_have(pick) < 1.0 and not G.nodes[pick].has("seedItem"): G.trade.buy_seeds(pick, 1)
+				if G.fields.seed_have(pick) < 1.0 and not G.nodes[pick].has("seedItem"): want_seeds[pick] = maxi(int(want_seeds.get(pick, 0)), 1)
 				if G.fields.plant_plan(a, pick)["plants"] >= 1: G.fields.plant(a, i, pick)
 			elif a == "orchard" and i == G.fields.area(a).size() - 1:
 				_maybe_cut_tree(a)
@@ -326,14 +407,14 @@ func _turn() -> void:
 	if G.S["coins"] < coins_need + 300:
 		for k in G.S["inv"].keys():
 			var keep := 6.0 + float(need.get(k, 0.0))
-			if G.inventory.count(k) > keep and G.inventory.value_of(k) > 0: G.trade.sell(k, G.inventory.count(k) - keep)
+			if G.inventory.count(k) > keep and G.inventory.sellable(k): want_sell[k] = floorf(G.inventory.count(k) - keep)
 	# buy missing raw items from merchants
 	for mid in G.nodes:
 		if G.nodes[mid]["type"] != "merchant" or not G.done(mid): continue
 		for k in G.nodes[mid].get("sells", {}):
-			if need.has(k) and G.inventory.count(k) < float(need[k]) and (G.S["coins"] > 900 or not G.S["seen"].has(k)): G.trade.buy_item(mid, k, 1)
+			if need.has(k) and G.inventory.count(k) < float(need[k]) and (G.S["coins"] > 900 or not G.S["seen"].has(k)): want_buy.append([mid, k])
 		for k in G.nodes[mid].get("barter", {}):
-			if need.has(k) and G.inventory.count(k) < 1: G.trade.barter(mid, k)
+			if need.has(k) and G.inventory.count(k) < 1: want_barter.append([mid, k])
 	# unlock what we can: main goals first, then optional upgrades and gear, polish once
 	for id in G.nodes:
 		var n = G.nodes[id]
@@ -341,6 +422,7 @@ func _turn() -> void:
 		if G.progression.is_open(id) and G.progression.can_unlock(id)["ok"]:
 			if n.get("optional", false) and n["type"] == "sidequest" and G.S["energy"] < 15: continue
 			G.progression.unlock(id)
+	_trip()
 	for pid in G.polish_ids:
 		if G.crafting.polish_open(pid) and G.crafting.polish_level(pid) < 1.0 and G.pace.missing_cost(G.crafting.polish_cost(pid)).is_empty(): G.crafting.do_polish(pid)
 	# eat a dish now and then

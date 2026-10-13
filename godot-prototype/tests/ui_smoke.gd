@@ -248,7 +248,9 @@ func _ready() -> void:
 	G.S["energy"] = 20.0
 	G.progression.unlock("clear_weeds")
 	G.inventory.add_item("straw", 3.0)
+	G.trip.test_square()
 	var sold: bool = G.trade.sell("straw", 1.0)
+	G.trip.leave()
 	var sticks0: float = G.inventory.count("stick")
 	var gathered: bool = G.crafting.start_recipe("gather_sticks")
 	var again: bool = G.crafting.start_recipe("gather_sticks")
@@ -315,7 +317,9 @@ func _ready() -> void:
 	print("r7 pools: ", " ".join(sizes))
 	G.inventory.add_item("carrot", 10.0, true)
 	var c0: float = G.S["coins"]
+	G.trip.test_square()
 	G.trade.sell("carrot", 10.0)
+	G.trip.leave()
 	var got10: float = G.S["coins"] - c0
 	var low: float = G.trade.demand_factor("carrot")
 	for _i in range(10): G.step_time()

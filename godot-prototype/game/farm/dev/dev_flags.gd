@@ -61,6 +61,7 @@ static func apply(main, G) -> void:
 			for kv in a.substr(7).split(","):
 				var parts2: PackedStringArray = kv.split(":")
 				G.trip.pack(parts2[0], int(parts2[1]) if parts2.size() > 1 else 1)
+		elif a == "--square": G.S["trip"] = {"phase": "square", "bought": 0.0}       # screenshots: standing on the village square (use with --give, --pack, --spot=market)
 		elif a == "--built":                       # screenshots: pretend house, barn and workshop stand
 			for b in ["cottage", "barn_1", "workshop_1"]: G.S["unlocked"][b] = true
 			G.invalidate_caps()

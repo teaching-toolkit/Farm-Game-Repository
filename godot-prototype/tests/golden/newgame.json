@@ -222,6 +222,10 @@
 	"story_last": -99.0,
 	"story_seen": {},
 	"story_taps": {},
+	"trip": {
+		"bought": 0.0,
+		"phase": ""
+	},
 	"trips": 0.0,
 	"unlocked": {
 		"basket": true,

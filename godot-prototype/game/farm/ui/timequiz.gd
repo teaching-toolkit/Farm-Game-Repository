@@ -195,3 +195,44 @@ func _time_quiz_buttons(after: VBoxContainer) -> void:
 	row.add_child(back)
 	after.add_child(row)
 	M.modals.fit_modal.call_deferred()
+
+# ------------------------------------------------------------------ the walk to the village
+
+## The one question on the way to the village (the trip's walk): only a right first try gets you there; a wrong one leads to the next
+## question (a market trip waits until one is answered right first time).
+func show_trip_question() -> void:
+	var q: Dictionary = G.knowledge.next_time_question()
+	M.playback.begin()
+	var box := M.modals.open_modal(tr("🚶 On the way to the village"))
+	Sound.music("quiz")
+	box.add_child(UI.header(null, "🏘️", 64))
+	box.add_child(UI.label(str(q.get("source", "")) + tr("   ·   one question, then you are there"), 15, UI.MUTED, true))
+	var qbox := UI.vbox(8)
+	box.add_child(qbox)
+	var after := UI.vbox(8)
+	box.add_child(after)
+	question(qbox, q, _trip_answered.bind(q, after))
+
+func _trip_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> void:
+	if q.get("review", false): G.knowledge.record_card_answer(q, first_try)
+	else: G.knowledge.time_result(q, first_try)
+	if not first_try:
+		G.knowledge.retry_after_next(q)
+		after.add_child(UI.label(tr("⏸️ Not quite: only a right first answer gets you to the village. Try the next one."), 17, UI.MUTED, true))
+		var nb := UI.button(tr("Next question ▶"), show_trip_question, true, UI.GREEN, 21)
+		nb.custom_minimum_size = Vector2(0, 56)
+		after.add_child(nb)
+		M.modals.fit_modal.call_deferred()
+		return
+	var info: Dictionary = G.step_time()
+	G.trip.arrive()
+	if info.get("rain", false): M.after_close.append(tr("🌧️ Rain! The fields are watered — planting costs no water until the next question."))
+	after.add_child(UI.label(tr("🏘️ You are in the village."), 17, UI.MUTED, true))
+	var go := UI.button(tr("🏘️ To the square"), _to_square, true, UI.GREEN, 22)
+	go.custom_minimum_size = Vector2(0, 56)
+	after.add_child(go)
+	M.modals.fit_modal.call_deferred()
+
+func _to_square() -> void:
+	M.modals.close_modal()
+	M.sheets.open_spot.call_deferred("market")

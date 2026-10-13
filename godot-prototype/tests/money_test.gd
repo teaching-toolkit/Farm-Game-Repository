@@ -53,6 +53,7 @@ func _ready() -> void:
 	G.S["inv"].clear()
 	G.S["coins"] = 0.0
 	G.inventory.add_item("egg", 3.0, true)
+	G.trip.test_square()
 	G.trade.sell("egg", 3.0)
 	_check(is_equal_approx(float(G.S["coins"]), 195.0), "three eggs sell for 195 bronze (1 🟡 95 🟤): %s" % G.money(G.S["coins"]))
 	print("MONEY %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])
