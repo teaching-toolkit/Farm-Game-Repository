@@ -20,6 +20,7 @@ const WILD_WORDS := {"weeds": "overgrown with weeds", "rocks": "full of rocks", 
 # ------------------------------------------------------------------ patches (field, orchard, greenhouse)
 
 func on_patch(a: String, i: int) -> void:
+	G.story.tapped("patch:%s" % (a if G.fields.patch_usable(a, i) else str(G.fields.patch_wild(i / 9, i % 9)[0]) if a == "field" else a))   # the story: a patch to be cleared, by what is in the way
 	if not G.fields.patch_usable(a, i):
 		# an overgrown patch: show what clears the land — a field for later chapters only shows the mysterious sign
 		if a == "field":

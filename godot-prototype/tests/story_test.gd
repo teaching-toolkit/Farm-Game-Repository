@@ -10,6 +10,21 @@ func _ready() -> void:
 	G.reset_game()
 	G.player = "Mia"
 	var ST = G.story
+	# the real chapter 1 (data/farm/story): the opening is the frame, then the beat; later pieces wait for their game events
+	_check(ST.next_piece() == "c1_frame0", "a new game opens with the bedside frame (got %s)" % ST.next_piece())
+	ST.mark_seen("c1_frame0")
+	_check(ST.next_piece() == "c1_stalk", "then the nibbled stalk")
+	ST.mark_seen("c1_stalk")
+	_check(ST.next_piece() == "", "then nothing until the player does something (%s)" % ST.next_piece())
+	G.S["step"] = 2
+	_check(ST.is_ready("c1_night"), "after two questions: the first night")
+	G.S["unlocked"]["pet_bunny"] = true
+	_check(ST.is_ready("c1_bunny") and not ST.is_ready("c1_bell_out"), "the bunny's beat comes with the bunny; the bell waits for the next night")
+	ST.mark_seen("c1_bunny")
+	G.S["step"] = 3
+	_check(ST.is_ready("c1_bell_out"), "…one question after")
+	G.reset_game()
+	G.player = "Mia"
 	G.D["story"] = {
 		"f0": {"kind": "frame", "chapter": 1, "when": ["start"], "text": "Hello {player}."},
 		"b1": {"kind": "beat", "chapter": 1, "when": ["tap:market"], "pages": [{"text": "One."}, {"text": "Two.", "picture": "x"}]},

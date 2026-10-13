@@ -11,6 +11,7 @@ func _ready() -> void:
 	M = load("res://main.tscn").instantiate()
 	add_child(M)
 	D = preload("res://tests/ui_driver.gd").new(M)
+	D.story_enabled(false)          # the story has its own section below; the rest of the test runs without its boxes
 	await _frames(3)
 	D.close_modal()
 	# O1-O3: what is shown when. A new game has no coin and no album picture: the purse and the album button wait for them.
@@ -37,6 +38,39 @@ func _ready() -> void:
 	G.inventory.take("stone", 2.0)
 	print("weights: classes %s, two stones add 8 load units %s" % [wt_ok, wt_add])
 	if not (wt_ok and wt_add): print("FAIL weights: see the line above")
+	# Phase 5.2: the story on screen: a two-page box (Next, Got it), then a bark as a speech bubble that stays; the scroll lists the box
+	D.story_enabled(true)
+	G.D["story"] = {
+		"t_beat": {"kind": "beat", "chapter": 1, "when": [], "title": "Test beat", "pages": [{"text": "Page one for {player}."}, {"text": "Page two."}]},
+		"t_bark": {"kind": "bark", "chapter": 1, "when": [], "text": "Bark hello."}}
+	G.S["story_seen"].clear()
+	G.changed.emit()
+	await _frames(4)
+	var st_box: bool = D.modal_visible() and _modal_has("Page one")
+	var st_next := _press_text("Next")
+	await _frames(2)
+	var st_p2: bool = D.modal_visible() and _modal_has("Page two") and not _modal_has("Skip")
+	var st_done := _press_text("Got it")
+	await _frames(6)
+	var st_closed: bool = not D.modal_visible() and G.story.seen("t_beat")
+	var st_bubble: bool = D.bubbles() == 1 and G.story.seen("t_bark")
+	var st_icon: bool = D.icon_shown("scroll")
+	D.open_sheet("scroll")
+	await _frames(2)
+	var st_scroll := _press_text("Test beat")      # the scroll lists it; a tap reads it again, now with a Skip button
+	await _frames(3)
+	var st_again: bool = D.modal_visible() and _modal_has("Page one") and _modal_has("Skip") and G.story.pieces().size() == 2
+	_press_text("Skip")
+	await _frames(2)
+	print("story: box %s, next %s, page 2 %s, closed %s, bubble %s, scroll icon %s, scroll lists it %s, read again with skip %s" % [st_box, st_next, st_p2, st_closed, st_bubble, st_icon, st_scroll, st_again])
+	if not (st_box and st_next and st_p2 and st_done and st_closed and st_bubble and st_icon and st_scroll and st_again): print("FAIL story: see the line above")
+	D.close_sheet()
+	D.close_modal()
+	D.clear_toasts()
+	G.D["story"] = {}
+	G.S["story_seen"].clear()
+	G.S["revealed"].erase("scroll")
+	D.story_enabled(false)
 	var screen0: Vector2 = D.screen_size()
 	var narrow_ok := true
 	for w in [834.0, 744.0]:                       # iPad Pro 11" and iPad mini, upright
@@ -445,6 +479,16 @@ func _buttons(node: Node, out: Array) -> void:
 	for c in node.get_children():
 		if c is Button and not c.disabled and c.visible: out.append(c)
 		_buttons(c, out)
+
+func _modal_has(t: String) -> bool:
+	var found := false
+	var stack: Array = [D.modal_box()]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		if n is Label and n.text.contains(t): found = true
+		if n is Button and n.text.contains(t): found = true
+		stack.append_array(n.get_children())
+	return found
 
 func _press_text(t: String) -> bool:
 	var bs := []

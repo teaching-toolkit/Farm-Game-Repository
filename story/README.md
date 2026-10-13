@@ -28,7 +28,7 @@ texture; read aloud is the final test).
 | `world/` | world bible: `00-timeline.md`, `hazelwood.md`, `lease-and-collapse.md`, `shell-and-magic.md`, `helpers-and-rhyme.md` | Round 2 draft 1 |
 | `characters/` | `fenna.md`, `mumyo.md`, `lark.md`, `berit-and-family.md`, `helpers.md`, `hazelwood-people.md`, `minena.md` | Round 3 draft 1 |
 | `outline/` | `ladder.md`: the six-chapter ladder, beats mapped onto the game's goal nodes, running snags | Round 5 draft 1 |
-| `texts/` | the short in-game story texts and the bedside frame scenes (English, then German) | Round 7 |
+| `texts/` | the short in-game story texts and the bedside frame scenes (English, then German): `ch1.md` is the source of `godot-prototype/data/farm/story/10-chapter-1.json` and the German in `data/i18n/data-de.json` | Round 7, chapter 1 done |
 | `archive/` | earlier drafts, kept for reference | – |
 
 ## The rounds (see also `TODO.md`, group I)
@@ -42,7 +42,7 @@ texture; read aloud is the final test).
 | 4 | Game design pass. Part 1: story delivery. Part 2: pets' jobs, medicine, forest, six chapters (`game-design-round4.md`) | done 8 Oct 2026 |
 | 5 | Outline (ladder with cliffhangers) | draft 1 written 8 Oct 2026 (`outline/ladder.md`); five questions for the parent |
 | 6 | Loop back: story and game reconciled | – |
-| 7 | Texts, chapter 1 first, read aloud; German | – |
+| 7 | Texts, chapter 1 first, read aloud; German | chapter 1 written 13 Oct 2026 (`texts/ch1.md`), built into the game (phase 5); chapters 2–6 follow their builds |
 | 8 | Build into the game | – |
 
 ## Working agreements

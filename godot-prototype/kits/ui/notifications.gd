@@ -15,12 +15,14 @@ var max_width := 560.0         # cards are never wider than this (or the screen 
 var font_size := 17
 var swipe_distance := 70.0     # a swipe of this many pixels sends a card away
 signal dismissed(text: String)
+signal tapped(text: String)    # a sticky card was tapped (it goes away)
 
 func _init() -> void:
 	add_theme_constant_override("separation", 4)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 
-func notify(text: String, secs := 5.0) -> void:
+## A sticky card (`sticky`: a speech bubble) stays until it is tapped or swiped away; it is the last to be pushed out by newer cards.
+func notify(text: String, secs := 5.0, sticky := false) -> void:
 	var card := UI.card(Color(1, 0.98, 0.9, 0.97), UI.LINE)
 	card.mouse_filter = Control.MOUSE_FILTER_STOP
 	card.size_flags_horizontal = Control.SIZE_FILL
@@ -31,15 +33,19 @@ func notify(text: String, secs := 5.0) -> void:
 	var slot := Control.new()                   # the card lives inside a slot so that it can be moved sideways while the stack stays in order
 	slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	slot.set_meta("text", text)
+	slot.set_meta("sticky", sticky)
 	slot.add_child(card)
 	add_child(slot)
 	slot.custom_minimum_size = card.get_combined_minimum_size()
 	card.gui_input.connect(_on_card_input.bind(slot, card))
 	while get_child_count() > max_shown:
 		var old := get_child(0)
+		for c in get_children():
+			if not c.get_meta("sticky", false): old = c; break
 		remove_child(old); old.queue_free()
 	place()
 	place.call_deferred()
+	if sticky: return
 	var tw := create_tween()
 	tw.tween_interval(secs)
 	tw.tween_property(card, "modulate:a", 0.0, 0.8)
@@ -67,6 +73,9 @@ func _on_card_input(e: InputEvent, slot: Control, card: Control) -> void:
 			var dx: float = card.position.x
 			_drag = {}
 			if absf(dx) >= swipe_distance: _swipe_away(slot, card, signf(dx))
+			elif absf(dx) < 8.0 and slot.get_meta("sticky", false):
+				tapped.emit(str(slot.get_meta("text", "")))
+				_swipe_away(slot, card, 1.0)
 			else: create_tween().tween_property(card, "position:x", 0.0, 0.12)
 	elif e is InputEventMouseMotion and _drag.get("slot") == slot:
 		card.position.x = e.global_position.x - float(_drag["x"])

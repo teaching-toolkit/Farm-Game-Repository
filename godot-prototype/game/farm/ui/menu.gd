@@ -39,7 +39,7 @@ func show_menu() -> void:
 	sr.add_child(UI.soft_button((tr("🔔 Sounds: on") if Sound.sfx_on else tr("🔕 Sounds: off")), _toggle_sfx, true, 17))
 	sr.add_child(UI.soft_button(tr("🎼 Credits"), _show_credits, true, 17))
 	box.add_child(sr)
-	box.add_child(UI.soft_button(tr("📜 What happened (log)"), M.questlog.open_log, true, 18))
+	box.add_child(UI.soft_button(tr("📋 What happened (log)"), M.questlog.open_log, true, 18))
 	box.add_child(UI.label(_version_text(), 14, UI.MUTED, true))
 	if not grownup_open():
 		box.add_child(UI.button(tr("🔒 Grown-up settings"), ask_password, true, UI.BLUE, 18))

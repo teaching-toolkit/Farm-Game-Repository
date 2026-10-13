@@ -65,12 +65,16 @@ func _player_chosen(name: String) -> void:
 	M.modals.close_modal()
 	M.refresh()
 	M.notes.toast(tr("👋 Hello, %s!") % name)
-	if G.S["step"] == 0 and not G.done("k_wheat"): show_welcome()
+	if G.S["step"] == 0 and not G.done("k_wheat") and not M.story.pump(): show_welcome()
 
-func show_welcome() -> void:
-	var box := M.modals.open_modal(tr("🔥 Ashes"))
-	box.add_child(UI.header(null, "🔥", 72))
-	box.add_child(UI.label(tr("Your farm burned down. All that's left: a tent, an old bucket by a wild pond, a tin pot, a few sticks and stones, one wheat seed — and a box with a book in it."), 20, UI.INK, true))
+## The first words of the game. After the opening story (`after_story`) only the hints are left: what to do first, and how it works.
+func show_welcome(after_story := false) -> void:
+	var box := M.modals.open_modal(tr("💡 How to play") if after_story else tr("🔥 Ashes"))
+	box.add_child(UI.header(null, "💡" if after_story else "🔥", 72))
+	if after_story:
+		box.add_child(UI.label(tr("In the tent is a box with a book in it. Open it, and your seed can grow."), 20, UI.INK, true))
+	else:
+		box.add_child(UI.label(tr("Your farm burned down. All that's left: a tent, an old bucket by a wild pond, a tin pot, a few sticks and stones, one wheat seed — and a box with a book in it."), 20, UI.INK, true))
 	box.add_child(UI.label(tr("Tap places on the farm to see what you can do there. Every right answer in the ❓ Time Quiz moves farm time forward. When you're tired, tap ⚡ to rest."), 17, UI.MUTED, true))
 	var ob := UI.button(tr("📗 Open the book"), _open_first_book, true, UI.GREEN, 20)
 	ob.custom_minimum_size = Vector2(0, 56)

@@ -114,6 +114,15 @@ Full profiles in `characters/`. One line each here, to check that the spines cla
 
 *(none yet)*
 
+## Chapter 1 as built (13 Oct 2026) 💡
+
+`texts/ch1.md` (English with the German under it); in the game: `data/farm/story/10-chapter-1.json`. 17 pieces: bedside frame 0 (3 pages), the nibbled
+stalk (1.1), the book (1.2), the first night (1.3, awe), bells and the silly stick pile (1.4), the burnt ledger page (1.5), the seller on the track (1.6,
+adapted: she stops at the land, not at a campfire), the notice board (1.7), six barks (1.8), the bunny comes home (1.9), the bell at night (1.10), frame 1.
+Flagged inventions in these texts 💡: the grandchildren blurt *the bells* in frame 0 and are hushed; the bunny is "she" in English and **das Häschen** in
+German (no gender needed); "Moonedge one" is how the seller greets you; you keep the burnt page; the first night comes after two Time Quiz questions;
+the bell at night comes one question after the bunny's return; the German quotes are „…“, the farm's carrots are *Karotten*.
+
 ## Session log
 
 - **7 Oct 2026, Round 1:** folder created; premise, book file and game hooks drafted; grandmother name options offered.
@@ -172,3 +181,5 @@ Full profiles in `characters/`. One line each here, to check that the spines cla
   the land around and being kind without expecting anything back; the Lord's share becomes a real payment from chapter 2 or 3, growing
   with the patches and chapter by chapter; chapter 1 starts without any merchant, and carrot seeds force the first trip; title
   **Hazelwood Harvest**. Round 6 works these into the ladder and the world files.
+- **13 Oct 2026, Round 7 (chapter 1, parent away):** chapter 1 written and built (`texts/ch1.md`, see "Chapter 1 as built"). The ladder's chapter 1 adapted to the
+  decided rules: no merchant at the campfire, the seller first passes on the track (1.6). Everything flagged in the list above; the parent may overrule any of it.

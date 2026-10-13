@@ -19,6 +19,7 @@ var _slide := 1.0
 
 ## A tap on a place: a building with an inside opens its inside, everything else its sheet.
 func open_spot(sid: String) -> void:
+	G.story.tapped(sid)
 	M.feedback.animal_voice(sid)
 	if Spots.has_interior(sid) and M.mapview.built(sid):
 		M.interiors.open_interior(sid)
@@ -43,6 +44,8 @@ func open_pantry() -> void: open_spot("storage")
 func open_goals() -> void: open_sheet("goals")
 
 func open_album() -> void: open_sheet("album")
+
+func open_scroll() -> void: open_sheet("scroll")
 
 func open_sheet(kind: String) -> void:
 	M.interior_back = ""
@@ -114,10 +117,14 @@ func rebuild_sheet() -> void:
 				M.sheet_title.text = tr("📖 Quest book")
 				M.content.add_child(UI.header(null, "📖", 80))
 				M.questlog.sheet_goals()
+			"scroll":
+				M.sheet_title.text = tr("📜 Story")
+				M.content.add_child(UI.header(null, "📜", 80))
+				M.story.sheet_scroll()
 			"album":
 				M.sheet_title.text = tr("🖼️ Album")
 				M.content.add_child(UI.header(null, "🖼️", 80))
 				M.album.sheet_album()
 			"log":
-				M.sheet_title.text = tr("📜 What happened")
+				M.sheet_title.text = tr("📋 What happened")
 				M.questlog.sheet_log()

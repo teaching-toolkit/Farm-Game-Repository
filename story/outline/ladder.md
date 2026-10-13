@@ -36,6 +36,10 @@ The grandchildren crowd round your bed: "Tell us about the farm that burned down
 
 ### Chapter 1: Ashes · G, W, A
 
+*Built 13 Oct 2026 (`../texts/ch1.md`). Adapted to the decided rules: 1.6 is the seller stopping on the track by your land (no campfire visit; the merchant first passes
+by on the road, ✅ 12 Oct); 1.3 comes after two Time Quiz questions; 1.4 and 1.5 fire when their jobs are done; 1.7 on the first tap of the notice board; 1.8 barks are six
+small lines with a chance of showing; 1.10 comes one question after the bunny. Frame 0 and 1 are in the game.*
+
 | # | Kind | Trigger | Critical? | What happens |
 |---|---|---|---|---|
 | 1.1 | Beat | `start` | yes | One green patch in the ash. One ripe wheat stalk, every grain nibbled off but one. (Who nibbled? 🔒 the bunny.) |

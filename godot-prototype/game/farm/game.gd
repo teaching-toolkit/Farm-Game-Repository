@@ -584,6 +584,9 @@ func term(name: String, arg: String) -> bool:
 		"chapter": return chapter() == int(arg)
 		"tap": return S["story_taps"].has(arg)
 		"page": return knowledge.page_seen(arg)
+		"after":                                                  # after:<piece>:<n> — n Time Quiz questions have passed since the piece was seen
+			var q := arg.split(":")
+			return q.size() == 2 and S["story_seen"].has(q[0]) and S["step"] - int(S["story_seen"][q[0]]) >= int(q[1])
 		"chance": return float(hash("%d/%s" % [int(S["step"]), arg]) % 1000) / 1000.0 < float(arg)   # the same answer all through one question: asking does not use up luck
 	return false
 

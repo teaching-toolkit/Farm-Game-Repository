@@ -35,6 +35,7 @@ var questlog: FarmUiQuestLog
 var rest: FarmUiRest
 var sheets: FarmUiSheets
 var stations: FarmUiStations
+var story: FarmUiStory
 var timequiz: FarmUiTimeQuiz
 var waterroad: FarmUiWaterRoad
 var welcome: FarmUiWelcome
@@ -104,6 +105,7 @@ func _make_parts() -> void:
 	rest = FarmUiRest.new(self)
 	sheets = FarmUiSheets.new(self)
 	stations = FarmUiStations.new(self)
+	story = FarmUiStory.new(self)
 	timequiz = FarmUiTimeQuiz.new(self)
 	waterroad = FarmUiWaterRoad.new(self)
 	welcome = FarmUiWelcome.new(self)
@@ -140,7 +142,9 @@ func _ready() -> void:
 	if G.player == "" and shot_path == "" and DisplayServer.get_name() != "headless":
 		welcome.ask_player()
 	elif G.S["gift_pending"].size() > 0: gifts.show_gift()
-	elif G.S["step"] == 0 and not G.done("k_wheat"): welcome.show_welcome()
+	elif G.S["step"] == 0 and not G.done("k_wheat"):
+		if not story.pump(): welcome.show_welcome()
+	else: story.queue_pump()
 
 ## Andika (a font made for children learning to read) with Noto Color Emoji as fallback, so every device shows the same emojis.
 func _setup_theme() -> void:
@@ -250,6 +254,7 @@ func _build() -> void:
 	var ir := UI.hbox(6)
 	rv.add_child(ir)
 	for pair in [["bag", "🎒", sheets.open_pantry, "Pantry: what you have"], ["book", "📖", sheets.open_goals, "Quest book: everything you can do next"],
+			["scroll", "📜", sheets.open_scroll, tr("Story: what you have read")],
 			["album", "🖼️", sheets.open_album, tr("Album: pets, friends, postcards, perks, acorns")], ["settings", "⚙️", menu.show_menu, tr("Settings")]]:
 		var b := UI.soft_button(pair[1], pair[2], true, 22)
 		b.custom_minimum_size = Vector2(48, 46)
@@ -426,6 +431,7 @@ func refresh() -> void:
 	if sheet.visible:
 		sheets.rebuild_sheet()
 		sheets.fit_sheet.call_deferred()
+	story.queue_pump()
 
 ## Taps on the farm make sparkles (perk "Magic sparkles").
 func _input(e: InputEvent) -> void:

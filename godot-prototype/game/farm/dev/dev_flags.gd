@@ -42,6 +42,8 @@ static func apply(main, G) -> void:
 		elif a == "--rainbow": main.menu.rainbow_now.call_deferred()
 		elif a.begins_with("--sheetscroll="):      # screenshots: the open sheet scrolled down by N pixels (9999 = to the end)
 			main.get_tree().create_timer(0.4).timeout.connect(func(): main.sheet_scroll.scroll_vertical = int(a.substr(14)))
+		elif a == "--nostory": main.story.enabled = false          # tests and screenshots of other things: no story boxes or bubbles
+		elif a.begins_with("--story="): main.story.show_piece.call_deferred(a.substr(8), true)     # screenshots: one story piece (the id)
 		elif a == "--pulse": for t in [0.2, 0.5, 0.8, 1.1, 1.4, 1.7, 2.0, 2.3]: main.get_tree().create_timer(t).timeout.connect(func(): main.playback._pulse(main.energy_bar, -4.0))     # screenshots: the bar pulse with a number floating up (J4)
 		elif a == "--toasts":                      # screenshots: a stack of notification cards
 			for t in ["🐰 A bunny came home!", "🌱 The carrots are ready to pick.", "💧 The watering can is empty. The well is behind the barn."]: main.notes.toast.call_deferred(t, 60.0)

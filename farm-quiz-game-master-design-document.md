@@ -924,6 +924,20 @@ harvest; a double-yolk egg, a honey flow, a thick fleece; a neighbour's gift bas
 
 ---
 
+### 11.6 The story *(built: the engine and chapter 1; the rest follows the chapters)*
+
+The story reaches the child as **story pieces** (`godot-prototype/data/farm/story/`, one entry per piece; the canon, the people and the texts live in `story/`).
+Kinds: **frame** (the grandchildren at the bed, at the start and between chapters), **beat** (a plot step that hangs on a goal the child must do), **discovery**
+(what you find when you first tap something or finish a job), **letter**, **moment** and **visit** (small scenes with people), **scene** (the village square),
+**bark** (one line, a speech bubble tapped away) and **trace** (no text). A piece has a chapter, conditions (`done:<goal>`, `tap:<place>`, `page:<card>`,
+`step>=n`, `seen:<piece>`, `after:<piece>:<n>` …, all must hold) and shows once, except barks, which come back after 12 questions.
+**Rules of showing:** only when the farm is quiet (no Time Quiz, Rest, pop-up, celebration or open window; a discovery may come over a window); one box at a
+time; if several are ready: frame, beat, discovery, letter, moment, visit, scene, bark; **one unprompted piece (moment, visit, letter) per 3 questions**; no
+real-time gating. A story box has a picture or an emoji, 2–4 short sentences, 🔊 like the cards, one big button, and from the second viewing a **Skip**.
+The **📜 scroll** in the top bar appears with the first piece read and lists what was read, a chapter at a time; a tap reads a piece again. The opening of
+a new game is the bedside frame, then the nibbled stalk, then a short *How to play* hint (what the old welcome taught). German texts follow the English
+ones (the *Du* form, „ss“, no gendered word for the farmer). The bot never opens a box; the data checker knows every condition.
+
 ## 12. Seasons
 
 A year is four seasons of 30 Time Quiz questions; the season bar in the top bar shows how many are left. Nothing dies;

@@ -9507,6 +9507,158 @@
   "en": "Compost",
   "de": "Kompostieren"
  },
+ "story/c1_frame0/title": {
+  "en": "Bedtime",
+  "de": "Schlafenszeit"
+ },
+ "story/c1_frame0/pages/0/text": {
+  "en": "Evening. The room smells of tea. Minena has brought a cup and spilled half of it. The others sit on the floor, on the bed, on your feet.",
+  "de": "Abend. Im Zimmer riecht es nach Tee. Minena hat eine Tasse gebracht und die Hälfte verschüttet. Die anderen sitzen auf dem Boden, auf dem Bett, auf deinen Füssen."
+ },
+ "story/c1_frame0/pages/1/text": {
+  "en": "“Tell us about the farm that burned down!” “Again?” you say. “Yes!” “And don't forget the bells,” whispers someone very small. “Shh! That comes later!”",
+  "de": "„Erzähl uns von der Farm, die abgebrannt ist!“ „Schon wieder?“, sagst du. „Ja!“ „Und vergiss die Glöckchen nicht“, flüstert jemand ganz Kleines. „Psst! Das kommt später!“"
+ },
+ "story/c1_frame0/pages/2/text": {
+  "en": "You close your eyes. You are not sure you remember it right. But it always begins the same way: with ash.",
+  "de": "Du schliesst die Augen. Du bist nicht sicher, ob du alles richtig weisst. Aber es fängt immer gleich an: mit Asche."
+ },
+ "story/c1_stalk/title": {
+  "en": "The last grain",
+  "de": "Das letzte Korn"
+ },
+ "story/c1_stalk/pages/0/text": {
+  "en": "Everything is grey. Ash, mud, black posts where a house once stood. The farm of your family is gone.",
+  "de": "Alles ist grau. Asche, Matsch, schwarze Pfosten, wo einmal ein Haus stand. Der Hof deiner Familie ist weg."
+ },
+ "story/c1_stalk/pages/1/text": {
+  "en": "But look. One green patch in the ash. On it stands one ripe wheat stalk. Every grain has been nibbled off. All but one.",
+  "de": "Aber schau. Ein grünes Fleckchen in der Asche. Darauf steht ein reifer Weizenhalm. Jedes Korn ist abgeknabbert. Bis auf eins."
+ },
+ "story/c1_stalk/pages/2/text": {
+  "en": "You pick up the last grain. Somebody was here. And somebody left it for you.",
+  "de": "Du nimmst das letzte Korn in die Hand. Jemand war hier. Und jemand hat es für dich dagelassen."
+ },
+ "story/c1_book/title": {
+  "en": "The book",
+  "de": "Das Buch"
+ },
+ "story/c1_book/pages/0/text": {
+  "en": "The book in the box is old. On the first page, in thin brown ink: “Start small. Small is plenty.”",
+  "de": "Das Buch in der Kiste ist alt. Auf der ersten Seite steht in dünner brauner Tinte: „Fang klein an. Klein ist genug.“"
+ },
+ "story/c1_book/pages/1/text": {
+  "en": "You read it twice. Then, from nowhere, an old tune comes back, and a line of words: “Long ears sow the clover green.”",
+  "de": "Du liest es zweimal. Dann kommt von irgendwoher eine alte Melodie zurück, und eine Zeile: „Lange Ohren säen den Klee so grün.“"
+ },
+ "story/c1_night/title": {
+  "en": "The first night",
+  "de": "Die erste Nacht"
+ },
+ "story/c1_night/pages/0/text": {
+  "en": "The first night. The sky is huge. At the edge of the dark forest, white stones glow, very faintly.",
+  "de": "Die erste Nacht. Der Himmel ist riesig. Am Rand des dunklen Waldes leuchten weisse Steine, ganz schwach."
+ },
+ "story/c1_night/pages/1/text": {
+  "en": "Somewhere, a tune. You do not know it. You find you are humming it anyway.",
+  "de": "Irgendwo eine Melodie. Du kennst sie nicht. Und doch summst du sie mit."
+ },
+ "story/c1_bells/text": {
+  "en": "When the last thistle is out, you hear it: a tiny bell, high in the air. Then nothing. Behind you, three sticks lie in a very silly pile. Nothing is missing.",
+  "de": "Als die letzte Distel draussen ist, hörst du es: ein winziges Glöckchen, hoch in der Luft. Dann nichts mehr. Hinter dir liegen drei Stöcke in einem sehr komischen Haufen. Es fehlt nichts."
+ },
+ "story/c1_bells/title": {
+  "en": "A little bell",
+  "de": "Ein Glöckchen"
+ },
+ "story/c1_ledger/text": {
+  "en": "Under the black boards you find a page, burnt at the edges. A list of numbers. At the bottom, in red: “The Lord's share.” Every year the red number is bigger. You fold the page small and keep it.",
+  "de": "Unter den schwarzen Brettern findest du ein Blatt, an den Rändern verbrannt. Eine Liste mit Zahlen. Ganz unten, in Rot: „Der Anteil des Herrn.“ Jedes Jahr ist die rote Zahl grösser. Du faltest das Blatt klein und behältst es."
+ },
+ "story/c1_ledger/title": {
+  "en": "A burnt page",
+  "de": "Ein verbranntes Blatt"
+ },
+ "story/c1_seller/title": {
+  "en": "The seller",
+  "de": "Die Händlerin"
+ },
+ "story/c1_seller/pages/0/text": {
+  "en": "A cart creaks along the old track and stops by your land. The seller sniffs. “Is that porridge?” You hand her a bowl. She eats it standing up, very fast.",
+  "de": "Ein Karren knarrt den alten Weg entlang und hält am Rand deines Landes. Die Händlerin schnuppert. „Ist das Porridge?“ Du reichst ihr eine Schüssel. Sie isst im Stehen, ganz schnell."
+ },
+ "story/c1_seller/pages/1/text": {
+  "en": "“You're from Moonedge, aren't you?” she says. “Good porridge, {player}. I'll tell them in the village that somebody is cooking up here again.”",
+  "de": "„Du bist doch von Moonedge, oder?“, sagt sie. „Gutes Porridge, {player}. Ich erzähle im Dorf, dass hier oben wieder jemand kocht.“"
+ },
+ "story/c1_board/text": {
+  "en": "A notice board, full of little papers. Somebody needs a basket. Somebody has lost a goat. You read every one twice, and keep your hat low.",
+  "de": "Eine Anschlagtafel voller kleiner Zettel. Jemand braucht einen Korb. Jemand hat eine Ziege verloren. Du liest jeden zweimal und ziehst den Hut tief ins Gesicht."
+ },
+ "story/c1_board/title": {
+  "en": "The notice board",
+  "de": "Die Anschlagtafel"
+ },
+ "story/c1_bunny/title": {
+  "en": "The bunny comes home",
+  "de": "Das Häschen kommt heim"
+ },
+ "story/c1_bunny/pages/0/text": {
+  "en": "A bunny sits on the one green patch. She sits like someone who has always sat there.",
+  "de": "Ein Häschen sitzt auf dem einen grünen Beet. Es sitzt da, als hätte es dort schon immer gesessen."
+ },
+ "story/c1_bunny/pages/1/text": {
+  "en": "Now you understand. The patch stayed green because somebody looked after it. The stalk was nibbled because somebody was hungry. And one grain was left for you.",
+  "de": "Jetzt verstehst du es. Das Beet ist grün geblieben, weil jemand sich darum gekümmert hat. Der Halm war abgeknabbert, weil jemand Hunger hatte. Und ein Korn blieb für dich übrig."
+ },
+ "story/c1_bunny/pages/2/text": {
+  "en": "Now the first line of the old rhyme makes sense: “Long ears sow the clover green.” You say it out loud. The bunny's ear twitches.",
+  "de": "Jetzt ergibt die erste Zeile des alten Reims einen Sinn: „Lange Ohren säen den Klee so grün.“ Du sagst sie laut. Das Ohr des Häschens zuckt."
+ },
+ "story/c1_bell_out/text": {
+  "en": "That night, from far away: two soft rings of a very small bell. You sit up in the dark. The bunny is asleep in the clover. So who else is still here?",
+  "de": "In der Nacht, von weit weg: zwei leise Töne eines ganz kleinen Glöckchens. Du setzt dich im Dunkeln auf. Das Häschen schläft im Klee. Wer ist denn sonst noch hier?"
+ },
+ "story/c1_bell_out/title": {
+  "en": "Two soft rings",
+  "de": "Zwei leise Töne"
+ },
+ "story/c1_frame1/title": {
+  "en": "Back in the room",
+  "de": "Zurück im Zimmer"
+ },
+ "story/c1_frame1/pages/0/text": {
+  "en": "Back in the room, the tea has gone cold. “Was there really a bunny?” asks Minena. “There was,” you say. “She was very rude about carrots.”",
+  "de": "Zurück im Zimmer ist der Tee kalt geworden. „Gab es wirklich ein Häschen?“, fragt Minena. „Ja“, sagst du. „Es war sehr frech, wenn es um Karotten ging.“"
+ },
+ "story/c1_frame1/pages/1/text": {
+  "en": "“And the bell? Who rang the bell?” “Shh!” says everybody at once. “That's next time!” You smile. They know this story almost as well as you do. Almost.",
+  "de": "„Und die Glocke? Wer hat die Glocke geläutet?“ „Psst!“, rufen alle auf einmal. „Das kommt beim nächsten Mal!“ Du lächelst. Sie kennen die Geschichte fast so gut wie du. Fast."
+ },
+ "story/c1_k_seller/text": {
+  "en": "“Do you ever stop?” calls the seller from the track. You wave. You do not stop.",
+  "de": "„Hörst du eigentlich nie auf?“, ruft die Händlerin vom Weg. Du winkst. Du hörst nicht auf."
+ },
+ "story/c1_k_hens/text": {
+  "en": "The hens argue about who laid which egg. Nobody wins.",
+  "de": "Die Hühner streiten, wer welches Ei gelegt hat. Niemand gewinnt."
+ },
+ "story/c1_k_bucket/text": {
+  "en": "The old bucket clanks against the well stones. It sounds almost proud.",
+  "de": "Der alte Eimer klappert an den Brunnensteinen. Es klingt fast stolz."
+ },
+ "story/c1_k_grass/text": {
+  "en": "Something rustles in the long grass. It stops when you look.",
+  "de": "Im hohen Gras raschelt etwas. Es hört auf, sobald du hinschaust."
+ },
+ "story/c1_k_smoke/text": {
+  "en": "The wind still smells a little of old smoke.",
+  "de": "Der Wind riecht immer noch ein bisschen nach altem Rauch."
+ },
+ "story/c1_k_winter/text": {
+  "en": "The tent flaps in the wind. You pull the blanket up to your nose.",
+  "de": "Das Zelt flattert im Wind. Du ziehst die Decke bis zur Nase."
+ },
  "chapters/0/name": {
   "en": "Ashes",
   "de": "Asche"

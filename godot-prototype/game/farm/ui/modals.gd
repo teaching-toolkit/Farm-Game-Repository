@@ -61,3 +61,4 @@ func _after_close() -> void:
 	M.after_close.clear()
 	if G.S["gift_pending"].size() > 0: M.gifts.show_gift.call_deferred()
 	elif M.celebration_queue.size() > 0: M.celebrations.show_celebration.call_deferred()
+	else: M.story.queue_pump()

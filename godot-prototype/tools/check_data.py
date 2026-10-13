@@ -274,6 +274,10 @@ def story_condition(w, expr):
         if arg not in spots_for_story and not arg.startswith("patch:"): err(w, f"condition {expr!r}: {arg} is not a place (places.json spots) or patch:<kind>")
     elif name == "page":
         if arg not in N or N[arg].get("type") != "knowledge": err(w, f"condition {expr!r}: {arg} is not a card")
+    elif name == "after":
+        pid, _, n = arg.partition(":")
+        if pid not in STORY: err(w, f"condition {expr!r}: {pid} is not a story piece")
+        if not n.isdigit(): err(w, f"condition {expr!r}: after:<piece>:<number of questions>")
     elif name == "chance":
         try:
             if not 0 <= float(arg) <= 1: err(w, f"condition {expr!r}: a chance between 0 and 1")
