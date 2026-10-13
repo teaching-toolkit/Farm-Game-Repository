@@ -84,6 +84,10 @@ func effect_text(e: Dictionary) -> String:
 		elif k.begins_with("slots:"): out.append(tr("+%d batch at %s") % [int(v2), G.nodes.get(k.substr(6), {}).get("name", k.substr(6))])
 		elif k.begins_with("yield_"): out.append(tr("+%d %s per harvest") % [int(v2), G.iname(k.substr(6))])
 		elif k == "shelfLife": out.append(tr("food keeps %d season longer") % int(v2))
+		elif k.begins_with("well_"):
+			var wp: String = k.substr(5)
+			var wsp: Dictionary = G.meta.get("well", {}).get("params", {}).get(wp, {})
+			if not wsp.is_empty() and v2 >= 0.075: out.append("%s %s" % [wsp["emoji"], tr(str(wsp["name"]))])      # only what is felt: a small share stays unnamed
 		else: out.append("%s +%s" % [k, num(v2)])
 	for k in e.get("mult", {}):
 		var v3 := float(e["mult"][k])

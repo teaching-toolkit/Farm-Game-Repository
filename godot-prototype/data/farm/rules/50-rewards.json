@@ -583,6 +583,18 @@
         "emoji": "🍃",
         "desc": "Blossom petals in spring, leaves in autumn, snowflakes in winter.",
         "when": "seasons>=4"
+      },
+      {
+        "id": "perk_fireflies",
+        "name": "Fireflies",
+        "emoji": "✨",
+        "desc": "Little lights drift over the farm. A thank-you from the night garden."
+      },
+      {
+        "id": "perk_stars",
+        "name": "Shooting stars",
+        "emoji": "🌠",
+        "desc": "Now and then a star falls across the sky. A thank-you from Lark, who says he did not arrange it."
       }
     ]
   },

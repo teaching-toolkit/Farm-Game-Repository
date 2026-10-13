@@ -241,10 +241,18 @@ else:
         if len(set(ids)) != len(ids): err(f"pets {pid}", "two jobs with the same id")
         for j in jobs:
             w = f"pets {pid} job {j.get('id')}"
-            if j.get("kind") not in ("weeds", "stones", "water", "makes"): err(w, f"kind {j.get('kind')!r} is not weeds, stones, water or makes")
+            if j.get("kind") not in ("weeds", "stones", "water", "pests", "makes"): err(w, f"kind {j.get('kind')!r} is not weeds, stones, water, pests or makes")
             if j.get("kind") == "makes" and j.get("item") not in ITEMS: err(w, f"item {j.get('item')} is not an item")
             if j.get("kind") == "makes" and not float(j.get("rate", 0)) > 0: err(w, "makes needs a rate above 0")
             if not j.get("name") or not j.get("emoji"): err(w, "needs a name and an emoji")
+    for pid, ws in PT.get("allowedWhens", {}).items():
+        if pid not in N or N[pid].get("type") != "pet": err("pets", f"allowedWhens: {pid} is not a pet")
+        for wc in ws:
+            if wc not in PT.get("whens", {}): err(f"pets {pid}", f"allowedWhens names {wc}, which is not a WHEN card")
+    for wc, w in PT.get("whens", {}).items():
+        if not (w.get("stat") or w.get("item")): err(f"pets when {wc}", "needs a stat or an item")
+        if w.get("item") and w["item"] not in ITEMS: err(f"pets when {wc}", f"item {w['item']} is not an item")
+        if not float(w.get("min", 0)) <= float(w.get("default", 0)) <= float(w.get("max", 99)): err(f"pets when {wc}", "default outside min..max")
     for pid, f in PT.get("first", {}).items():
         if pid not in N or N[pid].get("type") != "pet": err("pets", f"first: {pid} is not a pet")
         if not f.get("emoji") or not f.get("place") or int(f.get("every", 0)) < 1: err(f"pets {pid}", "first needs an emoji, a place and every >= 1")

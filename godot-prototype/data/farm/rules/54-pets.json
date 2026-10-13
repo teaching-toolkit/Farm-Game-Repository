@@ -1,32 +1,246 @@
 {
   "pets": {
-    "note": "The pets' jobs (TODO S2). Level 1 is the pet's bonus from its node (always on, nothing changes). Level 2 opens when the NEXT pet has come home (the last pet has no level 2 yet): then the child chooses one of the pet's jobs on the job board, and the pet does it once every question (the same step as everything else; no questions, no work). A job that cannot run just waits (💤 nothing to do, 📦 the store is full). kinds: weeds and stones (take `amount` from the patch that has most; stones go into the store), water (adds `amount` to the water), makes (an item, `rate` per question, whole units arrive). `first`: what a pet with only its level 1 does for the eye: every `every` questions it walks to `place` ('water', 'field', 'spot:<place>') and shows its emoji.",
+    "note": "The pets' jobs (TODO S2). Level 1 is the pet's bonus from its node (always on, nothing changes). Level 2 opens when the NEXT pet has come home (the last pet has no level 2 yet): then the child chooses one of the pet's jobs on the job board, and the pet does it once every question (the same step as everything else; no questions, no work). A job that cannot run just waits (💤 nothing to do, 📦 the store is full). kinds: weeds and stones (take `amount` from the patch that has most; stones go into the store), water (adds `amount` to the water), makes (an item, `rate` per question, whole units arrive). `first`: what a pet with only its level 1 does for the eye: every `every` questions it walks to `place` ('water', 'field', 'spot:<place>') and shows its emoji. Levels 3 and 4 (TODO S5): a pet's level is 1 + the pets that came home after it (at most 4); once the last pet is home (the story is over: free play) every pet is level 4 and the last one has its jobs too. Level 3: the job can have a WHEN card (`whens`: a condition with a number the child sets; `allowedWhens` per pet). Level 4: a second rule, read after the first when the first's WHEN does not hold (a job, and a WHEN or always). A rule that cannot run waits.",
     "jobs": {
       "pet_bunny": [
-        {"id": "weeds", "name": "Pull weeds", "emoji": "🌿", "kind": "weeds", "amount": 1, "desc": "Pulls a weed on the patch that has most."},
-        {"id": "stones", "name": "Pick stones", "emoji": "🪨", "kind": "stones", "amount": 1, "desc": "Picks a stone from the stoniest patch."}
+        {
+          "id": "weeds",
+          "name": "Pull weeds",
+          "emoji": "🌿",
+          "kind": "weeds",
+          "amount": 1,
+          "desc": "Pulls a weed on the patch that has most."
+        },
+        {
+          "id": "stones",
+          "name": "Pick stones",
+          "emoji": "🪨",
+          "kind": "stones",
+          "amount": 1,
+          "desc": "Picks a stone from the stoniest patch."
+        }
       ],
       "pet_tortoise": [
-        {"id": "water", "name": "Bring water", "emoji": "💧", "kind": "water", "amount": 1, "desc": "Brings a little water every question."},
-        {"id": "stones", "name": "Pick stones", "emoji": "🪨", "kind": "stones", "amount": 1, "desc": "Picks a stone from the stoniest patch."}
+        {
+          "id": "water",
+          "name": "Bring water",
+          "emoji": "💧",
+          "kind": "water",
+          "amount": 1,
+          "desc": "Brings a little water every question."
+        },
+        {
+          "id": "stones",
+          "name": "Pick stones",
+          "emoji": "🪨",
+          "kind": "stones",
+          "amount": 1,
+          "desc": "Picks a stone from the stoniest patch."
+        }
       ],
       "pet_goat": [
-        {"id": "weeds", "name": "Graze weeds", "emoji": "🌿", "kind": "weeds", "amount": 1, "desc": "Eats the weeds on the patch that has most."},
-        {"id": "compost", "name": "Make compost", "emoji": "🟫", "kind": "makes", "item": "compost", "rate": 0.5, "desc": "Leaves a little compost."}
+        {
+          "id": "weeds",
+          "name": "Graze weeds",
+          "emoji": "🌿",
+          "kind": "weeds",
+          "amount": 1,
+          "desc": "Eats the weeds on the patch that has most."
+        },
+        {
+          "id": "compost",
+          "name": "Make compost",
+          "emoji": "🟫",
+          "kind": "makes",
+          "item": "compost",
+          "rate": 0.5,
+          "desc": "Leaves a little compost."
+        }
       ],
       "pet_pony": [
-        {"id": "log", "name": "Haul logs", "emoji": "🪵", "kind": "makes", "item": "log", "rate": 0.25, "desc": "Drags a log in from the woodlot."},
-        {"id": "stick", "name": "Fetch sticks", "emoji": "🌿", "kind": "makes", "item": "stick", "rate": 0.5, "desc": "Fetches sticks."}
+        {
+          "id": "log",
+          "name": "Haul logs",
+          "emoji": "🪵",
+          "kind": "makes",
+          "item": "log",
+          "rate": 0.25,
+          "desc": "Drags a log in from the woodlot."
+        },
+        {
+          "id": "stick",
+          "name": "Fetch sticks",
+          "emoji": "🌿",
+          "kind": "makes",
+          "item": "stick",
+          "rate": 0.5,
+          "desc": "Fetches sticks."
+        }
       ],
       "pet_badger": [
-        {"id": "herbs", "name": "Gather herbs", "emoji": "🌿", "kind": "makes", "item": "herbs", "rate": 0.34, "desc": "Finds herbs at the edge of the wood."},
-        {"id": "compost", "name": "Make compost", "emoji": "🟫", "kind": "makes", "item": "compost", "rate": 0.5, "desc": "Digs old leaves into compost."}
+        {
+          "id": "herbs",
+          "name": "Gather herbs",
+          "emoji": "🌿",
+          "kind": "makes",
+          "item": "herbs",
+          "rate": 0.34,
+          "desc": "Finds herbs at the edge of the wood."
+        },
+        {
+          "id": "compost",
+          "name": "Make compost",
+          "emoji": "🟫",
+          "kind": "makes",
+          "item": "compost",
+          "rate": 0.5,
+          "desc": "Digs old leaves into compost."
+        }
+      ],
+      "pet_alpaca": [
+        {
+          "id": "guard",
+          "name": "Guard the fields",
+          "emoji": "🛡️",
+          "kind": "pests",
+          "amount": 1,
+          "desc": "Chases a pest away from the fields."
+        },
+        {
+          "id": "fleece",
+          "name": "Grow fleece",
+          "emoji": "🧶",
+          "kind": "makes",
+          "item": "wool",
+          "rate": 0.5,
+          "desc": "Grows a little extra wool."
+        }
       ]
     },
     "first": {
-      "pet_tortoise": {"emoji": "💧", "place": "water", "every": 1},
-      "pet_goat": {"emoji": "🌿", "place": "field", "every": 4},
-      "pet_alpaca": {"emoji": "🧶", "place": "spot:pets", "every": 4}
+      "pet_tortoise": {
+        "emoji": "💧",
+        "place": "water",
+        "every": 1
+      },
+      "pet_goat": {
+        "emoji": "🌿",
+        "place": "field",
+        "every": 4
+      },
+      "pet_alpaca": {
+        "emoji": "🧶",
+        "place": "spot:pets",
+        "every": 4
+      }
+    },
+    "whens": {
+      "weeds": {
+        "emoji": "🌿",
+        "name": "Weeds on a patch",
+        "op": ">=",
+        "stat": "weeds_max",
+        "min": 1,
+        "max": 8,
+        "step": 1,
+        "default": 3
+      },
+      "empty": {
+        "emoji": "🟫",
+        "name": "Empty patches",
+        "op": ">=",
+        "stat": "empty_patches",
+        "min": 1,
+        "max": 9,
+        "step": 1,
+        "default": 2
+      },
+      "water": {
+        "emoji": "💧",
+        "name": "Water",
+        "op": "<",
+        "stat": "water",
+        "min": 2,
+        "max": 40,
+        "step": 2,
+        "default": 8
+      },
+      "compost": {
+        "emoji": "🟫",
+        "name": "Compost",
+        "op": "<",
+        "item": "compost",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "default": 3
+      },
+      "sticks": {
+        "emoji": "🌿",
+        "name": "Sticks",
+        "op": "<",
+        "item": "stick",
+        "min": 2,
+        "max": 10,
+        "step": 2,
+        "default": 6
+      },
+      "logs": {
+        "emoji": "🪵",
+        "name": "Logs",
+        "op": "<",
+        "item": "log",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "default": 4
+      },
+      "herbs": {
+        "emoji": "🌿",
+        "name": "Herbs",
+        "op": "<",
+        "item": "herbs",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "default": 4
+      },
+      "pests": {
+        "emoji": "🐦",
+        "name": "Pests",
+        "op": ">=",
+        "stat": "pests",
+        "min": 1,
+        "max": 8,
+        "step": 1,
+        "default": 2
+      }
+    },
+    "allowedWhens": {
+      "pet_bunny": [
+        "weeds",
+        "empty"
+      ],
+      "pet_tortoise": [
+        "water",
+        "weeds"
+      ],
+      "pet_goat": [
+        "weeds",
+        "compost"
+      ],
+      "pet_pony": [
+        "sticks",
+        "logs"
+      ],
+      "pet_badger": [
+        "herbs",
+        "compost"
+      ],
+      "pet_alpaca": [
+        "pests",
+        "empty"
+      ]
     }
   }
 }

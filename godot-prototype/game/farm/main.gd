@@ -418,7 +418,8 @@ func refresh() -> void:
 		_last_season = G.seasons.season()
 	if not modal.visible: Sound.music("farm", G.seasons.season())
 	map.set_perks({"butterflies": G.rewards.perk_on("perk_butterflies"), "sparkles": G.rewards.perk_on("perk_sparkles"),
-		"rainbow": G.rewards.perk_on("perk_rainbow"), "breeze": G.rewards.perk_on("perk_breeze")})
+		"rainbow": G.rewards.perk_on("perk_rainbow"), "breeze": G.rewards.perk_on("perk_breeze"),
+		"fireflies": G.rewards.perk_on("perk_fireflies"), "stars": G.rewards.perk_on("perk_stars")})
 	var lk: Dictionary = S.get("look", {})
 	var ls := JSON.stringify(lk)
 	if ls != _look_sig and map.avatar:

@@ -63,7 +63,7 @@ static func apply(main, G) -> void:
 				G.trip.pack(parts2[0], int(parts2[1]) if parts2.size() > 1 else 1)
 		elif a == "--gate": G.S["gate"] = {"here": true, "until": 999, "cart": 12.0, "visits": 1}; G.S["unlocked"]["road_2"] = true; G.invalidate_caps()     # screenshots: the travelling merchant is at the gate
 		elif a == "--pets":                        # screenshots: the first three pets are home (the bunny and the tortoise have jobs), the patches are weedy
-			for pid in ["pet_bunny", "pet_tortoise", "pet_goat"]: G.S["unlocked"][pid] = true
+			for pid in ["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony"]: G.S["unlocked"][pid] = true
 			for i in range(mini(G.S["patches"].size(), 4)): G.S["patches"][i]["weeds"] = 4.0
 			G.invalidate_caps()
 		elif a == "--well":                        # screenshots: chapter 2, the book Body and mind and two of its cards learned, some parameters moved (use with --spot=… or --sheet=well)

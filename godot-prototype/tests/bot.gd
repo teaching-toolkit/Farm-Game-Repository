@@ -30,6 +30,7 @@ func _ready() -> void:
 		if a.begins_with("--iters="): max_iters = int(a.substr(8))
 		if a.begins_with("--chapter="): target_chapter = int(a.substr(10))
 		if a == "--flex": flex = true
+		if a == "--end": target_chapter = 7          # play to the end of the story (until the last pet is home)
 		if a.begins_with("--trace="): trace = int(a.substr(8))
 		if a.begins_with("--accuracy="): accuracy = clampf(float(a.substr(11)), 0.05, 1.0)
 		if a.begins_with("--seed="): quiz_rng.seed = int(a.substr(7)) + 1
@@ -47,6 +48,7 @@ func _ready() -> void:
 	var it := 0
 	_begin_chapter()
 	while it < max_iters and G.chapter() < target_chapter:
+		if target_chapter == 7 and G.pets.free_play(): break
 		it += 1
 		var st0: int = G.S["step"]
 		_turn()

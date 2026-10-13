@@ -104,6 +104,10 @@ class MapFx extends Control:
 	var flies := []
 	var sparks := []
 	var drift := []
+	var glow := []                 # fireflies (perk)
+	var star_t := -1.0             # a shooting star crossing the sky (perk); < 0: none now
+	var star_wait := 6.0
+	var star_from := Vector2.ZERO
 	var rainbow_t := -1.0
 	var rainbow_len := 40.0
 	var t := 0.0
@@ -123,6 +127,10 @@ class MapFx extends Control:
 		elif drift.is_empty():
 			for i in range(22): drift.append(_flake(true))
 		if not on.get("rainbow", false): rainbow_t = -1.0
+		if not on.get("fireflies", false): glow.clear()
+		elif glow.is_empty():
+			for i in range(14): glow.append({"p": _spot(), "ph": randf() * TAU, "v": Vector2(randf_range(-9.0, 9.0), randf_range(-6.0, 6.0))})
+		if not on.get("stars", false): star_t = -1.0
 
 	func set_season(s: String) -> void:
 		if s == season: return
@@ -151,8 +159,19 @@ class MapFx extends Control:
 
 	func _process(d: float) -> void:
 		t += d
-		var busy := not flies.is_empty() or not sparks.is_empty() or not drift.is_empty() or rainbow_t >= 0.0
+		var busy := not flies.is_empty() or not sparks.is_empty() or not drift.is_empty() or rainbow_t >= 0.0 or not glow.is_empty() or on.get("stars", false)
 		if not busy: return
+		for g in glow:
+			g["ph"] = float(g["ph"]) + d * 2.4
+			g["p"] = g["p"] + (g["v"] as Vector2) * d
+			if g["p"].x < 0.0 or g["p"].x > size.x or g["p"].y < size.y * 0.3 or g["p"].y > size.y: g["v"] = -(g["v"] as Vector2)
+		if on.get("stars", false):
+			if star_t >= 0.0:
+				star_t += d
+				if star_t > 1.1: star_t = -1.0; star_wait = randf_range(14.0, 30.0)
+			else:
+				star_wait -= d
+				if star_wait <= 0.0: star_t = 0.0; star_from = Vector2(randf_range(0.2, 0.8) * size.x, randf_range(0.02, 0.15) * size.y)
 		for f in flies:
 			f["ph"] = float(f["ph"]) + d * 16.0
 			if float(f["rest"]) > 0.0:
@@ -191,6 +210,16 @@ class MapFx extends Control:
 				draw_arc(c, r0 - i * 9.0, PI * 1.08, PI * 1.92, 64, Color(col.r, col.g, col.b, 0.38 * a), 9.0, true)
 		for fl in drift:
 			_flake_draw(fl)
+		for g in glow:
+			var b := 0.5 + 0.5 * sin(float(g["ph"]))
+			draw_circle(g["p"], 7.0, Color(1.0, 0.92, 0.45, 0.10 + 0.18 * b))
+			draw_circle(g["p"], 2.6, Color(1.0, 0.95, 0.6, 0.55 + 0.45 * b))
+		if star_t >= 0.0:
+			var k2 := star_t / 1.1
+			var head := star_from + Vector2(260.0, 150.0) * k2
+			var tail := head - Vector2(80.0, 46.0) * sin(k2 * PI)
+			draw_line(tail, head, Color(1, 1, 0.85, 0.9 * (1.0 - k2)), 3.0, true)
+			draw_circle(head, 3.5, Color(1, 1, 0.9, 1.0 - k2))
 		for f in flies:
 			var p: Vector2 = f["p"]
 			var flap := absf(sin(float(f["ph"])))

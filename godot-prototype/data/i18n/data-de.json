@@ -2831,6 +2831,78 @@
   "en": "Healer Wren kneeling in her new herb garden, holding a bunch of your herbs",
   "de": "Die Heilerin Wren kniet in ihrem neuen Kräutergarten und hält einen Strauss von deinen Kräutern"
  },
+ "nodes/sq_free_family/name": {
+  "en": "A table for the family",
+  "de": "Ein Tisch für die Familie"
+ },
+ "nodes/sq_free_family/desc": {
+  "en": "Reward: a picture for the album — the whole family at the long table, and your cousin passing you the bread.",
+  "de": "Belohnung: ein Bild für das Album – die ganze Familie am langen Tisch, und dein Cousin reicht dir das Brot."
+ },
+ "nodes/sq_free_family/reward/picture": {
+  "en": "The whole family at the long table, your cousin passing you the bread",
+  "de": "Die ganze Familie am langen Tisch, dein Cousin reicht dir das Brot"
+ },
+ "nodes/sq_free_quill/name": {
+  "en": "Everything to count for Quill",
+  "de": "Alles zum Zählen für Quill"
+ },
+ "nodes/sq_free_quill/desc": {
+  "en": "Reward: a picture for the album — Quill the steward, his ledger open, counting your baskets one by one and smiling for the first time.",
+  "de": "Belohnung: ein Bild für das Album – Quill, der Verwalter, mit offenem Buch, der deine Körbe einen nach dem anderen zählt und zum ersten Mal lächelt."
+ },
+ "nodes/sq_free_quill/reward/picture": {
+  "en": "Quill the steward counting your baskets one by one, his ledger open, smiling",
+  "de": "Quill, der Verwalter, zählt deine Körbe einen nach dem anderen, sein Buch offen, und lächelt"
+ },
+ "nodes/sq_free_greenstem/name": {
+  "en": "A chest for Greenstem",
+  "de": "Eine Truhe für Greenstem"
+ },
+ "nodes/sq_free_greenstem/desc": {
+  "en": "Reward: a picture for the album — Greenstem and Wren side by side at the still-room door, a box of remedies between them.",
+  "de": "Belohnung: ein Bild für das Album – Greenstem und Wren Seite an Seite an der Tür der Destillierstube, eine Kiste mit Heilmitteln zwischen ihnen."
+ },
+ "nodes/sq_free_greenstem/reward/picture": {
+  "en": "Greenstem and Wren side by side at the still-room door, a box of remedies between them",
+  "de": "Greenstem und Wren Seite an Seite an der Tür der Destillierstube, eine Kiste mit Heilmitteln zwischen ihnen"
+ },
+ "nodes/sq_free_miller/name": {
+  "en": "Flour for the miller",
+  "de": "Mehl für den Müller"
+ },
+ "nodes/sq_free_miller/desc": {
+  "en": "Reward: a picture for the album — the old miller on his steps, white with flour, watching the sails turn.",
+  "de": "Belohnung: ein Bild für das Album – der alte Müller auf seiner Treppe, weiss vom Mehl, er sieht den Flügeln beim Drehen zu."
+ },
+ "nodes/sq_free_miller/reward/picture": {
+  "en": "The old miller on his steps, white with flour, watching the sails turn",
+  "de": "Der alte Müller auf seiner Treppe, weiss vom Mehl, sieht den Flügeln beim Drehen zu"
+ },
+ "nodes/sq_free_lark/name": {
+  "en": "A name for the squirrel",
+  "de": "Ein Name für das Eichhörnchen"
+ },
+ "nodes/sq_free_lark/desc": {
+  "en": "Reward: a picture for the album — Lark on the fence with a squirrel on his shoulder, very proud of the name.",
+  "de": "Belohnung: ein Bild für das Album – Lark auf dem Zaun, ein Eichhörnchen auf der Schulter, sehr stolz auf den Namen."
+ },
+ "nodes/sq_free_lark/reward/picture": {
+  "en": "Lark on the fence with a squirrel on his shoulder, very proud of its name",
+  "de": "Lark auf dem Zaun mit einem Eichhörnchen auf der Schulter, sehr stolz auf seinen Namen"
+ },
+ "nodes/sq_free_garden/name": {
+  "en": "A bowl of milk for the night garden",
+  "de": "Eine Schale Milch für den Nachtgarten"
+ },
+ "nodes/sq_free_garden/desc": {
+  "en": "Reward: a picture for the album — a bowl of milk at the edge of the dark garden, and two very soft rings of a very small bell.",
+  "de": "Belohnung: ein Bild für das Album – eine Schale Milch am Rand des dunklen Gartens und zwei ganz leise Töne einer ganz kleinen Glocke."
+ },
+ "nodes/sq_free_garden/reward/picture": {
+  "en": "A bowl of milk at the edge of the dark garden under the moon",
+  "de": "Eine Schale Milch am Rand des dunklen Gartens unter dem Mond"
+ },
  "nodes/book_basics/name": {
   "en": "The Little Farm Book",
   "de": "Das kleine Hofbuch"
@@ -11895,6 +11967,54 @@
   "en": "A letter with a seal",
   "de": "Ein Brief mit Siegel"
  },
+ "story/c6_free_family/text": {
+  "en": "Your cousin pushes the pie across the table and looks at his plate. “I should have said it differently, that day.” “Yes,” you say. Then you pass the bread, and that is how it is mended.",
+  "de": "Dein Cousin schiebt den Kuchen über den Tisch und schaut auf seinen Teller. „Ich hätte es damals anders sagen sollen.“ „Ja“, sagst du. Dann reichst du das Brot weiter, und so wird es wieder gut."
+ },
+ "story/c6_free_family/title": {
+  "en": "The long table",
+  "de": "Der lange Tisch"
+ },
+ "story/c6_free_quill/text": {
+  "en": "Quill counts every basket twice. “A tenth,” he says, and writes it with a small flourish. “The Lord will like the numbers. I like them better.” He looks at your fields as if they were a poem.",
+  "de": "Quill zählt jeden Korb zweimal. „Ein Zehntel“, sagt er und schreibt es mit einem kleinen Schnörkel. „Dem Herrn werden die Zahlen gefallen. Mir gefallen sie noch besser.“ Er betrachtet deine Felder, als wären sie ein Gedicht."
+ },
+ "story/c6_free_quill/title": {
+  "en": "Quill counts",
+  "de": "Quill zählt"
+ },
+ "story/c6_free_greenstem/text": {
+  "en": "Greenstem takes the chest in both arms. “Wren says I may carry it to the village myself.” Wren, behind him, folds her arms and does not say a word. Her eyes say a lot.",
+  "de": "Greenstem nimmt die Truhe in beide Arme. „Wren sagt, ich darf sie selbst ins Dorf tragen.“ Wren, hinter ihm, verschränkt die Arme und sagt kein Wort. Ihre Augen sagen viel."
+ },
+ "story/c6_free_greenstem/title": {
+  "en": "Two healers",
+  "de": "Zwei Heiler"
+ },
+ "story/c6_free_miller/text": {
+  "en": "The miller pours your flour into his hopper. The sails creak, then turn, slowly, as they did before the fire. “Hear that?” he says. “That is Hazelwood having bread again.”",
+  "de": "Der Müller schüttet dein Mehl in seinen Trichter. Die Flügel knarren, dann drehen sie sich, langsam, wie vor dem Feuer. „Hörst du das?“, sagt er. „So klingt es, wenn Hazelwood wieder Brot hat.“"
+ },
+ "story/c6_free_miller/title": {
+  "en": "The sails turn",
+  "de": "Die Flügel drehen sich"
+ },
+ "story/c6_free_lark/text": {
+  "en": "Lark holds out the cake. The squirrel takes it with both hands. “Nutmeg,” Lark announces. “Obviously.” The squirrel does not look as if it has any other opinion. You laugh until the fence shakes.",
+  "de": "Lark hält den Kuchen hin. Das Eichhörnchen nimmt ihn mit beiden Händen. „Nutmeg“, verkündet Lark. „Natürlich.“ Das Eichhörnchen sieht nicht aus, als hätte es eine andere Meinung. Du lachst, bis der Zaun wackelt."
+ },
+ "story/c6_free_lark/title": {
+  "en": "Nutmeg",
+  "de": "Nutmeg"
+ },
+ "story/c6_free_garden/text": {
+  "en": "You set the bowl down at the edge of the garden. You open your mouth. You close it again. Far off, very softly, a very small bell rings twice. You nod, and walk home in the dark, and you are not afraid.",
+  "de": "Du stellst die Schale am Rand des Gartens ab. Du öffnest den Mund. Du schliesst ihn wieder. Weit weg läutet, ganz leise, eine ganz kleine Glocke zweimal. Du nickst und gehst im Dunkeln heim, und du hast keine Angst."
+ },
+ "story/c6_free_garden/title": {
+  "en": "For the night garden",
+  "de": "Für den Nachtgarten"
+ },
  "chapters/0/name": {
   "en": "Ashes",
   "de": "Asche"
@@ -12411,6 +12531,22 @@
   "en": "Blossom petals in spring, leaves in autumn, snowflakes in winter.",
   "de": "Blütenblätter im Frühling, Blätter im Herbst, Schneeflocken im Winter."
  },
+ "meta/perks/list/9/name": {
+  "en": "Fireflies",
+  "de": "Glühwürmchen"
+ },
+ "meta/perks/list/9/desc": {
+  "en": "Little lights drift over the farm. A thank-you from the night garden.",
+  "de": "Kleine Lichter schweben über dem Hof. Ein Dankeschön vom Nachtgarten."
+ },
+ "meta/perks/list/10/name": {
+  "en": "Shooting stars",
+  "de": "Sternschnuppen"
+ },
+ "meta/perks/list/10/desc": {
+  "en": "Now and then a star falls across the sky. A thank-you from Lark, who says he did not arrange it.",
+  "de": "Ab und zu fällt ein Stern über den Himmel. Ein Dankeschön von Lark, der sagt, er habe das nicht arrangiert."
+ },
  "meta/postcards/news/pet": {
   "en": "your new {pet}",
   "de": "deinem neuen {pet}"
@@ -12518,6 +12654,54 @@
  "meta/pets/jobs/pet_badger/1/desc": {
   "en": "Digs old leaves into compost.",
   "de": "Gräbt altes Laub zu Kompost um."
+ },
+ "meta/pets/jobs/pet_alpaca/0/name": {
+  "en": "Guard the fields",
+  "de": "Die Felder bewachen"
+ },
+ "meta/pets/jobs/pet_alpaca/0/desc": {
+  "en": "Chases a pest away from the fields.",
+  "de": "Jagt einen Schädling von den Feldern."
+ },
+ "meta/pets/jobs/pet_alpaca/1/name": {
+  "en": "Grow fleece",
+  "de": "Vlies wachsen lassen"
+ },
+ "meta/pets/jobs/pet_alpaca/1/desc": {
+  "en": "Grows a little extra wool.",
+  "de": "Lässt ein wenig zusätzliche Wolle wachsen."
+ },
+ "meta/pets/whens/weeds/name": {
+  "en": "Weeds on a patch",
+  "de": "Unkraut auf einem Beet"
+ },
+ "meta/pets/whens/empty/name": {
+  "en": "Empty patches",
+  "de": "Leere Beete"
+ },
+ "meta/pets/whens/water/name": {
+  "en": "Water",
+  "de": "Wasser"
+ },
+ "meta/pets/whens/compost/name": {
+  "en": "Compost",
+  "de": "Kompost"
+ },
+ "meta/pets/whens/sticks/name": {
+  "en": "Sticks",
+  "de": "Stöcke"
+ },
+ "meta/pets/whens/logs/name": {
+  "en": "Logs",
+  "de": "Baumstämme"
+ },
+ "meta/pets/whens/herbs/name": {
+  "en": "Herbs",
+  "de": "Kräuter"
+ },
+ "meta/pets/whens/pests/name": {
+  "en": "Pests",
+  "de": "Schädlinge"
  },
  "meta/well/visit/messages/0": {
   "en": "{name} shows you the garden. You eat warm bread on the doorstep and laugh until your tummy hurts.",

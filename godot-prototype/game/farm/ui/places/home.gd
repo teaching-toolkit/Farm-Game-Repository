@@ -76,12 +76,45 @@ func _job_board(pid: String) -> void:
 		var on: bool = j["id"] == cur
 		bx.add_child(UI.button("%s%s %s" % ["✔ " if on else "", j["emoji"], tr(str(j["name"]))], G.pets.choose.bind(pid, j["id"]), not on, UI.GREEN if on else UI.AMBER, 16))
 	M.content.add_child(bx)
+	if G.pets.level(pid) >= 3: _when_row(pid, 0, tr("WHEN"))
+	if G.pets.level(pid) >= 4:
+		var cur2: String = G.pets.second_job(pid)
+		var bx2 := HFlowContainer.new()
+		bx2.add_theme_constant_override("h_separation", 6)
+		bx2.add_child(UI.label(tr("OTHERWISE"), 15, UI.MUTED))
+		for j in jobs:
+			var on2: bool = j["id"] == cur2
+			bx2.add_child(UI.button("%s%s %s" % ["✔ " if on2 else "", j["emoji"], tr(str(j["name"]))], G.pets.set_second_job.bind(pid, j["id"]), not on2, UI.GREEN if on2 else UI.AMBER, 15))
+		M.content.add_child(bx2)
+		_when_row(pid, 1, tr("WHEN"))
 	var last := G.pets.last(pid)
 	if not last.is_empty():
 		var jb: Dictionary = G.pets.job(pid, str(last.get("job", "")))
 		var txt := tr("   Last question: %s") % tr(str(jb.get("name", "")))
-		if not last["ok"]: txt = tr("   Last question: 📦 the store is full") if last.get("why", "") == "full" else tr("   Last question: 💤 nothing to do")
+		if not last["ok"]:
+			match str(last.get("why", "")):
+				"full": txt = tr("   Last question: 📦 the store is full")
+				"wait": txt = tr("   Last question: ⏸️ waiting for its WHEN")
+				_: txt = tr("   Last question: 💤 nothing to do")
 		M.content.add_child(UI.label(txt, 14, UI.MUTED, true))
+
+## A WHEN card (level 3 and 4): tap the card to change it (the last choice is always), − and + set the number.
+func _when_row(pid: String, rule: int, label: String) -> void:
+	var w: Dictionary = G.pets.when_of(pid, rule)
+	var cards: Array = [""] + G.pets.allowed_whens(pid)
+	var cur := str(w.get("card", ""))
+	var nxt: String = cards[(cards.find(cur) + 1) % cards.size()]
+	var row := HFlowContainer.new()
+	row.add_theme_constant_override("h_separation", 6)
+	row.add_child(UI.label(label, 15, UI.MUTED))
+	var c: Dictionary = G.pets.whens().get(cur, {})
+	var txt := tr("always") if cur == "" else "%s %s %s %d" % [c["emoji"], tr(str(c["name"])), "≥" if c["op"] == ">=" else "<", int(w["n"])]
+	row.add_child(UI.button(txt, G.pets.set_when.bind(pid, rule, nxt), true, UI.GREEN, 15))
+	if cur != "":
+		var step := float(c.get("step", 1))
+		row.add_child(UI.soft_button("−", G.pets.set_when.bind(pid, rule, cur, float(w["n"]) - step), float(w["n"]) - step >= float(c["min"]) - 0.001, 18))
+		row.add_child(UI.soft_button("+", G.pets.set_when.bind(pid, rule, cur, float(w["n"]) + step), float(w["n"]) + step <= float(c["max"]) + 0.001, 18))
+	M.content.add_child(row)
 
 func part_jobs() -> void:
 	M.widgets.section(tr("📋 Little jobs"), tr("A few coins and a bit of luck for each."))

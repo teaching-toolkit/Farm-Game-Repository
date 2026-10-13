@@ -872,7 +872,7 @@ pet corner then shows its job board, two jobs to choose from (✔ marks the one 
 bunny and goat pull weeds (the patch with most), bunny and tortoise pick stones (they arrive in the store), tortoise brings 1 💧, goat and badger make compost (every other question), pony hauls
 logs (every fourth question) or fetches sticks (every second), badger gathers herbs (every third question). A job that cannot run just waits: 💤 nothing to do, 📦 the store is full; the board says
 what happened in the last question. After the Time Quiz the pets **walk to where they worked** (a patch, the pond, the pet corner), show an emoji and walk back; a pet at level 1 shows its bonus now and
-then (the tortoise 💧, the goat 🌿, the alpaca 🧶). *(Planned: WHEN cards and the second rule, levels 3 and 4: TODO S5.)* Data: `rules/54-pets.json`; system `G.pets`.
+then (the tortoise 💧, the goat 🌿, the alpaca 🧶). **Levels 3 and 4** *(built, phase 12)*: a pet's level is 1 + the pets that came home after it (at most 4); once the last pet is home and the story is over, every pet is level 4 and the alpaca (guard the fields, grow fleece) gets its jobs too. **Level 3** adds a **WHEN card** to the job (weeds on a patch ≥ n, empty patches ≥ n, water < n, compost < n, sticks < n, logs < n, herbs < n, pests ≥ n; the child sets the number with − and +; each pet has two cards that fit it); the pet then works only when the condition holds. **Level 4** adds a second rule, read after the first when its WHEN does not hold (*OTHERWISE*: another job and its own WHEN, or always). A rule that cannot run waits (⏸️). Data: `rules/54-pets.json`; system `G.pets`.
 
 The child names each pet (or keeps the default). Each pet adds a little luck for good, walks about the pet corner, and its
 arrival brings a celebration and a chance of a postcard. The fifth pet needs the most branches at once: fine flour, honey,
@@ -1030,6 +1030,11 @@ real-time gating. A story box has a picture or an emoji, 2–4 short sentences, 
 The **📜 scroll** in the top bar appears with the first piece read and lists what was read, a chapter at a time; a tap reads a piece again. The opening of
 a new game is the bedside frame, then the nibbled stalk, then a short *How to play* hint (what the old welcome taught). German texts follow the English
 ones (the *Du* form, „ss“, no gendered word for the farmer). The bot never opens a box; the data checker knows every condition.
+
+### 11.7 Free play after the story *(built, phase 12)*
+
+When the alpaca has come home the story is over; no epilogue follows. The pets' job boards open fully (§10.3), and six **loose ends** become optional goals in the village (each with a short box and a picture for the album, no grandchildren): a table for the family (the cousin), everything to count for Quill, a chest for Greenstem (with Wren), flour for the miller, a name for the squirrel (Lark; the reward is the
+*shooting stars* perk) and a bowl of milk for the night garden (the reward is the *fireflies* perk; the unsaid thing stays unsaid). Costs are things the farm makes (pies, remedies, flour, a cake, milk). *(Planned: more side quests and add-ons.)*
 
 ## 12. Seasons
 
