@@ -713,6 +713,12 @@
 		"sq_village_well": "board",
 		"sq_telescope": "board",
 		"sq_healer_garden": "board",
+		"sq_free_family": "board",
+		"sq_free_quill": "board",
+		"sq_free_greenstem": "board",
+		"sq_free_miller": "board",
+		"sq_free_lark": "board",
+		"sq_free_garden": "board",
 		"book_basics": "library",
 		"book_village": "library",
 		"book_kitchen": "library",
@@ -1409,7 +1415,13 @@
 			"sq_festival_flags",
 			"sq_village_well",
 			"sq_telescope",
-			"sq_healer_garden"
+			"sq_healer_garden",
+			"sq_free_family",
+			"sq_free_quill",
+			"sq_free_greenstem",
+			"sq_free_miller",
+			"sq_free_lark",
+			"sq_free_garden"
 		],
 		"bookcart": [
 			"book_cart"
