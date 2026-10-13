@@ -83,7 +83,7 @@ def data_texts():
             for k, v in o.items():
                 if k in SKIP or k.endswith("Note"): continue
                 p = f"{path}/{k}"
-                if k in ("name", "desc", "text", "abundance", "hint") or path.endswith("/news"): put(p, v)
+                if k in ("name", "desc", "text", "abundance", "hint", "advice") or path.endswith("/news"): put(p, v)
                 elif k in ("messages", "names") and isinstance(v, list):
                     for i, s in enumerate(v): put(f"{p}/{i}", s)
                 else: walk(v, p)

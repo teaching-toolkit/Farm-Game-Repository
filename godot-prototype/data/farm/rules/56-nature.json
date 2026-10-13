@@ -1,0 +1,13 @@
+{
+  "nature": {
+    "note": "What the forest edge gives (TODO N1-N5, design document 5.9). Each pool is a number from 0 to `max` that falls when something is gathered (`recipes`: how much one tap takes) and grows back by `regrow` every question. The yield of a tap is its amount x max(floor, pool / max), rounded, at least 1, so the campfire is never impossible. The trees are a cycle instead: a tree that is felled becomes a stump, a stump a sapling after about `stumpToSapling` questions, a sapling a tree after about `saplingToTree`. The first time a pool falls below `adviceBelow` of its maximum there is a short advice (a recommendation first, then the yield falls), and again after `adviceEvery` questions. The numbers are shown in the forest edge's window once the card *Take only what grows back* is learned (frozen until then, D4).",
+    "adviceBelow": 0.35,
+    "adviceEvery": 40,
+    "pools": {
+      "sticks": {"emoji": "🌿", "name": "Sticks", "max": 40, "regrow": 1.2, "floor": 0.5, "recipes": {"gather_sticks": 2}, "advice": "The forest edge is running low on sticks. Let it grow back for a while: they come back slowly."},
+      "stones": {"emoji": "🪨", "name": "Loose stones", "max": 30, "regrow": 0.15, "floor": 0.67, "recipes": {"pick_stones": 1, "dig_stones": 3}, "advice": "The loose stones at the forest edge are nearly gone. They hardly come back. Pick the stones out of your fields instead."},
+      "clay": {"emoji": "🟫", "name": "Clay", "max": 20, "regrow": 0.4, "floor": 0.5, "recipes": {"dig_clay": 1}, "advice": "The clay pit is getting empty. It fills up slowly: give it some time."},
+      "trees": {"emoji": "🌲", "name": "Trees", "max": 14, "stumpToSapling": 14, "saplingToTree": 22, "floor": 0.5, "recipes": {"chop_deadwood": 1}, "advice": "Only a few trees are left at the forest edge. Stumps grow new saplings, and saplings grow into trees. Give them time."}
+    }
+  }
+}

@@ -72,6 +72,12 @@ static func apply(main, G) -> void:
 			G.S["well"]["invite"] = "Wren the healer"
 			G.inventory.add_item("porridge", 3.0, true)
 			G.invalidate_caps()
+		elif a == "--nature":                      # screenshots: the forest edge is thin and its card is learned (use with --spot=forest)
+			G.S["unlocked"]["k_regrow"] = true
+			G.S["unlocked"]["wild_edge"] = true
+			G.S["nature"]["pool"] = {"sticks": 9.0, "stones": 4.0, "clay": 16.0}
+			G.S["nature"]["t"] = 5.0; G.S["nature"]["s"] = 6.0; G.S["nature"]["p"] = 3.0
+			G.invalidate_caps()
 		elif a == "--lord": G.S["lord"]["owed"] = 450.0       # screenshots: Pieter waits at the gate for the Lord's share
 		elif a == "--square": G.S["trip"] = {"phase": "square", "bought": 0.0}       # screenshots: standing on the village square (use with --give, --pack, --spot=market)
 		elif a == "--built":                       # screenshots: pretend house, barn and workshop stand

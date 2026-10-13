@@ -8395,6 +8395,78 @@
   "en": "Only on Sundays",
   "de": "Nur sonntags"
  },
+ "nodes/k_regrow/name": {
+  "en": "Take only what grows back",
+  "de": "Nur nehmen, was nachwächst"
+ },
+ "nodes/k_regrow/desc": {
+  "en": "The forest gives, but it needs time to give again.",
+  "de": "Der Wald gibt, aber er braucht Zeit, um wieder zu geben."
+ },
+ "nodes/k_regrow/page": {
+  "en": "The forest gives you sticks, wood and clay. A felled tree leaves a stump, and from the stump a young tree can grow, but that takes a long time. If you take more than grows back, there is less and less. If you take only what grows back, the forest stays alive for ever. Look at how it is doing before you take more.",
+  "de": "Der Wald gibt dir Stöcke, Holz und Lehm. Ein gefällter Baum lässt einen Stumpf zurück, und aus dem Stumpf kann ein junger Baum wachsen, aber das dauert lange. Wenn du mehr nimmst, als nachwächst, wird es immer weniger. Wenn du nur nimmst, was nachwächst, bleibt der Wald für immer lebendig. Schau, wie es ihm geht, bevor du mehr nimmst."
+ },
+ "nodes/k_regrow/questions/0/q": {
+  "en": "What happens if you cut more trees than grow back?",
+  "de": "Was passiert, wenn du mehr Bäume fällst, als nachwachsen?"
+ },
+ "nodes/k_regrow/questions/0/why": {
+  "en": "Trees need a long time to grow, so cutting too many leaves the forest bare.",
+  "de": "Bäume brauchen lange zum Wachsen, darum macht zu viel Fällen den Wald kahl."
+ },
+ "nodes/k_regrow/questions/0/answers/0": {
+  "en": "There are fewer and fewer trees",
+  "de": "Es gibt immer weniger Bäume"
+ },
+ "nodes/k_regrow/questions/0/answers/1": {
+  "en": "The forest gets bigger",
+  "de": "Der Wald wird grösser"
+ },
+ "nodes/k_regrow/questions/0/answers/2": {
+  "en": "Nothing changes",
+  "de": "Nichts ändert sich"
+ },
+ "nodes/k_regrow/questions/1/q": {
+  "en": "How can a forest give wood for ever?",
+  "de": "Wie kann ein Wald für immer Holz geben?"
+ },
+ "nodes/k_regrow/questions/1/why": {
+  "en": "If you take only as much as grows back, the forest never runs out.",
+  "de": "Wer nur so viel nimmt, wie nachwächst, dem geht der Wald nie aus."
+ },
+ "nodes/k_regrow/questions/1/answers/0": {
+  "en": "By taking only what grows back",
+  "de": "Indem man nur nimmt, was nachwächst"
+ },
+ "nodes/k_regrow/questions/1/answers/1": {
+  "en": "By cutting everything at once",
+  "de": "Indem man alles auf einmal fällt"
+ },
+ "nodes/k_regrow/questions/1/answers/2": {
+  "en": "By never using any wood",
+  "de": "Indem man nie Holz braucht"
+ },
+ "nodes/k_regrow/questions/2/q": {
+  "en": "What grows from a stump or a seed in the forest?",
+  "de": "Was wächst im Wald aus einem Stumpf oder einem Samen?"
+ },
+ "nodes/k_regrow/questions/2/why": {
+  "en": "A sapling is a young tree, and it needs many years to become big.",
+  "de": "Ein Setzling ist ein junger Baum, und er braucht viele Jahre, um gross zu werden."
+ },
+ "nodes/k_regrow/questions/2/answers/0": {
+  "en": "A young tree, slowly",
+  "de": "Ein junger Baum, langsam"
+ },
+ "nodes/k_regrow/questions/2/answers/1": {
+  "en": "A stone",
+  "de": "Ein Stein"
+ },
+ "nodes/k_regrow/questions/2/answers/2": {
+  "en": "A carrot",
+  "de": "Eine Karotte"
+ },
  "nodes/straw_sandals/name": {
   "en": "Straw Sandals",
   "de": "Strohsandalen"
@@ -11138,5 +11210,37 @@
  "meta/well/params/play/hint": {
   "en": "Music, drawing, a party, a visit.",
   "de": "Musik, Zeichnen, ein Fest, ein Besuch."
+ },
+ "meta/nature/pools/sticks/name": {
+  "en": "Sticks",
+  "de": "Stöcke"
+ },
+ "meta/nature/pools/sticks/advice": {
+  "en": "The forest edge is running low on sticks. Let it grow back for a while: they come back slowly.",
+  "de": "Am Waldrand werden die Stöcke knapp. Lass ihn eine Weile nachwachsen: Sie kommen nur langsam zurück."
+ },
+ "meta/nature/pools/stones/name": {
+  "en": "Loose stones",
+  "de": "Lose Steine"
+ },
+ "meta/nature/pools/stones/advice": {
+  "en": "The loose stones at the forest edge are nearly gone. They hardly come back. Pick the stones out of your fields instead.",
+  "de": "Die losen Steine am Waldrand sind fast weg. Sie kommen kaum zurück. Lies stattdessen die Steine aus deinen Feldern."
+ },
+ "meta/nature/pools/clay/name": {
+  "en": "Clay",
+  "de": "Lehm"
+ },
+ "meta/nature/pools/clay/advice": {
+  "en": "The clay pit is getting empty. It fills up slowly: give it some time.",
+  "de": "Die Lehmgrube wird leer. Sie füllt sich langsam: Gib ihr etwas Zeit."
+ },
+ "meta/nature/pools/trees/name": {
+  "en": "Trees",
+  "de": "Bäume"
+ },
+ "meta/nature/pools/trees/advice": {
+  "en": "Only a few trees are left at the forest edge. Stumps grow new saplings, and saplings grow into trees. Give them time.",
+  "de": "Am Waldrand stehen nur noch wenige Bäume. Aus Stümpfen wachsen neue Setzlinge, und Setzlinge werden zu Bäumen. Gib ihnen Zeit."
  }
 }

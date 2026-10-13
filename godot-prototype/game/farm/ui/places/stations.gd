@@ -72,6 +72,7 @@ func station_card(root: String) -> PanelContainer:
 	var skill := ""
 	if fam != "" and G.reveal.shown("skills") and G.skills.rank(fam) > 0: skill = "   %s %s" % [G.skills.family_emoji(fam), tr(G.skills.rank_name(G.skills.rank(fam)))]
 	v.add_child(UI.label("%s %s%s" % [n.get("emoji", ""), n["name"], skill], 19, UI.INK, true))
+	if root == "wild_edge" and G.nature.known(): _nature_rows(v)
 	var soonest := 999
 	for job in running: soonest = mini(soonest, G.up(job["left"]))
 	var att := []
@@ -108,7 +109,7 @@ func station_card(root: String) -> PanelContainer:
 			continue
 		var outs := []
 		var batch: int = G.crafting.recipe_batch(rid)     # carrying gear: a bigger load per tap (and more energy)
-		for k in r["outputs"]: outs.append("%s%s" % [G.iemoji(k), M.widgets.num(float(r["outputs"][k]) * G.m("out:" + r["station"]) * batch)])
+		for k in r["outputs"]: outs.append("%s%s" % [G.iemoji(k), M.widgets.num(G.nature.scaled(rid, float(r["outputs"][k]) * G.m("out:" + r["station"]) * batch))])
 		var pay: Dictionary = G.crafting.recipe_cost(rid)
 		var c: Dictionary = pay.duplicate()
 		var base: Dictionary = G.crafting.recipe_cost_base(rid)
@@ -147,6 +148,20 @@ func station_card(root: String) -> PanelContainer:
 	if grid.get_child_count() > 0: v.add_child(grid)
 	for line in locked: v.add_child(UI.label(line, 14, UI.MUTED, true))
 	return pc
+
+## How the forest edge is doing (TODO N3, N4): a bar for what grows back, and the trees' cycle (shown once the card *Take only what grows back* is learned).
+func _nature_rows(v: VBoxContainer) -> void:
+	for p in G.nature.pools():
+		var sp: Dictionary = G.nature.pools()[p]
+		var row := UI.hbox(8)
+		row.add_child(UI.label("%s" % sp["emoji"], 20))
+		var bv := UI.vbox(1)
+		bv.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		bv.add_child(UI.label(tr(str(sp["name"])), 15, UI.INK))
+		bv.add_child(UI.bar(G.nature.fill(p), 200, 10, UI.GREEN if G.nature.fill(p) >= 0.35 else UI.RED))
+		row.add_child(bv)
+		if p == "trees": row.add_child(UI.label("🌲%d  🪵%d  🌱%d" % [G.down(G.nature.trees()), G.down(G.nature.stumps() + 0.5), G.down(G.nature.saplings() + 0.5)], 16, UI.INK))
+		v.add_child(row)
 
 func do_cut_tree(a: String, i: int) -> void:
 	if G.fields.cut_tree(a, i): M.sheets.open_sheet("patch:%s:%d" % [a, i])

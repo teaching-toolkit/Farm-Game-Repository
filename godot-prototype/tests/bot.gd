@@ -66,6 +66,7 @@ func _ready() -> void:
 			var ps: Array = pace_sum.get(G.chapter(), [0.0, 0])
 			pace_sum[G.chapter()] = [float(ps[0]) + float(G.S["pace"]), int(ps[1]) + 1]
 		if it % 200 == 0:
+			if "--nature" in OS.get_cmdline_user_args(): print("   NATURE sticks %.1f stones %.1f clay %.1f trees %.1f stumps %.1f saplings %.1f" % [G.nature.level("sticks"), G.nature.level("stones"), G.nature.level("clay"), G.nature.trees(), G.nature.stumps(), G.nature.saplings()])
 			print("iter %d step %d ch %d unlocked %d cards %d coins %d energy %d season %s" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.progression.cards_learned(), int(G.S["coins"]), int(G.S["energy"]), G.seasons.season()])
 	if "--stuck" in OS.get_cmdline_user_args():
 		for id in G.nodes:

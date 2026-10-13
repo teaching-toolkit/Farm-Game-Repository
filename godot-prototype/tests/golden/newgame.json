@@ -86,6 +86,13 @@
 	},
 	"luck_boosts": [],
 	"market": {},
+	"nature": {
+		"advice": {},
+		"p": 0.0,
+		"pool": {},
+		"s": 0.0,
+		"t": -1.0
+	},
 	"open_early": {},
 	"orchard": [],
 	"patches": [

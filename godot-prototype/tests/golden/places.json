@@ -799,6 +799,7 @@
 		"k_friends": "library",
 		"k_calm": "library",
 		"k_play": "library",
+		"k_regrow": "library",
 		"straw_sandals": "living",
 		"wooden_clogs": "living",
 		"hobnail_boots": "living",
@@ -1371,6 +1372,7 @@
 			"k_friends",
 			"k_calm",
 			"k_play",
+			"k_regrow",
 			"polish_library"
 		],
 		"bookcart": [
@@ -1513,6 +1515,7 @@
 			"k_friends",
 			"k_calm",
 			"k_play",
+			"k_regrow",
 			"polish_library",
 			"campfire",
 			"chopping_block",

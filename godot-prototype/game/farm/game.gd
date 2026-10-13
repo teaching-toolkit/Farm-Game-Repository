@@ -107,6 +107,7 @@ var gate: FarmGate
 var lord: FarmLord
 var pets: FarmPets
 var well: FarmWell
+var nature: FarmNature
 var trust: FarmTrust
 
 func _init() -> void:
@@ -130,6 +131,7 @@ func _init() -> void:
 	lord = FarmLord.new(self)
 	pets = FarmPets.new(self)
 	well = FarmWell.new(self)
+	nature = FarmNature.new(self)
 	trust = FarmTrust.new(self)
 
 # ------------------------------------------------------------------ start, seed and clock
@@ -310,7 +312,7 @@ func save_defaults() -> Dictionary:
 ## Everything a save holds in a new game: the Game's keys and every system's.
 func all_save_defaults() -> Dictionary:
 	var d := save_defaults()
-	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story, trip, gate, lord, pets, well]:
+	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story, trip, gate, lord, pets, well, nature]:
 		d.merge(sys.save_defaults())
 	return d
 
@@ -538,6 +540,7 @@ func setup_clock() -> void:
 	clock.register("producers", inventory.step_producers)
 	clock.register("pets", pets.step)
 	clock.register("well", well.step)
+	clock.register("nature", nature.step)
 	clock.register("crops", fields.step_crops)
 	clock.register("weeds", fields.tick_weeds_stones)
 	clock.register("pests", fields.step_pests)

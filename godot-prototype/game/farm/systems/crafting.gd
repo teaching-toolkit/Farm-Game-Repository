@@ -220,9 +220,11 @@ func _recipe_out(rid: String, n := 1, grade := -1) -> void:
 		var q := float(r["outputs"][k]) * G.m("out:" + r["station"]) * float(n)
 		var gm = G.seasons.smod("gather", {})
 		if typeof(gm) == TYPE_DICTIONARY and gm.has(rid): q *= float(gm[rid])
+		q = G.nature.scaled(rid, q)         # a thin forest edge gives less (never less than 1)
 		q = G.inventory.add_item(k, q, false, grade)
 		arrived[k] = q
 		got.append("%s%d" % [G.iemoji(k), G.down(q)])
+	G.nature.took(rid, float(n))
 	var shown_grade := "  " + G.quality.stars(grade if grade >= 0 else G.quality.default_grade()) if makes_graded(rid) else ""
 	G.say(tr("✨ %s ready: %s") % [str(r.get("name", G.iname(r["outputs"].keys()[0]))), " ".join(got)] + shown_grade)
 	G.inventory.emit_gained("recipe:" + rid, arrived)
