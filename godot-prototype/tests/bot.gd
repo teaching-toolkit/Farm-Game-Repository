@@ -125,6 +125,8 @@ func _ready() -> void:
 			for cid in G.nodes:
 				if G.nodes[cid]["type"] == "crop" and G.nodes[cid].get("yields", {}).has(k): how.append("crop %s done %s" % [cid, G.done(cid)])
 			print("stuck: ", id, " needs ", k, " ", float(x["have"]), "/", float(x["need"]), " <- ", how)
+	if "--dyes" in OS.get_cmdline_user_args():
+		print("dyes: woad crop open ", G.progression.is_open("crop_woad"), " done ", G.done("crop_woad"), " in field ", G.fields.crops_for("field").has("crop_woad"), " sow_ok ", G.fields.sow_ok("field", "crop_woad"), " seeds ", G.fields.seed_have("crop_woad"), " woad ", G.inventory.count("woad"), " blue ", G.inventory.count("blue_dye"), " red ", G.inventory.count("red_dye"), " yellow ", G.inventory.count("yellow_dye"), " recipe blue open ", G.crafting.recipe_open("blue_dye"), " missing ", G.progression.missing_reqs("crop_woad"))
 	var orch := []
 	for p in G.fields.area("orchard"): orch.append(str(p["crop"]))
 	print("orchard: crops possible ", G.fields.crops_for("orchard"), " planted ", orch, "  walnut tree open ", G.done("crop_walnut"), " missing ", G.progression.missing_reqs("crop_walnut"))
