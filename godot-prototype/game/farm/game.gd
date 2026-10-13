@@ -19,6 +19,7 @@ signal ask_name(pet_id: String, default_name: String)
 signal gained(source: String, got: Dictionary, lost: Dictionary)
 signal sold(item: String, n: float, coins: float)   # coins fly to the purse (perk), a jingle
 signal celebrate(id: String)     # a new building, tool or helper: the big pop-up with confetti
+signal revealed(id: String)      # a part of the interface comes into view for the first time (G.reveal)
 
 const SEASON_WORDS := ["spring", "summer", "autumn", "winter"]   # i18n (shown with tr(): "It's spring!")
 const SAVE_PATH := "user://farm_save.json"          # the farm from before players had names
@@ -95,6 +96,7 @@ var crafting: FarmCrafting
 var trade: FarmTrade
 var knowledge: FarmKnowledge
 var rewards: FarmRewards
+var reveal: FarmReveal
 
 func _init() -> void:
 	seasons = FarmSeasons.new(self)
@@ -108,6 +110,7 @@ func _init() -> void:
 	trade = FarmTrade.new(self)
 	knowledge = FarmKnowledge.new(self)
 	rewards = FarmRewards.new(self)
+	reveal = FarmReveal.new(self)
 
 # ------------------------------------------------------------------ start, seed and clock
 
@@ -286,7 +289,7 @@ func save_defaults() -> Dictionary:
 ## Everything a save holds in a new game: the Game's keys and every system's.
 func all_save_defaults() -> Dictionary:
 	var d := save_defaults()
-	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade]:
+	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal]:
 		d.merge(sys.save_defaults())
 	return d
 
@@ -305,6 +308,7 @@ func new_game() -> void:
 		S["patches"][i]["weeds"] = float(st.get("patchWeeds", 0)) + float(i % 2)
 		S["patches"][i]["stones"] = float(st.get("patchStones", 0))
 	rewards.refill_jobs()
+	reveal.settle()
 	save_game()
 
 ## How often the farm was saved (or would be: test runs count too). Every player action ends with a save, so saves minus steps of time is
@@ -351,6 +355,7 @@ func load_game(path := "") -> bool:
 		if nodes.has(nid) and not satisfied(nid): S["unlocked"][nid] = true
 	invalidate_caps()
 	fields.ensure_areas()
+	reveal.settle()          # what a loaded farm already has counts as shown: no "New: …" for it
 	return true
 
 func reset_game() -> void:
@@ -478,6 +483,7 @@ func setup_clock() -> void:
 	clock.register("acorns", rewards.check_acorns)
 	clock.register("unlocks", progression.auto_unlocks)
 	clock.register("perks", rewards.check_perks)
+	clock.register("reveal", reveal.step)
 
 # ------------------------------------------------------------------ conditions ("when" in the data)
 
@@ -500,7 +506,20 @@ func counter(name: String) -> float:
 		"arith_level": return float(math.medal_count(learn_record(), "bronze") + 1)
 		"sold_kinds": return float(S.get("sold_kinds", {}).size())
 		"friends": return float(rewards.friends().size())
+		"coins": return float(S["coins"])
+		"album": return float(S["album"].size())
+		"chapter": return float(chapter())
+		"step": return float(S["step"])
+		"items_seen": return float(S["seen"].size())
 	return NAN
+
+## Has this part of the interface been shown (condition term `seen:<id>`)?
+func seen(id: String) -> bool:
+	return S["revealed"].has(id)
+
+## All of a list of conditions ("when" in the data).
+func cond_all(list: Array) -> bool:
+	return Conditions.check_all(list, self)
 
 # ------------------------------------------------------------------ cheat (for testing)
 

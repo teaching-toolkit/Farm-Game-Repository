@@ -1,0 +1,9 @@
+{
+  "reveal": {
+    "note": "What is shown when (TODO O1-O3, D4). The engine runs from the start; an element listed here appears only when ALL of its conditions hold, and then stays. Conditions: unlocked:<node>, <counter>>=<n> (coins, album, chapter, step, items_seen, weeds, cards, harvests, seasons ...), seen:<element>. An element not listed is always shown. The interface asks G.reveal.shown(id).",
+    "elements": {
+      "coins": {"when": ["coins>=1"], "note": "The purse appears with the first coin: before that a counter at 0 says nothing to a child."},
+      "album": {"when": ["album>=1"], "note": "The album button appears with the first picture in it (a pet, a friend, a postcard, a perk, an acorn)."}
+    }
+  }
+}

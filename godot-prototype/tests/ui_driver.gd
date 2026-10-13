@@ -22,6 +22,8 @@ func rest_state() -> Dictionary: return M.rest_state
 func info_text() -> String: return M.lbl_info.text         # "Chapter 1 · question 12": only changes when the farm has caught up
 func screen_size() -> Vector2: return M.size
 func set_screen_size(v: Vector2) -> void: M.set_deferred("size", v)
+func coins_shown() -> bool: return M.lbl_coins.visible
+func icon_shown(id: String) -> bool: return M.icon_buttons[id].visible
 func hud_fits() -> bool: return M.hud_panel.get_combined_minimum_size().x <= M.size.x + 0.5     # the top bar is not wider than the screen
 func playback_held() -> bool: return M.playback.held
 func playback_playing() -> bool: return M.playback.playing

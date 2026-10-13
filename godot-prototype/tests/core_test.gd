@@ -11,6 +11,7 @@ var checks := 0
 
 class FakeGame:
 	func done(id: String) -> bool: return id == "tent"
+	func seen(id: String) -> bool: return id == "album"
 	func counter(name: String) -> float:
 		return {"weeds": 12.0, "seasons": 2.0}.get(name, NAN)
 
@@ -41,6 +42,11 @@ func _init() -> void:
 	_check(not Conditions.check("weeds>=13", fg), "…not yet")
 	_check(not Conditions.check("unknown>=0", fg), "a counter nobody knows is false")
 	_check(not Conditions.check("weeds", fg) and not Conditions.check("", fg), "nonsense is false")
+	_check(Conditions.check("seen:album", fg) and not Conditions.check("seen:bag", fg), "seen: asks the provider")
+	_check(not Conditions.check("seen:album", Modifiers), "seen: is false for a provider that cannot tell")
+	_check(Conditions.check_all([], fg), "no conditions: holds")
+	_check(Conditions.check_all(["done:tent", "weeds>=10", "seen:album"], fg), "all of a list")
+	_check(not Conditions.check_all(["done:tent", "weeds>=13"], fg), "…one failing makes the list fail")
 	# clock
 	var c = Clock.new()
 	var seen := []

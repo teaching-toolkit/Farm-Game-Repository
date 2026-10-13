@@ -55,6 +55,14 @@ a log row per change; `web-build/` exported at the end of the phase.
 German through `tools/i18n.py`; the smoke test; the bot (it must learn any new mechanic, e.g. market trips, packing, the Lord's share);
 the explorer (pace in hours, Time Quiz and Rest answers per hour); the design document; a log row. **Old saves must keep loading.**
 
+**Phase 4 plan (written 13 Oct 2026; each slice passes `check_all.sh` before the next, a log row each; the version becomes 0.11.0 at the end):**
+1. **4.1 What is shown when (O1–O3, D4).** New system `game/farm/systems/reveal.gd` (`G.reveal.shown(id)`; once shown, always shown: `S["revealed"]`, new key in `save_defaults()`, no version step). Data `data/farm/rules/60-reveal.json`: `elements: {id: {"when": [conditions]}}`; an id that is not listed is always shown. Conditions (`kits/core/conditions.gd`) learn `chapter>=2`, `step>=N` (counters), `seen:<id>` (another element was shown) and `check_all(list)`. The interface asks `shown(id)` for its icons (`album` now; later the face, the bag, the signpost …) and says *New: …* when one appears. The engine keeps running underneath (O2). Paper: the first-screen audit (O1) and the complete D4 table go into the design document as *(planned)*. Bot: unchanged (it plays the rules, not the screen). Checks: core test for the new terms, smoke test (album hidden at the start, shown after the first entry).
+2. **4.2 Item weights (M4).** Weight classes (feather 0.1 · light 0.5 · normal 1 · bulky 2 · heavy 4) in `data/farm/rules/45-carry.json` (by category, overrides per item); `G.inventory.weight_of(k)` and `load()`; nothing shown, nothing limited yet (the first market trip, phase 6). Data checker: every item resolves to a class. No rule changes: golden runs identical.
+3. **4.3 Quality (Y1).** Inventory batches `[season, qty, quality]` (quality only for crops, dishes, crafts, medicine; raw materials have none); old saves: `SAVE_VERSION` 2 gives every existing batch of such an item quality Proper. Quality comes from a score (tools/stations + ingredients' quality + skill rank (4.4) + patch condition) with a small chance of one level up or down; the recipe tile shows what to expect; selling pays Lumpy 60 % · Proper 100 % · Fancy 150 % (best first). The golden runs change on purpose: re-recorded with the new rules.
+4. **4.4 Skills and ranks (Y2).** Eight families, five ranks (10 / 30 / 80 / 200 batches, gates from Skilled on), practice counted per batch of a family, effects through the modifiers (fewer inputs, better quality chances, Handy: less energy, Master: faster). Save key `skills`.
+5. **4.5 Bronze and gold, realistic prices (M2, M1, D3).** Coins counted in bronze (100 = 1 gold), shown as 2 🟡 35 🟤 once gold exists; the price table (D3) replaces today's values; the pricing rule (`meta.pricing`) stops multiplying the mark-up at every stage; the pace is re-checked with the bot and the explorer (the playthrough stays about 20 hours). `SAVE_VERSION` 3 converts old coins.
+Open design questions for 4.3–4.5 go to §2 with a 💡 recommendation as they come up; the parent is away, so easy-to-undo 💡 options are taken and logged in `PROJECT-LOG.md` §2.6.
+
 **T3. The bot plays to the end of chapter 5** (and later chapters' free play). It stalls in chapter 5 (energy 0 after about 800 questions; the alpaca's goals
   need things it does not make). Then the explorer's own simulation and its checks can be replaced by the bot's report and the data checker (the R7 decision). The
   bot also has to learn every new mechanic as it arrives (market trips, packing, the Lord's share …).
@@ -147,7 +155,7 @@ them up, each with a 💡 recommendation.
 - **D3. A realistic price table** ✅ (R1, R2): today's Swiss prices for things the child knows (bread, eggs, milk, a basket, a
   hammer), old-world ratios for the rest; how much wheat a bowl of porridge really takes; seeds sold by the bag (a handful is cheap); an
   axle is expensive. In bronze (100 bronze = 1 gold). 🔗 M1, Y2 (the novice/master rule for what is worth making).
-- **D4. The hidden/frozen/visible table, complete** (O1): every system, what it does before it is shown, and when it is shown. Start:
+- **D4. The hidden/frozen/visible table, complete** (O1) ✅ written into the design document §13.2b on 13 Oct 2026 (it grows when a system is built: add the row there and in `60-reveal.json`). Every system, what it does before it is shown, and when it is shown. Start:
 
   | System | Before it is shown | Shown when |
   |---|---|---|
@@ -467,7 +475,8 @@ Things that don't exist yet (the forest screen before chapter 5) aren't visible 
 
 - **O1. An unlock schedule for the interface:** every button, bar, icon and window, and when it appears (example: after the Home Field
   is cleared completely, a window opens that wasn't there before). Start with an audit of the first screen. 🔗 D4, J8.
-- **O2. The engine runs from the start, the numbers wait** (frozen or hidden, per D4).
+  **Built 13 Oct 2026 (phase 4.1):** `game/farm/systems/reveal.gd` (`G.reveal.shown(id)`, `settle()` on load and new game, `step()` in the clock; save key `revealed`), data `data/farm/rules/60-reveal.json` (`elements: {id: {when: [conditions], note}}`), the interface asks for its icons and the purse (`main.refresh`, `main.icon_buttons`) and says *New: …* (`notes.on_revealed`). Scheduled so far: 🪙 `coins>=1`, 🖼️ `album>=1`. First-screen audit (O1): everything else on the first screen is needed for the first jobs; the bag and the book wait for the new chapter 1 (D2). Conditions learned `seen:<id>`, `check_all`, and the counters `coins`, `album`, `chapter`, `step`, `items_seen`.
+- **O2. The engine runs from the start, the numbers wait** (frozen or hidden, per D4). ✅ mechanism built (O1); each system that waits is hidden through `shown(id)` when it is built.
 - **O3. Triggers:** 💡 reuse the story's trigger language (`story/story-delivery.md` §6: `done:<node>`, `chapter:<n>`, `step>=<n>`,
   `seen:<id>` …) so unlocks and story pieces share one system, and an unlock can come with a story box that explains it.
 

@@ -1,6 +1,6 @@
 # Hazelwood Harvest — Master Design Document
 
-**Version 2.1 · 12 October 2026 · describes game version 0.9.0 (data v0.8) as built** (the game was called *Farm Quiz Game* until
+**Version 2.2 · 13 October 2026 · describes game version 0.10.0 (data v0.8) as built** (the game was called *Farm Quiz Game* until
 0.9.0)
 
 This document describes the game: what it is, how it plays, and why it is made this way. It describes the current design,
@@ -126,7 +126,7 @@ A chapter takes about one to five hours of play; the whole game about 20 hours (
 
 ### 4.1 The Time Quiz — the farm's clock
 
-The ❓ button (an old clock) at the bottom right opens the Time Quiz. **One answer that is right at the first try = one step
+The green clock that hangs from the right end of the top bar opens the Time Quiz. **One answer that is right at the first try = one step
 of farm time.** It is the only thing that moves time. After a wrong first pick the child keeps trying until the right answer
 and its "why" show, but time stays where it was, and that question comes back right after the next one (a pack question as
 well as a card review).
@@ -149,7 +149,7 @@ well as a card review).
 - **Feedback.** A wrong pick greys out and shows a short hint ("Hens lay something you can cook for breakfast"); the right
   one turns green with a one-line "why". Wrong answers can be retried (`wrongAnswer: retry`); only the first try counts for
   the repetition and only a right first try moves time.
-- **Read aloud.** 🔊 reads the question and the answers where the device has a voice.
+- **Read aloud.** Where the device has a voice, 🔊 reads the question and the answers. A device setting (⚙️ Settings, grown-up part) chooses *off* (no 🔊 buttons), *a button* (the default) or *by itself* (each question and card page is read as it opens; 🔊 reads it again).
 - **Every question has an id** that never changes and is never reused: a pack code and a number (`CON-003`, `PIC-012`);
   the knowledge cards' questions are `KNW-001` … `KNW-201`. The learning record and the translations use the id, so the
   record says how well the child knows *that* question in any language, and a question can be reworded without losing
@@ -157,6 +157,12 @@ well as a card review).
 - **Packs now:** *Farm basics* (FRM, 4), *Continents* (CON, 12), *Farm pictures* (PIC, 18, picture questions). A playthrough
   has about 1,400 Time Quiz answers, so a live set of 40–80 questions, swapped as the child learns (one pack per school
   topic or term), keeps it fresh.
+
+- **The farm after the quiz.** While the quiz is open **nothing on the farm changes** (the screen keeps its old look). After *Back to the
+  farm*: a fixed short pause (0.8 s, the same after one question or eight), then what happened plays, mostly together: **rain** first
+  (about a second, if it rained), then the plants **flick through every stage in between** (0.3 s each: sped-up time, not a jump), a bar that
+  changed (energy, water) pulses with its change floating up (−4), pests and the scarecrow play out (§6.4), and last the short notes, a gift or
+  a celebration. **A tap anywhere jumps to the end.** *(planned: a travelling merchant coming down the road, the pets' work)*
 
 A pack file:
 
@@ -407,6 +413,10 @@ decimals anywhere.
   the **North Field** (chapter 4: clear the scrub, then fence it) and the **River Meadow** (chapter 5, optional: drain the
   marsh, then a sluice; it also gives water). Later fields are on the map from the start, overgrown behind a crumbling wall;
   tapping them shows only the mysterious sign until their chapter.
+- **The fields have no sign.** The bottom of a patch's window has a titled section **The whole field**: *Harvest all*, *Pick all weeds*, *Pick all stones*
+  (each with the number of patches it is for; greyed when there are none), then what can be done on the fields (clearing, new land), the field's
+  upgrades and polish, then the pests line. The farmer walks from patch to patch while acting. A small 🔨 shows above the first field when
+  something can be built there.
 - **Clearing takes steps.** The Home Field starts with **one** cleared patch (and one wheat seed to plant in it); the other eight
   are cleared two at a time — *Clear the thistles*, *Pull the weeds*, *Clear the rocks*, *Clear the stumps* — in 4–5 taps each (cut the tall weeds, pull the roots, pick the stones,
   gather the sticks, rake). Every step costs a little energy, gives material back (fibre, stones, sticks, a log) and makes the
@@ -465,7 +475,7 @@ decimals anywhere.
   lavender for slugs and caterpillars, a bird feeder).
 - **Damage.** The pests that stay eat a share of every growing patch: 2 % per pest, at most 35 %, worked out exactly and
   shown rounded; a patch never drops below one plant.
-- **On screen** (played when the farm is seen again after the quiz): the scarecrow throws angry looks (💢😠👀) — as many as
+- **On screen** (played after the quiz, §4.1): the scarecrow throws angry looks (💢😠👀) — as many as
   its level — and the pests it hits fly off; the others fly or crawl to the crops one after another, peck, and speed off
   with a plant. Pests change by chapter: sparrows, rabbits, slugs, caterpillars, voles.
 
@@ -877,6 +887,10 @@ seasons change speeds and amounts:
 
 At each change of season, stale food turns (§5.7).
 
+**The look of the season.** One shader lies over every picture on the map: in **winter** snow caps sit on every top edge (roofs, tree tops,
+fence rails) and the colours are muted and cooler; in **autumn** greens turn golden. Soil and plants keep their own look (muted in winter, no caps).
+*(planned: snow that settles on the ground and must be cleared, bare trees, a smooth change from one season to the next)*
+
 ---
 
 ## 13. The map and the interface
@@ -909,22 +923,53 @@ front. Only a picture's visible pixels react to taps, so a tall roof never steal
 - **No sheet shows anything beyond the current chapter**, and a place's sheet shows what can be done there now; the quest book
   keeps the chapter's "coming up".
 
+### 13.2b What is shown when *(built: the mechanism; planned: most of the schedule)*
+
+The engine runs from the start; **what the child sees comes later.** Every button, bar, icon and number can be given a rule in
+`data/farm/rules/60-reveal.json` (conditions such as `coins>=1`, `chapter>=2`, `step>=40`, `done:<node>`, `seen:<element>`; all must hold).
+When the rule first holds, the thing appears for good with a small hop and a note (*New: …*); a farm that is loaded counts what it already
+has as shown. An element without a rule is always there.
+
+| System | Before it is shown | Shown when |
+|---|---|---|
+| 🪙 The purse (coins) | hidden *(built)* | the first coin |
+| 🖼️ The album button | hidden *(built)* | the first picture in the album |
+| Item weight and carrying *(planned)* | works, unexplained (the bag simply fills) | the first market trip |
+| Energy drain and wellbeing *(planned)* | frozen | chapter 2 (the face appears) |
+| The bed's energy | shown plainly from chapter 1 ("+1 ⚡ per right sum"); that it goes through *sleep* is never said | – |
+| Happy boost from helping *(planned)* | works, unexplained | a book explains it |
+| Sustainability (forest, water, clay) *(planned)* | frozen | chapter 2–3, through a note in the grandmother's book |
+| Market prices changing *(planned)* | frozen | the first season with market news |
+| Merchant favour and trust *(planned)* | works, unexplained | the merchant says so ("for you, a better price") |
+| Skills and practice *(planned)* | works, unexplained | the first rank-up |
+| The Lord's share *(planned)* | does not exist | chapter 2 or 3 |
+| The forest screen *(planned)* | does not exist, not even visible | chapter 5 |
+
+**The first screen today** (a new game): the water and energy bars, the season bar with the question count, the next goal, 🎒, 📖, ⚙️, the
+Time Quiz clock; the farm with its ruins, the tent, the one cleared patch, the workbench, the market stall and the board, each with a 🔨
+when there is something to do. Everything on it is needed for the first jobs, except what 13.2b hides. *(planned with the new chapter 1: the
+bag and the book also wait until the first thing is in the bag and the first goal is done.)*
+
 ### 13.3 Screens
 
-- **Top bar:** 🪙 coins; 💧 water and ⚡ energy as rows of cubes (tap water to fetch, energy to Rest); the season bar (one thin
-  stripe per question, in the season's colour); 🎒 pantry, 📖 quest book, 🖼️ album, ⚙️ settings.
+- **Top bar** (it fits every iPad width from 744 px): 🪙 coins; 💧 water and ⚡ energy as rows of cubes (tap water to fetch, energy to
+  Rest); the season bar (one thin stripe per question, in the season's colour); **the next story goal** across the whole middle (tap: its place
+  glows); 🎒 pantry, 📖 quest book, 🖼️ album, ⚙️ settings; and the **Time Quiz clock** hanging from the bar's right end (its hour hand goes once
+  round per season; tapped, the quiz opens). There is **no bottom bar**: the map runs to the bottom edge. Some of these appear only when
+  they matter (§13.2b).
+- **Notifications** look like a phone's: small cards stacked under the top bar, each with its own time (a hint goes sooner than news); a swipe
+  sideways sends one away; taps outside the cards go through to the farm.
+- **Testing buttons** (⏩ Cheat, 🪙 +50 bronze, 🎓 Quizzes) float at the top left when a grown-up switches them on (device setting).
 - **Tap a place → a sheet slides up** with a picture on top and everything to do there: build, stations and recipes, animals,
   polish. Everything with a button is a **tile in a grid** (like the store and the market): a picture or emoji, the name,
   what it gives and costs, and its button at the bottom, as wide as the tile — recipes, crops to plant, weeds and stones on
   a patch, goals and upgrades (two per row), polish, collecting from animals and mucking out, and the knowledge cards.
-- **Tap a patch that is still overgrown** and the field's sheet opens with a note on top: which patch it is, what is in the way
+- **Tap a patch that is still overgrown** and a window opens with a note on top: which patch it is, what is in the way
   (weeds, rocks, stumps, scrub, marsh) and what clears it, or what is needed first. When planting, a cost the player can't
   pay shows its missing cubes hollow (e.g. the water a full patch needs).
 - **Buildings with an inside** (house, barn, workshop) open a window over the dimmed farm showing the room as a cutaway; its
   corners (bed · books · kitchen; cellar · crocks · hay · seed library; benches · kiln & forge · spinning · tools) open their own
   sheets.
-- **Bottom bar:** the next story goal (tap: its place glows) and the **Time Quiz clock** (its hour hand goes once round per
-  season; tapped, it spins and the quiz opens).
 - **Signs on places:** 🔨 something to build, 🧺 animals ready, ❓ a card quiz, 📖 a card to read, 🍂 stale soon, ⏳ busy, 😴 tired.
 - **⬅️ Back to the farm** closes any window.
 
@@ -939,8 +984,7 @@ front. Only a picture's visible pixels react to taps, so a tall roof never steal
 - **Buttons** carry an emoji and one word (💪 gather, 🌱 plant, 🧺 harvest, 🪓 wood, 🤏 fine work, 🔨 build, 🍲 cook, 🔪 prepare,
   ⚙️ mill, 🫙 press, 🧶 textiles).
 - **Tap a bar** (season, growing, weeds, stones, pages, steps, polish, pests, seeds, store) for a one-line explanation.
-- **Celebrations** for new buildings, tools, gear and helpers (§11.5); pests and the scarecrow play out when the farm is seen
-  again after the quiz (§6.4).
+- **Celebrations** for new buildings, tools, gear and helpers (§11.5); after the quiz the farm plays what changed (§4.1).
 
 ### 13.5 The farmer
 
@@ -957,7 +1001,7 @@ farmer, merchants walking about.
 
 - **Font:** Andika (SIL), designed for children learning to read; emojis from Noto Color Emoji, the same on every device.
 - **Short sentences**, everyday words, one idea per line; numbers whole (§5.8).
-- **🔊 Read aloud** for quiz questions and card pages, where the device has a voice.
+- **🔊 Read aloud** for quiz questions and card pages, where the device has a voice: off, a button or by itself (§4.1).
 - **Big touch targets**, nothing that punishes slowness (§4.3), nothing that dies or is lost for good.
 - The whole game in **English and German** (§4.5).
 

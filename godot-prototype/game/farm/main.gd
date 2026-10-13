@@ -29,6 +29,7 @@ var notes: FarmUiNotes
 var pantry: FarmUiPantry
 var patches: FarmUiPatches
 var playback: FarmUiPlayback
+var icon_buttons := {}      # the icons of the top bar by id (bag, book, album, settings): shown when G.reveal says so
 var placesheet: FarmUiPlaceSheet
 var questlog: FarmUiQuestLog
 var rest: FarmUiRest
@@ -117,6 +118,7 @@ func _ready() -> void:
 	_build()
 	G.changed.connect(queue_refresh)
 	G.toast.connect(notes.toast)
+	G.revealed.connect(notes.on_revealed)
 	UI.explain_hook = notes.hint
 	G.offer_cards.connect(gifts.show_gift)
 	G.sold.connect(feedback.on_sold)
@@ -247,12 +249,13 @@ func _build() -> void:
 	hh.add_child(rv)
 	var ir := UI.hbox(6)
 	rv.add_child(ir)
-	for pair in [["🎒", sheets.open_pantry, "Pantry: what you have"], ["📖", sheets.open_goals, "Quest book: everything you can do next"],
-			["🖼️", sheets.open_album, tr("Album: pets, friends, postcards, perks, acorns")], ["⚙️", menu.show_menu, tr("Settings")]]:
-		var b := UI.soft_button(pair[0], pair[1], true, 22)
+	for pair in [["bag", "🎒", sheets.open_pantry, "Pantry: what you have"], ["book", "📖", sheets.open_goals, "Quest book: everything you can do next"],
+			["album", "🖼️", sheets.open_album, tr("Album: pets, friends, postcards, perks, acorns")], ["settings", "⚙️", menu.show_menu, tr("Settings")]]:
+		var b := UI.soft_button(pair[1], pair[2], true, 22)
 		b.custom_minimum_size = Vector2(48, 46)
-		b.tooltip_text = pair[2]
+		b.tooltip_text = pair[3]
 		ir.add_child(b)
+		icon_buttons[pair[0]] = b
 	# --- the farm map: one screen, scaled to fit (it only moves up when a sheet covers the bottom)
 	scroll = ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -372,6 +375,8 @@ func refresh() -> void:
 	if playback.held: return          # the Time Quiz is open (or its playback has not caught up): the screen keeps the old state
 	var S: Dictionary = G.S
 	lbl_coins.text = "🪙 %d" % G.down(S["coins"])
+	lbl_coins.visible = G.reveal.shown("coins")          # what is shown when: data/farm/rules/60-reveal.json
+	for id in icon_buttons: icon_buttons[id].visible = G.reveal.shown(id)
 	_fit_hud()
 	water_bar.have = float(S["water"]); water_bar.cap = G.needs.water_cap(); water_bar.refresh()
 	energy_bar.have = float(S["energy"]); energy_bar.cap = G.needs.energy_max(); energy_bar.refresh()

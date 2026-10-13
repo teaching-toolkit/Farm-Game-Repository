@@ -13,6 +13,22 @@ func _ready() -> void:
 	D = preload("res://tests/ui_driver.gd").new(M)
 	await _frames(3)
 	D.close_modal()
+	# O1-O3: what is shown when. A new game has no coin and no album picture: the purse and the album button wait for them.
+	var rv_hidden: bool = G.S["coins"] < 1.0 and not D.coins_shown() and not D.icon_shown("album") and D.icon_shown("bag")
+	var rv_new := []
+	G.revealed.connect(func(id): rv_new.append(id))
+	G.S["coins"] = 3.0
+	G.S["album"].append({"id": "test", "text": "x", "emoji": "🏺"})
+	G.changed.emit()
+	await _frames(3)
+	var rv_shown: bool = D.coins_shown() and D.icon_shown("album") and rv_new.has("coins") and rv_new.has("album") and G.S["revealed"].has("coins")
+	G.S["coins"] = 0.0
+	G.changed.emit()
+	await _frames(3)
+	var rv_stays: bool = D.coins_shown()           # once shown, always shown
+	G.S["album"].clear()
+	print("reveal: hidden at the start %s, shown with the first coin and picture %s (told: %s), stays %s" % [rv_hidden, rv_shown, rv_new, rv_stays])
+	if not (rv_hidden and rv_shown and rv_stays): print("FAIL reveal: see the line above")
 	var screen0: Vector2 = D.screen_size()
 	var narrow_ok := true
 	for w in [834.0, 744.0]:                       # iPad Pro 11" and iPad mini, upright

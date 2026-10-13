@@ -187,6 +187,7 @@
 	"read_progress": 0.0,
 	"reading": "",
 	"recent_q": [],
+	"revealed": {},
 	"running": {},
 	"seeds": {
 		"crop_wheat": 1.0

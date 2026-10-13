@@ -41,3 +41,19 @@ func place_toasts() -> void:
 	if M.toasts == null or M.hud_panel == null: return
 	M.toasts.top = M.hud_panel.size.y + 8.0
 	M.toasts.place()
+
+## A part of the interface comes into view for the first time (G.reveal): say so, and let its icon hop.
+func on_revealed(id: String) -> void:
+	var what := ""
+	match id:
+		"coins": what = tr("🪙 your purse")
+		"album": what = tr("🖼️ the album")
+		_: return
+	toast(tr("✨ New: %s") % what, 6.0)
+	var node: Control = M.lbl_coins if id == "coins" else M.icon_buttons.get(id)
+	if node == null: return
+	node.visible = true
+	node.pivot_offset = node.size / 2.0
+	var tw := node.create_tween()
+	tw.tween_property(node, "scale", Vector2(1.5, 1.5), 0.2)
+	tw.tween_property(node, "scale", Vector2.ONE, 0.25)

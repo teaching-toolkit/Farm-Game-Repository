@@ -165,9 +165,12 @@ for l in (m.group(1) if m else "").split("\n"):
     mm = re.match(r'\t\t"(\w+)":', l)
     if mm: counters.add(mm.group(1))
 if not counters: warn("conditions", "could not read the counters from game/farm/game.gd")
+reveal_ids = set(META.get("reveal", {}).get("elements", {}))
 def condition_ok(w, expr):
     if expr.startswith("unlocked:") or expr.startswith("done:"):
         node_id(w, expr.split(":", 1)[1], "condition")
+    elif expr.startswith("seen:"):
+        if expr[5:] not in reveal_ids: err(w, f"condition {expr!r}: {expr[5:]} is not an element of rules/60-reveal.json")
     else:
         p = expr.split(">=")
         if len(p) != 2 or p[0] not in counters: err(w, f"condition {expr!r} is not 'unlocked:<node>' or '<counter>>=<n>' with a counter of the game ({', '.join(sorted(counters))})")
@@ -178,6 +181,9 @@ for p in META.get("perks", {}).get("list", []):
     if p.get("when"): condition_ok(f"perk {p['id']}", str(p["when"]))
 for a in META.get("acorns", {}).get("list", []):
     if a["when"] != "luck": condition_ok(f"acorn {a['id']}", str(a["when"]))     # "luck": found by a luck event (meta.luck.events)
+for rid, r in META.get("reveal", {}).get("elements", {}).items():
+    if not isinstance(r.get("when", []), list): err(f"reveal {rid}", "'when' must be a list of conditions (all must hold)")
+    for expr in r.get("when", []): condition_ok(f"reveal {rid}", str(expr))
 
 # ---------------------------------------------------------------- places (data/farm/places.json)
 spots = set(PLACES["spots"])
