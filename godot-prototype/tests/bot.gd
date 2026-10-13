@@ -357,6 +357,18 @@ func _needed_items() -> Dictionary:
 						need[ik] = maxf(float(need.get(ik, 0.0)), float(r["inputs"][ik]) * 2.0)
 					for kk in r.get("keeps", []):
 						if G.inventory.count(kk) < 1.0: need[kk] = maxf(float(need.get(kk, 0.0)), 1.0)
+	for cid in G.nodes:      # a seed that is only bartered (woad, saffron …): wanted while the crop's yield is short, with the barter price
+		var cn = G.nodes[cid]
+		if cn["type"] != "crop" or not cn.has("seedItem") or not G.done(cid): continue
+		var short := false
+		for y in cn.get("yields", {}):
+			if need.has(y) and G.inventory.count(y) < float(need[y]): short = true
+		if not short or G.inventory.count(cn["seedItem"]) >= 1.0: continue
+		need[cn["seedItem"]] = 1.0
+		for mid in G.nodes:
+			if G.nodes[mid]["type"] == "merchant" and G.done(mid) and G.nodes[mid].get("barter", {}).has(cn["seedItem"]):
+				for x in G.nodes[mid]["barter"][cn["seedItem"]]:
+					if x != "coins": need[x] = maxf(float(need.get(x, 0.0)), float(G.nodes[mid]["barter"][cn["seedItem"]][x]))
 	for aid in G.nodes:
 		if G.nodes[aid]["type"] == "animal" and G.done(aid):
 			for fk in G.nodes[aid].get("feed", {}): need[fk] = maxf(float(need.get(fk, 0.0)), 6.0)
