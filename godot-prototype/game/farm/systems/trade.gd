@@ -90,6 +90,25 @@ func sell_gate(k: String, q: float) -> bool:
 		return true
 	return false
 
+## Bartering with the travelling merchant at the gate: what he offers and asks is in rules/50-gate.json (the axle for the first cart).
+func barter_gate(k: String) -> bool:
+	if not G.gate.here():
+		G.say(tr("🛒 The merchant is not here."))
+		return false
+	var b: Dictionary = G.gate.data().get("barter", {}).get(k, {})
+	if b.is_empty(): return false
+	var cost := {}
+	for x in b.get("cost", {}): cost[x] = float(b["cost"][x])
+	if not G.pace.pay(cost):
+		G.say(tr("Missing what the trader wants."))
+		return false
+	G.buying = true
+	G.inventory.add_item(k, float(b.get("gives", 1)))
+	G.buying = false
+	G.say(tr("🤝 Traded for %s%s %s") % ["", G.iemoji(k), G.iname(k)])
+	G.save_game(); G.changed.emit()
+	return true
+
 ## The selling itself: the best grade first, the market pays less for a pile of the same thing; `cut` is what a middleman keeps back.
 func _sell_units(k: String, n: float, cut: float) -> bool:
 	var gs := G.inventory.take_best(k, int(n))

@@ -71,6 +71,7 @@ func _ready() -> void:
 		for id in G.nodes:
 			if G.progression.is_open(id) and not G.done(id) and not G.nodes[id].get("optional", false):
 				print("   open: %s (%s) %s" % [id, G.nodes[id]["type"], G.progression.can_unlock(id)["why"]])
+	if "--trips" in OS.get_cmdline_user_args(): print("hand cart: %s, axles left %d" % [str(G.S["unlocked"].has("hand_cart")), int(G.inventory.count("axle"))])
 	print("DONE iters %d steps %d chapter %d unlocked %d cards %d goals %d coins %d ms %d" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.progression.cards_learned(), G.S["goals"], int(G.S["coins"]), Time.get_ticks_msec() - t0])
 	_close_chapter(G.chapter() > int(_row["chapter"]))
 	if report_path != "": _write_report()
@@ -267,6 +268,12 @@ func _held_for_order(k: String, orders: Array) -> bool:
 		if not G.done(id) and G.pace.node_cost(id).has(k): return true
 	return false
 
+func _gate_cost(k: String) -> Dictionary:
+	var c := {}
+	var b: Dictionary = G.gate.data().get("barter", {}).get(k, {})
+	for x in b.get("cost", {}): c[x] = float(b["cost"][x])
+	return c
+
 func _rest() -> void:
 	var guard := 0
 	while G.S["energy"] < G.needs.energy_max() - G.needs.rest_per_answer() and guard < 40:
@@ -277,7 +284,7 @@ func _needed_items() -> Dictionary:
 	for id in G.nodes:
 		if not G.progression.is_open(id): continue
 		var n = G.nodes[id]
-		if n.get("optional", false) and n["type"] != "gear": continue
+		if n.get("optional", false) and n["type"] != "gear" and id != "hand_cart": continue      # (the first cart carries the trips: worth the axle)
 		var c: Dictionary = G.pace.node_cost(id)
 		for k in c:
 			if k in ["coins", "energy", "water"]: continue
@@ -308,6 +315,10 @@ func _needed_items() -> Dictionary:
 		if G.knowledge.card_status(cid) == "discover":
 			for k in G.nodes[cid].get("discover", []):
 				if not G.S["seen"].has(k): need[k] = maxf(float(need.get(k, 0.0)), 1.0)
+	for bk in G.gate.data().get("barter", {}):          # what the merchant asks for his axle must be made in time
+		if need.has(bk):
+			for x in G.gate.data()["barter"][bk]["cost"]:
+				if x != "coins": need[x] = maxf(float(need.get(x, 0.0)), float(G.gate.data()["barter"][bk]["cost"][x]))
 	need["fertilizer_hint"] = 0
 	return need
 
@@ -389,6 +400,9 @@ func _turn() -> void:
 			if G.S["step"] >= int(an["ready"]): G.animals.collect_animal(aid)
 	# make what open goals need, plus gather basics
 	var need := _needed_items()
+	var coins_short := false      # money for a goal is short: then crafts that sell are worth making too
+	for id in G.nodes:
+		if G.progression.is_open(id) and float(G.pace.node_cost(id).get("coins", 0.0)) > float(G.S["coins"]) - 300.0: coins_short = true
 	for root in G.crafting.stations():
 		for rid in G.crafting.station_recipes_for(root):
 			if not G.crafting.recipe_open(rid): continue
@@ -400,6 +414,9 @@ func _turn() -> void:
 				for k in need:
 					if k.begins_with("tag:") and (G.items[o].get("tags", []) as Array).has(k.substr(4)): useful = true
 			if r["station"] == "wild_edge" and G.S["woodpile"] < 6: useful = true
+			if coins_short and r["station"] != "wild_edge":       # a craft that sells for more than its stuff is worth (and the store has room)
+				for o in r["outputs"]:
+					if G.items[o].get("category", "") == "craft" and G.inventory.count(o) < 4.0 and G.inventory.value_of(o) >= 100.0: useful = true
 			if useful:
 				if G.crafting.recipe_fuel(rid) > float(G.S["woodpile"]) + 0.0001: G.crafting.stoke(G.crafting.recipe_fuel(rid))   # stoke the woodpile first
 				G.crafting.start_recipe(rid)
@@ -432,6 +449,9 @@ func _turn() -> void:
 			if G.gate.wants(k): G.trade.sell_gate(k, float(want_sell[k]))
 			want_sell[k] = float(want_sell[k]) - (before - G.inventory.count(k))
 			if float(want_sell[k]) < 1.0: want_sell.erase(k)
+		for bk in G.gate.data().get("barter", {}):          # …and trades an axle for the first cart
+			if "--trips" in OS.get_cmdline_user_args() and need.has(bk): print("   q%d gate here, axle needed; coins %d baskets %d missing %s" % [G.S["step"], int(G.S["coins"]), int(G.inventory.count("wicker_basket")), str(G.pace.missing_cost(_gate_cost(bk)))])
+			if need.has(bk) and G.inventory.count(bk) < 1.0 and G.pace.missing_cost(_gate_cost(bk)).is_empty(): G.trade.barter_gate(bk)
 	_trip()
 	for pid in G.polish_ids:
 		if G.crafting.polish_open(pid) and G.crafting.polish_level(pid) < 1.0 and G.pace.missing_cost(G.crafting.polish_cost(pid)).is_empty(): G.crafting.do_polish(pid)

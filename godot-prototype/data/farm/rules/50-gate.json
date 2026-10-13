@@ -7,6 +7,9 @@
     "stay": 3,
     "cut": 0.85,
     "cart": {"base": 30, "perRoadLevel": 15},
+    "barter": {
+      "axle": {"cost": {"coins": 900, "wicker_basket": 2}, "gives": 1, "note": "An axle is expensive: nobody on the farm can make one yet (the first cart, D2)."}
+    },
     "cats": ["crop", "ingredient", "dish", "animal", "craft", "textile", "find"]
   }
 }

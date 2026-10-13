@@ -288,8 +288,8 @@
   "de": "Samenhändler"
  },
  "nodes/seed_1/desc": {
-  "en": "Always there, always takes coins. Wheat and carrot seeds.",
-  "de": "Immer da, nimmt immer Münzen. Weizen- und Karottensamen."
+  "en": "The seed seller in the village. Carrot seeds, and a sack of grain for sowing if you ever run out.",
+  "de": "Der Samenverkäufer im Dorf. Karottensamen — und ein Sack Korn zum Säen, falls dir mal alles ausgeht."
  },
  "nodes/land_start/name": {
   "en": "One cleared patch",
@@ -304,8 +304,8 @@
   "de": "Weizen"
  },
  "nodes/crop_wheat/desc": {
-  "en": "The backbone crop: food, feed, flour and straw.",
-  "de": "Die wichtigste Pflanze: Essen, Futter, Mehl und Stroh."
+  "en": "The backbone crop: food, feed, flour and straw. The grain is the seed: keep some back to sow.",
+  "de": "Die wichtigste Pflanze: Essen, Futter, Mehl und Stroh. Das Korn ist der Samen: Behalte etwas zum Säen zurück."
  },
  "nodes/crop_carrot/name": {
   "en": "Carrot",
@@ -2216,8 +2216,8 @@
   "de": "Handwagen"
  },
  "nodes/hand_cart/desc": {
-  "en": "Haul more at once: harvesting −15%, building −10% energy.",
-  "de": "Mehr auf einmal transportieren: Ernten −15%, Bauen −10% Energie."
+  "en": "Two wheels on a real axle: the bag holds twice as much on the way to the village, and harvesting costs less energy.",
+  "de": "Zwei Räder an einer richtigen Achse: Die Tasche fasst auf dem Weg ins Dorf doppelt so viel, und Ernten kosten weniger Energie."
  },
  "nodes/insect_hotel/name": {
   "en": "Insect Hotel",
@@ -7683,6 +7683,78 @@
   "en": "Keep it bare and dry",
   "de": "Sie nackt und trocken halten"
  },
+ "nodes/k_seeds/name": {
+  "en": "Saving seed",
+  "de": "Samen aufbewahren"
+ },
+ "nodes/k_seeds/desc": {
+  "en": "A grain you keep back is a seed you can sow again.",
+  "de": "Ein Korn, das du zurückbehältst, ist ein Samen, den du wieder säen kannst."
+ },
+ "nodes/k_seeds/page": {
+  "en": "A grain of wheat is a seed. If you plant it, it grows into a plant, and that plant gives you many new grains. A good farmer always keeps some grains back to sow next time, before eating or selling the rest. That is how one little stalk can become a whole field.",
+  "de": "Ein Weizenkorn ist ein Samen. Wenn du es einpflanzt, wächst eine Pflanze daraus, und diese Pflanze schenkt dir viele neue Körner. Ein guter Bauer behält immer ein paar Körner zum nächsten Säen zurück, bevor er den Rest isst oder verkauft. So kann aus einem kleinen Halm ein ganzes Feld werden."
+ },
+ "nodes/k_seeds/questions/0/q": {
+  "en": "What is a grain of wheat?",
+  "de": "Was ist ein Weizenkorn?"
+ },
+ "nodes/k_seeds/questions/0/why": {
+  "en": "A grain is the seed of the wheat plant: planted, it grows into a new plant.",
+  "de": "Ein Korn ist der Samen der Weizenpflanze: Eingepflanzt wächst daraus eine neue Pflanze."
+ },
+ "nodes/k_seeds/questions/0/answers/0": {
+  "en": "A seed",
+  "de": "Ein Samen"
+ },
+ "nodes/k_seeds/questions/0/answers/1": {
+  "en": "A leaf",
+  "de": "Ein Blatt"
+ },
+ "nodes/k_seeds/questions/0/answers/2": {
+  "en": "A root",
+  "de": "Eine Wurzel"
+ },
+ "nodes/k_seeds/questions/1/q": {
+  "en": "Why does a farmer keep some grains back?",
+  "de": "Warum behält ein Bauer ein paar Körner zurück?"
+ },
+ "nodes/k_seeds/questions/1/why": {
+  "en": "Kept grains are the seed for the next sowing. Without them nothing can be planted.",
+  "de": "Zurückbehaltene Körner sind der Samen fürs nächste Säen. Ohne sie kann nichts gepflanzt werden."
+ },
+ "nodes/k_seeds/questions/1/answers/0": {
+  "en": "To sow them next time",
+  "de": "Um sie nächstes Mal zu säen"
+ },
+ "nodes/k_seeds/questions/1/answers/1": {
+  "en": "To make the sack heavier",
+  "de": "Damit der Sack schwerer wird"
+ },
+ "nodes/k_seeds/questions/1/answers/2": {
+  "en": "To feed the weeds",
+  "de": "Um das Unkraut zu füttern"
+ },
+ "nodes/k_seeds/questions/2/q": {
+  "en": "One wheat plant can give you...",
+  "de": "Eine Weizenpflanze kann dir ... schenken."
+ },
+ "nodes/k_seeds/questions/2/why": {
+  "en": "One plant gives many grains, so a little seed grows into a lot of food.",
+  "de": "Eine Pflanze schenkt viele Körner, aus wenig Samen wird also viel Essen."
+ },
+ "nodes/k_seeds/questions/2/answers/0": {
+  "en": "Many new grains",
+  "de": "viele neue Körner"
+ },
+ "nodes/k_seeds/questions/2/answers/1": {
+  "en": "Exactly one grain",
+  "de": "genau ein Korn"
+ },
+ "nodes/k_seeds/questions/2/answers/2": {
+  "en": "No grains at all",
+  "de": "gar keine Körner"
+ },
  "nodes/straw_sandals/name": {
   "en": "Straw Sandals",
   "de": "Strohsandalen"
@@ -8316,8 +8388,8 @@
   "de": "Lehm"
  },
  "items/clay/desc": {
-  "en": "Bought, or dug at the Pond.",
-  "de": "Gekauft oder am Teich ausgegraben."
+  "en": "Dug at the field edge with a shovel, or bought.",
+  "de": "Mit der Schaufel am Feldrand ausgegraben oder gekauft."
  },
  "items/brick/name": {
   "en": "Brick",
@@ -8983,6 +9055,30 @@
   "en": "A cake sweetened with honey instead of sugar.",
   "de": "Ein Kuchen, der mit Honig statt mit Zucker gesüsst ist."
  },
+ "items/wicker_basket/name": {
+  "en": "Wicker Basket",
+  "de": "Weidenkorb"
+ },
+ "items/wicker_basket/desc": {
+  "en": "Woven from sticks and plant fibre. Holds a lot — and people in the village like to buy them.",
+  "de": "Aus Stecken und Pflanzenfasern geflochten. Fasst viel — und die Leute im Dorf kaufen ihn gern."
+ },
+ "items/clay_pot/name": {
+  "en": "Clay Pot",
+  "de": "Tontopf"
+ },
+ "items/clay_pot/desc": {
+  "en": "Two lumps of clay, dug and fired. A pot is always useful.",
+  "de": "Zwei Klumpen Lehm, ausgegraben und gebrannt. Einen Topf kann man immer brauchen."
+ },
+ "items/axle/name": {
+  "en": "Axle",
+  "de": "Achse"
+ },
+ "items/axle/desc": {
+  "en": "A wheel axle, turned smooth and true. Nobody on the farm can make one yet — the travelling merchant has one.",
+  "de": "Eine Radachse, glatt und gerade gedreht. Auf dem Hof kann sie noch niemand machen — der fahrende Händler hat eine."
+ },
  "recipes/porridge/verb": {
   "en": "Cook",
   "de": "Kochen"
@@ -9506,6 +9602,22 @@
  "recipes/compost_scraps/verb": {
   "en": "Compost",
   "de": "Kompostieren"
+ },
+ "recipes/wicker_basket/name": {
+  "en": "Wicker basket",
+  "de": "Weidenkorb"
+ },
+ "recipes/wicker_basket/verb": {
+  "en": "Weave",
+  "de": "Flechten"
+ },
+ "recipes/clay_pot/name": {
+  "en": "Clay pot",
+  "de": "Tontopf"
+ },
+ "recipes/clay_pot/verb": {
+  "en": "Fire",
+  "de": "Brennen"
  },
  "story/c1_frame0/title": {
   "en": "Bedtime",

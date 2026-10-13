@@ -81,6 +81,15 @@ func _part_gate() -> void:
 	bv.add_child(UI.bar(G.gate.fill(), 240, 12, UI.AMBER if G.gate.fill() < 0.999 else UI.RED))
 	head.add_child(bv)
 	M.content.add_child(head)
+	for bk in G.gate.data().get("barter", {}):          # what he trades (barter): the axle
+		var bb: Dictionary = G.gate.data()["barter"][bk]
+		var bc := {}
+		for x in bb["cost"]: bc[x] = float(bb["cost"][x])
+		var brow := UI.hbox(6)
+		brow.add_child(UI.rich("%s %s  for  %s" % [G.iemoji(bk), G.iname(bk), M.widgets.cost_bb(bc)], 17))
+		var can: bool = G.pace.missing_cost(bc).is_empty()
+		brow.add_child(UI.soft_button("🤝", G.trade.barter_gate.bind(bk), can, 20))
+		M.content.add_child(brow)
 	var ks: Array = G.S["inv"].keys().filter(func(k): return G.gate.wants(k) and G.inventory.count(k) >= 1.0)
 	if ks.is_empty():
 		M.content.add_child(UI.label(tr("He has nothing to buy from you right now."), 16, UI.MUTED, true))

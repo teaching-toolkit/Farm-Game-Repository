@@ -222,6 +222,10 @@ if not GT: err("gate", "no 'gate' in rules/50-gate.json")
 if not 0 < float(GT.get("chance", 0)) <= 1: err("gate", "chance must be between 0 and 1")
 if not 0 < float(GT.get("cut", 0)) <= 1: err("gate", "cut (the share of the village price he pays) must be between 0 and 1")
 if int(GT.get("stay", 0)) < 1: err("gate", "stay must be at least 1 question")
+for k, b in GT.get("barter", {}).items():
+    if k not in ITEMS: err("gate", f"barter: {k} is not an item")
+    for x in b.get("cost", {}):
+        if x != "coins" and x not in ITEMS: err("gate", f"barter {k}: cost {x} is not an item")
 _cats = {it.get("category", "") for it in ITEMS.values()}
 for c in GT.get("cats", []):
     if c not in _cats: err("gate", f"category {c!r} has no items")

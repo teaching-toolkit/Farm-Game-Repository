@@ -47,6 +47,22 @@ func _ready() -> void:
 	_check(T.can_take("carrot") == 1, "a nearly full cart takes only what fits (%d)" % T.can_take("carrot"))
 	G.S["gate"]["here"] = false
 	_check(not G.trade.sell_gate("carrot", 1.0), "when he is not here nothing is sold to him")
+	# barter: the axle for coins and two baskets (the first cart, D2)
+	G.S["gate"]["here"] = true
+	G.S["inv"].clear()
+	G.S["coins"] = 1000.0
+	_check(not G.trade.barter_gate("axle") and G.inventory.count("axle") == 0.0, "without the baskets there is no axle")
+	G.inventory.add_item("wicker_basket", 2.0, true)
+	_check(G.trade.barter_gate("axle") and G.inventory.count("axle") == 1.0 and G.S["coins"] == 100.0 and G.inventory.count("wicker_basket") == 0.0, "900 bronze and two baskets buy an axle")
+	G.S["unlocked"]["workbench"] = true
+	G.S["unlocked"]["road_2"] = true
+	G.S["unlocked"]["stone_axe"] = true
+	G.inventory.add_item("log", 2.0, true); G.inventory.add_item("rope", 2.0, true); G.inventory.add_item("stick", 6.0, true)
+	G.S["energy"] = 20.0
+	_check(G.progression.can_unlock("hand_cart")["ok"], "with the axle the first cart can be built")
+	G.progression.unlock("hand_cart")
+	G.invalidate_caps()
+	_check(G.trip.capacity() == 60.0 and G.trip.device() == "hand_cart", "the hand cart makes the bag hold 60 (%s)" % G.trip.capacity())
 	# the village still works as before
 	_check(is_equal_approx(T.price("carrot", 1), G.trade.sell_total("carrot", 1) * float(T.data()["cut"])), "his price is derived from the village price")
 	print("GATE %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])
