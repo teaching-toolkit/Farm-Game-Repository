@@ -5,6 +5,7 @@ class_name FarmMain
 ## Pictures come from assets/ when they exist (see kits/ui/art.gd); emojis stand in for the rest.
 const UI = preload("res://kits/ui/ui.gd")
 const MAP_SCENE = preload("res://game/farm/map/farm_map.tscn")
+const Notifications = preload("res://kits/ui/notifications.gd")
 const GOAL_TYPES := ["building", "station", "tool", "gear", "helper", "land", "patch", "delivery", "pet", "sidequest"]
 
 const DevFlags = preload("res://game/farm/dev/dev_flags.gd")
@@ -47,7 +48,9 @@ var lbl_info: Label
 var lbl_status: Label
 var scroll: ScrollContainer
 var map
-var bottom: PanelContainer
+var hud_panel: PanelContainer     # the top bar
+var quiz_holder: PanelContainer   # the round frame of the Time Quiz clock, hanging from the top bar
+var cheat_box: VBoxContainer      # the testing buttons, floating below the top bar in the left corner (⚙️ → grown-up settings)
 var goal_btn: Button
 var quiz_btn          # UI.ClockButton: the Time Quiz (an old clock; its hand goes round once when tapped)
 var sheet: PanelContainer
@@ -56,7 +59,7 @@ var sheet_scroll: ScrollContainer
 var content: VBoxContainer
 var sheet_kind := ""
 var sheet_h := 0.0
-var toasts: VBoxContainer
+var toasts          # the notifications (kits/ui/notifications.gd): small cards stacked just below the top bar
 var modal: Control
 var modal_card: PanelContainer
 var modal_box: VBoxContainer
@@ -178,16 +181,20 @@ func _build() -> void:
 	var root := UI.vbox(0)
 	root.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(root)
-	# --- top bar (HUD)
+	# --- the top bar: coins, water, energy and the season on the left, the next goal in the middle (the whole height of the bar),
+	# the buttons at the right; the Time Quiz clock hangs from the bar's lower edge in the right corner (there is no bottom bar)
 	var hud := PanelContainer.new()
-	var hs := UI.box(UI.PAPER, 0, UI.LINE, 0, 12)
+	hud_panel = hud
+	var hs := UI.box(UI.PAPER, 0, UI.LINE, 0, 10)
 	hs.border_width_bottom = 2
 	hs.border_color = UI.LINE
 	hud.add_theme_stylebox_override("panel", hs)
 	root.add_child(hud)
+	var hh := UI.hbox(8)
+	hud.add_child(hh)
 	var hv := UI.vbox(2)
-	hud.add_child(hv)
-	var r1 := UI.hbox(10)
+	hh.add_child(hv)
+	var r1 := UI.hbox(8)
 	hv.add_child(r1)
 	lbl_coins = UI.label("", 22); r1.add_child(lbl_coins)
 	var wp = UI.TapPanel.new()
@@ -214,29 +221,36 @@ func _build() -> void:
 	ep.add_child(ebox)
 	ep.pressed.connect(rest.show_rest)
 	r1.add_child(ep)
-	r1.add_child(UI.spacer())
-	for pair in [["🎒", sheets.open_pantry, "Pantry: what you have"], ["📖", sheets.open_goals, "Quest book: everything you can do next"],
-			["🖼️", sheets.open_album, tr("Album: pets, friends, postcards, perks, acorns")], ["⚙️", menu.show_menu, tr("Settings")]]:
-		var b := UI.soft_button(pair[0], pair[1], true, 22)
-		b.custom_minimum_size = Vector2(50, 46)
-		b.tooltip_text = pair[2]
-		r1.add_child(b)
 	var r2 := UI.hbox(8)
 	hv.add_child(r2)
 	season_emoji = UI.label("", 18); r2.add_child(season_emoji)
 	season_bar = UI.SeasonBar.new(); r2.add_child(season_bar)
 	UI.explain(season_bar, tr("🗓️ The season: one mark per Time Quiz question. The number = questions until the next season."))
-	lbl_info = UI.label("", 15, UI.MUTED); r2.add_child(lbl_info)
+	lbl_info = UI.label("", 15, UI.MUTED)
+	lbl_info.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	lbl_info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	lbl_info.custom_minimum_size = Vector2(60, 0)
+	r2.add_child(lbl_info)
 	lbl_status = UI.label("", 15, UI.MUTED); r2.add_child(lbl_status)
-	r2.add_child(UI.spacer())
-	if G.settings.get("showCheatButton", true):
-		var cb := UI.button(tr("⏩ Cheat"), _cheat, true, UI.AMBER, 14)
-		cb.custom_minimum_size = Vector2(0, 30)
-		cb.tooltip_text = tr("Testing only: lets time pass until everything growing or cooking is done, then fills energy and water.")
-		r2.add_child(cb)
-		var cc := UI.button("🪙+100", func(): G.cheat_coins(100), true, UI.AMBER, 14)
-		cc.custom_minimum_size = Vector2(0, 30)
-		r2.add_child(cc)
+	# the next goal: the whole width and height between the energy bar and the buttons
+	goal_btn = UI.soft_button("", goalbar.goal_pressed, true, 16)
+	goal_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	goal_btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	goal_btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	goal_btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	goal_btn.clip_text = true
+	goal_btn.custom_minimum_size = Vector2(120, 0)
+	hh.add_child(goal_btn)
+	var rv := UI.vbox(0)
+	hh.add_child(rv)
+	var ir := UI.hbox(6)
+	rv.add_child(ir)
+	for pair in [["🎒", sheets.open_pantry, "Pantry: what you have"], ["📖", sheets.open_goals, "Quest book: everything you can do next"],
+			["🖼️", sheets.open_album, tr("Album: pets, friends, postcards, perks, acorns")], ["⚙️", menu.show_menu, tr("Settings")]]:
+		var b := UI.soft_button(pair[0], pair[1], true, 22)
+		b.custom_minimum_size = Vector2(48, 46)
+		b.tooltip_text = pair[2]
+		ir.add_child(b)
 	# --- the farm map: one screen, scaled to fit (it only moves up when a sheet covers the bottom)
 	scroll = ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -247,30 +261,26 @@ func _build() -> void:
 	map.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(map)
 	scroll.resized.connect(func(): map.fit(scroll.size))
-	# --- bottom bar: next goal + the Time Quiz
-	bottom = PanelContainer.new()
-	var bs := UI.box(UI.PAPER, 0, UI.LINE, 0, 12)
-	bs.border_width_top = 2
-	bs.border_color = UI.LINE
-	bs.content_margin_bottom = 14
-	bottom.add_theme_stylebox_override("panel", bs)
-	root.add_child(bottom)
-	var bh := UI.hbox(10)
-	bottom.add_child(bh)
-	goal_btn = UI.soft_button("", goalbar.goal_pressed, true, 18)
-	goal_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	goal_btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
-	goal_btn.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	goal_btn.custom_minimum_size = Vector2(0, 60)
-	bh.add_child(goal_btn)
-	var qp := PanelContainer.new()
-	qp.add_theme_stylebox_override("panel", UI.box(UI.GREEN, 40, Color(0, 0, 0, 0), 0, 4))
+	# --- the Time Quiz: a green round clock that hangs from the lower edge of the top bar in the right corner
+	quiz_holder = PanelContainer.new()
+	quiz_holder.add_theme_stylebox_override("panel", UI.box(UI.GREEN, 40, UI.LINE, 2, 4))
 	quiz_btn = UI.ClockButton.new()
 	quiz_btn.custom_minimum_size = Vector2(72, 72)
 	quiz_btn.tooltip_text = tr("Time Quiz: every right answer moves farm time one step.")
 	quiz_btn.pressed.connect(timequiz.show_time_quiz)
-	qp.add_child(quiz_btn)
-	bh.add_child(qp)
+	quiz_holder.add_child(quiz_btn)
+	add_child(quiz_holder)
+	hud.resized.connect(_place_quiz_button)
+	# --- the testing buttons: small, floating below the bar at the left; a grown-up setting shows or hides them
+	cheat_box = UI.vbox(4)
+	for c in [[tr("⏩ Cheat"), G.cheat_max, tr("Testing only: lets time pass until everything growing or cooking is done, then fills energy and water.")],
+			[tr("🪙 +50"), G.cheat_coins.bind(50), tr("Testing only: 50 coins.")],
+			[tr("🎓 Quizzes"), G.knowledge.cheat_skip_card_quizzes, tr("Testing only: passes the quiz of every card that is waiting for it.")]]:
+		var cb := UI.button(c[0], c[1], true, UI.AMBER, 13)
+		cb.custom_minimum_size = Vector2(0, 28)
+		cb.tooltip_text = c[2]
+		cheat_box.add_child(cb)
+	add_child(cheat_box)
 	# --- the sheet that slides up from the bottom
 	sheet = PanelContainer.new()
 	var ss := UI.box(UI.PAPER, 0, UI.LINE, 2, 14)
@@ -305,8 +315,7 @@ func _build() -> void:
 	content = UI.vbox(8)
 	sheet_scroll.add_child(content)
 	# --- toasts and the centred pop-up (quizzes, Rest, cards, gifts)
-	toasts = UI.vbox(4)
-	toasts.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	toasts = Notifications.new()
 	add_child(toasts)
 	modal = Control.new()
 	modal.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -327,7 +336,19 @@ func _build() -> void:
 	modal_box = UI.vbox(10)
 	msc.add_child(modal_box)
 
+## The Time Quiz clock sits in the right corner, its upper part over the bar and the rest over the map.
+func _place_quiz_button() -> void:
+	if notes != null: notes.place_toasts()
+	if cheat_box != null and hud_panel != null:
+		cheat_box.size = cheat_box.get_combined_minimum_size()
+		cheat_box.position = Vector2(8.0, hud_panel.size.y + 6.0)
+	if quiz_holder == null or hud_panel == null: return
+	var qs := quiz_holder.get_combined_minimum_size()
+	quiz_holder.size = qs
+	quiz_holder.position = Vector2(size.x - qs.x - 10.0, hud_panel.size.y - qs.y * 0.42)
+
 func _on_resized() -> void:
+	_place_quiz_button()
 	if sheet.visible: sheets.fit_sheet()
 	if modal.visible: modals.fit_modal()
 
@@ -359,8 +380,7 @@ func refresh() -> void:
 	var slen: int = G.seasons.season_len()
 	season_bar.set_state(G.seasons.season(), slen, slen - G.seasons.questions_left_in_season(), "→ " + nxt_emoji)
 	quiz_btn.show_time(float(slen - G.seasons.questions_left_in_season()) / float(slen))
-	var ch: Dictionary = G.D["chapters"][G.chapter() - 1]
-	lbl_info.text = tr("Chapter %d · %s · question %d%s") % [G.chapter(), ch["name"], S["step"], "  🌧️" if S.get("rain", false) else ""]
+	lbl_info.text = tr("Chapter %d · question %d%s") % [G.chapter(), S["step"], "  🌧️" if S.get("rain", false) else ""]
 	# out of water: say so with a picture (once, when it runs out)
 	if _last_water >= 1.0 and float(S["water"]) < 1.0 and not modal.visible: patches.show_no_water.call_deferred()
 	_last_water = float(S["water"])
@@ -371,6 +391,7 @@ func refresh() -> void:
 	if G.S["reading"] != "": st.append(tr("📖 reading"))
 	lbl_status.text = "  ".join(st)
 	bg.color = UI.SEASON_BG.get(G.seasons.season(), UI.BG)
+	cheat_box.visible = G.cheats_visible()
 	map.ground.set_season(G.seasons.season(), mapview.fence_level())
 	# fields, add-ons and the house yard
 	field_idx = clampi(field_idx, 0, maxi(0, G.fields.field_names().size() - 1))
@@ -387,9 +408,6 @@ func refresh() -> void:
 	if sheet.visible:
 		sheets.rebuild_sheet()
 		sheets.fit_sheet.call_deferred()
-
-func _cheat() -> void:
-	G.cheat_max()
 
 ## Taps on the farm make sparkles (perk "Magic sparkles").
 func _input(e: InputEvent) -> void:

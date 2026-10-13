@@ -46,6 +46,7 @@ func show_menu() -> void:
 		return
 	box.add_child(UI.label(tr("🔓 Grown-up settings (open for a few minutes)"), 17, UI.MUTED, true))
 	_part_review_share(box)
+	_part_device(box)
 	box.add_child(UI.label(tr("Question packs and the size of Rest sums are set in data/settings.json and data/quiz_packs/."), 15, UI.MUTED, true))
 	box.add_child(UI.soft_button(tr("📊 Learning record (sums and questions)"), _show_learning, true, 18))
 	box.add_child(UI.soft_button(tr("%s 🎚️ Prices fit my farm (dynamic difficulty)") % ("✅" if G.pace.flex_on() else "⬜"), M.stations.toggle_flex, true, 16))
@@ -150,6 +151,34 @@ func _part_review_share(box: Control) -> void:
 	v.add_child(UI.label(tr("📚 %d%% from the books read   ·   📦 %d%% from your question packs") % [pct, 100 - pct], 16, UI.INK, true))
 	v.add_child(UI.label(tr("A book question only comes when a card is due for review; otherwise a pack question takes its place."), 14, UI.MUTED, true))
 	box.add_child(pc)
+
+## Settings for this device: the testing buttons, and whether questions are read aloud.
+func _part_device(box: Control) -> void:
+	var pc := UI.card(Color("f3f7ea"))
+	var v := UI.vbox(6)
+	pc.add_child(v)
+	v.add_child(UI.label(tr("🔊 Read questions and cards aloud"), 18, UI.INK, true))
+	var row := HFlowContainer.new()
+	row.add_theme_constant_override("h_separation", 8)
+	var mode := G.read_aloud_mode()
+	for pair in [["off", tr("🔇 Off")], ["button", tr("🔊 A button")], ["auto", tr("🗣️ By itself")]]:
+		if mode == pair[0]: row.add_child(UI.button("✔ " + pair[1], Callable(), true, UI.GREEN, 16))
+		else: row.add_child(UI.soft_button(pair[1], _set_read_aloud.bind(pair[0]), true, 16))
+	v.add_child(row)
+	v.add_child(UI.label(tr("By itself: each question and card page is read as it opens; the 🔊 button reads it again."), 14, UI.MUTED, true))
+	v.add_child(UI.soft_button(tr("%s 🛠️ Testing buttons on the farm (cheats)") % ("✅" if G.cheats_visible() else "⬜"), _toggle_cheats, true, 16))
+	box.add_child(pc)
+
+func _set_read_aloud(mode: String) -> void:
+	G.prefs.set_value("readAloud", mode)
+	M.modals.close_modal()
+	show_menu()
+
+func _toggle_cheats() -> void:
+	G.prefs.set_value("cheatButtons", not G.cheats_visible())
+	M.refresh()
+	M.modals.close_modal()
+	show_menu()
 
 func _change_review_share(d: float) -> void:
 	G.pace.set_review_share(G.pace.review_share() + d)

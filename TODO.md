@@ -185,9 +185,11 @@ them up, each with a 💡 recommendation.
 - **J5. Notifications like a phone's** [#12] ✅ (R4): they stack from the top, just below the top bar; a swipe sends one away if it
   doesn't leave fast enough; smaller; a duration per kind. Today (`notes.toast` in `game/farm/ui/notes.gd`): 6.5 s each (bar hints 3 s), max 3, centred above
   the bottom bar, taps go through them (`MOUSE_FILTER_IGNORE`). Same look family as the barks' speech bubbles (`story/story-delivery.md`).
+  **Built 13 Oct 2026 (0.10.0):** `kits/ui/notifications.gd` (a generic stack: `notify(text, secs)`, a swipe of 70 px sends a card away); `notes.toast(text, secs := 5.0)` in the game; smaller text (17 pt), at most 4, the stack starts just below the top bar; taps outside the cards go through. `--toasts` shows a stack in screenshots.
 - **J6. Read aloud in the grown-up settings** [#13] ✅ (R1): one setting with three choices: *off* (no 🔊 buttons) · *button* (as now)
   · *automatic* (reads each question and card page as it opens; the 🔊 button stays to repeat). Today: 🔊 in the Time Quiz and on card
   pages (`timequiz.speak` in `game/farm/ui/timequiz.gd`). Later the story boxes too (I8).
+  **Built 13 Oct 2026 (0.10.0):** ⚙️ Settings, grown-up part → a *device* card: three buttons (🔇 Off / 🔊 A button / 🗣️ By itself), kept on the device (`kits/core/prefs.gd`, `Game.read_aloud_mode()`); the Time Quiz and card pages obey it.
 - **J12. The pet corner shows a raw key.** The sheet lists each pet with its bonus; the tortoise's reads "Mossy — fetchWater +1" (the effect key,
   not words; the bunny's reads properly, "+1 carrot per harvest"). Found 13 Oct 2026 while checking R2; the same in the old code. 💡 Give the
   pet effects readable lines (`widgets.effect_text` in `game/farm/ui/widgets.gd`, German through `tools/i18n.py`) and check the goat's and the pony's too.
@@ -200,9 +202,11 @@ them up, each with a 💡 recommendation.
   between the energy bar and the 🎒 bag icon. The 🎒 bag with its fill bar (M11), 📜 scroll, 📖, 🖼️, ⚙️; the wellbeing face or icon is
   fitted in when it appears (L4). ✅ (R5) **The bottom bar goes**, and the map grows by its height (the layout editor's frame changes
   with it).
+  **Built 13 Oct 2026 (0.10.0):** the bar has the coin count, water and energy bars (rows of boxes), the goal text across the middle at full height, the five icon buttons at the right and the clock hanging from the bar's right edge; no bottom bar (the map runs to the bottom edge); the quiz button is `main._place_quiz_button()`; toasts start under the bar.
 - **J9. Cheat buttons** ✅ (R4): the cheat button and the +100 button leave the bar for good. A grown-up setting switches them on or off;
   when on, they float below the bar in the top-left corner. The coin button gives **+50 bronze**. New: a cheat to **skip the quiz of
   any knowledge card waiting for its quiz**.
+  **Built 13 Oct 2026 (0.10.0):** ⚙️ Settings, grown-up part → "Testing buttons on the farm (cheats)" (on the device, `Game.cheats_visible()`); three buttons float at the top left (Cheat, +50, Quizzes = `knowledge.cheat_skip_card_quizzes()`).
 
 ---
 

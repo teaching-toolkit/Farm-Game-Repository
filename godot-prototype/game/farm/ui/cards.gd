@@ -33,7 +33,9 @@ func card_page(cid: String) -> void:
 	box.add_child(UI.header(Art.first("cards", [cid]), str(n.get("emoji", "📖")), 84))
 	var page := str(n.get("page", n.get("desc", "")))
 	box.add_child(UI.label(page, 20, UI.INK, true))
-	box.add_child(UI.soft_button(tr("🔊 Read aloud"), M.timequiz.speak.bind(page), true, 17))
+	if G.read_aloud_mode() != "off":
+		box.add_child(UI.soft_button(tr("🔊 Read aloud"), M.timequiz.speak.bind(page), true, 17))
+		if G.read_aloud_mode() == "auto": M.timequiz.speak.call_deferred(page)
 	var unl := []
 	for u in n.get("unlocks", []):
 		if G.nodes.has(u): unl.append(G.nodes[u].get("emoji", "") + " " + G.nodes[u]["name"])

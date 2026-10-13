@@ -56,9 +56,12 @@ func question(box: VBoxContainer, q: Dictionary, on_done: Callable) -> void:
 	qh.add_child(ql)
 	var words := []
 	for a in q["answers"]: words.append(_atext(a))
-	var sp := UI.soft_button("🔊", speak.bind(str(q["q"]) + ". " + ". ".join(words)), true, 20)
-	sp.custom_minimum_size = Vector2(52, 44)
-	qh.add_child(sp)
+	var aloud := str(q["q"]) + ". " + ". ".join(words)
+	if G.read_aloud_mode() != "off":
+		var sp := UI.soft_button("🔊", speak.bind(aloud), true, 20)
+		sp.custom_minimum_size = Vector2(52, 44)
+		qh.add_child(sp)
+		if G.read_aloud_mode() == "auto": speak.call_deferred(aloud)
 	box.add_child(qh)
 	if str(q.get("img", "")) != "" or str(q.get("emoji", "")) != "":
 		var pc := CenterContainer.new()

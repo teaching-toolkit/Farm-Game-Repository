@@ -78,19 +78,17 @@ func close_sheet() -> void:
 		M.interior_back = ""
 		M.interiors.open_interior(p)
 
-## The sheet grows with its content, up to 60% of the screen, and always leaves the bottom bar visible.
+## The sheet grows with its content, up to 60% of the screen.
 func fit_sheet() -> void:
 	if not M.sheet.visible: return
 	var want := M.content.get_combined_minimum_size().y + 96.0
 	M.sheet_h = clampf(want, 240.0, M.size.y * 0.6)
 	_place_sheet()
 	M.map.set_extra_bottom(M.sheet_h)
-	M.notes.place_toasts()
 
 func _place_sheet() -> void:
-	var bottom_h: float = M.bottom.size.y
 	M.sheet.size = Vector2(M.size.x, M.sheet_h)
-	M.sheet.position = Vector2(0, M.size.y - bottom_h - M.sheet_h + (1.0 - _slide) * (M.sheet_h + bottom_h))
+	M.sheet.position = Vector2(0, M.size.y - M.sheet_h + (1.0 - _slide) * M.sheet_h)
 
 func rebuild_sheet() -> void:
 	M.widgets.clear(M.content)

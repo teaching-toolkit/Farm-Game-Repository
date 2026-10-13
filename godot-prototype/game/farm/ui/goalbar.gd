@@ -1,6 +1,6 @@
 extends RefCounted
 class_name FarmUiGoalBar
-## The bottom bar: the next goal (what the player can work on next) and what happens when it is tapped.
+## The next goal (what the player can work on next), shown in the top bar, and what happens when it is tapped.
 
 const Spots = preload("res://game/farm/spots.gd")
 

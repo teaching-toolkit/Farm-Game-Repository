@@ -58,6 +58,7 @@ const Modifiers = preload("res://kits/core/modifiers.gd")
 const Conditions = preload("res://kits/core/conditions.gd")
 const Saves = preload("res://kits/core/saves.gd")
 const Data = preload("res://kits/core/data.gd")
+var prefs = preload("res://kits/core/prefs.gd").new()   # this device's small choices (cheat buttons, read aloud): user://device.json
 var rng = preload("res://kits/core/rng.gd").new()    # the one random source of the rules (seedable)
 var clock = preload("res://kits/core/clock.gd").new()  # one step of time: the systems that run in it, in order
 
@@ -126,6 +127,7 @@ func shuffle(a: Array) -> void:
 func _ready() -> void:
 	setup_clock()
 	_test_args()
+	prefs.open("" if test_seed >= 0 else "user://device.json")
 	if test_seed >= 0:
 		rng.seed = test_seed
 		seed(test_seed)
@@ -266,6 +268,14 @@ func load_data() -> void:
 		pack_questions.append({"id": "X-001", "q": "Which planet do we live on?", "answers": ["Earth", "Mars", "the Moon"], "correct": 0})
 	for cid in card_ids:
 		for q in nodes[cid].get("questions", []): quiz_keys[str(q.get("q", ""))] = quiz.key(q)
+
+## Do the testing buttons show on the farm? (data/settings.json "showCheatButton" is the starting value; ⚙️ Settings → grown-up part changes it.)
+func cheats_visible() -> bool:
+	return bool(prefs.get_value("cheatButtons", settings.get("showCheatButton", true)))
+
+## How questions and card pages are read aloud: "off" (no 🔊 buttons), "button" (a 🔊 button to press), "auto" (read as they open; 🔊 repeats).
+func read_aloud_mode() -> String:
+	return str(prefs.get_value("readAloud", "button"))
 
 ## The keys of the save that the Game itself owns (the systems own the rest, see their save_defaults()).
 func save_defaults() -> Dictionary:

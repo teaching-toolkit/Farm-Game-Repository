@@ -40,6 +40,8 @@ static func apply(main, G) -> void:
 			for p in G.meta.get("perks", {}).get("list", []):
 				if a == "--perks=all" or a.substr(8).split(",").has(p["id"]): G.rewards.perks()[p["id"]] = true
 		elif a == "--rainbow": main.menu.rainbow_now.call_deferred()
+		elif a == "--toasts":                      # screenshots: a stack of notification cards
+			for t in ["🐰 A bunny came home!", "🌱 The carrots are ready to pick.", "💧 The watering can is empty. The well is behind the barn."]: main.notes.toast.call_deferred(t, 60.0)
 		elif a.begins_with("--load="):             # screenshots: start from a saved farm (--load=res://tests/fixtures/ch3-seed1.json)
 			G.load_game(a.substr(7))
 			G.changed.emit()

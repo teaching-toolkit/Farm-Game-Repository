@@ -48,6 +48,17 @@ func mark_page_seen(cid: String) -> void:
 	if not G.S.has("read_seen"): G.S["read_seen"] = {}
 	G.S["read_seen"][cid] = true
 
+## Testing: the quiz of every card that is waiting for its quiz is passed (all answers right at the first try).
+func cheat_skip_card_quizzes() -> int:
+	var n := 0
+	for cid in G.card_ids:
+		if card_status(cid) != "quiz": continue
+		for q in card_quiz(cid): record_card_answer(q, true)
+		finish_card(cid, true)
+		n += 1
+	if n > 0: G.say(tr("🎓 Cheat: %d card quizzes passed.") % n)
+	return n
+
 func tick_reading(_info := {}) -> void:
 	var cid: String = G.S["reading"]
 	if cid == "": return
