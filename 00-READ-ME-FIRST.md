@@ -17,14 +17,14 @@ update when, and what to do at the end of a session: `claude-skills/farm-game-se
 ## 1. The project in a few lines
 
 **Hazelwood Harvest** (until 0.9.0 *Farm Quiz Game*) — an educational farming game for an **8-year-old**, played on an **iPad held upright**. The player
-rebuilds a burnt-down farm from a tent and one wheat seed to a master farm, over five chapters, each ending with a pet
+rebuilds a burnt-down farm from a tent and one wheat seed to a master farm, over six chapters, each ending with a pet
 coming home (bunny, tortoise, goat, pony, alpaca). Learning *is* the economy:
 
 - **Time Quiz** — general-knowledge questions from packs the parent chooses; each right answer moves farm time one step.
 - **Rest** — mental-arithmetic sums (a curriculum for classes 1–7 with spaced repetition and medals) give energy.
 - **Knowledge cards** — 67 cards about real farming and crafts, read and quizzed, unlock what they describe.
 
-It is built as a **Godot 4.7 prototype** (GDScript) that is fully playable through all five chapters, driven by one data
+It is built as a **Godot 4.7 prototype** (GDScript) that is fully playable through all six chapters, driven by one data
 file. It also runs in the browser (`web-build/`). The person you work with is the child's parent and the game's designer;
 they test on the iPad, pick the generated pictures and decide on design questions. Write to them in plain, friendly English
 and keep the game's own texts simple enough for a young reader.

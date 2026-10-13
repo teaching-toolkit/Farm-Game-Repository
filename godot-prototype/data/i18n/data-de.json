@@ -1640,8 +1640,8 @@
   "de": "Importhändler"
  },
  "nodes/import_broker/desc": {
-  "en": "Only barters: rare seeds for fine goods. Arrives with the 4th pet (design doc said 3 — moved so chapter 5 has its own opening).",
-  "de": "Tauscht nur: seltene Samen gegen feine Waren. Kommt mit dem 4. Haustier."
+  "en": "Only barters: rare seeds for fine goods. Arrives with the 5th pet and opens the last chapter.",
+  "de": "Tauscht nur: seltene Samen gegen feine Waren. Kommt mit dem 5. Haustier und öffnet das letzte Kapitel."
  },
  "nodes/pet_pony/name": {
   "en": "Pony comes home",
@@ -1858,6 +1858,14 @@
  "nodes/pet_alpaca/desc": {
   "en": "Pet 5 (default name Alfie). Bonus: soft fleece, 1 wool every 4 questions.",
   "de": "Haustier 5 (heisst zuerst Alfie). Bonus: weiches Vlies, 1 Wolle alle 4 Fragen."
+ },
+ "nodes/pet_badger/name": {
+  "en": "Badger comes home",
+  "de": "Der Dachs zieht ein"
+ },
+ "nodes/pet_badger/desc": {
+  "en": "Pet 5 (default name Bramble). Wise and slow, he knows which plants are good for you. Bonus: every herb harvest gives +1 herb.",
+  "de": "Haustier 5 (Standardname Bracken). Weise und gemächlich: Er weiss, welche Pflanzen gut für dich sind. Bonus: Jede Kräuterernte gibt +1 Kraut."
  },
  "nodes/wild_edge/name": {
   "en": "Field Edge & Woods",
@@ -9968,6 +9976,10 @@
   "de": "Handel im Dorf"
  },
  "chapters/4/name": {
+  "en": "Healing",
+  "de": "Heilkunde"
+ },
+ "chapters/5/name": {
   "en": "Master Farm",
   "de": "Meisterhof"
  },

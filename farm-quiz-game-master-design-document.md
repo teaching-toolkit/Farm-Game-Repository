@@ -771,7 +771,7 @@ bellows*.
 
 ## 10. Progression
 
-### 10.1 Five chapters
+### 10.1 Six chapters
 
 | Chapter | Home | Material age | What opens up | Pet |
 |---|---|---|---|---|
@@ -779,7 +779,8 @@ bellows*.
 | 2 · Homestead | Cottage | logs, planks, clay, bricks | log shed, compost and tomatoes, bees, woodlot, carpenter and kiln, the cottage in stages, stove, oven and prep table, pond, market stall, barn and cows, butter, the orchard | Tortoise |
 | 3 · Smallholding | Cottage | iron, nails | smithy, forge and anvil, iron tools (more plants per patch), sawbench, sheep and cloth, linen from flax, the press (oil, juice, sugar), windmill, fermenting and the cellar (yogurt, cheese, cider, vinegar, pickles), lumbermill | Goat |
 | 4 · Village Trade | Farmhouse | steel, glass, hardwood | blast forge and steel tools, drip line, the farmhouse in stages, greenhouse, brickworks, warehouse, master workshop and textile loom, walnuts and olives, pizza, the North Field | Pony |
-| 5 · Master Farm | Farmhouse | heirlooms, dyes | Import Broker barter, saffron and heirloom crops, the dye vat and colour mixing, Harvest Fair ribbons, master oven and stove, fine flour, seed library, wind pump, the River Meadow | Alpaca |
+| 5 · Healing | Farmhouse | herbs, the forest | the healer's garden and the old lamp-maker, the herb drying loft; *(planned: the still-room, remedies, the forest screen, phase 12)* | Badger *(a placeholder pet until then)* |
+| 6 · Master Farm | Farmhouse | heirlooms, dyes | Import Broker barter, saffron and heirloom crops, the dye vat and colour mixing, Harvest Fair ribbons, master oven and stove, fine flour, seed library, wind pump, the River Meadow | Alpaca |
 
 A chapter's sheets never show anything beyond it; the quest book shows this chapter's next goals and what is one step away.
 
@@ -797,7 +798,7 @@ Everything is a **node** in the data with `requires` (other nodes) and a `cost`.
 - **Chapters** end with a pet; later favours open only after the previous chapter's pet, so they never crowd a new chapter's
   first goals.
 
-### 10.3 The five pets
+### 10.3 The pets (five; the badger is a placeholder)
 
 | # | Pet (default name) | Dish | Comfort item | Bonus for good |
 |---|---|---|---|---|
@@ -805,7 +806,8 @@ Everything is a **node** in the data with `requires` (other nodes) and a `cost`.
 | 2 | 🐢 Tortoise (Mossy) | Tortoise Garden Platter | Warm Shell House | +1 💧 every water trip |
 | 3 | 🐐 Goat (Bramble) | Apple Oat Crumble | Goat Shed | a little compost every question, weeds −15 % |
 | 4 | 🐴 Pony (Hazel) | Apple-Carrot Cake | Saddle Blanket (needs the barn stable) | +10 % when selling |
-| 5 | 🦙 Alpaca (Alfie) | Golden Honey Cake + Rainbow Roast | Rainbow Quilt | a little wool every question |
+| 5 | 🦡 Badger (Bracken) | *(placeholder: 12 herbs, 2 honey)* | — | +1 herb per herb harvest *(in phase 12 the Healer's Chest, a tea set and remedies)* |
+| 6 | 🦙 Alpaca (Alfie) | Golden Honey Cake + Rainbow Roast | Rainbow Quilt | a little wool every question |
 
 The child names each pet (or keeps the default). Each pet adds a little luck for good, walks about the pet corner, and its
 arrival brings a celebration and a chance of a postcard. The fifth pet needs the most branches at once: fine flour, honey,
