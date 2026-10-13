@@ -73,6 +73,8 @@ func _season_change(sn: int) -> void:
 			spoiled[k] = lost
 	var msg := tr("%s It's %s! %s") % [str(G.meta["seasons"]["mods"][nm].get("emoji", "")), tr(nm), str(G.meta["seasons"]["mods"][nm].get("abundance", ""))]
 	G.say(msg)
+	var hint: String = str(G.meta["seasons"]["mods"][nm].get("hint", ""))
+	if hint != "" and G.done("k_wheat"): G.say("🌾 " + hint)
 	if not spoiled.is_empty():
 		var parts := []
 		for k in spoiled: parts.append("%s%d" % [G.iemoji(k), G.up(spoiled[k])])

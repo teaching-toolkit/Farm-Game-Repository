@@ -112,6 +112,8 @@ for nid, n in N.items():
         for i in n.get(k, []):
             if i not in ITEMS: err(w, f"{k} names {i}, which is not an item")
     if "seedItem" in n and n["seedItem"] not in ITEMS: err(w, f"seedItem {n['seedItem']} is not an item")
+    for sn in n.get("sowSeasons", []):
+        if sn not in ("spring", "summer", "autumn", "winter"): err(w, f"sowSeasons: {sn} is not a season")
     if "perk" in n and n["perk"] not in perk_ids: err(w, f"perk {n['perk']} is not in meta.perks")
     h = n.get("reward", {}).get("helper") if isinstance(n.get("reward"), dict) else None
     if h: node_id(w, h, "reward.helper")

@@ -99,6 +99,11 @@ func field_water_mult() -> float:
 	if G.S.get("rain", false): return 0.0
 	return float(G.g("waterMult", 1.0)) * G.m("water:field") * float(G.seasons.smod("waterField", 1.0))
 
+## A crop with "sowSeasons" can only be sown in those seasons (it can stay in the ground through the others).
+func sow_season_ok(n: Dictionary) -> bool:
+	var ss: Array = n.get("sowSeasons", [])
+	return ss.is_empty() or ss.has(G.seasons.season())
+
 ## How many plants of this crop could go into one patch right now, and why not more.
 func plant_plan(a: String, cid: String) -> Dictionary:
 	var n = G.nodes[cid]
@@ -109,6 +114,8 @@ func plant_plan(a: String, cid: String) -> Dictionary:
 	var seed_cost := float(n.get("seedCost", 0))
 	if seeds < k:   # only seeds you have can be planted (they are bought at the market)
 		k = int(floorf(seeds + 0.0001)); reasons.append("seeds")
+	if not sow_season_ok(n):      # winter wheat is sown in autumn or winter only
+		k = 0; reasons.append("season")
 	if a == "field":
 		var fd := free_density()
 		while k > fd and fert_points_have() + 0.001 < (k - fd):
@@ -137,6 +144,7 @@ func plant(a: String, i: int, cid: String) -> bool:
 	var plan := plant_plan(a, cid)
 	var k := int(plan["plants"])
 	if k < 1:
+		if plan["reasons"].has("season"): G.say(tr("🌱 %s is sown in %s.") % [G.nodes[cid]["name"], " / ".join((G.nodes[cid]["sowSeasons"] as Array).map(func(x): return tr(x)))]); return false
 		G.say(tr("🌱 Can't plant %s: not enough %s.") % [G.nodes[cid]["name"], ", ".join(plan["reasons"])])
 		return false
 	if G.S["energy"] + 0.001 < float(plan["energy"]):

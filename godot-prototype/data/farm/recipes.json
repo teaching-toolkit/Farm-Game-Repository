@@ -106,5 +106,6 @@
   "feed_mash": {"name": "Feed mash (chop old veg & straw)", "station": "chopping_block", "inputs": {"tag:vegetable": 2, "straw": 1}, "outputs": {"feed_mash": 3}, "energy": 2, "verb": "Mash"},
   "compost_scraps": {"name": "Compost (any scraps)", "station": "compost_bin", "inputs": {"tag:compostable": 3}, "outputs": {"compost": 2}, "energy": 0, "time": 4, "verb": "Compost"},
   "wicker_basket": {"name": "Wicker basket", "station": "workbench", "requires": ["k_rope"], "inputs": {"stick": 6, "fiber": 2}, "outputs": {"wicker_basket": 1}, "energy": 3, "verb": "Weave", "note": "Made again and again, it sells."},
-  "clay_pot": {"name": "Clay pot", "station": "campfire", "inputs": {"clay": 2}, "outputs": {"clay_pot": 1}, "energy": 2, "fuel": 1, "verb": "Fire", "note": "Fired in the embers. Made again and again, it sells."}
+  "clay_pot": {"name": "Clay pot", "station": "campfire", "inputs": {"clay": 2}, "outputs": {"clay_pot": 1}, "energy": 2, "fuel": 1, "verb": "Fire", "note": "Fired in the embers. Made again and again, it sells."},
+  "straw_hutch_hay": {"station": "workbench", "inputs": {"stick": 8, "hay": 6, "rope": 3}, "outputs": {"straw_hutch": 1}, "energy": 5, "verb": "Weave"}
 }

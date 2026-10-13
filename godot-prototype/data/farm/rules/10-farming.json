@@ -142,6 +142,7 @@
         "waterField": 1,
         "rain": 0.3,
         "abundance": "Fruit and nuts: orchard +40%; branches fall (sticks ×2).",
+        "hint": "Time to sow winter wheat: it sleeps under the frost and wakes in spring.",
         "yieldOrchard": 1.4,
         "gather": {
           "gather_sticks": 2

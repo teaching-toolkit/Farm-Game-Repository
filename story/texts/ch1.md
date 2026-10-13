@@ -71,13 +71,13 @@ Under the black boards you find a page, burnt at the edges. A list of numbers. A
 ## c1_seller · visit · The seller
 *When:* `done:d_porridge`
 
-Page 1. A cart creaks along the old track and stops by your land. The seller sniffs. “Is that porridge?” You hand her a bowl. She eats it standing up, very fast.
+Page 1. On the village square a seller sniffs the air. “Is that porridge?” You hand her a bowl. She eats it standing up, very fast.
 
-> Ein Karren knarrt den alten Weg entlang und hält am Rand deines Landes. Die Händlerin schnuppert. „Ist das Porridge?“ Du reichst ihr eine Schüssel. Sie isst im Stehen, ganz schnell.
+> Auf dem Dorfplatz schnuppert eine Händlerin in der Luft. „Ist das Porridge?“ Du reichst ihr eine Schüssel. Sie isst im Stehen, ganz schnell.
 
-Page 2. “You're from Moonedge, aren't you?” she says. “Good porridge, {player}. I'll tell them in the village that somebody is cooking up here again.”
+Page 2. “You're from Moonedge, aren't you?” she says. “Good porridge, {player}. I'll tell everyone that somebody is cooking up here again.”
 
-> „Du bist doch von Moonedge, oder?“, sagt sie. „Gutes Porridge, {player}. Ich erzähle im Dorf, dass hier oben wieder jemand kocht.“
+> „Du bist doch von Moonedge, oder?“, sagt sie. „Gutes Porridge, {player}. Ich erzähle allen, dass hier oben wieder jemand kocht.“
 
 ## c1_board · discovery · The notice board
 *When:* `tap:board`
@@ -122,9 +122,9 @@ Page 2. “And the bell? Who rang the bell?” “Shh!” says everybody at once
 ## c1_k_seller · bark
 *When:* `done:d_porridge + step>=8 + chance:0.25`
 
-“Do you ever stop?” calls the seller from the track. You wave. You do not stop.
+“Do you ever stop?” calls a cart driver from the track. You wave. You do not stop.
 
-> „Hörst du eigentlich nie auf?“, ruft die Händlerin vom Weg. Du winkst. Du hörst nicht auf.
+> „Hörst du eigentlich nie auf?“, ruft ein Fuhrmann vom Weg. Du winkst. Du hörst nicht auf.
 
 ## c1_k_hens · bark
 *When:* `done:animal_chicken + chance:0.2`

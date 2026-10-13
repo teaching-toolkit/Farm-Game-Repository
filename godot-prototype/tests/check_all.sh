@@ -46,6 +46,9 @@ grep -q "^TRIP OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/gate_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^GATE|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^GATE OK/✔ travelling merchant/; s/^GATE FAILED/✘ travelling merchant/'
 grep -q "^GATE OK" "$LOG" || FAIL=1
+"$G" --headless --path . res://tests/crops_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
+grep -E "^CROPS|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^CROPS OK/✔ hay and winter wheat/; s/^CROPS FAILED/✘ hay and winter wheat/'
+grep -q "^CROPS OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/market_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^MARKET|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^MARKET OK/✔ trust and season prices/; s/^MARKET FAILED/✘ trust and season prices/'
 grep -q "^MARKET OK" "$LOG" || FAIL=1

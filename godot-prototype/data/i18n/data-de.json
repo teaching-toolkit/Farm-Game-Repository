@@ -288,8 +288,8 @@
   "de": "Samenhändler"
  },
  "nodes/seed_1/desc": {
-  "en": "The seed seller in the village. Carrot seeds, and a sack of grain for sowing if you ever run out.",
-  "de": "Der Samenverkäufer im Dorf. Karottensamen — und ein Sack Korn zum Säen, falls dir mal alles ausgeht."
+  "en": "The seed seller in the village. Carrot seeds, and sacks of grain, hay and winter wheat for sowing if you ever run out.",
+  "de": "Der Samenverkäufer im Dorf. Karottensamen — und Säcke mit Korn, Heu und Winterweizen zum Säen, falls dir einmal etwas ausgeht."
  },
  "nodes/land_start/name": {
   "en": "One cleared patch",
@@ -618,6 +618,22 @@
  "nodes/pet_bunny/desc": {
   "en": "Pet 1 (default name Pip; the player can rename). Bonus: every carrot harvest gives +1 carrot.",
   "de": "Haustier 1 (heisst zuerst Pip; du kannst es umbenennen). Bonus: Jede Karottenernte bringt +1 Karotte."
+ },
+ "nodes/crop_hay/name": {
+  "en": "Meadow hay",
+  "de": "Wiesenheu"
+ },
+ "nodes/crop_hay/desc": {
+  "en": "Meadow grass, cut and dried: bedding for the hutch, feed for the pen, and it sells. The hay you keep is the seed.",
+  "de": "Wiesengras, geschnitten und getrocknet: Bett für den Stall, Futter für das Gehege, und man kann es verkaufen. Das Heu, das du zurückbehältst, ist die Saat."
+ },
+ "nodes/crop_winter_wheat/name": {
+  "en": "Winter wheat",
+  "de": "Winterweizen"
+ },
+ "nodes/crop_winter_wheat/desc": {
+  "en": "Sow it in autumn or winter. It grows slowly in the cold and gives more grain than summer wheat. The grain is the seed.",
+  "de": "Säe ihn im Herbst oder Winter. Er wächst in der Kälte langsam und gibt mehr Korn als der Sommerweizen. Das Korn ist die Saat."
  },
  "nodes/cottage_walls/name": {
   "en": "Cottage · log walls",
@@ -7755,6 +7771,150 @@
   "en": "No grains at all",
   "de": "gar keine Körner"
  },
+ "nodes/k_hay/name": {
+  "en": "Meadow hay",
+  "de": "Wiesenheu"
+ },
+ "nodes/k_hay/desc": {
+  "en": "Grass, cut and dried, keeps for the whole winter.",
+  "de": "Gras, geschnitten und getrocknet, hält den ganzen Winter."
+ },
+ "nodes/k_hay/page": {
+  "en": "Grass grows quickly in a meadow. A farmer cuts it and lets it dry in the sun. Dry grass is called hay. It does not rot, so it keeps for the whole winter. Hay makes soft beds and good food for hutches and pens. Keep some hay back, and you can sow more.",
+  "de": "Auf einer Wiese wächst das Gras schnell. Ein Bauer schneidet es und lässt es in der Sonne trocknen. Trockenes Gras heisst Heu. Es fault nicht, darum hält es den ganzen Winter. Heu gibt weiche Betten und gutes Futter für Ställe und Gehege. Behalte etwas Heu zurück, dann kannst du neues säen."
+ },
+ "nodes/k_hay/questions/0/q": {
+  "en": "What is hay?",
+  "de": "Was ist Heu?"
+ },
+ "nodes/k_hay/questions/0/why": {
+  "en": "Hay is grass that was cut and dried in the sun.",
+  "de": "Heu ist Gras, das geschnitten und in der Sonne getrocknet wurde."
+ },
+ "nodes/k_hay/questions/0/answers/0": {
+  "en": "Grass that was cut and dried",
+  "de": "Gras, das geschnitten und getrocknet wurde"
+ },
+ "nodes/k_hay/questions/0/answers/1": {
+  "en": "Wet grass in a bucket",
+  "de": "Nasses Gras in einem Eimer"
+ },
+ "nodes/k_hay/questions/0/answers/2": {
+  "en": "A kind of stone",
+  "de": "Eine Art Stein"
+ },
+ "nodes/k_hay/questions/1/q": {
+  "en": "Why do farmers dry grass into hay?",
+  "de": "Warum trocknen Bauern Gras zu Heu?"
+ },
+ "nodes/k_hay/questions/1/why": {
+  "en": "Fresh grass rots, dry hay keeps for months.",
+  "de": "Frisches Gras fault, trockenes Heu hält monatelang."
+ },
+ "nodes/k_hay/questions/1/answers/0": {
+  "en": "So it keeps all winter",
+  "de": "Damit es den ganzen Winter hält"
+ },
+ "nodes/k_hay/questions/1/answers/1": {
+  "en": "So it turns blue",
+  "de": "Damit es blau wird"
+ },
+ "nodes/k_hay/questions/1/answers/2": {
+  "en": "So it gets heavier",
+  "de": "Damit es schwerer wird"
+ },
+ "nodes/k_hay/questions/2/q": {
+  "en": "What is hay good for?",
+  "de": "Wofür ist Heu gut?"
+ },
+ "nodes/k_hay/questions/2/why": {
+  "en": "Hay makes a soft bed and is food for animals.",
+  "de": "Heu gibt ein weiches Bett und ist Futter für Tiere."
+ },
+ "nodes/k_hay/questions/2/answers/0": {
+  "en": "Soft beds and feed for animals",
+  "de": "Weiche Betten und Futter für Tiere"
+ },
+ "nodes/k_hay/questions/2/answers/1": {
+  "en": "Building walls",
+  "de": "Mauern bauen"
+ },
+ "nodes/k_hay/questions/2/answers/2": {
+  "en": "Making soup",
+  "de": "Suppe kochen"
+ },
+ "nodes/k_winter_wheat/name": {
+  "en": "Winter wheat",
+  "de": "Winterweizen"
+ },
+ "nodes/k_winter_wheat/desc": {
+  "en": "Some wheat is sown in autumn and ripens after the winter.",
+  "de": "Manchen Weizen sät man im Herbst, und er reift nach dem Winter."
+ },
+ "nodes/k_winter_wheat/page": {
+  "en": "Most wheat is sown in spring. But there is also winter wheat. A farmer sows it in autumn. It sprouts, then rests under the cold and the snow, and grows again when spring comes. Because it started early, it gives more grain. You can only sow it in autumn or winter.",
+  "de": "Die meisten Weizenkörner sät man im Frühling. Es gibt aber auch Winterweizen. Ein Bauer sät ihn im Herbst. Er keimt, ruht dann unter Kälte und Schnee und wächst im Frühling weiter. Weil er früh angefangen hat, gibt er mehr Korn. Du kannst ihn nur im Herbst oder Winter säen."
+ },
+ "nodes/k_winter_wheat/questions/0/q": {
+  "en": "When do farmers sow winter wheat?",
+  "de": "Wann säen Bauern Winterweizen?"
+ },
+ "nodes/k_winter_wheat/questions/0/why": {
+  "en": "Winter wheat is sown in autumn and rests through the winter.",
+  "de": "Winterweizen wird im Herbst gesät und ruht über den Winter."
+ },
+ "nodes/k_winter_wheat/questions/0/answers/0": {
+  "en": "In autumn",
+  "de": "Im Herbst"
+ },
+ "nodes/k_winter_wheat/questions/0/answers/1": {
+  "en": "In spring",
+  "de": "Im Frühling"
+ },
+ "nodes/k_winter_wheat/questions/0/answers/2": {
+  "en": "In midsummer",
+  "de": "Mitten im Sommer"
+ },
+ "nodes/k_winter_wheat/questions/1/q": {
+  "en": "What does winter wheat do in the cold?",
+  "de": "Was macht Winterweizen in der Kälte?"
+ },
+ "nodes/k_winter_wheat/questions/1/why": {
+  "en": "It rests under the cold and snow and grows again in spring.",
+  "de": "Er ruht unter Kälte und Schnee und wächst im Frühling wieder."
+ },
+ "nodes/k_winter_wheat/questions/1/answers/0": {
+  "en": "It rests and waits",
+  "de": "Er ruht und wartet"
+ },
+ "nodes/k_winter_wheat/questions/1/answers/1": {
+  "en": "It melts",
+  "de": "Er schmilzt"
+ },
+ "nodes/k_winter_wheat/questions/1/answers/2": {
+  "en": "It turns into hay",
+  "de": "Er wird zu Heu"
+ },
+ "nodes/k_winter_wheat/questions/2/q": {
+  "en": "Why does winter wheat give more grain?",
+  "de": "Warum gibt Winterweizen mehr Korn?"
+ },
+ "nodes/k_winter_wheat/questions/2/why": {
+  "en": "An early start gives the plant more time to grow grain.",
+  "de": "Wer früh anfängt zu wachsen, hat mehr Zeit, Korn zu bilden."
+ },
+ "nodes/k_winter_wheat/questions/2/answers/0": {
+  "en": "It started growing early",
+  "de": "Er hat früh angefangen zu wachsen"
+ },
+ "nodes/k_winter_wheat/questions/2/answers/1": {
+  "en": "It is painted gold",
+  "de": "Er ist golden angemalt"
+ },
+ "nodes/k_winter_wheat/questions/2/answers/2": {
+  "en": "It drinks no water",
+  "de": "Er trinkt kein Wasser"
+ },
  "nodes/straw_sandals/name": {
   "en": "Straw Sandals",
   "de": "Strohsandalen"
@@ -9079,6 +9239,22 @@
   "en": "A wheel axle, turned smooth and true. Nobody on the farm can make one yet — the travelling merchant has one.",
   "de": "Eine Radachse, glatt und gerade gedreht. Auf dem Hof kann sie noch niemand machen — der fahrende Händler hat eine."
  },
+ "items/hay/name": {
+  "en": "Hay",
+  "de": "Heu"
+ },
+ "items/hay/desc": {
+  "en": "Meadow grass, cut and dried. Soft bedding, feed for hutch and pen, and good for the compost heap.",
+  "de": "Wiesengras, geschnitten und getrocknet. Weiches Bett, Futter für Stall und Gehege und gut für den Komposthaufen."
+ },
+ "items/winter_wheat/name": {
+  "en": "Winter wheat",
+  "de": "Winterweizen"
+ },
+ "items/winter_wheat/desc": {
+  "en": "Sown in autumn, it sleeps under the frost and wakes in spring. The grain is its own seed.",
+  "de": "Im Herbst gesät, schläft er unter dem Frost und wacht im Frühling auf. Das Korn ist seine eigene Saat."
+ },
  "recipes/porridge/verb": {
   "en": "Cook",
   "de": "Kochen"
@@ -9619,6 +9795,10 @@
   "en": "Fire",
   "de": "Brennen"
  },
+ "recipes/straw_hutch_hay/verb": {
+  "en": "Weave",
+  "de": "Flechten"
+ },
  "story/c1_frame0/title": {
   "en": "Bedtime",
   "de": "Schlafenszeit"
@@ -9696,12 +9876,12 @@
   "de": "Die Händlerin"
  },
  "story/c1_seller/pages/0/text": {
-  "en": "A cart creaks along the old track and stops by your land. The seller sniffs. “Is that porridge?” You hand her a bowl. She eats it standing up, very fast.",
-  "de": "Ein Karren knarrt den alten Weg entlang und hält am Rand deines Landes. Die Händlerin schnuppert. „Ist das Porridge?“ Du reichst ihr eine Schüssel. Sie isst im Stehen, ganz schnell."
+  "en": "On the village square a seller sniffs the air. “Is that porridge?” You hand her a bowl. She eats it standing up, very fast.",
+  "de": "Auf dem Dorfplatz schnuppert eine Händlerin in der Luft. „Ist das Porridge?“ Du reichst ihr eine Schüssel. Sie isst im Stehen, ganz schnell."
  },
  "story/c1_seller/pages/1/text": {
-  "en": "“You're from Moonedge, aren't you?” she says. “Good porridge, {player}. I'll tell them in the village that somebody is cooking up here again.”",
-  "de": "„Du bist doch von Moonedge, oder?“, sagt sie. „Gutes Porridge, {player}. Ich erzähle im Dorf, dass hier oben wieder jemand kocht.“"
+  "en": "“You're from Moonedge, aren't you?” she says. “Good porridge, {player}. I'll tell everyone that somebody is cooking up here again.”",
+  "de": "„Du bist doch von Moonedge, oder?“, sagt sie. „Gutes Porridge, {player}. Ich erzähle allen, dass hier oben wieder jemand kocht.“"
  },
  "story/c1_board/text": {
   "en": "A notice board, full of little papers. Somebody needs a basket. Somebody has lost a goat. You read every one twice, and keep your hat low.",
@@ -9748,8 +9928,8 @@
   "de": "„Und die Glocke? Wer hat die Glocke geläutet?“ „Psst!“, rufen alle auf einmal. „Das kommt beim nächsten Mal!“ Du lächelst. Sie kennen die Geschichte fast so gut wie du. Fast."
  },
  "story/c1_k_seller/text": {
-  "en": "“Do you ever stop?” calls the seller from the track. You wave. You do not stop.",
-  "de": "„Hörst du eigentlich nie auf?“, ruft die Händlerin vom Weg. Du winkst. Du hörst nicht auf."
+  "en": "“Do you ever stop?” calls a cart driver from the track. You wave. You do not stop.",
+  "de": "„Hörst du eigentlich nie auf?“, ruft ein Fuhrmann vom Weg. Du winkst. Du hörst nicht auf."
  },
  "story/c1_k_hens/text": {
   "en": "The hens argue about who laid which egg. Nobody wins.",
@@ -9822,6 +10002,10 @@
  "meta/seasons/mods/autumn/abundance": {
   "en": "Fruit and nuts: orchard +40%; branches fall (sticks ×2).",
   "de": "Obst und Nüsse: Obstgarten +40%; Äste fallen herunter (Stöcke ×2)."
+ },
+ "meta/seasons/mods/autumn/hint": {
+  "en": "Time to sow winter wheat: it sleeps under the frost and wakes in spring.",
+  "de": "Zeit, Winterweizen zu säen: Er schläft unter dem Frost und wacht im Frühling auf."
  },
  "meta/seasons/mods/winter/abundance": {
   "en": "Frost brings stones up (pick them for walls); indoor work by the fire −10% energy; wool grows thick.",

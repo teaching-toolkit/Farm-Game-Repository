@@ -72,9 +72,10 @@ func sheet_patch(a: String, i: int) -> void:
 			var base := {"water": float(plan["water_full_base" if short else "water_base"]), "energy": float(plan["energy_base"])}
 			t.add_child(M.widgets.costs(c, base))
 			t.add_child(UI.label("🌰 %d" % G.down(G.fields.seed_have(cid)), 16, UI.INK if G.fields.seed_have(cid) >= 1.0 else UI.RED))
-			if plants < int(plan["max"]) and plan["reasons"].size() > 0:
+			if plan["reasons"].has("season"): t.add_child(UI.label(tr("🍂 Sow in autumn or winter"), 14, UI.MUTED, true))
+			elif plants < int(plan["max"]) and plan["reasons"].size() > 0:
 				var why := []
-				for rk in plan["reasons"]: why.append(G.iemoji(rk) if rk != "seeds" else "🌰")
+				for rk in plan["reasons"]: why.append("🌰" if rk == "seeds" else ("🍂" if rk == "season" else G.iemoji(rk)))
 				t.add_child(UI.label("fewer: " + " ".join(why), 14, UI.MUTED))
 			if G.fields.seed_have(cid) < 1.0 and not n.has("seedItem"):
 				t.add_child(UI.soft_button(tr("🛒 Buy seeds"), M.widgets.go_spot.bind("market"), true, 15))
