@@ -1,7 +1,7 @@
 # Architecture plan (TODO T2 → T1): the game's code, restructured for upkeep and reuse
 
 Written 12 Oct 2026 after reading the code (Godot 4.7 project in `godot-prototype/`). Labels: ✅ decided · 💡 proposed · ❓ for the parent.
-Slices R0–R2 are built (§9, marked ✅). When the restructuring is done, the parts of this file that describe the result move into
+Slices R0–R3 are built (§9, marked ✅). When the restructuring is done, the parts of this file that describe the result move into
 `godot-prototype/ARCHITECTURE.md` (the lasting description), and this plan goes to `archive/`.
 
 ---
@@ -262,7 +262,7 @@ rough (S ≈ one session, M ≈ two, L ≈ three or four).
 | **R0. Safety net** ✅ 12 Oct 2026 | `--seed=` for all randomness; the golden run (bot fingerprint per question); save fixtures; the interface test driver, with the smoke test moved onto it; the screenshot flags moved out of `main.gd` | P8, P10 | M |
 | **R1. Folders** ✅ 12 Oct 2026 | `kits/` and `game/farm/`; move the files that are already separate (learnkit → `kits/learn`, ui, avatar and actor, sound, i18n, art); fix the `preload` paths | – | S |
 | **R2. Content out of code** ✅ 13 Oct 2026 | places, insides, picture chains, ruins, pens, bench, pets and animals, the chapter rule → data (`data/farm/places.json`; pets, animals and the chapter rule from the nodes and `chapters[].pet`). Left for R4: the lists of node types (`GOAL_TYPES`, `NOT_AUTO`, `MAIN_TYPES`, `DEFAULT_CAT`), which belong to the progression kit | P3 | S |
-| **R3. Core** | modifiers, conditions, rng, events, the clock (with the systems registered in today's exact order) | P4 | M |
+| **R3. Core** ✅ 13 Oct 2026 | modifiers, conditions, rng, the clock (with the systems registered in today's exact order), in `kits/core/` with `tests/core_test.gd`. `events.gd` moved to R4 (it is first needed when the systems are split out of `game.gd`), `saves.gd` is R7, `data.gd` R8 | P4 | M |
 | **R4. Rules split** | `game.gd` → systems (progression, knowledge, items & trade, crafting, needs, resources, seasons, rewards, farm: fields, animals …) behind the same `Game` front door; today's function names keep working | P1 | L |
 | **R5. Interface split** | `main.gd` → composition root, sheet and modal hosts, notifications, place scripts, learning screens, menus; reads through the systems only | P1, P2 | L |
 | **R6. Map** | generic map (`kits/world`) vs the farm's drawing (road, forest, fields); pests and the scarecrow drawn once | P9 | M |

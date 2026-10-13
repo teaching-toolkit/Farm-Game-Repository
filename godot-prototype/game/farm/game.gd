@@ -52,7 +52,10 @@ var polish_ids: Array = []
 var card_ids: Array = []
 var animal_ids: Array = []          # the animals (nodes of type "animal"), in the data's order
 var pet_ids: Array = []             # the pets in the order they come home: one at the end of each chapter (chapters[].pet)
-var rng := RandomNumberGenerator.new()
+const Modifiers = preload("res://kits/core/modifiers.gd")
+const Conditions = preload("res://kits/core/conditions.gd")
+var rng = preload("res://kits/core/rng.gd").new()    # the one random source of the rules (seedable)
+var clock = preload("res://kits/core/clock.gd").new()  # one step of time: the systems that run in it, in order
 const Learner = preload("res://kits/learn/learner.gd")
 var math = preload("res://kits/learn/math_engine.gd").new()   # Rest sums: curriculum, spaced repetition, medals (learnkit)
 var quiz = preload("res://kits/learn/quiz_engine.gd").new()   # Time Quiz questions: spaced repetition (learnkit)
@@ -82,11 +85,10 @@ func now() -> float:
 
 ## Shuffles an array with the game's own random numbers (so a seed gives the same order).
 func shuffle(a: Array) -> void:
-	for i in range(a.size() - 1, 0, -1):
-		var j := rng.randi_range(0, i)
-		var t = a[i]; a[i] = a[j]; a[j] = t
+	rng.shuffle(a)
 
 func _ready() -> void:
+	_setup_clock()
 	_test_args()
 	if test_seed >= 0:
 		rng.seed = test_seed
@@ -347,42 +349,32 @@ func satisfied(id: String) -> bool:
 func done(id: String) -> bool:
 	return S["unlocked"].has(id)
 
-func _apply(e: Dictionary, g: float, st: Dictionary, ad: Dictionary, mu: Dictionary, pr: Dictionary) -> void:
-	for k in e.get("set", {}):
-		st[k] = e["set"][k]
-	for k in e.get("add", {}):
-		ad[k] = ad.get(k, 0.0) + float(e["add"][k]) * g
-	for k in e.get("mult", {}):
-		var v := 1.0 - (1.0 - float(e["mult"][k])) * g
-		mu[k] = mu.get(k, 1.0) * v
-	for k in e.get("produces", {}):
-		pr[k] = pr.get(k, 0.0) + float(e["produces"][k]) * g
-
+## Everything that changes the farm's numbers, folded into one table (kits/core/modifiers.gd): every node done (except what a
+## helper replaced or what is not attached), polish at a diminishing weight, and the gift cards in use. Kept until something changes (_dirty).
 func caps() -> Dictionary:
 	if _caps != null: return _caps
-	var st := {}; var ad := {}; var mu := {}; var pr := {}
+	var t: Dictionary = Modifiers.empty()
 	for id in S["unlocked"]:
 		if not nodes.has(id) or superseded(id): continue
 		var n = nodes[id]
 		if n["type"] == "polish": continue
 		if n.has("attach") and S["attach"].get(n["attach"], id) != id: continue
-		if n.has("effects"): _apply(n["effects"], 1.0, st, ad, mu, pr)
+		if n.has("effects"): Modifiers.apply(t, n["effects"])
 	for pid in S["polish"]:
 		var p := float(S["polish"][pid])
 		if p <= 0.0 or not nodes.has(pid): continue
-		_apply(nodes[pid].get("effects", {}), 1.0 - pow(0.5, p), st, ad, mu, pr)
+		Modifiers.apply(t, nodes[pid].get("effects", {}), 1.0 - pow(0.5, p))
 	for gid in S.get("gift_active", S["gift_owned"]):
 		var gc := gift_card(gid)
-		if not gc.is_empty(): _apply(gc.get("effects", {}), 1.0, st, ad, mu, pr)
-	_caps = {"set": st, "add": ad, "mult": mu, "produces": pr}
+		if not gc.is_empty(): Modifiers.apply(t, gc.get("effects", {}))
+	_caps = t
 	return _caps
 
 func m(k: String) -> float:
-	return float(caps()["mult"].get(k, 1.0))
+	return Modifiers.mult(caps(), k)
 
 func g(k: String, d: float = 0.0) -> float:
-	var c := caps()
-	return float(c["set"].get(k, d)) + float(c["add"].get(k, 0.0))
+	return Modifiers.value(caps(), k, d)
 
 func energy_max() -> float:
 	return g("energyMax", 20.0) + 3.0 * S["acorns"].size()
@@ -2010,27 +2002,61 @@ func _weed_luck() -> void:
 		S["acorns"]["acorn_lucky"] = true; _dirty(); say(tr("🌰✨ A golden acorn glints under a leaf! Energy max +3 for good."))
 
 # ------------------------------------------------------------------ one Time Quiz answer = one step of farm time
+## One step of time (one right Time Quiz answer). The step counter moves, then the systems run in the order registered in
+## _setup_clock() (kits/core/clock.gd), each adding to the report `info`; then the farm is saved and the interface told.
 func step_time() -> Dictionary:
 	S["step"] = int(S["step"]) + 1
-	_tick_pace()
 	var info := {"removed": 0, "arrived": 0.0, "rain": false, "season": false}
+	clock.run(info)
+	_dirty()
+	save_game()
+	step_done.emit(info)
+	changed.emit()
+	return info
+
+## The systems of one step of time and their ORDER (it is part of the rules: rain before crops, crops before pests …).
+## A new system registers here, after the one it must follow.
+func _setup_clock() -> void:
+	clock.register("pace", func(_i): _tick_pace())
+	clock.register("season", _step_season)
+	clock.register("rain", _step_rain)
+	clock.register("producers", _step_producers)
+	clock.register("crops", _step_crops)
+	clock.register("weeds", func(_i): _tick_weeds_stones())
+	clock.register("pests", _step_pests)
+	clock.register("stations", func(_i): _tick_stations())
+	clock.register("reading", func(_i): _tick_reading())
+	clock.register("home_fuel", func(_i): _tick_home_fuel())
+	clock.register("market", func(_i): _tick_market())
+	clock.register("wear", func(_i): _wear("question"))     # polish that wears with time
+	clock.register("neighbour_gift", _step_neighbour_gift)
+	clock.register("luck", func(_i): _expire_luck_boosts())
+	clock.register("acorns", func(_i): _check_acorns())
+	clock.register("unlocks", func(_i): _auto_unlocks())
+	clock.register("perks", func(_i): _check_perks())
+
+func _step_season(info: Dictionary) -> void:
 	var sn := season_no()
 	if sn != int(S["last_season"]):
 		_season_change(sn)
 		S["last_season"] = sn
 		info["season"] = true
-	# rain
+
+## Rain waters the fields (planting costs no water this question); water never comes by itself, it is carried.
+func _step_rain(info: Dictionary) -> void:
 	var rain_ch := float(smod("rain", 0.0)) * (1.0 + 0.3 * luck())
 	var was_rain: bool = S.get("rain", false)
 	S["rain"] = rng.randf() < rain_ch
 	info["rain"] = S["rain"]
 	info["rain_stopped"] = was_rain and not S["rain"]
-	# water never comes by itself (it is carried); rain waters the fields: planting costs no water this question
 	if g("waterPerStep", 0.0) > 0.0: S["water"] = minf(water_cap(), float(S["water"]) + g("waterPerStep", 0.0))
-	# passive producers (woodlot, pets)
+
+## Passive producers (woodlot, pets).
+func _step_producers(_info: Dictionary) -> void:
 	for k in caps()["produces"]:
 		add_item(k, float(caps()["produces"][k]), true)
-	# crops
+
+func _step_crops(_info: Dictionary) -> void:
 	for a in ["field", "orchard", "gh"]:
 		var arr: Array = area(a)
 		for i in range(arr.size()):
@@ -2038,16 +2064,12 @@ func step_time() -> Dictionary:
 			if p["crop"] == "" or p["ready"]: continue
 			p["growth"] = float(p["growth"]) + grow_speed(a, p)
 			if float(p["growth"]) + 0.0001 >= grow_target(p): p["ready"] = true
-	_tick_weeds_stones()
+
+func _step_pests(info: Dictionary) -> void:
 	var pr := _tick_pests()
 	info["removed"] = pr["removed"]; info["arrived"] = pr["arrived"]; info["eaten"] = pr["eaten"]; info["eat_share"] = pr["eat_share"]
-	_tick_stations()
-	_tick_reading()
-	_tick_home_fuel()
-	_tick_market()
-	# polish that wears with time
-	_wear("question")
-	# neighbour gifts
+
+func _step_neighbour_gift(_info: Dictionary) -> void:
 	if roll(_event("neighbour_gift")):
 		var opts := []
 		for k in S["seen"]:
@@ -2055,19 +2077,12 @@ func step_time() -> Dictionary:
 		if opts.size() > 0:
 			var k2: String = opts[rng.randi_range(0, opts.size() - 1)]
 			add_item(k2, 2.0, true); say(tr("🧺 A neighbour drops off a little gift basket: %s×2") % iemoji(k2))
-	# expire luck boosts
+
+func _expire_luck_boosts() -> void:
 	var keep := []
 	for b in S["luck_boosts"]:
 		if int(b[1]) > S["step"]: keep.append(b)
 	S["luck_boosts"] = keep
-	_check_acorns()
-	_auto_unlocks()
-	_check_perks()
-	_dirty()
-	save_game()
-	step_done.emit(info)
-	changed.emit()
-	return info
 
 func weed_rate() -> float:
 	var w = meta.get("weeds", {})
@@ -2359,26 +2374,26 @@ func _check_acorns() -> void:
 			say(tr("🌰✨ Golden Acorn: %s! Energy max +%d for good.") % [a["name"], int(ac.get("energyMaxEach", 3))])
 	_check_perks()
 
-## A condition from the data: "unlocked:id" or "<counter>>=N" (sidequests, seasons, weeds, cards, harvests, rest_quick,
-## medals (Rest sum medals won), arith_level, sold_kinds, friends).
+## A condition from the data (kits/core/conditions.gd): "unlocked:id" or "<counter>>=N". This game's counters are below.
 func cond(w: String) -> bool:
-	if w.begins_with("unlocked:"): return done(w.substr(9))
-	var p := w.split(">=")
-	if p.size() != 2: return false
-	var n := float(p[1])
+	return Conditions.check(w, self)
+
+## The value of a named counter for conditions: sidequests, seasons, weeds, cards, harvests, rest_quick, medals (Rest sum medals
+## won), arith_level, sold_kinds, friends. NAN for a name that is not one (the condition is then false).
+func counter(name: String) -> float:
 	var st: Dictionary = S["stats"]
-	match p[0]:
-		"sidequests": return float(st.get("sidequests", 0)) >= n
-		"seasons": return float(season_no()) >= n
-		"weeds": return float(st.get("weeds", 0)) >= n
-		"cards": return float(cards_learned()) >= n
-		"harvests": return float(st.get("harvests", 0)) >= n
-		"rest_quick": return float(st.get("rest_quick", 0)) >= n
-		"medals": return float(math.medal_count(_learn())) >= n
-		"arith_level": return float(math.medal_count(_learn(), "bronze") + 1) >= n
-		"sold_kinds": return float(S.get("sold_kinds", {}).size()) >= n
-		"friends": return float(friends().size()) >= n
-	return false
+	match name:
+		"sidequests": return float(st.get("sidequests", 0))
+		"seasons": return float(season_no())
+		"weeds": return float(st.get("weeds", 0))
+		"cards": return float(cards_learned())
+		"harvests": return float(st.get("harvests", 0))
+		"rest_quick": return float(st.get("rest_quick", 0))
+		"medals": return float(math.medal_count(_learn()))
+		"arith_level": return float(math.medal_count(_learn(), "bronze") + 1)
+		"sold_kinds": return float(S.get("sold_kinds", {}).size())
+		"friends": return float(friends().size())
+	return NAN
 
 # ------------------------------------------------------------------ perks: small extras for favours and achievements
 func perk_def(id: String) -> Dictionary:

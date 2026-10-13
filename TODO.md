@@ -1,7 +1,7 @@
 # To-do list — Farm Quiz Game
 
 The project's to-do list and plan. Moved out of `00-READ-ME-FIRST.md` §6 on **9 October 2026**; finished tasks live in
-`PROJECT-LOG.md`, not here. **Last updated: 13 October 2026** (phase 1 built and checked, version 0.9.0; phase 2, the restructuring, under way: R0–R2 done, next R3; seven rounds of the
+`PROJECT-LOG.md`, not here. **Last updated: 13 October 2026** (phase 1 built and checked, version 0.9.0; phase 2, the restructuring, under way: R0–R3 done, next R4; seven rounds of the
 parent's decisions, 10–12 Oct, worked in; §0 is the implementation plan).
 
 **Standing rule** (from `00-READ-ME-FIRST.md`): keep this file current *as you work*. Tick off or remove done tasks (and add a
@@ -66,8 +66,8 @@ question must match):
 - ✅ **R0** safety net (`--seed`, golden run, save fixtures, an interface test driver, screenshot flags out of `main.gd`; done 12 Oct 2026,
   `bash tests/check_all.sh`) · ✅ **R1** folders
   (`kits/`, `game/farm/`; done 12 Oct 2026) · ✅ **R2** farm content out of code (done 13 Oct 2026: `data/farm/places.json`; pets, animals and
-  the chapter rule now come from the nodes and `chapters[].pet`; checked by `tests/places_test.tscn`, which is part of `check_all.sh`) · **R3** core
-  (modifiers, conditions, clock) · **R4** `game.gd` split into systems behind the same `Game` front door (was T1; also takes the lists of node types
+  the chapter rule now come from the nodes and `chapters[].pet`; checked by `tests/places_test.tscn`, which is part of `check_all.sh`) · ✅ **R3** core
+  (done 13 Oct 2026: `kits/core/` modifiers, conditions, rng, clock; events come with R4, saves with R7, data loading with R8) · **R4** `game.gd` split into systems behind the same `Game` front door (was T1; also takes the lists of node types
   that are still in code: `GOAL_TYPES` in `main.gd`, `NOT_AUTO`, `MAIN_TYPES`, `DEFAULT_CAT` in `game.gd` → data of the progression kit) · **R5** `main.gd` split into a composition root,
   hosts and one script per place (was T1) · **R6** map: generic vs farm, pests drawn once · **R7** saves with versions and upgrade steps ·
   **R8** data files split, a data checker, pacing from the real engine.

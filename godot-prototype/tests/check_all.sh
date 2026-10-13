@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# All quick checks in one go (about 2 minutes): UI smoke test, save fixtures, places and pets, golden run, translations.
+# All quick checks in one go (about 2 minutes): UI smoke test, save fixtures, core kit, places and pets, golden run, translations.
 # Run after every restructuring step:  bash tests/check_all.sh   (Godot as in tests/golden.sh)
 set -uo pipefail
 cd "$(dirname "$0")/.."
@@ -19,6 +19,9 @@ else echo "✔ UI smoke test ($(grep -c . "$LOG") lines; read them against claud
 "$G" --headless --path . res://tests/fixtures_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^FIXTURES|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^FIXTURES OK/✔ save fixtures/; s/^FIXTURES FAILED/✘ save fixtures/'
 grep -q "^FIXTURES OK" "$LOG" || FAIL=1
+"$G" --headless --path . -s res://tests/core_test.gd > "$LOG" 2>&1 || FAIL=1
+grep -E "^CORE|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^CORE OK/✔ core kit/; s/^CORE FAILED/✘ core kit/'
+grep -q "^CORE OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/places_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^PLACES|^FAIL|^   |SCRIPT ERROR" "$LOG" | sed 's/^PLACES OK/✔ places and pets/; s/^PLACES FAILED/✘ places and pets/'
 grep -q "^PLACES OK" "$LOG" || FAIL=1

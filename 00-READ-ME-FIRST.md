@@ -2,7 +2,7 @@
 
 This file is the starting point for a new chat or another AI: what the project is, how the folder is laid out, the parent's
 rules and where we left off. **How to work on the project** (what to read, the checks, changing content) lives in three skill
-files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2 under way: R0–R2 done).
+files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2 under way: R0–R3 done).
 
 ---
 
@@ -185,7 +185,10 @@ R1 done too: the code now lives in `kits/` (reusable parts) and `game/farm/` (th
 rules that put a data node at a place are now `godot-prototype/data/farm/places.json`; the pets and animals come from the nodes and
 `chapters[].pet` instead of lists in four places. A new test (`tests/places_test.tscn`, in `check_all.sh`) pins it to what the old code
 gave; all checks pass, the golden runs are identical. No change to the game; `web-build/` still matches it (a web export would now also
-carry `data/farm/*.json`). Next: R3 (the core: modifiers, conditions, the clock).
+carry `data/farm/*.json`). 
+13 Oct 2026 (phase 2, R3): the core: `godot-prototype/kits/core/` (modifiers, conditions, rng, clock; own README and test). `Game.step_time()`
+is now a list of registered systems in today's order (`Game._setup_clock()`). No change to the game (golden runs identical, also strict);
+`web-build/` still matches it. Next: R4 (`game.gd` split into systems).
 
 ---
 
