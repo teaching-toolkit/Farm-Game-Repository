@@ -9,9 +9,12 @@ The game never needs any of these — a missing picture just shows the emoji.
 import csv
 import json
 import os
+import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA = json.load(open(os.path.join(ROOT, "data", "farm-progression.json"), encoding="utf-8"))
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import farmdata
+DATA = farmdata.load()
 NODES = DATA["nodes"]
 
 STYLE = ("Bright, friendly mobile-game cartoon, thick rounded dark outlines, flat colours with simple cel shading, "

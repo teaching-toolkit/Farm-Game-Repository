@@ -30,7 +30,9 @@ hotspot_art = places_data["cornerArt"]
 interiors = {b: {"art": i["art"], "members": i["members"]} for b, i in places_data["interiors"].items()}
 pens = {sid: p["fence"] for sid, p in places_data["pens"].items()}
 always = places_data["alwaysOpen"]
-data = json.load(open(os.path.join(ROOT, "data", "farm-progression.json"), encoding="utf-8"))
+sys.path.insert(0, HERE)
+import farmdata
+data = farmdata.load()
 start = set(data["start"].get("unlocked", []))
 plot_chains["pets"] = [c["pet"] for c in data["chapters"]]
 

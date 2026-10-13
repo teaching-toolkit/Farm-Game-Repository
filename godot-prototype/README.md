@@ -1,6 +1,6 @@
 # Farm Quiz Game — Godot prototype
 
-A playable prototype that runs the whole progression from `data/farm-progression.json` (data v0.8). Start with `../00-READ-ME-FIRST.md` for the project as a whole.
+A playable prototype that runs the whole progression from the files in `data/farm/` (data v0.8). Start with `../00-READ-ME-FIRST.md` for the project as a whole.
 Made for an **iPad held upright** (design size 834×1194; other screens stretch to fit).
 Pictures come from `assets/` when they exist; emojis stand in for every picture that doesn't exist yet.
 
@@ -247,8 +247,12 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   (one Time Quiz question), `--lang=de` (quiz texts in German), `--shot=file.png`.
 
 ## Changing content (no code needed)
-- `data/farm-progression.json` — the whole tree. Edit it, run `python3 tools/sync_progression.py` (copies it into
-  `../progression/` and the explorer) and check it in `../progression/progression-explorer.html`.
+- **`data/farm/`** — the whole tree, split into files (since R8, 13 Oct 2026): `items.json`, `recipes.json`, `chapters.json`, `start.json`; `nodes/NN-theme.json` (the
+  nodes: ruins and roads, the main path of each chapter, hoes and patches, helpers, side quests, books, the 67 knowledge cards, gear and fences, polish);
+  `rules/NN-system.json` (the numbers and texts of the systems, the old `meta`). One item, node or recipe per line. The game reads the files in name order and the
+  nodes **keep their order** (many lists follow it: a new node goes where it should come in its file, a new file's number decides where it comes). Edit,
+  then run `python3 tools/check_data.py` (every id, cost and condition exists), `python3 tools/sync_progression.py` (writes it as one file for
+  `../progression/` and the explorer) and check it in `../progression/progression-explorer.html`. Tools that need the data in Python use `tools/farmdata.py`.
 - `data/farm/places.json` — the farm's places: their names and emoji, the buildings with an inside and their corners, the pictures each
   upgrade chain uses, ruins, pens, the workbench, and which place every data node belongs to (`nodeSpots`). A new place or corner
   is an entry here plus its spot in `data/map_layout.json`. Which animals and pets there are comes from the nodes themselves
@@ -277,7 +281,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - `data/settings.json`:
   - `activePacks` — which packs are on (empty = all); `quizOptions` — answers per question (4; a question with fewer shows all
     it has); `language` — the language when the device has not chosen one in ⚙️ Settings (`en` or `de`);
-  - `dynamicDifficulty` — prices that fit the farm (see above; tuned in `meta.flex` of farm-progression.json);
+  - `dynamicDifficulty` — prices that fit the farm (see above; tuned in `meta.flex`, `data/farm/rules/40-economy.json`);
   - `knowledgeReviewShare` — share of Time Quiz questions that are reviews of knowledge cards the child already learned
     (0 = off, 0.25 = one in four); the rest come from the parent's packs. This is the starting value: ⚙️ Settings changes it
     for each farm in 5 % steps;

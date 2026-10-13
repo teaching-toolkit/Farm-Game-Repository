@@ -1,0 +1,19 @@
+{
+  "polish": {
+    "gain": "cap × (1 − 0.5^P)",
+    "cost": "base × (1 + floor(P))",
+    "note": "Polish = endless optional upgrades (sharpen, oil, clean, re-stuff, air…). Each polish adds 1 point P. The effect listed is the cap: the first point gives half of it, the second a quarter more, the third an eighth… while the cost rises by the base every time. Use (or time) wears P down slowly (wear), so it's also maintenance. New KINDS of upgrade are always worth more than grinding the same one."
+  },
+  "practice": {
+    "thresholds": [
+      10,
+      40,
+      120
+    ],
+    "energyPerStar": 0.95,
+    "note": "Every station counts how often it was used. At 10, 40 and 120 uses it earns a star: −5% energy for its recipes per star."
+  },
+  "building": {
+    "note": "Big buildings are built in steps (node.steps): each step takes its own materials and some energy, and the next step can only start after 'wait' Time Quiz questions (the mortar dries, the wood settles). node.cost is the total."
+  }
+}

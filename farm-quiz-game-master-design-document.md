@@ -13,7 +13,7 @@ not its history and not the work still to do:
 | What was done when, and the decisions taken along the way | `PROJECT-LOG.md` (same folder) |
 | How to run, test and change the Godot prototype | `godot-prototype/README.md` |
 | The learning kit (Rest sums, quiz engine, learning record) | `godot-prototype/kits/learn/README.md` |
-| Every number (items, buildings, recipes, costs, rules) | `godot-prototype/data/farm-progression.json` (the explorer in `progression/` shows it) |
+| Every number (items, buildings, recipes, costs, rules) | `godot-prototype/data/farm/` (the explorer in `progression/` shows it) |
 
 **The data is the source of truth for numbers.** The numbers quoted here are the current ones; if the data and this
 document ever disagree, the data wins and this document should be corrected.
@@ -999,7 +999,7 @@ Everything about the content is data, so the game can be rebalanced without code
 
 | File | Holds |
 |---|---|
-| `data/farm-progression.json` | the whole tree (v0.8): 141 items, 424 nodes (buildings, upgrades, tools, gear, helpers, polish, cards, books, goals, side quests, pets, merchants …), 106 recipes, and the rules in `meta` (energy, water, yields, pricing, market, seasons, pests, freshness, carry, flex …) |
+| `data/farm/` | the whole tree (v0.8), in files: `items.json` (141 items), `nodes/` (424 nodes in 14 themed files: buildings, upgrades, tools, gear, helpers, polish, cards, books, goals, side quests, pets, merchants …), `recipes.json` (106), `rules/` (energy, water, yields, pricing, market, seasons, pests, freshness, carry, flex …, by system), `chapters.json`, `start.json`, and `places.json` (the farm's places) |
 | `data/map_layout.json` | where every place, add-on, corner and decoration stands |
 | `data/quiz_packs/*.json` | Time Quiz packs |
 | `data/i18n/quiz-<lang>.json` | quiz texts by question id |

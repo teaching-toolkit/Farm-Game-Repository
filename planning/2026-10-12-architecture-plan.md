@@ -196,7 +196,7 @@ data/
   settings.json                 the parent's settings (as now)
   farm/
     items.json  recipes.json    split out of farm-progression.json
-    nodes/ch1.json … ch6.json   nodes by chapter (easier to read and to edit)
+    nodes/NN-theme.json         nodes in themed slices of the existing order (✅ R8: 14 files; not by chapter, because the order of the nodes is game behaviour and is not chapter-sorted)
     rules/*.json                today's "meta" blocks, one file per system (seasons, pests, market, pricing, needs …)
     places.json                 places, insides, picture chains, ruins, pens, bench, and the rules that put a node at a place (out of spots.gd) ✅ R2, built as data/farm/places.json
     (no pets.json)              ✅ R2: the pets are the nodes of type "pet", in the order of chapters[].pet; their sound (voice) and facing (facesLeft) are fields on the nodes, the luck bonus is meta.luck.petBonus

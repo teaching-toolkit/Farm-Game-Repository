@@ -24,7 +24,7 @@ const SEASON_WORDS := ["spring", "summer", "autumn", "winter"]   # i18n (shown w
 const SAVE_PATH := "user://farm_save.json"          # the farm from before players had names
 const PLAYERS_DIR := "user://players"               # players/<name>/farm_save.json and learning.json
 const LAST_PLAYER := "user://last_player.txt"
-const DATA_PATH := "res://data/farm-progression.json"
+const DATA_DIR := "res://data/farm"       # items, recipes, chapters, start; nodes/ and rules/ are folders of themed files (kits/core/data.gd)
 const NOT_AUTO := ["pet", "delivery", "animal", "sidequest", "knowledge", "polish", "book"]
 const DEFAULT_CAT := {"land": "field", "patch": "field", "building": "build", "station": "build", "helper": "build",
 	"tool": "craft", "gear": "craft", "polish": "craft", "delivery": "errand", "pet": "errand", "sidequest": "errand",
@@ -57,6 +57,7 @@ var pet_ids: Array = []             # the pets in the order they come home: one 
 const Modifiers = preload("res://kits/core/modifiers.gd")
 const Conditions = preload("res://kits/core/conditions.gd")
 const Saves = preload("res://kits/core/saves.gd")
+const Data = preload("res://kits/core/data.gd")
 var rng = preload("res://kits/core/rng.gd").new()    # the one random source of the rules (seedable)
 var clock = preload("res://kits/core/clock.gd").new()  # one step of time: the systems that run in it, in order
 
@@ -207,8 +208,8 @@ func set_language(l: String, save := true) -> void:
 	changed.emit()
 
 func load_data() -> void:
-	var txt := FileAccess.get_file_as_string(DATA_PATH)
-	D = JSON.parse_string(txt)
+	D = {"meta": Data.read_dir(DATA_DIR + "/rules"), "chapters": Data.read(DATA_DIR + "/chapters.json"), "start": Data.read(DATA_DIR + "/start.json"),
+		"items": Data.read(DATA_DIR + "/items.json"), "nodes": Data.read_dir(DATA_DIR + "/nodes"), "recipes": Data.read(DATA_DIR + "/recipes.json")}
 	items = D["items"]; nodes = D["nodes"]; recipes = D["recipes"]; meta = D["meta"]
 	tags.clear(); replaced_by.clear(); station_recipes.clear(); polish_ids.clear(); card_ids.clear(); animal_ids.clear(); pet_ids.clear()
 	for iid in items:

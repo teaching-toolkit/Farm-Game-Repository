@@ -14,6 +14,8 @@ When the English of a data text changes, its entry gets "stale": true: the old t
 checks it and removes the flag. Languages come from data/i18n/languages.json; English is the source and needs no file.
 """
 import json, os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import farmdata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, ".."))
@@ -51,7 +53,7 @@ def has_words(s):
     return isinstance(s, str) and re.search(r"[A-Za-z]{2,}", s) is not None
 
 def data_texts():
-    D = json.load(open(os.path.join(ROOT, "data", "farm-progression.json"), encoding="utf-8"))
+    D = farmdata.load()
     out = {}
     def put(path, v):
         if has_words(v): out[path] = v

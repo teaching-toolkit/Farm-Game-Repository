@@ -1,0 +1,24 @@
+{
+  "rest": {
+    "name": "Rest",
+    "emoji": "😴",
+    "note": "Sleep, food and a sip of water. Each correct arithmetic answer restores energy per Rest answer (home + bed + pillow + bottle + library chair + gift cards + polish). A wrong answer restores nothing; no timer. In winter with an empty woodpile the house is cold: Rest gives 25% less.",
+    "coldHouseMult": 0.75
+  },
+  "quiz": {
+    "knowledgeReviewShare": 0.25,
+    "wrongAnswer": "retry",
+    "note": "Time Quiz questions come from the parent's question packs; knowledgeReviewShare of them (0–1, a setting) are due reviews of knowledge cards the child already learned (spaced repetition). 0 turns reviews off."
+  },
+  "knowledge": {
+    "newQuestions": 2,
+    "maxReviewQuestions": 3,
+    "leitnerGapsDays": [
+      1,
+      3,
+      7,
+      21
+    ],
+    "note": "To learn a card: own its book, have discovered its items (if any), read it (cost.read = Time Quiz questions of reading, faster with library levels), then answer its quiz: newQuestions about the card + up to maxReviewQuestions from cards it builds on (weakest or longest-unseen first; one per card). Wrong answers can be retried; only first-try answers move a card up a Leitner box. A missed review never blocks — that card just comes back sooner. Cards unlock things (anything that lists them in requires), give a permanent boost (effects), or both."
+  }
+}

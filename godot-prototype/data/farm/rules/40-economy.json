@@ -1,0 +1,76 @@
+{
+  "market": {
+    "fullPrice": 8,
+    "dropPerUnit": 0.08,
+    "floor": 0.6,
+    "recoverPerQuestion": 1,
+    "recoverShare": 0.25,
+    "note": "Each thing sells at full price for the first fullPrice units; every further unit of the same thing fetches dropPerUnit less (down to floor). Every Time Quiz question the market forgets recoverShare of what was sold lately (at least recoverPerQuestion units). Selling many different things pays best; a big pile of one thing sold at once pays a little less."
+  },
+  "pricing": {
+    "inputsMult": 1.25,
+    "perDifferentInput": 0.1,
+    "perEnergy": 0.5,
+    "perFuel": 0.5,
+    "perWater": 0.2,
+    "perQuestion": 0.5,
+    "note": "How made things are priced (tools/econ check): worth of the inputs x (inputsMult + perDifferentInput x (different inputs - 1)) + perEnergy x energy + perFuel x fuel + perWater x water + perQuestion x station time. A dish of four different things pays more than its parts; a dish made from dishes pays more again."
+  },
+  "flex": {
+    "types": [
+      "building",
+      "station",
+      "tool",
+      "gear",
+      "helper",
+      "delivery",
+      "sidequest",
+      "land",
+      "patch"
+    ],
+    "basePace": [
+      [
+        0,
+        7
+      ],
+      [
+        45,
+        10
+      ],
+      [
+        60,
+        38
+      ],
+      [
+        100,
+        55
+      ],
+      [
+        140,
+        75
+      ],
+      [
+        180,
+        120
+      ],
+      [
+        220,
+        140
+      ]
+    ],
+    "strength": 0.4,
+    "range": [
+      0.8,
+      1.25
+    ],
+    "rangeSide": [
+      0.75,
+      1.35
+    ],
+    "tipBonus": 0.08,
+    "warmup": 15,
+    "paceQuestions": 20,
+    "minWorth": 0.25,
+    "note": "Dynamic difficulty (settings dynamicDifficulty, or ⚙️ Settings → Prices fit my farm). pace = worth of what the player brings in per Time Quiz question (running average over paceQuestions; things bought don't count; things worth nothing count minWorth). basePace = the pace the test bot has after so many goals ([goals done, pace], a straight line in between; tests/bot.gd prints pace_sample lines). When a goal of these types first shows up while open, factor = (pace / basePace) ^ strength, × (1 + tipBonus) if an improvement not made yet would make it quicker, kept within range (rangeSide for favours); it is then fixed for that goal. Coins and material amounts of 2 or more are multiplied (never beyond what the store holds); energy and the kinds of things never change. No factor before warmup questions. The pace also grows when a player simply works more per question, so only part of it is followed (strength 0.4) and the range is narrow."
+  }
+}

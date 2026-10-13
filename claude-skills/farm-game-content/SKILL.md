@@ -28,7 +28,7 @@ plural), never an "s" added by code.
 
 ## Knowledge cards and their questions
 
-Cards, books and the card questions (ids `KNW-…`) live in `data/farm-progression.json`. After changing card questions, run
+Cards, books and the card questions (ids `KNW-…`) live in `data/farm/nodes/` (the cards in `11-knowledge-cards.json`, the books in `10-books-and-library.json`). After changing card questions, run
 `python3 tools/quiz_ids.py` as above. Then follow "Progression numbers" below.
 
 ## Any text the player sees
@@ -43,9 +43,10 @@ Cards, books and the card questions (ids `KNW-…`) live in `data/farm-progressi
 
 ## Progression numbers (items, nodes, recipes, chapters, prices, energy)
 
-1. Edit `data/farm-progression.json` with targeted edits. It keeps its own layout (one item, node or recipe per line), so
-   don't rewrite it with a plain `json.dump(indent=…)`.
-2. Run `python3 tools/sync_progression.py` (copies it into `../progression/` and the explorer).
+1. Edit the file in `data/farm/` that holds it (`items.json`, `recipes.json`, `nodes/NN-theme.json`, `rules/NN-system.json`; find it with
+   `grep -rn '"<id>"' data/farm`) with targeted edits. Items, recipes and nodes are one per line: don't rewrite a file with a plain
+   `json.dump(indent=…)` (`tools/farmdata.py` writes the layout). Node order is game order: a new node goes where it should come.
+2. Run `python3 tools/check_data.py` (ids, costs, conditions), then `python3 tools/sync_progression.py` (writes the data as one file into `../progression/` and the explorer).
 3. Run the explorer check (command in `farm-game-check` §2) and the bot. Compare the playthrough hours, the answers and
    when the pets arrive with `00-READ-ME-FIRST.md` §7. Report the difference and update §7.
 4. If the data and a document disagree, the data wins; fix the document, or ask the parent if the data looks wrong.

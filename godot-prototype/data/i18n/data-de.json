@@ -9547,10 +9547,6 @@
   "en": "brambles and bindweed",
   "de": "Brombeeren und Winden"
  },
- "meta/rest/name": {
-  "en": "Rest",
-  "de": "Ausruhen"
- },
  "meta/seasons/mods/spring/abundance": {
   "en": "Weeds sprout everywhere (more fibre).",
   "de": "Überall spriesst Unkraut (mehr Fasern)."
@@ -9566,6 +9562,10 @@
  "meta/seasons/mods/winter/abundance": {
   "en": "Frost brings stones up (pick them for walls); indoor work by the fire −10% energy; wool grows thick.",
   "de": "Der Frost drückt Steine nach oben (sammle sie für Mauern); Arbeit drinnen am Feuer −10% Energie; die Wolle wächst dick."
+ },
+ "meta/rest/name": {
+  "en": "Rest",
+  "de": "Ausruhen"
  },
  "meta/luck/events/0/text": {
   "en": "A lost coin in the weeds!",

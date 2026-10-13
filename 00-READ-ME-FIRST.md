@@ -48,7 +48,7 @@ Background, read only the parts a task needs: `farm-quiz-game-master-design-docu
 marks *(planned)* and *(idea)*; no history or to-dos), `PROJECT-LOG.md` (history, decisions, assumptions still to confirm),
 `godot-prototype/README.md` (how to run, test and change the prototype; every setting and test flag),
 `godot-prototype/kits/learn/README.md` (Rest sums, quiz engine, learning record, question ids) and `story/README.md` (the story).
-The numbers are in `godot-prototype/data/farm-progression.json` (browse them in `progression/progression-explorer.html`).
+The numbers are in the files of `godot-prototype/data/farm/` (browse them in `progression/progression-explorer.html`).
 **The data wins** if it and a document disagree.
 
 ---

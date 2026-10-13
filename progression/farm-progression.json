@@ -10,6 +10,7 @@
       "energy": "⚡ spent by the player (restored by Rest: sleep, food, a sip of water)",
       "water": "💧 taken from the well pool"
     },
+    "note_on_numbers": "Costs per chapter were scaled by the pacing check so the minutes per main goal rise gently (meta.targets.minutesPerGoal); change any number and re-check it in progression-explorer.html (drop this file onto the page).",
     "pacing": {
       "secondsPerStep": 25,
       "secondsPerAction": 3,
@@ -17,29 +18,6 @@
       "playerEfficiency": 0.6,
       "note": "Real time = Time Quiz answers × secondsPerStep + actions × secondsPerAction + Rest answers × secondsPerRest + knowledge questions × secondsPerKnowledgeQuestion. Rest answers = energy spent ÷ energy per answer (home, bed, pillow, bottle…).",
       "secondsPerKnowledgeQuestion": 12
-    },
-    "weeds": {
-      "ratePerQuestion": 0.15,
-      "tierByChapter": [
-        1,
-        1.2,
-        1.5,
-        2,
-        2.5
-      ],
-      "fertilizerFactor": 0.4,
-      "freeDensity": 2,
-      "weedsPerPull": 3,
-      "orchardFactor": 0.5,
-      "names": [
-        "dandelions",
-        "dandelions and docks",
-        "thistles",
-        "brambles",
-        "brambles and bindweed"
-      ],
-      "note": "Weeds grow on every field patch every question, planted or not: ratePerQuestion × weed tier of the chapter × (1 + fertilizerFactor × fertilizer points the patch density needs) × weed multipliers (edging, borders, geese, goat, mulch…). One weeding tap clears weedsPerPull weeds; each weed costs 1 energy (less with hoes) and gives 1 fiber. Orchard spots grow half as many. The first freeDensity plants per patch need no fertilizer; each plant beyond needs 1 fertilizer point per planting.",
-      "diminishing": "Weeding has no floor: you can always 'Root out the weeds' (a polish) — the first time cuts regrowth most, every next time half as much and costs more energy, because the last weeds are harder to find."
     },
     "targets": {
       "hours": {
@@ -88,27 +66,107 @@
     "numbers": {
       "rule": "Every amount is kept exactly in the background (decimals allowed). The player only sees whole numbers: stocks are rounded DOWN, costs and requirements rounded UP, so what looks affordable always is. Percentages from upgrades multiply exactly."
     },
-    "rest": {
-      "name": "Rest",
-      "emoji": "😴",
-      "note": "Sleep, food and a sip of water. Each correct arithmetic answer restores energy per Rest answer (home + bed + pillow + bottle + library chair + gift cards + polish). A wrong answer restores nothing; no timer. In winter with an empty woodpile the house is cold: Rest gives 25% less.",
-      "coldHouseMult": 0.75
-    },
-    "quiz": {
-      "knowledgeReviewShare": 0.25,
-      "wrongAnswer": "retry",
-      "note": "Time Quiz questions come from the parent's question packs; knowledgeReviewShare of them (0–1, a setting) are due reviews of knowledge cards the child already learned (spaced repetition). 0 turns reviews off."
-    },
-    "knowledge": {
-      "newQuestions": 2,
-      "maxReviewQuestions": 3,
-      "leitnerGapsDays": [
+    "weeds": {
+      "ratePerQuestion": 0.15,
+      "tierByChapter": [
         1,
-        3,
-        7,
-        21
+        1.2,
+        1.5,
+        2,
+        2.5
       ],
-      "note": "To learn a card: own its book, have discovered its items (if any), read it (cost.read = Time Quiz questions of reading, faster with library levels), then answer its quiz: newQuestions about the card + up to maxReviewQuestions from cards it builds on (weakest or longest-unseen first; one per card). Wrong answers can be retried; only first-try answers move a card up a Leitner box. A missed review never blocks — that card just comes back sooner. Cards unlock things (anything that lists them in requires), give a permanent boost (effects), or both."
+      "fertilizerFactor": 0.4,
+      "freeDensity": 2,
+      "weedsPerPull": 3,
+      "orchardFactor": 0.5,
+      "names": [
+        "dandelions",
+        "dandelions and docks",
+        "thistles",
+        "brambles",
+        "brambles and bindweed"
+      ],
+      "note": "Weeds grow on every field patch every question, planted or not: ratePerQuestion × weed tier of the chapter × (1 + fertilizerFactor × fertilizer points the patch density needs) × weed multipliers (edging, borders, geese, goat, mulch…). One weeding tap clears weedsPerPull weeds; each weed costs 1 energy (less with hoes) and gives 1 fiber. Orchard spots grow half as many. The first freeDensity plants per patch need no fertilizer; each plant beyond needs 1 fertilizer point per planting.",
+      "diminishing": "Weeding has no floor: you can always 'Root out the weeds' (a polish) — the first time cuts regrowth most, every next time half as much and costs more energy, because the last weeds are harder to find."
+    },
+    "water": {
+      "fetchBase": 2,
+      "fetchEnergy": 1,
+      "note": "Water never comes by itself: every drop is carried. A trip with the old bucket brings fetchBase 💧 for fetchEnergy ⚡ (gathering upgrades make it cheaper). Wells, the yoke, the dug-out pond and more make each trip bring more and the store hold more, so later on you carry water less often. Rain waters the fields: planting costs no water until the next question.",
+      "manual": true
+    },
+    "pests": {
+      "ratePerPlant": 0.05,
+      "tierByChapter": [
+        1,
+        1.4,
+        1.8,
+        2.3,
+        2.8
+      ],
+      "eatPerPest": 0.02,
+      "maxEat": 0.35,
+      "leaveRate": 0.2,
+      "capBase": 4,
+      "capPerPlant": 0.2,
+      "kinds": [
+        [
+          "🐦",
+          "sparrows"
+        ],
+        [
+          "🐇",
+          "rabbits"
+        ],
+        [
+          "🐌",
+          "slugs"
+        ],
+        [
+          "🐛",
+          "caterpillars"
+        ],
+        [
+          "🐭",
+          "voles"
+        ]
+      ],
+      "note": "Every question, pests arrive in proportion to the plants growing (ratePerPlant × plants × chapter tier × season × (1 − fence block)). The scarecrow (and cat, owl, ducks) chases up to 'scare' pests away per question and leaveRate of the rest wander off. The pests that stay eat a share of every growing patch: eatPerPest × pests (at most maxEat), worked out exactly every question and shown rounded to a whole percent; a patch never drops below 1 plant. All this happens once per question; the map plays it when the farm is seen again after the Time Quiz: the scarecrow throws as many angry looks at once as its level (1–4), then the pests that stayed come one by one, eat a plant and carry it off, and come back a few seconds later."
+    },
+    "stones": {
+      "heavePerPatch": 0.07,
+      "deepBedFactor": {
+        "4": 1.3,
+        "5": 1.6,
+        "6": 1.8
+      },
+      "barePatchFactor": 1.5,
+      "capPerPatch": 6,
+      "slowPerStone": 0.04,
+      "stonesPerPick": 2,
+      "energyPerStone": 1,
+      "note": "In winter, frost lifts stones in every field patch (more in deep beds and bare beds). Stones slow growth a little (like weeds, together at most 50%). Picking them gives stones for walls, paths and buildings."
+    },
+    "rotation": {
+      "sameCropGrow": 0.85,
+      "afterLegumeGrow": 1.1,
+      "legumes": [
+        "crop_beans",
+        "crop_clover"
+      ],
+      "note": "A patch remembers its last crop. The same crop again grows 15% slower (tired soil); after beans or clover the next crop grows 10% faster (rested soil)."
+    },
+    "yield": {
+      "spread": 0.22,
+      "luckShift": 0.1,
+      "minMain": 1,
+      "note": "Crop yields are averages per plant. Each plant gives its average × (1 + luck × luckShift) × the patch's quality, plus a random spread (spread × average), rounded up or down at random so the average is kept. The first item of a crop is at least minMain per plant. Upgrades raise the average (yield_<item> adds to every harvest)."
+    },
+    "carry": {
+      "cats": [
+        "gather"
+      ],
+      "note": "Carrying gear (effect add.carry) makes a gathering tap take 1 + carry loads at once: outputs and energy both grow with it, so the energy per piece stays the same, but more comes in per question (each spot refills once per question). A tap takes a smaller load when energy is short."
     },
     "seasons": {
       "lengthQuestions": 30,
@@ -227,63 +285,13 @@
       ],
       "note": "Cellar Racks add 1 season to everything; the Cool Cellar card adds 1 more. Preserved goods never spoil: flour, honey, jam, pickles, aged cheese, oils, cider, vinegar, grains, seeds, nuts."
     },
-    "water": {
-      "fetchBase": 2,
-      "fetchEnergy": 1,
-      "note": "Water never comes by itself: every drop is carried. A trip with the old bucket brings fetchBase 💧 for fetchEnergy ⚡ (gathering upgrades make it cheaper). Wells, the yoke, the dug-out pond and more make each trip bring more and the store hold more, so later on you carry water less often. Rain waters the fields: planting costs no water until the next question.",
-      "manual": true
-    },
-    "pests": {
-      "ratePerPlant": 0.05,
-      "tierByChapter": [
-        1,
-        1.4,
-        1.8,
-        2.3,
-        2.8
-      ],
-      "eatPerPest": 0.02,
-      "maxEat": 0.35,
-      "leaveRate": 0.2,
-      "capBase": 4,
-      "capPerPlant": 0.2,
-      "kinds": [
-        [
-          "🐦",
-          "sparrows"
-        ],
-        [
-          "🐇",
-          "rabbits"
-        ],
-        [
-          "🐌",
-          "slugs"
-        ],
-        [
-          "🐛",
-          "caterpillars"
-        ],
-        [
-          "🐭",
-          "voles"
-        ]
-      ],
-      "note": "Every question, pests arrive in proportion to the plants growing (ratePerPlant × plants × chapter tier × season × (1 − fence block)). The scarecrow (and cat, owl, ducks) chases up to 'scare' pests away per question and leaveRate of the rest wander off. The pests that stay eat a share of every growing patch: eatPerPest × pests (at most maxEat), worked out exactly every question and shown rounded to a whole percent; a patch never drops below 1 plant. All this happens once per question; the map plays it when the farm is seen again after the Time Quiz: the scarecrow throws as many angry looks at once as its level (1–4), then the pests that stayed come one by one, eat a plant and carry it off, and come back a few seconds later."
-    },
-    "stones": {
-      "heavePerPatch": 0.07,
-      "deepBedFactor": {
-        "4": 1.3,
-        "5": 1.6,
-        "6": 1.8
-      },
-      "barePatchFactor": 1.5,
-      "capPerPatch": 6,
-      "slowPerStone": 0.04,
-      "stonesPerPick": 2,
-      "energyPerStone": 1,
-      "note": "In winter, frost lifts stones in every field patch (more in deep beds and bare beds). Stones slow growth a little (like weeds, together at most 50%). Picking them gives stones for walls, paths and buildings."
+    "muck": {
+      "energyPerMuck": 0.5,
+      "manurePerMuck": 1,
+      "thresholdPerAnimal": 4,
+      "slowAbove": 0.75,
+      "slowAboveDouble": 0.5,
+      "note": "Each collection leaves muck (hens 0.3, cows 1, sheep 0.6 per animal). Above thresholdPerAnimal × animals the animals give 25% less; above twice that, 50% less. Mucking out costs energyPerMuck per muck and gives manure (compost!)."
     },
     "fuel": {
       "values": {
@@ -301,27 +309,118 @@
       ],
       "note": "Heat stations take recipe.fuel points from the woodpile per batch (campfire 1, stove 1, oven 2, kiln 3, forge 2…). The home burns homeFuel per question in winter (tent 0.2 → farmhouse 0.4; the hearth −30%). Stack wood onto the woodpile any time; the woodpile holds woodpileCap points (basket 20, shed 40, warehouse 80)."
     },
-    "muck": {
-      "energyPerMuck": 0.5,
-      "manurePerMuck": 1,
-      "thresholdPerAnimal": 4,
-      "slowAbove": 0.75,
-      "slowAboveDouble": 0.5,
-      "note": "Each collection leaves muck (hens 0.3, cows 1, sheep 0.6 per animal). Above thresholdPerAnimal × animals the animals give 25% less; above twice that, 50% less. Mucking out costs energyPerMuck per muck and gives manure (compost!)."
+    "rest": {
+      "name": "Rest",
+      "emoji": "😴",
+      "note": "Sleep, food and a sip of water. Each correct arithmetic answer restores energy per Rest answer (home + bed + pillow + bottle + library chair + gift cards + polish). A wrong answer restores nothing; no timer. In winter with an empty woodpile the house is cold: Rest gives 25% less.",
+      "coldHouseMult": 0.75
     },
-    "rotation": {
-      "sameCropGrow": 0.85,
-      "afterLegumeGrow": 1.1,
-      "legumes": [
-        "crop_beans",
-        "crop_clover"
+    "quiz": {
+      "knowledgeReviewShare": 0.25,
+      "wrongAnswer": "retry",
+      "note": "Time Quiz questions come from the parent's question packs; knowledgeReviewShare of them (0–1, a setting) are due reviews of knowledge cards the child already learned (spaced repetition). 0 turns reviews off."
+    },
+    "knowledge": {
+      "newQuestions": 2,
+      "maxReviewQuestions": 3,
+      "leitnerGapsDays": [
+        1,
+        3,
+        7,
+        21
       ],
-      "note": "A patch remembers its last crop. The same crop again grows 15% slower (tired soil); after beans or clover the next crop grows 10% faster (rested soil)."
+      "note": "To learn a card: own its book, have discovered its items (if any), read it (cost.read = Time Quiz questions of reading, faster with library levels), then answer its quiz: newQuestions about the card + up to maxReviewQuestions from cards it builds on (weakest or longest-unseen first; one per card). Wrong answers can be retried; only first-try answers move a card up a Leitner box. A missed review never blocks — that card just comes back sooner. Cards unlock things (anything that lists them in requires), give a permanent boost (effects), or both."
     },
     "polish": {
       "gain": "cap × (1 − 0.5^P)",
       "cost": "base × (1 + floor(P))",
       "note": "Polish = endless optional upgrades (sharpen, oil, clean, re-stuff, air…). Each polish adds 1 point P. The effect listed is the cap: the first point gives half of it, the second a quarter more, the third an eighth… while the cost rises by the base every time. Use (or time) wears P down slowly (wear), so it's also maintenance. New KINDS of upgrade are always worth more than grinding the same one."
+    },
+    "practice": {
+      "thresholds": [
+        10,
+        40,
+        120
+      ],
+      "energyPerStar": 0.95,
+      "note": "Every station counts how often it was used. At 10, 40 and 120 uses it earns a star: −5% energy for its recipes per star."
+    },
+    "building": {
+      "note": "Big buildings are built in steps (node.steps): each step takes its own materials and some energy, and the next step can only start after 'wait' Time Quiz questions (the mortar dries, the wood settles). node.cost is the total."
+    },
+    "market": {
+      "fullPrice": 8,
+      "dropPerUnit": 0.08,
+      "floor": 0.6,
+      "recoverPerQuestion": 1,
+      "recoverShare": 0.25,
+      "note": "Each thing sells at full price for the first fullPrice units; every further unit of the same thing fetches dropPerUnit less (down to floor). Every Time Quiz question the market forgets recoverShare of what was sold lately (at least recoverPerQuestion units). Selling many different things pays best; a big pile of one thing sold at once pays a little less."
+    },
+    "pricing": {
+      "inputsMult": 1.25,
+      "perDifferentInput": 0.1,
+      "perEnergy": 0.5,
+      "perFuel": 0.5,
+      "perWater": 0.2,
+      "perQuestion": 0.5,
+      "note": "How made things are priced (tools/econ check): worth of the inputs x (inputsMult + perDifferentInput x (different inputs - 1)) + perEnergy x energy + perFuel x fuel + perWater x water + perQuestion x station time. A dish of four different things pays more than its parts; a dish made from dishes pays more again."
+    },
+    "flex": {
+      "types": [
+        "building",
+        "station",
+        "tool",
+        "gear",
+        "helper",
+        "delivery",
+        "sidequest",
+        "land",
+        "patch"
+      ],
+      "basePace": [
+        [
+          0,
+          7
+        ],
+        [
+          45,
+          10
+        ],
+        [
+          60,
+          38
+        ],
+        [
+          100,
+          55
+        ],
+        [
+          140,
+          75
+        ],
+        [
+          180,
+          120
+        ],
+        [
+          220,
+          140
+        ]
+      ],
+      "strength": 0.4,
+      "range": [
+        0.8,
+        1.25
+      ],
+      "rangeSide": [
+        0.75,
+        1.35
+      ],
+      "tipBonus": 0.08,
+      "warmup": 15,
+      "paceQuestions": 20,
+      "minWorth": 0.25,
+      "note": "Dynamic difficulty (settings dynamicDifficulty, or ⚙️ Settings → Prices fit my farm). pace = worth of what the player brings in per Time Quiz question (running average over paceQuestions; things bought don't count; things worth nothing count minWorth). basePace = the pace the test bot has after so many goals ([goals done, pace], a straight line in between; tests/bot.gd prints pace_sample lines). When a goal of these types first shows up while open, factor = (pace / basePace) ^ strength, × (1 + tipBonus) if an improvement not made yet would make it quicker, kept within range (rangeSide for favours); it is then fixed for that goal. Coins and material amounts of 2 or more are multiplied (never beyond what the store holds); energy and the kinds of things never change. No factor before warmup questions. The pace also grows when a player simply works more per question, so only part of it is followed (strength 0.4) and the range is narrow."
     },
     "luck": {
       "petBonus": 0.05,
@@ -801,15 +900,6 @@
       ],
       "note": "Three small jobs that refill themselves as soon as one is done (only things the player can do right now). Reward: a few coins and a little luck."
     },
-    "practice": {
-      "thresholds": [
-        10,
-        40,
-        120
-      ],
-      "energyPerStar": 0.95,
-      "note": "Every station counts how often it was used. At 10, 40 and 120 uses it earns a star: −5% energy for its recipes per star."
-    },
     "acorns": {
       "energyMaxEach": 3,
       "list": [
@@ -855,33 +945,6 @@
       "quartz",
       "relic"
     ],
-    "note_on_numbers": "Costs per chapter were scaled by the pacing check so the minutes per main goal rise gently (meta.targets.minutesPerGoal); change any number and re-check it in progression-explorer.html (drop this file onto the page).",
-    "yield": {
-      "spread": 0.22,
-      "luckShift": 0.1,
-      "minMain": 1,
-      "note": "Crop yields are averages per plant. Each plant gives its average × (1 + luck × luckShift) × the patch's quality, plus a random spread (spread × average), rounded up or down at random so the average is kept. The first item of a crop is at least minMain per plant. Upgrades raise the average (yield_<item> adds to every harvest)."
-    },
-    "building": {
-      "note": "Big buildings are built in steps (node.steps): each step takes its own materials and some energy, and the next step can only start after 'wait' Time Quiz questions (the mortar dries, the wood settles). node.cost is the total."
-    },
-    "market": {
-      "fullPrice": 8,
-      "dropPerUnit": 0.08,
-      "floor": 0.6,
-      "recoverPerQuestion": 1,
-      "recoverShare": 0.25,
-      "note": "Each thing sells at full price for the first fullPrice units; every further unit of the same thing fetches dropPerUnit less (down to floor). Every Time Quiz question the market forgets recoverShare of what was sold lately (at least recoverPerQuestion units). Selling many different things pays best; a big pile of one thing sold at once pays a little less."
-    },
-    "pricing": {
-      "inputsMult": 1.25,
-      "perDifferentInput": 0.1,
-      "perEnergy": 0.5,
-      "perFuel": 0.5,
-      "perWater": 0.2,
-      "perQuestion": 0.5,
-      "note": "How made things are priced (tools/econ check): worth of the inputs x (inputsMult + perDifferentInput x (different inputs - 1)) + perEnergy x energy + perFuel x fuel + perWater x water + perQuestion x station time. A dish of four different things pays more than its parts; a dish made from dishes pays more again."
-    },
     "perks": {
       "note": "Small extras that make the farm prettier or livelier. They do not change the economy. Some come from favours (side quest 'perk'), others from achievements ('when': rest_quick>=N quick Rest answers, medals>=N Rest sum medals won, sold_kinds>=N different things sold, harvests>=N, seasons>=N, cards>=N, sidequests>=N, unlocked:id). Every perk can be switched off in the album.",
       "list": [
@@ -963,69 +1026,6 @@
         "{player}, everyone is talking about {news}. Thank you again for your help — this is for you!",
         "Dear {player}, I was so happy to hear about {news}. I hope this helps on the farm!"
       ]
-    },
-    "carry": {
-      "cats": [
-        "gather"
-      ],
-      "note": "Carrying gear (effect add.carry) makes a gathering tap take 1 + carry loads at once: outputs and energy both grow with it, so the energy per piece stays the same, but more comes in per question (each spot refills once per question). A tap takes a smaller load when energy is short."
-    },
-    "flex": {
-      "types": [
-        "building",
-        "station",
-        "tool",
-        "gear",
-        "helper",
-        "delivery",
-        "sidequest",
-        "land",
-        "patch"
-      ],
-      "basePace": [
-        [
-          0,
-          7
-        ],
-        [
-          45,
-          10
-        ],
-        [
-          60,
-          38
-        ],
-        [
-          100,
-          55
-        ],
-        [
-          140,
-          75
-        ],
-        [
-          180,
-          120
-        ],
-        [
-          220,
-          140
-        ]
-      ],
-      "strength": 0.4,
-      "range": [
-        0.8,
-        1.25
-      ],
-      "rangeSide": [
-        0.75,
-        1.35
-      ],
-      "tipBonus": 0.08,
-      "warmup": 15,
-      "paceQuestions": 20,
-      "minWorth": 0.25,
-      "note": "Dynamic difficulty (settings dynamicDifficulty, or ⚙️ Settings → Prices fit my farm). pace = worth of what the player brings in per Time Quiz question (running average over paceQuestions; things bought don't count; things worth nothing count minWorth). basePace = the pace the test bot has after so many goals ([goals done, pace], a straight line in between; tests/bot.gd prints pace_sample lines). When a goal of these types first shows up while open, factor = (pace / basePace) ^ strength, × (1 + tipBonus) if an improvement not made yet would make it quicker, kept within range (rangeSide for favours); it is then fixed for that goal. Coins and material amounts of 2 or more are multiplied (never beyond what the store holds); energy and the kinds of things never change. No factor before warmup questions. The pace also grows when a player simply works more per question, so only part of it is followed (strength 0.4) and the range is narrow."
     }
   },
   "chapters": [

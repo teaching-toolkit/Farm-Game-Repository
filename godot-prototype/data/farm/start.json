@@ -1,0 +1,29 @@
+{
+  "coins": 0,
+  "water": 4,
+  "patchWeeds": 1,
+  "patchStones": 1,
+  "energy": 10,
+  "inventory": {
+    "tin_pot": 1,
+    "stick": 3,
+    "stone": 3
+  },
+  "seeds": {
+    "crop_wheat": 1
+  },
+  "unlocked": [
+    "tent",
+    "well_1",
+    "road_1",
+    "basket",
+    "hands",
+    "rock",
+    "bucket",
+    "seed_1",
+    "land_start",
+    "wild_edge",
+    "book_basics",
+    "library_box"
+  ]
+}

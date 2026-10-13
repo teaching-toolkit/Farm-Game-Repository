@@ -70,7 +70,7 @@ question must match):
   (done 13 Oct 2026: `kits/core/` modifiers, conditions, rng, clock; events come with R4, saves with R7, data loading with R8) · ✅ **R4** `game.gd` split into 11 systems in `game/farm/systems/` (done 13 Oct 2026; `G.<system>.<function>`; see its README; left: the lists of
   node types `GOAL_TYPES` in `main.gd`, `NOT_AUTO`, `MAIN_TYPES`, `DEFAULT_CAT` in `game.gd` → data, with R8) · ✅ **R5** `main.gd` split into a composition root and 25 parts in `game/farm/ui/`
   (done 13 Oct 2026; own README; the generic hosts become kits with phase 3) (was T1) · ✅ **R6** map (done 13 Oct 2026: `farm_map.gd` split into ground, critters, cat and walker; the pests are drawn once: the copy in `field_view.gd` was dead code and is gone; no `kits/world` yet) · ✅ **R7** saves with versions and upgrade steps (done 13 Oct 2026: `kits/core/saves.gd`, `SAVE_VERSION` 1, `save_defaults()` per system, `tests/saves_test.tscn`) ·
-  **R8** data files split, a data checker, pacing from the real engine.
+  **R8** data files split (✅ 13 Oct 2026: `data/farm/`, `kits/core/data.gd`, `tools/farmdata.py`), a data checker, pacing from the real engine.
 - ✅ Decided (R7): **pacing from the real engine**: the bot reports hours, questions and Rest answers per chapter; the explorer no longer
   simulates its own copy of the rules but shows the data and that report, refreshed by **a script the parent can run** (a double-click
   `Update explorer.command`, like the web build's) whenever the game has changed; the explorer is a nice-to-have, not a priority.

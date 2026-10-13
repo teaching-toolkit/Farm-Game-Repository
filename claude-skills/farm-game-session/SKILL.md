@@ -41,7 +41,7 @@ before any work starts.
 | Rest sums, the quiz engine, the learning record | `godot-prototype/kits/learn/README.md` |
 | The story | `story/README.md`, then the files it points to (keep its labels ✅ 💡 ❓ 🔒) |
 | Why something is the way it is | `PROJECT-LOG.md` §2 (search it; don't read it whole) |
-| Pace and balancing | `godot-prototype/data/farm-progression.json` and the explorer. **The data wins** if it and a document disagree |
+| Pace and balancing | the files in `godot-prototype/data/farm/` (`rules/`, `nodes/`, `items.json`, `recipes.json`) and the explorer. **The data wins** if it and a document disagree |
 
 For any long file: list its headings with `grep -n '^#'`, then read only the sections you need. In the two big scripts
 (the rules are in `game/farm/systems/*.gd` and the interface in `game/farm/ui/*.gd`, 50–400 lines each, see their READMEs; `main.gd` is the 400-line composition root), find functions with
@@ -52,7 +52,7 @@ Then say in one line which task(s) from `TODO.md` you are working on.
 ## 3. Plan bigger steps before building
 
 A step is "bigger" if it adds a mechanic, touches more than two scripts, or changes the save data or the structure of
-`farm-progression.json`. For those:
+the data files in `data/farm/`. For those:
 
 1. Write a short plan into `TODO.md` under the task, at most about 15 lines: the goal, the files, what happens to existing
    saves (old saves must keep loading: a new key goes into its system's `save_defaults()`, a changed layout needs a `SAVE_VERSION` step in `Game.save_steps()`), what the bot must learn to play it, and how it will be checked.

@@ -1,0 +1,7 @@
+[
+  {"id": 1, "name": "Ashes", "home": "Tent", "theme": "Sticks & stones. Fire, porridge, first tools, first coins.", "pet": "pet_bunny"},
+  {"id": 2, "name": "Homestead", "home": "Cottage", "theme": "Timber & clay. Kitchen, cows, bees, bread — and iron ore at the end.", "pet": "pet_tortoise"},
+  {"id": 3, "name": "Smallholding", "home": "Cottage", "theme": "Iron. Double harvests, sheep & cloth, windmill, press, cellar.", "pet": "pet_goat"},
+  {"id": 4, "name": "Village Trade", "home": "Farmhouse", "theme": "Steel & glass. Farmhouse, greenhouse, orchard oils, pizza.", "pet": "pet_pony"},
+  {"id": 5, "name": "Master Farm", "home": "Farmhouse", "theme": "Heirlooms, saffron, plant dyes and colour mixing, master baking.", "pet": "pet_alpaca"}
+]

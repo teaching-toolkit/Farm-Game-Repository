@@ -1,0 +1,245 @@
+{
+  "weeds": {
+    "ratePerQuestion": 0.15,
+    "tierByChapter": [
+      1,
+      1.2,
+      1.5,
+      2,
+      2.5
+    ],
+    "fertilizerFactor": 0.4,
+    "freeDensity": 2,
+    "weedsPerPull": 3,
+    "orchardFactor": 0.5,
+    "names": [
+      "dandelions",
+      "dandelions and docks",
+      "thistles",
+      "brambles",
+      "brambles and bindweed"
+    ],
+    "note": "Weeds grow on every field patch every question, planted or not: ratePerQuestion × weed tier of the chapter × (1 + fertilizerFactor × fertilizer points the patch density needs) × weed multipliers (edging, borders, geese, goat, mulch…). One weeding tap clears weedsPerPull weeds; each weed costs 1 energy (less with hoes) and gives 1 fiber. Orchard spots grow half as many. The first freeDensity plants per patch need no fertilizer; each plant beyond needs 1 fertilizer point per planting.",
+    "diminishing": "Weeding has no floor: you can always 'Root out the weeds' (a polish) — the first time cuts regrowth most, every next time half as much and costs more energy, because the last weeds are harder to find."
+  },
+  "water": {
+    "fetchBase": 2,
+    "fetchEnergy": 1,
+    "note": "Water never comes by itself: every drop is carried. A trip with the old bucket brings fetchBase 💧 for fetchEnergy ⚡ (gathering upgrades make it cheaper). Wells, the yoke, the dug-out pond and more make each trip bring more and the store hold more, so later on you carry water less often. Rain waters the fields: planting costs no water until the next question.",
+    "manual": true
+  },
+  "pests": {
+    "ratePerPlant": 0.05,
+    "tierByChapter": [
+      1,
+      1.4,
+      1.8,
+      2.3,
+      2.8
+    ],
+    "eatPerPest": 0.02,
+    "maxEat": 0.35,
+    "leaveRate": 0.2,
+    "capBase": 4,
+    "capPerPlant": 0.2,
+    "kinds": [
+      [
+        "🐦",
+        "sparrows"
+      ],
+      [
+        "🐇",
+        "rabbits"
+      ],
+      [
+        "🐌",
+        "slugs"
+      ],
+      [
+        "🐛",
+        "caterpillars"
+      ],
+      [
+        "🐭",
+        "voles"
+      ]
+    ],
+    "note": "Every question, pests arrive in proportion to the plants growing (ratePerPlant × plants × chapter tier × season × (1 − fence block)). The scarecrow (and cat, owl, ducks) chases up to 'scare' pests away per question and leaveRate of the rest wander off. The pests that stay eat a share of every growing patch: eatPerPest × pests (at most maxEat), worked out exactly every question and shown rounded to a whole percent; a patch never drops below 1 plant. All this happens once per question; the map plays it when the farm is seen again after the Time Quiz: the scarecrow throws as many angry looks at once as its level (1–4), then the pests that stayed come one by one, eat a plant and carry it off, and come back a few seconds later."
+  },
+  "stones": {
+    "heavePerPatch": 0.07,
+    "deepBedFactor": {
+      "4": 1.3,
+      "5": 1.6,
+      "6": 1.8
+    },
+    "barePatchFactor": 1.5,
+    "capPerPatch": 6,
+    "slowPerStone": 0.04,
+    "stonesPerPick": 2,
+    "energyPerStone": 1,
+    "note": "In winter, frost lifts stones in every field patch (more in deep beds and bare beds). Stones slow growth a little (like weeds, together at most 50%). Picking them gives stones for walls, paths and buildings."
+  },
+  "rotation": {
+    "sameCropGrow": 0.85,
+    "afterLegumeGrow": 1.1,
+    "legumes": [
+      "crop_beans",
+      "crop_clover"
+    ],
+    "note": "A patch remembers its last crop. The same crop again grows 15% slower (tired soil); after beans or clover the next crop grows 10% faster (rested soil)."
+  },
+  "yield": {
+    "spread": 0.22,
+    "luckShift": 0.1,
+    "minMain": 1,
+    "note": "Crop yields are averages per plant. Each plant gives its average × (1 + luck × luckShift) × the patch's quality, plus a random spread (spread × average), rounded up or down at random so the average is kept. The first item of a crop is at least minMain per plant. Upgrades raise the average (yield_<item> adds to every harvest)."
+  },
+  "carry": {
+    "cats": [
+      "gather"
+    ],
+    "note": "Carrying gear (effect add.carry) makes a gathering tap take 1 + carry loads at once: outputs and energy both grow with it, so the energy per piece stays the same, but more comes in per question (each spot refills once per question). A tap takes a smaller load when energy is short."
+  },
+  "seasons": {
+    "lengthQuestions": 30,
+    "order": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "mods": {
+      "spring": {
+        "emoji": "🌱",
+        "grow": 1,
+        "weeds": 1.5,
+        "pests": 1,
+        "waterField": 1,
+        "rain": 0.3,
+        "abundance": "Weeds sprout everywhere (more fibre).",
+        "gather": {
+          "pull_wild_weeds": 1.5
+        }
+      },
+      "summer": {
+        "emoji": "☀️",
+        "grow": 1.2,
+        "weeds": 1,
+        "pests": 1.5,
+        "waterField": 1.3,
+        "rain": 0.1,
+        "abundance": "Bees fly all day: +30% honeycomb.",
+        "out": {
+          "animal_bees": 1.3
+        }
+      },
+      "autumn": {
+        "emoji": "🍂",
+        "grow": 0.85,
+        "weeds": 0.7,
+        "pests": 1,
+        "waterField": 1,
+        "rain": 0.3,
+        "abundance": "Fruit and nuts: orchard +40%; branches fall (sticks ×2).",
+        "yieldOrchard": 1.4,
+        "gather": {
+          "gather_sticks": 2
+        }
+      },
+      "winter": {
+        "emoji": "❄️",
+        "grow": 0.5,
+        "weeds": 0.2,
+        "pests": 0.2,
+        "waterField": 0.8,
+        "rain": 0.2,
+        "abundance": "Frost brings stones up (pick them for walls); indoor work by the fire −10% energy; wool grows thick.",
+        "stoneHeave": true,
+        "homeFuel": true,
+        "indoorEnergy": 0.9,
+        "gather": {
+          "pick_stones": 2
+        },
+        "out": {
+          "animal_sheep": 1.2
+        }
+      }
+    },
+    "note": "Seasons only change speeds and amounts — nothing dies. Crops just grow slower in winter (the greenhouse doesn't care). The season shows how many questions are left until the next one."
+  },
+  "freshness": {
+    "rule": "At each change of season, food that has already lived through shelfLife season changes turns stale: plant food becomes Feed Mash, eggs and dairy go to the Compost pile. A 'stale soon' badge shows on anything that will turn at the next change — sell it, eat it, or cook it into something that keeps.",
+    "shelfLife": {
+      "default": -1,
+      "items": {
+        "carrot": 2,
+        "onion": 2,
+        "potato": 2,
+        "beet": 2,
+        "lettuce": 1,
+        "beans": 2,
+        "tomato": 1,
+        "pumpkin": 3,
+        "berries": 1,
+        "apple": 2,
+        "herbs": 1,
+        "clover": 1,
+        "olive": 1,
+        "rainbow_carrot": 2,
+        "golden_beet": 2,
+        "woad": 1,
+        "egg": 1,
+        "milk": 1,
+        "butter": 1,
+        "fresh_cheese": 1,
+        "yogurt": 1,
+        "beet_juice": 1,
+        "apple_juice": 1,
+        "tomato_sauce": 1,
+        "fresh_pasta": 1,
+        "pizza_dough": 1
+      },
+      "dishes": 1,
+      "dishExceptions": {
+        "pickles": -1
+      }
+    },
+    "spoilsTo": {
+      "plant": "feed_mash",
+      "animal": "compost"
+    },
+    "animalItems": [
+      "egg",
+      "milk",
+      "butter",
+      "fresh_cheese",
+      "yogurt"
+    ],
+    "note": "Cellar Racks add 1 season to everything; the Cool Cellar card adds 1 more. Preserved goods never spoil: flour, honey, jam, pickles, aged cheese, oils, cider, vinegar, grains, seeds, nuts."
+  },
+  "muck": {
+    "energyPerMuck": 0.5,
+    "manurePerMuck": 1,
+    "thresholdPerAnimal": 4,
+    "slowAbove": 0.75,
+    "slowAboveDouble": 0.5,
+    "note": "Each collection leaves muck (hens 0.3, cows 1, sheep 0.6 per animal). Above thresholdPerAnimal × animals the animals give 25% less; above twice that, 50% less. Mucking out costs energyPerMuck per muck and gives manure (compost!)."
+  },
+  "fuel": {
+    "values": {
+      "stick": 1,
+      "straw": 0.5,
+      "log": 4,
+      "plank": 2,
+      "hardwood": 6,
+      "charcoal": 8
+    },
+    "stackOrder": [
+      "stick",
+      "straw",
+      "log"
+    ],
+    "note": "Heat stations take recipe.fuel points from the woodpile per batch (campfire 1, stove 1, oven 2, kiln 3, forge 2…). The home burns homeFuel per question in winter (tent 0.2 → farmhouse 0.4; the hearth −30%). Stack wood onto the woodpile any time; the woodpile holds woodpileCap points (basket 20, shed 40, warehouse 80)."
+  }
+}
