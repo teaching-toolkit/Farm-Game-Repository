@@ -343,7 +343,7 @@
  "🟫 Patch %d": "🟫 Beet %d",
  "🌳 Tree spot %d": "🌳 Baumplatz %d",
  "🪴 Bed %d": "🪴 Beet %d",
- "🚧 Not fully cleared yet: it gives %d%% of a full harvest. Finish clearing it at the 🪧 sign.": "🚧 Noch nicht ganz aufgeräumt: Es bringt %d%% einer vollen Ernte. Räum es beim 🪧 Schild fertig auf.",
+ "🚧 Not fully cleared yet: it gives %d%% of a full harvest. Finish clearing it further down.": "🚧 Noch nicht ganz freigeräumt: Es gibt %d%% einer vollen Ernte. Räume es weiter unten fertig.",
  "  fits here": "  passt hierhin",
  "No seeds you can plant here yet. Learn crop cards in the 📦 library.": "Noch keine Samen, die du hier pflanzen kannst. Lerne Pflanzenkarten in der 📦 Bücherei.",
  "🛒 Buy seeds": "🛒 Samen kaufen",
@@ -362,12 +362,14 @@
  "🟫 Patch %d is not ready yet: it is still %s.": "🟫 Beet %d ist noch nicht bereit: Es ist noch %s.",
  "%s %s below clears it.": "%s %s (unten) macht es frei.",
  "To clear it you need first: %s.": "Um es frei zu machen, brauchst du zuerst: %s.",
+ "🌾 The whole field": "🌾 Das ganze Feld",
+ "One tap does the job on every patch of this field.": "Ein Tippen macht die Arbeit auf allen Beeten dieses Feldes.",
+ "🧺 Harvest all": "🧺 Alles ernten",
+ "🌿 Pick all weeds": "🌿 Alles Unkraut jäten",
+ "🪨 Pick all stones": "🪨 Alle Steine sammeln",
  "🐦 Pests on the farm: they nibble what grows.": "🐦 Schädlinge auf dem Hof: Sie knabbern an dem, was wächst.",
  "eat %d%% 🌾 each question": "fressen %d%% 🌾 pro Frage",
  "🧍 Pests chased away every question.": "🧍 Pro Frage verjagte Schädlinge.",
- "🌿 Weed all": "🌿 Alles jäten",
- "🪨 Pick stones": "🪨 Steine aufsammeln",
- "🧺 Harvest all": "🧺 Alles ernten",
  "overgrown with weeds": "voller Unkraut",
  "full of rocks": "voller Felsen",
  "full of old tree stumps": "voller alter Baumstümpfe",
@@ -580,6 +582,9 @@
  "Spinning & weaving": "Spinnen & Weben",
  "Tools": "Werkzeug",
  "_unused": {
-  "Chapter %d · %s · question %d%s": "Kapitel %d · %s · Frage %d%s"
+  "Chapter %d · %s · question %d%s": "Kapitel %d · %s · Frage %d%s",
+  "🚧 Not fully cleared yet: it gives %d%% of a full harvest. Finish clearing it at the 🪧 sign.": "🚧 Noch nicht ganz aufgeräumt: Es bringt %d%% einer vollen Ernte. Räum es beim 🪧 Schild fertig auf.",
+  "🌿 Weed all": "🌿 Alles jäten",
+  "🪨 Pick stones": "🪨 Steine aufsammeln"
  }
 }

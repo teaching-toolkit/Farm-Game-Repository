@@ -24,6 +24,22 @@ const MEDAL_WORDS := {"bronze": "🥉 Bronze: answer %d of its sums quick and ri
 ## Quick sums: the answer is typed on a number pad (or the keyboard) and sent with ✔. A timer runs for
 ## Rest: sums on the number pad (kits/learn/number_pad_quiz.gd asks, checks and remembers). A right answer gives energy:
 ## all of it when quick (the level's time — 2.5 s for a sum learned by heart), half when slow.
+## The Rest buttons (the energy pill, the bed): the farmer first walks to the house with the farm scrolled to it, then the window opens
+## (when he has arrived, but after 0.4 s at the earliest and 1.6 s at the latest, so that a far walk does not make anyone wait).
+func go_rest() -> void:
+	if M.modal.visible: return
+	M.interior_back = ""        # Rest ends on the farm, not back in the house window
+	M.sheets.close_sheet()
+	var sid: String = M.mapview.map_sid("living")
+	M.mapview.reveal(M.map.spot_rect(sid))
+	M.feedback.play_act("rest", M.map.stand_point(sid))
+	await M.get_tree().create_timer(0.4).timeout
+	var waited := 0.4
+	while M.map.avatar.moving and waited < 1.6:
+		await M.get_tree().process_frame
+		waited += M.get_process_delta_time()
+	if not M.modal.visible: show_rest()
+
 func show_rest() -> void:
 	var box := M.modals.open_modal(tr("😴 Rest"))
 	Sound.music("rest")

@@ -104,7 +104,7 @@ question must match):
     grown-up lock (password "farm", hint shows it for now; later a real password and a reminder as the hint).
   - B1 the opening: one cleared patch, one wheat seed, the new *Clear the thistles* job (the opening changes again with D2).
   - C1 the Rest start page, C2 a sum left on screen leaves no trace.
-  - D every window as a grid. Not converted: the woodpile's "+ Stick" chips, "Weed all / Pick stones" (they move with J2), the quest
+  - D every window as a grid. Not converted: the woodpile's "+ Stick" chips, "Weed all / Pick stones" (Weed all / Pick stones moved with J2 ✅), the quest
     book. The store becomes a compact grid anyway (M11).
   - G the farmer's acts: watch them on the iPad and say which look wrong or too fast (each is a few numbers in `data/acts.json`).
 - **W5. German proofreading** (easiest in the game with the language on Deutsch, or in `data/i18n/*-de.json`). ✅ "ss", never "ß":
@@ -170,9 +170,11 @@ them up, each with a 💡 recommendation.
   weeds*, *Pick all stones* (and *Clear the snow*, N6), then the field's upgrades, then the pests line. The farmer walks to the field
   (patch to patch while acting). Notes: today *Weed all* / *Pick stones* are in `patches.part_field`, *Harvest all* in `patches.part_area` and at the
   storage basket (`pantry._harvest_everything`), in `game/farm/ui/`; `deco/signpost.png` goes unused; all three fields.
+  **Built 13 Oct 2026 (0.10.0):** the sign is gone from `map_layout.json` (and `tools/default_layout.py`). A patch's window ends with `placesheet.part_field_below()`: section *The whole field* (🧺 Harvest all · 🌿 Pick all weeds · 🪨 Pick all stones, each with the number of patches it is for, greyed when 0), then *To do here* (clearing, new land), the field's polish and upgrades, then the pests line (`patches.part_pests`). Tapping an overgrown patch opens the same list as a window of its own (with the "why it is not ready" note). The first field gets a small 🔨 when something can be done (`map.set_field_badge`). Each patch plays its own act, so the farmer walks from patch to patch. *Clear the snow* (N6) joins the section when N6 is built. Smoke test checks one tap weeds the patch. Found: the polish card "Mend the fence" says "At full polish: pestBlock +0" (a raw key, like J12).
 - **J3. Rest: the farmer goes home** [#9]. When Rest starts, the farmer walks to the tent or house. The code already starts a "rest" act
   at the house (`rest.show_rest` in `game/farm/ui/rest.gd`), but the Rest window covers the farm. Check on the iPad; 💡 open the window when the farmer
   arrives (or after about half a second).
+  **Built 13 Oct 2026 (0.10.0):** `rest.go_rest()` (the energy pill and the bed button): the house window closes, the map scrolls to the house, the farmer walks there and the Rest window opens when he has arrived (after 0.4 s at the earliest, 1.6 s at the latest). `show_rest()` stays the window itself (tests). Check the timing on the iPad.
 - **J4. Back on the farm after the Time Quiz** [#10] ✅ (R2, R3). While the quiz is open, nothing on the farm changes. After "Back to
   the farm": a fixed short pause (0.7–1 s, the same after one question or eight), then the changes play, mostly together, some
   staggered: **rain first** (if it rained; a big global event that draws attention), then the **plants flick quickly through every

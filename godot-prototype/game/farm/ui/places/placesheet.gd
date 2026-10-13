@@ -46,6 +46,9 @@ func sheet_spot(sid: String) -> void:
 		M.content.add_child(UI.label(str(G.nodes[head]["desc"]), 16, UI.MUTED, true))
 	elif not M.mapview.is_open(sid):
 		M.content.add_child(UI.label(tr("Build it to open this place."), 17, UI.MUTED, true))
+	if sid == "field":      # no sign on the map any more: this sheet only opens for an overgrown patch (or from a goal)
+		part_field_below()
+		return
 	var lists := goal_lists(sid)
 	if sid != "market": _part_main_goals(sid, lists[0])   # what to do here comes first (the market: selling first, orders at the bottom)
 	match sid:
@@ -55,22 +58,36 @@ func sheet_spot(sid: String) -> void:
 		"market": M.market.part_market()
 		"bookcart": M.market.part_bookcart()
 		"board": M.home.part_jobs()
-		"field": M.patches.part_field()
 		"orchard": M.patches.part_area("orchard")
 		"greenhouse": M.patches.part_area("gh")
 		"pets": M.home.part_pets()
 		"kitchen", "forest": M.stations.part_woodpile()
 		"pond", "well": M.waterroad.part_water(sid)
 		"road": M.waterroad.part_road()
+	_part_things_here(sid)
+	_part_more_goals(sid, lists[0], lists[1], lists[2])
+	M.stations.part_polish_here(sid)
+	if sid == "market": _part_main_goals(sid, lists[0])
+
+## The animals and the machines (stations) that stand at a place, as cards.
+func _part_things_here(sid: String) -> void:
 	for aid in Spots.nodes_at(G, sid):
 		if G.nodes[aid]["type"] != "animal": continue
 		if not G.progression.missing_reqs(aid).is_empty() and not G.done(aid): continue
 		M.content.add_child(M.animalsheet.animal_card(aid))
 	for root in G.crafting.stations():
 		if Spots.in_spot(G, root, sid): M.content.add_child(M.stations.station_card(root))
-	_part_more_goals(sid, lists[0], lists[1], lists[2])
-	M.stations.part_polish_here(sid)
-	if sid == "market": _part_main_goals(sid, lists[0])
+
+## What the field window shows below the patch (or by itself for an overgrown patch): the whole-field jobs, what to do on the
+## fields (clearing, new land), the field's upgrades, then the pests line.
+func part_field_below() -> void:
+	M.patches.part_whole_field()
+	var lists := goal_lists("field")
+	_part_main_goals("field", lists[0])
+	_part_things_here("field")
+	_part_more_goals("field", lists[0], lists[1], lists[2])
+	M.stations.part_polish_here("field")
+	M.patches.part_pests()
 
 ## [main goals open now, optional upgrades open now, [id, missing] one step away] at a place.
 func goal_lists(sid: String) -> Array:

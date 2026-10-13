@@ -14,7 +14,7 @@ export GODOT="$G"
 FAIL=0
 LOG="$(mktemp)"
 "$G" --headless --path . res://tests/ui_smoke.tscn -- --seed=1 > "$LOG" 2>&1
-if grep -q "SCRIPT ERROR" "$LOG" || ! grep -q "^insides: " "$LOG"; then echo "✘ UI smoke test"; grep -m3 -A3 "SCRIPT ERROR" "$LOG"; FAIL=1
+if grep -q "SCRIPT ERROR" "$LOG" || grep -q "^FAIL" "$LOG" || ! grep -q "^insides: " "$LOG"; then echo "✘ UI smoke test"; grep -m3 -A3 "SCRIPT ERROR" "$LOG"; grep "^FAIL" "$LOG"; FAIL=1
 else echo "✔ UI smoke test ($(grep -c . "$LOG") lines; read them against claude-skills/farm-game-check)"; fi
 "$G" --headless --path . res://tests/fixtures_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^FIXTURES|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^FIXTURES OK/✔ save fixtures/; s/^FIXTURES FAILED/✘ save fixtures/'

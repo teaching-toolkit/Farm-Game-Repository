@@ -1,6 +1,6 @@
 extends RefCounted
 class_name FarmUiPatches
-## Patches (field, orchard, greenhouse): tapping a patch, its sheet, planting, harvesting, weeding, picking stones, and the whole-field actions.
+## Patches (field, orchard, greenhouse): tapping a patch, its sheet, planting, harvesting, weeding, picking stones, and the whole-field section.
 
 const UI = preload("res://kits/ui/ui.gd")
 const Art = preload("res://kits/ui/art.gd")
@@ -52,7 +52,7 @@ func sheet_patch(a: String, i: int) -> void:
 	if p["crop"] == "":
 		M.content.add_child(UI.header(Art.tex("deco", "soil_heap"), "🟫", 80))
 		if float(p.get("quality", 1.0)) < 0.99:
-			M.content.add_child(UI.label(tr("🚧 Not fully cleared yet: it gives %d%% of a full harvest. Finish clearing it at the 🪧 sign.") % int(round(float(p["quality"]) * 100)), 16, UI.MUTED, true))
+			M.content.add_child(UI.label(tr("🚧 Not fully cleared yet: it gives %d%% of a full harvest. Finish clearing it further down.") % int(round(float(p["quality"]) * 100)), 16, UI.MUTED, true))
 		var cap: int = G.fields.plants_per_patch(a)
 		M.content.add_child(UI.label("🌱".repeat(cap) + tr("  fits here"), 17, UI.MUTED, true))
 		var cs: Array = G.fields.crops_for(a)
@@ -129,6 +129,7 @@ func sheet_patch(a: String, i: int) -> void:
 			M.widgets.tile_button(st, UI.action_button("field", _do_stones.bind(i), true, UI.SOIL, "🤏", tr("Pick")))
 			wg.add_child(st.get_meta("panel"))
 		if wg.get_child_count() > 0: M.content.add_child(wg)
+		M.placesheet.part_field_below()
 
 func _do_plant(a: String, i: int, cid: String) -> void:
 	var plan: Dictionary = G.fields.plant_plan(a, cid)
@@ -169,9 +170,29 @@ func _do_weed(i: int) -> void:
 func _do_stones(i: int) -> void:
 	G.fields.pick_stones(i)
 
-func _pick_all() -> void:
-	for i in range(M.field_idx * 9, M.field_idx * 9 + 9):
-		if i < G.S["patches"].size() and G.fields.patch_usable("field", i) and float(G.S["patches"][i]["stones"]) >= 0.5:
+## What there is to do on the patches of field f: how many are ready, weedy and stony (overgrown patches do not count).
+func _field_jobs(f: int) -> Dictionary:
+	var jobs := {"ready": 0, "weeds": 0, "stones": 0}
+	for i in range(f * 9, mini(f * 9 + 9, G.S["patches"].size())):
+		if not G.fields.patch_usable("field", i): continue
+		var p: Dictionary = G.S["patches"][i]
+		if p["crop"] != "" and p["ready"]: jobs["ready"] += 1
+		if float(p["weeds"]) >= 0.5: jobs["weeds"] += 1
+		if float(p["stones"]) >= 0.5: jobs["stones"] += 1
+	return jobs
+
+## Harvest, weed or pick the stones of every patch of field f. The farmer walks from patch to patch (each patch plays its own act).
+func harvest_field(f: int) -> void:
+	for i in range(f * 9, mini(f * 9 + 9, G.S["patches"].size())):
+		if G.fields.patch_usable("field", i) and G.S["patches"][i]["ready"] and G.S["patches"][i]["crop"] != "":
+			if not G.fields.harvest("field", i): break
+
+func weed_field(f: int) -> void:
+	G.fields.weed_field(f)
+
+func stones_field(f: int) -> void:
+	for i in range(f * 9, mini(f * 9 + 9, G.S["patches"].size())):
+		if G.fields.patch_usable("field", i) and float(G.S["patches"][i]["stones"]) >= 0.5:
 			if not G.fields.pick_stones(i): break
 
 ## Harvest everything that is ready in an area (all fields, the orchard or the greenhouse).
@@ -204,7 +225,21 @@ func part_patch_note(i: int) -> void:
 		else: v.add_child(UI.label(tr("To clear it you need first: %s.") % ", ".join(miss), 16, UI.MUTED, true))
 	M.content.add_child(pc)
 
-func part_field() -> void:
+## "The whole field": one button per job, each for every patch of the open field, with how many patches it is for.
+func part_whole_field() -> void:
+	var f: int = M.field_idx
+	var jobs := _field_jobs(f)
+	M.widgets.section(tr("🌾 The whole field"), tr("One tap does the job on every patch of this field."))
+	var qa := HFlowContainer.new()
+	qa.add_theme_constant_override("h_separation", 8)
+	qa.add_theme_constant_override("v_separation", 8)
+	qa.add_child(UI.button("%s  %d" % [tr("🧺 Harvest all"), jobs["ready"]], harvest_field.bind(f), jobs["ready"] > 0, UI.GREEN, 17))
+	qa.add_child(UI.button("%s  %d" % [tr("🌿 Pick all weeds"), jobs["weeds"]], weed_field.bind(f), jobs["weeds"] > 0, UI.GREEN_DARK, 17))
+	qa.add_child(UI.button("%s  %d" % [tr("🪨 Pick all stones"), jobs["stones"]], stones_field.bind(f), jobs["stones"] > 0, UI.SOIL, 17))
+	M.content.add_child(qa)
+
+## The pests line: how many there are, what they eat, what chases them off.
+func part_pests() -> void:
 	var pc := UI.card(Color("f3f7ea"))
 	var pv := UI.vbox(4)
 	pc.add_child(pv)
@@ -222,10 +257,6 @@ func part_field() -> void:
 		r2.add_child(UI.label("🚧 %d%%" % int(round(G.fields.pest_block() * 100)), 17))
 	pv.add_child(r2)
 	M.content.add_child(pc)
-	var qa := HFlowContainer.new()
-	qa.add_child(UI.soft_button(tr("🌿 Weed all"), func(): G.fields.weed_field(M.field_idx), true, 17))
-	qa.add_child(UI.soft_button(tr("🪨 Pick stones"), _pick_all, true, 17))
-	M.content.add_child(qa)
 
 func part_area(a: String) -> void:
 	var arr: Array = G.fields.area(a)

@@ -221,8 +221,8 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   grids; green buttons say in one word what they do (Gather, Pull, Plant, Twist, Cook, Bake, Lay, Raise …).
 - **Fields** — tap a patch to plant (the pop-up shows how many seeds you have), harvest, pull weeds or pick stones. Patches of a
   field from a later chapter only show the mysterious sign. All three fields are always on the map (North Field and
-  River Meadow stay overgrown until they are cleared); the 🪧 signpost next to the Home Field opens clearing land, better patches,
-  scarecrow and fence (so does tapping a patch that isn't cleared yet). Orchard and greenhouse are their own places; an orchard tree can be cut down (🪓, a log and sticks) to plant another kind.
+  River Meadow stay overgrown until they are cleared). The fields have no sign: the bottom of a patch's window has **"The whole field"** (Harvest all, Pick all weeds,
+  Pick all stones, each with how many patches it is for), then clearing land, better patches, scarecrow and fence, then the pests line (tapping a patch that isn't cleared yet opens the same). A small 🔨 shows above the first field when there is something to do. Orchard and greenhouse are their own places; an orchard tree can be cut down (🪓, a log and sticks) to plant another kind.
 - **Places** — kitchen and workshop (stations, woodpile, choice slots), pens (feed, collect, muck out), storage (sell, eat for an
   energy discount, burn as firewood, “stale soon”), market (seeds, merchants; orders to deliver at the bottom), book cart and library
   (books, reading, card quizzes), home (Rest, food, what you wear), notice board (little jobs, favours for neighbours).

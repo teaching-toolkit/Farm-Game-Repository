@@ -24,6 +24,17 @@ func _ready() -> void:
 	var planted := _press_text("🌱")
 	await _frames(2)
 	print("planted: ", planted, " patch: ", G.S["patches"][0]["crop"], " plants ", G.S["patches"][0]["plants"])
+	# 2b) the whole field (J2): the patch's window has a "The whole field" section; one tap weeds every patch of the field
+	G.S["energy"] = 20.0
+	G.S["patches"][0]["weeds"] = 2.0
+	D.tap_patch("field", 0)
+	await _frames(2)
+	var weeds_before := float(G.S["patches"][0]["weeds"])
+	var wf_pressed := _press_text("Pick all weeds")
+	await _frames(2)
+	print("whole field: button pressed %s, weeds %s -> %s" % [wf_pressed, weeds_before, G.S["patches"][0]["weeds"]])
+	if not wf_pressed or float(G.S["patches"][0]["weeds"]) >= 0.5: print("FAIL whole field: the weeds are still there")
+	D.close_sheet()
 	# 3) answer three Time Quiz questions
 	var s0: int = G.S["step"]
 	for k in range(3):
@@ -50,6 +61,13 @@ func _ready() -> void:
 	D.close_modal()
 	var wr: String = await _wrong_rest()
 	print("rest energy: ", e0, " -> quick ", e1, " -> slow ", e2, "  (wrong-answer path: ", wr, ")  start page first: ", start_page)
+	# J3: the Rest button first sends the farmer home, then the window opens
+	D.go_rest()
+	var rest_open_early: bool = D.modal_visible()
+	await get_tree().create_timer(2.0).timeout
+	print("go rest: window not yet open at once %s, open after the walk %s" % [not rest_open_early, D.modal_visible()])
+	if rest_open_early or not D.modal_visible(): print("FAIL go rest: the window must open after the walk, not at once")
+	D.close_modal()
 	# r9: a sum left unanswered (back to the farm) leaves no trace in the learning record
 	D.show_rest()
 	await _frames(1)

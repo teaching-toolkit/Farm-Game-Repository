@@ -43,6 +43,7 @@ var ground_tap: Control     # taps on the forest and the road
 var road_level := 1.0
 ## Road tiles (assets/road/road_1 … road_9) for each road level: a mix of the two kinds of the level.
 var road_badge: PanelContainer
+var field_badge: PanelContainer       # a little sign above the first field when there is something to do on the fields (they have no sign of their own)
 var avatar                    # the farmer: walks to wherever the player taps (kits/avatar/avatar.gd)
 var actor                     # … and acts out what the player did there (kits/avatar/actor.gd, data/acts.json)
 var perk_fx                   # butterflies, sparkles, rainbow, season breeze (fx.gd MapFx)
@@ -156,6 +157,9 @@ func _ready() -> void:
 	road_badge = UI.pill("", 18, Color(1, 1, 1, 0.95))
 	road_badge.visible = false
 	board.add_child(road_badge)
+	field_badge = UI.pill("", 18, Color(1, 1, 1, 0.95))
+	field_badge.visible = false
+	board.add_child(field_badge)
 	perk_fx = Fx.MapFx.new()
 	perk_fx.size = design
 	for fv in fields:
@@ -250,6 +254,7 @@ func _poly_rect(poly: PackedVector2Array, clip: Rect2) -> Rect2:
 ## Where a place's middle is, in farm (board) coordinates — things fly from and to it.
 func spot_point(sid: String) -> Vector2:
 	if slots.has(sid): return slots[sid].map_center()
+	if sid == "field": return patch_point(0, 4)       # the fields have no sign: the middle of the first one
 	if sid == "road":
 		var rd: Dictionary = L.get("ground", {}).get("road", {})
 		if rd.has("points"):
@@ -399,6 +404,13 @@ func refresh_fields(G) -> void:
 	if rl != road_level:
 		road_level = rl
 	board.queue_redraw()
+
+func set_field_badge(text: String) -> void:
+	field_badge.get_child(0).text = text
+	field_badge.visible = text != "" and fields.size() > 0
+	var s := field_badge.get_combined_minimum_size()
+	field_badge.size = s
+	if fields.size() > 0: field_badge.position = fields[0].position + Vector2(fields[0].size.x / 2.0 - s.x / 2.0, -s.y * 0.2)
 
 func set_road_badge(text: String) -> void:
 	road_badge.get_child(0).text = text

@@ -9,7 +9,7 @@
     "well": {"name": "Well", "emoji": "🪣"},
     "storage": {"name": "Storage", "emoji": "🧺"},
     "workshop": {"name": "Workshop", "emoji": "🪚"},
-    "field": {"name": "Field", "emoji": "🪧"},
+    "field": {"name": "Field", "emoji": "🌾"},
     "forest": {"name": "Forest edge", "emoji": "🌳"},
     "lumber": {"name": "Woodlot", "emoji": "🌲"},
     "coop": {"name": "Chickens", "emoji": "🐔"},

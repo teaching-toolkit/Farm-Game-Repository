@@ -46,8 +46,7 @@ places = {
     "market":   {"x": 655, "y": 168, "foot": [2, 1], "w": 150, "ws": {"market": 120}},
     "bookcart": {"x": 775, "y": 236, "foot": [1, 1], "w": 92},
     "windmill": {"x": 785, "y": 330, "foot": [1, 1], "w": 110},
-    # the three fields stand in a column in the middle; the sign of the Home Field and things in the pockets between them
-    "field":    {"x": 240, "y": 452, "foot": [1, 1], "w": 50},
+    # the three fields stand in a column in the middle; things in the pockets between them (the fields have no sign: since 0.10.0 their jobs are in the patch windows)
     "compost":  {"x": 250, "y": 545, "foot": [1, 1], "w": 90},
     "broker":   {"x": 584, "y": 785, "foot": [1, 1], "w": 92},
     # left side: animals, the pond

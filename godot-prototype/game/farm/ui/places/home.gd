@@ -25,7 +25,7 @@ func part_home() -> void:
 	eh.add_child(UI.label("⚡", 22))
 	eh.add_child(UI.explain(UI.stock_bar(float(G.S["energy"]), G.needs.energy_max(), UI.item_color("energy")), tr("⚡ Your energy: work uses it, rest fills it.")))
 	rv.add_child(eh)
-	var rb := UI.button(tr("😴 Rest"), M.rest.show_rest, true, UI.BLUE, 19)
+	var rb := UI.button(tr("😴 Rest"), M.rest.go_rest, true, UI.BLUE, 19)
 	rb.custom_minimum_size = Vector2(0, 50)
 	rv.add_child(rb)
 	M.content.add_child(rc)
