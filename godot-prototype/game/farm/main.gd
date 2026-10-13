@@ -371,7 +371,7 @@ func refresh() -> void:
 	if G.S["reading"] != "": st.append(tr("📖 reading"))
 	lbl_status.text = "  ".join(st)
 	bg.color = UI.SEASON_BG.get(G.seasons.season(), UI.BG)
-	map.set_season(G.seasons.season(), mapview.fence_level())
+	map.ground.set_season(G.seasons.season(), mapview.fence_level())
 	# fields, add-ons and the house yard
 	field_idx = clampi(field_idx, 0, maxi(0, G.fields.field_names().size() - 1))
 	map.refresh_fields(G)
@@ -381,8 +381,8 @@ func refresh() -> void:
 	goal_id = goalbar.next_goal()
 	for sid in map.slots: mapview.update_slot(sid)
 	map.set_road_badge(mapview.badge("road"))
-	map.set_critters(mapview.critter_spec())
-	map.set_cat(G.done("barn_cat"))
+	map.critters.set_critters(mapview.critter_spec())
+	map.farmcat.set_cat(G.done("barn_cat"))
 	goalbar.update_goal_bar()
 	if sheet.visible:
 		sheets.rebuild_sheet()

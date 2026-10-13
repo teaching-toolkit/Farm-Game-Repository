@@ -2,7 +2,7 @@
 
 This file is the starting point for a new chat or another AI: what the project is, how the folder is laid out, the parent's
 rules and where we left off. **How to work on the project** (what to read, the checks, changing content) lives in three skill
-files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2 under way: R0–R5 done).
+files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2 under way: R0–R6 done).
 
 ---
 
@@ -198,7 +198,9 @@ runs identical, also strict; bot, smoke test, screenshots unchanged); `web-build
 13 Oct 2026 (phase 2, R5): `main.gd` (3,108 lines) is split: it is now the 400-line composition root (`FarmMain`: builds the screen and
 refreshes it); the interface's jobs are 25 parts in `godot-prototype/game/farm/ui/` (and `ui/places/`; own README), reached as `M.<part>.<function>`
 (e.g. `M.modals.open_modal`, `M.patches.on_patch`). Same method as R4. No change to the game: all checks pass, the golden runs are identical, and 21
-screens (sheets, pop-ups, Rest, quiz, menu, album, cards, English and German) look the same as before. `web-build/` still matches the code. Next: R6 (map).
+screens (sheets, pop-ups, Rest, quiz, menu, album, cards, English and German) look the same as before. `web-build/` still matches the code.
+
+13 Oct 2026 (phase 2, R6): the map: `farm_map.gd` (1,042 lines) is split into the map node and `ground`, `critters`, `cat`, `walker` (`godot-prototype/game/farm/map/`, own README); the pest and scarecrow drawing that existed twice is now only in `iso_field.gd` (the copy in `field_view.gd` was dead code). No change to the game (all checks pass, golden runs identical, map screenshots in four seasons and a fully built winter farm look the same as before). `web-build/` still matches the code. Next: R7 (versioned saves).
 
 ---
 

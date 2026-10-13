@@ -300,7 +300,7 @@ func _process(d: float) -> void:
 	_sort_t += d
 	if _sort_t > 0.15 and map:
 		_sort_t = 0.0
-		map._sort_in(self, feet.y)
+		map.sort_in(self, feet.y)
 
 func _animate(d: float) -> void:
 	rig.rotation.y = lerp_angle(rig.rotation.y, _face, minf(1.0, d * 10.0))

@@ -1,7 +1,7 @@
 # To-do list — Farm Quiz Game
 
 The project's to-do list and plan. Moved out of `00-READ-ME-FIRST.md` §6 on **9 October 2026**; finished tasks live in
-`PROJECT-LOG.md`, not here. **Last updated: 13 October 2026** (phase 1 built and checked, version 0.9.0; phase 2, the restructuring, under way: R0–R5 done, next R6; seven rounds of the
+`PROJECT-LOG.md`, not here. **Last updated: 13 October 2026** (phase 1 built and checked, version 0.9.0; phase 2, the restructuring, under way: R0–R6 done, next R7; seven rounds of the
 parent's decisions, 10–12 Oct, worked in; §0 is the implementation plan).
 
 **Standing rule** (from `00-READ-ME-FIRST.md`): keep this file current *as you work*. Tick off or remove done tasks (and add a
@@ -69,7 +69,7 @@ question must match):
   the chapter rule now come from the nodes and `chapters[].pet`; checked by `tests/places_test.tscn`, which is part of `check_all.sh`) · ✅ **R3** core
   (done 13 Oct 2026: `kits/core/` modifiers, conditions, rng, clock; events come with R4, saves with R7, data loading with R8) · ✅ **R4** `game.gd` split into 11 systems in `game/farm/systems/` (done 13 Oct 2026; `G.<system>.<function>`; see its README; left: the lists of
   node types `GOAL_TYPES` in `main.gd`, `NOT_AUTO`, `MAIN_TYPES`, `DEFAULT_CAT` in `game.gd` → data, with R8) · ✅ **R5** `main.gd` split into a composition root and 25 parts in `game/farm/ui/`
-  (done 13 Oct 2026; own README; the generic hosts become kits with phase 3) (was T1) · **R6** map: generic vs farm, pests drawn once · **R7** saves with versions and upgrade steps ·
+  (done 13 Oct 2026; own README; the generic hosts become kits with phase 3) (was T1) · ✅ **R6** map (done 13 Oct 2026: `farm_map.gd` split into ground, critters, cat and walker; the pests are drawn once: the copy in `field_view.gd` was dead code and is gone; no `kits/world` yet) · **R7** saves with versions and upgrade steps ·
   **R8** data files split, a data checker, pacing from the real engine.
 - ✅ Decided (R7): **pacing from the real engine**: the bot reports hours, questions and Rest answers per chapter; the explorer no longer
   simulates its own copy of the rules but shows the data and that report, refreshed by **a script the parent can run** (a double-click

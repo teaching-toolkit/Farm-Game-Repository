@@ -324,7 +324,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - `game/farm/main.gd` — the interface's composition root (top bar, map, bottom bar; refreshes the screen); `game/farm/ui/*.gd` — the
   parts of the interface, one script per job (sheets, pop-ups, quizzes, Rest, cards, the places' sheets, menus; see `game/farm/ui/README.md`); `game/farm/map/farm_map.tscn` + `farm_map.gd` — the
   one-screen map, built from `data/map_layout.json` (ground, forest, road, house yard, fields with shadows and fence, pens, places,
-  add-ons and decorations sorted by their feet; scaled to fit the screen); `game/farm/map/slot.gd` — one place (stands on its footprint,
+  add-ons and decorations sorted by their feet; scaled to fit the screen); `game/farm/map/{ground,critters,cat,walker}.gd` — the map's parts (see `game/farm/map/README.md`); `game/farm/map/slot.gd` — one place (stands on its footprint,
   taps only on its pixels, draws its footprint until it has a picture); `game/farm/spots.gd` + `data/farm/places.json` — which place or corner each data node
   belongs to, the buildings with an inside (`interiors`), which pictures an upgrade chain uses, ruins, pens and the workbench (the rules are in the
   script, the tables are data); `game/farm/map/iso_field.gd` — a field at
