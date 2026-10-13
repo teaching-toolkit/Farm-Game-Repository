@@ -1,0 +1,78 @@
+{
+  "accuracy": 1.0,
+  "chapterEnds": {
+    "pet_bunny": {
+      "hours": 3.59,
+      "question": 154
+    },
+    "pet_goat": {
+      "hours": 16.84,
+      "question": 618
+    },
+    "pet_pony": {
+      "hours": 21.37,
+      "question": 741
+    },
+    "pet_tortoise": {
+      "hours": 7.58,
+      "question": 289
+    }
+  },
+  "chapters": {
+    "1": {
+      "actions": 2207,
+      "hours": 3.58,
+      "knowledge": 75,
+      "questions": 153,
+      "rest": 311
+    },
+    "2": {
+      "actions": 2821,
+      "hours": 3.99,
+      "knowledge": 70,
+      "questions": 135,
+      "rest": 334
+    },
+    "3": {
+      "actions": 6588,
+      "hours": 9.27,
+      "knowledge": 120,
+      "questions": 329,
+      "rest": 786
+    },
+    "4": {
+      "actions": 3879,
+      "hours": 4.53,
+      "knowledge": 5,
+      "questions": 123,
+      "rest": 307
+    },
+    "5": {
+      "actions": 2,
+      "hours": 0.01,
+      "knowledge": 0,
+      "questions": 1,
+      "rest": 0
+    }
+  },
+  "made": "2026-10-12",
+  "note": "Made by the bot playing the real rules (tests/bot.gd --report). Hours = Time Quiz questions × secondsPerStep + actions × secondsPerAction + Rest answers × secondsPerRest + knowledge questions × secondsPerKnowledgeQuestion (data/farm/rules/general.json pacing). The bot plays well: a child takes longer per action and makes more trips. Actions are counted from the game's own updates, so they are approximate.",
+  "reachedChapter": 5,
+  "seed": 1,
+  "timing": {
+    "note": "Real time = Time Quiz answers × secondsPerStep + actions × secondsPerAction + Rest answers × secondsPerRest + knowledge questions × secondsPerKnowledgeQuestion. Rest answers = energy spent ÷ energy per answer (home, bed, pillow, bottle…).",
+    "playerEfficiency": 0.6,
+    "secondsPerAction": 3.0,
+    "secondsPerKnowledgeQuestion": 12.0,
+    "secondsPerRest": 5.0,
+    "secondsPerStep": 25.0
+  },
+  "total": {
+    "actions": 15497,
+    "hours": 21.37,
+    "knowledge": 270,
+    "questions": 741,
+    "rest": 1738
+  },
+  "version": "0.9.0"
+}

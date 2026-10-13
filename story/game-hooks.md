@@ -70,7 +70,7 @@ A running list. Nothing here is built yet. Before anything is built, the parent 
 
 - `data/farm-progression.json`: `chapters` goes from 5 to 6; a new pet node (`pet_badger`); about 70–100 new nodes (medicine
   chapter); sidequest names and blurbs; chapter numbers of later nodes shift.
-- `game/farm/game.gd`: pet lists are hard-coded (lines near 363 and 1907: `pet_bunny … pet_alpaca`); a pet-automation tick.
+- Pets: the list, their voices and their luck are in `data/farm/animals.json`, the chapter rule in `data/farm/chapters.json` (since 12 Oct 2026); still needed: a pet-automation tick.
 - `game/farm/main.gd`: the top-right row (`_open_pantry` → story scroll), `_show_welcome` (the start story), `_on_patch` and
   `_part_patch_note` (first-tap problem stories), the new forest screen.
 - New: `data/story.json`, `game/farm/story.gd`, `assets/story/`, `data/i18n/story-de.json`.

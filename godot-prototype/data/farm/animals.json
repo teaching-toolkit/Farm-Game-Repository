@@ -1,0 +1,35 @@
+{
+ "note": "The farm's animals and pets (moved out of the code 12 Oct 2026). animals: farm animals walking in their pens, in this order. voices: what a pen's animals sound like when tapped (perk 'Farm sounds'), sound name -> animal id. pets: the pets, in the order they come; luckPerPet: luck each pet adds. petVoices: pets with a sound of their own.",
+ "animals": [
+  "animal_chicken",
+  "animal_cow",
+  "animal_sheep",
+  "animal_bees"
+ ],
+ "voices": {
+  "coop": {
+   "chicken": "animal_chicken"
+  },
+  "cows": {
+   "cow": "animal_cow"
+  },
+  "sheep": {
+   "sheep": "animal_sheep"
+  },
+  "bees": {
+   "bees": "animal_bees"
+  }
+ },
+ "pets": [
+  "pet_bunny",
+  "pet_tortoise",
+  "pet_goat",
+  "pet_pony",
+  "pet_alpaca"
+ ],
+ "luckPerPet": 0.05,
+ "petVoices": {
+  "pet_goat": "goat",
+  "pet_pony": "pony"
+ }
+}

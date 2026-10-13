@@ -220,6 +220,11 @@ details summary { cursor: pointer; font-weight: 500; }
   </section>
 
   <section class="panel" id="panel-pacing" role="tabpanel" aria-labelledby="tab-pacing" hidden>
+    <div class="box" style="margin-bottom:16px">
+      <h2>From the real game</h2>
+      <p class="note" id="realNote">The game's bot plays the real rules (not this page's model) and reports what each chapter takes. Made by double-clicking <b>Update explorer.command</b> in the game folder; the numbers below are from the last time it ran.</p>
+      <div class="tscroll"><table id="realTable"></table></div>
+    </div>
     <div class="grid2">
       <div class="box">
         <h2>Assumptions</h2>
@@ -993,6 +998,105 @@ details summary { cursor: pointer; font-weight: 500; }
   if (typeof module !== "undefined" && module.exports) module.exports = api; else root.FarmSim = api;
 })(typeof window !== "undefined" ? window : globalThis);
 
+</script>
+<script id="pacing-report" type="application/json">{
+  "accuracy": 1.0,
+  "chapterEnds": {
+    "pet_bunny": {
+      "hours": 3.59,
+      "question": 154
+    },
+    "pet_goat": {
+      "hours": 16.84,
+      "question": 618
+    },
+    "pet_pony": {
+      "hours": 21.37,
+      "question": 741
+    },
+    "pet_tortoise": {
+      "hours": 7.58,
+      "question": 289
+    }
+  },
+  "chapters": {
+    "1": {
+      "actions": 2207,
+      "hours": 3.58,
+      "knowledge": 75,
+      "questions": 153,
+      "rest": 311
+    },
+    "2": {
+      "actions": 2821,
+      "hours": 3.99,
+      "knowledge": 70,
+      "questions": 135,
+      "rest": 334
+    },
+    "3": {
+      "actions": 6588,
+      "hours": 9.27,
+      "knowledge": 120,
+      "questions": 329,
+      "rest": 786
+    },
+    "4": {
+      "actions": 3879,
+      "hours": 4.53,
+      "knowledge": 5,
+      "questions": 123,
+      "rest": 307
+    },
+    "5": {
+      "actions": 2,
+      "hours": 0.01,
+      "knowledge": 0,
+      "questions": 1,
+      "rest": 0
+    }
+  },
+  "made": "2026-10-12",
+  "note": "Made by the bot playing the real rules (tests/bot.gd --report). Hours = Time Quiz questions × secondsPerStep + actions × secondsPerAction + Rest answers × secondsPerRest + knowledge questions × secondsPerKnowledgeQuestion (data/farm/rules/general.json pacing). The bot plays well: a child takes longer per action and makes more trips. Actions are counted from the game's own updates, so they are approximate.",
+  "reachedChapter": 5,
+  "seed": 1,
+  "timing": {
+    "note": "Real time = Time Quiz answers × secondsPerStep + actions × secondsPerAction + Rest answers × secondsPerRest + knowledge questions × secondsPerKnowledgeQuestion. Rest answers = energy spent ÷ energy per answer (home, bed, pillow, bottle…).",
+    "playerEfficiency": 0.6,
+    "secondsPerAction": 3.0,
+    "secondsPerKnowledgeQuestion": 12.0,
+    "secondsPerRest": 5.0,
+    "secondsPerStep": 25.0
+  },
+  "total": {
+    "actions": 15497,
+    "hours": 21.37,
+    "knowledge": 270,
+    "questions": 741,
+    "rest": 1738
+  },
+  "version": "0.9.0"
+}</script>
+<script>
+/* The bot's pacing report (tests/bot.gd --report, put in here by tools/sync_progression.py). */
+(function () {
+  let r = {};
+  try { r = JSON.parse(document.getElementById("pacing-report").textContent || "{}"); } catch (e) { r = {}; }
+  const t = document.getElementById("realTable");
+  if (!t) return;
+  if (!r.chapters) { t.innerHTML = "<tr><td>No report yet: double-click Update explorer.command in the game folder.</td></tr>"; return; }
+  const ends = r.chapterEnds || {};
+  const endAt = {};
+  for (const [id, e] of Object.entries(ends)) endAt[id] = e;
+  let h = "<thead><tr><th>Chapter</th><th>Time Quiz questions</th><th>Actions</th><th>Rest answers</th><th>Knowledge questions</th><th>Hours</th></tr></thead><tbody>";
+  for (const [ch, c] of Object.entries(r.chapters)) h += `<tr><td>${ch}</td><td>${c.questions}</td><td>${c.actions}</td><td>${c.rest}</td><td>${c.knowledge}</td><td>${c.hours.toFixed(1)}</td></tr>`;
+  const T = r.total || {};
+  h += `<tr><td><b>All</b></td><td><b>${T.questions}</b></td><td><b>${T.actions}</b></td><td><b>${T.rest}</b></td><td><b>${T.knowledge}</b></td><td><b>${(T.hours || 0).toFixed(1)}</b></td></tr></tbody>`;
+  t.innerHTML = h;
+  const n = document.getElementById("realNote");
+  const pets = Object.entries(endAt).sort((a, b) => a[1].hours - b[1].hours).map(([id, e]) => `${id.replace("pet_", "")} ${e.hours.toFixed(1)} h (question ${e.question})`).join(", ");
+  if (n) n.innerHTML += ` Report of ${r.made}, game version ${r.version}, seed ${r.seed}. Chapters end with: ${pets}. Actions are the bot's own taps: a child taps "harvest all" and sells in bigger lots, so this is on the high side.`;
+})();
 </script>
 <script id="builtin-data" type="application/json">{
   "meta": {

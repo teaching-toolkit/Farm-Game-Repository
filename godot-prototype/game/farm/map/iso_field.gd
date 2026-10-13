@@ -134,28 +134,34 @@ func _on_patch(k: int) -> void:
 func _wild_info(i: int) -> Array:
 	return G.patch_wild(field_index, i)
 
+## What patch k looks like now (crop, stage, weeds, stones or what is in the way).
+func spec_of(k: int) -> Dictionary:
+	var arr: Array = G.area(area_name)
+	var i := field_index * 9 + k
+	var spec := {"crop": "", "plants": 0, "stage": "", "ready": false, "weeds": 0, "stones": 0, "wild": "", "seed": hash([field_index, k])}
+	if not (i < arr.size() and G.patch_usable(area_name, i)):
+		var wi := _wild_info(i)
+		spec["wild"] = wi[0]
+		spec["clear"] = wi[1]
+	else:
+		var p = arr[i]
+		spec["weeds"] = mini(12, int(floor(float(p["weeds"]) + 0.001)))
+		spec["stones"] = mini(6, int(floor(float(p["stones"]) + 0.001)))
+		if p["crop"] != "":
+			spec["crop"] = p["crop"]
+			spec["plants"] = clampi(G.shown_plants(float(p["plants"])), 1, 9)
+			var frac := float(p["growth"]) / maxf(0.01, G.grow_target(p))
+			spec["stage"] = "ready" if p["ready"] else ("sprout" if frac < 0.5 else "grown")
+			spec["ready"] = p["ready"]
+	return spec
+
 func refresh() -> void:
 	var arr: Array = G.area(area_name)
 	usable.resize(9)
 	for k in range(9):
 		var i := field_index * 9 + k
-		var spec := {"crop": "", "plants": 0, "stage": "", "ready": false, "weeds": 0, "stones": 0, "wild": "", "seed": hash([field_index, k])}
 		usable[k] = i < arr.size() and G.patch_usable(area_name, i)
-		if not usable[k]:
-			var wi := _wild_info(i)
-			spec["wild"] = wi[0]
-			spec["clear"] = wi[1]
-		else:
-			var p = arr[i]
-			spec["weeds"] = mini(12, int(floor(float(p["weeds"]) + 0.001)))
-			spec["stones"] = mini(6, int(floor(float(p["stones"]) + 0.001)))
-			if p["crop"] != "":
-				spec["crop"] = p["crop"]
-				spec["plants"] = clampi(G.shown_plants(float(p["plants"])), 1, 9)
-				var frac := float(p["growth"]) / maxf(0.01, G.grow_target(p))
-				spec["stage"] = "ready" if p["ready"] else ("sprout" if frac < 0.5 else "grown")
-				spec["ready"] = p["ready"]
-		patches[k].show_state(spec)
+		patches[k].show_state(spec_of(k))
 	# what stands round the field and in the gaps
 	var fence_on := ""
 	for id in FENCE_IDS:
@@ -337,17 +343,29 @@ func _throw_look(target: Label, chase: bool) -> void:
 		tw2.parallel().tween_property(target, "modulate:a", 0.0, 0.5)
 		tw2.tween_callback(target.queue_free)
 
+var hold := false        # the Time Quiz is open: rain waits for the playback afterwards (J4)
+var pending_rain := false
+
 func _on_step(info: Dictionary) -> void:
 	if has_scarecrow: pending_scare += int(info.get("removed", 0))
 	if info.get("rain", false):
-		var rain := UI.label("🌧️🌧️🌧️", 30)
-		rain.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		rain.position = Vector2(-140, -20)
-		layer.add_child(rain)
-		var tw := create_tween()
-		tw.tween_property(rain, "position", Vector2(size.x + 20, size.y * 0.4), 1.6)
-		tw.tween_callback(rain.queue_free)
+		if hold: pending_rain = true
+		else: play_rain()
 	# plants the pests ate: remember them, a bird shows it when the farm is visible again
+	_note_eaten(info)
+
+## Rain passing over the field.
+func play_rain() -> void:
+	pending_rain = false
+	var rain := UI.label("🌧️🌧️🌧️", 30)
+	rain.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	rain.position = Vector2(-140, -20)
+	layer.add_child(rain)
+	var tw := create_tween()
+	tw.tween_property(rain, "position", Vector2(size.x + 20, size.y * 0.4), 1.6)
+	tw.tween_callback(rain.queue_free)
+
+func _note_eaten(info: Dictionary) -> void:
 	if area_name != "field": return
 	var eaten: Dictionary = info.get("eaten", {})
 	for i in eaten:

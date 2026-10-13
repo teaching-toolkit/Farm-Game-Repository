@@ -1,0 +1,10 @@
+{
+  "muck": {
+    "energyPerMuck": 0.5,
+    "manurePerMuck": 1,
+    "thresholdPerAnimal": 4,
+    "slowAbove": 0.75,
+    "slowAboveDouble": 0.5,
+    "note": "Each collection leaves muck (hens 0.3, cows 1, sheep 0.6 per animal). Above thresholdPerAnimal × animals the animals give 25% less; above twice that, 50% less. Mucking out costs energyPerMuck per muck and gives manure (compost!)."
+  }
+}

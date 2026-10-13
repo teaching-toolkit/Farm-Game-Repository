@@ -16,6 +16,9 @@ const IsoField = preload("res://game/farm/map/iso_field.gd")
 const Avatar = preload("res://kits/avatar/avatar.gd")
 const Actor = preload("res://kits/avatar/actor.gd")
 const Fx = preload("res://game/farm/fx.gd")
+const Shapes = preload("res://kits/world/shapes.gd")
+const Flight = preload("res://kits/world/flight.gd")
+const WalkGrid = preload("res://kits/world/walk_grid.gd")
 const LAYOUT_PATH := "res://data/map_layout.json"
 const GRASS := {"spring": Color("9cc86a"), "summer": Color("b3c95c"), "autumn": Color("c4b46a"), "winter": Color("dfe8e6")}
 const GRASS_TINT := {"spring": Color(1, 1, 1), "summer": Color(1.05, 1.03, 0.85), "autumn": Color(1.1, 0.95, 0.7), "winter": Color(0.95, 1.0, 1.08)}
@@ -48,7 +51,7 @@ var road_badge: PanelContainer
 var avatar                    # the farmer: walks to wherever the player taps (kits/avatar/avatar.gd)
 var actor                     # … and acts out what the player did there (kits/avatar/actor.gd, data/acts.json)
 var perk_fx                   # butterflies, sparkles, rainbow, season breeze (fx.gd MapFx)
-var astar := AStarGrid2D.new()
+var walk = WalkGrid.new()     # where the farmer can walk (kits/world/walk_grid.gd)
 var _grid_sig := ""
 const CELL := 16.0
 var fields: Array = []      # IsoField per field (0 = Home Field)
@@ -239,15 +242,9 @@ func spot_rect(sid: String) -> Rect2:
 	if sid == "field" and fields.size() > 0:
 		var fr := Rect2(fields[0].position, fields[0].size)
 		r = fr.merge(r) if r.size != Vector2.ZERO else fr
-	if sid == "road": r = _poly_rect(_road_band(), Rect2(Vector2.ZERO, design))
+	if sid == "road": r = Shapes.poly_rect(_road_band(), Rect2(Vector2.ZERO, design))
 	if r.size == Vector2.ZERO: return r
 	return to_map(r)
-
-func _poly_rect(poly: PackedVector2Array, clip: Rect2) -> Rect2:
-	if poly.is_empty(): return Rect2()
-	var r := Rect2(poly[0], Vector2.ZERO)
-	for p in poly: r = r.expand(p)
-	return r.intersection(clip)
 
 ## Where a place's middle is, in farm (board) coordinates — things fly from and to it.
 func spot_point(sid: String) -> Vector2:
@@ -274,52 +271,7 @@ func patch_point(f: int, k: int) -> Vector2:
 ## Lets things fly from one place to another in an arc, growing and then shrinking: one picture per piece
 ## (3 carrots harvested = 3 carrots flying). pieces = [[emoji, texture or null], …]. The target bounces when they land.
 func fly(from: Vector2, to_sid: String, pieces: Array, bounce: Array = []) -> void:
-	var to := spot_point(to_sid)
-	var delay := 0.0
-	var all := []
-	for pc in pieces: all.append([pc, false])
-	for pc in bounce: all.append([pc, true])
-	for item in all:
-		var pc: Array = item[0]
-		var off: bool = item[1]
-		var node: Control
-		var tex: Texture2D = pc[1]
-		if tex:
-			var tr := TextureRect.new()
-			tr.texture = tex
-			tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			tr.size = Vector2(36, 36)
-			node = tr
-		else:
-			node = UI.label(str(pc[0]), 26)
-			node.size = Vector2(36, 36)
-		node.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		node.pivot_offset = Vector2(18, 18)
-		var start := from + Vector2(randf_range(-14, 14), randf_range(-10, 6))
-		node.position = start - Vector2(18, 18)
-		node.scale = Vector2(0.7, 0.7)
-		node.modulate.a = 0.0
-		fx_layer.add_child(node)
-		var lift := maxf(110.0, start.distance_to(to) * 0.45)
-		var ctrl := (start + to) / 2.0 + Vector2(randf_range(-30, 30), -lift)
-		var tw := create_tween()
-		tw.tween_interval(delay)
-		tw.tween_property(node, "modulate:a", 1.0, 0.08)
-		if off:
-			# the store is full: it flies there, hits it and bounces off, spinning away
-			tw.tween_method(_fly_step.bind(node, start, ctrl, to + Vector2(0, -26)), 0.0, 0.92, 0.8).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-			tw.tween_callback(_store_full.bind(to_sid))
-			var away := to + Vector2(randf_range(60, 120) * (-1.0 if randf() < 0.5 else 1.0), -150)
-			tw.tween_property(node, "position", away - Vector2(18, 18), 0.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-			tw.parallel().tween_property(node, "rotation", randf_range(-6.0, 6.0), 0.55)
-			tw.tween_property(node, "position", away + Vector2(0, 160), 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-			tw.parallel().tween_property(node, "modulate:a", 0.0, 0.45)
-			tw.tween_callback(node.queue_free)
-		else:
-			tw.tween_method(_fly_step.bind(node, start, ctrl, to), 0.0, 1.0, 0.85).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-			tw.tween_callback(_landed.bind(node, to_sid))
-		delay += 0.11
+	Flight.fly(fx_layer, from, spot_point(to_sid), pieces, bounce, _landed.bind(to_sid), _store_full.bind(to_sid))
 
 ## The store shakes and shows that it is full.
 func _store_full(sid: String) -> void:
@@ -337,14 +289,6 @@ func _store_full(sid: String) -> void:
 	tw2.tween_property(mark, "position:y", mark.position.y - 30, 0.8)
 	tw2.parallel().tween_property(mark, "modulate:a", 0.0, 0.8)
 	tw2.tween_callback(mark.queue_free)
-
-func _fly_step(t: float, node: Control, a: Vector2, c: Vector2, b: Vector2) -> void:
-	if not is_instance_valid(node): return
-	var p := a.lerp(c, t).lerp(c.lerp(b, t), t)
-	node.position = p - Vector2(18, 18)
-	var s := 0.7 + 0.9 * sin(PI * minf(1.0, t * 1.15))      # grows on the way up, shrinks into the store
-	if t > 0.85: s = lerpf(s, 0.35, (t - 0.85) / 0.15)
-	node.scale = Vector2(s, s)
 
 func _landed(node: Control, sid: String) -> void:
 	if is_instance_valid(node): node.queue_free()
@@ -422,6 +366,7 @@ func play_pending() -> void:
 
 ## Shows the add-ons that are built (and not replaced by a newer one).
 func refresh_addons(G) -> void:
+	call_deferred("_season_looks")
 	for a in addon_nodes:
 		var id: String = a["id"]
 		var on: bool = G.nodes.has(id) and G.done(id) and not G.superseded(id)
@@ -667,57 +612,15 @@ func forest_poly() -> PackedVector2Array:
 	if fp.size() < 3: return PackedVector2Array()
 	return _extended(_pts(fp))
 
-func _pts(arr: Array) -> PackedVector2Array:
-	var out := PackedVector2Array()
-	for p in arr: out.append(Vector2(float(p[0]), float(p[1])))
-	return out
-
 ## Corners lying on the farm's edge are pushed outward along their inner edge, so the shape continues off the farm.
 func _extended(poly: PackedVector2Array) -> PackedVector2Array:
-	var out := PackedVector2Array()
-	var n := poly.size()
-	for i in range(n):
-		var p := poly[i]
-		var on := _edges_of(p)
-		if on.is_empty():
-			out.append(p)
-			continue
-		var prev := poly[(i - 1 + n) % n]
-		var nxt := poly[(i + 1) % n]
-		var dir := Vector2.ZERO
-		for q in [prev, nxt]:
-			var shared := false
-			for e in _edges_of(q):
-				if e in on: shared = true
-			if not shared: dir = (p - q).normalized()
-		if dir == Vector2.ZERO:   # a corner of the farm: straight outwards
-			dir = Vector2(-1.0 if p.x < design.x / 2.0 else 1.0, -1.0 if p.y < design.y / 2.0 else 1.0).normalized()
-		out.append(p + dir * EXTEND)
-	return out
+	return Shapes.extended(poly, design, EXTEND)
 
-func _edges_of(p: Vector2) -> Array:
-	var e := []
-	if p.x <= 0.5: e.append("l")
-	if p.x >= design.x - 0.5: e.append("r")
-	if p.y <= 0.5: e.append("t")
-	if p.y >= design.y - 0.5: e.append("b")
-	return e
-
-## A band of width w along a line: left side forwards, then right side backwards.
 func _band(line: PackedVector2Array, w: float) -> PackedVector2Array:
-	var n := line.size()
-	var left := PackedVector2Array()
-	var right := PackedVector2Array()
-	for i in range(n):
-		var d := Vector2.ZERO
-		if i > 0: d += (line[i] - line[i - 1]).normalized()
-		if i < n - 1: d += (line[i + 1] - line[i]).normalized()
-		var nrm := Vector2(-d.y, d.x).normalized() * w / 2.0
-		left.append(line[i] + nrm)
-		right.append(line[i] - nrm)
-	right.reverse()
-	left.append_array(right)
-	return left
+	return Shapes.band(line, w)
+
+func _pts(arr: Array) -> PackedVector2Array:
+	return Shapes.pts(arr)
 
 func _textured(poly: PackedVector2Array, tex: Texture2D, tint: Color) -> void:
 	var uvs := PackedVector2Array()
@@ -732,6 +635,34 @@ func set_season(s: String, fence: int) -> void:
 		fence_level = fence
 		queue_redraw()
 		board.queue_redraw()
+	_season_looks()
+
+## The season's look on every picture of the map (season.gdshader): snow caps and muted colours in winter, golden autumn.
+const SEASON_SHADER = preload("res://game/farm/map/season.gdshader")
+var _season_mat: ShaderMaterial
+func _season_looks() -> void:
+	if _season_mat == null:
+		_season_mat = ShaderMaterial.new()
+		_season_mat.shader = SEASON_SHADER
+	_season_mat.set_shader_parameter("winter", 1.0 if season == "winter" else 0.0)
+	_season_mat.set_shader_parameter("autumn", 1.0 if season == "autumn" else 0.0)
+	for layer in [flat, objects]:
+		if layer: _put_season_mat(layer)
+	for g in [self, board]:                  # the ground drawn by the map (grass round the farm) and by the board itself
+		if g == null: continue
+		if g.material == null:
+			var gm := ShaderMaterial.new()
+			gm.shader = SEASON_SHADER
+			gm.set_shader_parameter("ground", 1.0)
+			g.material = gm
+		g.material.set_shader_parameter("winter", 1.0 if season == "winter" else 0.0)
+		g.material.set_shader_parameter("autumn", 1.0 if season == "autumn" else 0.0)
+
+func _put_season_mat(n: Node) -> void:
+	for c in n.get_children():
+		if c == avatar or c == critter_layer or c == fx_layer or c == cat: continue
+		if c is TextureRect and c.material == null: c.material = _season_mat
+		_put_season_mat(c)
 
 # ------------------------------------------------------------------ animals and pets walking around
 ## spec: { spot_id: [[emoji, texture or null], …] } — one entry per animal or pet walking around that place.
@@ -907,23 +838,13 @@ func _walk_to_patch(_a: String, k: int, fv) -> void:
 	if actor: actor.stop()
 	avatar.walk_to(fv.position + fv.patch_center(k))
 
-func _cell(p: Vector2) -> Vector2i:
-	return Vector2i(clampi(int(p.x / CELL), 0, astar.region.size.x - 1), clampi(int(p.y / CELL), 0, astar.region.size.y - 1))
-
-func _cell_center(c: Vector2i) -> Vector2:
-	return Vector2((c.x + 0.5) * CELL, (c.y + 0.5) * CELL)
-
-## The grid of where the farmer can walk: not through buildings, pens, ponds, fields or the forest. Made again when
-## places appear (only visible ones block).
+## The grid of where the farmer can walk (kits/world/walk_grid.gd): not through buildings, pens, ponds, fields or the
+## forest. Made again when places appear (only visible ones block).
 func _grid_update() -> void:
 	var sig := ""
 	for sid in slots: sig += "1" if slots[sid].visible else "0"
-	if sig == _grid_sig and astar.region.size.x > 0: return
+	if sig == _grid_sig and walk.ready(): return
 	_grid_sig = sig
-	astar.region = Rect2i(0, 0, ceili(design.x / CELL), ceili(design.y / CELL))
-	astar.cell_size = Vector2(CELL, CELL)
-	astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
-	astar.update()
 	var polys := []
 	for sid in slots:
 		var s = slots[sid]
@@ -942,58 +863,13 @@ func _grid_update() -> void:
 			Vector2(x, y), Vector2(fv.position.x, y - fv.size.y / 2.0)]))
 	var fpoly := forest_poly()
 	if fpoly.size() >= 3: polys.append(fpoly)
-	for poly in polys:
-		var r := Rect2(poly[0], Vector2.ZERO)
-		for q in poly: r = r.expand(q)
-		var a := _cell(r.position)
-		var b := _cell(r.end)
-		for cx in range(a.x, b.x + 1):
-			for cy in range(a.y, b.y + 1):
-				if Geometry2D.is_point_in_polygon(_cell_center(Vector2i(cx, cy)), poly): astar.set_point_solid(Vector2i(cx, cy), true)
-
-func _nearest_free(c: Vector2i) -> Vector2i:
-	if not astar.is_point_solid(c): return c
-	for rad in range(1, 30):
-		var best := Vector2i(-1, -1)
-		var bd := 1e9
-		for dx in range(-rad, rad + 1):
-			for dy in range(-rad, rad + 1):
-				if maxi(absi(dx), absi(dy)) != rad: continue
-				var q := c + Vector2i(dx, dy)
-				if not astar.region.has_point(q) or astar.is_point_solid(q): continue
-				var dd := Vector2(dx, dy * 2.0).length()     # prefer cells beside or below (the front of things)
-				if dd < bd:
-					bd = dd
-					best = q
-		if best.x >= 0: return best
-	return c
-
-func _clear_line(a: Vector2, b: Vector2) -> bool:
-	var n := int(a.distance_to(b) / (CELL * 0.4)) + 1
-	for i in range(n + 1):
-		if astar.is_point_solid(_cell(a.lerp(b, float(i) / float(n)))): return false
-	return true
+	walk.cell = CELL
+	walk.rebuild(design, polys)
 
 ## A way from one point to another around everything that stands in the way (straightened where nothing is in between).
 func find_path(from: Vector2, to: Vector2) -> PackedVector2Array:
 	_grid_update()
-	var a := _nearest_free(_cell(from))
-	var goal := _cell(to)
-	var end_free: bool = not astar.is_point_solid(goal)
-	var b := _nearest_free(goal)
-	var ids: Array[Vector2i] = astar.get_id_path(a, b)
-	if ids.is_empty(): return PackedVector2Array()
-	var pts := PackedVector2Array([from])
-	for c in ids: pts.append(_cell_center(c))
-	pts[pts.size() - 1] = to.clamp(Vector2(4, 4), design - Vector2(4, 4)) if end_free else _cell_center(b)
-	var out := PackedVector2Array([pts[0]])
-	var i := 0
-	while i < pts.size() - 1:
-		var j := pts.size() - 1
-		while j > i + 1 and not _clear_line(pts[i], pts[j]): j -= 1
-		out.append(pts[j])
-		i = j
-	return out
+	return walk.find_path(from, to)
 
 # ------------------------------------------------------------------ perk effects over the farm
 func set_perks(flags: Dictionary) -> void:

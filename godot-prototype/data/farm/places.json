@@ -1,0 +1,552 @@
+{
+ "note": "The places on the farm map and what belongs to them (game/farm/spots.gd reads this; moved out of the code 12 Oct 2026). Where each place stands is in map_layout.json. names: id -> [name, emoji] (names are translated in data/i18n/ui-<lang>.json). interiors: buildings with an inside; built = once this (or an upgrade) is done the map shows the building and a tap opens the inside with its corners (members). insideArt: pictures of the corners inside (assets/interior/<id>.png, then assets/map/<id>.png), the newest one built is shown. artChains: the upgrade chain of a place, first to last; its picture follows the newest one built (pictures are named after the first stage they stand for). plotChains: places lying flat on the ground (pens, gardens, the pond), picture in assets/plots/<id>.png, buildings stand on them as add-ons. alwaysOpen: open before anything is built. ruins: what is left before a building stands again (stone or wood). bench: tool pictures shown on the workbench once done (x, y, w = fractions of the bench picture); item = an item in the store counts. pens: fence picture (assets/fences/, empty = none), ground (earth | grass | meadow), dirt = share of bare earth. Which place a data node belongs to: ruinsAt (ruins_<place> are cleared at that place), slotPrefixes, then slots by the node's slot (a place id, or byId / byPrefix / default), then defaultPlace.",
+ "names": {
+  "home": [
+   "House",
+   "🏠"
+  ],
+  "living": [
+   "Bed & home",
+   "🛏️"
+  ],
+  "library": [
+   "Library",
+   "📦"
+  ],
+  "kitchen": [
+   "Kitchen",
+   "🔥"
+  ],
+  "well": [
+   "Well",
+   "🪣"
+  ],
+  "storage": [
+   "Storage",
+   "🧺"
+  ],
+  "workshop": [
+   "Workshop",
+   "🪚"
+  ],
+  "field": [
+   "Field",
+   "🪧"
+  ],
+  "forest": [
+   "Forest edge",
+   "🌳"
+  ],
+  "lumber": [
+   "Woodlot",
+   "🌲"
+  ],
+  "coop": [
+   "Chickens",
+   "🐔"
+  ],
+  "cows": [
+   "Cows",
+   "🐄"
+  ],
+  "sheep": [
+   "Sheep",
+   "🐑"
+  ],
+  "bees": [
+   "Bees",
+   "🐝"
+  ],
+  "barn": [
+   "Barn",
+   "🛖"
+  ],
+  "windmill": [
+   "Windmill",
+   "🌬️"
+  ],
+  "compost": [
+   "Compost",
+   "♻️"
+  ],
+  "pond": [
+   "Pond",
+   "🦆"
+  ],
+  "orchard": [
+   "Orchard",
+   "🍎"
+  ],
+  "greenhouse": [
+   "Greenhouse",
+   "🪴"
+  ],
+  "pets": [
+   "Pet corner",
+   "🐾"
+  ],
+  "market": [
+   "Market",
+   "🧑‍🌾"
+  ],
+  "bookcart": [
+   "Book cart",
+   "🛒"
+  ],
+  "board": [
+   "Notice board",
+   "📋"
+  ],
+  "broker": [
+   "Import Broker",
+   "🧳"
+  ],
+  "road": [
+   "Road",
+   "🛤️"
+  ],
+  "barn_build": [
+   "Barn",
+   "🛖"
+  ],
+  "barn_cellar": [
+   "Cellar",
+   "🧀"
+  ],
+  "barn_ferment": [
+   "Crocks",
+   "🫙"
+  ],
+  "barn_hay": [
+   "Hay & water",
+   "🌾"
+  ],
+  "barn_seeds": [
+   "Seed library",
+   "🌱"
+  ],
+  "ws_build": [
+   "Workshop",
+   "🪚"
+  ],
+  "ws_bench": [
+   "Benches",
+   "🪚"
+  ],
+  "ws_fire": [
+   "Kiln & forge",
+   "🔥"
+  ],
+  "ws_loom": [
+   "Spinning & weaving",
+   "🧶"
+  ],
+  "ws_tools": [
+   "Tools",
+   "🛠️"
+  ]
+ },
+ "interiors": {
+  "home": {
+   "built": "cottage",
+   "art": "house",
+   "members": [
+    "living",
+    "library",
+    "kitchen"
+   ]
+  },
+  "barn": {
+   "built": "barn_1",
+   "art": "barn",
+   "members": [
+    "barn_build",
+    "barn_cellar",
+    "barn_ferment",
+    "barn_hay",
+    "barn_seeds"
+   ]
+  },
+  "workshop": {
+   "built": "workshop_1",
+   "art": "workshop",
+   "members": [
+    "ws_build",
+    "ws_bench",
+    "ws_fire",
+    "ws_loom",
+    "ws_tools"
+   ]
+  }
+ },
+ "insideArt": {
+  "living": [
+   "straw_bed",
+   "wool_mattress",
+   "linen_bedding"
+  ],
+  "library": [
+   "library_box",
+   "library_shelf",
+   "library_bookcase",
+   "library_room"
+  ],
+  "kitchen": [
+   "campfire",
+   "stove_1",
+   "stove_2",
+   "stove_3"
+  ],
+  "barn_cellar": [
+   "cellar",
+   "cellar_2"
+  ],
+  "barn_ferment": [
+   "fermenter"
+  ],
+  "barn_hay": [
+   "hay_rack",
+   "water_trough"
+  ],
+  "barn_seeds": [
+   "seed_library"
+  ],
+  "ws_bench": [
+   "workbench",
+   "carpenter_bench",
+   "sawbench",
+   "press"
+  ],
+  "ws_fire": [
+   "kiln",
+   "forge",
+   "anvil",
+   "kiln_2",
+   "forge_2",
+   "glass_kiln"
+  ],
+  "ws_loom": [
+   "hand_loom",
+   "spinning_wheel",
+   "textile_loom",
+   "dye_vat"
+  ],
+  "ws_tools": [
+   "tool_rack",
+   "master_tool_chest"
+  ]
+ },
+ "artChains": {
+  "home": [
+   "cottage",
+   "cottage_loft",
+   "farmhouse",
+   "farmhouse_sunroom"
+  ],
+  "living": [
+   "tent"
+  ],
+  "library": [
+   "library_box",
+   "library_shelf",
+   "library_bookcase",
+   "library_room"
+  ],
+  "kitchen": [
+   "campfire",
+   "stove_1",
+   "stove_2",
+   "stove_3"
+  ],
+  "well": [
+   "well_1",
+   "well_2",
+   "well_3",
+   "well_4",
+   "well_5"
+  ],
+  "road": [
+   "road_1",
+   "road_2",
+   "road_3",
+   "road_4",
+   "road_5"
+  ],
+  "storage": [
+   "basket",
+   "shed",
+   "warehouse"
+  ],
+  "workshop": [
+   "workbench",
+   "workshop_1",
+   "workshop_2",
+   "workshop_3"
+  ],
+  "barn": [
+   "barn_1",
+   "barn_2",
+   "barn_3"
+  ],
+  "windmill": [
+   "windmill_1",
+   "windmill_2"
+  ],
+  "compost": [
+   "compost_bin",
+   "compost_bin_2"
+  ],
+  "greenhouse": [
+   "greenhouse",
+   "greenhouse_2"
+  ],
+  "lumber": [
+   "woodlot",
+   "lumbermill",
+   "lumbermill_2"
+  ],
+  "market": [
+   "market_stall"
+  ]
+ },
+ "plotChains": {
+  "coop": [
+   "coop_1",
+   "coop_2"
+  ],
+  "cows": [
+   "animal_cow"
+  ],
+  "sheep": [
+   "sheep_pen"
+  ],
+  "bees": [
+   "cap_bees_1",
+   "animal_bees"
+  ],
+  "pets": [
+   "pet_bunny",
+   "pet_tortoise",
+   "pet_goat",
+   "pet_pony",
+   "pet_alpaca"
+  ],
+  "pond": [
+   "pond"
+  ],
+  "orchard": [
+   "orchard"
+  ]
+ },
+ "alwaysOpen": [
+  "board",
+  "field",
+  "forest",
+  "market",
+  "pond",
+  "road"
+ ],
+ "ruins": {
+  "home": "stone",
+  "well": "stone",
+  "windmill": "stone",
+  "workshop": "stone",
+  "greenhouse": "stone",
+  "barn": "wood",
+  "lumber": "wood",
+  "storage": "wood",
+  "market": "wood",
+  "compost": "wood",
+  "board": "wood",
+  "kitchen": "stone",
+  "library": "wood",
+  "living": "wood"
+ },
+ "bench": [
+  {
+   "id": "rope",
+   "item": true,
+   "pic": "rope",
+   "x": 0.3,
+   "y": 0.3,
+   "w": 0.24
+  },
+  {
+   "id": "rock",
+   "pic": "stone_hammer",
+   "x": 0.5,
+   "y": 0.22,
+   "w": 0.26
+  },
+  {
+   "id": "stone_knife",
+   "pic": "flint_knife",
+   "x": 0.7,
+   "y": 0.3,
+   "w": 0.2
+  },
+  {
+   "id": "stone_axe",
+   "pic": "stone_axe",
+   "x": 0.44,
+   "y": 0.38,
+   "w": 0.28
+  },
+  {
+   "id": "wooden_shovel",
+   "pic": "wooden_shovel",
+   "x": 0.64,
+   "y": 0.4,
+   "w": 0.34
+  },
+  {
+   "id": "stick_hoe",
+   "pic": "wooden_rake",
+   "x": 0.3,
+   "y": 0.42,
+   "w": 0.32
+  },
+  {
+   "id": "saw",
+   "pic": "hand_saw",
+   "x": 0.56,
+   "y": 0.3,
+   "w": 0.28
+  },
+  {
+   "id": "iron_hammer",
+   "pic": "iron_hammer",
+   "x": 0.78,
+   "y": 0.24,
+   "w": 0.22
+  }
+ ],
+ "pens": {
+  "coop": {
+   "fence": "wattle_fence",
+   "ground": "earth",
+   "dirt": 0.75
+  },
+  "cows": {
+   "fence": "stick_fence",
+   "ground": "grass",
+   "dirt": 0.3
+  },
+  "sheep": {
+   "fence": "wattle_fence",
+   "ground": "grass",
+   "dirt": 0.3
+  },
+  "pets": {
+   "fence": "picket_fence",
+   "ground": "grass",
+   "dirt": 0.2
+  },
+  "orchard": {
+   "fence": "stick_fence",
+   "ground": "grass",
+   "dirt": 0.15
+  },
+  "bees": {
+   "fence": "",
+   "ground": "meadow",
+   "dirt": 0.1
+  }
+ },
+ "ruinsAt": {
+  "workshop": "ws_build",
+  "barn": "barn_build"
+ },
+ "slotPrefixes": {
+  "gear:": "living",
+  "tool:": "ws_tools"
+ },
+ "slots": {
+  "living": "living",
+  "library": "library",
+  "kitchen": "kitchen",
+  "well": "well",
+  "storage": "storage",
+  "windmill": "windmill",
+  "lumber": "lumber",
+  "orchard": "orchard",
+  "greenhouse": "greenhouse",
+  "barn": {
+   "byId": {
+    "cellar": "barn_cellar",
+    "cellar_2": "barn_cellar",
+    "oak_barrels": "barn_cellar",
+    "fermenter": "barn_ferment",
+    "hay_rack": "barn_hay",
+    "water_trough": "barn_hay",
+    "seed_library": "barn_seeds"
+   },
+   "default": "barn_build"
+  },
+  "workshop": {
+   "byId": {
+    "workbench": "ws_bench",
+    "carpenter_bench": "ws_bench",
+    "sawbench": "ws_bench",
+    "press": "ws_bench",
+    "polish_workbench": "ws_bench",
+    "kiln": "ws_fire",
+    "kiln_2": "ws_fire",
+    "glass_kiln": "ws_fire",
+    "forge": "ws_fire",
+    "forge_2": "ws_fire",
+    "anvil": "ws_fire",
+    "smithy_chimney": "ws_fire",
+    "polish_kiln": "ws_fire",
+    "polish_forge": "ws_fire",
+    "hand_loom": "ws_loom",
+    "textile_loom": "ws_loom",
+    "spinning_wheel": "ws_loom",
+    "dye_vat": "ws_loom",
+    "polish_loom": "ws_loom",
+    "tool_rack": "ws_tools",
+    "master_tool_chest": "ws_tools",
+    "whetstone": "ws_tools",
+    "grindstone": "ws_tools"
+   },
+   "default": "ws_build"
+  },
+  "chicken_area": "coop",
+  "cow_area": "cows",
+  "sheep_area": "sheep",
+  "bee_yard": "bees",
+  "village": "board",
+  "pet": "pets",
+  "fence": "field",
+  "field2": "field",
+  "field3": "field",
+  "market": {
+   "byId": {
+    "book_cart": "bookcart",
+    "import_broker": "broker"
+   },
+   "default": "market"
+  },
+  "road": "road",
+  "special": {
+   "byPrefix": {
+    "orchard": "orchard",
+    "greenhouse": "greenhouse"
+   },
+   "default": "pond"
+  },
+  "field": {
+   "byId": {
+    "wild_edge": "forest",
+    "gathering_basket": "forest"
+   },
+   "byPrefix": {
+    "compost": "compost",
+    "worm": "compost"
+   },
+   "default": "field"
+  },
+  "board": "board"
+ },
+ "defaultPlace": "field"
+}

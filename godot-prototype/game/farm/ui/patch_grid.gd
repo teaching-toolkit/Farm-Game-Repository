@@ -1,5 +1,7 @@
 extends Control
-## The field grid (3×3 patches), the pests hopping around and the scarecrow's fierce looks.
+## The square patch grid of the orchard and the greenhouse sheets (3 per row), with rain passing over it.
+## (The fields themselves are drawn on the map by iso_field.gd, with the pests and the scarecrow; until R6 this grid
+## had its own copy of those, which never showed here.)
 const UI = preload("res://kits/ui/ui.gd")
 const Art = preload("res://kits/ui/art.gd")
 
@@ -10,12 +12,6 @@ var area_name := "field"
 var field_index := 0
 var grid: GridContainer
 var layer: Control
-var scarecrow: Label
-var scare_pic: TextureRect
-var critters: Array = []
-var hop_t := 0.0
-var look_t := 0.0
-var kinds := ["🐦", "🐇", "🐌", "🐛", "🐭"]
 
 func _ready() -> void:
 	G = get_node("/root/Game")
@@ -33,23 +29,12 @@ func _ready() -> void:
 	layer.set_anchors_preset(Control.PRESET_FULL_RECT)
 	layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(layer)
-	scarecrow = UI.label("", 38)
-	scarecrow.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	layer.add_child(scarecrow)
-	scare_pic = TextureRect.new()
-	scare_pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	scare_pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	scare_pic.size = Vector2(64, 76)
-	scare_pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	layer.add_child(scare_pic)
 	G.step_done.connect(_on_step)
 	refresh()
 
 func show_area(a: String, f: int) -> void:
 	area_name = a
 	field_index = f
-	for c in critters: c.queue_free()
-	critters.clear()
 	refresh()
 
 ## Soil picture (assets/tiles/soil.png, overgrown.png) when it exists, tinted by state; a coloured box otherwise.
@@ -198,105 +183,11 @@ func refresh() -> void:
 		b.add_theme_stylebox_override("disabled", _patch_style(col, tex_key, tint))
 		b.pressed.connect(_on_patch.bind(i))
 		grid.add_child(b)
-	_update_scarecrow()
-	call_deferred("_sync_critters")
 
 func _on_patch(i: int) -> void:
 	patch_pressed.emit(area_name, i)
 
-func _update_scarecrow() -> void:
-	var em := ""
-	var sid := ""
-	for pair in [["scarecrow_4", "🎏"], ["scarecrow_3", "💂"], ["scarecrow_2", "🧑‍🌾"], ["scarecrow_1", "🧍"]]:
-		if G.done(pair[0]) and em == "":
-			em = pair[1]; sid = pair[0]
-	var tex: Texture2D = Art.first("map", [sid, "scarecrow_1"]) if sid != "" else null
-	scare_pic.texture = tex if area_name == "field" else null
-	scarecrow.text = em if area_name == "field" and tex == null else ""
-	scarecrow.position = Vector2(maxf(0.0, size.x - 54.0), 2.0)
-
-func _growing_rects() -> Array:
-	var out := []
-	if area_name != "field": return out
-	var start := field_index * 9
-	var kids := grid.get_children()
-	for k in range(kids.size()):
-		var i := start + k
-		if i >= G.S["patches"].size(): continue
-		var p = G.S["patches"][i]
-		if p["crop"] == "" or p["ready"]: continue
-		var c: Control = kids[k]
-		if c.size.x < 10: continue
-		out.append(Rect2(c.position, c.size))
-	return out
-
-func _sync_critters() -> void:
-	var rects := _growing_rects()
-	var want := 0
-	if rects.size() > 0: want = mini(14, int(round(float(G.S["pests"]))))
-	while critters.size() > want:
-		var c: Label = critters.pop_back()
-		var tw := create_tween()
-		tw.tween_property(c, "modulate:a", 0.0, 0.3)
-		tw.tween_callback(c.queue_free)
-	while critters.size() < want and rects.size() > 0:
-		var c := UI.label(kinds[mini(G.chapter() - 1, kinds.size() - 1) if randf() < 0.6 else randi() % kinds.size()], 24)
-		c.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		var r: Rect2 = rects[randi() % rects.size()]
-		c.position = Vector2(randf_range(-30, size.x), -30)
-		layer.add_child(c)
-		critters.append(c)
-		var tw2 := create_tween()
-		tw2.tween_property(c, "position", r.position + Vector2(randf() * maxf(10.0, r.size.x - 30.0), randf() * maxf(10.0, r.size.y - 30.0)), 0.6)
-
-func _process(delta: float) -> void:
-	if scarecrow:
-		scarecrow.position = Vector2(maxf(0.0, size.x - 50.0), 0.0)
-		scare_pic.position = Vector2(maxf(0.0, size.x - 66.0), -6.0)
-	hop_t += delta
-	look_t += delta
-	if hop_t > 0.8:
-		hop_t = 0.0
-		var rects := _growing_rects()
-		for c in critters:
-			if not is_instance_valid(c) or rects.is_empty(): continue
-			if randf() < 0.5:
-				var r: Rect2 = rects[randi() % rects.size()]
-				var target := r.position + Vector2(randf() * maxf(10.0, r.size.x - 30.0), randf() * maxf(10.0, r.size.y - 30.0))
-				var tw := create_tween()
-				tw.tween_property(c, "position", c.position.lerp(target, 0.5) + Vector2(0, -8), 0.18)
-				tw.tween_property(c, "position", c.position.lerp(target, 0.9), 0.18)
-	if look_t > 2.6 and critters.size() > 0 and _has_scarecrow():
-		look_t = 0.0
-		_throw_look(critters[randi() % critters.size()], false)
-
-func _has_scarecrow() -> bool:
-	return scarecrow.text != "" or scare_pic.texture != null
-
-func _throw_look(target: Label, chase: bool) -> void:
-	if not is_instance_valid(target): return
-	var look := UI.label(["💢", "😠", "👀"][randi() % 3], 22)
-	look.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	look.position = scarecrow.position + Vector2(10, 20)
-	layer.add_child(look)
-	var tw := create_tween()
-	tw.tween_property(look, "position", target.position, 0.35)
-	tw.tween_property(look, "modulate:a", 0.0, 0.15)
-	tw.tween_callback(look.queue_free)
-	if chase:
-		var tw2 := create_tween()
-		tw2.tween_interval(0.35)
-		tw2.tween_property(target, "position", target.position + Vector2(randf_range(-200, 200), -260), 0.5)
-		tw2.parallel().tween_property(target, "modulate:a", 0.0, 0.5)
-		tw2.tween_callback(target.queue_free)
-
 func _on_step(info: Dictionary) -> void:
-	var removed := mini(int(info.get("removed", 0)), 6)
-	if area_name == "field" and _has_scarecrow():
-		for _k in range(removed):
-			if critters.is_empty(): break
-			var c: Label = critters.pop_back()
-			_throw_look(c, true)
 	if info.get("rain", false):
 		var rain := UI.label("🌧️🌧️🌧️", 30)
 		rain.mouse_filter = Control.MOUSE_FILTER_IGNORE

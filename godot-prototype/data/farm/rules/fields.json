@@ -1,0 +1,98 @@
+{
+  "weeds": {
+    "ratePerQuestion": 0.15,
+    "tierByChapter": [
+      1,
+      1.2,
+      1.5,
+      2,
+      2.5
+    ],
+    "fertilizerFactor": 0.4,
+    "freeDensity": 2,
+    "weedsPerPull": 3,
+    "orchardFactor": 0.5,
+    "names": [
+      "dandelions",
+      "dandelions and docks",
+      "thistles",
+      "brambles",
+      "brambles and bindweed"
+    ],
+    "note": "Weeds grow on every field patch every question, planted or not: ratePerQuestion × weed tier of the chapter × (1 + fertilizerFactor × fertilizer points the patch density needs) × weed multipliers (edging, borders, geese, goat, mulch…). One weeding tap clears weedsPerPull weeds; each weed costs 1 energy (less with hoes) and gives 1 fiber. Orchard spots grow half as many. The first freeDensity plants per patch need no fertilizer; each plant beyond needs 1 fertilizer point per planting.",
+    "diminishing": "Weeding has no floor: you can always 'Root out the weeds' (a polish) — the first time cuts regrowth most, every next time half as much and costs more energy, because the last weeds are harder to find."
+  },
+  "pests": {
+    "ratePerPlant": 0.05,
+    "tierByChapter": [
+      1,
+      1.4,
+      1.8,
+      2.3,
+      2.8
+    ],
+    "eatPerPest": 0.02,
+    "maxEat": 0.35,
+    "leaveRate": 0.2,
+    "capBase": 4,
+    "capPerPlant": 0.2,
+    "kinds": [
+      [
+        "🐦",
+        "sparrows"
+      ],
+      [
+        "🐇",
+        "rabbits"
+      ],
+      [
+        "🐌",
+        "slugs"
+      ],
+      [
+        "🐛",
+        "caterpillars"
+      ],
+      [
+        "🐭",
+        "voles"
+      ]
+    ],
+    "note": "Every question, pests arrive in proportion to the plants growing (ratePerPlant × plants × chapter tier × season × (1 − fence block)). The scarecrow (and cat, owl, ducks) chases up to 'scare' pests away per question and leaveRate of the rest wander off. The pests that stay eat a share of every growing patch: eatPerPest × pests (at most maxEat), worked out exactly every question and shown rounded to a whole percent; a patch never drops below 1 plant. All this happens once per question; the map plays it when the farm is seen again after the Time Quiz: the scarecrow throws as many angry looks at once as its level (1–4), then the pests that stayed come one by one, eat a plant and carry it off, and come back a few seconds later."
+  },
+  "stones": {
+    "heavePerPatch": 0.07,
+    "deepBedFactor": {
+      "4": 1.3,
+      "5": 1.6,
+      "6": 1.8
+    },
+    "barePatchFactor": 1.5,
+    "capPerPatch": 6,
+    "slowPerStone": 0.04,
+    "stonesPerPick": 2,
+    "energyPerStone": 1,
+    "note": "In winter, frost lifts stones in every field patch (more in deep beds and bare beds). Stones slow growth a little (like weeds, together at most 50%). Picking them gives stones for walls, paths and buildings."
+  },
+  "rotation": {
+    "sameCropGrow": 0.85,
+    "afterLegumeGrow": 1.1,
+    "legumes": [
+      "crop_beans",
+      "crop_clover"
+    ],
+    "note": "A patch remembers its last crop. The same crop again grows 15% slower (tired soil); after beans or clover the next crop grows 10% faster (rested soil)."
+  },
+  "yield": {
+    "spread": 0.22,
+    "luckShift": 0.1,
+    "minMain": 1,
+    "note": "Crop yields are averages per plant. Each plant gives its average × (1 + luck × luckShift) × the patch's quality, plus a random spread (spread × average), rounded up or down at random so the average is kept. The first item of a crop is at least minMain per plant. Upgrades raise the average (yield_<item> adds to every harvest)."
+  },
+  "water": {
+    "fetchBase": 2,
+    "fetchEnergy": 1,
+    "note": "Water never comes by itself: every drop is carried. A trip with the old bucket brings fetchBase 💧 for fetchEnergy ⚡ (gathering upgrades make it cheaper). Wells, the yoke, the dug-out pond and more make each trip bring more and the store hold more, so later on you carry water less often. Rain waters the fields: planting costs no water until the next question.",
+    "manual": true
+  }
+}

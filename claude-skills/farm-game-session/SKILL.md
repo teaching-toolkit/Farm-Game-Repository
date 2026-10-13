@@ -36,23 +36,24 @@ before any work starts.
 
 | The task is about | Read |
 |---|---|
-| A code change or a new mechanic | First `planning/2026-10-12-architecture-plan.md` (where code goes and the restructuring under way; later `godot-prototype/ARCHITECTURE.md`); then the design document's section for it (list the headings first: `grep -n '^#' farm-quiz-game-master-design-document.md`), the parts of `godot-prototype/README.md` it touches, then the scripts |
+| A code change or a new mechanic | First `godot-prototype/ARCHITECTURE.md` (how the code is built and where new code goes; the reasons are in `planning/2026-10-12-architecture-plan.md`); then the design document's section for it (list the headings first: `grep -n '^#' farm-quiz-game-master-design-document.md`), the parts of `godot-prototype/README.md` it touches, then the scripts |
 | Questions, cards, texts, German, numbers, sounds, pictures | `claude-skills/farm-game-content/SKILL.md` |
 | Rest sums, the quiz engine, the learning record | `godot-prototype/kits/learn/README.md` |
+| How the code is built, **where new code goes** | `godot-prototype/ARCHITECTURE.md` (read before any code change) |
 | The story | `story/README.md`, then the files it points to (keep its labels ✅ 💡 ❓ 🔒) |
 | Why something is the way it is | `PROJECT-LOG.md` §2 (search it; don't read it whole) |
-| Pace and balancing | `godot-prototype/data/farm-progression.json` and the explorer. **The data wins** if it and a document disagree |
+| Pace and balancing | `godot-prototype/data/farm/` (the data, split into files) and the explorer. **The data wins** if it and a document disagree |
 
 For any long file: list its headings with `grep -n '^#'`, then read only the sections you need. In the two big scripts
-(`game/farm/main.gd` about 3,100 lines, `game/farm/game.gd` about 2,400 lines), find functions with `grep -n '^func'` and read
-those. Never edit anything in `archive/`.
+(the screen in `game/farm/ui/*.gd` and `ui/places/*.gd`, 15–340 lines each, built by `game/farm/main.gd`; the rules in `game/farm/systems/*.gd`, 30–380 lines each, behind the front door
+`game/farm/game.gd`), find functions with `grep -n '^func'` and read those. New rule code goes into its system. Never edit anything in `archive/`.
 
 Then say in one line which task(s) from `TODO.md` you are working on.
 
 ## 3. Plan bigger steps before building
 
 A step is "bigger" if it adds a mechanic, touches more than two scripts, or changes the save data or the structure of
-`farm-progression.json`. For those:
+the data in `data/farm/`. For those:
 
 1. Write a short plan into `TODO.md` under the task, at most about 15 lines: the goal, the files, what happens to existing
    saves (old saves must keep loading), what the bot must learn to play it, and how it will be checked.

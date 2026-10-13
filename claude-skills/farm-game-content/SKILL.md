@@ -28,7 +28,7 @@ plural), never an "s" added by code.
 
 ## Knowledge cards and their questions
 
-Cards, books and the card questions (ids `KNW-…`) live in `data/farm-progression.json`. After changing card questions, run
+Cards, books and the card questions (ids `KNW-…`) live in `data/farm/nodes/ch*.json` (a card's file = its chapter). After changing card questions, run
 `python3 tools/quiz_ids.py` as above. Then follow "Progression numbers" below.
 
 ## Any text the player sees
@@ -37,17 +37,21 @@ Cards, books and the card questions (ids `KNW-…`) live in `data/farm-progressi
 - Then run `python3 tools/i18n.py`. It adds new texts to every language, flags data texts whose English changed
   (`"stale": true`) and checks that `%s`, `%d` and `{…}` slots match. Translate everything it reports as missing or stale in
   `data/i18n/*-de.json`. `python3 tools/i18n.py --check` must end with exit code 0.
-- **German spelling:** whether the game uses "ß" or Swiss "ss" is open question Q-X1 in `TODO.md`. Follow the answer once it is
-  decided; until then, match what the files already use.
+- **German spelling:** Swiss "ss", never "ß" (decided 10 Oct 2026).
 - Look at the changed screens with `--lang=de`: German texts are longer and must still fit.
 
 ## Progression numbers (items, nodes, recipes, chapters, prices, energy)
 
-1. Edit `data/farm-progression.json` with targeted edits. It keeps its own layout (one item, node or recipe per line), so
-   don't rewrite it with a plain `json.dump(indent=…)`.
-2. Run `python3 tools/sync_progression.py` (copies it into `../progression/` and the explorer).
+1. The data is split into files in `data/farm/` (since 12 Oct 2026; `tools/farm_data.py` explains the layout): `items.json`,
+   `recipes.json`, `nodes/ch1.json` … (a node's file = its `"chapter"`), `rules/*.json` (the "meta" blocks by part of the game),
+   `start.json`, `chapters.json`; plus `places.json`, `animals.json`. Edit with targeted edits; items, nodes and recipes keep
+   one per line, so don't rewrite a file with a plain `json.dump(indent=…)`; a script edits through
+   `farm_data.load()` / `farm_data.save(D)`. A new node goes to the end of `nodes/order.json`'s order by itself.
+2. Run `python3 tools/check_data.py` (ids, items, effect keys, conditions; exit code 0) and
+   `python3 tools/sync_progression.py` (puts the data together into `../progression/` and the explorer).
 3. Run the explorer check (command in `farm-game-check` §2) and the bot. Compare the playthrough hours, the answers and
-   when the pets arrive with `00-READ-ME-FIRST.md` §7. Report the difference and update §7.
+   when the pets arrive with `00-READ-ME-FIRST.md` §7. Report the difference and update §7. The bot's own pacing report
+   (`--report=FILE`, or `Update explorer.command`) shows what the real rules take per chapter.
 4. If the data and a document disagree, the data wins; fix the document, or ask the parent if the data looks wrong.
 
 ## Settings

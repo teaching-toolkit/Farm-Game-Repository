@@ -1,6 +1,6 @@
 # Farm Quiz Game — Godot prototype
 
-A playable prototype that runs the whole progression from `data/farm-progression.json` (data v0.8). Start with `../00-READ-ME-FIRST.md` for the project as a whole.
+A playable prototype that runs the whole progression from the data in `data/farm/` (data v0.8). Start with `../00-READ-ME-FIRST.md` for the project as a whole.
 Made for an **iPad held upright** (design size 834×1194; other screens stretch to fit).
 Pictures come from `assets/` when they exist; emojis stand in for every picture that doesn't exist yet.
 
@@ -67,8 +67,13 @@ neighbour. Where everything stands, and how big it is, comes from `data/map_layo
   with its inside: the corners (bed · books · kitchen; cellar · crocks · hay · seed library; benches · kiln & forge · spinning ·
   tools) are tappable and open their own sheet; closing the sheet brings you back inside. Before the barn or workshop stands, the
   place opens one sheet for everything there.
-- **Bottom bar** — the next story goal (tap it: its place glows) and the **Time Quiz** button, an old clock: its hour hand goes
-  once round per season; tapped, it spins once all the way round and the quiz opens.
+- **Top bar** (`game/farm/ui/top_bar.gd`; no bottom bar since 0.10) — coins, water, energy and the season on the left, the next
+  goal in the middle (tap it: its place glows), 🎒 📖 🖼️ ⚙️ on the right; the **Time Quiz** clock hangs below the right corner:
+  its hour hand goes once round per season; tapped, it spins once all the way round and the quiz opens. Notifications come in at
+  the top below the bar, newest first; a swipe sends one away.
+- **After the Time Quiz** the farm plays what happened (`game/farm/ui/playback.gd`): pause, rain, plants flicking through
+  their stages, pests, then the energy change; any tap skips to the end. **Seasons** show on every map picture
+  (`game/farm/map/season.gdshader`: snow caps and muted colours in winter, golden autumn).
 - Animals and pets walk around inside their pens; pests hop on the fields and the scarecrow throws fierce looks.
 
 ## Pictures (assets/)
@@ -78,7 +83,7 @@ The game looks for a picture named after the data id and uses the emoji when the
   A picture is named after the **first** stage it stands for and later upgrades keep it until they get their own: the final
   farmhouse is `cottage.png`, the barn `barn_1.png`, the workshop `workshop_1.png`, the warehouse `shed.png`.
 - `assets/plots/<place>.png` — `pond.png` (dug out), `pond_wild.png` (at the start) and `home.png` (the house plot before the
-  house). Pens have no picture of their own any more (a generic fence and ground; see `PENS` in `game/farm/spots.gd`).
+  house). Pens have no picture of their own any more (a generic fence and ground; see `pens` in `data/farm/places.json`).
 - `assets/ruins/stone_wall.png`, `wood_wall.png` — one side of a ruined wall (like a fence side) for buildings not built yet;
   `deco/rubble.png`, `planks.png` lie about. Without them the broken fences are used.
 - `assets/addons/<id>.png` — things built on a place, shown when built (`coop_2`, `nest_boxes`, `beehive`, `bee_house` …).
@@ -104,8 +109,8 @@ The game looks for a picture named after the data id and uses the emoji when the
   The grass texture is drawn at half size (`GRASS_SCALE` in `game/farm/map/farm_map.gd`). Earth tiles (`ground/…`) lose the grass
   rim the generator paints round them and get a wide soft edge when `import_art.py` cuts them.
 - `assets/map/workbench_empty.png` and `assets/tools/<tool>.png` — the workbench at the workshop place and the tools that appear
-  on it once made (rope, stone hammer, flint knife, stone axe, wooden shovel, rake, saw, iron hammer; where each lies: `BENCH` in
-  `game/farm/spots.gd`). Inside the workshop they hang on the wall once the tool rack is built.
+  on it once made (rope, stone hammer, flint knife, stone axe, wooden shovel, rake, saw, iron hammer; where each lies: `bench` in
+  `data/farm/places.json`). Inside the workshop they hang on the wall once the tool rack is built.
 - `assets/ui/clock_face.png`, `clock_hour.png`, `clock_minute.png` — the Time Quiz clock (hands pointing up, hub at the bottom);
   without them a clock is drawn.
 - `assets/items/<item id>.png` — optional pictures of items (for things flying to the store and the pantry); emojis otherwise.
@@ -228,13 +233,17 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   (books, reading, card quizzes), home (Rest, food, what you wear), notice board (little jobs, favours for neighbours).
 
 ## Testing shortcuts
-- **⏩ Cheat** (top bar) lets time pass until everything growing, cooking, reading or resting animals is done
-  (at most 60 questions), then fills energy and water. **🪙+100** adds coins.
-  Hide both by setting `"showCheatButton": false` in `data/settings.json`.
+- **⏩ Cheat** (floating below the top bar) lets time pass until everything growing, cooking, reading or resting animals is
+  done (at most 60 questions), then fills energy and water. **🪙+50** adds coins; **📚 Skip card quizzes** counts every card
+  waiting for its quiz as learned. A grown-up switches them on or off in ⚙️ (saved on this device in `user://device.json`,
+  with read aloud: off / with a button / by itself); `"showCheatButton"` in `data/settings.json` is only the starting value.
 - ⚙️ → **Start a new game** deletes this player's farm (the learning record stays).
 - Saves live in Godot's user folder, one folder per player: `players/<name>/farm_save.json` and `learning.json` (on a Mac:
   `~/Library/Application Support/Godot/app_userdata/Hazelwood Harvest/`; farms played before the rename on 12 Oct 2026 stay in
   `…/Farm Quiz Game (prototype)/` and can be copied over by hand. The web version keeps its saves in the browser, unaffected by the name).
+  A save carries `"version"` (`SAVE_VERSION` in `game/farm/game.gd`): older saves are upgraded step by step when loaded and get
+  every newer key from `state_defaults()`. Changing the shape of something already saved → raise `SAVE_VERSION`, add a step
+  to `_save_upgrades()`, add a fixture in `tests/fixtures/` (old fixtures stay: they must keep loading).
 - `--seed=N` (tests, bot, screenshots): the same seed gives the same game. The rules engine takes all its random numbers from
   it, its clock moves with the questions instead of the wall clock, and it neither reads nor writes saves or learning records
   on the device. The flags are read in `game/farm/dev/dev_flags.gd` (the screen) and `Game._test_args()` (the rules).
@@ -243,8 +252,12 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   (one Time Quiz question), `--lang=de` (quiz texts in German), `--shot=file.png`.
 
 ## Changing content (no code needed)
-- `data/farm-progression.json` — the whole tree. Edit it, run `python3 tools/sync_progression.py` (copies it into
-  `../progression/` and the explorer) and check it in `../progression/progression-explorer.html`.
+- `data/farm/` — the whole tree, split into files (`tools/farm_data.py` explains the layout): `items.json`, `recipes.json`,
+  `nodes/ch1.json` … (by chapter; `nodes/order.json` = the order the game goes through them), `rules/*.json` (the "meta"
+  blocks: fields, seasons, crafting, rewards …), `start.json`, `chapters.json` (the chapters and the chapter rule),
+  `places.json`, `animals.json`. Edit, then run `python3 tools/check_data.py` (finds unknown ids, items, effect keys and
+  conditions) and `python3 tools/sync_progression.py` (puts it together into `../progression/` and the explorer).
+  `Update explorer.command` (in the main folder) also lets the bot play and puts its pacing report into the explorer.
 - `data/quiz_packs/*.json` — Time Quiz questions, one file per pack: `{ "id", "code", "title", "subject", "pool", "questions":
   [ {"id", "q", "img", "emoji", "answers", "correct", "right", "wrong"} ] }`. An answer is text or `{"text", "img", "emoji"}` (a
   picture answer; `img` = a picture name like `items/carrot`, `emoji` stands in until it exists); `img`/`emoji` on the question =
@@ -266,7 +279,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - `data/settings.json`:
   - `activePacks` — which packs are on (empty = all); `quizOptions` — answers per question (4; a question with fewer shows all
     it has); `language` — the language when the device has not chosen one in ⚙️ Settings (`en` or `de`);
-  - `dynamicDifficulty` — prices that fit the farm (see above; tuned in `meta.flex` of farm-progression.json);
+  - `dynamicDifficulty` — prices that fit the farm (see above; tuned in `flex` in `data/farm/rules/general.json`);
   - `knowledgeReviewShare` — share of Time Quiz questions that are reviews of knowledge cards the child already learned
     (0 = off, 0.25 = one in four); the rest come from the parent's packs. This is the starting value: ⚙️ Settings changes it
     for each farm in 5 % steps;
@@ -293,12 +306,14 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   `tests/golden/` (coins, energy, water, goals, what is unlocked, the store). A restructuring must leave it unchanged. `--strict`
   also compares a hash of the whole save; `--record` records new golden runs after a change to the rules or numbers on purpose.
   Bot flags for it: `--seed=N`, `--golden=FILE`, `--save-at=CHAPTER:FILE` (writes a save fixture).
+- `godot --headless --path . res://tests/core_test.tscn -- --seed=1` — the core kit (`kits/core/`): modifiers, conditions, random numbers, clock; every condition in the data is known.
 - `godot --headless --path . res://tests/fixtures_test.tscn -- --seed=1` — every save in `tests/fixtures/` still loads, plays
   on for 10 steps and saves unchanged; a save in an older layout is completed when loaded.
 - `godot --headless --path . res://tests/ui_smoke.tscn` — clicks through the opening (first card, planting, Time Quiz, Rest,
   every place on the map, quest book, album, log) and checks the sums, the market, postcards, perks, the farmer, quiz ids,
   answers and pictures, German texts, stoking, carrying, rooting out and dynamic prices. It reaches the screen only through
   `tests/ui_driver.gd`, so splitting `main.gd` changes the driver, not the test.
+- `xvfb-run … godot --path . res://tests/playback_shots.tscn -- --seed=1 --out=DIR` — screenshots of the playback after the Time Quiz.
 - `godot --headless --path . -s res://tests/learn_sim.gd` — a pretend child practises 2,500 Rest sums: when is each level passed?
 - Screenshots: `godot --path . --resolution 834x1194 -- --shot=out.png [--spot=kitchen] [--spot=home] [--quiz] [--goal]`
   (`--demo=1` fast-forwards with the cheat; `--timestep=95` jumps to question 95, i.e. winter, to check the seasons).
@@ -311,14 +326,22 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - The pixie chest mini-game is not in yet; the farmer is a first prototype (one look, no "make your farmer" screen yet).
 
 ## Files
-- `game/farm/game.gd` — rules engine (autoload `Game`): data, time, energy, fields, weeds, stones, pests, animals, stations,
-  firewood, knowledge, polish, gear, seasons, freshness, luck, gift cards, jobs, acorns, cheat.
-- `game/farm/main.gd` — the interface (top bar, map, sheets, the inside windows, quizzes); `game/farm/map/farm_map.tscn` + `farm_map.gd` — the
+- `game/farm/game.gd` — the rules' front door (autoload `Game`): data, the farm's state, players and saves, the signals, the
+  core parts and the clock; every rule function is still callable here and passes on to its system in `game/farm/systems/`:
+  `seasons`, `items` (store, freshness), `progression` (costs, requirements, unlocking, polish), `pacing` (dynamic difficulty),
+  `fields` (patches, crops, weeds, stones, pests), `resources` (water), `animals`, `crafting` (stations, recipes, woodpile),
+  `trade` (market, merchants), `knowledge` (cards, reading, Time Quiz questions), `needs` (Rest, food, the cold house),
+  `rewards` (luck, postcards, gift cards, jobs, acorns, perks). New rule code goes into its system, not into `game.gd`.
+- `game/farm/main.gd` — the screen's composition root (builds the top bar, map, sheet and pop-up, connects the signals, refreshes);
+  everything it shows is done by its parts in `game/farm/ui/` (`map_view`, `sheets`, `modal`, `notifications`, `celebrations`,
+  `time_quiz`, `rest`, `card`, `postcards`, `settings`, `welcome`, `menus`, `farmer_acts`, `sounds`, `widgets`, and one script
+  per kind of place in `ui/places/`), reached as `M.ui_<part>`; new screen code goes into its part; `game/farm/map/farm_map.tscn` + `farm_map.gd` — the
   one-screen map, built from `data/map_layout.json` (ground, forest, road, house yard, fields with shadows and fence, pens, places,
   add-ons and decorations sorted by their feet; scaled to fit the screen); `game/farm/map/slot.gd` — one place (stands on its footprint,
   taps only on its pixels, draws its footprint until it has a picture); `game/farm/spots.gd` — which place or corner each data node
-  belongs to, the buildings with an inside (`INTERIORS`), and which pictures an upgrade chain uses; `game/farm/map/iso_field.gd` — a field at
-  an angle (diamond patches, pests, scarecrow looks, rain); `game/farm/ui/field_view.gd` — the square patch grid still used inside the
+  belongs to, the buildings with an inside, and which pictures an upgrade chain uses, all read from `data/farm/places.json`
+  (`data/farm/animals.json`: animals and pets; `data/farm/chapters.json`: the chapter rule); `game/farm/map/iso_field.gd` — a field at
+  an angle (diamond patches, pests, scarecrow looks, rain); `game/farm/ui/patch_grid.gd` — the square patch grid used inside the
   orchard and greenhouse sheets; `kits/ui/art.gd` — pictures with emoji fallback; `kits/ui/ui.gd` — styles.
 - `kits/avatar/avatar.gd` — the farmer (a 3D figure drawn into a picture on the map) + `data/avatar.json` (its look); `kits/avatar/actor.gd` — the farmer acting things out (`data/acts.json`; try
   `--act=weed@patch0`, poses side by side in `tests/pose_sheet.tscn`); `game/farm/fx.gd` —

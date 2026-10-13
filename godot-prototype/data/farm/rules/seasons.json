@@ -1,0 +1,119 @@
+{
+  "seasons": {
+    "lengthQuestions": 30,
+    "order": [
+      "spring",
+      "summer",
+      "autumn",
+      "winter"
+    ],
+    "mods": {
+      "spring": {
+        "emoji": "🌱",
+        "grow": 1,
+        "weeds": 1.5,
+        "pests": 1,
+        "waterField": 1,
+        "rain": 0.3,
+        "abundance": "Weeds sprout everywhere (more fibre).",
+        "gather": {
+          "pull_wild_weeds": 1.5
+        }
+      },
+      "summer": {
+        "emoji": "☀️",
+        "grow": 1.2,
+        "weeds": 1,
+        "pests": 1.5,
+        "waterField": 1.3,
+        "rain": 0.1,
+        "abundance": "Bees fly all day: +30% honeycomb.",
+        "out": {
+          "animal_bees": 1.3
+        }
+      },
+      "autumn": {
+        "emoji": "🍂",
+        "grow": 0.85,
+        "weeds": 0.7,
+        "pests": 1,
+        "waterField": 1,
+        "rain": 0.3,
+        "abundance": "Fruit and nuts: orchard +40%; branches fall (sticks ×2).",
+        "yieldOrchard": 1.4,
+        "gather": {
+          "gather_sticks": 2
+        }
+      },
+      "winter": {
+        "emoji": "❄️",
+        "grow": 0.5,
+        "weeds": 0.2,
+        "pests": 0.2,
+        "waterField": 0.8,
+        "rain": 0.2,
+        "abundance": "Frost brings stones up (pick them for walls); indoor work by the fire −10% energy; wool grows thick.",
+        "stoneHeave": true,
+        "homeFuel": true,
+        "indoorEnergy": 0.9,
+        "gather": {
+          "pick_stones": 2
+        },
+        "out": {
+          "animal_sheep": 1.2
+        }
+      }
+    },
+    "note": "Seasons only change speeds and amounts — nothing dies. Crops just grow slower in winter (the greenhouse doesn't care). The season shows how many questions are left until the next one."
+  },
+  "freshness": {
+    "rule": "At each change of season, food that has already lived through shelfLife season changes turns stale: plant food becomes Feed Mash, eggs and dairy go to the Compost pile. A 'stale soon' badge shows on anything that will turn at the next change — sell it, eat it, or cook it into something that keeps.",
+    "shelfLife": {
+      "default": -1,
+      "items": {
+        "carrot": 2,
+        "onion": 2,
+        "potato": 2,
+        "beet": 2,
+        "lettuce": 1,
+        "beans": 2,
+        "tomato": 1,
+        "pumpkin": 3,
+        "berries": 1,
+        "apple": 2,
+        "herbs": 1,
+        "clover": 1,
+        "olive": 1,
+        "rainbow_carrot": 2,
+        "golden_beet": 2,
+        "woad": 1,
+        "egg": 1,
+        "milk": 1,
+        "butter": 1,
+        "fresh_cheese": 1,
+        "yogurt": 1,
+        "beet_juice": 1,
+        "apple_juice": 1,
+        "tomato_sauce": 1,
+        "fresh_pasta": 1,
+        "pizza_dough": 1
+      },
+      "dishes": 1,
+      "dishExceptions": {
+        "pickles": -1
+      }
+    },
+    "spoilsTo": {
+      "plant": "feed_mash",
+      "animal": "compost"
+    },
+    "animalItems": [
+      "egg",
+      "milk",
+      "butter",
+      "fresh_cheese",
+      "yogurt"
+    ],
+    "note": "Cellar Racks add 1 season to everything; the Cool Cellar card adds 1 more. Preserved goods never spoil: flour, honey, jam, pickles, aged cheese, oils, cider, vinegar, grains, seeds, nuts."
+  }
+}

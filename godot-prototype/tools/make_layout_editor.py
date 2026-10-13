@@ -23,25 +23,17 @@ ROOT = os.path.dirname(HERE)
 ASSETS = os.path.join(ROOT, "assets")
 
 layout = json.load(open(os.path.join(ROOT, "data", "map_layout.json"), encoding="utf-8"))
-spots_src = open(os.path.join(ROOT, "game", "farm", "spots.gd"), encoding="utf-8").read()
-
-
-def const_block(name):
-    m = re.search(r"const " + name + r" := \{(.*?)\n\}", spots_src, re.S)
-    return m.group(1) if m else ""
-
-
-titles = {m.group(1): (m.group(2), m.group(3)) for m in re.finditer(r'"(\w+)": \["([^"]+)", "([^"]+)"\]', const_block("SPOTS"))}
-chains = {m.group(1): re.findall(r'"(\w+)"', m.group(2)) for m in re.finditer(r'"(\w+)": \[([^\]]*)\]', const_block("ART_CHAINS"))}
-plot_chains = {m.group(1): re.findall(r'"(\w+)"', m.group(2)) for m in re.finditer(r'"(\w+)": \[([^\]]*)\]', const_block("PLOT_CHAINS"))}
-hotspot_art = {m.group(1): re.findall(r'"(\w+)"', m.group(2)) for m in re.finditer(r'"(\w+)": \[([^\]]*)\]', const_block("HOTSPOT_ART"))}
-interiors = {}
-for m in re.finditer(r'"(\w+)": \{"built": "(\w+)", "art": "(\w+)", "members": \[([^\]]*)\]\}', const_block("INTERIORS")):
-    interiors[m.group(1)] = {"art": m.group(3), "members": re.findall(r'"(\w+)"', m.group(4))}
-pens = {m.group(1): m.group(2) for m in re.finditer(r'"(\w+)": \{"fence": "(\w*)"', const_block("PENS"))}
-always = re.search(r"ALWAYS_OPEN := \[([^\]]*)\]", spots_src)
-always = re.findall(r'"(\w+)"', always.group(1)) if always else []
-data = json.load(open(os.path.join(ROOT, "data", "farm-progression.json"), encoding="utf-8"))
+places = json.load(open(os.path.join(ROOT, "data", "farm", "places.json"), encoding="utf-8"))   # what game/farm/spots.gd reads
+titles = {k: tuple(v) for k, v in places["names"].items()}
+chains = places["artChains"]
+plot_chains = places["plotChains"]
+hotspot_art = places["insideArt"]
+interiors = {k: {"art": v["art"], "members": v["members"]} for k, v in places["interiors"].items()}
+pens = {k: v["fence"] for k, v in places["pens"].items()}
+always = places["alwaysOpen"]
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import farm_data
+data = farm_data.load()
 start = set(data["start"].get("unlocked", []))
 
 pics = {}

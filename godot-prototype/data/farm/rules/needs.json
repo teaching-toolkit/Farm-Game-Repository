@@ -1,0 +1,8 @@
+{
+  "rest": {
+    "name": "Rest",
+    "emoji": "😴",
+    "note": "Sleep, food and a sip of water. Each correct arithmetic answer restores energy per Rest answer (home + bed + pillow + bottle + library chair + gift cards + polish). A wrong answer restores nothing; no timer. In winter with an empty woodpile the house is cold: Rest gives 25% less.",
+    "coldHouseMult": 0.75
+  }
+}

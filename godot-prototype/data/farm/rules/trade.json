@@ -1,0 +1,19 @@
+{
+  "market": {
+    "fullPrice": 8,
+    "dropPerUnit": 0.08,
+    "floor": 0.6,
+    "recoverPerQuestion": 1,
+    "recoverShare": 0.25,
+    "note": "Each thing sells at full price for the first fullPrice units; every further unit of the same thing fetches dropPerUnit less (down to floor). Every Time Quiz question the market forgets recoverShare of what was sold lately (at least recoverPerQuestion units). Selling many different things pays best; a big pile of one thing sold at once pays a little less."
+  },
+  "pricing": {
+    "inputsMult": 1.25,
+    "perDifferentInput": 0.1,
+    "perEnergy": 0.5,
+    "perFuel": 0.5,
+    "perWater": 0.2,
+    "perQuestion": 0.5,
+    "note": "How made things are priced (tools/econ check): worth of the inputs x (inputsMult + perDifferentInput x (different inputs - 1)) + perEnergy x energy + perFuel x fuel + perWater x water + perQuestion x station time. A dish of four different things pays more than its parts; a dish made from dishes pays more again."
+  }
+}

@@ -8,28 +8,28 @@ static func apply(main, G) -> void:
 		if a.begins_with("--shot="): main.shot_path = a.substr(7)
 		elif a.begins_with("--demo="):
 			for _i in range(int(a.substr(7))): G.cheat_max()
-		elif a == "--quiz": main.call_deferred("_show_time_quiz")
-		elif a.begins_with("--qid="): main.call_deferred("_show_quiz_id", a.substr(6))     # screenshots: one Time Quiz question
-		elif a == "--rest": main.call_deferred("_show_rest")
+		elif a == "--quiz": main.ui_quiz.call_deferred("_show_time_quiz")
+		elif a.begins_with("--qid="): main.ui_quiz.call_deferred("_show_quiz_id", a.substr(6))     # screenshots: one Time Quiz question
+		elif a == "--rest": main.ui_rest.call_deferred("_open_rest")
 		elif a.begins_with("--shotframes="): main.shot_at = int(a.substr(13))
-		elif a.begins_with("--act="): main.call_deferred("_test_act", a.substr(6))   # screenshots: --act=weed@patch0, --act=cook@kitchen
-		elif a == "--restgo": main.call_deferred("_rest_go")              # screenshots: past the Rest start page (after --rest)
-		elif a == "--menu": main.call_deferred("_show_menu")            # screenshots: ⚙️ Settings
-		elif a == "--grownup": main._grownup_until = 1e12                # screenshots: grown-up settings open
-		elif a == "--password": main.call_deferred("_ask_password")     # screenshots: the grown-up password box
-		elif a.begins_with("--card="): main.call_deferred("_show_card", a.substr(7))
-		elif a.begins_with("--patch="): main.call_deferred("_on_patch", "field", int(a.substr(8)))
+		elif a.begins_with("--act="): main.ui_acts.call_deferred("_test_act", a.substr(6))   # screenshots: --act=weed@patch0, --act=cook@kitchen
+		elif a == "--restgo": main.ui_rest.call_deferred("_rest_go")              # screenshots: past the Rest start page (after --rest)
+		elif a == "--menu": main.ui_settings.call_deferred("_show_menu")            # screenshots: ⚙️ Settings
+		elif a == "--grownup": main.ui_settings._grownup_until = 1e12                # screenshots: grown-up settings open
+		elif a == "--password": main.ui_settings.call_deferred("_ask_password")     # screenshots: the grown-up password box
+		elif a.begins_with("--card="): main.ui_card.call_deferred("_show_card", a.substr(7))
+		elif a.begins_with("--patch="): main.ui_fields.call_deferred("_on_patch", "field", int(a.substr(8)))
 		elif a.begins_with("--pests="): G.S["pests"] = float(a.substr(8))
 		elif a.begins_with("--water="): G.S["water"] = float(a.substr(8))   # screenshots: carried water
 		elif a.begins_with("--timestep="): G.S["step"] = int(a.substr(11))   # e.g. 95 = winter (screenshots only)
 		elif a.begins_with("--stepat="): main.step_at = int(a.substr(9))
-		elif a.begins_with("--sheet="): main.call_deferred("_open_sheet", a.substr(8))
-		elif a.begins_with("--spot="): main.call_deferred("_open_spot", a.substr(7))
-		elif a.begins_with("--scroll="): main.call_deferred("_scroll_to", float(a.substr(9)), false)
-		elif a == "--goal": main.call_deferred("_goal_pressed")
+		elif a.begins_with("--sheet="): main.ui_sheets.call_deferred("_open_sheet", a.substr(8))
+		elif a.begins_with("--spot="): main.ui_sheets.call_deferred("_open_spot", a.substr(7))
+		elif a.begins_with("--scroll="): main.ui_map.call_deferred("_scroll_to", float(a.substr(9)), false)
+		elif a == "--goal": main.ui_map.call_deferred("_goal_pressed")
 		elif a == "--newgame": G.reset_game()      # screenshots of the very start
 		elif a.begins_with("--player="): G.set_player(a.substr(9))
-		elif a.begins_with("--celebrate="): main.call_deferred("_celebrate", a.substr(12))     # screenshots of the big pop-up
+		elif a.begins_with("--celebrate="): main.ui_celebrate.call_deferred("_celebrate", a.substr(12))     # screenshots of the big pop-up
 		elif a == "--postcard":                    # screenshots: a friend (Granny Maud) and her postcard
 			G.S["unlocked"]["sq_lost_goat"] = true
 			G._dirty()
@@ -39,7 +39,7 @@ static func apply(main, G) -> void:
 		elif a.begins_with("--perks="):            # screenshots: --perks=all or --perks=perk_rainbow,perk_breeze
 			for p in G.meta.get("perks", {}).get("list", []):
 				if a == "--perks=all" or a.substr(8).split(",").has(p["id"]): G.perks()[p["id"]] = true
-		elif a == "--rainbow": main.call_deferred("_rainbow_now")
+		elif a == "--rainbow": main.ui_settings.call_deferred("_rainbow_now")
 		elif a.begins_with("--unlock="):           # screenshots: pretend these are done (--unlock=workbench,stone_axe)
 			for id in a.substr(9).split(","): G.S["unlocked"][id] = true
 			G._dirty()

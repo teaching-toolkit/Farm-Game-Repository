@@ -41,13 +41,19 @@ def ui_texts():
                 code = line.split("# i18n")[0]
                 for m in re.finditer(r'"((?:[^"\\]|\\.)*)"(\s*:)?', code):
                     if not m.group(2) and has_words(m.group(1)): out.setdefault(gd_unescape(m.group(1)), f"{d}/{f}")
+    # the names of the places on the map (shown with tr())
+    places = json.load(open(os.path.join(ROOT, "data", "farm", "places.json"), encoding="utf-8"))
+    for name, _emoji in places.get("names", {}).values():
+        out.setdefault(name, "data/farm/places.json")
     return out
 
 def has_words(s):
     return isinstance(s, str) and re.search(r"[A-Za-z]{2,}", s) is not None
 
 def data_texts():
-    D = json.load(open(os.path.join(ROOT, "data", "farm-progression.json"), encoding="utf-8"))
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import farm_data
+    D = farm_data.load()
     out = {}
     def put(path, v):
         if has_words(v): out[path] = v

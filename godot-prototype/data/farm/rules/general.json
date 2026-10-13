@@ -1,0 +1,125 @@
+{
+  "title": "Farm Quiz Game — Production & Unlock Tree",
+  "version": "0.8",
+  "updated": "2026-10-06",
+  "status": "Draft. Every number is a first-pass guess meant to be tuned with the explorer's pacing check.",
+  "units": {
+    "step": "1 correctly answered Time Quiz question (the game's clock)",
+    "value": "coins when sold",
+    "energy": "⚡ spent by the player (restored by Rest: sleep, food, a sip of water)",
+    "water": "💧 taken from the well pool"
+  },
+  "pacing": {
+    "secondsPerStep": 25,
+    "secondsPerAction": 3,
+    "secondsPerRest": 5,
+    "playerEfficiency": 0.6,
+    "note": "Real time = Time Quiz answers × secondsPerStep + actions × secondsPerAction + Rest answers × secondsPerRest + knowledge questions × secondsPerKnowledgeQuestion. Rest answers = energy spent ÷ energy per answer (home, bed, pillow, bottle…).",
+    "secondsPerKnowledgeQuestion": 12
+  },
+  "targets": {
+    "hours": {
+      "pet_bunny": 1,
+      "pet_tortoise": 4.5,
+      "pet_goat": 10,
+      "pet_pony": 17.5,
+      "pet_alpaca": 25.5
+    },
+    "frontierMin": 2,
+    "frontierMaxEarly": 6,
+    "frontierMax": 12,
+    "quickWinMinutes": [
+      8,
+      15,
+      18,
+      22,
+      22
+    ],
+    "note": "Difficulty should stay steady rather than hit fixed hours: minutes per main goal rise gently (minutesPerGoal), Rest answers per hour stay in a band, and at every moment 2–12 goals are open with a quick win nearby. Pet hours are reported, not forced.",
+    "minutesPerGoal": [
+      2.5,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "rules": [
+    "requires = must already be built/unlocked (shown with a lock icon until then). cost = used up once.",
+    "replaces = upgrade path; the old tier is consumed and anything that required it is still satisfied.",
+    "keeps = needed in the pantry but not used up (tin pot, starter, cultures, the stone in Stone Soup).",
+    "tag:x in inputs = any item with that tag (e.g. any vegetable).",
+    "Stations with time > 0 work over several questions; slots = batches at once.",
+    "Crops: yields per plant. Patch levels (type patch, perPatch) set how many plants of the same crop fit in one patch; plants beyond 2 need fertilizer points every planting (ash 1, compost 2, worm castings 4).",
+    "cost.energy = effort for one build or delivery; perPatch costs are paid once per field patch. cat = energy category (field, weed, gather, wood, build, craft, smith, kiln, cook, prep, mill, process, textile, animal).",
+    "effects.mult: energy:<cat>, water:field|animal, weeds, grow, feed:<animal>, out:<animal|station>, in:<station>:<item>, time:<station>. Multipliers from different things multiply; an upgrade that replaces another drops the old one's effect.",
+    "type helper = optional upgrade that only makes things cheaper. type sidequest = optional favour; the reward is a picture.",
+    "type knowledge = a card: requires its book (+ earlier cards), discover = items the player must have held once, cost.read = Time Quiz questions of reading, then a short quiz. unlocks = what lists it in requires.",
+    "type book = bought once from the Book Cart (coins); the library level limits how many books fit (bookSlots). requiresCards = number of cards learned.",
+    "type gear = clothing & kit worn by the farmer (slots feet, hands, back, bottle, head, apron, pillow, bed); each slot's ladder replaces the previous item.",
+    "type polish = endless optional upgrade with diminishing returns (see meta.polish). attach = choice slot on a station: only one item per station is active, swap freely.",
+    "New effect keys: scare / pestBlock (pests), fuel and fuel:<station>, muck and muck:<animal>, stones, pests, read, yield:orchard, slots:<station> (add), wear, shelfLife, restedSoil, winterGrow, woodpileCap, homeFuel, bookSlots, luck, luckDuration, energyPerRest.",
+    "recipe.fuel = woodpile points per batch. item.buff = eating it makes energy costs ×energy for the next 'questions' Time Quiz questions."
+  ],
+  "numbers": {
+    "rule": "Every amount is kept exactly in the background (decimals allowed). The player only sees whole numbers: stocks are rounded DOWN, costs and requirements rounded UP, so what looks affordable always is. Percentages from upgrades multiply exactly."
+  },
+  "note_on_numbers": "Costs per chapter were scaled by the pacing check so the minutes per main goal rise gently (meta.targets.minutesPerGoal); change any number and re-check it in progression-explorer.html (drop this file onto the page).",
+  "flex": {
+    "types": [
+      "building",
+      "station",
+      "tool",
+      "gear",
+      "helper",
+      "delivery",
+      "sidequest",
+      "land",
+      "patch"
+    ],
+    "basePace": [
+      [
+        0,
+        7
+      ],
+      [
+        45,
+        10
+      ],
+      [
+        60,
+        38
+      ],
+      [
+        100,
+        55
+      ],
+      [
+        140,
+        75
+      ],
+      [
+        180,
+        120
+      ],
+      [
+        220,
+        140
+      ]
+    ],
+    "strength": 0.4,
+    "range": [
+      0.8,
+      1.25
+    ],
+    "rangeSide": [
+      0.75,
+      1.35
+    ],
+    "tipBonus": 0.08,
+    "warmup": 15,
+    "paceQuestions": 20,
+    "minWorth": 0.25,
+    "note": "Dynamic difficulty (settings dynamicDifficulty, or ⚙️ Settings → Prices fit my farm). pace = worth of what the player brings in per Time Quiz question (running average over paceQuestions; things bought don't count; things worth nothing count minWorth). basePace = the pace the test bot has after so many goals ([goals done, pace], a straight line in between; tests/bot.gd prints pace_sample lines). When a goal of these types first shows up while open, factor = (pace / basePace) ^ strength, × (1 + tipBonus) if an improvement not made yet would make it quicker, kept within range (rangeSide for favours); it is then fixed for that goal. Coins and material amounts of 2 or more are multiplied (never beyond what the store holds); energy and the kinds of things never change. No factor before warmup questions. The pace also grows when a player simply works more per question, so only part of it is followed (strength 0.4) and the range is narrow."
+  }
+}

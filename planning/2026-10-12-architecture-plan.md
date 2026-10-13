@@ -261,13 +261,13 @@ rough (S ≈ one session, M ≈ two, L ≈ three or four).
 |---|---|---|---|
 | **R0. Safety net** ✅ 12 Oct 2026 | `--seed=` for all randomness; the golden run (bot fingerprint per question); save fixtures; the interface test driver, with the smoke test moved onto it; the screenshot flags moved out of `main.gd` | P8, P10 | M |
 | **R1. Folders** ✅ 12 Oct 2026 | `kits/` and `game/farm/`; move the files that are already separate (learnkit → `kits/learn`, ui, avatar and actor, sound, i18n, art); fix the `preload` paths | – | S |
-| **R2. Content out of code** | places, insides, picture chains, ruins, pens, bench, pets and animals, the chapter rule → data files | P3 | S |
-| **R3. Core** | modifiers, conditions, rng, events, the clock (with the systems registered in today's exact order) | P4 | M |
-| **R4. Rules split** | `game.gd` → systems (progression, knowledge, items & trade, crafting, needs, resources, seasons, rewards, farm: fields, animals …) behind the same `Game` front door; today's function names keep working | P1 | L |
-| **R5. Interface split** | `main.gd` → composition root, sheet and modal hosts, notifications, place scripts, learning screens, menus; reads through the systems only | P1, P2 | L |
-| **R6. Map** | generic map (`kits/world`) vs the farm's drawing (road, forest, fields); pests and the scarecrow drawn once | P9 | M |
-| **R7. Saves** | version number, slices per system, upgrade steps; all fixtures load | P5 | M |
-| **R8. Data and pacing** | data files split (§5), the data checker, pacing from the bot (if §11 a is yes) | P6, P7 | M |
+| **R2. Content out of code** ✅ 12 Oct 2026 | places, insides, picture chains, ruins, pens, bench, pets and animals, the chapter rule → data files | P3 | S |
+| **R3. Core** ✅ 12 Oct 2026 | modifiers, conditions, rng, events, the clock (with the systems registered in today's exact order) | P4 | M |
+| **R4. Rules split** ✅ 12 Oct 2026 | `game.gd` → systems (progression, knowledge, items & trade, crafting, needs, resources, seasons, rewards, farm: fields, animals …) behind the same `Game` front door; today's function names keep working | P1 | L |
+| **R5. Interface split** ✅ 12 Oct 2026 | `main.gd` → composition root, sheet and modal hosts, notifications, place scripts, learning screens, menus; reads through the systems only | P1, P2 | L |
+| **R6. Map** ✅ 12 Oct 2026 | generic map (`kits/world`) vs the farm's drawing (road, forest, fields); pests and the scarecrow drawn once | P9 | M |
+| **R7. Saves** ✅ 12 Oct 2026 | version number, slices per system, upgrade steps; all fixtures load | P5 | M |
+| **R8. Data and pacing** ✅ 12 Oct 2026 | data files split (§5), the data checker, pacing from the bot (if §11 a is yes) | P6, P7 | M |
 
 Then `ARCHITECTURE.md` is written from this plan, the session skill gets a short "where new code goes" section, and every new system of
 the TODO's steps 5–13 is built directly as a kit or a farm system.

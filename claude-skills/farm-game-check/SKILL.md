@@ -56,6 +56,7 @@ What a pass looks like:
   anything. If the change is meant to alter the pace, say by how much and update the numbers here and in the prototype README.
   A new mechanic needs the bot to learn it, or the bot no longer tests the game. `--trace=N` prints the first N questions;
   `--flex` plays with dynamic difficulty; `--accuracy=0.8` misses a share of first tries in the Time Quiz.
+- **Data check** (`python3 tools/check_data.py`, part of `check_all.sh`): exit code 0; read its warnings.
 - **Golden run** (`tests/golden.sh`, part of `check_all.sh`): the bot plays seeds 1 and 2 to chapter 5 (741 and 639 steps,
   12 Oct 2026) and must match `tests/golden/` step by step. A restructuring that changes it changed the rules: find out why
   before going on. Only a change to rules or numbers made on purpose is recorded anew (`bash tests/golden.sh --record`), and
@@ -114,7 +115,7 @@ Adapted from *systematic-debugging* in obra/superpowers (MIT).
 
 ## 6. Independent review of bigger changes
 
-For a new mechanic, a change to the save data, a change to the game rules in `game/farm/game.gd`, or more than about 150 changed
+For a new mechanic, a change to the save data, a change to the game rules in `game/farm/systems/` or `game/farm/game.gd`, or more than about 150 changed
 lines: start a fresh subagent that did not write the code and give it
 
 - the changed files or the diff, the task text and its plan from `TODO.md`, and the design document's section;

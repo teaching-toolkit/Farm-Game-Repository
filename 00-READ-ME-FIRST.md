@@ -48,7 +48,8 @@ Background, read only the parts a task needs: `farm-quiz-game-master-design-docu
 marks *(planned)* and *(idea)*; no history or to-dos), `PROJECT-LOG.md` (history, decisions, assumptions still to confirm),
 `godot-prototype/README.md` (how to run, test and change the prototype; every setting and test flag),
 `godot-prototype/kits/learn/README.md` (Rest sums, quiz engine, learning record, question ids) and `story/README.md` (the story).
-The numbers are in `godot-prototype/data/farm-progression.json` (browse them in `progression/progression-explorer.html`).
+The numbers are in `godot-prototype/data/farm/` (split into files; browse them all in `progression/progression-explorer.html`,
+which `Update explorer.command` refreshes with the real game's pacing).
 **The data wins** if it and a document disagree.
 
 ---
@@ -62,7 +63,7 @@ The numbers are in `godot-prototype/data/farm-progression.json` (browse them in 
 | `PROJECT-LOG.md` | history and decisions |
 | `planning/` | the parent's raw notes and the decision rounds, kept word for word; **the architecture plan** (`2026-10-12-architecture-plan.md`); `TODO.md` points into them |
 | `farm-quiz-game-master-design-document.md` | the design (v2.0) |
-| `godot-prototype/` | **the game** — Godot project (`project.godot`), `kits/` (reusable parts: learn, ui, avatar, audio, i18n), `game/farm/` (this game's rules and screens), `data/`, `assets/`, `tests/`, `tools/`, `fonts/` |
+| `godot-prototype/` | **the game** — Godot project (`project.godot`; how the code is built: `ARCHITECTURE.md`), `kits/` (reusable parts: learn, ui, avatar, audio, i18n), `game/farm/` (this game's rules and screens), `data/`, `assets/`, `tests/`, `tools/`, `fonts/` |
 | `Build web version.command` | **double-click on the Mac** to re-export the game into `web-build/` (needs Godot.app and its export templates installed once) |
 | `Publish web version.command` | **double-click on the Mac** to push `web-build/` to the public GitHub repo as one fresh commit (see §4.7) |
 | `CLAUDE.md` | short pointer that Claude Code loads by itself: start with the session skill |
@@ -177,9 +178,17 @@ rename to *Hazelwood Harvest*. No game, data or code changes yet; `web-build/` i
 "ss"; only a right first try moves time; design document 2.1. Smoke test and bot pass. **`web-build/` matches the code** (exported
 12 Oct 2026, 89 MB `index.pck`). Next: the parent tests 0.9.0 on the iPad (publish with `Publish web version.command`), then phase 2.
 
-12 Oct 2026 (phase 2, R0): the safety net for the restructuring: `--seed`, the golden run, save fixtures, the UI test driver,
-screenshot flags in `game/farm/dev/dev_flags.gd`, `tests/check_all.sh`. No change to the game; `web-build/` still matches it.
-R1 done too: the code now lives in `kits/` (reusable parts) and `game/farm/` (this game). Next: R2 (farm content out of code).
+12 Oct 2026 (phase 2 built, version 0.9.1): the restructuring is done and changes nothing in the game (checked step by step
+by the golden run). The code now lives in `godot-prototype/kits/` (reusable parts, with `kits/core/`) and `godot-prototype/game/farm/`
+(the rules in twelve systems behind `game.gd`, the screen in parts behind `main.gd`); the data in `data/farm/` is split into files;
+saves carry a version; `bash tests/check_all.sh` runs every check; **read `godot-prototype/ARCHITECTURE.md` before any code
+change**. The explorer shows the real game's pacing (double-click `Update explorer.command`). `web-build/` matches the code
+(exported 12 Oct 2026, 0.9.1, tried in a browser). Next: the parent tests 0.9.1 on the iPad and publishes it; phase 3 (interface).
+
+12 Oct 2026 (phase 3 built, version 0.10.0): the new top bar with the hanging clock (no bottom bar), notifications at the top,
+cheat buttons and read aloud as grown-up settings, "The whole field" in every patch sheet, Rest after the walk home, the playback
+after the Time Quiz, the seasons on every map picture. Checks pass; `web-build/` matches the code (0.10.0, started in a browser).
+Next: the parent tests 0.10.0 on the iPad and publishes it; phase 4 (foundations: D4 and D3 on paper first).
 
 ---
 

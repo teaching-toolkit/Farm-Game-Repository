@@ -3,7 +3,7 @@
 Run from the game folder after adding or changing questions:   python3 tools/quiz_ids.py
 
 - Every question gets a unique id that never changes: <pack code>-<number>, e.g. CON-003. Packs in data/quiz_packs/ have
-  their own "code" (3 capital letters); the knowledge cards' questions in data/farm-progression.json use KNW.
+  their own "code" (3 capital letters); the knowledge cards' questions in data/farm/nodes/ use KNW.
   A new question gets the next free number. Never reuse or renumber an id: the learning record (how well the child
   knows each question) and the translations are stored under it.
 - data/i18n/quiz-en.json is written fresh: all English texts by id (for translators to read). A pack's pool of extra
@@ -16,24 +16,10 @@ import json, os, re, sys, glob
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PACKS = os.path.join(ROOT, "data", "quiz_packs")
-DATA = os.path.join(ROOT, "data", "farm-progression.json")
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import farm_data
 I18N = os.path.join(ROOT, "data", "i18n")
 FIELDS = ("q", "right", "wrong", "why")
-
-def dumps_progression(d):
-    """farm-progression.json keeps its own layout: one item / node / recipe per line."""
-    parts = []
-    for k, v in d.items():
-        if k == "chapters":
-            rows = ["    " + json.dumps(c, ensure_ascii=False) for c in v]
-            parts.append(f'  {json.dumps(k)}: [\n' + ",\n".join(rows) + "\n  ]")
-        elif k in ("items", "nodes", "recipes"):
-            rows = [f'    {json.dumps(ik, ensure_ascii=False)}: {json.dumps(iv, ensure_ascii=False)}' for ik, iv in v.items()]
-            parts.append(f'  {json.dumps(k)}: {{\n' + ",\n".join(rows) + "\n  }")
-        else:
-            body = json.dumps(v, ensure_ascii=False, indent=2).replace("\n", "\n  ")
-            parts.append(f'  {json.dumps(k)}: {body}')
-    return "{\n" + ",\n".join(parts) + "\n}\n"
 
 def text(a):
     return a.get("text", "") if isinstance(a, dict) else str(a)
@@ -47,9 +33,9 @@ def main():
         pack["code"] = code
         if pack.get("pool"): pools[code] = pack["pool"]
         groups.append((code, pack["questions"], lambda p=p, pack=pack: open(p, "w", encoding="utf-8").write(json.dumps(pack, ensure_ascii=False, indent=1) + "\n")))
-    D = json.load(open(DATA, encoding="utf-8"))
+    D = farm_data.load()
     cardq = [q for n in D["nodes"].values() if n.get("type") == "knowledge" for q in n.get("questions", [])]
-    groups.append(("KNW", cardq, lambda: open(DATA, "w", encoding="utf-8").write(dumps_progression(D))))
+    groups.append(("KNW", cardq, lambda: farm_data.save(D)))
 
     seen, new = {}, 0
     for code, qs, _ in groups:

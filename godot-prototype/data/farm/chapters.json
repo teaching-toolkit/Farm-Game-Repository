@@ -1,0 +1,48 @@
+{
+ "note": "How the chapter number is worked out (moved out of the code 12 Oct 2026): it starts at 'first' and goes up by one for each node in advanceWhenDone that is done, up to 'last'. Today the first four pets end chapters 1-4; the new story (TODO phase 7-8) will replace this with chapter goals.",
+ "first": 1,
+ "advanceWhenDone": [
+  "pet_bunny",
+  "pet_tortoise",
+  "pet_goat",
+  "pet_pony"
+ ],
+ "last": 5,
+ "list": [
+  {
+   "id": 1,
+   "name": "Ashes",
+   "home": "Tent",
+   "theme": "Sticks & stones. Fire, porridge, first tools, first coins.",
+   "pet": "pet_bunny"
+  },
+  {
+   "id": 2,
+   "name": "Homestead",
+   "home": "Cottage",
+   "theme": "Timber & clay. Kitchen, cows, bees, bread — and iron ore at the end.",
+   "pet": "pet_tortoise"
+  },
+  {
+   "id": 3,
+   "name": "Smallholding",
+   "home": "Cottage",
+   "theme": "Iron. Double harvests, sheep & cloth, windmill, press, cellar.",
+   "pet": "pet_goat"
+  },
+  {
+   "id": 4,
+   "name": "Village Trade",
+   "home": "Farmhouse",
+   "theme": "Steel & glass. Farmhouse, greenhouse, orchard oils, pizza.",
+   "pet": "pet_pony"
+  },
+  {
+   "id": 5,
+   "name": "Master Farm",
+   "home": "Farmhouse",
+   "theme": "Heirlooms, saffron, plant dyes and colour mixing, master baking.",
+   "pet": "pet_alpaca"
+  }
+ ]
+}

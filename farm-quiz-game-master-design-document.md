@@ -1,6 +1,6 @@
 # Hazelwood Harvest — Master Design Document
 
-**Version 2.1 · 12 October 2026 · describes game version 0.9.0 (data v0.8) as built** (the game was called *Farm Quiz Game* until
+**Version 2.2 · 12 October 2026 · describes game version 0.10.0 (data v0.8) as built** (the game was called *Farm Quiz Game* until
 0.9.0)
 
 This document describes the game: what it is, how it plays, and why it is made this way. It describes the current design,
@@ -13,7 +13,7 @@ not its history and not the work still to do:
 | What was done when, and the decisions taken along the way | `PROJECT-LOG.md` (same folder) |
 | How to run, test and change the Godot prototype | `godot-prototype/README.md` |
 | The learning kit (Rest sums, quiz engine, learning record) | `godot-prototype/kits/learn/README.md` |
-| Every number (items, buildings, recipes, costs, rules) | `godot-prototype/data/farm-progression.json` (the explorer in `progression/` shows it) |
+| Every number (items, buildings, recipes, costs, rules) | `godot-prototype/data/farm/` (split into files; the explorer in `progression/` shows it all) |
 
 **The data is the source of truth for numbers.** The numbers quoted here are the current ones; if the data and this
 document ever disagree, the data wins and this document should be corrected.
@@ -865,8 +865,10 @@ harvest; a double-yolk egg, a honey flow, a thick fleece; a neighbour's gift bas
 
 ## 12. Seasons
 
-A year is four seasons of 30 Time Quiz questions; the season bar in the top bar shows how many are left. Nothing dies;
-seasons change speeds and amounts:
+A year is four seasons of 30 Time Quiz questions; the season bar in the top bar shows how many are left. Every picture on the
+map shows the season (one shader, no extra pictures): in **winter** snow lies on every top edge (roofs, trees, fences, stones)
+and on the ground, and the colours are muted and cooler; in **autumn** the greens turn golden. Nothing dies; seasons change
+speeds and amounts:
 
 | Season | Slower | Plenty |
 |---|---|---|
@@ -911,20 +913,30 @@ front. Only a picture's visible pixels react to taps, so a tall roof never steal
 
 ### 13.3 Screens
 
-- **Top bar:** 🪙 coins; 💧 water and ⚡ energy as rows of cubes (tap water to fetch, energy to Rest); the season bar (one thin
-  stripe per question, in the season's colour); 🎒 pantry, 📖 quest book, 🖼️ album, ⚙️ settings.
+- **Top bar** (the only bar; the map fills the rest of the screen): on the left 🪙 coins, 💧 water and ⚡ energy as rows of cubes
+  (tap water to fetch, energy to Rest) with the season bar under them (one thin stripe per question, in the season's colour);
+  in the middle **the next goal** in words (tap: its sheet opens and its place glows); on the right 🎒 pantry, 📖 quest book,
+  🖼️ album, ⚙️ settings, two by two. The **Time Quiz clock** hangs from the bar's bottom edge in the right corner (its hour hand
+  goes once round per season; tapped, it spins and the quiz opens). The cheat buttons float below the bar on the left when a
+  grown-up has switched them on.
+- **Notifications** appear like a phone's: at the top, just below the bar, the newest on top, three at most; each goes by itself
+  after a few seconds (longer texts stay longer), and a swipe sends it away sooner.
+- **Back on the farm after the Time Quiz:** while the quiz is open the fields stay as they were. When it closes, a short pause,
+  then the rain if it rained, then the plants flick through every stage they grew (with weeds, stones and the pests), and last
+  the energy bar pulses and the change floats up from it. Any tap jumps to the end.
+- **Rest:** the farmer first walks home (tent or house) and lies down; the Rest window opens when the farmer is there.
 - **Tap a place → a sheet slides up** with a picture on top and everything to do there: build, stations and recipes, animals,
   polish. Everything with a button is a **tile in a grid** (like the store and the market): a picture or emoji, the name,
   what it gives and costs, and its button at the bottom, as wide as the tile — recipes, crops to plant, weeds and stones on
   a patch, goals and upgrades (two per row), polish, collecting from animals and mucking out, and the knowledge cards.
+- **A patch's sheet ends with "The whole field":** *Harvest all*, *Pick all weeds*, *Pick all stones* for the whole field at
+  once, then what can be built or improved for the field, then the pests. (There is no field sign on the map.)
 - **Tap a patch that is still overgrown** and the field's sheet opens with a note on top: which patch it is, what is in the way
   (weeds, rocks, stumps, scrub, marsh) and what clears it, or what is needed first. When planting, a cost the player can't
   pay shows its missing cubes hollow (e.g. the water a full patch needs).
 - **Buildings with an inside** (house, barn, workshop) open a window over the dimmed farm showing the room as a cutaway; its
   corners (bed · books · kitchen; cellar · crocks · hay · seed library; benches · kiln & forge · spinning · tools) open their own
   sheets.
-- **Bottom bar:** the next story goal (tap: its place glows) and the **Time Quiz clock** (its hour hand goes once round per
-  season; tapped, it spins and the quiz opens).
 - **Signs on places:** 🔨 something to build, 🧺 animals ready, ❓ a card quiz, 📖 a card to read, 🍂 stale soon, ⏳ busy, 😴 tired.
 - **⬅️ Back to the farm** closes any window.
 
@@ -957,7 +969,8 @@ farmer, merchants walking about.
 
 - **Font:** Andika (SIL), designed for children learning to read; emojis from Noto Color Emoji, the same on every device.
 - **Short sentences**, everyday words, one idea per line; numbers whole (§5.8).
-- **🔊 Read aloud** for quiz questions and card pages, where the device has a voice.
+- **🔊 Read aloud** for quiz questions and card pages, where the device has a voice. A grown-up setting chooses *off* (no 🔊
+  buttons), *with a button* (🔊 to tap) or *by itself* (each question and page is read as it opens; 🔊 repeats it).
 - **Big touch targets**, nothing that punishes slowness (§4.3), nothing that dies or is lost for good.
 - The whole game in **English and German** (§4.5).
 
@@ -999,7 +1012,7 @@ Everything about the content is data, so the game can be rebalanced without code
 
 | File | Holds |
 |---|---|
-| `data/farm-progression.json` | the whole tree (v0.8): 141 items, 424 nodes (buildings, upgrades, tools, gear, helpers, polish, cards, books, goals, side quests, pets, merchants …), 106 recipes, and the rules in `meta` (energy, water, yields, pricing, market, seasons, pests, freshness, carry, flex …) |
+| `data/farm/` (items, recipes, nodes by chapter, rules, start, chapters, places, animals) | the whole tree (v0.8): 141 items, 424 nodes (buildings, upgrades, tools, gear, helpers, polish, cards, books, goals, side quests, pets, merchants …), 106 recipes, and the rules in `meta` (energy, water, yields, pricing, market, seasons, pests, freshness, carry, flex …) |
 | `data/map_layout.json` | where every place, add-on, corner and decoration stands |
 | `data/quiz_packs/*.json` | Time Quiz packs |
 | `data/i18n/quiz-<lang>.json` | quiz texts by question id |
@@ -1015,9 +1028,9 @@ value checks) and keeps a copy of the current data.
 
 | Part | Does |
 |---|---|
-| `game/farm/game.gd` (autoload `Game`) | the rules engine: time, energy, water, fields, weeds, pests, animals, stations, fuel, knowledge, polish, gear, seasons, freshness, luck, gifts, jobs, dynamic difficulty, saves |
-| `game/farm/main.gd` | the interface: bars, sheets, inside windows, quizzes, album, settings |
-| `game/farm/map/` (`farm_map.gd`, `slot.gd`, `iso_field.gd`), `game/farm/spots.gd`, `game/farm/ui/field_view.gd` | the one-screen map, a place, a field, which data node belongs where, the patch grid |
+| `game/farm/game.gd` (autoload `Game`) + `game/farm/systems/*.gd` | the rules engine (front door + one system per area): time, energy, water, fields, weeds, pests, animals, stations, fuel, knowledge, polish, gear, seasons, freshness, luck, gifts, jobs, dynamic difficulty, saves |
+| `game/farm/main.gd` + `game/farm/ui/*.gd`, `ui/places/*.gd` | the interface: the root builds the screen; one part each for the map, sheets, pop-ups, quizzes, Rest, cards, settings, menus, and each kind of place |
+| `game/farm/map/` (`farm_map.gd`, `slot.gd`, `iso_field.gd`), `game/farm/spots.gd`, `game/farm/ui/patch_grid.gd` | the one-screen map, a place, a field, which data node belongs where, the patch grid |
 | `game/farm/fx.gd`, `game/farm/dev/dev_flags.gd` | perk effects drawn over the farm; the test and screenshot flags |
 | `kits/ui/` (`art.gd`, `ui.gd`), `kits/avatar/` (`avatar.gd`, `actor.gd`), `kits/audio/` (`sound.gd`, `synth.gd`), `kits/i18n/i18n.gd` | pictures with emoji fallback, styles and explanations, the farmer, sound and music, languages (reusable parts, 12 Oct 2026) |
 | `kits/learn/` | the learning kit — learner record, spaced repetition, maths engine, quiz engine, timer, number pad; reusable in any Godot game |

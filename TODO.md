@@ -25,8 +25,8 @@ play-test on the iPad. Sizes are rough: one session ≈ one longer chat. Two tra
 | Phase | What | Tasks | Version · test | Size |
 |---|---|---|---|---|
 | **1. Ready to build** | Godot set up in the Mac's Linux shell; **the round 8 pictures** sorted, imported and checked on the map; version numbers; "ss"; the first-try rule; the game renamed **Hazelwood Harvest**; stale facts in the design document | ✅ done 12 Oct 2026, except the iPad test (W3) | **0.9.0** · iPad | 2–3 |
-| **2. Restructuring** | Slices R0–R8 of the architecture plan, none of which changes the game: safety net and golden run, folders, content out of code, core, rules split, interface split, map, versioned saves, data split, pacing from the real engine, the explorer updated by a script | T2 | 0.9.x · golden run, no iPad test needed | 10–14 |
-| **3. Interface in the new structure** | Whole-field section (no field sign), Rest walk, the playback after the quiz, phone-like notifications, read-aloud setting, the new top bar (no bottom bar), cheat buttons, **the season shader** (snow caps, muted winter, golden autumn: looks only) | J2–J6, J8, J9, N7 | **0.10** · iPad | 3–4 |
+| **2. Restructuring** | Slices R0–R8 of the architecture plan, none of which changes the game: safety net and golden run, folders, content out of code, core, rules split, interface split, map, versioned saves, data split, pacing from the real engine, the explorer updated by a script | ✅ done 12 Oct 2026 (`godot-prototype/ARCHITECTURE.md`) | **0.9.1** · golden run, web build tried | 10–14 |
+| **3. Interface in the new structure** | Whole-field section (no field sign), Rest walk, the playback after the quiz, phone-like notifications, read-aloud setting, the new top bar (no bottom bar), cheat buttons, **the season shader** (snow caps, muted winter, golden autumn: looks only) | ✅ done 12 Oct 2026 (J2–J6, J8, J9, J12, N7; log) | **0.10.0** · iPad | 3–4 |
 | **4. Foundations** | What is shown when (frozen/hidden per system); item weights; **quality**; **skills and ranks**; **bronze and gold** and the realistic prices (after D3) | O1–O3, M4, Y1, Y2, M1, M2 | 0.11 · bot and explorer | 4–6 |
 | **5. Story engine** | Opening panels and frame, the 📜 scroll, bubbles, first-tap stories, chapter 1 texts (needs Rounds 6–7) | I8a, I9, I7 (ch 1) | 0.12 · iPad | 3–4 |
 | **6. Store and market** | The store as a grid with filters and packing; the bag; the signpost, trips and the market square; the travelling merchant as a figure; trust; coin animations; season prices | M11, M5–M9, M3, M8, M12, P1 | **0.13** · iPad | 5–7 |
@@ -55,7 +55,7 @@ a log row per change; `web-build/` exported at the end of the phase.
 German through `tools/i18n.py`; the smoke test; the bot (it must learn any new mechanic, e.g. market trips, packing, the Lord's share);
 the explorer (pace in hours, Time Quiz and Rest answers per hour); the design document; a log row. **Old saves must keep loading.**
 
-**T2. Architecture and restructuring** ✅ (R5, R6). **Plan written: `planning/2026-10-12-architecture-plan.md`** (read it before any
+**T2. Architecture and restructuring** ✅ (R5, R6) — ✅ **built 12 Oct 2026** (phase 2, version 0.9.1). **Plan written: `planning/2026-10-12-architecture-plan.md`** (read it before any
 code work). In short: a small **core** (data loading, modifiers, conditions, the clock, versioned saves, events, a seedable random
 source), **kits** that each do one job and know nothing about farming (learn, progression, knowledge, items & trade, crafting & skills,
 needs & energy, resources, seasons & weather, story, rewards, world, avatar, ui, audio, i18n), and **the farm** on top. Reuse target ✅
@@ -65,17 +65,17 @@ slices that don't change the game, each checked by a **golden run** (the bot pla
 question must match):
 - ✅ **R0** safety net (`--seed`, golden run, save fixtures, an interface test driver, screenshot flags out of `main.gd`; done 12 Oct 2026,
   `bash tests/check_all.sh`) · ✅ **R1** folders
-  (`kits/`, `game/farm/`; done 12 Oct 2026) · **R2** farm content out of code (places, pets, chapters → data) · **R3** core (modifiers, conditions, clock)
-  · **R4** `game.gd` split into systems behind the same `Game` front door (was T1) · **R5** `main.gd` split into a composition root,
-  hosts and one script per place (was T1) · **R6** map: generic vs farm, pests drawn once · **R7** saves with versions and upgrade steps ·
-  **R8** data files split, a data checker, pacing from the real engine.
+  (`kits/`, `game/farm/`; done 12 Oct 2026) · ✅ **R2** farm content out of code (places, pets, chapters → data) · ✅ **R3** core (modifiers, conditions, clock)
+  · ✅ **R4** `game.gd` split into systems behind the same `Game` front door (was T1) · ✅ **R5** `main.gd` split into a composition root,
+  hosts and one script per place (was T1) · ✅ **R6** map: generic vs farm, pests drawn once · ✅ **R7** saves with versions and upgrade steps ·
+  ✅ **R8** data files split, a data checker, pacing from the real engine (all done 12 Oct 2026).
 - ✅ Decided (R7): **pacing from the real engine**: the bot reports hours, questions and Rest answers per chapter; the explorer no longer
   simulates its own copy of the rules but shows the data and that report, refreshed by **a script the parent can run** (a double-click
   `Update explorer.command`, like the web build's) whenever the game has changed; the explorer is a nice-to-have, not a priority.
   **The interface fixes come after the split**, except J1, J10, J11. **The Godot project is renamed *Hazelwood Harvest*** in phase 1; the
   folder stays `godot-prototype/`. The spin-off games are **very hypothetical**: kits are only as general as the farm needs, cleanly
   separated so that reuse stays possible.
-- Afterwards: `godot-prototype/ARCHITECTURE.md` from the plan; a "where new code goes" section in `claude-skills/farm-game-session`.
+- ✅ Afterwards: `godot-prototype/ARCHITECTURE.md` (with "where new code goes"); the session skill points to it.
 
 ---
 
@@ -88,7 +88,8 @@ question must match):
   (`00-READ-ME-FIRST.md` §4.7), GitHub Pages, the first run of `Build web version.command` and `Publish web version.command` on the
   Mac, the iPad Home Screen link. Cloud sessions can push to the private repo (a 403 on 7 Oct 2026 went away once the Claude GitHub
   App had write access).
-- **W3. Play-test round 8 on the iPad** and collect the findings (pace, picture questions, stoking, loads, the bar explanations).
+- **W3. Play-test round 8 on the iPad** (now version **0.10.0** in `web-build/`: phase 3, the new top bar, playback, seasons …; publish with
+  `Publish web version.command`; the cheat buttons are on until switched off in ⚙️ → grown-up settings) and collect the findings (pace, picture questions, stoking, loads, the bar explanations).
   Several notes of 9–12 Oct came from this (J2–J5, J8–J10); keep adding.
 - **W4. Check what was built on 7 Oct 2026** (details in `PROJECT-LOG.md`):
   - A1–A5 small fixes (planting water bar, overgrown patch note, why a perk came, no dark forest floor, the question share) and the
@@ -156,15 +157,15 @@ them up, each with a 💡 recommendation.
 
 ## 4. Interface and feel (J) — small, can be done one by one
 
-- **J2. Whole-field actions without the field sign** [#8] ✅ (R1). Today the farmer walks to the **sign** for a whole-field job and acts
+- ✅ **built 12 Oct 2026 (0.10.0)** · **J2. Whole-field actions without the field sign** [#8] ✅ (R1). Today the farmer walks to the **sign** for a whole-field job and acts
   there. Remove the field sign; at the bottom of a patch's window a titled section **"The whole field"** with *Harvest all*, *Pick all
   weeds*, *Pick all stones* (and *Clear the snow*, N6), then the field's upgrades, then the pests line. The farmer walks to the field
   (patch to patch while acting). Notes: today *Weed all* / *Pick stones* are in `_part_field`, *Harvest all* in `_part_area` and at the
   storage basket (`_harvest_everything`) in `main.gd`; `deco/signpost.png` goes unused; all three fields.
-- **J3. Rest: the farmer goes home** [#9]. When Rest starts, the farmer walks to the tent or house. The code already starts a "rest" act
+- ✅ **built 12 Oct 2026 (0.10.0)** · **J3. Rest: the farmer goes home** [#9]. When Rest starts, the farmer walks to the tent or house. The code already starts a "rest" act
   at the house (`main.gd` ~line 1251), but the Rest window covers the farm. Check on the iPad; 💡 open the window when the farmer
   arrives (or after about half a second).
-- **J4. Back on the farm after the Time Quiz** [#10] ✅ (R2, R3). While the quiz is open, nothing on the farm changes. After "Back to
+- ✅ **built 12 Oct 2026 (0.10.0)** · **J4. Back on the farm after the Time Quiz** [#10] ✅ (R2, R3). While the quiz is open, nothing on the farm changes. After "Back to
   the farm": a fixed short pause (0.7–1 s, the same after one question or eight), then the changes play, mostly together, some
   staggered: **rain first** (if it rained; a big global event that draws attention), then the **plants flick quickly through every
   in-between stage** (sped-up time, not a jump), together with weeds, pests and a travelling merchant coming down the road; the **energy
@@ -173,22 +174,26 @@ them up, each with a 💡 recommendation.
   0.3 s each) together with weeds, pests and an arriving merchant → last the energy bar's pulse and floating number, short notes. **Any tap
   jumps to the end.** Notes: the pests are already played after the quiz (`_play_fx` →
   `map.play_pending()`); the rules engine must record a small snapshot per question. Later the same playback shows the pets' work (S2).
-- **J5. Notifications like a phone's** [#12] ✅ (R4): they stack from the top, just below the top bar; a swipe sends one away if it
+- ✅ **built 12 Oct 2026 (0.10.0)** · **J5. Notifications like a phone's** [#12] ✅ (R4): they stack from the top, just below the top bar; a swipe sends one away if it
   doesn't leave fast enough; smaller; a duration per kind. Today (`_toast` in `main.gd`): 6.5 s each (bar hints 3 s), max 3, centred above
   the bottom bar, taps go through them (`MOUSE_FILTER_IGNORE`). Same look family as the barks' speech bubbles (`story/story-delivery.md`).
-- **J6. Read aloud in the grown-up settings** [#13] ✅ (R1): one setting with three choices: *off* (no 🔊 buttons) · *button* (as now)
+- ✅ **built 12 Oct 2026 (0.10.0)** · **J6. Read aloud in the grown-up settings** [#13] ✅ (R1): one setting with three choices: *off* (no 🔊 buttons) · *button* (as now)
   · *automatic* (reads each question and card page as it opens; the 🔊 button stays to repeat). Today: 🔊 in the Time Quiz and on card
   pages (`_speak` in `main.gd`). Later the story boxes too (I8).
 - **J7. Stale facts left** (the rest fixed 12 Oct 2026): the design document's §1.1 premise (tent, bucket, pot, one seed, a box with a
   book) vs the story (bucket, pot and book come in Berit's box; the seed is found on the one live patch; the tent is borrowed): fix
   together with I9. `story/characters/lark.md` has Lark turn up "the day the market stall opens" (chapter 2); the ladder has him walk up
   the new gravel road (`road_3`, 2.5): pick one in I6.
-- **J8. A new top bar** ✅ (R4; the parent checked: there is plenty of space). The **Time Quiz button moves up**: the green circle with
+- ✅ **built 12 Oct 2026 (0.10.0)** · **J8. A new top bar** ✅ (R4; the parent checked: there is plenty of space). The **Time Quiz button moves up**: the green circle with
   the watch face hangs from the bottom edge of the bar in the right corner. The **next goal's text** fills the whole width and height
   between the energy bar and the 🎒 bag icon. The 🎒 bag with its fill bar (M11), 📜 scroll, 📖, 🖼️, ⚙️; the wellbeing face or icon is
   fitted in when it appears (L4). ✅ (R5) **The bottom bar goes**, and the map grows by its height (the layout editor's frame changes
   with it).
-- **J9. Cheat buttons** ✅ (R4): the cheat button and the +100 button leave the bar for good. A grown-up setting switches them on or off;
+- ✅ **built 12 Oct 2026 (0.10.0)** · **J12. Favour helpers listed at the field** (found by the data checker, 12 Oct 2026): the helpers from favours (Tom's
+  horseshoe, Ella's bell, Hilde's wind chime, Otto's bird feeder, Wren's lavender, the stray kitten, Ginger the cat) have slot
+  "board", which has no rule in `data/farm/places.json`, so they show up in the field's sheet. 💡 A rule `"board": "board"` (the
+  notice board, where the favours come from), or each helper at the place it helps (the cat at the barn …). Small; phase 3.
+- ✅ **built 12 Oct 2026 (0.10.0)** · **J9. Cheat buttons** ✅ (R4): the cheat button and the +100 button leave the bar for good. A grown-up setting switches them on or off;
   when on, they float below the bar in the top-left corner. The coin button gives **+50 bronze**. New: a cheat to **skip the quiz of
   any knowledge card waiting for its quiz**.
 
@@ -427,7 +432,7 @@ with the farm). ✅ Natural consequences instead of "nothing punishes" (R1; L7).
   action, J2); fewer crops in winter ✅ (R5): outdoors only a few hardy crops can be sown (✅ winter wheat, onions, beans as broad beans,
   winter kale; U5); every other crop's tile shows ❄️ "too cold to sow", with "try the greenhouse" only once a greenhouse exists; crops already in the ground grow at **a
   quarter** of their speed. The greenhouse and the cloches get a real job. **Winter wheat** becomes a new crop (U5).
-- **N7. Seasons you can see** ✅ (R4): trees and grass look visibly different each season; winter is not just snow but **muted colours**;
+- ✅ **built 12 Oct 2026 (0.10.0)** · **N7. Seasons you can see** ✅ (R4): trees and grass look visibly different each season; winter is not just snow but **muted colours**;
   a cheap way to put **snow on every roof** without a new picture for each building. ✅ (R5) **One shader over all map pictures**:
   snow caps on every top edge (roofs, trees, fences), muted colours in winter, green turned golden in autumn; new pictures only where a
   shader can't fake it (bare deciduous trees in winter, R4).
@@ -541,7 +546,8 @@ Decided in Round 4 ✅ (six chapters; chapter 5 *Healing* with the badger; ~25 h
 Quiz question each; the Wren check and the poisoning exception).
 
 - **S1. Six chapters in the data**: renumber (old 5 → 6), the badger as a placeholder, `pet_alpaca` and `import_broker` re-pointed to
-  `pet_badger`, `sq_healer_garden`, `sq_lamp_maker` and `copper_still` into chapter 5; pet lists in `game/farm/game.gd` (two places); bot and
+  `pet_badger`, `sq_healer_garden`, `sq_lamp_maker` and `copper_still` into chapter 5; the pet list and the chapter rule in `data/farm/animals.json` and
+  `data/farm/chapters.json` (since R2; `last` becomes 6); bot and
   explorer re-run. 💡 From the outline: `pet_tortoise` to require `pond`, `pet_alpaca` to require `river_meadow_drain` (decide in I6).
 - **S2. Pets visible and their job board level 1–2** (they walk and act; today's bonuses become level 1). 🔗 J4 (the playback shows their
   work), M5 (the pony carries to market).

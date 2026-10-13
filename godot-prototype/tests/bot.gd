@@ -4,6 +4,9 @@ extends Node
 ##   --seed=N        the same game every time (the rules engine's random numbers, clock and learning record; see Game.now)
 ##   --golden=FILE   writes one fingerprint line per step of time; tests/golden.sh compares it with tests/golden/
 ##   --save-at=C:FILE  writes the save when chapter C is reached (test fixtures, tests/fixtures/)
+##   --report=FILE   writes the pacing report: per chapter the Time Quiz questions, actions, Rest answers and knowledge
+##                   questions, and the hours they take with the timing in data/farm/rules/general.json "pacing"
+##                   (the explorer shows it; "Update explorer.command" makes it)
 var G
 var log_lines := []
 var max_iters := 900
@@ -17,6 +20,10 @@ var pace_sum := {}      # chapter -> [sum of pace, questions]: tells meta.flex.b
 var golden_path := ""
 var golden := []        # fingerprint lines
 var save_at := {}       # chapter -> file
+var report_path := ""
+var pace := {}          # chapter -> {"questions", "actions", "rest", "knowledge"}
+var milestones := {}    # node id that ends a chapter -> [step, seconds so far]
+var _busy := ""         # "step" or "rest" while the bot does those (their "changed" is no action)
 
 func _ready() -> void:
 	G = get_node("/root/Game")
@@ -28,6 +35,7 @@ func _ready() -> void:
 		if a.begins_with("--accuracy="): accuracy = clampf(float(a.substr(11)), 0.05, 1.0)
 		if a.begins_with("--seed="): quiz_rng.seed = int(a.substr(7)) + 1
 		if a.begins_with("--golden="): golden_path = a.substr(9)
+		if a.begins_with("--report="): report_path = a.substr(9)
 		if a.begins_with("--save-at="):
 			var parts := a.substr(10).split(":", true, 1)
 			if parts.size() == 2: save_at[int(parts[0])] = parts[1]
@@ -57,13 +65,14 @@ func _ready() -> void:
 		if it % 200 == 0:
 			print("iter %d step %d ch %d unlocked %d cards %d coins %d energy %d season %s" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.cards_learned(), int(G.S["coins"]), int(G.S["energy"]), G.season()])
 	print("DONE iters %d steps %d chapter %d unlocked %d cards %d goals %d coins %d ms %d" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.cards_learned(), G.S["goals"], int(G.S["coins"]), Time.get_ticks_msec() - t0])
+	if report_path != "": _write_report()
 	if golden_path != "":
 		var gf := FileAccess.open(golden_path, FileAccess.WRITE)
 		if gf: gf.store_string("\n".join(golden) + "\n")
 		print("golden run: %d lines written to %s" % [golden.size(), golden_path])
 	if accuracy < 1.0: print("Time Quiz questions asked %d for %d steps of time (first-try accuracy %.2f)" % [asked, G.S["step"], accuracy])
 	var pets := []
-	for p in ["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony"]:
+	for p in G.chapters_cfg.get("advanceWhenDone", []):
 		if G.done(p): pets.append(p)
 	var pc := {}
 	for ch in pace_sum: pc[ch] = snappedf(float(pace_sum[ch][0]) / maxf(1.0, float(pace_sum[ch][1])), 0.1)
@@ -102,6 +111,26 @@ func _ready() -> void:
 	print("last log: ", G.S["log"].slice(-8))
 	get_tree().quit()
 
+## A learned card took a quiz: its new questions plus a few reviews of earlier cards (meta.knowledge).
+var _cards_known := {}
+func _count_new_cards() -> void:
+	var kn: Dictionary = G.meta.get("knowledge", {})
+	for cid in G.card_ids:
+		if _cards_known.has(cid) or not G.done(cid): continue
+		_cards_known[cid] = true
+		var anc := 0
+		for a in G.card_ancestors(cid):
+			if G.done(a): anc += 1
+		_count("knowledge", mini(int(kn.get("newQuestions", 2)), G.nodes[cid].get("questions", []).size()) + mini(int(kn.get("maxReviewQuestions", 3)), anc))
+
+func _note_chapter_ends() -> void:
+	for id in G.chapters_cfg.get("advanceWhenDone", []):
+		if G.done(id) and not milestones.has(id):
+			var tot := {"questions": 0, "actions": 0, "rest": 0, "knowledge": 0}
+			for ch in pace:
+				for k in tot: tot[k] = int(tot[k]) + int(pace[ch][k])
+			milestones[id] = [int(G.S["step"]), _seconds(tot)]
+
 ## One line per step of time: the main numbers in words (they should stay the same through a restructuring) and a
 ## short hash of the whole state (changes whenever the save layout changes, which is fine when on purpose).
 func _fingerprint() -> String:
@@ -129,7 +158,7 @@ func _maybe_cut_tree(a: String) -> void:
 		for j in range(G.area(a).size()):
 			var cj: String = G.area(a)[j]["crop"]
 			if cj != "" and int(planted.get(cj, 0)) > 1:
-				G.cut_tree(a, j)
+				_a(G.cut_tree(a, j))
 				return
 		return
 
@@ -143,8 +172,46 @@ func _deep_need(k: String, need: Dictionary) -> bool:
 
 func _rest() -> void:
 	var guard := 0
+	_busy = "rest"
 	while G.S["energy"] < G.energy_max() - G.rest_per_answer() and guard < 40:
 		G.rest_correct(); guard += 1
+		_count("rest", 1)
+	_busy = ""
+
+## Counts an action the bot did (anything that returned true, or put wood on the woodpile).
+func _a(ok) -> void:
+	if (typeof(ok) == TYPE_BOOL and ok) or (typeof(ok) == TYPE_FLOAT and ok > 0.0): _count("actions", 1)
+
+func _count(what: String, n: int) -> void:
+	var c: Dictionary = pace.get(G.chapter(), {"questions": 0, "actions": 0, "rest": 0, "knowledge": 0})
+	c[what] = int(c[what]) + n
+	pace[G.chapter()] = c
+
+func _seconds(c: Dictionary) -> float:
+	var t: Dictionary = G.meta.get("pacing", {})
+	return float(c["questions"]) * float(t.get("secondsPerStep", 25)) + float(c["actions"]) * float(t.get("secondsPerAction", 3)) \
+		+ float(c["rest"]) * float(t.get("secondsPerRest", 5)) + float(c["knowledge"]) * float(t.get("secondsPerKnowledgeQuestion", 12))
+
+## The pacing report: what the real rules need per chapter, in questions, actions, Rest answers and hours.
+func _write_report() -> void:
+	var chapters := {}
+	var total := {"questions": 0, "actions": 0, "rest": 0, "knowledge": 0}
+	var keys: Array = pace.keys()
+	keys.sort()
+	for ch in keys:
+		var c: Dictionary = pace[ch]
+		chapters[str(ch)] = {"questions": c["questions"], "actions": c["actions"], "rest": c["rest"], "knowledge": c["knowledge"], "hours": snappedf(_seconds(c) / 3600.0, 0.01)}
+		for k in total: total[k] = int(total[k]) + int(c[k])
+	total["hours"] = snappedf(_seconds(total) / 3600.0, 0.01)
+	var ms := {}
+	for id in milestones: ms[id] = {"question": milestones[id][0], "hours": snappedf(float(milestones[id][1]) / 3600.0, 0.01)}
+	var rep := {"note": "Made by the bot playing the real rules (tests/bot.gd --report). Hours = Time Quiz questions × secondsPerStep + actions × secondsPerAction + Rest answers × secondsPerRest + knowledge questions × secondsPerKnowledgeQuestion (data/farm/rules/general.json pacing). The bot plays well: a child takes longer per action and makes more trips. Actions are counted from the game's own updates, so they are approximate.",
+		"made": Time.get_date_string_from_system(), "version": str(ProjectSettings.get_setting("application/config/version", "")),
+		"seed": G.test_seed, "accuracy": accuracy, "reachedChapter": G.chapter(), "timing": G.meta.get("pacing", {}),
+		"chapters": chapters, "total": total, "chapterEnds": ms}
+	var f := FileAccess.open(report_path, FileAccess.WRITE)
+	if f: f.store_string(JSON.stringify(rep, "  ") + "\n")
+	print("pacing report: %.1f hours to chapter %d (%d questions, %d actions, %d Rest answers, %d knowledge questions) -> %s" % [total["hours"], G.chapter(), total["questions"], total["actions"], total["rest"], total["knowledge"], report_path])
 
 func _needed_items() -> Dictionary:
 	var need := {}
@@ -194,19 +261,20 @@ func _turn() -> void:
 			for q in G.card_quiz(cid): G.record_card_answer(q, true)
 			G.finish_card(cid, true)
 		elif st == "readable" and G.S["reading"] == "":
-			G.start_reading(cid)
+			_a(G.start_reading(cid))
 	# water: carry some from the pond when it runs low (the bucket costs a little energy)
 	var trips := 0
 	while float(G.S["water"]) < G.water_cap() - G.fetch_amount() and G.S["energy"] > 6 and trips < 4:
 		if not G.fetch_water(): break
 		trips += 1
+		_count("actions", 1)
 	# fields
 	for i in range(G.S["patches"].size()):
 		if not G.patch_usable("field", i): continue
 		var p = G.S["patches"][i]
-		if p["ready"]: G.harvest("field", i)
-		if float(p["weeds"]) >= 3.0: G.weed(i)
-		if float(p["stones"]) >= 2.0: G.pick_stones(i)
+		if p["ready"]: _a(G.harvest("field", i))
+		if float(p["weeds"]) >= 3.0: _a(G.weed(i))
+		if float(p["stones"]) >= 2.0: _a(G.pick_stones(i))
 		if p["crop"] == "":
 			var cs: Array = G.crops_for("field")
 			if cs.size() > 0:
@@ -221,12 +289,12 @@ func _turn() -> void:
 							if k.begins_with("tag:") and (G.items[y].get("tags", []) as Array).has(k.substr(4)): short = maxf(short, float(need[k]) - G.count_tag(k.substr(4)))
 						if short > best + 0.01 and short > 0.0: best = short; pick = c
 				if G.seed_have(pick) < float(G.plants_per_patch("field")) and not G.nodes[pick].has("seedItem"):
-					G.buy_seeds(pick, maxi(1, G.plants_per_patch("field") * 2))      # seeds come from the market now
-				if G.plant_plan("field", pick)["plants"] >= 1: G.plant("field", i, pick)
+					_a(G.buy_seeds(pick, maxi(1, G.plants_per_patch("field") * 2)))      # seeds come from the market now
+				if G.plant_plan("field", pick)["plants"] >= 1: _a(G.plant("field", i, pick))
 	for a in ["orchard", "gh"]:
 		for i in range(G.area(a).size()):
 			var p = G.area(a)[i]
-			if p["ready"]: G.harvest(a, i)
+			if p["ready"]: _a(G.harvest(a, i))
 			if p["crop"] == "":
 				var cs: Array = G.crops_for(a)
 				if cs.is_empty(): continue
@@ -236,8 +304,8 @@ func _turn() -> void:
 				for c in cs:
 					for y in G.nodes[c].get("yields", {}):
 						if _deep_need(y, need_o) and G.count(y) < 3.0: pick = c
-				if G.seed_have(pick) < 1.0 and not G.nodes[pick].has("seedItem"): G.buy_seeds(pick, 1)
-				if G.plant_plan(a, pick)["plants"] >= 1: G.plant(a, i, pick)
+				if G.seed_have(pick) < 1.0 and not G.nodes[pick].has("seedItem"): _a(G.buy_seeds(pick, 1))
+				if G.plant_plan(a, pick)["plants"] >= 1: _a(G.plant(a, i, pick))
 			elif a == "orchard" and i == G.area(a).size() - 1:
 				_maybe_cut_tree(a)
 	# animals
@@ -245,10 +313,10 @@ func _turn() -> void:
 		if G.nodes[aid]["type"] != "animal": continue
 		if not G.missing_reqs(aid).is_empty(): continue
 		var an = G.animal(aid)
-		if int(an["count"]) < G.animal_cap(aid) and G.S["coins"] > 2.0 * float(G.nodes[aid].get("price", {}).get("coins", 0)): G.buy_animal(aid)
+		if int(an["count"]) < G.animal_cap(aid) and G.S["coins"] > 2.0 * float(G.nodes[aid].get("price", {}).get("coins", 0)): _a(G.buy_animal(aid))
 		if int(an["count"]) > 0:
-			if G.muck_factor(aid) < 1.0: G.muck_out(aid)
-			if G.S["step"] >= int(an["ready"]): G.collect_animal(aid)
+			if G.muck_factor(aid) < 1.0: _a(G.muck_out(aid))
+			if G.S["step"] >= int(an["ready"]): _a(G.collect_animal(aid))
 	# make what open goals need, plus gather basics
 	var need := _needed_items()
 	for root in G.stations():
@@ -263,8 +331,8 @@ func _turn() -> void:
 					if k.begins_with("tag:") and (G.items[o].get("tags", []) as Array).has(k.substr(4)): useful = true
 			if r["station"] == "wild_edge" and G.S["woodpile"] < 6: useful = true
 			if useful:
-				if G.recipe_fuel(rid) > float(G.S["woodpile"]) + 0.0001: G.stoke(G.recipe_fuel(rid))   # stoke the woodpile first
-				G.start_recipe(rid)
+				if G.recipe_fuel(rid) > float(G.S["woodpile"]) + 0.0001: _a(G.stoke(G.recipe_fuel(rid)))   # stoke the woodpile first
+				_a(G.start_recipe(rid))
 	# money: sell surplus when coins are short for an open goal
 	var coins_need := 0.0
 	for id in G.nodes:
@@ -272,27 +340,34 @@ func _turn() -> void:
 	if G.S["coins"] < coins_need + 20:
 		for k in G.S["inv"].keys():
 			var keep := 6.0 + float(need.get(k, 0.0))
-			if G.count(k) > keep and G.value_of(k) > 0: G.sell(k, G.count(k) - keep)
+			if G.count(k) > keep and G.value_of(k) > 0: _a(G.sell(k, G.count(k) - keep))
 	# buy missing raw items from merchants
 	for mid in G.nodes:
 		if G.nodes[mid]["type"] != "merchant" or not G.done(mid): continue
 		for k in G.nodes[mid].get("sells", {}):
-			if need.has(k) and G.count(k) < float(need[k]) and (G.S["coins"] > 60 or not G.S["seen"].has(k)): G.buy_item(mid, k, 1)
+			if need.has(k) and G.count(k) < float(need[k]) and (G.S["coins"] > 60 or not G.S["seen"].has(k)): _a(G.buy_item(mid, k, 1))
 		for k in G.nodes[mid].get("barter", {}):
-			if need.has(k) and G.count(k) < 1: G.barter(mid, k)
+			if need.has(k) and G.count(k) < 1: _a(G.barter(mid, k))
 	# unlock what we can: main goals first, then optional upgrades and gear, polish once
 	for id in G.nodes:
 		var n = G.nodes[id]
 		if n["type"] == "animal" or n["type"] == "polish": continue
 		if G.is_open(id) and G.can_unlock(id)["ok"]:
 			if n.get("optional", false) and n["type"] == "sidequest" and G.S["energy"] < 15: continue
-			G.unlock(id)
+			_a(G.unlock(id))
 	for pid in G.polish_ids:
-		if G.polish_open(pid) and G.polish_level(pid) < 1.0 and G.missing_cost(G.polish_cost(pid)).is_empty(): G.do_polish(pid)
+		if G.polish_open(pid) and G.polish_level(pid) < 1.0 and G.missing_cost(G.polish_cost(pid)).is_empty(): _a(G.do_polish(pid))
 	# eat a dish now and then
 	for k in G.S["inv"].keys():
-		if G.items[k].has("buff") and G.count(k) > 3 and G.S["buff"].is_empty(): G.eat(k)
+		if G.items[k].has("buff") and G.count(k) > 3 and G.S["buff"].is_empty(): _a(G.eat(k))
 	# only a right first try moves time: with --accuracy below 1 some questions are asked without moving it
+	_count_new_cards()
+	var a0 := asked
 	asked += 1
 	while accuracy < 1.0 and quiz_rng.randf() >= accuracy: asked += 1
+	_count("questions", asked - a0)
+	var ch0: int = G.chapter()
+	_busy = "step"
 	G.step_time()
+	_busy = ""
+	if G.chapter() > ch0 or report_path != "": _note_chapter_ends()

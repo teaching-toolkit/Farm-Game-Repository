@@ -1,0 +1,606 @@
+{
+  "luck": {
+    "note": "A hidden background number (starts at 0) that makes lucky things a bit more likely: chance × (1 + luck). Side quests give +0.5 for 30 questions, Little Jobs +0.1 for 10, a four-leaf clover +0.3 for 20; each pet adds +0.05 for good; the Lucky Horseshoe gift card +0.15 for good.",
+    "sources": {
+      "sidequest": [
+        0.5,
+        30
+      ],
+      "job": [
+        0.1,
+        10
+      ],
+      "clover": [
+        0.3,
+        20
+      ],
+      "pet": [
+        0.05,
+        -1
+      ]
+    },
+    "events": [
+      {
+        "id": "weed_coin",
+        "when": "weed",
+        "chance": 0.04,
+        "text": "A lost coin in the weeds!",
+        "gives": {
+          "coins": 2
+        }
+      },
+      {
+        "id": "weed_seed",
+        "when": "weed",
+        "chance": 0.02,
+        "text": "An old seed packet!",
+        "gives": {
+          "seed": 1
+        }
+      },
+      {
+        "id": "weed_clover",
+        "when": "weed",
+        "chance": 0.01,
+        "text": "A four-leaf clover! You feel lucky.",
+        "luck": [
+          0.3,
+          20
+        ]
+      },
+      {
+        "id": "weed_relic",
+        "when": "weed",
+        "chance": 0.007,
+        "text": "Something old in the soil: a relic for the album!",
+        "gives": {
+          "relic": 1
+        }
+      },
+      {
+        "id": "stone_quartz",
+        "when": "stones",
+        "chance": 0.02,
+        "text": "A sparkling quartz crystal inside a stone!",
+        "gives": {
+          "quartz": 1
+        }
+      },
+      {
+        "id": "rain",
+        "when": "question",
+        "chance": "season.rain",
+        "text": "It rained: no watering needed, and the well fills a little.",
+        "rain": true
+      },
+      {
+        "id": "double_harvest",
+        "when": "harvest",
+        "chance": 0.03,
+        "text": "Bumper crop: double harvest!",
+        "mult": 2
+      },
+      {
+        "id": "double_yolk",
+        "when": "collect:animal_chicken",
+        "chance": 0.05,
+        "text": "A double-yolk egg!",
+        "gives": {
+          "egg": 1
+        }
+      },
+      {
+        "id": "honey_flow",
+        "when": "collect:animal_bees",
+        "chance": 0.05,
+        "text": "A honey flow: extra comb!",
+        "gives": {
+          "honeycomb": 1
+        }
+      },
+      {
+        "id": "thick_fleece",
+        "when": "collect:animal_sheep",
+        "chance": 0.05,
+        "text": "An extra-thick fleece!",
+        "gives": {
+          "wool": 1
+        }
+      },
+      {
+        "id": "neighbour_gift",
+        "when": "question",
+        "chance": 0.01,
+        "text": "A neighbour drops off a little gift basket.",
+        "gives": {
+          "random_ingredient": 2
+        }
+      },
+      {
+        "id": "seed_bargain",
+        "when": "buy_seeds",
+        "chance": 0.05,
+        "text": "The seed merchant adds one for free.",
+        "gives": {
+          "seed": 1
+        }
+      },
+      {
+        "id": "golden_acorn",
+        "when": "weed",
+        "chance": 0.002,
+        "text": "A golden acorn glints under a leaf!",
+        "acorn": "acorn_lucky"
+      }
+    ]
+  },
+  "giftCards": {
+    "milestones": [
+      "every pet arriving",
+      "every library level",
+      "every 12 goals reached"
+    ],
+    "note": "Gifts that help on the farm. They come on postcards from friends (meta.postcards) and cannot be bought. Only maxActive gifts work at the same time; the others wait in the album and can be swapped in.",
+    "pool": [
+      {
+        "id": "gc_deep_pockets",
+        "name": "Deep Pockets",
+        "emoji": "👖",
+        "effects": {
+          "add": {
+            "storageCap": 5
+          }
+        },
+        "desc": "Every store holds 5 more."
+      },
+      {
+        "id": "gc_spring_water",
+        "name": "Hidden Spring",
+        "emoji": "💧",
+        "effects": {
+          "add": {
+            "fetchWater": 1
+          }
+        },
+        "desc": "+1 💧 every trip for water."
+      },
+      {
+        "id": "gc_early_bird",
+        "name": "Early Bird",
+        "emoji": "🐓",
+        "effects": {
+          "add": {
+            "energyMax": 3
+          }
+        },
+        "desc": "Energy max +3."
+      },
+      {
+        "id": "gc_green_thumb",
+        "name": "Green Thumb",
+        "emoji": "👍",
+        "effects": {
+          "mult": {
+            "grow": 0.95
+          }
+        },
+        "desc": "Crops grow 5% faster."
+      },
+      {
+        "id": "gc_horseshoe",
+        "name": "Lucky Horseshoe",
+        "emoji": "🧲",
+        "effects": {
+          "add": {
+            "luck": 0.15
+          }
+        },
+        "desc": "A little luck, for good."
+      },
+      {
+        "id": "gc_soft_pillow",
+        "name": "Soft Pillow",
+        "emoji": "🛌",
+        "effects": {
+          "add": {
+            "energyPerRest": 0.5
+          }
+        },
+        "desc": "+0.5 energy per Rest answer."
+      },
+      {
+        "id": "gc_sharp_eyes",
+        "name": "Sharp Eyes",
+        "emoji": "👀",
+        "effects": {
+          "mult": {
+            "pests": 0.9
+          }
+        },
+        "desc": "10% fewer pests."
+      },
+      {
+        "id": "gc_strong_back",
+        "name": "Strong Back",
+        "emoji": "💪",
+        "effects": {
+          "mult": {
+            "energy:harvest": 0.9
+          }
+        },
+        "desc": "Harvesting −10% energy."
+      },
+      {
+        "id": "gc_bookworm",
+        "name": "Bookworm",
+        "emoji": "🐛",
+        "effects": {
+          "mult": {
+            "read": 0.8
+          }
+        },
+        "desc": "Reading 20% faster."
+      },
+      {
+        "id": "gc_good_neighbour",
+        "name": "Good Neighbour",
+        "emoji": "🤝",
+        "effects": {
+          "add": {
+            "luckDuration": 15
+          }
+        },
+        "desc": "Side-quest luck lasts 15 questions longer."
+      },
+      {
+        "id": "gc_compost_king",
+        "name": "Compost King",
+        "emoji": "♻️",
+        "effects": {
+          "mult": {
+            "time:compost_bin": 0.85
+          }
+        },
+        "desc": "Compost 15% faster."
+      },
+      {
+        "id": "gc_market_smile",
+        "name": "Market Smile",
+        "emoji": "😊",
+        "effects": {
+          "add": {
+            "sellBonusPct": 3
+          }
+        },
+        "desc": "+3% on everything sold."
+      },
+      {
+        "id": "gc_hardy_seeds",
+        "name": "Hardy Seeds",
+        "emoji": "❄️",
+        "effects": {
+          "add": {
+            "winterGrow": 0.2
+          }
+        },
+        "desc": "Crops grow faster in winter."
+      },
+      {
+        "id": "gc_busy_bees",
+        "name": "Busy Bees",
+        "emoji": "🐝",
+        "effects": {
+          "mult": {
+            "out:animal_bees": 1.1
+          }
+        },
+        "desc": "+10% honeycomb."
+      },
+      {
+        "id": "gc_cool_cellar",
+        "name": "Cool Cellar",
+        "emoji": "🧊",
+        "effects": {
+          "add": {
+            "shelfLife": 1
+          }
+        },
+        "desc": "Food keeps one season longer."
+      },
+      {
+        "id": "gc_firekeeper",
+        "name": "Firekeeper",
+        "emoji": "🔥",
+        "effects": {
+          "mult": {
+            "fuel": 0.85
+          }
+        },
+        "desc": "15% less firewood."
+      },
+      {
+        "id": "gc_light_step",
+        "name": "Light Step",
+        "emoji": "🦶",
+        "effects": {
+          "mult": {
+            "energy:errand": 0.85
+          }
+        },
+        "desc": "Errands −15% energy."
+      },
+      {
+        "id": "gc_clean_hands",
+        "name": "Clean Barn",
+        "emoji": "🧼",
+        "effects": {
+          "mult": {
+            "muck": 0.8
+          }
+        },
+        "desc": "20% less muck."
+      },
+      {
+        "id": "gc_stone_sense",
+        "name": "Stone Sense",
+        "emoji": "🪨",
+        "effects": {
+          "mult": {
+            "stones": 0.8
+          }
+        },
+        "desc": "20% fewer stones heave up."
+      },
+      {
+        "id": "gc_quick_hands",
+        "name": "Quick Hands",
+        "emoji": "🔪",
+        "effects": {
+          "mult": {
+            "energy:prep": 0.92
+          }
+        },
+        "desc": "Prep −8% energy."
+      },
+      {
+        "id": "gc_tidy_rows",
+        "name": "Tidy Rows",
+        "emoji": "🌾",
+        "effects": {
+          "mult": {
+            "weeds": 0.92
+          }
+        },
+        "desc": "8% fewer weeds."
+      },
+      {
+        "id": "gc_happy_hens",
+        "name": "Happy Hens",
+        "emoji": "🐔",
+        "effects": {
+          "mult": {
+            "out:animal_chicken": 1.1
+          }
+        },
+        "desc": "+10% eggs."
+      },
+      {
+        "id": "gc_strong_arms",
+        "name": "Strong Arms",
+        "emoji": "🏗️",
+        "effects": {
+          "mult": {
+            "energy:build": 0.92
+          }
+        },
+        "desc": "Building −8% energy."
+      },
+      {
+        "id": "gc_handy",
+        "name": "Handy",
+        "emoji": "🛠️",
+        "effects": {
+          "mult": {
+            "energy:craft": 0.92
+          }
+        },
+        "desc": "Crafting −8% energy."
+      }
+    ],
+    "maxActive": 2
+  },
+  "jobs": {
+    "slots": 3,
+    "rewardCoinsPerChapter": 4,
+    "rewardLuck": [
+      0.1,
+      10
+    ],
+    "templates": [
+      {
+        "type": "harvest",
+        "text": "Harvest {n} {item}",
+        "n": [
+          3,
+          8
+        ]
+      },
+      {
+        "type": "weed",
+        "text": "Pull {n} weeds",
+        "n": [
+          6,
+          15
+        ]
+      },
+      {
+        "type": "make",
+        "text": "Make {n} {item}",
+        "n": [
+          1,
+          2
+        ]
+      },
+      {
+        "type": "sell",
+        "text": "Sell {n} things",
+        "n": [
+          4,
+          10
+        ]
+      },
+      {
+        "type": "collect",
+        "text": "Collect from your {item}",
+        "n": [
+          1,
+          2
+        ]
+      },
+      {
+        "type": "stones",
+        "text": "Pick {n} stones from the fields",
+        "n": [
+          3,
+          6
+        ]
+      },
+      {
+        "type": "rest",
+        "text": "Rest: answer {n} sums",
+        "n": [
+          3,
+          6
+        ]
+      }
+    ],
+    "note": "Three small jobs that refill themselves as soon as one is done (only things the player can do right now). Reward: a few coins and a little luck."
+  },
+  "acorns": {
+    "energyMaxEach": 3,
+    "list": [
+      {
+        "id": "acorn_first_favour",
+        "name": "First favour done",
+        "when": "sidequests>=1"
+      },
+      {
+        "id": "acorn_shelf",
+        "name": "A real bookshelf",
+        "when": "unlocked:library_shelf"
+      },
+      {
+        "id": "acorn_first_winter",
+        "name": "Survived the first winter",
+        "when": "seasons>=4"
+      },
+      {
+        "id": "acorn_weeder",
+        "name": "100 weeds pulled",
+        "when": "weeds>=100"
+      },
+      {
+        "id": "acorn_first_pet",
+        "name": "First pet home",
+        "when": "unlocked:pet_bunny"
+      },
+      {
+        "id": "acorn_scholar",
+        "name": "10 cards learned",
+        "when": "cards>=10"
+      },
+      {
+        "id": "acorn_lucky",
+        "name": "Found while weeding",
+        "when": "luck"
+      }
+    ],
+    "note": "Seven Golden Acorns hide in the game, each found a different way. Each one raises the energy max by 3 for good."
+  },
+  "luckFinds": [
+    "quartz",
+    "relic"
+  ],
+  "perks": {
+    "note": "Small extras that make the farm prettier or livelier. They do not change the economy. Some come from favours (side quest 'perk'), others from achievements ('when': rest_quick>=N quick Rest answers, medals>=N Rest sum medals won, sold_kinds>=N different things sold, harvests>=N, seasons>=N, cards>=N, sidequests>=N, unlocked:id). Every perk can be switched off in the album.",
+    "list": [
+      {
+        "id": "perk_butterflies",
+        "name": "Butterflies",
+        "emoji": "🦋",
+        "desc": "Butterflies flutter over your fields. A thank-you from Granny Maud's meadow."
+      },
+      {
+        "id": "perk_sparkles",
+        "name": "Magic sparkles",
+        "emoji": "✨",
+        "desc": "Sparkles where you tap the farm. A trick the twins taught you."
+      },
+      {
+        "id": "perk_sounds",
+        "name": "Farm sounds",
+        "emoji": "🔔",
+        "desc": "Animal voices: hens, cows and sheep call when you tap their pen, and now and then on their own; birds sing over the fields. Ella's little bell started it."
+      },
+      {
+        "id": "perk_rainbow",
+        "name": "Rainbows",
+        "emoji": "🌈",
+        "desc": "A rainbow over the farm after the rain. Hilde says the washing dries best under one."
+      },
+      {
+        "id": "perk_lightning",
+        "name": "Lightning sums",
+        "emoji": "⚡",
+        "desc": "Quick Rest sums sometimes crackle with lightning.",
+        "when": "rest_quick>=25"
+      },
+      {
+        "id": "perk_streak",
+        "name": "Hot streak",
+        "emoji": "🔥",
+        "desc": "A flame counts your quick Rest sums in a row.",
+        "when": "medals>=3"
+      },
+      {
+        "id": "perk_coins",
+        "name": "Coin shower",
+        "emoji": "🪙",
+        "desc": "Coins fly into your purse when you sell.",
+        "when": "sold_kinds>=8"
+      },
+      {
+        "id": "perk_confetti",
+        "name": "Harvest party",
+        "emoji": "🎉",
+        "desc": "Confetti when you harvest everything at once.",
+        "when": "harvests>=40"
+      },
+      {
+        "id": "perk_breeze",
+        "name": "Season breeze",
+        "emoji": "🍃",
+        "desc": "Blossom petals in spring, leaves in autumn, snowflakes in winter.",
+        "when": "seasons>=4"
+      }
+    ]
+  },
+  "postcards": {
+    "chanceBase": 0.35,
+    "chancePerFriend": 0.2,
+    "firstSure": true,
+    "choicesMax": 3,
+    "note": "Friends are the people you helped (finished side quests; the same person counts once). At a milestone (a pet arrives, the library grows, every 12 goals) a friend may hear of it and send a postcard with a gift: chance = chanceBase + chancePerFriend x friends (at most 100%; the very first postcard always comes). The gift is picked from as many cards as there are friends (1, 2, 3 at most). Cards not picked can come again on a later postcard.",
+    "news": {
+      "pet": "your new {pet}",
+      "library": "your library growing",
+      "goals": "all your work on the farm ({n} jobs done!)"
+    },
+    "messages": [
+      "Dear {player}, I heard about {news}! Here is a little something for your farm.",
+      "Hello {player}! Word travels fast in our village — {news}! I wanted to send you a present.",
+      "{player}, everyone is talking about {news}. Thank you again for your help — this is for you!",
+      "Dear {player}, I was so happy to hear about {news}. I hope this helps on the farm!"
+    ]
+  }
+}

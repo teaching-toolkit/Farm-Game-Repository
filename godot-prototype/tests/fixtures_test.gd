@@ -17,11 +17,21 @@ func _ready() -> void:
 	var old: Dictionary = G.S.duplicate(true)
 	var added := ["step_ready", "open_early", "early_patches", "perks", "sold_kinds", "market", "postcards", "gift_active"]
 	for k in added: old.erase(k)
+	old.erase("version")
 	old["step"] = float(old["step"])
+	old["gift_pending"] = [["gc_deep_pockets"]]       # a gift offer from before postcards
 	_write(TMP, old)
 	_check(G.load_game(TMP), "older layout loads")
 	for k in added: _check(G.S.has(k), "older layout gets %s" % k)
 	_check(typeof(G.S["step"]) == TYPE_INT, "older layout: step is a whole number")
+	_check(int(G.S.get("version", 0)) == G.SAVE_VERSION, "older layout is upgraded to version %d" % G.SAVE_VERSION)
+	_check(typeof(G.S["gift_pending"][0]) == TYPE_DICTIONARY and G.S["gift_pending"][0]["offer"] == ["gc_deep_pockets"], "an old gift offer becomes a postcard")
+	G.save_to(TMP)
+	_check(int(JSON.parse_string(FileAccess.get_file_as_string(TMP)).get("version", 0)) == G.SAVE_VERSION, "a save carries its version")
+	var future: Dictionary = G.S.duplicate(true)
+	future["version"] = G.SAVE_VERSION + 5
+	_write(TMP, future)
+	_check(G.load_game(TMP), "a save from a newer game still loads (with a warning)")
 	# 3. every fixture loads, plays on and saves unchanged
 	var dir := DirAccess.open("res://tests/fixtures")
 	for f in dir.get_files():
