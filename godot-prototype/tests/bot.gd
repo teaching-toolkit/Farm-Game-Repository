@@ -78,6 +78,12 @@ func _ready() -> void:
 		if a.begins_with("--why="):
 			var wid := a.substr(6)
 			print("WHY %s: %s; missing reqs %s; missing cost %s" % [wid, str(G.progression.can_unlock(wid)), str(G.progression.missing_reqs(wid)), str(G.pace.missing_cost(G.pace.node_cost(wid)))])
+	if "--patches" in OS.get_cmdline_user_args():
+		for i in range(mini(G.progression.plots(), G.S["patches"].size())):
+			var q: Dictionary = G.S["patches"][i]
+			print("   patch %d: crop %s plants %s ready %s weeds %.1f stones %.1f snow %s growth %.2f" % [i, q["crop"], str(q["plants"]), str(q["ready"]), float(q["weeds"]), float(q["stones"]), str(q.get("snow", false)), float(q["growth"])])
+		for c in G.fields.crops_for("field"): print("   plan %s: %s sow_ok %s" % [c, str(G.fields.plant_plan("field", c)), str(G.fields.sow_ok("field", c))])
+		print("   season %s seeds %s inv carrots %.0f clover %.0f" % [G.seasons.season(), str(G.S["seeds"]), G.inventory.count("carrot"), G.inventory.count("clover")])
 	print("DONE iters %d steps %d chapter %d unlocked %d cards %d goals %d coins %d ms %d" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.progression.cards_learned(), G.S["goals"], int(G.S["coins"]), Time.get_ticks_msec() - t0])
 	_close_chapter(G.chapter() > int(_row["chapter"]))
 	if report_path != "": _write_report()
@@ -224,7 +230,7 @@ func _trip() -> void:
 	var seeds_ok := false
 	for cid in want_seeds:
 		if budget >= 4.0 * float(G.nodes[cid].get("seedCost", 1)): seeds_ok = true
-	var errands: bool = seeds_ok or not want_buy.is_empty() or not want_barter.is_empty() or not orders.is_empty()
+	var errands: bool = seeds_ok or want_grain > 0 or not want_buy.is_empty() or not want_barter.is_empty() or not orders.is_empty()
 	var sell_load := 0.0
 	for k in want_sell: sell_load += G.inventory.load_of(k, float(want_sell[k]))
 	var near_cap := false      # a full store wastes harvests: go before it overflows
@@ -259,6 +265,7 @@ func _trip() -> void:
 	for cid in want_seeds:
 		var afford := int(floorf(seed_budget / maxf(1.0, float(G.nodes[cid].get("seedCost", 1)))))
 		if afford >= 1: G.trade.buy_seeds(cid, mini(int(want_seeds[cid]), afford))
+	if want_grain > 0: G.trade.buy_item("seed_1", "wheat", want_grain)
 	for mid_k in want_buy:
 		var need_n := ceili(float(_needed_items().get(mid_k[1], 1.0)) - G.inventory.count(mid_k[1]))
 		var c0: float = G.inventory.count(mid_k[1])
@@ -333,13 +340,14 @@ var want_seeds := {}
 var want_buy := []        # [merchant, item]
 var _last_shares := 0
 var _sold_mark := 0.0
+var want_grain := 0       # grain to buy for sowing when nothing can be sown (the seller's safety net)
 var want_barter := []     # [merchant, item]
 var want_sell := {}       # item -> units
 var last_trip := -99      # the step of the last trip
 var trips_done := 0
 
 func _turn() -> void:
-	want_seeds = {}; want_buy = []; want_barter = []; want_sell = {}
+	want_seeds = {}; want_buy = []; want_barter = []; want_sell = {}; want_grain = 0
 	if G.S["energy"] < 8: _rest()
 	# knowledge
 	for cid in G.card_ids:
@@ -364,7 +372,12 @@ func _turn() -> void:
 		if float(p["weeds"]) >= 3.0: G.fields.weed(i)
 		if float(p["stones"]) >= 2.0: G.fields.pick_stones(i)
 		if p["crop"] == "":
-			var cs: Array = G.fields.crops_for("field")
+			var cs: Array = G.fields.crops_for("field").filter(func(c): return G.fields.sow_ok("field", c))      # what can be sown now
+			var sowable := false
+			for c in cs:
+				if G.fields.seed_have(c) >= 1.0: sowable = true
+			if p.get("snow", false) and sowable and not G.fields.clear_snow(i): continue      # winter: the snow goes first (only when there is something to sow)
+			if p.get("snow", false): continue
 			if cs.size() > 0:
 				var pick: String = cs[(i + G.S["step"]) % cs.size()]
 				var need := _needed_items()
@@ -379,13 +392,21 @@ func _turn() -> void:
 				if cs.has("crop_wheat") and G.inventory.count("wheat") < 3.0 * G.fields.plants_per_patch("field") + 4.0 and G.fields.seed_have("crop_wheat") >= 1.0: pick = "crop_wheat"      # the grain is the seed: grow enough of it
 				if G.fields.seed_have(pick) < float(G.fields.plants_per_patch("field")) and not G.nodes[pick].has("seedItem"):
 					want_seeds[pick] = maxi(int(want_seeds.get(pick, 0)), maxi(1, G.fields.plants_per_patch("field") * 8))      # seeds come from the village now: a bulk, a trip costs a question
+				var any_plantable := false
+				for c in cs:
+					if G.fields.plant_plan("field", c)["plants"] >= 1: any_plantable = true
+				if not any_plantable:
+					if cs.has("crop_wheat") and G.done("seed_1"): want_grain = maxi(want_grain, 4 * G.fields.plants_per_patch("field"))      # the safety net: a sack of grain
+				if G.fields.plant_plan("field", pick)["plants"] < 1:          # no seed (or season) for the first choice: anything that can go in is better than an empty patch
+					for c in cs:
+						if G.fields.plant_plan("field", c)["plants"] >= 1: pick = c; break
 				if G.fields.plant_plan("field", pick)["plants"] >= 1: G.fields.plant("field", i, pick)
 	for a in ["orchard", "gh"]:
 		for i in range(G.fields.area(a).size()):
 			var p = G.fields.area(a)[i]
 			if p["ready"]: G.fields.harvest(a, i)
 			if p["crop"] == "":
-				var cs: Array = G.fields.crops_for(a)
+				var cs: Array = G.fields.crops_for(a).filter(func(c): return G.fields.sow_ok(a, c))
 				if cs.is_empty(): continue
 				# a tree whose fruit an open goal needs (walnuts for the pony's cake …), else take turns
 				var pick: String = cs[i % cs.size()]

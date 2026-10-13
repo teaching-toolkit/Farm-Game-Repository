@@ -151,7 +151,7 @@ well as a card review).
   the repetition and only a right first try moves time.
 - **Read aloud.** Where the device has a voice, 🔊 reads the question and the answers. A device setting (⚙️ Settings, grown-up part) chooses *off* (no 🔊 buttons), *a button* (the default) or *by itself* (each question and card page is read as it opens; 🔊 reads it again).
 - **Every question has an id** that never changes and is never reused: a pack code and a number (`CON-003`, `PIC-012`);
-  the knowledge cards' questions are `KNW-001` … `KNW-228`. The learning record and the translations use the id, so the
+  the knowledge cards' questions are `KNW-001` … `KNW-234`. The learning record and the translations use the id, so the
   record says how well the child knows *that* question in any language, and a question can be reworded without losing
   what was learned.
 - **Packs now:** *Farm basics* (FRM, 4), *Continents* (CON, 12), *Farm pictures* (PIC, 18, picture questions). A playthrough
@@ -427,6 +427,13 @@ whatever it yields. A share is never more than a quarter of what the farm sold i
 to two seasons' worth. **While something is owed, everything that costs coins is blocked** (the goal tiles say *the Lord's share first*; seeds and wares cannot be bought); selling, making,
 farming, trips and barter go on, so nobody is stuck. In chapter 6 the story eases the fraction to a tenth (`lord.eased`, *planned*). Data: `rules/53-lord.json`; system `G.lord`;
 story pieces `c3_pieter`, `c3_pieter_paid`, `c3_k_pieter`. *(Planned: Quill counts the patches and buildings himself in chapter 4, the story beat that eases it.)*
+
+### 5.9 What the forest edge gives *(built, phase 10)*
+
+Gathering at the forest edge draws on **pools**: sticks (40, +1.2 a question), loose stones (30, +0.15), clay (20, +0.4) and the **trees**, which go round a cycle: a felled tree becomes a stump, after about 14 questions a sapling, after about
+22 more a tree again. A tap gives its full yield while the pool is full and less when it is not (the share is the pool's fullness, never below a half to two thirds), **rounded and never below 1**, so the campfire is never impossible. The first time a pool
+is low the farm says so (*a recommendation first*), and again after 40 questions. Stones come back hardly at all: the stones in the fields (frost heave) and the quarry merchant matter. The numbers (a bar per pool, 🌲🪵🌱 for the trees) show in the forest
+edge's window once the card *Take only what grows back* has been learned. *(Planned: water as a pool, herbs, the Helper who pauses a job and gives a look.)* Data: `rules/56-nature.json`; system `G.nature`.
 
 ### 5.4 Seeds
 
@@ -1021,13 +1028,13 @@ seasons change speeds and amounts:
 | 🌱 Spring | — | weeds sprout (+50 %, more fibre to pull); rain often |
 | ☀️ Summer | fields thirstier (+30 % water), more pests (+50 %) | crops grow 20 % faster; bees +30 % honeycomb |
 | 🍂 Autumn | crops 15 % slower | orchard +40 %; branches fall (sticks ×2); rain often |
-| ❄️ Winter | crops at half speed; the house burns firewood | frost lifts stones (more to pick); indoor work −10 % energy; thick fleeces; few weeds and pests |
+| ❄️ Winter | crops at a quarter of their speed; snow covers the empty patches; only hardy crops can be sown outdoors; the house burns firewood | frost lifts stones (more to pick); indoor work −10 % energy; thick fleeces; few weeds and pests |
 
-At each change of season, stale food turns (§5.7).
+At each change of season, stale food turns (§5.7) and a short text says what changes now (growth, weeds, pests, rain, what can be sown; `intro` in the data), next to the market news (§5.3).
 
 **The look of the season.** One shader lies over every picture on the map: in **winter** snow caps sit on every top edge (roofs, tree tops,
 fence rails) and the colours are muted and cooler; in **autumn** greens turn golden. Soil and plants keep their own look (muted in winter, no caps).
-*(planned: snow that settles on the ground and must be cleared, bare trees, a smooth change from one season to the next)*
+**Snow** *(built, phase 10)*: in winter the rain is snow; every empty field patch is covered until the farmer clears it (a whole-field action, 1 ⚡ a patch) or spring melts it; nothing can be sown under snow. Outdoors in winter only **hardy** crops (winter wheat, onions, beans, winter kale) can be sown; every other crop's tile says *too cold to sow* (the greenhouse and the orchard do not mind). *(Planned: snow drawn on the ground, bare trees, a smooth change from one season to the next.)*
 
 ---
 
@@ -1181,7 +1188,7 @@ Everything about the content is data, so the game can be rebalanced without code
 
 | File | Holds |
 |---|---|
-| `data/farm/` | the whole tree (v0.8), in files: `items.json` (146 items), `nodes/` (438 nodes in 14 themed files: buildings, upgrades, tools, gear, helpers, polish, cards, books, goals, side quests, pets, merchants …), `recipes.json` (106), `rules/` (energy, water, yields, pricing, market, seasons, pests, freshness, carry, flex …, by system), `chapters.json`, `start.json`, and `places.json` (the farm's places) |
+| `data/farm/` | the whole tree (v0.8), in files: `items.json` (147 items), `nodes/` (445 nodes in 14 themed files: buildings, upgrades, tools, gear, helpers, polish, cards, books, goals, side quests, pets, merchants …), `recipes.json` (106), `rules/` (energy, water, yields, pricing, market, seasons, pests, freshness, carry, flex …, by system), `chapters.json`, `start.json`, and `places.json` (the farm's places) |
 | `data/map_layout.json` | where every place, add-on, corner and decoration stands |
 | `data/quiz_packs/*.json` | Time Quiz packs |
 | `data/i18n/quiz-<lang>.json` | quiz texts by question id |

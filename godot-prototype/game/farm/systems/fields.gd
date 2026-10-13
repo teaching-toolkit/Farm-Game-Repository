@@ -104,6 +104,49 @@ func sow_season_ok(n: Dictionary) -> bool:
 	var ss: Array = n.get("sowSeasons", [])
 	return ss.is_empty() or ss.has(G.seasons.season())
 
+## Outdoors in winter only hardy crops ("winterHardy") can be sown; the greenhouse and the orchard's trees do not mind.
+func sow_cold(a: String, n: Dictionary) -> bool:
+	return a == "field" and G.seasons.season() == "winter" and not bool(n.get("winterHardy", false))
+
+## Can this crop be sown in this kind of place now, as far as the season goes?
+func sow_ok(a: String, cid: String) -> bool:
+	var n: Dictionary = G.nodes[cid]
+	return sow_season_ok(n) and not sow_cold(a, n)
+
+# ------------------------------------------------------------------ snow (TODO N6)
+
+func patch_snow(i: int) -> bool:
+	return bool(G.S["patches"][i].get("snow", false))
+
+## Snow falls (in winter, like rain): every empty patch of the field is covered until it is cleared or spring comes.
+func snowfall() -> void:
+	var any := false
+	for i in range(G.S["patches"].size()):
+		if not patch_usable("field", i): continue
+		var p: Dictionary = G.S["patches"][i]
+		if p["crop"] == "" and not p.get("snow", false): p["snow"] = true; any = true
+	if any: G.say(tr("❄️ It snowed! The empty patches are under snow: clear it before you sow."))
+
+## Spring: the snow melts everywhere.
+func melt_snow() -> void:
+	for p in G.S["patches"]: p["snow"] = false
+
+func clear_snow(i: int) -> bool:
+	if not patch_snow(i): return false
+	var e := G.needs.ecost("field", 1.0) * G.m("energy:field")
+	if G.S["energy"] + 0.001 < e: G.say(tr("⚡ Too tired to clear the snow. Rest a little (tap ⚡).")); return false
+	G.S["energy"] -= e
+	G.S["patches"][i]["snow"] = false
+	G.inventory.emit_gained("patch:field:%d" % i, {})
+	G.save_game(); G.changed.emit()
+	return true
+
+func snow_count() -> int:
+	var n := 0
+	for i in range(G.S["patches"].size()):
+		if patch_usable("field", i) and patch_snow(i): n += 1
+	return n
+
 ## How many plants of this crop could go into one patch right now, and why not more.
 func plant_plan(a: String, cid: String) -> Dictionary:
 	var n = G.nodes[cid]
@@ -116,6 +159,8 @@ func plant_plan(a: String, cid: String) -> Dictionary:
 		k = int(floorf(seeds + 0.0001)); reasons.append("seeds")
 	if not sow_season_ok(n):      # winter wheat is sown in autumn or winter only
 		k = 0; reasons.append("season")
+	if sow_cold(a, n):            # outdoors in winter only hardy crops
+		k = 0; reasons.append("cold")
 	if a == "field":
 		var fd := free_density()
 		while k > fd and fert_points_have() + 0.001 < (k - fd):
@@ -141,9 +186,11 @@ func plant(a: String, i: int, cid: String) -> bool:
 	if not patch_usable(a, i): return false
 	var p = area(a)[i]
 	if p["crop"] != "": G.say(tr("Something is already growing there.")); return false
+	if a == "field" and patch_snow(i): G.say(tr("❄️ Snow covers this patch: clear it first.")); return false
 	var plan := plant_plan(a, cid)
 	var k := int(plan["plants"])
 	if k < 1:
+		if plan["reasons"].has("cold"): G.say(tr("❄️ Too cold to sow %s outdoors now.") % G.nodes[cid]["name"]); return false
 		if plan["reasons"].has("season"): G.say(tr("🌱 %s is sown in %s.") % [G.nodes[cid]["name"], " / ".join((G.nodes[cid]["sowSeasons"] as Array).map(func(x): return tr(x)))]); return false
 		G.say(tr("🌱 Can't plant %s: not enough %s.") % [G.nodes[cid]["name"], ", ".join(plan["reasons"])])
 		return false

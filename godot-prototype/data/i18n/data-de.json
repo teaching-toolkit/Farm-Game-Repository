@@ -939,6 +939,14 @@
   "en": "Pet 2 (default name Mossy). Bonus: finds a hidden spring (+1 💧 every water trip).",
   "de": "Haustier 2 (heisst zuerst Mossy). Bonus: findet eine versteckte Quelle (+1 💧 bei jedem Wasserholen)."
  },
+ "nodes/crop_kale/name": {
+  "en": "Winter kale",
+  "de": "Winterkohl"
+ },
+ "nodes/crop_kale/desc": {
+  "en": "Slow and small, but it grows in the cold and pays well in winter.",
+  "de": "Langsam und klein, aber er wächst in der Kälte und bringt im Winter gutes Geld."
+ },
  "nodes/smithy_chimney/name": {
   "en": "Smithy · chimney",
   "de": "Schmiede · Kamin"
@@ -8467,6 +8475,78 @@
   "en": "A carrot",
   "de": "Eine Karotte"
  },
+ "nodes/k_kale/name": {
+  "en": "Kale in the cold",
+  "de": "Kohl in der Kälte"
+ },
+ "nodes/k_kale/desc": {
+  "en": "Some plants grow when it is cold.",
+  "de": "Manche Pflanzen wachsen, wenn es kalt ist."
+ },
+ "nodes/k_kale/page": {
+  "en": "Most plants stop growing when it gets cold. But some plants are hardy. Kale, winter wheat and onions can stay out in the cold. Frost even makes kale sweeter, because the plant makes sugar to keep its leaves from freezing. In a greenhouse the cold stays outside, and other plants can grow too.",
+  "de": "Die meisten Pflanzen hören auf zu wachsen, wenn es kalt wird. Aber manche sind winterhart. Grünkohl, Winterweizen und Zwiebeln können draussen in der Kälte bleiben. Frost macht Grünkohl sogar süsser, denn die Pflanze macht Zucker, damit ihre Blätter nicht gefrieren. In einem Gewächshaus bleibt die Kälte draussen, und auch andere Pflanzen können wachsen."
+ },
+ "nodes/k_kale/questions/0/q": {
+  "en": "Which plant can grow in the cold of winter?",
+  "de": "Welche Pflanze kann in der Kälte des Winters wachsen?"
+ },
+ "nodes/k_kale/questions/0/why": {
+  "en": "Kale is a hardy plant: it stays green and keeps growing in the cold.",
+  "de": "Grünkohl ist winterhart: Er bleibt grün und wächst in der Kälte weiter."
+ },
+ "nodes/k_kale/questions/0/answers/0": {
+  "en": "Kale",
+  "de": "Grünkohl"
+ },
+ "nodes/k_kale/questions/0/answers/1": {
+  "en": "Tomatoes",
+  "de": "Tomaten"
+ },
+ "nodes/k_kale/questions/0/answers/2": {
+  "en": "Pumpkins",
+  "de": "Kürbisse"
+ },
+ "nodes/k_kale/questions/1/q": {
+  "en": "What does frost do to kale?",
+  "de": "Was macht Frost mit Grünkohl?"
+ },
+ "nodes/k_kale/questions/1/why": {
+  "en": "The plant makes sugar to keep its leaves from freezing, so it tastes sweeter.",
+  "de": "Die Pflanze macht Zucker, damit ihre Blätter nicht gefrieren, darum schmeckt er süsser."
+ },
+ "nodes/k_kale/questions/1/answers/0": {
+  "en": "It makes it taste sweeter",
+  "de": "Er schmeckt dann süsser"
+ },
+ "nodes/k_kale/questions/1/answers/1": {
+  "en": "It turns it blue",
+  "de": "Er wird blau"
+ },
+ "nodes/k_kale/questions/1/answers/2": {
+  "en": "It makes it grow faster",
+  "de": "Er wächst schneller"
+ },
+ "nodes/k_kale/questions/2/q": {
+  "en": "Why can tomatoes grow in a greenhouse in winter?",
+  "de": "Warum können Tomaten im Winter in einem Gewächshaus wachsen?"
+ },
+ "nodes/k_kale/questions/2/why": {
+  "en": "A greenhouse keeps the cold out, so tender plants stay warm.",
+  "de": "Ein Gewächshaus hält die Kälte draussen, darum bleiben zarte Pflanzen warm."
+ },
+ "nodes/k_kale/questions/2/answers/0": {
+  "en": "The cold stays outside",
+  "de": "Die Kälte bleibt draussen"
+ },
+ "nodes/k_kale/questions/2/answers/1": {
+  "en": "The sun is hotter in winter",
+  "de": "Die Sonne ist im Winter heisser"
+ },
+ "nodes/k_kale/questions/2/answers/2": {
+  "en": "Tomatoes like snow",
+  "de": "Tomaten mögen Schnee"
+ },
  "nodes/straw_sandals/name": {
   "en": "Straw Sandals",
   "de": "Strohsandalen"
@@ -9807,6 +9887,14 @@
   "en": "Sown in autumn, it sleeps under the frost and wakes in spring. The grain is its own seed.",
   "de": "Im Herbst gesät, schläft er unter dem Frost und wacht im Frühling auf. Das Korn ist seine eigene Saat."
  },
+ "items/kale/name": {
+  "en": "Winter kale",
+  "de": "Winterkohl"
+ },
+ "items/kale/desc": {
+  "en": "Tough dark leaves that sweeten in the frost. It grows slowly, but it grows when nothing else does.",
+  "de": "Zähe dunkle Blätter, die im Frost süss werden. Er wächst langsam, aber er wächst, wenn sonst nichts wächst."
+ },
  "recipes/porridge/verb": {
   "en": "Cook",
   "de": "Kochen"
@@ -10583,9 +10671,17 @@
   "en": "brambles and bindweed",
   "de": "Brombeeren und Winden"
  },
+ "meta/seasons/mods/spring/intro": {
+  "en": "Weeds sprout fast now, and the rain waters your fields. A good time to sow.",
+  "de": "Das Unkraut spriesst jetzt schnell, und der Regen giesst deine Felder. Eine gute Zeit zum Säen."
+ },
  "meta/seasons/mods/spring/abundance": {
   "en": "Weeds sprout everywhere (more fibre).",
   "de": "Überall spriesst Unkraut (mehr Fasern)."
+ },
+ "meta/seasons/mods/summer/intro": {
+  "en": "Crops grow fastest, but the soil is dry and more pests come. Carry plenty of water.",
+  "de": "Die Pflanzen wachsen am schnellsten, aber der Boden ist trocken und es kommen mehr Schädlinge. Trag reichlich Wasser."
  },
  "meta/seasons/mods/summer/abundance": {
   "en": "Bees fly all day: +30% honeycomb.",
@@ -10595,9 +10691,13 @@
   "en": "Fruit and nuts: orchard +40%; branches fall (sticks ×2).",
   "de": "Obst und Nüsse: Obstgarten +40%; Äste fallen herunter (Stöcke ×2)."
  },
- "meta/seasons/mods/autumn/hint": {
-  "en": "Time to sow winter wheat: it sleeps under the frost and wakes in spring.",
-  "de": "Zeit, Winterweizen zu säen: Er schläft unter dem Frost und wacht im Frühling auf."
+ "meta/seasons/mods/autumn/intro": {
+  "en": "Crops grow a little slower and the weeds slow down. Sow winter wheat now: it sleeps under the frost and wakes in spring.",
+  "de": "Die Pflanzen wachsen etwas langsamer, und das Unkraut wird weniger. Säe jetzt Winterweizen: Er schläft unter dem Frost und wacht im Frühling auf."
+ },
+ "meta/seasons/mods/winter/intro": {
+  "en": "Crops grow at a quarter of their speed. Snow covers the empty patches: clear it before you sow. Outside only hardy crops can be sown: winter wheat, onions, beans and kale. The house needs firewood.",
+  "de": "Die Pflanzen wachsen nur noch mit einem Viertel ihrer Geschwindigkeit. Schnee bedeckt die leeren Beete: Räume ihn weg, bevor du säst. Draussen kann man nur winterharte Pflanzen säen: Winterweizen, Zwiebeln, Bohnen und Grünkohl. Das Haus braucht Brennholz."
  },
  "meta/seasons/mods/winter/abundance": {
   "en": "Frost brings stones up (pick them for walls); indoor work by the fire −10% energy; wool grows thick.",

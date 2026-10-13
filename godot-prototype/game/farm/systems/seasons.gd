@@ -47,12 +47,14 @@ func step_rain(info: Dictionary) -> void:
 	var was_rain: bool = G.S.get("rain", false)
 	G.S["rain"] = G.rng.randf() < rain_ch
 	info["rain"] = G.S["rain"]
+	if G.S["rain"] and season() == "winter": G.fields.snowfall()          # in winter it snows instead
 	info["rain_stopped"] = was_rain and not G.S["rain"]
 	if G.g("waterPerStep", 0.0) > 0.0: G.S["water"] = minf(G.needs.water_cap(), float(G.S["water"]) + G.g("waterPerStep", 0.0))
 
 func _season_change(sn: int) -> void:
 	var nm: String = G.SEASON_NAMES[sn % 4]
 	G.trade.season_news(nm)
+	if nm != "winter": G.fields.melt_snow()
 	var spoiled := {}
 	var fr = G.meta.get("freshness", {})
 	var animal_items: Array = fr.get("animalItems", [])
@@ -73,8 +75,8 @@ func _season_change(sn: int) -> void:
 			spoiled[k] = lost
 	var msg := tr("%s It's %s! %s") % [str(G.meta["seasons"]["mods"][nm].get("emoji", "")), tr(nm), str(G.meta["seasons"]["mods"][nm].get("abundance", ""))]
 	G.say(msg)
-	var hint: String = str(G.meta["seasons"]["mods"][nm].get("hint", ""))
-	if hint != "" and G.done("k_wheat"): G.say("🌾 " + hint)
+	var intro: String = str(G.meta["seasons"]["mods"][nm].get("intro", ""))      # what changes now (TODO N8)
+	if intro != "": G.say("📜 " + tr(intro))
 	if not spoiled.is_empty():
 		var parts := []
 		for k in spoiled: parts.append("%s%d" % [G.iemoji(k), G.up(spoiled[k])])

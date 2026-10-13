@@ -55,6 +55,10 @@ func sheet_patch(a: String, i: int) -> void:
 		if float(p.get("quality", 1.0)) < 0.99:
 			M.content.add_child(UI.label(tr("🚧 Not fully cleared yet: it gives %d%% of a full harvest. Finish clearing it further down.") % int(round(float(p["quality"]) * 100)), 16, UI.MUTED, true))
 		var cap: int = G.fields.plants_per_patch(a)
+		if a == "field" and G.fields.patch_snow(i):          # winter: the snow has to go before anything is sown (TODO N6)
+			M.content.add_child(UI.label(tr("❄️ Snow covers this patch. Clear it before you sow."), 18, UI.INK, true))
+			M.content.add_child(UI.action_button("field", G.fields.clear_snow.bind(i), float(G.S["energy"]) + 0.001 >= G.needs.ecost("field", 1.0) * G.m("energy:field"), UI.SOIL, "🧹", tr("Clear the snow")))
+			return
 		M.content.add_child(UI.label("🌱".repeat(cap) + tr("  fits here"), 17, UI.MUTED, true))
 		var cs: Array = G.fields.crops_for(a)
 		if cs.is_empty(): M.content.add_child(UI.label(tr("No seeds you can plant here yet. Learn crop cards in the 📦 library."), 17, UI.MUTED, true))
@@ -72,7 +76,8 @@ func sheet_patch(a: String, i: int) -> void:
 			var base := {"water": float(plan["water_full_base" if short else "water_base"]), "energy": float(plan["energy_base"])}
 			t.add_child(M.widgets.costs(c, base))
 			t.add_child(UI.label("🌰 %d" % G.down(G.fields.seed_have(cid)), 16, UI.INK if G.fields.seed_have(cid) >= 1.0 else UI.RED))
-			if plan["reasons"].has("season"): t.add_child(UI.label(tr("🍂 Sow in autumn or winter"), 14, UI.MUTED, true))
+			if plan["reasons"].has("cold"): t.add_child(UI.label(tr("❄️ Too cold to sow. Try the greenhouse.") if G.done("greenhouse") else tr("❄️ Too cold to sow"), 14, UI.MUTED, true))
+			elif plan["reasons"].has("season"): t.add_child(UI.label(tr("🍂 Sow in autumn or winter"), 14, UI.MUTED, true))
 			elif plants < int(plan["max"]) and plan["reasons"].size() > 0:
 				var why := []
 				for rk in plan["reasons"]: why.append("🌰" if rk == "seeds" else ("🍂" if rk == "season" else G.iemoji(rk)))
@@ -175,13 +180,14 @@ func _do_stones(i: int) -> void:
 
 ## What there is to do on the patches of field f: how many are ready, weedy and stony (overgrown patches do not count).
 func _field_jobs(f: int) -> Dictionary:
-	var jobs := {"ready": 0, "weeds": 0, "stones": 0}
+	var jobs := {"ready": 0, "weeds": 0, "stones": 0, "snow": 0}
 	for i in range(f * 9, mini(f * 9 + 9, G.S["patches"].size())):
 		if not G.fields.patch_usable("field", i): continue
 		var p: Dictionary = G.S["patches"][i]
 		if p["crop"] != "" and p["ready"]: jobs["ready"] += 1
 		if float(p["weeds"]) >= 0.5: jobs["weeds"] += 1
 		if float(p["stones"]) >= 0.5: jobs["stones"] += 1
+		if p.get("snow", false): jobs["snow"] += 1
 	return jobs
 
 ## Harvest, weed or pick the stones of every patch of field f. The farmer walks from patch to patch (each patch plays its own act).
@@ -192,6 +198,11 @@ func harvest_field(f: int) -> void:
 
 func weed_field(f: int) -> void:
 	G.fields.weed_field(f)
+
+func snow_field(f: int) -> void:
+	for i in range(f * 9, mini(f * 9 + 9, G.S["patches"].size())):
+		if G.fields.patch_usable("field", i) and G.S["patches"][i].get("snow", false):
+			if not G.fields.clear_snow(i): break
 
 func stones_field(f: int) -> void:
 	for i in range(f * 9, mini(f * 9 + 9, G.S["patches"].size())):
@@ -239,6 +250,7 @@ func part_whole_field() -> void:
 	qa.add_child(UI.button("%s  %d" % [tr("🧺 Harvest all"), jobs["ready"]], harvest_field.bind(f), jobs["ready"] > 0, UI.GREEN, 17))
 	qa.add_child(UI.button("%s  %d" % [tr("🌿 Pick all weeds"), jobs["weeds"]], weed_field.bind(f), jobs["weeds"] > 0, UI.GREEN_DARK, 17))
 	qa.add_child(UI.button("%s  %d" % [tr("🪨 Pick all stones"), jobs["stones"]], stones_field.bind(f), jobs["stones"] > 0, UI.SOIL, 17))
+	if jobs["snow"] > 0: qa.add_child(UI.button("%s  %d" % [tr("❄️ Clear all snow"), jobs["snow"]], snow_field.bind(f), true, UI.SOIL, 17))
 	M.content.add_child(qa)
 
 ## The pests line: how many there are, what they eat, what chases them off.

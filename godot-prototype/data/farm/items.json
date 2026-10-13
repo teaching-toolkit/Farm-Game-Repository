@@ -144,5 +144,6 @@
   "clay_pot": {"name": "Clay Pot", "emoji": "🏺", "category": "craft", "value": 130, "desc": "Two lumps of clay, dug and fired. A pot is always useful.", "chapter": 1},
   "axle": {"name": "Axle", "emoji": "⚙️", "category": "material", "value": 900, "desc": "A wheel axle, turned smooth and true. Nobody on the farm can make one yet — the travelling merchant has one.", "chapter": 1},
   "hay": {"name": "Hay", "emoji": "🌿", "category": "crop", "value": 12, "tags": ["fodder", "bedding", "compostable"], "desc": "Meadow grass, cut and dried. Soft bedding, feed for hutch and pen, and good for the compost heap.", "chapter": 1},
-  "winter_wheat": {"name": "Winter wheat", "emoji": "❄️", "category": "crop", "value": 18, "tags": ["grain", "millable", "feed-grain"], "desc": "Sown in autumn, it sleeps under the frost and wakes in spring. The grain is its own seed.", "chapter": 1}
+  "winter_wheat": {"name": "Winter wheat", "emoji": "❄️", "category": "crop", "value": 18, "tags": ["grain", "millable", "feed-grain"], "desc": "Sown in autumn, it sleeps under the frost and wakes in spring. The grain is its own seed.", "chapter": 1},
+  "kale": {"name": "Winter kale", "emoji": "🥬", "category": "crop", "value": 60, "tags": ["vegetable", "leafy", "compostable"], "desc": "Tough dark leaves that sweeten in the frost. It grows slowly, but it grows when nothing else does.", "chapter": 2}
 }

@@ -78,6 +78,9 @@ static func apply(main, G) -> void:
 			G.S["nature"]["pool"] = {"sticks": 9.0, "stones": 4.0, "clay": 16.0}
 			G.S["nature"]["t"] = 5.0; G.S["nature"]["s"] = 6.0; G.S["nature"]["p"] = 3.0
 			G.invalidate_caps()
+		elif a == "--snow":                        # screenshots: winter, snow on the empty patches (use with --sheet=patch:field:0 or --spot=field)
+			G.S["step"] = 95; G.S["last_season"] = 3
+			G.fields.snowfall()
 		elif a == "--lord": G.S["lord"]["owed"] = 450.0       # screenshots: Pieter waits at the gate for the Lord's share
 		elif a == "--square": G.S["trip"] = {"phase": "square", "bought": 0.0}       # screenshots: standing on the village square (use with --give, --pack, --spot=market)
 		elif a == "--built":                       # screenshots: pretend house, barn and workshop stand

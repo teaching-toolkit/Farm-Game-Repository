@@ -117,6 +117,7 @@
         "pests": 1,
         "waterField": 1,
         "rain": 0.3,
+        "intro": "Weeds sprout fast now, and the rain waters your fields. A good time to sow.",
         "abundance": "Weeds sprout everywhere (more fibre).",
         "gather": {
           "pull_wild_weeds": 1.5
@@ -129,6 +130,7 @@
         "pests": 1.5,
         "waterField": 1.3,
         "rain": 0.1,
+        "intro": "Crops grow fastest, but the soil is dry and more pests come. Carry plenty of water.",
         "abundance": "Bees fly all day: +30% honeycomb.",
         "out": {
           "animal_bees": 1.3
@@ -142,7 +144,7 @@
         "waterField": 1,
         "rain": 0.3,
         "abundance": "Fruit and nuts: orchard +40%; branches fall (sticks ×2).",
-        "hint": "Time to sow winter wheat: it sleeps under the frost and wakes in spring.",
+        "intro": "Crops grow a little slower and the weeds slow down. Sow winter wheat now: it sleeps under the frost and wakes in spring.",
         "yieldOrchard": 1.4,
         "gather": {
           "gather_sticks": 2
@@ -150,11 +152,12 @@
       },
       "winter": {
         "emoji": "❄️",
-        "grow": 0.5,
+        "grow": 0.25,
         "weeds": 0.2,
         "pests": 0.2,
         "waterField": 0.8,
         "rain": 0.2,
+        "intro": "Crops grow at a quarter of their speed. Snow covers the empty patches: clear it before you sow. Outside only hardy crops can be sown: winter wheat, onions, beans and kale. The house needs firewood.",
         "abundance": "Frost brings stones up (pick them for walls); indoor work by the fire −10% energy; wool grows thick.",
         "stoneHeave": true,
         "homeFuel": true,
@@ -167,7 +170,7 @@
         }
       }
     },
-    "note": "Seasons only change speeds and amounts — nothing dies. Crops just grow slower in winter (the greenhouse doesn't care). The season shows how many questions are left until the next one."
+    "note": "Seasons only change speeds and amounts — nothing dies. Crops grow at a quarter of their speed in winter (the greenhouse doesn't care). The season shows how many questions are left until the next one."
   },
   "freshness": {
     "rule": "At each change of season, food that has already lived through shelfLife season changes turns stale: plant food becomes Feed Mash, eggs and dairy go to the Compost pile. A 'stale soon' badge shows on anything that will turn at the next change — sell it, eat it, or cook it into something that keeps.",
