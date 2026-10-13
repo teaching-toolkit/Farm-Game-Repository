@@ -22,7 +22,7 @@ coming home (bunny, tortoise, goat, pony, alpaca). Learning *is* the economy:
 
 - **Time Quiz** — general-knowledge questions from packs the parent chooses; each right answer moves farm time one step.
 - **Rest** — mental-arithmetic sums (a curriculum for classes 1–7 with spaced repetition and medals) give energy.
-- **Knowledge cards** — 67 cards about real farming and crafts, read and quizzed, unlock what they describe.
+- **Knowledge cards** — 76 cards about real farming and crafts, read and quizzed, unlock what they describe.
 
 It is built as a **Godot 4.7 prototype** (GDScript) that is fully playable through all six chapters, driven by one data
 file. It also runs in the browser (`web-build/`). The person you work with is the child's parent and the game's designer;
@@ -237,6 +237,6 @@ area. Finished tasks are recorded in `PROJECT-LOG.md` and removed from `TODO.md`
 
 ## 7. Key numbers right now
 
-Data v0.8: 141 items, 424 nodes, 106 recipes, 38 stations, 67 cards in 12 books, 22 polish jobs, 58 helpers, 28 side quests.
+Data v0.8: 146 items, 438 nodes, 109 recipes, 38 stations, 76 cards in 13 books, 22 polish jobs, 58 helpers, 28 side quests.
 Explorer playthrough: about 21.2 hours, ~1,417 Time Quiz answers, ~1,380 Rest answers; pets at about 1.6 / 5.8 / 12 / 17 / 20 h.
-Quiz packs: Farm basics (FRM, 4), Continents (CON, 12), Farm pictures (PIC, 18) + card questions KNW-001…201.
+Quiz packs: Farm basics (FRM, 4), Continents (CON, 12), Farm pictures (PIC, 18) + card questions KNW-001…228.

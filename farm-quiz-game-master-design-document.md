@@ -151,7 +151,7 @@ well as a card review).
   the repetition and only a right first try moves time.
 - **Read aloud.** Where the device has a voice, 🔊 reads the question and the answers. A device setting (⚙️ Settings, grown-up part) chooses *off* (no 🔊 buttons), *a button* (the default) or *by itself* (each question and card page is read as it opens; 🔊 reads it again).
 - **Every question has an id** that never changes and is never reused: a pack code and a number (`CON-003`, `PIC-012`);
-  the knowledge cards' questions are `KNW-001` … `KNW-201`. The learning record and the translations use the id, so the
+  the knowledge cards' questions are `KNW-001` … `KNW-228`. The learning record and the translations use the id, so the
   record says how well the child knows *that* question in any language, and a question can be reworded without losing
   what was learned.
 - **Packs now:** *Farm basics* (FRM, 4), *Continents* (CON, 12), *Farm pictures* (PIC, 18, picture questions). A playthrough
@@ -1179,7 +1179,7 @@ Everything about the content is data, so the game can be rebalanced without code
 
 | File | Holds |
 |---|---|
-| `data/farm/` | the whole tree (v0.8), in files: `items.json` (141 items), `nodes/` (424 nodes in 14 themed files: buildings, upgrades, tools, gear, helpers, polish, cards, books, goals, side quests, pets, merchants …), `recipes.json` (106), `rules/` (energy, water, yields, pricing, market, seasons, pests, freshness, carry, flex …, by system), `chapters.json`, `start.json`, and `places.json` (the farm's places) |
+| `data/farm/` | the whole tree (v0.8), in files: `items.json` (146 items), `nodes/` (438 nodes in 14 themed files: buildings, upgrades, tools, gear, helpers, polish, cards, books, goals, side quests, pets, merchants …), `recipes.json` (106), `rules/` (energy, water, yields, pricing, market, seasons, pests, freshness, carry, flex …, by system), `chapters.json`, `start.json`, and `places.json` (the farm's places) |
 | `data/map_layout.json` | where every place, add-on, corner and decoration stands |
 | `data/quiz_packs/*.json` | Time Quiz packs |
 | `data/i18n/quiz-<lang>.json` | quiz texts by question id |

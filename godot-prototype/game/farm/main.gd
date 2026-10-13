@@ -39,6 +39,9 @@ var stations: FarmUiStations
 var story: FarmUiStory
 var timequiz: FarmUiTimeQuiz
 var waterroad: FarmUiWaterRoad
+var wellui: FarmUiWell
+var face_btn: Button        # the farmer's face at the end of the energy bar (opens the dashboard)
+var rest_icon: Label        # the 😴 before the face appears
 var welcome: FarmUiWelcome
 var widgets: FarmUiWidgets
 var bg: ColorRect
@@ -109,6 +112,7 @@ func _make_parts() -> void:
 	story = FarmUiStory.new(self)
 	timequiz = FarmUiTimeQuiz.new(self)
 	waterroad = FarmUiWaterRoad.new(self)
+	wellui = FarmUiWell.new(self)
 	welcome = FarmUiWelcome.new(self)
 	widgets = FarmUiWidgets.new(self)
 
@@ -227,7 +231,13 @@ func _build() -> void:
 	ebox.add_child(UI.label("⚡", 20))
 	energy_bar = UI.stock_bar(0.0, 20.0, UI.item_color("energy"), 150)
 	ebox.add_child(energy_bar)
-	ebox.add_child(UI.label("😴", 18))
+	rest_icon = UI.label("😴", 18)
+	ebox.add_child(rest_icon)
+	face_btn = UI.soft_button("🙂", sheets.open_sheet.bind("well"), true, 18)
+	face_btn.custom_minimum_size = Vector2(34, 30)
+	face_btn.tooltip_text = tr("How you feel")
+	face_btn.visible = false
+	ebox.add_child(face_btn)
 	ep.add_child(ebox)
 	ep.pressed.connect(rest.go_rest)
 	r1.add_child(ep)
@@ -397,6 +407,9 @@ func refresh() -> void:
 	_fit_hud()
 	water_bar.have = float(S["water"]); water_bar.cap = G.needs.water_cap(); water_bar.refresh()
 	energy_bar.have = float(S["energy"]); energy_bar.cap = G.needs.energy_max(); energy_bar.refresh()
+	face_btn.visible = G.reveal.shown("face")
+	rest_icon.visible = not face_btn.visible
+	if face_btn.visible: face_btn.text = G.well.face()
 	season_emoji.text = G.seasons.season_emoji()
 	if G.seasons.season() != _last_season:            # a new season: its music on the farm, a breeze with the perk
 		if _last_season != "": feedback.sfx("breeze")

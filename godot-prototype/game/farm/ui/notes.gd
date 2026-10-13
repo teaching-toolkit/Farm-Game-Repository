@@ -50,9 +50,10 @@ func on_revealed(id: String) -> void:
 		"album": what = tr("🖼️ the album")
 		"scroll": what = tr("📜 the story scroll")
 		"bag": what = tr("🎒 the bag")
+		"face": what = tr("😊 how you feel: tap the face")
 		_: return
 	toast(tr("✨ New: %s") % what, 6.0)
-	var node: Control = M.lbl_coins if id == "coins" else M.icon_buttons.get(id)
+	var node: Control = M.lbl_coins if id == "coins" else (M.face_btn if id == "face" else M.icon_buttons.get(id))
 	if node == null: return
 	node.visible = true
 	node.pivot_offset = node.size / 2.0

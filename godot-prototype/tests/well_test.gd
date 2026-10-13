@@ -81,6 +81,13 @@ func _ready() -> void:
 	for p in W.params(): G.S["well"]["v"][p] = 0.1
 	_check(happy == "😄" and W.face() == "😣", "the face follows the overall mood")
 	_check(G.well.save_defaults().has("well"), "the save key has defaults")
+	var rows := {}
+	for cid in G.card_ids:
+		if G.nodes[cid].has("wellRow"): rows[str(G.nodes[cid]["wellRow"])] = cid
+	_check(rows.size() == W.params().size(), "every parameter has one card that opens its row (%d)" % rows.size())
+	var all_in_book := true
+	for p in rows: if not (G.nodes[rows[p]]["requires"] as Array).has("book_body"): all_in_book = false
+	_check(all_in_book and G.nodes["book_body"]["type"] == "book", "the cards belong to the book Body and mind")
 	print("WELL %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])
 	get_tree().quit(1 if fails > 0 else 0)
 

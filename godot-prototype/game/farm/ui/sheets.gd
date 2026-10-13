@@ -19,6 +19,9 @@ var _slide := 1.0
 
 ## A tap on a place: a building with an inside opens its inside, everything else its sheet.
 func open_spot(sid: String) -> void:
+	if sid == "farmer":        # a tap on the farmer opens the wellbeing dashboard, once it has appeared (TODO L4)
+		if G.reveal.shown("face"): open_sheet("well")
+		return
 	G.story.tapped(sid)
 	M.feedback.animal_voice(sid)
 	if Spots.has_interior(sid) and M.mapview.built(sid):
@@ -123,6 +126,9 @@ func rebuild_sheet() -> void:
 				M.sheet_title.text = tr("🎒 Bag")
 				M.content.add_child(UI.header(null, "🎒", 70))
 				M.pantry.part_bag()
+			"well":
+				M.sheet_title.text = tr("%s How you feel") % G.well.face()
+				M.wellui.sheet_well()
 			"scroll":
 				M.sheet_title.text = tr("📜 Story")
 				M.content.add_child(UI.header(null, "📜", 80))

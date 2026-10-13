@@ -170,6 +170,7 @@ func _ready() -> void:
 	# the farmer, in front of the house
 	avatar = Avatar.new()
 	avatar.map = self
+	avatar.tapped.connect(func(): spot_tapped.emit("farmer"))
 	avatar.feet = Vector2(float(L.get("avatar", {}).get("x", 417)), float(L.get("avatar", {}).get("y", 262)))
 	sort_in(avatar, avatar.feet.y)
 	actor = Actor.new()

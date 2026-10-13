@@ -249,6 +249,22 @@ else:
         if pid not in N or N[pid].get("type") != "pet": err("pets", f"first: {pid} is not a pet")
         if not f.get("emoji") or not f.get("place") or int(f.get("every", 0)) < 1: err(f"pets {pid}", "first needs an emoji, a place and every >= 1")
 
+# ---------------------------------------------------------------- wellbeing (rules/55-well.json)
+WL = META.get("well", {})
+if not WL: warn("well", "rules/55-well.json is missing")
+else:
+    rows = {}
+    for nid, n in N.items():
+        if "wellRow" in n:
+            if n["wellRow"] not in WL.get("params", {}): err(f"node {nid}", f"wellRow {n['wellRow']} is not a wellbeing parameter")
+            rows.setdefault(n["wellRow"], []).append(nid)
+    for p, sp in WL.get("params", {}).items():
+        if len(rows.get(p, [])) != 1: err(f"well {p}", f"needs exactly one card that opens its dashboard row (wellRow), has {rows.get(p, [])}")
+        for k in ("emoji", "name", "floor", "hint"):
+            if k not in sp: err(f"well {p}", f"{k} is missing")
+    if not 1 <= int(WL.get("fromChapter", 0)) <= len(D["chapters"]): err("well", "fromChapter is not a chapter")
+    if not WL.get("faces"): err("well", "faces are missing")
+
 # ---------------------------------------------------------------- the travelling merchant (rules/50-gate.json)
 GT = META.get("gate", {})
 if not GT: err("gate", "no 'gate' in rules/50-gate.json")

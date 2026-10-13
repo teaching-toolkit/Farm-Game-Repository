@@ -37,6 +37,7 @@ var _swing := 0.0
 var _face := 0.0
 var _blink := 2.5
 var _wave := 0.0
+signal tapped      # the farmer was tapped (a wave and a hop; the game can open something)
 var _hop := 0.0
 var _sort_t := 0.0
 var _foot_px := Vector2(75, 180)
@@ -435,4 +436,5 @@ func _has_point(p: Vector2) -> bool:
 func _gui_input(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT and not e.pressed:
 		greet()
+		tapped.emit()
 		accept_event()

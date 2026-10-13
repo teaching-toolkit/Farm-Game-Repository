@@ -2848,8 +2848,8 @@
   "de": "Bücherschrank & Lesesessel"
  },
  "nodes/library_bookcase/desc": {
-  "en": "Holds 10 books. Reading 20% faster. Needs 15 cards learned.",
-  "de": "Fasst 10 Bücher. Lesen 20% schneller. Braucht 15 gelernte Karten."
+  "en": "Holds 11 books. Reading 20% faster. Needs 15 cards learned.",
+  "de": "Fasst 11 Bücher. Lesen 20% schneller. Braucht 15 gelernte Karten."
  },
  "nodes/library_bookcase/steps/0/name": {
   "en": "Fit the planks",
@@ -2868,8 +2868,8 @@
   "de": "Bücherzimmer"
  },
  "nodes/library_room/desc": {
-  "en": "A quiet room of your own: all 12 books, reading 30% faster, and a cosy chair (+0.5 energy per Rest answer). Needs 30 cards learned.",
-  "de": "Ein ruhiges Zimmer für dich allein: alle 12 Bücher, Lesen 30% schneller und ein gemütlicher Sessel (+0,5 Energie pro Antwort beim Ausruhen). Braucht 30 gelernte Karten."
+  "en": "A quiet room of your own: all 13 books, reading 30% faster, and a cosy chair (+0.5 energy per Rest answer). Needs 30 cards learned.",
+  "de": "Ein ruhiges Zimmer für dich allein: alle 13 Bücher, Lesen 30% schneller und ein gemütlicher Sessel (+0,5 Energie pro Antwort beim Ausruhen). Braucht 30 gelernte Karten."
  },
  "nodes/library_room/steps/0/name": {
   "en": "Fit the planks",
@@ -2882,6 +2882,14 @@
  "nodes/library_room/steps/2/name": {
   "en": "Finish it off",
   "de": "Fertig machen"
+ },
+ "nodes/book_body/name": {
+  "en": "Body and Mind",
+  "de": "Körper und Geist"
+ },
+ "nodes/book_body/desc": {
+  "en": "Sleep, food, strong muscles, friends, calm and play: how a farmer feels well.",
+  "de": "Schlaf, Essen, starke Muskeln, Freunde, Ruhe und Spiel: wie sich ein Bauer wohlfühlt."
  },
  "nodes/k_wheat/name": {
   "en": "Growing wheat",
@@ -7922,6 +7930,438 @@
  "nodes/k_winter_wheat/questions/2/answers/2": {
   "en": "It drinks no water",
   "de": "Er trinkt kein Wasser"
+ },
+ "nodes/k_sleep/name": {
+  "en": "Sleep",
+  "de": "Schlaf"
+ },
+ "nodes/k_sleep/desc": {
+  "en": "Sleep lets body and mind recover.",
+  "de": "Im Schlaf erholen sich Körper und Geist."
+ },
+ "nodes/k_sleep/page": {
+  "en": "When you sleep, your body rests and grows, and your brain sorts out everything you learned that day. Children need about nine to eleven hours of sleep. A dark, quiet room and a comfy bed help a lot. A tired farmer makes more mistakes.",
+  "de": "Wenn du schläfst, ruht sich dein Körper aus und wächst, und dein Gehirn sortiert alles, was du am Tag gelernt hast. Kinder brauchen etwa neun bis elf Stunden Schlaf. Ein dunkles, ruhiges Zimmer und ein bequemes Bett helfen sehr. Ein müder Bauer macht mehr Fehler."
+ },
+ "nodes/k_sleep/questions/0/q": {
+  "en": "What does sleep do for you?",
+  "de": "Was macht der Schlaf für dich?"
+ },
+ "nodes/k_sleep/questions/0/why": {
+  "en": "Sleep lets the body rest and grow, and the brain sorts out what you learned.",
+  "de": "Im Schlaf ruht der Körper und wächst, und das Gehirn sortiert, was du gelernt hast."
+ },
+ "nodes/k_sleep/questions/0/answers/0": {
+  "en": "It lets your body rest and your brain sort what you learned",
+  "de": "Er lässt deinen Körper ruhen und dein Gehirn sortieren, was du gelernt hast"
+ },
+ "nodes/k_sleep/questions/0/answers/1": {
+  "en": "It makes you taller in one night",
+  "de": "Er macht dich über Nacht grösser"
+ },
+ "nodes/k_sleep/questions/0/answers/2": {
+  "en": "It uses up all your energy",
+  "de": "Er verbraucht deine ganze Energie"
+ },
+ "nodes/k_sleep/questions/1/q": {
+  "en": "What helps you sleep well?",
+  "de": "Was hilft dir, gut zu schlafen?"
+ },
+ "nodes/k_sleep/questions/1/why": {
+  "en": "A dark, quiet room and a comfy bed make it easy to fall asleep.",
+  "de": "In einem dunklen, ruhigen Zimmer mit bequemem Bett schläft man leicht ein."
+ },
+ "nodes/k_sleep/questions/1/answers/0": {
+  "en": "A dark, quiet room and a comfy bed",
+  "de": "Ein dunkles, ruhiges Zimmer und ein bequemes Bett"
+ },
+ "nodes/k_sleep/questions/1/answers/1": {
+  "en": "Loud music and bright lights",
+  "de": "Laute Musik und helles Licht"
+ },
+ "nodes/k_sleep/questions/1/answers/2": {
+  "en": "Running around just before bed",
+  "de": "Kurz vor dem Schlafen herumrennen"
+ },
+ "nodes/k_sleep/questions/2/q": {
+  "en": "What happens when you are very tired?",
+  "de": "Was passiert, wenn du sehr müde bist?"
+ },
+ "nodes/k_sleep/questions/2/why": {
+  "en": "Tired people make more mistakes and have less energy.",
+  "de": "Müde Menschen machen mehr Fehler und haben weniger Energie."
+ },
+ "nodes/k_sleep/questions/2/answers/0": {
+  "en": "You make more mistakes",
+  "de": "Du machst mehr Fehler"
+ },
+ "nodes/k_sleep/questions/2/answers/1": {
+  "en": "You get smarter",
+  "de": "Du wirst klüger"
+ },
+ "nodes/k_sleep/questions/2/answers/2": {
+  "en": "You grow faster",
+  "de": "Du wächst schneller"
+ },
+ "nodes/k_food/name": {
+  "en": "A colourful plate",
+  "de": "Ein bunter Teller"
+ },
+ "nodes/k_food/desc": {
+  "en": "Different foods give your body different things.",
+  "de": "Verschiedene Lebensmittel geben deinem Körper Verschiedenes."
+ },
+ "nodes/k_food/page": {
+  "en": "Different foods give your body different things. Bread and porridge give you energy. Vegetables and fruit give vitamins. Beans, eggs and milk help your body grow. So a good plate has many kinds and many colours, and not always the same dish.",
+  "de": "Verschiedene Lebensmittel geben deinem Körper verschiedene Dinge. Brot und Porridge geben dir Energie. Gemüse und Obst geben dir Vitamine. Bohnen, Eier und Milch helfen deinem Körper beim Wachsen. Ein guter Teller hat darum viele Sorten und viele Farben und nicht immer dasselbe Gericht."
+ },
+ "nodes/k_food/questions/0/q": {
+  "en": "Why is it good to eat many different foods?",
+  "de": "Warum ist es gut, viele verschiedene Lebensmittel zu essen?"
+ },
+ "nodes/k_food/questions/0/why": {
+  "en": "Each food gives the body something different, so variety keeps you healthy.",
+  "de": "Jedes Lebensmittel gibt dem Körper etwas anderes, darum hält Abwechslung gesund."
+ },
+ "nodes/k_food/questions/0/answers/0": {
+  "en": "Different foods give your body different things",
+  "de": "Verschiedene Lebensmittel geben deinem Körper Verschiedenes"
+ },
+ "nodes/k_food/questions/0/answers/1": {
+  "en": "Because one food is always enough",
+  "de": "Weil ein einziges immer reicht"
+ },
+ "nodes/k_food/questions/0/answers/2": {
+  "en": "Because it makes the plate heavier",
+  "de": "Weil der Teller dann schwerer wird"
+ },
+ "nodes/k_food/questions/1/q": {
+  "en": "Which food gives you energy for a long morning?",
+  "de": "Welches Essen gibt dir Energie für einen langen Morgen?"
+ },
+ "nodes/k_food/questions/1/why": {
+  "en": "Grains like porridge and bread give lasting energy.",
+  "de": "Getreide wie Porridge und Brot gibt Energie für lange Zeit."
+ },
+ "nodes/k_food/questions/1/answers/0": {
+  "en": "Porridge or bread",
+  "de": "Porridge oder Brot"
+ },
+ "nodes/k_food/questions/1/answers/1": {
+  "en": "Nothing at all",
+  "de": "Gar nichts"
+ },
+ "nodes/k_food/questions/1/answers/2": {
+  "en": "Only a glass of water",
+  "de": "Nur ein Glas Wasser"
+ },
+ "nodes/k_food/questions/2/q": {
+  "en": "How do you make a meal healthier?",
+  "de": "Wie wird eine Mahlzeit gesünder?"
+ },
+ "nodes/k_food/questions/2/why": {
+  "en": "Colourful vegetables add vitamins and fibre to a meal.",
+  "de": "Buntes Gemüse bringt Vitamine und Ballaststoffe in die Mahlzeit."
+ },
+ "nodes/k_food/questions/2/answers/0": {
+  "en": "Add vegetables of different colours",
+  "de": "Mit Gemüse in vielen Farben"
+ },
+ "nodes/k_food/questions/2/answers/1": {
+  "en": "Eat only sweets",
+  "de": "Wenn man nur Süsses isst"
+ },
+ "nodes/k_food/questions/2/answers/2": {
+  "en": "Skip breakfast",
+  "de": "Wenn man das Frühstück weglässt"
+ },
+ "nodes/k_strength/name": {
+  "en": "Strong muscles",
+  "de": "Starke Muskeln"
+ },
+ "nodes/k_strength/desc": {
+  "en": "Muscles get stronger when you use them.",
+  "de": "Muskeln werden stärker, wenn man sie braucht."
+ },
+ "nodes/k_strength/page": {
+  "en": "Muscles get stronger when you use them again and again. After hard work they need rest and good food to grow. Before heavy work, stretch a little to warm up. And when you lift something heavy, bend your knees and use your legs, not your back.",
+  "de": "Muskeln werden stärker, wenn du sie immer wieder brauchst. Nach harter Arbeit brauchen sie Ruhe und gutes Essen, um zu wachsen. Vor schwerer Arbeit dehnst du dich ein wenig, damit du warm wirst. Und wenn du etwas Schweres hebst, beuge die Knie und nimm die Beine, nicht den Rücken."
+ },
+ "nodes/k_strength/questions/0/q": {
+  "en": "How do muscles get stronger?",
+  "de": "Wie werden Muskeln stärker?"
+ },
+ "nodes/k_strength/questions/0/why": {
+  "en": "Using muscles regularly, with enough rest and food, makes them stronger.",
+  "de": "Wer die Muskeln regelmässig braucht und genug ruht und isst, wird stärker."
+ },
+ "nodes/k_strength/questions/0/answers/0": {
+  "en": "By being used again and again",
+  "de": "Wenn man sie immer wieder braucht"
+ },
+ "nodes/k_strength/questions/0/answers/1": {
+  "en": "By staying still all day",
+  "de": "Wenn man den ganzen Tag still sitzt"
+ },
+ "nodes/k_strength/questions/0/answers/2": {
+  "en": "By eating only sweets",
+  "de": "Wenn man nur Süsses isst"
+ },
+ "nodes/k_strength/questions/1/q": {
+  "en": "What do muscles need after hard work?",
+  "de": "Was brauchen Muskeln nach harter Arbeit?"
+ },
+ "nodes/k_strength/questions/1/why": {
+  "en": "Muscles grow stronger during rest, when they have good food.",
+  "de": "Muskeln werden in der Ruhe stärker, wenn sie gutes Essen haben."
+ },
+ "nodes/k_strength/questions/1/answers/0": {
+  "en": "Rest and good food",
+  "de": "Ruhe und gutes Essen"
+ },
+ "nodes/k_strength/questions/1/answers/1": {
+  "en": "More heavy lifting right away",
+  "de": "Gleich wieder schweres Heben"
+ },
+ "nodes/k_strength/questions/1/answers/2": {
+  "en": "Nothing",
+  "de": "Nichts"
+ },
+ "nodes/k_strength/questions/2/q": {
+  "en": "How should you lift something heavy?",
+  "de": "Wie hebst du etwas Schweres?"
+ },
+ "nodes/k_strength/questions/2/why": {
+  "en": "Using your legs protects your back.",
+  "de": "Mit den Beinen zu heben schützt deinen Rücken."
+ },
+ "nodes/k_strength/questions/2/answers/0": {
+  "en": "Bend your knees and use your legs",
+  "de": "Mit gebeugten Knien, aus den Beinen"
+ },
+ "nodes/k_strength/questions/2/answers/1": {
+  "en": "Bend over and pull with your back",
+  "de": "Gebückt, mit dem Rücken ziehen"
+ },
+ "nodes/k_strength/questions/2/answers/2": {
+  "en": "Jump and grab it",
+  "de": "Hochspringen und zupacken"
+ },
+ "nodes/k_friends/name": {
+  "en": "Friends",
+  "de": "Freunde"
+ },
+ "nodes/k_friends/desc": {
+  "en": "Helping others feels good, for them and for you.",
+  "de": "Anderen zu helfen fühlt sich gut an, für sie und für dich."
+ },
+ "nodes/k_friends/page": {
+  "en": "Being kind and helping others makes them feel good, and you too. Friends share heavy work, and they share fun. A good friend listens, shares and says thank you. On a farm, many hands make a big job small.",
+  "de": "Wenn du freundlich bist und anderen hilfst, fühlen sie sich gut, und du auch. Freunde teilen schwere Arbeit, und sie teilen Spass. Ein guter Freund hört zu, teilt und sagt danke. Auf einem Hof machen viele Hände eine grosse Arbeit klein."
+ },
+ "nodes/k_friends/questions/0/q": {
+  "en": "How do you often feel after you helped a friend?",
+  "de": "Wie fühlst du dich oft, nachdem du einem Freund geholfen hast?"
+ },
+ "nodes/k_friends/questions/0/why": {
+  "en": "Helping others makes people feel good too.",
+  "de": "Auch anderen zu helfen fühlt sich gut an."
+ },
+ "nodes/k_friends/questions/0/answers/0": {
+  "en": "Happy and proud",
+  "de": "Froh und stolz"
+ },
+ "nodes/k_friends/questions/0/answers/1": {
+  "en": "Angry",
+  "de": "Wütend"
+ },
+ "nodes/k_friends/questions/0/answers/2": {
+  "en": "Hungry for ever",
+  "de": "Für immer hungrig"
+ },
+ "nodes/k_friends/questions/1/q": {
+  "en": "What does a good friend do?",
+  "de": "Was macht ein guter Freund?"
+ },
+ "nodes/k_friends/questions/1/why": {
+  "en": "Listening, sharing and being thankful make friendships strong.",
+  "de": "Zuhören, Teilen und Danken machen Freundschaften stark."
+ },
+ "nodes/k_friends/questions/1/answers/0": {
+  "en": "Listens, shares and says thank you",
+  "de": "Er hört zu, teilt und sagt danke"
+ },
+ "nodes/k_friends/questions/1/answers/1": {
+  "en": "Takes everything for themselves",
+  "de": "Er nimmt alles für sich"
+ },
+ "nodes/k_friends/questions/1/answers/2": {
+  "en": "Never talks to you",
+  "de": "Er spricht nie mit dir"
+ },
+ "nodes/k_friends/questions/2/q": {
+  "en": "Why are friends useful on a farm?",
+  "de": "Warum sind Freunde auf einem Hof nützlich?"
+ },
+ "nodes/k_friends/questions/2/why": {
+  "en": "Friends share heavy work, so it gets done faster.",
+  "de": "Freunde teilen die schwere Arbeit, darum ist sie schneller getan."
+ },
+ "nodes/k_friends/questions/2/answers/0": {
+  "en": "Many hands make a big job small",
+  "de": "Viele Hände machen eine grosse Arbeit klein"
+ },
+ "nodes/k_friends/questions/2/answers/1": {
+  "en": "They never need help themselves",
+  "de": "Sie brauchen selbst nie Hilfe"
+ },
+ "nodes/k_friends/questions/2/answers/2": {
+  "en": "They make the fields bigger",
+  "de": "Sie machen die Felder grösser"
+ },
+ "nodes/k_calm/name": {
+  "en": "Calm and breathing",
+  "de": "Ruhe und Atmen"
+ },
+ "nodes/k_calm/desc": {
+  "en": "A slow breath and a short break calm you down.",
+  "de": "Ein langer Atemzug und eine kurze Pause machen ruhig."
+ },
+ "nodes/k_calm/page": {
+  "en": "When you feel worried or rushed, you can calm down. Breathe in slowly through your nose, and out slowly through your mouth. A short break, a walk or looking at the trees helps too. A farmer who never takes a break gets tired and cranky.",
+  "de": "Wenn du dich besorgt oder gehetzt fühlst, kannst du dich beruhigen. Atme langsam durch die Nase ein und langsam durch den Mund aus. Eine kurze Pause, ein Spaziergang oder ein Blick auf die Bäume helfen auch. Ein Bauer, der nie Pause macht, wird müde und mürrisch."
+ },
+ "nodes/k_calm/questions/0/q": {
+  "en": "What can you do when you feel worried or rushed?",
+  "de": "Was kannst du tun, wenn du dich besorgt oder gehetzt fühlst?"
+ },
+ "nodes/k_calm/questions/0/why": {
+  "en": "Slow breathing and a short pause calm the body down.",
+  "de": "Langsames Atmen und eine kurze Pause beruhigen den Körper."
+ },
+ "nodes/k_calm/questions/0/answers/0": {
+  "en": "Breathe slowly and take a short break",
+  "de": "Langsam atmen und eine kurze Pause machen"
+ },
+ "nodes/k_calm/questions/0/answers/1": {
+  "en": "Work even faster",
+  "de": "Noch schneller arbeiten"
+ },
+ "nodes/k_calm/questions/0/answers/2": {
+  "en": "Shout at the chickens",
+  "de": "Die Hühner anschreien"
+ },
+ "nodes/k_calm/questions/1/q": {
+  "en": "How do you breathe to calm down?",
+  "de": "Wie atmest du, um dich zu beruhigen?"
+ },
+ "nodes/k_calm/questions/1/why": {
+  "en": "Slow, steady breaths tell your body it is safe to relax.",
+  "de": "Ruhige, gleichmässige Atemzüge sagen deinem Körper, dass er sich entspannen darf."
+ },
+ "nodes/k_calm/questions/1/answers/0": {
+  "en": "In slowly, then out slowly",
+  "de": "Langsam ein und langsam aus"
+ },
+ "nodes/k_calm/questions/1/answers/1": {
+  "en": "As fast as you can",
+  "de": "So schnell du kannst"
+ },
+ "nodes/k_calm/questions/1/answers/2": {
+  "en": "Hold your breath for a long time",
+  "de": "Lange die Luft anhalten"
+ },
+ "nodes/k_calm/questions/2/q": {
+  "en": "What happens if you never take a break?",
+  "de": "Was passiert, wenn du nie eine Pause machst?"
+ },
+ "nodes/k_calm/questions/2/why": {
+  "en": "Without breaks people get tired and in a bad mood.",
+  "de": "Ohne Pausen werden Menschen müde und schlecht gelaunt."
+ },
+ "nodes/k_calm/questions/2/answers/0": {
+  "en": "You get tired and cranky",
+  "de": "Du wirst müde und mürrisch"
+ },
+ "nodes/k_calm/questions/2/answers/1": {
+  "en": "You get stronger every hour",
+  "de": "Du wirst jede Stunde stärker"
+ },
+ "nodes/k_calm/questions/2/answers/2": {
+  "en": "Nothing at all",
+  "de": "Gar nichts"
+ },
+ "nodes/k_play/name": {
+  "en": "Play and music",
+  "de": "Spiel und Musik"
+ },
+ "nodes/k_play/desc": {
+  "en": "Play, music and drawing are good for you.",
+  "de": "Spielen, Musik und Zeichnen tun gut."
+ },
+ "nodes/k_play/page": {
+  "en": "Play, music and drawing help you relax and be creative. Having fun is not a waste of time. People who play and rest learn better and work better afterwards. So make some music, draw a picture or play a game with a friend.",
+  "de": "Spielen, Musik und Zeichnen helfen dir, dich zu entspannen und Einfälle zu haben. Spass zu haben ist keine Zeitverschwendung. Wer spielt und sich ausruht, lernt und arbeitet danach besser. Mach also Musik, zeichne ein Bild oder spiel ein Spiel mit einem Freund."
+ },
+ "nodes/k_play/questions/0/q": {
+  "en": "Why is play good for you?",
+  "de": "Warum ist Spielen gut für dich?"
+ },
+ "nodes/k_play/questions/0/why": {
+  "en": "Play relaxes the mind and helps you think of new things.",
+  "de": "Spielen entspannt den Kopf und bringt neue Ideen."
+ },
+ "nodes/k_play/questions/0/answers/0": {
+  "en": "It helps you relax and be creative",
+  "de": "Es hilft dir, dich zu entspannen und Einfälle zu haben"
+ },
+ "nodes/k_play/questions/0/answers/1": {
+  "en": "It uses up all the day",
+  "de": "Es verbraucht den ganzen Tag"
+ },
+ "nodes/k_play/questions/0/answers/2": {
+  "en": "It makes the plants shrink",
+  "de": "Es lässt die Pflanzen schrumpfen"
+ },
+ "nodes/k_play/questions/1/q": {
+  "en": "Which of these is play?",
+  "de": "Was davon ist Spielen?"
+ },
+ "nodes/k_play/questions/1/why": {
+  "en": "Drawing and making music for fun are play.",
+  "de": "Zum Spass zu zeichnen oder Musik zu machen ist Spielen."
+ },
+ "nodes/k_play/questions/1/answers/0": {
+  "en": "Drawing or making music for fun",
+  "de": "Zum Spass zeichnen oder Musik machen"
+ },
+ "nodes/k_play/questions/1/answers/1": {
+  "en": "Counting the weeds",
+  "de": "Unkraut zählen"
+ },
+ "nodes/k_play/questions/1/answers/2": {
+  "en": "Carrying heavy buckets",
+  "de": "Schwere Eimer tragen"
+ },
+ "nodes/k_play/questions/2/q": {
+  "en": "Is playing a waste of time?",
+  "de": "Ist Spielen Zeitverschwendung?"
+ },
+ "nodes/k_play/questions/2/why": {
+  "en": "Rested and happy people learn and work better.",
+  "de": "Wer ausgeruht und froh ist, lernt und arbeitet besser."
+ },
+ "nodes/k_play/questions/2/answers/0": {
+  "en": "No, it helps you work better afterwards",
+  "de": "Nein, es hilft dir, danach besser zu arbeiten"
+ },
+ "nodes/k_play/questions/2/answers/1": {
+  "en": "Yes, always",
+  "de": "Ja, immer"
+ },
+ "nodes/k_play/questions/2/answers/2": {
+  "en": "Only on Sundays",
+  "de": "Nur sonntags"
  },
  "nodes/straw_sandals/name": {
   "en": "Straw Sandals",

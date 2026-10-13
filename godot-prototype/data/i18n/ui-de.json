@@ -106,6 +106,7 @@
  "winter": "Winter",
  "Water: tap to carry more from the pond or the well.": "Wasser: Tippe, um mehr vom Teich oder Brunnen zu holen.",
  "Rest: answer sums to get energy back (sleep, food, a sip of water).": "Ausruhen: Löse Rechnungen, um wieder Energie zu bekommen (Schlaf, Essen, ein Schluck Wasser).",
+ "How you feel": "Wie du dich fühlst",
  "🗓️ The season: one mark per Time Quiz question. The number = questions until the next season.": "🗓️ Die Jahreszeit: ein Strich pro Frage im Zeit-Quiz. Die Zahl = Fragen bis zur nächsten Jahreszeit.",
  "Bag: what you will take to the village": "Tasche: was du ins Dorf mitnimmst",
  "Story: what you have read": "Geschichte: was du gelesen hast",
@@ -385,6 +386,7 @@
  "🖼️ the album": "🖼️ das Album",
  "📜 the story scroll": "📜 die Geschichtenrolle",
  "🎒 the bag": "🎒 die Tasche",
+ "😊 how you feel: tap the face": "😊 wie du dich fühlst: tippe auf das Gesicht",
  "✨ New: %s": "✨ Neu: %s",
  "🟫 Patch %d": "🟫 Beet %d",
  "🌳 Tree spot %d": "🌳 Baumplatz %d",
@@ -453,6 +455,7 @@
  "🥇 Gold: still quick a week after silver.": "🥇 Gold: eine Woche nach Silber immer noch schnell.",
  "📖 Quest book": "📖 Aufgabenbuch",
  "🎒 Bag": "🎒 Tasche",
+ "%s How you feel": "%s Wie du dich fühlst",
  "📜 Story": "📜 Geschichte",
  "🖼️ Album": "🖼️ Album",
  "📋 What happened": "📋 Was passiert ist",
@@ -494,6 +497,8 @@
  "Your farm burned down. All that's left: a tent, an old bucket by a wild pond, a tin pot, a few sticks and stones, one wheat seed — and a box with a book in it.": "Dein Hof ist abgebrannt. Übrig sind nur: ein Zelt, ein alter Eimer an einem wilden Teich, ein Blechtopf, ein paar Stöcke und Steine, ein Weizenkorn — und eine Kiste mit einem Buch darin.",
  "Tap places on the farm to see what you can do there. Every right answer in the ❓ Time Quiz moves farm time forward. When you're tired, tap ⚡ to rest.": "Tippe auf Orte auf dem Hof, um zu sehen, was du dort tun kannst. Jede richtige Antwort im ❓ Zeit-Quiz lässt die Hofzeit weitergehen. Wenn du müde bist, tippe auf ⚡ zum Ausruhen.",
  "📗 Open the book": "📗 Buch öffnen",
+ "⚡ %+d each question": "⚡ %+d bei jeder Frage",
+ "📖 The book “Body and mind” (from the book cart) tells you more: each card shows one more thing here.": "📖 Das Buch „Körper und Geist“ (vom Bücherwagen) erzählt dir mehr: Jede Karte zeigt hier eine Sache mehr.",
  "energy max %d": "maximale Energie %d",
  "%s ⚡ per Rest answer": "%s ⚡ pro Antwort beim Ausruhen",
  "+%s 💧 per question": "+%s 💧 pro Frage",
@@ -732,6 +737,8 @@
   " (have %d)": " (hast %d)",
   "🍂 = goes stale at the next change of season — sell it, eat it or cook it into something that keeps. 🪙 = what one sells for; ↓ = the market has had lots of it lately and pays less for a while.": "🍂 = wird beim nächsten Jahreszeitenwechsel alt — verkauf es, iss es oder koch etwas Haltbares daraus. 🪙 = was eins beim Verkauf bringt; ↓ = der Markt hatte in letzter Zeit viel davon und zahlt eine Weile weniger.",
   "🍂 = goes stale at the next change of season — sell it, eat it or cook it into something that keeps. 🟤🟡 = what one sells for; ↓ = the market has had lots of it lately and pays less for a while.": "🍂 = wird beim nächsten Jahreszeitenwechsel alt — verkauf es, iss es oder koch etwas Haltbares daraus. 🟤🟡 = was eins beim Verkauf bringt; ↓ = der Markt hatte in letzter Zeit viel davon und zahlt eine Weile weniger.",
-  " — your store holds %d of each.": " — dein Lager fasst %d von jeder Sache."
+  " — your store holds %d of each.": " — dein Lager fasst %d von jeder Sache.",
+  "🙂 how you feel: tap the face": "🙂 wie du dich fühlst: tippe auf das Gesicht",
+  "📖 The book *Body and mind* (from the book cart) tells you more: each card shows one more thing here.": "📖 Das Buch *Körper und Geist* (vom Bücherwagen) erzählt dir mehr: Jede Karte zeigt hier eine Sache mehr."
  }
 }
