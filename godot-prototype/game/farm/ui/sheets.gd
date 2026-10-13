@@ -41,6 +41,8 @@ func _reveal_spot(sid: String) -> void:
 
 func open_pantry() -> void: open_spot("storage")
 
+func open_bag() -> void: open_sheet("bag")
+
 func open_goals() -> void: open_sheet("goals")
 
 func open_album() -> void: open_sheet("album")
@@ -117,6 +119,10 @@ func rebuild_sheet() -> void:
 				M.sheet_title.text = tr("📖 Quest book")
 				M.content.add_child(UI.header(null, "📖", 80))
 				M.questlog.sheet_goals()
+			"bag":
+				M.sheet_title.text = tr("🎒 Bag")
+				M.content.add_child(UI.header(null, "🎒", 70))
+				M.pantry.part_bag()
 			"scroll":
 				M.sheet_title.text = tr("📜 Story")
 				M.content.add_child(UI.header(null, "📜", 80))

@@ -101,6 +101,7 @@ var reveal: FarmReveal
 var quality: FarmQuality
 var skills: FarmSkills
 var story: FarmStory
+var trip: FarmTrip
 
 func _init() -> void:
 	seasons = FarmSeasons.new(self)
@@ -118,6 +119,7 @@ func _init() -> void:
 	quality = FarmQuality.new(self)
 	skills = FarmSkills.new(self)
 	story = FarmStory.new(self)
+	trip = FarmTrip.new(self)
 
 # ------------------------------------------------------------------ start, seed and clock
 
@@ -297,7 +299,7 @@ func save_defaults() -> Dictionary:
 ## Everything a save holds in a new game: the Game's keys and every system's.
 func all_save_defaults() -> Dictionary:
 	var d := save_defaults()
-	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story]:
+	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story, trip]:
 		d.merge(sys.save_defaults())
 	return d
 
@@ -565,6 +567,8 @@ func counter(name: String) -> float:
 		"step": return float(S["step"])
 		"items_seen": return float(S["seen"].size())
 		"story_seen": return float(S["story_seen"].size())
+		"trips": return float(S["trips"])
+		"packed": return float(trip.contents().size())
 		"skill_ranks": return float(skills.total_ranks())
 	return NAN
 

@@ -49,6 +49,7 @@ func on_revealed(id: String) -> void:
 		"coins": what = tr("🪙 your purse")
 		"album": what = tr("🖼️ the album")
 		"scroll": what = tr("📜 the story scroll")
+		"bag": what = tr("🎒 the bag")
 		_: return
 	toast(tr("✨ New: %s") % what, 6.0)
 	var node: Control = M.lbl_coins if id == "coins" else M.icon_buttons.get(id)

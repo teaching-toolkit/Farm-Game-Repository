@@ -49,6 +49,7 @@ func press_goal() -> void: M.goalbar.goal_pressed()
 func show_menu() -> void: M.menu.show_menu()
 func play_fx() -> void: M.mapview.play_fx()
 func refresh() -> void: M.refresh()
+func item_panel(k: String) -> void: M.pantry.item_panel(k)
 func story_enabled(on: bool) -> void: M.story.enabled = on
 func bubbles() -> int:      # sticky speech bubbles on the screen
 	var n := 0

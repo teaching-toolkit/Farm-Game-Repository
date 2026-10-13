@@ -15,7 +15,7 @@ func _ready() -> void:
 	await _frames(3)
 	D.close_modal()
 	# O1-O3: what is shown when. A new game has no coin and no album picture: the purse and the album button wait for them.
-	var rv_hidden: bool = G.S["coins"] < 1.0 and not D.coins_shown() and not D.icon_shown("album") and D.icon_shown("bag")
+	var rv_hidden: bool = G.S["coins"] < 1.0 and not D.coins_shown() and not D.icon_shown("album") and not D.icon_shown("bag")
 	var rv_new := []
 	G.revealed.connect(func(id): rv_new.append(id))
 	G.S["coins"] = 3.0
@@ -23,13 +23,37 @@ func _ready() -> void:
 	G.changed.emit()
 	await _frames(3)
 	var rv_shown: bool = D.coins_shown() and D.icon_shown("album") and rv_new.has("coins") and rv_new.has("album") and G.S["revealed"].has("coins")
+	G.inventory.add_item("stone", 3.0, true)       # the first packed thing shows the bag icon (and its thin bar)
+	G.trip.pack("stone", 2)
+	await _frames(3)
+	var rv_bag: bool = D.icon_shown("bag") and rv_new.has("bag")
+	G.trip.unpack_all()
+	G.inventory.take("stone", 3.0)
 	G.S["coins"] = 0.0
 	G.changed.emit()
 	await _frames(3)
 	var rv_stays: bool = D.coins_shown()           # once shown, always shown
 	G.S["album"].clear()
 	print("reveal: hidden at the start %s, shown with the first coin and picture %s (told: %s), stays %s" % [rv_hidden, rv_shown, rv_new, rv_stays])
-	if not (rv_hidden and rv_shown and rv_stays): print("FAIL reveal: see the line above")
+	if not (rv_hidden and rv_shown and rv_bag and rv_stays): print("FAIL reveal: see the line above")
+	# the store's tile panel: pack one with 🎒 +1, the panel shows again with the new numbers, take it out again
+	G.inventory.add_item("stone", 2.0, true)
+	D.open_spot("storage")
+	await _frames(2)
+	D.item_panel("stone")
+	await _frames(2)
+	var tp_open: bool = D.modal_visible() and _modal_has("🎒 +1")
+	_press_text("🎒 +1")
+	await _frames(2)
+	var tp_packed: bool = G.trip.packed("stone") == 1.0 and D.modal_visible() and _modal_has("↩ −1")
+	_press_text("↩ −1")
+	await _frames(2)
+	var tp_back: bool = G.trip.packed("stone") == 0.0
+	D.close_modal()
+	D.close_sheet()
+	G.inventory.take("stone", 2.0)
+	print("store panel: opens %s, packs %s, unpacks %s" % [tp_open, tp_packed, tp_back])
+	if not (tp_open and tp_packed and tp_back): print("FAIL store panel: see the line above")
 	# M4: every thing has a weight (hidden): classes, a total
 	var wt_ok: bool = G.inventory.weight_class("stone") == "heavy" and G.inventory.weight_of("stone") == 4.0 and G.inventory.weight_of("feather") == 0.1 and G.inventory.weight_class("straw") == "bulky"
 	var load0: float = G.inventory.total_load()

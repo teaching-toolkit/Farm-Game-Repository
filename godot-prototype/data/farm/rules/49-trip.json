@@ -1,0 +1,14 @@
+{
+  "trip": {
+    "note": "The bag and the market trip (TODO M5, M6, M11). What the farmer carries to the village: the bag holds load units (the weights of rules/45-weight.json; a normal thing is 1). Capacity = the best carrying thing you own (devices: node id -> load units), at least `base` (what fits in your arms). Packing does not take things out of the store: packed things stay there, marked, and can be unpacked for free. A trip costs `energy.base` x the errand multiplier (a better road, rucksack, boots make it cheaper), at least `energy.min`, and exactly one Time Quiz question.",
+    "base": 10,
+    "devices": {"fiber_bag": 18, "wicker_pack": 28, "canvas_rucksack": 40, "frame_rucksack": 55, "wheelbarrow": 70},
+    "energy": {"base": 3, "perRoadLevel": 0.3, "min": 1},
+    "storeFilters": [
+      {"id": "crops", "emoji": "🌾", "cats": ["crop"]},
+      {"id": "food", "emoji": "🍽️", "cats": ["dish", "ingredient", "animal"]},
+      {"id": "crafts", "emoji": "🧺", "cats": ["craft", "textile", "container", "pet-item", "find", "keeper"]},
+      {"id": "materials", "emoji": "🪵", "cats": ["material", "fertilizer", "byproduct", "feed", "fuel"]}
+    ]
+  }
+}

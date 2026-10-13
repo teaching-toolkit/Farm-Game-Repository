@@ -4,6 +4,7 @@
     "elements": {
       "coins": {"when": ["coins>=1"], "note": "The purse appears with the first coin: before that a counter at 0 says nothing to a child."},
       "album": {"whenAny": ["album>=1", "skill_ranks>=1"], "note": "The album button appears with the first picture in it (a pet, a friend, a postcard, a perk, an acorn) or with the first skill rank (the skills are listed there)."},
+      "bag": {"whenAny": ["packed>=1", "trips>=1"], "note": "The bag icon (and the weights it explains) appears with the first packed thing or the first market trip (D4: carrying works unexplained until the first trip)."},
       "scroll": {"when": ["story_seen>=1"], "note": "The story scroll appears when the first story piece has been read."},
       "skills": {"when": ["skill_ranks>=1"], "note": "Skills work from the start but are only shown, in the album, from the first rank-up (D4)."}
     }

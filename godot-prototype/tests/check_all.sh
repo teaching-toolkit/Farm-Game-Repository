@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# All quick checks in one go (about 2 minutes): UI smoke test, save fixtures, save versions, core kit, data checks, places and pets, quality, skills, money, story, golden run, translations.
+# All quick checks in one go (about 2 minutes): UI smoke test, save fixtures, save versions, core kit, data checks, places and pets, quality, skills, money, story, trip, golden run, translations.
 # Run after every restructuring step:  bash tests/check_all.sh   (Godot as in tests/golden.sh)
 set -uo pipefail
 cd "$(dirname "$0")/.."
@@ -40,6 +40,9 @@ grep -q "^MONEY OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/story_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^STORY|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^STORY OK/✔ story/; s/^STORY FAILED/✘ story/'
 grep -q "^STORY OK" "$LOG" || FAIL=1
+"$G" --headless --path . res://tests/trip_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
+grep -E "^TRIP|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^TRIP OK/✔ trip and bag/; s/^TRIP FAILED/✘ trip and bag/'
+grep -q "^TRIP OK" "$LOG" || FAIL=1
 bash tests/golden.sh "$@" || { echo "✘ golden run"; FAIL=1; }
 python3 tools/check_data.py > "$LOG" 2>&1 && echo "✔ data checks ($(tail -1 "$LOG"))" || { echo "✘ data checks"; grep ERROR "$LOG" | head -5; FAIL=1; }
 python3 tools/i18n.py --check > /dev/null || { echo "✘ translations (python3 tools/i18n.py)"; FAIL=1; }

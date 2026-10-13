@@ -201,6 +201,21 @@ for iid, it in ITEMS.items():
     if iid not in W.get("items", {}) and it.get("category") not in W.get("byCategory", {}):
         err("weights", f"item {iid} (category {it.get('category')}) has no weight class: give it an entry in items or its category one in byCategory")
 
+# ---------------------------------------------------------------- the bag and the trip (rules/49-trip.json)
+TR = META.get("trip", {})
+if not TR: err("trip", "no 'trip' in rules/49-trip.json")
+if float(TR.get("base", 0)) <= 0: err("trip", "base capacity must be above 0")
+for nid, cap in TR.get("devices", {}).items():
+    if nid not in N: err("trip", f"device {nid} is not a node")
+    elif float(cap) <= float(TR.get("base", 0)): err("trip", f"device {nid}: capacity {cap} is not above the base {TR.get('base')}")
+_filter_cats = set()
+for f in TR.get("storeFilters", []):
+    for c in f.get("cats", []):
+        if c in _filter_cats: err("trip", f"store filter {f.get('id')}: category {c} is in two filters")
+        _filter_cats.add(c)
+for c in {it.get("category", "") for it in ITEMS.values()}:
+    if c and c not in _filter_cats and c not in ("seed",): warn("trip", f"items of category {c!r} are in no store filter (they show under All only)")
+
 # ---------------------------------------------------------------- quality (rules/47-quality.json)
 Qd = META.get("quality", {})
 cats_known = {it.get("category") for it in ITEMS.values()}

@@ -57,6 +57,10 @@ static func apply(main, G) -> void:
 			for kv in a.substr(7).split(","):
 				var parts: PackedStringArray = kv.split(":")
 				G.inventory.add_item(parts[0], float(parts[1]) if parts.size() > 1 else 1.0, true)
+		elif a.begins_with("--pack="):             # screenshots: --pack=rope:2,stone:1 (packs what the store holds)
+			for kv in a.substr(7).split(","):
+				var parts2: PackedStringArray = kv.split(":")
+				G.trip.pack(parts2[0], int(parts2[1]) if parts2.size() > 1 else 1)
 		elif a == "--built":                       # screenshots: pretend house, barn and workshop stand
 			for b in ["cottage", "barn_1", "workshop_1"]: G.S["unlocked"][b] = true
 			G.invalidate_caps()

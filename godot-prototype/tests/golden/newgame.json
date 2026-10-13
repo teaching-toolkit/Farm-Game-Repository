@@ -3,6 +3,7 @@
 	"album": [],
 	"animals": {},
 	"attach": {},
+	"bag": {},
 	"buff": {},
 	"card_qseen": {},
 	"cards": {},
@@ -221,6 +222,7 @@
 	"story_last": -99.0,
 	"story_seen": {},
 	"story_taps": {},
+	"trips": 0.0,
 	"unlocked": {
 		"basket": true,
 		"book_basics": true,

@@ -29,6 +29,7 @@ var notes: FarmUiNotes
 var pantry: FarmUiPantry
 var patches: FarmUiPatches
 var playback: FarmUiPlayback
+var bag_bar: ProgressBar       # the thin bar under the bag icon
 var icon_buttons := {}      # the icons of the top bar by id (bag, book, album, settings): shown when G.reveal says so
 var placesheet: FarmUiPlaceSheet
 var questlog: FarmUiQuestLog
@@ -253,13 +254,20 @@ func _build() -> void:
 	hh.add_child(rv)
 	var ir := UI.hbox(6)
 	rv.add_child(ir)
-	for pair in [["bag", "🎒", sheets.open_pantry, "Pantry: what you have"], ["book", "📖", sheets.open_goals, "Quest book: everything you can do next"],
+	for pair in [["bag", "🎒", sheets.open_bag, tr("Bag: what you will take to the village")], ["book", "📖", sheets.open_goals, "Quest book: everything you can do next"],
 			["scroll", "📜", sheets.open_scroll, tr("Story: what you have read")],
 			["album", "🖼️", sheets.open_album, tr("Album: pets, friends, postcards, perks, acorns")], ["settings", "⚙️", menu.show_menu, tr("Settings")]]:
 		var b := UI.soft_button(pair[1], pair[2], true, 22)
 		b.custom_minimum_size = Vector2(48, 46)
 		b.tooltip_text = pair[3]
-		ir.add_child(b)
+		if pair[0] == "bag":          # a thin bar under the bag icon shows how full the bag is
+			var bv := UI.vbox(1)
+			bv.add_child(b)
+			bag_bar = UI.bar(0.0, 44, 5, UI.AMBER)
+			bv.add_child(bag_bar)
+			ir.add_child(bv)
+			icon_buttons["bag_box"] = bv
+		else: ir.add_child(b)
 		icon_buttons[pair[0]] = b
 	# --- the farm map: one screen, scaled to fit (it only moves up when a sheet covers the bottom)
 	scroll = ScrollContainer.new()
@@ -381,7 +389,10 @@ func refresh() -> void:
 	var S: Dictionary = G.S
 	lbl_coins.text = G.purse_text()
 	lbl_coins.visible = G.reveal.shown("coins")          # what is shown when: data/farm/rules/60-reveal.json
-	for id in icon_buttons: icon_buttons[id].visible = G.reveal.shown(id)
+	for id in icon_buttons: if id != "bag_box": icon_buttons[id].visible = G.reveal.shown(id)
+	icon_buttons["bag_box"].visible = icon_buttons["bag"].visible
+	bag_bar.value = G.trip.fill()
+	bag_bar.get_theme_stylebox("fill").bg_color = UI.AMBER if G.trip.fill() < 0.999 else UI.RED
 	_fit_hud()
 	water_bar.have = float(S["water"]); water_bar.cap = G.needs.water_cap(); water_bar.refresh()
 	energy_bar.have = float(S["energy"]); energy_bar.cap = G.needs.energy_max(); energy_bar.refresh()
