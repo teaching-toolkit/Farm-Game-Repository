@@ -43,6 +43,7 @@ func _fetch_water() -> void:
 
 ## The road: how good it is, and who can come along it to the market.
 func part_road() -> void:
+	if G.lord.here(): _part_lord()
 	if G.gate.here(): _part_gate()
 	var lv := int(round(G.g("roadLevel", 1.0)))
 	var rc := UI.card(Color("f6efe0"))
@@ -69,6 +70,22 @@ func part_road() -> void:
 		if road_only and not other: blocked += 1
 	if blocked > 0: rv.add_child(UI.label(tr("🚧 %s can't get through yet — a better road lets them come.") % "🧑‍🌾".repeat(mini(blocked, 5)), 16, UI.RED, true))
 	M.content.add_child(rc)
+
+## Pieter the night watchman waits at the gate for the Lord's share (TODO M13): what is owed, and the button to pay it (or what you have).
+func _part_lord() -> void:
+	M.widgets.section(tr("🏮 Pieter, the night watchman"), tr("He has come for the Lord's share. Until it is paid, nothing can be bought with coins. Selling, making and farming go on."))
+	var card := UI.card(Color("f6efe0"))
+	var v := UI.vbox(6)
+	card.add_child(v)
+	v.add_child(UI.label(tr("Owed: %s") % G.money(G.lord.owed()), 20, UI.INK, true))
+	var have: float = float(G.S["coins"])
+	var row := UI.hbox(8)
+	if have >= G.lord.owed():
+		row.add_child(UI.button(tr("Pay %s") % G.money(G.lord.owed()), G.lord.pay.bind(-1.0), true, UI.GREEN, 20))
+	else:
+		row.add_child(UI.button(tr("Pay what I have (%s)") % G.money(have), G.lord.pay.bind(-1.0), have >= 1.0, UI.AMBER, 18))
+	v.add_child(row)
+	M.content.add_child(card)
 
 ## The travelling merchant at the gate: what he buys from the store (no packing, no trip), a little cheaper than the village, until his cart is full.
 func _part_gate() -> void:

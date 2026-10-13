@@ -390,6 +390,17 @@ winter is hungry and pays more for what keeps). Goals' costs never change.
 
 **Coins fly** between the purse and the square — one coin for every 10 bronze, in tight bunches of 10 — plain for everyone; the *Coin shower* perk makes the selling flight a shower.
 
+### 5.3c The Lord's share *(built, phase 8)*
+
+From **chapter 3** the farm owes the Lord a share at the end of every season (a season is 30 questions; until then it is a ruined plot nobody watches). It is counted on what the Lord
+*assumes* the farm gives, not on what it gave: every patch that can be planted (field 420, orchard and greenhouse 630 🟤) and every building that produces or processes (mills, kiln, smithy, press,
+loom, lumbermill, workbench …, 420 🟤 × its level), times a fraction that rises with the chapter (a tenth, a fifth, a third, a half: the origin story's numbers), so a bigger farm owes more
+whatever it yields. A share is never more than a quarter of what the farm sold in the season that ended (at least 200 🟤): a quiet season costs little.
+**Pieter the night watchman** (his lantern) comes to the gate and waits there until it is paid; the child pays in the road's window (all of it, or what they have). Unpaid shares pile up
+to two seasons' worth. **While something is owed, everything that costs coins is blocked** (the goal tiles say *the Lord's share first*; seeds and wares cannot be bought); selling, making,
+farming, trips and barter go on, so nobody is stuck. In chapter 6 the story eases the fraction to a tenth (`lord.eased`, *planned*). Data: `rules/53-lord.json`; system `G.lord`;
+story pieces `c3_pieter`, `c3_pieter_paid`, `c3_k_pieter`. *(Planned: Quill counts the patches and buildings himself in chapter 4, the story beat that eases it.)*
+
 ### 5.4 Seeds
 
 Only seeds you have can be planted; seeds are bought from the **seed merchant**, who grows from a seller on foot to a cart,

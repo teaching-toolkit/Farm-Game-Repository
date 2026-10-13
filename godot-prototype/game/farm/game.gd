@@ -104,6 +104,7 @@ var skills: FarmSkills
 var story: FarmStory
 var trip: FarmTrip
 var gate: FarmGate
+var lord: FarmLord
 var trust: FarmTrust
 
 func _init() -> void:
@@ -124,6 +125,7 @@ func _init() -> void:
 	story = FarmStory.new(self)
 	trip = FarmTrip.new(self)
 	gate = FarmGate.new(self)
+	lord = FarmLord.new(self)
 	trust = FarmTrust.new(self)
 
 # ------------------------------------------------------------------ start, seed and clock
@@ -304,7 +306,7 @@ func save_defaults() -> Dictionary:
 ## Everything a save holds in a new game: the Game's keys and every system's.
 func all_save_defaults() -> Dictionary:
 	var d := save_defaults()
-	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story, trip, gate]:
+	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story, trip, gate, lord]:
 		d.merge(sys.save_defaults())
 	return d
 
@@ -441,6 +443,7 @@ func iemoji(k: String) -> String:
 			if inventory.count(o) >= 1.0: return items[o].get("emoji", "✳️")
 		return items[opts[0]].get("emoji", "✳️") if opts.size() > 0 else "✳️"
 	if k == "coins": return "🪙"
+	if k == "lord": return "🏮"
 	if k == "energy": return "⚡"
 	if k == "water": return "💧"
 	if k == "read": return "📖"
@@ -577,6 +580,9 @@ func counter(name: String) -> float:
 		"trips": return float(S["trips"])
 		"packed": return float(trip.contents().size())
 		"skill_ranks": return float(skills.total_ranks())
+		"lord_owed": return lord.owed()
+		"lord_paid": return float(S["lord"]["paid"])
+		"lord_shares": return float(S["lord"]["shares"])
 	return NAN
 
 ## Has this part of the interface, or this story piece, been shown (condition term `seen:<id>`)?

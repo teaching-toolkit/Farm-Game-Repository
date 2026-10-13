@@ -79,4 +79,5 @@ func _season_change(sn: int) -> void:
 		var parts := []
 		for k in spoiled: parts.append("%s%d" % [G.iemoji(k), G.up(spoiled[k])])
 		G.say(tr("🍂 Went stale at the change of season (now feed mash or compost): ") + " ".join(parts))
+	G.lord.season_ended()
 	G.rewards.check_acorns()

@@ -76,6 +76,14 @@
 	],
 	"last_season": 0.0,
 	"log": [],
+	"lord": {
+		"eased": false,
+		"last_share": 0.0,
+		"owed": 0.0,
+		"paid": 0.0,
+		"shares": 0.0,
+		"sold_mark": 0.0
+	},
 	"luck_boosts": [],
 	"market": {},
 	"open_early": {},

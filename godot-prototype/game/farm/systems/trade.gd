@@ -117,6 +117,7 @@ func _sell_units(k: String, n: float, cut: float) -> bool:
 		got += full_price(k, int(gs[i]) if i < gs.size() else -1) * demand_factor(k) * cut
 		market_sold()[k] = float(market_sold().get(k, 0.0)) + 1.0
 	G.S["coins"] += got
+	G.S["stats"]["sold_coins"] = float(G.S["stats"].get("sold_coins", 0.0)) + got
 	if cut >= 0.999: G.trip.sold(k, n)
 	G.rewards.job_progress("sell", k, n)
 	var msg := tr("🪙 Sold %d %s for %s") % [int(n), G.iname(k), G.money(got)]
@@ -167,6 +168,7 @@ func buy_seeds(cid: String, q: int) -> bool:
 	if room < q:
 		if room < 1: G.say(tr("🎒 No room to carry that home.")); return false
 		q = room
+	if G.lord.blocks_coins(): G.say(tr("🏮 The Lord's share first: pay Pieter at the gate.")); return false
 	var c := seed_price(cid) * q
 	if G.S["coins"] + 0.0001 < c: G.say(tr("🪙 Not enough coins.")); return false
 	G.S["coins"] -= c
@@ -187,6 +189,7 @@ func buy_item(merchant: String, k: String, q: int) -> bool:
 	if room < q:
 		if room < 1: G.say(tr("🎒 No room to carry that home.")); return false
 		q = room
+	if G.lord.blocks_coins(): G.say(tr("🏮 The Lord's share first: pay Pieter at the gate.")); return false
 	var price := buy_price(merchant, k) * q
 	if G.S["coins"] + 0.0001 < price: G.say(tr("🪙 Not enough coins.")); return false
 	G.S["coins"] -= price

@@ -1,0 +1,14 @@
+{
+  "lord": {
+    "note": "The Lord's share (TODO M13). From `startChapter` the farm owes a share at the end of every season: fraction(chapter) x what the Lord ASSUMES the farm gives (patches x patchValue + producing buildings x their level x buildingValue; a patch resting under clover counts too). All bronze. Pieter the night watchman comes to the gate and waits there until it is paid (the Road window); partly paying is fine. While something is owed, everything that costs coins is blocked (selling, making, farming, trips and barter go on), so nobody is ever stuck. Unpaid shares pile up, but never beyond `maxSeasons` seasons' worth. `eased` (set by the story in chapter 6, when the numbers are shown to the Lord) lowers the fraction to `easedFraction`. A share is never more than `maxOfSales` of what the farm sold in the season that ended (but at least `floor` bronze). Tuned with the bot: the share is about 6 % of a season's sales in chapter 3 and about 19 % in chapter 4.",
+    "startChapter": 3,
+    "fraction": {"3": 0.10, "4": 0.20, "5": 0.33, "6": 0.50},
+    "easedFraction": 0.10,
+    "patchValue": {"field": 420, "orchard": 630, "gh": 630},
+    "buildingValue": 420,
+    "maxOfSales": 0.25,
+    "floor": 200,
+    "stationCats": ["mill", "kiln", "smith", "wood", "process", "textile", "craft"],
+    "maxSeasons": 2
+  }
+}

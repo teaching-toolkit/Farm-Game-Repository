@@ -443,6 +443,25 @@ func set_gate(here: bool) -> void:
 	critters.sort_in(gate_cart, at.y + gate_cart.size.y)
 	create_tween().tween_property(gate_cart, "position", at, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
+## Pieter the night watchman stands at the gate with his lantern while the Lord's share is owed; a tap on him opens the road's window.
+var collector: Label
+
+func set_collector(here: bool) -> void:
+	if not here:
+		if collector != null:
+			collector.queue_free()
+			collector = null
+		return
+	if collector != null: return
+	collector = Label.new()
+	collector.text = "🧔🏮"
+	collector.add_theme_font_size_override("font_size", 38)
+	collector.mouse_filter = Control.MOUSE_FILTER_STOP
+	collector.gui_input.connect(func(e): if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT: spot_tapped.emit("road"))
+	var at := spot_point("road") + Vector2(-70, -30)
+	collector.position = at
+	critters.sort_in(collector, at.y + 44.0)
+
 func set_road_badge(text: String) -> void:
 	road_badge.get_child(0).text = text
 	road_badge.visible = text != ""

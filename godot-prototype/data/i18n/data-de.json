@@ -1851,6 +1851,14 @@
   "en": "Third ribbon: another +5%.",
   "de": "Dritte Schleife: noch einmal +5%."
  },
+ "nodes/pet_badger/name": {
+  "en": "Badger comes home",
+  "de": "Der Dachs zieht ein"
+ },
+ "nodes/pet_badger/desc": {
+  "en": "Pet 5 (default name Bracken). Wise and slow, he knows which plants are good for you. Bonus: every herb harvest gives +1 herb.",
+  "de": "Haustier 5 (Standardname Bracken). Weise und gemächlich: Er weiss, welche Pflanzen gut für dich sind. Bonus: Jede Kräuterernte gibt +1 Kraut."
+ },
  "nodes/pet_alpaca/name": {
   "en": "Alpaca comes home",
   "de": "Das Alpaka kommt nach Hause"
@@ -1858,14 +1866,6 @@
  "nodes/pet_alpaca/desc": {
   "en": "Pet 5 (default name Alfie). Bonus: soft fleece, 1 wool every 4 questions.",
   "de": "Haustier 5 (heisst zuerst Alfie). Bonus: weiches Vlies, 1 Wolle alle 4 Fragen."
- },
- "nodes/pet_badger/name": {
-  "en": "Badger comes home",
-  "de": "Der Dachs zieht ein"
- },
- "nodes/pet_badger/desc": {
-  "en": "Pet 5 (default name Bramble). Wise and slow, he knows which plants are good for you. Bonus: every herb harvest gives +1 herb.",
-  "de": "Haustier 5 (Standardname Bracken). Weise und gemächlich: Er weiss, welche Pflanzen gut für dich sind. Bonus: Jede Kräuterernte gibt +1 Kraut."
  },
  "nodes/wild_edge/name": {
   "en": "Field Edge & Woods",
@@ -9958,6 +9958,30 @@
  "story/c1_k_winter/text": {
   "en": "The tent flaps in the wind. You pull the blanket up to your nose.",
   "de": "Das Zelt flattert im Wind. Du ziehst die Decke bis zur Nase."
+ },
+ "story/c3_pieter/title": {
+  "en": "The night watchman",
+  "de": "Der Nachtwächter"
+ },
+ "story/c3_pieter/pages/0/text": {
+  "en": "A lantern swings up the road in the daylight. Under it walks Pieter, the night watchman. He does not look happy.",
+  "de": "Eine Laterne schwankt mitten am Tag die Strasse herauf. Darunter geht Pieter, der Nachtwächter. Er sieht nicht froh aus."
+ },
+ "story/c3_pieter/pages/1/text": {
+  "en": "“I am sorry, {player}. The Lord wants his share. It is not my idea. I only carry the book.” He shows you a number. “Pay when you can. I will wait at the gate.”",
+  "de": "„Es tut mir leid, {player}. Der Herr will seinen Anteil. Das ist nicht meine Idee. Ich trage nur das Buch.“ Er zeigt dir eine Zahl. „Zahl, wenn du kannst. Ich warte am Tor.“"
+ },
+ "story/c3_pieter_paid/text": {
+  "en": "Pieter taps his book shut. “Thank you. Most people hide when they see me.” He almost smiles. Then he walks home, whistling a tune he does not know he is whistling.",
+  "de": "Pieter klappt sein Buch zu. „Danke. Die meisten verstecken sich, wenn sie mich sehen.“ Er lächelt fast. Dann geht er heim und pfeift eine Melodie, von der er nicht weiss, dass er sie pfeift."
+ },
+ "story/c3_pieter_paid/title": {
+  "en": "Pieter",
+  "de": "Pieter"
+ },
+ "story/c3_k_pieter/text": {
+  "en": "Far down the road, a lantern waves at you. Pieter. You wave back.",
+  "de": "Weit unten auf der Strasse winkt eine Laterne dir zu. Pieter. Du winkst zurück."
  },
  "chapters/0/name": {
   "en": "Ashes",

@@ -155,6 +155,8 @@ func missing_cost(c: Dictionary) -> Array:
 		var h := G.inventory.have(k)
 		if h + 0.0001 < need:
 			miss.append({"key": k, "need": need, "have": h})
+	if c.has("coins") and float(c["coins"]) > 0.0 and G.lord.blocks_coins():      # the Lord's share comes first
+		miss.append({"key": "lord", "need": 1.0, "have": 0.0})
 	return miss
 
 func pay(c: Dictionary) -> bool:

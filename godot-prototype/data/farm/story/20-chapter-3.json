@@ -1,0 +1,5 @@
+{
+  "c3_pieter": {"kind": "visit", "chapter": 3, "when": ["lord_shares>=1"], "priority": 70, "emoji": "🏮", "title": "The night watchman", "pages": [{"text": "A lantern swings up the road in the daylight. Under it walks Pieter, the night watchman. He does not look happy."}, {"text": "“I am sorry, {player}. The Lord wants his share. It is not my idea. I only carry the book.” He shows you a number. “Pay when you can. I will wait at the gate.”"}]},
+  "c3_pieter_paid": {"kind": "moment", "chapter": 3, "when": ["lord_paid>=1"], "priority": 60, "emoji": "🏮", "title": "Pieter", "text": "Pieter taps his book shut. “Thank you. Most people hide when they see me.” He almost smiles. Then he walks home, whistling a tune he does not know he is whistling."},
+  "c3_k_pieter": {"kind": "bark", "chapter": 3, "when": ["lord_paid>=1", "chance:0.12"], "priority": 50, "once": false, "emoji": "🏮", "text": "Far down the road, a lantern waves at you. Pieter. You wave back."}
+}

@@ -62,6 +62,7 @@ static func apply(main, G) -> void:
 				var parts2: PackedStringArray = kv.split(":")
 				G.trip.pack(parts2[0], int(parts2[1]) if parts2.size() > 1 else 1)
 		elif a == "--gate": G.S["gate"] = {"here": true, "until": 999, "cart": 12.0, "visits": 1}; G.S["unlocked"]["road_2"] = true; G.invalidate_caps()     # screenshots: the travelling merchant is at the gate
+		elif a == "--lord": G.S["lord"]["owed"] = 450.0       # screenshots: Pieter waits at the gate for the Lord's share
 		elif a == "--square": G.S["trip"] = {"phase": "square", "bought": 0.0}       # screenshots: standing on the village square (use with --give, --pack, --spot=market)
 		elif a == "--built":                       # screenshots: pretend house, barn and workshop stand
 			for b in ["cottage", "barn_1", "workshop_1"]: G.S["unlocked"][b] = true

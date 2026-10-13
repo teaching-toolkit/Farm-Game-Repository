@@ -127,7 +127,7 @@ func can_unlock(id: String) -> Dictionary:
 	var mc := G.pace.missing_cost(G.pace.node_cost(id))
 	if not mc.is_empty():
 		var parts := []
-		for x in mc: parts.append("%s %d more" % [G.iemoji(x["key"]), G.up(float(x["need"]) - float(x["have"]))])
+		for x in mc: parts.append(tr("🏮 the Lord's share first") if x["key"] == "lord" else "%s %d more" % [G.iemoji(x["key"]), G.up(float(x["need"]) - float(x["have"]))])
 		return {"ok": false, "why": "missing " + ", ".join(parts)}
 	return {"ok": true, "why": ""}
 

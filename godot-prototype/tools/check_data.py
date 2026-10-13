@@ -218,6 +218,19 @@ for f in TR.get("storeFilters", []):
 for c in {it.get("category", "") for it in ITEMS.values()}:
     if c and c not in _filter_cats and c not in ("seed",): warn("trip", f"items of category {c!r} are in no store filter (they show under All only)")
 
+# ---------------------------------------------------------------- the Lord's share (rules/53-lord.json)
+LD = META.get("lord", {})
+if not LD: warn("lord", "rules/53-lord.json is missing")
+else:
+    if not 1 <= int(LD.get("startChapter", 0)) <= len(D["chapters"]): err("lord", "startChapter is not a chapter")
+    for ck, fv in LD.get("fraction", {}).items():
+        if not ck.isdigit() or not 1 <= int(ck) <= len(D["chapters"]): err("lord", f"fraction: {ck} is not a chapter")
+        if not 0 < float(fv) <= 1: err("lord", f"fraction for chapter {ck} must be between 0 and 1")
+    for sc in LD.get("stationCats", []):
+        if sc not in {n.get("cat") for n in N.values() if n.get("type") == "station"}: err("lord", f"stationCats: no station has the category {sc}")
+    for k in ("patchValue", "buildingValue", "maxOfSales", "floor", "maxSeasons", "easedFraction"):
+        if k not in LD: err("lord", f"{k} is missing")
+
 # ---------------------------------------------------------------- the travelling merchant (rules/50-gate.json)
 GT = META.get("gate", {})
 if not GT: err("gate", "no 'gate' in rules/50-gate.json")

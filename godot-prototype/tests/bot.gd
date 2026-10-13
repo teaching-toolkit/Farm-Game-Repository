@@ -325,6 +325,8 @@ func _needed_items() -> Dictionary:
 # What the bot wants from the village this turn (seeds to plant, things the goals need, orders to deliver, surplus to sell); the trip comes at the end of the turn.
 var want_seeds := {}
 var want_buy := []        # [merchant, item]
+var _last_shares := 0
+var _sold_mark := 0.0
 var want_barter := []     # [merchant, item]
 var want_sell := {}       # item -> units
 var last_trip := -99      # the step of the last trip
@@ -398,6 +400,13 @@ func _turn() -> void:
 		if int(an["count"]) > 0:
 			if G.animals.muck_factor(aid) < 1.0: G.animals.muck_out(aid)
 			if G.S["step"] >= int(an["ready"]): G.animals.collect_animal(aid)
+	if int(G.S["lord"]["shares"]) != _last_shares and "--lord" in OS.get_cmdline_user_args():
+		_last_shares = int(G.S["lord"]["shares"])
+		var sold: float = float(G.S["stats"].get("sold_coins", 0.0))
+		print("   LORD q%d ch%d: share %d (assumed %d, %d%%), sold since last share %d, coins %d" % [G.S["step"], G.chapter(), int(G.S["lord"]["last_share"]), int(G.lord.assumed()), int(G.lord.fraction() * 100), int(sold - _sold_mark), int(G.S["coins"])])
+		_sold_mark = sold
+	if G.lord.here():      # Pieter waits at the gate: the Lord's share comes first (sell what is needed to pay it)
+		G.lord.pay()
 	# make what open goals need, plus gather basics
 	var need := _needed_items()
 	var coins_short := false      # money for a goal is short: then crafts that sell are worth making too
