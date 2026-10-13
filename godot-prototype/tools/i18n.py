@@ -69,6 +69,10 @@ def data_texts():
         for k in ("name", "desc"): put(f"items/{iid}/{k}", it.get(k))
     for rid, r in D.get("recipes", {}).items():
         for k in ("name", "verb"): put(f"recipes/{rid}/{k}", r.get(k))
+    for sid, pc in D.get("story", {}).items():
+        put(f"story/{sid}/text", pc.get("text"))
+        put(f"story/{sid}/title", pc.get("title"))
+        for i, pg in enumerate(pc.get("pages", [])): put(f"story/{sid}/pages/{i}/text", pg.get("text"))
     ch = D.get("chapters", [])
     for key, c in (enumerate(ch) if isinstance(ch, list) else ch.items()):
         put(f"chapters/{key}/name", c.get("name"))

@@ -12,6 +12,7 @@ var checks := 0
 class FakeGame:
 	func done(id: String) -> bool: return id == "tent"
 	func seen(id: String) -> bool: return id == "album"
+	func term(name: String, arg: String) -> bool: return name == "start" or (name == "has" and arg == "carrot:3")
 	func counter(name: String) -> float:
 		return {"weeds": 12.0, "seasons": 2.0}.get(name, NAN)
 
@@ -47,6 +48,8 @@ func _init() -> void:
 	_check(Conditions.check_all([], fg), "no conditions: holds")
 	_check(Conditions.check_all(["done:tent", "weeds>=10", "seen:album"], fg), "all of a list")
 	_check(not Conditions.check_all(["done:tent", "weeds>=13"], fg), "…one failing makes the list fail")
+	_check(Conditions.check("start", fg) and Conditions.check("has:carrot:3", fg) and not Conditions.check("has:carrot:4", fg), "the game's own terms: name or name:argument go to the provider")
+	_check(not Conditions.check("start", Modifiers), "…false for a provider without terms")
 	# clock
 	var c = Clock.new()
 	var seen := []

@@ -249,6 +249,50 @@ for rid, r in RECIPES.items():
     if root not in Sk.get("stations", {}) and N.get(root, {}).get("cat") != "gather":
         warn("skills", f"recipe {rid} is made at {root}, which trains no skill family")
 
+# ---------------------------------------------------------------- story (data/farm/story/*.json)
+STORY = D.get("story", {}) if "D" in globals() else {}
+KINDS = ["frame", "beat", "discovery", "letter", "moment", "visit", "scene", "bark", "trace"]
+SEASONS = {"spring", "summer", "autumn", "winter"}
+def story_condition(w, expr):
+    if expr.startswith("seen:"):
+        if expr[5:] not in STORY and expr[5:] not in reveal_ids: err(w, f"condition {expr!r}: {expr[5:]} is neither a story piece nor an interface element")
+        return
+    if expr.startswith("unlocked:") or expr.startswith("done:"): node_id(w, expr.split(":", 1)[1], "condition"); return
+    if ">=" in expr: condition_ok(w, expr); return
+    name, _, arg = expr.partition(":")
+    if name == "start": return
+    if name == "has":
+        item, _, n = arg.partition(":")
+        if item not in ITEMS: err(w, f"condition {expr!r}: {item} is not an item")
+        try: float(n)
+        except ValueError: err(w, f"condition {expr!r}: {n!r} is not a number")
+    elif name == "season":
+        if arg not in SEASONS: err(w, f"condition {expr!r}: {arg} is not a season")
+    elif name == "chapter":
+        if not arg.isdigit() or not 1 <= int(arg) <= 6: err(w, f"condition {expr!r}: chapter 1 to 6")
+    elif name == "tap":
+        if arg not in spots_for_story and not arg.startswith("patch:"): err(w, f"condition {expr!r}: {arg} is not a place (places.json spots) or patch:<kind>")
+    elif name == "page":
+        if arg not in N or N[arg].get("type") != "knowledge": err(w, f"condition {expr!r}: {arg} is not a card")
+    elif name == "chance":
+        try:
+            if not 0 <= float(arg) <= 1: err(w, f"condition {expr!r}: a chance between 0 and 1")
+        except ValueError: err(w, f"condition {expr!r}: {arg!r} is not a number")
+    else: err(w, f"condition {expr!r}: unknown term {name!r}")
+spots_for_story = set(PLACES["spots"]) | {"board"}
+for sid, pc in STORY.items():
+    w = f"story {sid}"
+    if pc.get("kind") not in KINDS: err(w, f"kind {pc.get('kind')!r} is not one of {KINDS}")
+    if not isinstance(pc.get("chapter"), int) or not 1 <= pc["chapter"] <= 6: err(w, "chapter must be 1 to 6")
+    if pc.get("kind") != "trace" and not (pc.get("text") or pc.get("pages")): err(w, "needs a text or pages")
+    for pg in pc.get("pages", []):
+        if not pg.get("text"): err(w, "a page without text")
+    if not isinstance(pc.get("when", []), list): err(w, "'when' must be a list of conditions (all must hold)")
+    for expr in pc.get("when", []): story_condition(w, str(expr))
+    txt = " ".join([str(pc.get("text", ""))] + [str(pg.get("text", "")) for pg in pc.get("pages", [])])
+    if "ß" in txt: err(w, "ß: German text uses ss")
+    if len(txt.split()) > 70 and pc.get("kind") not in ("frame", "scene"): warn(w, f"{len(txt.split())} words: boxes are 2-4 sentences, about 35-45 words")
+
 # ---------------------------------------------------------------- money (rules/40-economy.json currency; prices in bronze)
 cur = META.get("economy", META).get("currency", {}) if False else META.get("currency", {})
 if not cur.get("rescaled"): warn("money", "meta.currency.rescaled is missing: the prices are not in bronze yet (tools/rescale_prices.py)")

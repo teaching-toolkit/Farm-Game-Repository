@@ -100,6 +100,7 @@ var rewards: FarmRewards
 var reveal: FarmReveal
 var quality: FarmQuality
 var skills: FarmSkills
+var story: FarmStory
 
 func _init() -> void:
 	seasons = FarmSeasons.new(self)
@@ -116,6 +117,7 @@ func _init() -> void:
 	reveal = FarmReveal.new(self)
 	quality = FarmQuality.new(self)
 	skills = FarmSkills.new(self)
+	story = FarmStory.new(self)
 
 # ------------------------------------------------------------------ start, seed and clock
 
@@ -219,7 +221,8 @@ func set_language(l: String, save := true) -> void:
 
 func load_data() -> void:
 	D = {"meta": Data.read_dir(DATA_DIR + "/rules"), "chapters": Data.read(DATA_DIR + "/chapters.json"), "start": Data.read(DATA_DIR + "/start.json"),
-		"items": Data.read(DATA_DIR + "/items.json"), "nodes": Data.read_dir(DATA_DIR + "/nodes"), "recipes": Data.read(DATA_DIR + "/recipes.json")}
+		"items": Data.read(DATA_DIR + "/items.json"), "nodes": Data.read_dir(DATA_DIR + "/nodes"), "recipes": Data.read(DATA_DIR + "/recipes.json"),
+		"story": Data.read_dir(DATA_DIR + "/story")}
 	items = D["items"]; nodes = D["nodes"]; recipes = D["recipes"]; meta = D["meta"]
 	tags.clear(); replaced_by.clear(); station_recipes.clear(); polish_ids.clear(); card_ids.clear(); animal_ids.clear(); pet_ids.clear()
 	for iid in items:
@@ -294,7 +297,7 @@ func save_defaults() -> Dictionary:
 ## Everything a save holds in a new game: the Game's keys and every system's.
 func all_save_defaults() -> Dictionary:
 	var d := save_defaults()
-	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills]:
+	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story]:
 		d.merge(sys.save_defaults())
 	return d
 
@@ -561,12 +564,28 @@ func counter(name: String) -> float:
 		"chapter": return float(chapter())
 		"step": return float(S["step"])
 		"items_seen": return float(S["seen"].size())
+		"story_seen": return float(S["story_seen"].size())
 		"skill_ranks": return float(skills.total_ranks())
 	return NAN
 
-## Has this part of the interface been shown (condition term `seen:<id>`)?
+## Has this part of the interface, or this story piece, been shown (condition term `seen:<id>`)?
 func seen(id: String) -> bool:
-	return S["revealed"].has(id)
+	return S["revealed"].has(id) or S["story_seen"].has(id)
+
+## The game's own condition terms (kits/core/conditions.gd): the start of a new game, what is in the store, the season, the chapter, what was tapped,
+## a card page that was read, a chance.
+func term(name: String, arg: String) -> bool:
+	match name:
+		"start": return int(S["step"]) == 0
+		"has":
+			var p := arg.split(":")
+			return p.size() == 2 and inventory.count(p[0]) >= float(p[1])
+		"season": return seasons.season() == arg
+		"chapter": return chapter() == int(arg)
+		"tap": return S["story_taps"].has(arg)
+		"page": return knowledge.page_seen(arg)
+		"chance": return float(hash("%d/%s" % [int(S["step"]), arg]) % 1000) / 1000.0 < float(arg)   # the same answer all through one question: asking does not use up luck
+	return false
 
 ## All of a list of conditions ("when" in the data).
 func cond_all(list: Array) -> bool:

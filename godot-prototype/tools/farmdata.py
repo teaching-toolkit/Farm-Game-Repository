@@ -38,8 +38,15 @@ def load_with_where(directory=None):
             if k in nodes: raise SystemExit(f"nodes: {k} is in two files ({where[k]} and {path})")
             nodes[k] = v
             where[k] = os.path.relpath(path, base)
+    story = {}
+    sdir = os.path.join(base, "story")
+    if os.path.isdir(sdir):
+        for path in sorted(os.path.join(sdir, f) for f in os.listdir(sdir) if f.endswith(".json")):
+            for k, v in _read(path).items():
+                if k in story: raise SystemExit(f"story: {k} is in two files ({path})")
+                story[k] = v
     D = {"meta": meta, "chapters": _read(os.path.join(base, "chapters.json")), "start": _read(os.path.join(base, "start.json")),
-         "items": _read(os.path.join(base, "items.json")), "nodes": nodes, "recipes": _read(os.path.join(base, "recipes.json"))}
+         "items": _read(os.path.join(base, "items.json")), "nodes": nodes, "recipes": _read(os.path.join(base, "recipes.json")), "story": story}
     return D, where
 
 def load(directory=None):
@@ -70,6 +77,7 @@ def merged_text(D):
     """The whole data as ONE json text (the layout the old data/farm-progression.json had): for the progression explorer."""
     parts = []
     for k, v in D.items():
+        if k == "story": continue          # the explorer does not need the story texts
         if k == "chapters":
             rows = ["    " + json.dumps(c, ensure_ascii=False) for c in v]
             parts.append(f'  {json.dumps(k)}: [\n' + ",\n".join(rows) + "\n  ]")

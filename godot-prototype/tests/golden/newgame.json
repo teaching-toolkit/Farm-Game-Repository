@@ -217,6 +217,10 @@
 	},
 	"step": 0.0,
 	"step_ready": {},
+	"story_bark": {},
+	"story_last": -99.0,
+	"story_seen": {},
+	"story_taps": {},
 	"unlocked": {
 		"basket": true,
 		"book_basics": true,
