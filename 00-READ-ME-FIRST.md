@@ -2,7 +2,7 @@
 
 This file is the starting point for a new chat or another AI: what the project is, how the folder is laid out, the parent's
 rules and where we left off. **How to work on the project** (what to read, the checks, changing content) lives in three skill
-files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2, the restructuring, is done: R0–R8; phase 3, the interface, is built: version 0.10.0).
+files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2, the restructuring, is done: R0–R8; phase 3, the interface, is built: version 0.10.0; phase 4, the foundations, is built: version 0.11.0).
 
 ---
 
@@ -214,6 +214,8 @@ double-click **`Update explorer.command`** refreshes the explorer (checks the da
 golden runs identical. `web-build/` still matches the code. **Phase 2 is finished.** Next: phase 3 (the interface in the new structure: J2–J6, J8, J9, N7; version 0.10).
 
 13 Oct 2026 (phase 3, version 0.10.0): the interface work is built: new top bar without a bottom bar (J8), cheat buttons and read aloud as device settings (J9, J6), phone-like notifications (J5), no field sign: *The whole field* in the patch window (J2), the farmer walks home before Rest (J3), the playback after the Time Quiz (J4), the season shader with snow caps and golden autumn (N7). All checks pass, golden runs identical. **Needs the iPad** (publish with `Publish web version.command`; `web-build/` does NOT match the code yet): the timing of the Rest walk and of the playback, swiping a notification, the shader on the real screen (snow caps look right on roofs, fences and trees?). Next: phase 4 (foundations, D-papers first).
+
+13 Oct 2026 (phase 4, version 0.11.0): the foundations are built, each slice checked and committed: **what is shown when** (`G.reveal`, `rules/60-reveal.json`; the purse and the album button wait for their first coin and picture; design document §13.2b, the D4 table), **item weights** (`rules/45-weight.json`, hidden), **quality** Lumpy / Proper / Fancy (`G.quality`, `rules/47-quality.json`; `SAVE_VERSION` 2), **skills and ranks** (`G.skills`, `rules/48-skills.json`; shown from the first rank-up in the album; `SAVE_VERSION` 3), **bronze and gold with realistic prices** (every old coin = 15 bronze, `planning/price-table.md`, `G.money`; `SAVE_VERSION` 4). Also the top bar now fits 744 and 834 px, the effect lines of upgrades and pets are readable (J12). New tests: quality (31), skills (31), money (17); golden runs re-recorded on purpose (the bot reaches chapter 5 in 603 / 741 steps); the explorer is refreshed. **Needs the iPad** and the parent's eye on the Swiss prices (TODO W9); `web-build/` does NOT match the code yet. Next: phase 5 (the story engine).
 
 ---
 
