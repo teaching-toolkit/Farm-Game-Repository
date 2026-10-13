@@ -1,0 +1,25 @@
+{
+  "weights": {
+    "note": "How hard each thing is to carry (TODO M4). Five classes, in load units; every item has one: its own entry in `items`, else its category's in `byCategory`. Works from the start but is not shown and limits nothing until the first market trip (design document 13.2b). Straw is light but bulky, so it counts as bulky; logs, stones and iron ore are heavy. Seeds are feathers.",
+    "classes": {"feather": 0.1, "light": 0.5, "normal": 1.0, "bulky": 2.0, "heavy": 4.0},
+    "seed": "feather",
+    "byCategory": {
+      "material": "normal", "byproduct": "light", "fuel": "normal", "container": "normal", "fertilizer": "normal", "feed": "normal",
+      "craft": "light", "keeper": "light", "crop": "normal", "animal": "light", "ingredient": "normal", "textile": "light",
+      "dish": "normal", "pet-item": "bulky", "seed": "feather", "find": "light"
+    },
+    "items": {
+      "stone": "heavy", "log": "heavy", "iron_ore": "heavy", "iron": "heavy", "brick": "heavy", "clay": "heavy", "sand": "heavy", "hardwood": "heavy",
+      "plank": "bulky", "manure": "heavy", "steel": "heavy",
+      "stick": "light", "fiber": "light", "rope": "light", "nails": "light", "glass": "normal",
+      "straw": "bulky", "wool": "bulky", "feather": "feather", "beeswax": "light",
+      "charcoal": "light", "ash": "light",
+      "pumpkin": "heavy", "potato": "normal", "herbs": "feather", "saffron": "feather", "berries": "light", "wheat": "light", "oats": "light", "flax": "light", "lettuce": "light",
+      "egg": "light", "honeycomb": "light", "honey": "normal", "milk": "normal",
+      "clay_jar": "normal", "tin_pot": "normal", "sourdough_starter": "feather", "yogurt_culture": "feather", "cheese_culture": "feather",
+      "yarn": "light", "wool_cloth": "normal", "linen_cloth": "normal", "red_dye": "light", "yellow_dye": "light", "blue_dye": "light", "orange_dye": "light", "green_dye": "light", "purple_dye": "light",
+      "pizza": "bulky", "cheese_board": "bulky", "garden_platter": "bulky", "relic": "normal", "quartz": "light",
+      "rainbow_quilt": "bulky", "saddle_blanket": "normal"
+    }
+  }
+}

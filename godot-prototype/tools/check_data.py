@@ -185,6 +185,22 @@ for rid, r in META.get("reveal", {}).get("elements", {}).items():
     if not isinstance(r.get("when", []), list): err(f"reveal {rid}", "'when' must be a list of conditions (all must hold)")
     for expr in r.get("when", []): condition_ok(f"reveal {rid}", str(expr))
 
+# ---------------------------------------------------------------- weights (rules/45-weight.json)
+W = META.get("weights", {})
+classes = W.get("classes", {})
+if not classes: err("weights", "no classes in rules/45-weight.json")
+for c, v in classes.items():
+    if not isinstance(v, (int, float)) or v <= 0: err(f"weights class {c}", "the load of a class must be a number above 0")
+if W.get("seed") not in classes: err("weights", f"seed class {W.get('seed')!r} is not one of the classes")
+for iid, c in W.get("items", {}).items():
+    if iid not in ITEMS: err("weights", f"item {iid} is not an item")
+    if c not in classes: err("weights", f"item {iid}: class {c!r} is not one of {sorted(classes)}")
+for cat, c in W.get("byCategory", {}).items():
+    if c not in classes: err("weights", f"category {cat}: class {c!r} is not one of {sorted(classes)}")
+for iid, it in ITEMS.items():
+    if iid not in W.get("items", {}) and it.get("category") not in W.get("byCategory", {}):
+        err("weights", f"item {iid} (category {it.get('category')}) has no weight class: give it an entry in items or its category one in byCategory")
+
 # ---------------------------------------------------------------- places (data/farm/places.json)
 spots = set(PLACES["spots"])
 rules = PLACES["nodeSpots"]

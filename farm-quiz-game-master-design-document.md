@@ -375,6 +375,9 @@ wheat seed (and one cleared patch).
 - **The store** holds a limited number of **each** item: Basket 10 → Log Shed 25 → Warehouse 60 (gifts add a few). What does
   not fit flies to the store, bounces off and tumbles away (🚫). Some things are **keepers** — needed but not used up (the
   tin pot, the sourdough starter, cultures, the stone in Stone Soup).
+- **Every thing has a weight** (five classes: feather 0.1 · light 0.5 · normal 1 · bulky 2 · heavy 4 load units; seeds are feathers; straw is light but
+  bulky, logs, stones and iron ore are heavy; `data/farm/rules/45-weight.json`). It works from the start but is not shown and limits nothing until
+  the first market trip, when carrying (backpack → basket → cart, the farmer's strength, the road) starts to matter *(planned, phase 6)*.
 
 ### 5.6 Fuel and the woodpile 🪵
 

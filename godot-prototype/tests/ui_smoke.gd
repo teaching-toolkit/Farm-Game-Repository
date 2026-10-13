@@ -29,6 +29,14 @@ func _ready() -> void:
 	G.S["album"].clear()
 	print("reveal: hidden at the start %s, shown with the first coin and picture %s (told: %s), stays %s" % [rv_hidden, rv_shown, rv_new, rv_stays])
 	if not (rv_hidden and rv_shown and rv_stays): print("FAIL reveal: see the line above")
+	# M4: every thing has a weight (hidden): classes, a total
+	var wt_ok: bool = G.inventory.weight_class("stone") == "heavy" and G.inventory.weight_of("stone") == 4.0 and G.inventory.weight_of("feather") == 0.1 and G.inventory.weight_class("straw") == "bulky"
+	var load0: float = G.inventory.total_load()
+	G.inventory.add_item("stone", 2.0, true)
+	var wt_add: bool = is_equal_approx(G.inventory.total_load() - load0, 8.0)
+	G.inventory.take("stone", 2.0)
+	print("weights: classes %s, two stones add 8 load units %s" % [wt_ok, wt_add])
+	if not (wt_ok and wt_add): print("FAIL weights: see the line above")
 	var screen0: Vector2 = D.screen_size()
 	var narrow_ok := true
 	for w in [834.0, 744.0]:                       # iPad Pro 11" and iPad mini, upright

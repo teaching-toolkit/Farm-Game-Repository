@@ -116,6 +116,34 @@ func stale_soon(k: String) -> float:
 		if G.seasons.season_no() - int(b[0]) >= life: t += float(b[1])
 	return t
 
+# ------------------------------------------------------------------ weight (TODO M4)
+
+## The weight class of an item, "feather" … "heavy" (rules/45-weight.json: the item's own entry, else its category's).
+func weight_class(k: String) -> String:
+	var w: Dictionary = G.meta.get("weights", {})
+	if w.get("items", {}).has(k): return str(w["items"][k])
+	return str(w.get("byCategory", {}).get(str(G.items.get(k, {}).get("category", "")), "normal"))
+
+## What one of it weighs, in load units (a normal thing is 1). Works from the start; shown and limited from the first market trip on.
+func weight_of(k: String) -> float:
+	return float(G.meta.get("weights", {}).get("classes", {}).get(weight_class(k), 1.0))
+
+## What one seed weighs.
+func seed_weight() -> float:
+	var w: Dictionary = G.meta.get("weights", {})
+	return float(w.get("classes", {}).get(str(w.get("seed", "feather")), 0.1))
+
+## What n of an item weigh together.
+func load_of(k: String, n: float) -> float:
+	return weight_of(k) * n
+
+## Everything in the store and every seed, in load units.
+func total_load() -> float:
+	var t := 0.0
+	for k in G.S["inv"]: t += load_of(k, count(k))
+	for c in G.S["seeds"]: t += seed_weight() * float(G.S["seeds"][c])
+	return t
+
 # ------------------------------------------------------------------ one Time Quiz answer
 
 ## Passive producers (woodlot, pets).

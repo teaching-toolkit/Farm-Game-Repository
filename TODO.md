@@ -314,6 +314,7 @@ them up, each with a 💡 recommendation.
 
 - **M4. Every thing gets a weight (bulk)** [#1]: how hard it is to carry. Works hidden from the start (D4). 💡 A few classes (feather,
   light, normal, bulky, heavy) rather than exact numbers; straw is light but bulky; logs, stones and iron ore are heavy. Seed items too.
+  **Built 13 Oct 2026 (phase 4.2):** `data/farm/rules/45-weight.json` (classes in load units: feather 0.1 · light 0.5 · normal 1 · bulky 2 · heavy 4; a class per category and per-item overrides; seeds are feathers); `G.inventory.weight_class/weight_of/load_of/seed_weight/total_load`; the data checker requires a class for every item. Nothing is shown or limited yet: the carrying limit and the bag come with the first market trip (M5, M11).
 - **M5. Carrying and the trip's energy** [#1], [#2]: how much the farmer can carry depends on the carrying device (backpack → basket →
   cart; the existing carrying gear for gathering can count too), and on **strength** (L2). The trip's energy is a farmer number too: a
   flat cost that gets cheaper with a better road, a better cart, boots, strength, or a borrowed donkey (a favour). Later: the wheelbarrow,
