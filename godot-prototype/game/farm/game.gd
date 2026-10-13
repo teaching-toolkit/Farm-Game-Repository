@@ -50,6 +50,8 @@ var replaced_by: Dictionary = {}
 var station_recipes: Dictionary = {}
 var polish_ids: Array = []
 var card_ids: Array = []
+var animal_ids: Array = []          # the animals (nodes of type "animal"), in the data's order
+var pet_ids: Array = []             # the pets in the order they come home: one at the end of each chapter (chapters[].pet)
 var rng := RandomNumberGenerator.new()
 const Learner = preload("res://kits/learn/learner.gd")
 var math = preload("res://kits/learn/math_engine.gd").new()   # Rest sums: curriculum, spaced repetition, medals (learnkit)
@@ -170,7 +172,7 @@ func load_data() -> void:
 	var txt := FileAccess.get_file_as_string(DATA_PATH)
 	D = JSON.parse_string(txt)
 	items = D["items"]; nodes = D["nodes"]; recipes = D["recipes"]; meta = D["meta"]
-	tags.clear(); replaced_by.clear(); station_recipes.clear(); polish_ids.clear(); card_ids.clear()
+	tags.clear(); replaced_by.clear(); station_recipes.clear(); polish_ids.clear(); card_ids.clear(); animal_ids.clear(); pet_ids.clear()
 	for iid in items:
 		for t in items[iid].get("tags", []):
 			if not tags.has(t): tags[t] = []
@@ -180,6 +182,9 @@ func load_data() -> void:
 		if n.has("replaces"): replaced_by[n["replaces"]] = nid
 		if n["type"] == "polish": polish_ids.append(nid)
 		if n["type"] == "knowledge": card_ids.append(nid)
+		if n["type"] == "animal": animal_ids.append(nid)
+	for c in D["chapters"]:
+		if nodes.has(str(c.get("pet", ""))): pet_ids.append(str(c["pet"]))
 	for rid in recipes:
 		var st = recipes[rid]["station"]
 		if not station_recipes.has(st): station_recipes[st] = []
@@ -393,11 +398,13 @@ func rest_per_answer() -> float:
 	if S.get("cold", false): v *= float(meta.get("rest", {}).get("coldHouseMult", 0.75))
 	return v
 
+## The chapter the farm is in: each chapter ends when its pet comes home (chapters[].pet in the data); the last chapter's pet ends the game.
 func chapter() -> int:
+	var chapters: Array = D["chapters"]
 	var c := 1
-	for pid in ["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony"]:
-		if done(pid): c += 1
-	return mini(c, 5)
+	for i in range(chapters.size() - 1):
+		if done(str(chapters[i].get("pet", ""))): c += 1
+	return mini(c, chapters.size())
 
 # ------------------------------------------------------------------ seasons
 func season_len() -> int:
@@ -1968,8 +1975,9 @@ func rest_correct(fast := true) -> float:
 # ------------------------------------------------------------------ luck
 func luck() -> float:
 	var l := g("luck", 0.0)
-	for pid in ["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony", "pet_alpaca"]:
-		if done(pid): l += 0.05
+	var per_pet := float(meta.get("luck", {}).get("petBonus", 0.05))
+	for pid in pet_ids:
+		if done(pid): l += per_pet
 	for b in S["luck_boosts"]:
 		if int(b[1]) > S["step"]: l += float(b[0])
 	return l

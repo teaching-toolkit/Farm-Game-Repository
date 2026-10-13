@@ -1,110 +1,79 @@
 extends RefCounted
-## Which place on the farm map every node of the data belongs to.
-## Where the places stand comes from data/map_layout.json; the keys here are their ids.
+## Which place on the farm map every node of the data belongs to, and what is known about each place.
+## Everything the farm knows about its places is data (data/farm/places.json: names, buildings with an inside, picture chains,
+## ruins, pens, the workbench, and the rules that put a data node at a place); this script only reads it.
+## Where the places stand comes from data/map_layout.json; the keys in both are the places' ids.
 ## Some places have an inside (house, barn, workshop): once the building stands, tapping it opens a window with
 ## its corners (bed, books, kitchen …), and every corner is a place of its own (a "member") with its own sheet.
 
-const SPOTS := {   # i18n
-	"home": ["House", "🏠"], "living": ["Bed & home", "🛏️"], "library": ["Library", "📦"], "kitchen": ["Kitchen", "🔥"],   # i18n
-	"well": ["Well", "🪣"], "storage": ["Storage", "🧺"], "workshop": ["Workshop", "🪚"],   # i18n
-	"field": ["Field", "🪧"], "forest": ["Forest edge", "🌳"], "lumber": ["Woodlot", "🌲"],   # i18n
-	"coop": ["Chickens", "🐔"], "cows": ["Cows", "🐄"], "sheep": ["Sheep", "🐑"], "bees": ["Bees", "🐝"],   # i18n
-	"barn": ["Barn", "🛖"], "windmill": ["Windmill", "🌬️"], "compost": ["Compost", "♻️"],   # i18n
-	"pond": ["Pond", "🦆"], "orchard": ["Orchard", "🍎"], "greenhouse": ["Greenhouse", "🪴"], "pets": ["Pet corner", "🐾"],   # i18n
-	"market": ["Market", "🧑‍🌾"], "bookcart": ["Book cart", "🛒"], "board": ["Notice board", "📋"], "broker": ["Import Broker", "🧳"],   # i18n
-	"road": ["Road", "🛤️"],   # i18n
-	# i18n · corners inside the barn and the workshop
-	"barn_build": ["Barn", "🛖"], "barn_cellar": ["Cellar", "🧀"], "barn_ferment": ["Crocks", "🫙"],   # i18n
-	"barn_hay": ["Hay & water", "🌾"], "barn_seeds": ["Seed library", "🌱"],   # i18n
-	"ws_build": ["Workshop", "🪚"], "ws_bench": ["Benches", "🪚"], "ws_fire": ["Kiln & forge", "🔥"],   # i18n
-	"ws_loom": ["Spinning & weaving", "🧶"], "ws_tools": ["Tools", "🛠️"],   # i18n
-}   # i18n
+const PATH := "res://data/farm/places.json"
 
-## Buildings with an inside. "built": once this (or an upgrade of it) is done, the map shows the building and a tap opens
-## the inside; before that the members stand outside on their own (house) or the place opens one sheet for all (barn, workshop).
-const INTERIORS := {
-	"home": {"built": "cottage", "art": "house", "members": ["living", "library", "kitchen"]},
-	"barn": {"built": "barn_1", "art": "barn", "members": ["barn_build", "barn_cellar", "barn_ferment", "barn_hay", "barn_seeds"]},
-	"workshop": {"built": "workshop_1", "art": "workshop", "members": ["ws_build", "ws_bench", "ws_fire", "ws_loom", "ws_tools"]},
-}
+static var _d := {}
+static var _by_spot := {}
+static var _of := {}
 
-## Pictures of the corners inside (assets/interior/<id>.png, then assets/map/<id>.png): the newest one built is shown.
-const HOTSPOT_ART := {
-	"living": ["straw_bed", "wool_mattress", "linen_bedding"],
-	"library": ["library_box", "library_shelf", "library_bookcase", "library_room"],
-	"kitchen": ["campfire", "stove_1", "stove_2", "stove_3"],
-	"barn_cellar": ["cellar", "cellar_2"], "barn_ferment": ["fermenter"], "barn_hay": ["hay_rack", "water_trough"],
-	"barn_seeds": ["seed_library"],
-	"ws_bench": ["workbench", "carpenter_bench", "sawbench", "press"],
-	"ws_fire": ["kiln", "forge", "anvil", "kiln_2", "forge_2", "glass_kiln"],
-	"ws_loom": ["hand_loom", "spinning_wheel", "textile_loom", "dye_vat"],
-	"ws_tools": ["tool_rack", "master_tool_chest"],
-}
+static func _data() -> Dictionary:
+	if _d.is_empty():
+		var parsed = JSON.parse_string(FileAccess.get_file_as_string(PATH))
+		if typeof(parsed) != TYPE_DICTIONARY:
+			push_error("%s could not be read" % PATH)
+			return {}
+		_d = parsed
+	return _d
+
+# ------------------------------------------------------------------ what a place is called, and how it is built
+
+## The English name of a place or corner (shown with tr()); the id with a capital letter when it has none.
+static func name_of(sid: String) -> String:
+	return str(_data().get("spots", {}).get(sid, {}).get("name", sid.capitalize()))
+
+## The emoji that stands in for a place's picture.
+static func emoji_of(sid: String) -> String:
+	return str(_data().get("spots", {}).get(sid, {}).get("emoji", "❔"))
+
+## Buildings with an inside: building id -> {"built": the node that makes it stand, "art": picture in assets/interiors/, "members": its corners}.
+## Once "built" (or an upgrade of it) is done, the map shows the building and a tap opens the inside; before that the members
+## stand outside on their own (house) or the place opens one sheet for all (barn, workshop).
+static func interiors() -> Dictionary:
+	return _data().get("interiors", {})
+
+static func has_interior(sid: String) -> bool:
+	return interiors().has(sid)
+
+static func interior(parent: String) -> Dictionary:
+	return interiors().get(parent, {})
 
 ## The upgrade chain of a place, first to last: its picture follows the newest one built (tent → cottage → …).
-## An upgrade without its own picture keeps the previous one; the place's own name (map/<spot>.png) comes last.
-## Pictures are named after the FIRST stage they stand for (the farmhouse picture is cottage.png until the cottage
-## gets its own), so a new building shows a picture from the moment it stands.
-const ART_CHAINS := {
-	"home": ["cottage", "cottage_loft", "farmhouse", "farmhouse_sunroom"],
-	"living": ["tent"],
-	"library": ["library_box", "library_shelf", "library_bookcase", "library_room"],
-	"kitchen": ["campfire", "stove_1", "stove_2", "stove_3"],
-	"well": ["well_1", "well_2", "well_3", "well_4", "well_5"],
-	"road": ["road_1", "road_2", "road_3", "road_4", "road_5"],
-	"storage": ["basket", "shed", "warehouse"],
-	"workshop": ["workbench", "workshop_1", "workshop_2", "workshop_3"],
-	"barn": ["barn_1", "barn_2", "barn_3"],
-	"windmill": ["windmill_1", "windmill_2"],
-	"compost": ["compost_bin", "compost_bin_2"],
-	"greenhouse": ["greenhouse", "greenhouse_2"],
-	"lumber": ["woodlot", "lumbermill", "lumbermill_2"],
-	"market": ["market_stall"],
-}
+static func art_chain(sid: String) -> Array:
+	return _data().get("artChains", {}).get(sid, [])
 
-## Places that lie flat on the ground (a fenced pen, a garden, the pond): their picture is in assets/plots/<id>.png,
-## and what gets built there stands on them as add-ons (see "addons" in map_layout.json).
-const PLOT_CHAINS := {
-	"coop": ["coop_1", "coop_2"], "cows": ["animal_cow"], "sheep": ["sheep_pen"], "bees": ["cap_bees_1", "animal_bees"],
-	"pets": ["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony", "pet_alpaca"], "pond": ["pond"], "orchard": ["orchard"],
-}
+## Pictures of the corners inside (assets/interior/<id>.png, then assets/map/<id>.png): the newest one built is shown.
+static func corner_art(sid: String) -> Array:
+	return _data().get("cornerArt", {}).get(sid, [])
 
 ## Places that are always open, even before anything is built there (the wild pond is where the bucket gets water).
-const ALWAYS_OPEN := ["board", "field", "forest", "market", "pond", "road"]
+static func is_always_open(sid: String) -> bool:
+	return _data().get("alwaysOpen", []).has(sid)
 
-## What is left of a building before it stands again (remnants of walls on its footprint): "stone" or "wood".
-const RUINS := {"home": "stone", "well": "stone", "windmill": "stone", "workshop": "stone", "greenhouse": "stone",
-	"barn": "wood", "lumber": "wood", "storage": "wood", "market": "wood", "compost": "wood",
-	"board": "wood", "kitchen": "stone", "library": "wood", "living": "wood"}
+## What is left of a building before it stands again (remnants of walls on its footprint): "stone" or "wood"; `none` if the place has no ruins.
+static func ruin_material(sid: String, none := "") -> String:
+	return str(_data().get("ruins", {}).get(sid, none))
+
+## Pens and gardens: no picture of their own, a generic fence round the footprint and a ground, with what is built
+## standing inside (add-ons): {"fence": picture in assets/fences/ ("" = none), "ground": earth | grass | meadow, "dirt": how much bare earth shows}.
+static func has_pen(sid: String) -> bool:
+	return _data().get("pens", {}).has(sid)
+
+static func pen(sid: String) -> Dictionary:
+	return _data().get("pens", {}).get(sid, {})
 
 ## The workbench shows what has been made: a picture in assets/tools/ appears on the bench once its node is done
 ## (or, for an item, once there is one in the store). x, y = where on the bench picture (fractions), w = width (fraction).
 ## Inside the workshop the same tools hang in a row on the wall once the tool rack is built.
-const BENCH := [
-	{"id": "rope", "item": true, "pic": "rope", "x": 0.30, "y": 0.30, "w": 0.24},
-	{"id": "rock", "pic": "stone_hammer", "x": 0.50, "y": 0.22, "w": 0.26},
-	{"id": "stone_knife", "pic": "flint_knife", "x": 0.70, "y": 0.30, "w": 0.20},
-	{"id": "stone_axe", "pic": "stone_axe", "x": 0.44, "y": 0.38, "w": 0.28},
-	{"id": "wooden_shovel", "pic": "wooden_shovel", "x": 0.64, "y": 0.40, "w": 0.34},
-	{"id": "stick_hoe", "pic": "wooden_rake", "x": 0.30, "y": 0.42, "w": 0.32},
-	{"id": "saw", "pic": "hand_saw", "x": 0.56, "y": 0.30, "w": 0.28},
-	{"id": "iron_hammer", "pic": "iron_hammer", "x": 0.78, "y": 0.24, "w": 0.22},
-]
+static func bench() -> Array:
+	return _data().get("bench", [])
 
-## Pens and gardens: no picture of their own — a generic fence round the footprint and a ground, with what is built
-## standing inside (add-ons). Before they open only broken posts and bare earth are left.
-## fence: a picture in assets/fences/ ("" = no fence), ground: earth | grass | meadow, dirt: how much bare earth shows.
-const PENS := {
-	"coop": {"fence": "wattle_fence", "ground": "earth", "dirt": 0.75},
-	"cows": {"fence": "stick_fence", "ground": "grass", "dirt": 0.3},
-	"sheep": {"fence": "wattle_fence", "ground": "grass", "dirt": 0.3},
-	"pets": {"fence": "picket_fence", "ground": "grass", "dirt": 0.2},
-	"orchard": {"fence": "stick_fence", "ground": "grass", "dirt": 0.15},
-	"bees": {"fence": "", "ground": "meadow", "dirt": 0.1},
-}
-
-static var _by_spot := {}
-static var _of := {}
+# ------------------------------------------------------------------ which place a data node belongs to
 
 static func spot_of(G, id: String) -> String:
 	if _of.is_empty(): _build(G)
@@ -122,15 +91,17 @@ static func _build(G) -> void:
 		if not _by_spot.has(s): _by_spot[s] = []
 		_by_spot[s].append(id)
 	# a building with an inside holds everything of its corners
-	for parent in INTERIORS:
+	var all_interiors := interiors()
+	for parent in all_interiors:
 		var all := []
-		for m in INTERIORS[parent]["members"]: all.append_array(_by_spot.get(m, []))
+		for m in all_interiors[parent]["members"]: all.append_array(_by_spot.get(m, []))
 		_by_spot[parent] = all
 
 ## The building a corner belongs to ("library" → "home"), or "" for a place of its own.
 static func parent_of(sid: String) -> String:
-	for parent in INTERIORS:
-		if sid in INTERIORS[parent]["members"]: return parent
+	var all_interiors := interiors()
+	for parent in all_interiors:
+		if sid in all_interiors[parent]["members"]: return parent
 	return ""
 
 ## Does node id belong to place sid (directly, or to one of its corners)?
@@ -138,48 +109,28 @@ static func in_spot(G, id: String, sid: String) -> bool:
 	var s := spot_of(G, id)
 	return s == sid or parent_of(s) == sid
 
+## The rules in data/farm/places.json "nodeSpots", in this order: the ruins of a place are cleared at that place; a node
+## attached to another goes where that one goes; then the slot's prefix ("gear:", "tool:"); then the slot itself.
 static func _rule(G, id: String, depth: int) -> String:
+	var r: Dictionary = _data().get("nodeSpots", {})
+	var fallback := str(r.get("default", "field"))
 	var n: Dictionary = G.nodes[id]
-	if id.begins_with("ruins_"):      # clearing the ruins of a place happens at that place
-		var p := id.substr(6)
-		return {"workshop": "ws_build", "barn": "barn_build"}.get(p, p)
+	var ruins := str(r.get("ruinsPrefix", ""))
+	if ruins != "" and id.begins_with(ruins):
+		var p := id.substr(ruins.length())
+		return str(r.get("ruinsAt", {}).get(p, p))
 	if n.has("attach") and depth < 3 and G.nodes.has(n["attach"]): return _rule(G, n["attach"], depth + 1)
 	var s := str(n.get("slot", ""))
-	if s.begins_with("gear:"): return "living"
-	if s.begins_with("tool:"): return "ws_tools"
-	match s:
-		"living", "library", "kitchen", "well", "storage", "windmill", "lumber", "orchard", "greenhouse":
-			return s
-		"barn":
-			if id in ["cellar", "cellar_2", "oak_barrels"]: return "barn_cellar"
-			if id == "fermenter": return "barn_ferment"
-			if id in ["hay_rack", "water_trough"]: return "barn_hay"
-			if id == "seed_library": return "barn_seeds"
-			return "barn_build"
-		"workshop":
-			if id in ["workbench", "carpenter_bench", "sawbench", "press", "polish_workbench"]: return "ws_bench"
-			if id in ["kiln", "kiln_2", "glass_kiln", "forge", "forge_2", "anvil", "smithy_chimney", "polish_kiln", "polish_forge"]: return "ws_fire"
-			if id in ["hand_loom", "textile_loom", "spinning_wheel", "dye_vat", "polish_loom"]: return "ws_loom"
-			if id in ["tool_rack", "master_tool_chest", "whetstone", "grindstone"]: return "ws_tools"
-			return "ws_build"
-		"chicken_area": return "coop"
-		"cow_area": return "cows"
-		"sheep_area": return "sheep"
-		"bee_yard": return "bees"
-		"village": return "board"
-		"pet": return "pets"
-		"fence", "field2", "field3": return "field"
-		"market":
-			if id == "book_cart": return "bookcart"
-			if id == "import_broker": return "broker"
-			return "market"
-		"road": return "road"
-		"special":
-			if id.begins_with("orchard"): return "orchard"
-			if id.begins_with("greenhouse"): return "greenhouse"
-			return "pond"
-		"field":
-			if id == "wild_edge" or id == "gathering_basket": return "forest"
-			if id.begins_with("compost") or id.begins_with("worm"): return "compost"
-			return "field"
-	return "field"
+	var prefixes: Dictionary = r.get("slotPrefixes", {})
+	for pre in prefixes:
+		if s.begins_with(pre): return str(prefixes[pre])
+	var e = r.get("slots", {}).get(s)
+	if e == null: return fallback
+	if typeof(e) == TYPE_STRING: return e
+	var ids: Dictionary = e.get("ids", {})
+	for spot in ids:
+		if id in ids[spot]: return str(spot)
+	var id_prefixes: Dictionary = e.get("prefixes", {})
+	for pre in id_prefixes:
+		if id.begins_with(pre): return str(id_prefixes[pre])
+	return str(e.get("default", fallback))

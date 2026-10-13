@@ -63,7 +63,7 @@ func _ready() -> void:
 		print("golden run: %d lines written to %s" % [golden.size(), golden_path])
 	if accuracy < 1.0: print("Time Quiz questions asked %d for %d steps of time (first-try accuracy %.2f)" % [asked, G.S["step"], accuracy])
 	var pets := []
-	for p in ["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony"]:
+	for p in G.pet_ids:
 		if G.done(p): pets.append(p)
 	var pc := {}
 	for ch in pace_sum: pc[ch] = snappedf(float(pace_sum[ch][0]) / maxf(1.0, float(pace_sum[ch][1])), 0.1)

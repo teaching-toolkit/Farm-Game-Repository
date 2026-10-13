@@ -38,8 +38,6 @@ var ground_tap: Control     # taps on the forest and the road
 var road_level := 1.0
 ## Road tiles (assets/road/road_1 … road_9) for each road level: a mix of the two kinds of the level.
 const ROAD_TILES := {1.0: [1, 2], 1.5: [2, 3], 2.0: [3, 4], 2.5: [4, 5], 3.0: [5, 6], 3.5: [6, 7], 4.0: [7, 8], 4.5: [8, 9], 5.0: [9]}
-## Animal pictures that look to the left (the others look to the right): they are mirrored as they walk.
-const FACES_LEFT := {"animal_chicken": true, "pet_bunny": false}
 var cat: TextureRect          # the farm cat (from the side quest): walks about, chases pests, naps
 var cat_emoji: Label
 var _cat := {"state": "", "until": 0.0, "target": Vector2.ZERO, "frame": 0.0}
@@ -762,7 +760,7 @@ func set_critters(spec: Dictionary) -> void:
 				c = UI.label(e[0], 22)
 			c.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			c.position = _spot_point(sid)
-			c.set_meta("left", FACES_LEFT.get(str(e[2]) if e.size() > 2 else "", false))
+			c.set_meta("left", bool(e[3]) if e.size() > 3 else false)   # e = [emoji, picture, node id, faces left (the node's "facesLeft")]
 			_sort_in(c, c.position.y + c.size.y)
 			arr.append(c)
 		_critters[sid] = arr

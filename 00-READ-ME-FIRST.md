@@ -2,7 +2,7 @@
 
 This file is the starting point for a new chat or another AI: what the project is, how the folder is laid out, the parent's
 rules and where we left off. **How to work on the project** (what to read, the checks, changing content) lives in three skill
-files in `claude-skills/`; see §2. Last updated: **12 October 2026** (phase 1 built: version 0.9.0).
+files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2 under way: R0–R2 done).
 
 ---
 
@@ -180,6 +180,12 @@ rename to *Hazelwood Harvest*. No game, data or code changes yet; `web-build/` i
 12 Oct 2026 (phase 2, R0): the safety net for the restructuring: `--seed`, the golden run, save fixtures, the UI test driver,
 screenshot flags in `game/farm/dev/dev_flags.gd`, `tests/check_all.sh`. No change to the game; `web-build/` still matches it.
 R1 done too: the code now lives in `kits/` (reusable parts) and `game/farm/` (this game). Next: R2 (farm content out of code).
+
+13 Oct 2026 (phase 2, R2): farm content out of code: the places, their insides, picture chains, ruins, pens, the workbench and the
+rules that put a data node at a place are now `godot-prototype/data/farm/places.json`; the pets and animals come from the nodes and
+`chapters[].pet` instead of lists in four places. A new test (`tests/places_test.tscn`, in `check_all.sh`) pins it to what the old code
+gave; all checks pass, the golden runs are identical. No change to the game; `web-build/` still matches it (a web export would now also
+carry `data/farm/*.json`). Next: R3 (the core: modifiers, conditions, the clock).
 
 ---
 

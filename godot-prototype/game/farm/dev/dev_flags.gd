@@ -40,6 +40,9 @@ static func apply(main, G) -> void:
 			for p in G.meta.get("perks", {}).get("list", []):
 				if a == "--perks=all" or a.substr(8).split(",").has(p["id"]): G.perks()[p["id"]] = true
 		elif a == "--rainbow": main.call_deferred("_rainbow_now")
+		elif a.begins_with("--load="):             # screenshots: start from a saved farm (--load=res://tests/fixtures/ch3-seed1.json)
+			G.load_game(a.substr(7))
+			G.changed.emit()
 		elif a.begins_with("--unlock="):           # screenshots: pretend these are done (--unlock=workbench,stone_axe)
 			for id in a.substr(9).split(","): G.S["unlocked"][id] = true
 			G._dirty()

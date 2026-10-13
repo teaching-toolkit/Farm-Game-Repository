@@ -320,7 +320,7 @@ func _ready() -> void:
 		D.open_spot(parent)
 		await _frames(2)
 		var opened: bool = D.modal_visible()
-		var corners: Array = Spots.INTERIORS[parent]["members"]
+		var corners: Array = Spots.interior(parent)["members"]
 		D.enter_corner(corners[1], parent)
 		await _frames(2)
 		var sheet_ok: bool = D.sheet_visible() and D.sheet_kind() == "spot:" + corners[1]

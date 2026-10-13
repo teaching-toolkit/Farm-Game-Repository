@@ -4,7 +4,7 @@
     python3 tools/i18n.py            (from the godot-prototype folder)
     python3 tools/i18n.py --check    only report (nothing written); exit code 1 if a language misses texts
 
-Interface: every literal in tr("…") or T("…") in kits/**/*.gd and game/**/*.gd  →  data/i18n/ui-<lang>.json
+Interface: every literal in tr("…") or T("…") in kits/**/*.gd and game/**/*.gd, and the place names in data/farm/places.json  →  data/i18n/ui-<lang>.json
     {"English text": "translation"}. A new text is added with "" (= still English); texts no longer in the code move
     to "_unused" (kept for a while, so a reworded text can take its old translation back by hand).
 Game data: names, descriptions, card pages and questions, steps, album pictures, postcards … (the rules below)
@@ -41,6 +41,10 @@ def ui_texts():
                 code = line.split("# i18n")[0]
                 for m in re.finditer(r'"((?:[^"\\]|\\.)*)"(\s*:)?', code):
                     if not m.group(2) and has_words(m.group(1)): out.setdefault(gd_unescape(m.group(1)), f"{d}/{f}")
+    # the farm's places and corners (names are shown with tr()): data/farm/places.json
+    places = json.load(open(os.path.join(ROOT, "data", "farm", "places.json"), encoding="utf-8"))
+    for sp in places.get("spots", {}).values():
+        if has_words(sp.get("name")): out.setdefault(sp["name"], "data/farm/places.json")
     return out
 
 def has_words(s):

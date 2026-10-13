@@ -78,7 +78,7 @@ The game looks for a picture named after the data id and uses the emoji when the
   A picture is named after the **first** stage it stands for and later upgrades keep it until they get their own: the final
   farmhouse is `cottage.png`, the barn `barn_1.png`, the workshop `workshop_1.png`, the warehouse `shed.png`.
 - `assets/plots/<place>.png` — `pond.png` (dug out), `pond_wild.png` (at the start) and `home.png` (the house plot before the
-  house). Pens have no picture of their own any more (a generic fence and ground; see `PENS` in `game/farm/spots.gd`).
+  house). Pens have no picture of their own any more (a generic fence and ground; see `pens` in `data/farm/places.json`).
 - `assets/ruins/stone_wall.png`, `wood_wall.png` — one side of a ruined wall (like a fence side) for buildings not built yet;
   `deco/rubble.png`, `planks.png` lie about. Without them the broken fences are used.
 - `assets/addons/<id>.png` — things built on a place, shown when built (`coop_2`, `nest_boxes`, `beehive`, `bee_house` …).
@@ -104,8 +104,8 @@ The game looks for a picture named after the data id and uses the emoji when the
   The grass texture is drawn at half size (`GRASS_SCALE` in `game/farm/map/farm_map.gd`). Earth tiles (`ground/…`) lose the grass
   rim the generator paints round them and get a wide soft edge when `import_art.py` cuts them.
 - `assets/map/workbench_empty.png` and `assets/tools/<tool>.png` — the workbench at the workshop place and the tools that appear
-  on it once made (rope, stone hammer, flint knife, stone axe, wooden shovel, rake, saw, iron hammer; where each lies: `BENCH` in
-  `game/farm/spots.gd`). Inside the workshop they hang on the wall once the tool rack is built.
+  on it once made (rope, stone hammer, flint knife, stone axe, wooden shovel, rake, saw, iron hammer; where each lies: `bench` in
+  `data/farm/places.json`). Inside the workshop they hang on the wall once the tool rack is built.
 - `assets/ui/clock_face.png`, `clock_hour.png`, `clock_minute.png` — the Time Quiz clock (hands pointing up, hub at the bottom);
   without them a clock is drawn.
 - `assets/items/<item id>.png` — optional pictures of items (for things flying to the store and the pantry); emojis otherwise.
@@ -238,13 +238,20 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - `--seed=N` (tests, bot, screenshots): the same seed gives the same game. The rules engine takes all its random numbers from
   it, its clock moves with the questions instead of the wall clock, and it neither reads nor writes saves or learning records
   on the device. The flags are read in `game/farm/dev/dev_flags.gd` (the screen) and `Game._test_args()` (the rules).
-- Screenshots and tests: `--player=Name`, `--newgame`, `--timestep=N`, `--spot=storage`, `--patch=K`, `--unlock=id,id`,
+- Screenshots and tests: `--player=Name`, `--newgame`, `--timestep=N`, `--spot=storage`, `--patch=K`, `--unlock=id,id`, `--load=res://tests/fixtures/ch3-seed1.json` (start from a saved farm),
   `--give=item:5`, `--water=1` (carried water), `--menu` (⚙️ Settings), `--grownup` (its grown-up part open), `--password` (the password box), `--celebrate=id`, `--postcard`, `--perks=all` (or a list of perk ids), `--rainbow`, `--rest` (the Rest start page; add `--restgo` for the sums), `--qid=PIC-004`
   (one Time Quiz question), `--lang=de` (quiz texts in German), `--shot=file.png`.
 
 ## Changing content (no code needed)
 - `data/farm-progression.json` — the whole tree. Edit it, run `python3 tools/sync_progression.py` (copies it into
   `../progression/` and the explorer) and check it in `../progression/progression-explorer.html`.
+- `data/farm/places.json` — the farm's places: their names and emoji, the buildings with an inside and their corners, the pictures each
+  upgrade chain uses, ruins, pens, the workbench, and which place every data node belongs to (`nodeSpots`). A new place or corner
+  is an entry here plus its spot in `data/map_layout.json`. Which animals and pets there are comes from the nodes themselves
+  (type `animal`, type `pet`, and `chapters[].pet`); an animal's or pet's `voice` (sound name in `data/sounds.json`) and `facesLeft`
+  (its picture looks left) are fields on its node. After changing it: `bash tests/check_all.sh` (the places test compares it with
+  `tests/golden/places.json`; for a change made on purpose, record anew with `… res://tests/places_test.tscn -- --seed=1 --record`),
+  `python3 tools/i18n.py` (new names), `python3 tools/make_layout_editor.py` and `python3 tools/art_list.py`.
 - `data/quiz_packs/*.json` — Time Quiz questions, one file per pack: `{ "id", "code", "title", "subject", "pool", "questions":
   [ {"id", "q", "img", "emoji", "answers", "correct", "right", "wrong"} ] }`. An answer is text or `{"text", "img", "emoji"}` (a
   picture answer; `img` = a picture name like `items/carrot`, `emoji` stands in until it exists); `img`/`emoji` on the question =
@@ -316,8 +323,9 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - `game/farm/main.gd` — the interface (top bar, map, sheets, the inside windows, quizzes); `game/farm/map/farm_map.tscn` + `farm_map.gd` — the
   one-screen map, built from `data/map_layout.json` (ground, forest, road, house yard, fields with shadows and fence, pens, places,
   add-ons and decorations sorted by their feet; scaled to fit the screen); `game/farm/map/slot.gd` — one place (stands on its footprint,
-  taps only on its pixels, draws its footprint until it has a picture); `game/farm/spots.gd` — which place or corner each data node
-  belongs to, the buildings with an inside (`INTERIORS`), and which pictures an upgrade chain uses; `game/farm/map/iso_field.gd` — a field at
+  taps only on its pixels, draws its footprint until it has a picture); `game/farm/spots.gd` + `data/farm/places.json` — which place or corner each data node
+  belongs to, the buildings with an inside (`interiors`), which pictures an upgrade chain uses, ruins, pens and the workbench (the rules are in the
+  script, the tables are data); `game/farm/map/iso_field.gd` — a field at
   an angle (diamond patches, pests, scarecrow looks, rain); `game/farm/ui/field_view.gd` — the square patch grid still used inside the
   orchard and greenhouse sheets; `kits/ui/art.gd` — pictures with emoji fallback; `kits/ui/ui.gd` — styles.
 - `kits/avatar/avatar.gd` — the farmer (a 3D figure drawn into a picture on the map) + `data/avatar.json` (its look); `kits/avatar/actor.gd` — the farmer acting things out (`data/acts.json`; try

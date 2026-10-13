@@ -1,8 +1,8 @@
 # To-do list — Farm Quiz Game
 
 The project's to-do list and plan. Moved out of `00-READ-ME-FIRST.md` §6 on **9 October 2026**; finished tasks live in
-`PROJECT-LOG.md`, not here. **Last updated: 12 October 2026, evening** (phase 1 built and checked; seven rounds of the parent's decisions, 10–12 Oct, worked in; the
-architecture plan written; §0 is now the implementation plan; nothing built yet).
+`PROJECT-LOG.md`, not here. **Last updated: 13 October 2026** (phase 1 built and checked, version 0.9.0; phase 2, the restructuring, under way: R0–R2 done, next R3; seven rounds of the
+parent's decisions, 10–12 Oct, worked in; §0 is the implementation plan).
 
 **Standing rule** (from `00-READ-ME-FIRST.md`): keep this file current *as you work*. Tick off or remove done tasks (and add a
 row to `PROJECT-LOG.md`), add new ones, reword changed ones. A task that is not written here does not exist for the next chat.
@@ -65,8 +65,10 @@ slices that don't change the game, each checked by a **golden run** (the bot pla
 question must match):
 - ✅ **R0** safety net (`--seed`, golden run, save fixtures, an interface test driver, screenshot flags out of `main.gd`; done 12 Oct 2026,
   `bash tests/check_all.sh`) · ✅ **R1** folders
-  (`kits/`, `game/farm/`; done 12 Oct 2026) · **R2** farm content out of code (places, pets, chapters → data) · **R3** core (modifiers, conditions, clock)
-  · **R4** `game.gd` split into systems behind the same `Game` front door (was T1) · **R5** `main.gd` split into a composition root,
+  (`kits/`, `game/farm/`; done 12 Oct 2026) · ✅ **R2** farm content out of code (done 13 Oct 2026: `data/farm/places.json`; pets, animals and
+  the chapter rule now come from the nodes and `chapters[].pet`; checked by `tests/places_test.tscn`, which is part of `check_all.sh`) · **R3** core
+  (modifiers, conditions, clock) · **R4** `game.gd` split into systems behind the same `Game` front door (was T1; also takes the lists of node types
+  that are still in code: `GOAL_TYPES` in `main.gd`, `NOT_AUTO`, `MAIN_TYPES`, `DEFAULT_CAT` in `game.gd` → data of the progression kit) · **R5** `main.gd` split into a composition root,
   hosts and one script per place (was T1) · **R6** map: generic vs farm, pests drawn once · **R7** saves with versions and upgrade steps ·
   **R8** data files split, a data checker, pacing from the real engine.
 - ✅ Decided (R7): **pacing from the real engine**: the bot reports hours, questions and Rest answers per chapter; the explorer no longer
@@ -179,6 +181,9 @@ them up, each with a 💡 recommendation.
 - **J6. Read aloud in the grown-up settings** [#13] ✅ (R1): one setting with three choices: *off* (no 🔊 buttons) · *button* (as now)
   · *automatic* (reads each question and card page as it opens; the 🔊 button stays to repeat). Today: 🔊 in the Time Quiz and on card
   pages (`_speak` in `main.gd`). Later the story boxes too (I8).
+- **J12. The pet corner shows a raw key.** The sheet lists each pet with its bonus; the tortoise's reads "Mossy — fetchWater +1" (the effect key,
+  not words; the bunny's reads properly, "+1 carrot per harvest"). Found 13 Oct 2026 while checking R2; the same in the old code. 💡 Give the
+  pet effects readable lines (`_effect_text` in `main.gd`, German through `tools/i18n.py`) and check the goat's and the pony's too.
 - **J7. Stale facts left** (the rest fixed 12 Oct 2026): the design document's §1.1 premise (tent, bucket, pot, one seed, a box with a
   book) vs the story (bucket, pot and book come in Berit's box; the seed is found on the one live patch; the tent is borrowed): fix
   together with I9. `story/characters/lark.md` has Lark turn up "the day the market stall opens" (chapter 2); the ladder has him walk up

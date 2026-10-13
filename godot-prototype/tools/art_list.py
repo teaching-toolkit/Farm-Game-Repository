@@ -9,7 +9,6 @@ The game never needs any of these — a missing picture just shows the emoji.
 import csv
 import json
 import os
-import re
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = json.load(open(os.path.join(ROOT, "data", "farm-progression.json"), encoding="utf-8"))
@@ -19,10 +18,9 @@ STYLE = ("Bright, friendly mobile-game cartoon, thick rounded dark outlines, fla
          "chunky cute proportions, three-quarter top-down view (isometric, like Hay Day), standing on a flat diamond-shaped footprint "
          "about twice as wide as deep, small soft shadow, isolated on plain white background, no text.")
 
-# places on the map and their upgrade chains, read from game/farm/spots.gd (ART_CHAINS)
-spots_src = open(os.path.join(ROOT, "game", "farm", "spots.gd"), encoding="utf-8").read()
-chains_src = spots_src.split("const ART_CHAINS")[1].split("}")[0]
-chains = {m.group(1): re.findall(r'"(\w+)"', m.group(2)) for m in re.finditer(r'"(\w+)": \[([^\]]*)\]', chains_src)}
+# places on the map and their upgrade chains, read from data/farm/places.json (artChains, cornerArt)
+PLACES = json.load(open(os.path.join(ROOT, "data", "farm", "places.json"), encoding="utf-8"))
+chains = PLACES["artChains"]
 
 rows = []
 
@@ -136,14 +134,13 @@ for kind, ch, what in [("stick", 1, "short sticks as edging"), ("stick_broken", 
 # the insides of the buildings (empty rooms) and what gets built inside them
 for art, what in [("house", "farmhouse"), ("barn", "big wooden barn"), ("workshop", "timber workshop")]:
     add(3, 2, f"interiors/{art}.png", "1024 max", f"Inside the {what} (empty)", f"empty {what} interior as an isometric dollhouse cutaway: diamond floor, two back walls, no furniture")
-hot_src = spots_src.split("const HOTSPOT_ART")[1].split("\n}")[0]
-for m in re.finditer(r'"(\w+)": \[([^\]]*)\]', hot_src):
-    for nid in re.findall(r'"(\w+)"', m.group(2)):
+for corner, ids in PLACES["cornerArt"].items():
+    for nid in ids:
         n = NODES.get(nid)
         if not n:
             continue
         ch = int(n.get("chapter", 1))
-        add(4 if ch <= 2 else ch + 2, ch, f"interior/{nid}.png", "384 max", f"{n['name']} (inside, {m.group(1)})", f"{n['name'].lower()}: {n.get('desc', '')}")
+        add(4 if ch <= 2 else ch + 2, ch, f"interior/{nid}.png", "384 max", f"{n['name']} (inside, {corner})", f"{n['name'].lower()}: {n.get('desc', '')}")
 # scarecrow levels sit on the field
 for nid in ["scarecrow_1", "scarecrow_2", "scarecrow_3"]:
     n = NODES[nid]

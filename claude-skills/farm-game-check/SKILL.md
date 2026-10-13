@@ -38,7 +38,7 @@ Always edit the real files in the folder, never the copy.
 After any change to the game, run all three, and read the whole output:
 
 ```bash
-timeout 178 bash tests/check_all.sh      # smoke test + save fixtures + golden run + translations in one go (~75 s)
+timeout 178 bash tests/check_all.sh      # smoke test + save fixtures + places and pets + golden run + translations in one go (~90 s)
 timeout 170 $G --headless --path . --audio-driver Dummy res://tests/ui_smoke.tscn
 timeout 170 $G --headless --path . --audio-driver Dummy res://tests/bot.tscn -- --chapter=5 --iters=1100
 timeout 170 $G --headless --path . --audio-driver Dummy -s res://tests/learn_sim.gd     # when Rest or the curriculum changed
@@ -61,6 +61,10 @@ What a pass looks like:
   before going on. Only a change to rules or numbers made on purpose is recorded anew (`bash tests/golden.sh --record`), and
   the log says so.
 - **Save fixtures** (`tests/fixtures_test.tscn`): every save in `tests/fixtures/` loads, plays on and saves unchanged.
+- **Places and pets** (`tests/places_test.tscn`, part of `check_all.sh`): `data/farm/places.json` and the rules in `game/farm/spots.gd` must
+  give the place of every data node, the tables, and the chapter and luck for every set of pets exactly as `tests/golden/places.json`
+  recorded (13 Oct 2026, from the code before slice R2). A new place, pet or chapter made on purpose is recorded anew:
+  `$G --headless --path . res://tests/places_test.tscn -- --seed=1 --record`, and the log says so.
 - **Texts changed:** `python3 tools/i18n.py --check` exits with 0.
 - **Progression data changed:** `python3 tools/sync_progression.py`, then the explorer check. From the project root, in one
   call (a server started in the background dies when the call ends):

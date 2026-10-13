@@ -11,8 +11,6 @@ const MapScript = preload("res://game/farm/map/farm_map.gd")
 const SlotScript = preload("res://game/farm/map/slot.gd")
 
 const GOAL_TYPES := ["building", "station", "tool", "gear", "helper", "land", "patch", "delivery", "pet", "sidequest"]
-const ANIMALS := ["animal_chicken", "animal_cow", "animal_sheep", "animal_bees"]
-const PETS := ["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony", "pet_alpaca"]
 
 const DevFlags = preload("res://game/farm/dev/dev_flags.gd")
 var G
@@ -365,7 +363,7 @@ func _cheat() -> void:
 func _headline(sid: String) -> String:
 	var best := ""
 	if map.slots.has(sid):
-		for id in Spots.ART_CHAINS.get(sid, []):
+		for id in Spots.art_chain(sid):
 			if G.nodes.has(id) and G.done(id): best = id
 	if best != "": return best
 	# buildings and land stand for a place before its animals, and animals before its machines
@@ -384,30 +382,29 @@ func _spot_title(sid: String) -> String:
 	if sid == "field":
 		var names: Array = G.field_names()
 		return names[clampi(field_idx, 0, names.size() - 1)] if names.size() > 0 else tr("Field")
-	var info: Array = Spots.SPOTS.get(sid, [sid.capitalize(), "❔"]).duplicate()
-	info[0] = tr(str(info[0]))
+	var title := tr(Spots.name_of(sid))
 	var parent := Spots.parent_of(sid)
-	if parent != "" and _built(parent): return info[0]      # a corner inside a building: "Bed & home", "Kitchen" …
+	if parent != "" and _built(parent): return title      # a corner inside a building: "Bed & home", "Kitchen" …
 	var head := _headline(sid)
 	if head != "":
 		var nm := str(G.nodes[head]["name"])
 		if nm.length() <= 14: return nm
-	return info[0]
+	return title
 
 func _spot_emoji(sid: String) -> String:
 	var parent := Spots.parent_of(sid)
-	if parent != "" and _built(parent): return Spots.SPOTS.get(sid, ["", "❔"])[1]
+	if parent != "" and _built(parent): return Spots.emoji_of(sid)
 	var head := _headline(sid)
-	if head != "": return str(G.nodes[head].get("emoji", Spots.SPOTS.get(sid, ["", "❔"])[1]))
-	return Spots.SPOTS.get(sid, ["", "❔"])[1]
+	if head != "": return str(G.nodes[head].get("emoji", Spots.emoji_of(sid)))
+	return Spots.emoji_of(sid)
 
 func _is_open(sid: String) -> bool:
-	return _headline(sid) != "" or Spots.ALWAYS_OPEN.has(sid)
+	return _headline(sid) != "" or Spots.is_always_open(sid)
 
 ## Does a building with an inside stand yet (house, barn, workshop)?
 func _built(parent: String) -> bool:
-	if not Spots.INTERIORS.has(parent): return false
-	var b: String = Spots.INTERIORS[parent]["built"]
+	if not Spots.has_interior(parent): return false
+	var b: String = Spots.interior(parent)["built"]
 	return G.nodes.has(b) and G.satisfied(b)
 
 ## The place on the map that stands for sid: a corner inside a building shows as the building once it stands.
@@ -428,7 +425,7 @@ func _art_keys(sid: String) -> Array:
 	var head := _headline(sid)
 	var keys := [head]
 	if map.slots.has(sid):
-		var chain: Array = Spots.ART_CHAINS.get(sid, [])
+		var chain: Array = Spots.art_chain(sid)
 		var at := chain.find(head)
 		for i in range(at - 1, -1, -1): keys.append(chain[i])
 	keys.append(sid)
@@ -443,7 +440,7 @@ func _update_slot(sid: String) -> void:
 		slot.visible = not _built("home")
 	if not slot.visible: return
 	slot.show_name = bool(G.settings.get("showPlaceNames", false))
-	var open := _is_open(sid) or (Spots.INTERIORS.has(sid) and _built(sid))
+	var open := _is_open(sid) or (Spots.has_interior(sid) and _built(sid))
 	var key := ""
 	var tex: Texture2D = null
 	var st := ""
@@ -456,13 +453,13 @@ func _update_slot(sid: String) -> void:
 		tex = Art.tex("plots", key)
 		st = "pond"
 		lk = {"wild": not dug}
-	elif Spots.PENS.has(sid):
+	elif Spots.has_pen(sid):
 		st = "pen"                                     # a generic fence and ground; what is built stands inside
-		lk = Spots.PENS[sid]
+		lk = Spots.pen(sid)
 		slot.inside = _pen_inside(sid) if open else []
 	elif open and _headline(sid).begins_with("ruins_"):
 		st = "ruin"                                    # the old walls are cleared away: bare earth, ready to build on
-		lk = {"material": Spots.RUINS.get(sid, "stone"), "cleared": true}
+		lk = {"material": Spots.ruin_material(sid, "stone"), "cleared": true}
 	elif open and _site_stage(sid) > 0 and _first_key("map", _art_keys(sid).filter(func(k): return G.nodes.has(k) and G.done(k))) == "":
 		var stage := _site_stage(sid)                  # a building site: foundation, frame, walls … as the steps are done
 		key = "site_%d" % stage
@@ -477,9 +474,9 @@ func _update_slot(sid: String) -> void:
 			tex = Art.tex("map", "workbench_empty")        # the bench is empty; what has been made lies on it
 	elif sid == "kitchen":
 		st = "fireplace"                               # before the campfire: a few blackened rocks and a burnt log, no ruin
-	elif Spots.RUINS.has(sid):
+	elif Spots.ruin_material(sid) != "":
 		st = "ruin"                                    # what is left of it: broken walls, rubble — less as it is cleared
-		lk = {"material": Spots.RUINS[sid]}
+		lk = {"material": Spots.ruin_material(sid)}
 		var rid := "ruins_" + sid
 		if G.nodes.has(rid):
 			lk["progress"] = float(G.step_index(rid)) / float(maxi(1, G.steps_of(rid).size()))
@@ -502,7 +499,7 @@ func _site_stage(sid: String) -> int:
 ## What has been made so far, lying on the workbench (tools; rope once there is some).
 func _bench_things() -> Array:
 	var out := []
-	for b in Spots.BENCH:
+	for b in Spots.bench():
 		var have: bool = G.count(str(b["id"])) >= 1.0 if b.get("item", false) else (G.nodes.has(b["id"]) and G.satisfied(b["id"]))
 		var t: Texture2D = Art.tex("tools", str(b["pic"]))
 		if have and t: out.append({"tex": t, "x": b["x"], "y": b["y"], "w": b["w"]})
@@ -520,7 +517,7 @@ func _pen_inside(sid: String) -> Array:
 
 ## A locked place with nothing to do yet: it only shows a mysterious sign and a promise.
 func _mystery(sid: String) -> bool:
-	if _is_open(sid) or (Spots.INTERIORS.has(sid) and _built(sid)): return false
+	if _is_open(sid) or (Spots.has_interior(sid) and _built(sid)): return false
 	var lists := _goal_lists(sid)
 	if not lists[0].is_empty() or not lists[1].is_empty(): return false
 	for aid in Spots.nodes_at(G, sid):
@@ -579,8 +576,8 @@ func _play_fx() -> void:
 
 ## Small sign on a place: something to build (🔨), animals ready (🧺), a card quiz (❓), food going stale (🍂) …
 func _badge(sid: String) -> String:
-	if Spots.INTERIORS.has(sid) and _built(sid):
-		for m in Spots.INTERIORS[sid]["members"]:
+	if Spots.has_interior(sid) and _built(sid):
+		for m in Spots.interior(sid)["members"]:
 			var bm := _badge(m)
 			if bm != "": return bm
 		return ""
@@ -618,16 +615,16 @@ func _badge(sid: String) -> String:
 
 func _critter_spec() -> Dictionary:
 	var spec := {}
-	for aid in ANIMALS:
-		if not G.nodes.has(aid) or not G.S["animals"].has(aid): continue
+	for aid in G.animal_ids:
+		if not G.S["animals"].has(aid): continue
 		var c := int(G.S["animals"][aid]["count"])
 		if c <= 0: continue
 		var arr := []
-		for _i in range(mini(4, c)): arr.append([G.nodes[aid].get("emoji", "🐾"), Art.tex("animals", aid), aid])
+		for _i in range(mini(4, c)): arr.append([G.nodes[aid].get("emoji", "🐾"), Art.tex("animals", aid), aid, G.nodes[aid].get("facesLeft", false)])
 		spec[Spots.spot_of(G, aid)] = arr
 	var pets := []
-	for pid in PETS:
-		if G.done(pid): pets.append([G.nodes[pid].get("emoji", "🐾"), Art.tex("animals", pid), pid])
+	for pid in G.pet_ids:
+		if G.done(pid): pets.append([G.nodes[pid].get("emoji", "🐾"), Art.tex("animals", pid), pid, G.nodes[pid].get("facesLeft", false)])
 	if pets.size() > 0: spec["pets"] = pets
 	return spec
 
@@ -699,7 +696,7 @@ func _reveal(r: Rect2) -> void:
 ## A tap on a place: a building with an inside opens its inside, everything else its sheet.
 func _open_spot(sid: String) -> void:
 	_animal_voice(sid)
-	if Spots.INTERIORS.has(sid) and _built(sid):
+	if Spots.has_interior(sid) and _built(sid):
 		_open_interior(sid)
 		return
 	_open_sheet_for(sid)
@@ -719,7 +716,7 @@ func _reveal_spot(sid: String) -> void:
 ## A window over the farm (the farm stays visible, dimmed, behind it) with the building's inside: every corner
 ## (bed, books, kitchen; cellar, crocks …; benches, kiln & forge …) is tappable and opens its own sheet.
 func _open_interior(parent: String) -> void:
-	var info: Dictionary = Spots.INTERIORS[parent]
+	var info: Dictionary = Spots.interior(parent)
 	var box := _open_modal("%s %s" % [_spot_emoji(parent), _spot_title(parent)])
 	var w := _modal_w() - 40.0
 	var bg_tex: Texture2D = Art.tex("interiors", str(info["art"]))
@@ -752,7 +749,7 @@ func _open_interior(parent: String) -> void:
 		var s = SlotScript.new()
 		s.setup(m, Vector2(float(at.get("x", 0.5)) * w, float(at.get("y", 0.6)) * h), cw, Vector2i(1, 1), cw * 0.9)
 		room.add_child(s)
-		var keys: Array = Spots.HOTSPOT_ART.get(m, []).filter(func(id): return G.nodes.has(id) and G.done(id))
+		var keys: Array = Spots.corner_art(m).filter(func(id): return G.nodes.has(id) and G.done(id))
 		keys.reverse()
 		var key := _first_key("interior", keys)
 		var tex: Texture2D = Art.tex("interior", key) if key != "" else null
@@ -760,14 +757,12 @@ func _open_interior(parent: String) -> void:
 			key = _first_key("map", keys)
 			tex = Art.tex("map", key) if key != "" else null
 		var open := _is_open(m) or m in ["barn_build", "ws_build"]
-		var info2: Array = Spots.SPOTS.get(m, [m.capitalize(), "❔"]).duplicate()
-		info2[0] = tr(str(info2[0]))
-		s.set_state(info2[0], info2[1], tex, not open, _badge(m), key)
+		s.set_state(tr(Spots.name_of(m)), Spots.emoji_of(m), tex, not open, _badge(m), key)
 		s.tapped.connect(_enter_corner.bind(parent))
 	if parent == "workshop" and G.nodes.has("tool_rack") and G.done("tool_rack"):
 		var rack: Dictionary = spots.get("ws_tools", {"x": 0.5, "y": 0.5, "w": 0.2})
 		var tools := []
-		for b in Spots.BENCH:
+		for b in Spots.bench():
 			if b.get("item", false) or not G.nodes.has(b["id"]) or not G.satisfied(b["id"]): continue
 			var tt: Texture2D = Art.tex("tools", str(b["pic"]))
 			if tt: tools.append(tt)
@@ -992,7 +987,7 @@ func _node_picture(id: String) -> Texture2D:
 	if t: return t
 	t = Art.first("helpers", [id])
 	if t: return t
-	for b in Spots.BENCH:
+	for b in Spots.bench():
 		if b["id"] == id: return Art.first("tools", [str(b["pic"])])
 	return Art.first("interior", [id])
 
@@ -1215,7 +1210,7 @@ func _show_rest() -> void:
 	var box := _open_modal(tr("😴 Rest"))
 	Sound.music("rest")
 	_act("rest", map.stand_point(_map_sid("living")))
-	var beds: Array = Spots.HOTSPOT_ART.get("living", []).filter(func(id): return G.nodes.has(id) and G.done(id))
+	var beds: Array = Spots.corner_art("living").filter(func(id): return G.nodes.has(id) and G.done(id))
 	beds.reverse()
 	var bed: Texture2D = Art.first("interior", beds)
 	box.add_child(UI.header(bed if bed else Art.first("map", ["tent"]), "😴", 72))
@@ -1429,31 +1424,34 @@ func _gain_sound(source: String, got: Dictionary) -> String:
 	if source == "water": return "water"
 	return "build"
 
-const ANIMAL_VOICE := {"coop": ["chicken"], "cows": ["cow"], "sheep": ["sheep"], "bees": ["bees"]}
-
 ## Tapping a pen: its animals call (perk "Farm sounds"; Sound checks the perk).
 func _animal_voice(sid: String) -> void:
 	var v: Array = _voices_at(sid)
 	if not v.is_empty(): Sound.play(v[randi() % v.size()])
 
+## The sound an animal or pet makes (its node's "voice" in the data), or "" if it has none or is not on the farm yet.
+func _voice_of(id: String) -> String:
+	var n: Dictionary = G.nodes[id]
+	var v := str(n.get("voice", ""))
+	if v == "": return ""
+	var here: bool = G.done(id) if n["type"] == "pet" else int(G.animal(id)["count"]) > 0
+	return v if here else ""
+
 func _voices_at(sid: String) -> Array:
-	if sid == "pets":
-		var out := []
-		for p in [["pet_goat", "goat"], ["pet_pony", "pony"]]:
-			if G.done(p[0]): out.append(p[1])
-		return out
-	var out2 := []
-	for v in ANIMAL_VOICE.get(sid, []):
-		var aid: String = {"chicken": "animal_chicken", "cow": "animal_cow", "sheep": "animal_sheep", "bees": "animal_bees"}[v]
-		if G.nodes.has(aid) and int(G.animal(aid)["count"]) > 0: out2.append(v)
-	return out2
+	var out := []
+	for id in Spots.nodes_at(G, sid):
+		var v := _voice_of(id)
+		if v != "": out.append(v)
+	return out
 
 ## Now and then, while the farm is on screen, an animal (or a bird, or the cat) makes itself heard.
 func _animal_ambience(t: Timer) -> void:
 	t.wait_time = randf_range(20.0, 45.0)
 	if modal.visible or not G.perk_on("perk_sounds"): return
 	var v := ["birds"]
-	for sid in ["coop", "cows", "sheep", "bees", "pets"]: v.append_array(_voices_at(sid))
+	for id in G.animal_ids + G.pet_ids:
+		var voice := _voice_of(id)
+		if voice != "": v.append(voice)
 	if G.done("barn_cat"): v.append("cat")
 	Sound.play(v[randi() % v.size()])
 
@@ -2196,7 +2194,7 @@ func _node_row(id: String, show_button := true, show_place := false, tile := fal
 	h.add_child(UI.label("%s %s" % [n.get("emoji", ""), n["name"]], 19, UI.INK, true))
 	if show_place:
 		var sid := Spots.spot_of(G, id)
-		var pb := UI.soft_button("📍 " + tr(str(Spots.SPOTS.get(sid, [sid])[0])), _go_spot.bind(sid), true, 15)
+		var pb := UI.soft_button("📍 " + tr(Spots.name_of(sid)), _go_spot.bind(sid), true, 15)
 		h.add_child(pb)
 	var ck: Dictionary = G.can_unlock(id)
 	var steps: Array = G.steps_of(id)
@@ -2288,11 +2286,11 @@ func _spot_header(sid: String) -> Control:
 	var tex: Texture2D = null
 	if map.slots.has(ms) and map.slots[ms].visible and map.slots[ms].pic.texture: tex = map.slots[ms].pic.texture
 	if Spots.parent_of(sid) != "" and _built(Spots.parent_of(sid)):
-		var keys: Array = Spots.HOTSPOT_ART.get(sid, []).filter(func(id): return G.nodes.has(id) and G.done(id))
+		var keys: Array = Spots.corner_art(sid).filter(func(id): return G.nodes.has(id) and G.done(id))
 		keys.reverse()
 		var kk := _first_key("interior", keys)
 		tex = Art.tex("interior", kk) if kk != "" else null
-	if tex == null and Spots.PENS.has(sid):
+	if tex == null and Spots.has_pen(sid):
 		for a in map.addon_nodes:
 			if a["sid"] == sid and a["node"].visible: tex = a["node"].texture
 	return UI.header(tex, _spot_emoji(sid), 100)
@@ -2687,7 +2685,7 @@ func _part_road() -> void:
 
 func _part_pets() -> void:
 	var any := false
-	for pid in PETS:
+	for pid in G.pet_ids:
 		if not G.done(pid): continue
 		any = true
 		var n: Dictionary = G.nodes[pid]

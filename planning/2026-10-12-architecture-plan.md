@@ -1,7 +1,7 @@
 # Architecture plan (TODO T2 → T1): the game's code, restructured for upkeep and reuse
 
 Written 12 Oct 2026 after reading the code (Godot 4.7 project in `godot-prototype/`). Labels: ✅ decided · 💡 proposed · ❓ for the parent.
-Nothing here is built yet. When the restructuring is done, the parts of this file that describe the result move into
+Slices R0–R2 are built (§9, marked ✅). When the restructuring is done, the parts of this file that describe the result move into
 `godot-prototype/ARCHITECTURE.md` (the lasting description), and this plan goes to `archive/`.
 
 ---
@@ -198,8 +198,8 @@ data/
     items.json  recipes.json    split out of farm-progression.json
     nodes/ch1.json … ch6.json   nodes by chapter (easier to read and to edit)
     rules/*.json                today's "meta" blocks, one file per system (seasons, pests, market, pricing, needs …)
-    places.json                 places, insides, picture chains, ruins, pens, bench (out of spots.gd)
-    pets.json                   pets, their chapters, dishes, comfort items (out of main.gd / game.gd)
+    places.json                 places, insides, picture chains, ruins, pens, bench, and the rules that put a node at a place (out of spots.gd) ✅ R2, built as data/farm/places.json
+    (no pets.json)              ✅ R2: the pets are the nodes of type "pet", in the order of chapters[].pet; their sound (voice) and facing (facesLeft) are fields on the nodes, the luck bonus is meta.luck.petBonus
     layout.json  acts.json  avatar.json  sounds.json  story.json
   quiz_packs/  i18n/            as now
 ```
@@ -261,7 +261,7 @@ rough (S ≈ one session, M ≈ two, L ≈ three or four).
 |---|---|---|---|
 | **R0. Safety net** ✅ 12 Oct 2026 | `--seed=` for all randomness; the golden run (bot fingerprint per question); save fixtures; the interface test driver, with the smoke test moved onto it; the screenshot flags moved out of `main.gd` | P8, P10 | M |
 | **R1. Folders** ✅ 12 Oct 2026 | `kits/` and `game/farm/`; move the files that are already separate (learnkit → `kits/learn`, ui, avatar and actor, sound, i18n, art); fix the `preload` paths | – | S |
-| **R2. Content out of code** | places, insides, picture chains, ruins, pens, bench, pets and animals, the chapter rule → data files | P3 | S |
+| **R2. Content out of code** ✅ 13 Oct 2026 | places, insides, picture chains, ruins, pens, bench, pets and animals, the chapter rule → data (`data/farm/places.json`; pets, animals and the chapter rule from the nodes and `chapters[].pet`). Left for R4: the lists of node types (`GOAL_TYPES`, `NOT_AUTO`, `MAIN_TYPES`, `DEFAULT_CAT`), which belong to the progression kit | P3 | S |
 | **R3. Core** | modifiers, conditions, rng, events, the clock (with the systems registered in today's exact order) | P4 | M |
 | **R4. Rules split** | `game.gd` → systems (progression, knowledge, items & trade, crafting, needs, resources, seasons, rewards, farm: fields, animals …) behind the same `Game` front door; today's function names keep working | P1 | L |
 | **R5. Interface split** | `main.gd` → composition root, sheet and modal hosts, notifications, place scripts, learning screens, menus; reads through the systems only | P1, P2 | L |

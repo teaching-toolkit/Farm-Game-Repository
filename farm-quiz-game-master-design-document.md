@@ -1017,7 +1017,7 @@ value checks) and keeps a copy of the current data.
 |---|---|
 | `game/farm/game.gd` (autoload `Game`) | the rules engine: time, energy, water, fields, weeds, pests, animals, stations, fuel, knowledge, polish, gear, seasons, freshness, luck, gifts, jobs, dynamic difficulty, saves |
 | `game/farm/main.gd` | the interface: bars, sheets, inside windows, quizzes, album, settings |
-| `game/farm/map/` (`farm_map.gd`, `slot.gd`, `iso_field.gd`), `game/farm/spots.gd`, `game/farm/ui/field_view.gd` | the one-screen map, a place, a field, which data node belongs where, the patch grid |
+| `game/farm/map/` (`farm_map.gd`, `slot.gd`, `iso_field.gd`), `game/farm/spots.gd` with `data/farm/places.json`, `game/farm/ui/field_view.gd` | the one-screen map, a place, a field, which data node belongs where (the places, their insides, picture chains, ruins, pens and the workbench are data), the patch grid |
 | `game/farm/fx.gd`, `game/farm/dev/dev_flags.gd` | perk effects drawn over the farm; the test and screenshot flags |
 | `kits/ui/` (`art.gd`, `ui.gd`), `kits/avatar/` (`avatar.gd`, `actor.gd`), `kits/audio/` (`sound.gd`, `synth.gd`), `kits/i18n/i18n.gd` | pictures with emoji fallback, styles and explanations, the farmer, sound and music, languages (reusable parts, 12 Oct 2026) |
 | `kits/learn/` | the learning kit — learner record, spaced repetition, maths engine, quiz engine, timer, number pad; reusable in any Godot game |
