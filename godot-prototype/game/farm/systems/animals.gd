@@ -7,6 +7,10 @@ var G: FarmGame   # the Game: the farm's state (G.S), its data and the other sys
 func _init(game: FarmGame) -> void:
 	G = game
 
+## The save keys this system owns, with their values in a new game (kits/core/saves.gd fills missing ones into older saves).
+func save_defaults() -> Dictionary:
+	return {"animals": {}}
+
 # ------------------------------------------------------------------ animals & muck
 
 func animal_key(aid: String) -> String:

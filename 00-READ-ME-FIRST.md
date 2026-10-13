@@ -2,7 +2,7 @@
 
 This file is the starting point for a new chat or another AI: what the project is, how the folder is laid out, the parent's
 rules and where we left off. **How to work on the project** (what to read, the checks, changing content) lives in three skill
-files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2 under way: R0–R6 done).
+files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2 under way: R0–R7 done).
 
 ---
 
@@ -200,7 +200,11 @@ refreshes it); the interface's jobs are 25 parts in `godot-prototype/game/farm/u
 (e.g. `M.modals.open_modal`, `M.patches.on_patch`). Same method as R4. No change to the game: all checks pass, the golden runs are identical, and 21
 screens (sheets, pop-ups, Rest, quiz, menu, album, cards, English and German) look the same as before. `web-build/` still matches the code.
 
-13 Oct 2026 (phase 2, R6): the map: `farm_map.gd` (1,042 lines) is split into the map node and `ground`, `critters`, `cat`, `walker` (`godot-prototype/game/farm/map/`, own README); the pest and scarecrow drawing that existed twice is now only in `iso_field.gd` (the copy in `field_view.gd` was dead code). No change to the game (all checks pass, golden runs identical, map screenshots in four seasons and a fully built winter farm look the same as before). `web-build/` still matches the code. Next: R7 (versioned saves).
+13 Oct 2026 (phase 2, R6): the map: `farm_map.gd` (1,042 lines) is split into the map node and `ground`, `critters`, `cat`, `walker` (`godot-prototype/game/farm/map/`, own README); the pest and scarecrow drawing that existed twice is now only in `iso_field.gd` (the copy in `field_view.gd` was dead code). No change to the game (all checks pass, golden runs identical, map screenshots in four seasons and a fully built winter farm look the same as before). `web-build/` still matches the code. 
+13 Oct 2026 (phase 2, R7): saves have a version: `kits/core/saves.gd`, `Game.SAVE_VERSION` = 1 (older saves are 0 and are upgraded when loaded), every
+system declares the save keys it owns (`save_defaults()`), a new key or a changed layout has a clear place to go (README, `farm-game-session` skill). The
+fixtures stay in the old layout and still load; a new test (`tests/saves_test.tscn`) checks the new-game state, key owners, upgrades and saves from a newer
+game. The golden runs' numbers are unchanged (only their state hash, since every save now has `version`; recorded anew). `web-build/` still matches the code. Next: R8 (data split, checker, pacing).
 
 ---
 

@@ -235,6 +235,10 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - Saves live in Godot's user folder, one folder per player: `players/<name>/farm_save.json` and `learning.json` (on a Mac:
   `~/Library/Application Support/Godot/app_userdata/Hazelwood Harvest/`; farms played before the rename on 12 Oct 2026 stay in
   `…/Farm Quiz Game (prototype)/` and can be copied over by hand. The web version keeps its saves in the browser, unaffected by the name).
+  **A save has a version** (`"version"`; none = 0). `Game.SAVE_VERSION` is the current one. A new key is added to the `save_defaults()` of the system that
+  owns it (older saves get it when loaded); a change to the layout of what is saved raises `SAVE_VERSION` and adds a step to
+  `Game.save_steps()` (`kits/core/saves.gd` runs the steps a save has not had yet). The fixtures in `tests/fixtures/` stay in their old layout
+  and must keep loading; a save from a newer game is loaded as it is.
 - `--seed=N` (tests, bot, screenshots): the same seed gives the same game. The rules engine takes all its random numbers from
   it, its clock moves with the questions instead of the wall clock, and it neither reads nor writes saves or learning records
   on the device. The flags are read in `game/farm/dev/dev_flags.gd` (the screen) and `Game._test_args()` (the rules).
@@ -295,13 +299,15 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   the number changes from run to run; `--flex` plays with dynamic difficulty on; `--trace=N` prints what happens during the first N questions;
   `--accuracy=0.8` misses a share of first tries (only a right first try moves time) and reports how many questions it was asked; it prints
   its pace, which `meta.flex.basePace` is taken from).
-- `bash tests/check_all.sh` — all quick checks in one go (about 2 minutes): smoke test, save fixtures, golden run, translations.
+- `bash tests/check_all.sh` — all quick checks in one go (about 2 minutes): smoke test, save fixtures, save versions, core kit, places and pets, golden run, translations.
 - `bash tests/golden.sh` — the golden run: the bot plays seeds 1 and 2 to chapter 5 and every step of time is compared with
   `tests/golden/` (coins, energy, water, goals, what is unlocked, the store). A restructuring must leave it unchanged. `--strict`
-  also compares a hash of the whole save; `--record` records new golden runs after a change to the rules or numbers on purpose.
+  also compares a hash of the whole save (it changes when the save layout does: record anew then, and check that without the hash nothing differs); `--record` records new golden runs after a change to the rules or numbers on purpose.
   Bot flags for it: `--seed=N`, `--golden=FILE`, `--save-at=CHAPTER:FILE` (writes a save fixture).
 - `godot --headless --path . res://tests/fixtures_test.tscn -- --seed=1` — every save in `tests/fixtures/` still loads, plays
   on for 10 steps and saves unchanged; a save in an older layout is completed when loaded.
+- `godot --headless --path . res://tests/saves_test.tscn -- --seed=1` — a new game has the recorded keys (`tests/golden/newgame.json`; `--record` after a
+  new save key on purpose), every key has one owner, saves from before the version number are upgraded, a save from a newer game is kept.
 - `godot --headless --path . res://tests/ui_smoke.tscn` — clicks through the opening (first card, planting, Time Quiz, Rest,
   every place on the map, quest book, album, log) and checks the sums, the market, postcards, perks, the farmer, quiz ids,
   answers and pictures, German texts, stoking, carrying, rooting out and dynamic prices. It reaches the screen only through

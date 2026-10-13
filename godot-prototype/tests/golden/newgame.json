@@ -1,0 +1,225 @@
+{
+	"acorns": {},
+	"album": [],
+	"animals": {},
+	"attach": {},
+	"buff": {},
+	"card_qseen": {},
+	"cards": {},
+	"coins": 0.0,
+	"cold": false,
+	"early_patches": {},
+	"energy": 10.0,
+	"gh": [],
+	"gift_active": [],
+	"gift_owned": [],
+	"gift_pending": [],
+	"gift_seen": [],
+	"gift_shop": [],
+	"goals": 0.0,
+	"inv": {
+		"stick": [
+			[
+				0.0,
+				3.0
+			]
+		],
+		"stone": [
+			[
+				0.0,
+				3.0
+			]
+		],
+		"tin_pot": [
+			[
+				0.0,
+				1.0
+			]
+		]
+	},
+	"jobs": [
+		{
+			"got": 0.0,
+			"item": "",
+			"n": 13.0,
+			"text": "Pull 13 weeds",
+			"type": "weed"
+		},
+		{
+			"got": 0.0,
+			"item": "gather_sticks",
+			"n": 2.0,
+			"text": "Make 2 Gather sticks",
+			"type": "make"
+		},
+		{
+			"got": 0.0,
+			"item": "",
+			"n": 5.0,
+			"text": "Pick 5 stones from the fields",
+			"type": "stones"
+		}
+	],
+	"last_season": 0.0,
+	"log": [],
+	"luck_boosts": [],
+	"market": {},
+	"open_early": {},
+	"orchard": [],
+	"patches": [
+		{
+			"crop": "",
+			"cycles": 0.0,
+			"growth": 0.0,
+			"last": "",
+			"plants": 0.0,
+			"quality": 1.0,
+			"ready": false,
+			"soil": 1.0,
+			"stones": 1.0,
+			"weeds": 1.0
+		},
+		{
+			"crop": "",
+			"cycles": 0.0,
+			"growth": 0.0,
+			"last": "",
+			"plants": 0.0,
+			"quality": 1.0,
+			"ready": false,
+			"soil": 1.0,
+			"stones": 0.0,
+			"weeds": 0.0
+		},
+		{
+			"crop": "",
+			"cycles": 0.0,
+			"growth": 0.0,
+			"last": "",
+			"plants": 0.0,
+			"quality": 1.0,
+			"ready": false,
+			"soil": 1.0,
+			"stones": 0.0,
+			"weeds": 0.0
+		},
+		{
+			"crop": "",
+			"cycles": 0.0,
+			"growth": 0.0,
+			"last": "",
+			"plants": 0.0,
+			"quality": 1.0,
+			"ready": false,
+			"soil": 1.0,
+			"stones": 0.0,
+			"weeds": 0.0
+		},
+		{
+			"crop": "",
+			"cycles": 0.0,
+			"growth": 0.0,
+			"last": "",
+			"plants": 0.0,
+			"quality": 1.0,
+			"ready": false,
+			"soil": 1.0,
+			"stones": 0.0,
+			"weeds": 0.0
+		},
+		{
+			"crop": "",
+			"cycles": 0.0,
+			"growth": 0.0,
+			"last": "",
+			"plants": 0.0,
+			"quality": 1.0,
+			"ready": false,
+			"soil": 1.0,
+			"stones": 0.0,
+			"weeds": 0.0
+		},
+		{
+			"crop": "",
+			"cycles": 0.0,
+			"growth": 0.0,
+			"last": "",
+			"plants": 0.0,
+			"quality": 1.0,
+			"ready": false,
+			"soil": 1.0,
+			"stones": 0.0,
+			"weeds": 0.0
+		},
+		{
+			"crop": "",
+			"cycles": 0.0,
+			"growth": 0.0,
+			"last": "",
+			"plants": 0.0,
+			"quality": 1.0,
+			"ready": false,
+			"soil": 1.0,
+			"stones": 0.0,
+			"weeds": 0.0
+		},
+		{
+			"crop": "",
+			"cycles": 0.0,
+			"growth": 0.0,
+			"last": "",
+			"plants": 0.0,
+			"quality": 1.0,
+			"ready": false,
+			"soil": 1.0,
+			"stones": 0.0,
+			"weeds": 0.0
+		}
+	],
+	"perks": {},
+	"pests": 0.0,
+	"pet_names": {},
+	"polish": {},
+	"postcards": [],
+	"practice": {},
+	"rain": false,
+	"read_done": {},
+	"read_progress": 0.0,
+	"reading": "",
+	"recent_q": [],
+	"running": {},
+	"seeds": {
+		"crop_wheat": 1.0
+	},
+	"seen": {
+		"stick": true,
+		"stone": true,
+		"tin_pot": true
+	},
+	"sold_kinds": {},
+	"stats": {
+		"harvests": 0.0,
+		"rest": 0.0,
+		"sidequests": 0.0,
+		"stones": 0.0,
+		"weeds": 0.0
+	},
+	"step": 0.0,
+	"step_ready": {},
+	"unlocked": {
+		"basket": true,
+		"book_basics": true,
+		"bucket": true,
+		"hands": true,
+		"land_start": true,
+		"library_box": true,
+		"road_1": true,
+		"rock": true,
+		"seed_1": true,
+		"tent": true,
+		"well_1": true,
+		"wild_edge": true
+	},
+	"water": 4.0,
+	"woodpile": 0.0
+}

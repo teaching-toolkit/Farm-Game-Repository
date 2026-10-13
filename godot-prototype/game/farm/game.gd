@@ -56,6 +56,7 @@ var animal_ids: Array = []          # the animals (nodes of type "animal"), in t
 var pet_ids: Array = []             # the pets in the order they come home: one at the end of each chapter (chapters[].pet)
 const Modifiers = preload("res://kits/core/modifiers.gd")
 const Conditions = preload("res://kits/core/conditions.gd")
+const Saves = preload("res://kits/core/saves.gd")
 var rng = preload("res://kits/core/rng.gd").new()    # the one random source of the rules (seedable)
 var clock = preload("res://kits/core/clock.gd").new()  # one step of time: the systems that run in it, in order
 
@@ -75,6 +76,9 @@ var buying := false      # bought things are not "produced"
 ## the clock moves with the steps instead of the wall clock, and nothing is read from or written to the device
 ## (no players, no save, a fresh learning record). Save files can still be written on purpose with save_to().
 var test_seed := -1
+## The version of the save layout (kits/core/saves.gd). A save without a "version" is version 0. Every change to the layout of a save
+## adds an upgrade step in save_steps() and raises this number; tests/fixtures/ keeps old saves that must still load.
+const SAVE_VERSION := 1
 const TEST_CLOCK_START := 1800000000.0   # a fixed moment in 2027; one step of time counts as 10 minutes
 
 ## The systems: each owns one part of the rules and works on the farm's state G.S (see game/farm/systems/).
@@ -262,19 +266,23 @@ func load_data() -> void:
 	for cid in card_ids:
 		for q in nodes[cid].get("questions", []): quiz_keys[str(q.get("q", ""))] = quiz.key(q)
 
+## The keys of the save that the Game itself owns (the systems own the rest, see their save_defaults()).
+func save_defaults() -> Dictionary:
+	var st: Dictionary = D["start"]
+	return {"step": 0, "coins": float(st.get("coins", 0)), "water": float(st.get("water", 10)), "energy": float(st.get("energy", 10)),
+		"goals": 0, "stats": {"weeds": 0.0, "stones": 0.0, "sidequests": 0, "harvests": 0, "rest": 0}, "log": []}
+
+## Everything a save holds in a new game: the Game's keys and every system's.
+func all_save_defaults() -> Dictionary:
+	var d := save_defaults()
+	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade]:
+		d.merge(sys.save_defaults())
+	return d
+
 func new_game() -> void:
 	var st: Dictionary = D["start"]
-	S = {
-		"step": 0, "coins": float(st.get("coins", 0)), "water": float(st.get("water", 10)), "energy": float(st.get("energy", 10)),
-		"inv": {}, "seen": {}, "seeds": {}, "unlocked": {}, "polish": {}, "attach": {},
-		"patches": [], "orchard": [], "gh": [], "animals": {}, "running": {}, "woodpile": 0.0, "pests": 0.0,
-		"reading": "", "read_progress": 0.0, "read_done": {}, "cards": {}, "card_qseen": {},
-		"buff": {}, "luck_boosts": [], "gift_owned": [], "gift_shop": [], "gift_seen": [], "gift_pending": [], "goals": 0,
-		"jobs": [], "practice": {}, "acorns": {}, "album": [], "pet_names": {},
-		"stats": {"weeds": 0.0, "stones": 0.0, "sidequests": 0, "harvests": 0, "rest": 0}, "last_season": 0,
-		"cold": false, "rain": false, "recent_q": [], "log": [], "gift_active": [], "step_ready": {}, "open_early": {}, "early_patches": {},
-		"postcards": [], "perks": {}, "sold_kinds": {}, "market": {},
-	}
+	S = all_save_defaults()
+	S["version"] = SAVE_VERSION
 	for nid in st.get("unlocked", []): S["unlocked"][nid] = true
 	for k in st.get("inventory", {}): inventory.add_item(k, float(st["inventory"][k]), true)
 	for k in st.get("seeds", {}): S["seeds"][k] = float(st["seeds"][k])
@@ -295,32 +303,34 @@ func save_game() -> void:
 
 ## Writes the farm to a file (the normal save, or a test fixture).
 func save_to(path: String) -> void:
-	var f := FileAccess.open(path, FileAccess.WRITE)
-	if f:
-		f.store_string(JSON.stringify(S))
+	Saves.write(path, S)
+
+## The upgrade steps from older save layouts, in order (kits/core/saves.gd). A step takes the save from the version before its "to".
+func save_steps() -> Array:
+	return [{"to": 1, "name": "saves from before the version number: gift offers become postcards, the gift shop is gone, the first cards owned are the active ones", "fn": upgrade_save_v0}]
+
+func upgrade_save_v0(save: Dictionary) -> void:
+	# gift cards from before: offers waiting become postcards from "a friend"; the gift shop is gone
+	var gp := []
+	for x in save.get("gift_pending", []):
+		if typeof(x) == TYPE_ARRAY: gp.append({"from": tr("A friend"), "emoji": "💌", "text": tr("A little something for your farm!"), "offer": x, "step": int(save.get("step", 0))})
+		elif typeof(x) == TYPE_DICTIONARY: gp.append(x)
+	save["gift_pending"] = gp
+	save["gift_shop"] = []
+	if not save.has("gift_active"):   # saves from before: the first cards owned are the ones that work
+		var mx := int(meta.get("giftCards", {}).get("maxActive", 2))
+		save["gift_active"] = (save.get("gift_owned", []) as Array).slice(0, mx)
 
 func load_game(path := "") -> bool:
 	if path == "": path = save_path()
-	if not FileAccess.file_exists(path): return false
-	var d = JSON.parse_string(FileAccess.get_file_as_string(path))
-	if typeof(d) != TYPE_DICTIONARY or not d.has("unlocked"): return false
+	var d := Saves.read(path)
+	if not d.has("unlocked"): return false
 	S = d
-	S["step"] = int(S["step"])
-	S["last_season"] = int(S.get("last_season", 0))
-	for k in ["step_ready", "open_early", "early_patches", "perks", "sold_kinds", "market"]:
-		if not S.has(k): S[k] = {}
-	if not S.has("postcards"): S["postcards"] = []
-	# gift cards from before: offers waiting become postcards from "a friend"; the gift shop is gone
-	var gp := []
-	for x in S.get("gift_pending", []):
-		if typeof(x) == TYPE_ARRAY: gp.append({"from": tr("A friend"), "emoji": "💌", "text": tr("A little something for your farm!"), "offer": x, "step": S["step"]})
-		elif typeof(x) == TYPE_DICTIONARY: gp.append(x)
-	S["gift_pending"] = gp
-	S["gift_shop"] = []
-	if not S.has("gift_active"):   # saves from before: the first cards owned are the ones that work
-		var mx := int(meta.get("giftCards", {}).get("maxActive", 2))
-		S["gift_active"] = (S["gift_owned"] as Array).slice(0, mx)
-	# saves from an older version: things everyone starts with (the muddy road …) are added
+	S["step"] = int(S.get("step", 0))        # (JSON gives whole numbers back as floats)
+	Saves.upgrade(S, save_steps(), SAVE_VERSION)
+	Saves.fill(S, all_save_defaults())       # keys that a newer game added
+	S["last_season"] = int(S["last_season"])
+	# things everyone starts with (the muddy road …) that the data has gained since: added to every farm
 	for nid in D["start"].get("unlocked", []):
 		if nodes.has(nid) and not satisfied(nid): S["unlocked"][nid] = true
 	invalidate_caps()

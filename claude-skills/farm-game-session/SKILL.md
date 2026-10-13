@@ -55,7 +55,7 @@ A step is "bigger" if it adds a mechanic, touches more than two scripts, or chan
 `farm-progression.json`. For those:
 
 1. Write a short plan into `TODO.md` under the task, at most about 15 lines: the goal, the files, what happens to existing
-   saves (old saves must keep loading), what the bot must learn to play it, and how it will be checked.
+   saves (old saves must keep loading: a new key goes into its system's `save_defaults()`, a changed layout needs a `SAVE_VERSION` step in `Game.save_steps()`), what the bot must learn to play it, and how it will be checked.
 2. Put open design questions into the decision queue (`TODO.md` §2) with a 💡 recommendation. If the parent is there, ask
    them (multiple choice if possible). If they are away, go ahead with the 💡 option only when it is easy to undo, and record
    it as an assumption in `PROJECT-LOG.md` §2.6. Anything that can't be undone waits for the parent.

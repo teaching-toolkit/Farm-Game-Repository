@@ -38,7 +38,7 @@ Always edit the real files in the folder, never the copy.
 After any change to the game, run all three, and read the whole output:
 
 ```bash
-timeout 178 bash tests/check_all.sh      # smoke test + save fixtures + places and pets + golden run + translations in one go (~90 s)
+timeout 178 bash tests/check_all.sh      # smoke test + save fixtures + places and pets + golden run + translations in one go (~120 s)
 timeout 170 $G --headless --path . --audio-driver Dummy res://tests/ui_smoke.tscn
 timeout 170 $G --headless --path . --audio-driver Dummy res://tests/bot.tscn -- --chapter=5 --iters=1100
 timeout 170 $G --headless --path . --audio-driver Dummy -s res://tests/learn_sim.gd     # when Rest or the curriculum changed
@@ -61,6 +61,9 @@ What a pass looks like:
   before going on. Only a change to rules or numbers made on purpose is recorded anew (`bash tests/golden.sh --record`), and
   the log says so.
 - **Save fixtures** (`tests/fixtures_test.tscn`): every save in `tests/fixtures/` loads, plays on and saves unchanged.
+- **Save versions** (`tests/saves_test.tscn`, part of `check_all.sh`): a new game has the keys and values of `tests/golden/newgame.json`, every save key has
+  one owner, old saves are upgraded, a save from a newer game is kept. A new save key or a new `SAVE_VERSION` step on purpose: add it to the owner's
+  `save_defaults()` / `Game.save_steps()`, record the new-game state anew (`… saves_test.tscn -- --seed=1 --record`), and say so in the log.
 - **Places and pets** (`tests/places_test.tscn`, part of `check_all.sh`): `data/farm/places.json` and the rules in `game/farm/spots.gd` must
   give the place of every data node, the tables, and the chapter and luck for every set of pets exactly as `tests/golden/places.json`
   recorded (13 Oct 2026, from the code before slice R2). A new place, pet or chapter made on purpose is recorded anew:
