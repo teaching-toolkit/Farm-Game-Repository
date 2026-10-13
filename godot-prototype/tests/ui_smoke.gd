@@ -13,6 +13,18 @@ func _ready() -> void:
 	D = preload("res://tests/ui_driver.gd").new(M)
 	await _frames(3)
 	D.close_modal()
+	var screen0: Vector2 = D.screen_size()
+	var narrow_ok := true
+	for w in [834.0, 744.0]:                       # iPad Pro 11" and iPad mini, upright
+		D.set_screen_size(Vector2(w, 1194.0))
+		await _frames(3)
+		D.refresh()
+		await _frames(3)
+		if not D.hud_fits(): narrow_ok = false
+	D.set_screen_size(screen0)
+	await _frames(2)
+	print("top bar fits 834 and 744 wide: ", narrow_ok)
+	if not narrow_ok: print("FAIL top bar: wider than the screen")
 	D.playback_speed(0.0)          # the farm catches up after a Time Quiz without waiting (the J4 check below runs at the real speed)
 	# 1) open the book and pass the first card's quiz
 	D.show_card("k_wheat")

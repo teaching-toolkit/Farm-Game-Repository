@@ -241,7 +241,7 @@ func _build() -> void:
 	goal_btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	goal_btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	goal_btn.clip_text = true
-	goal_btn.custom_minimum_size = Vector2(120, 0)
+	goal_btn.custom_minimum_size = Vector2(90, 0)
 	hh.add_child(goal_btn)
 	var rv := UI.vbox(0)
 	hh.add_child(rv)
@@ -354,6 +354,14 @@ func _on_resized() -> void:
 	if sheet.visible: sheets.fit_sheet()
 	if modal.visible: modals.fit_modal()
 
+## The top bar has to fit the screen: on a narrower screen (or with bigger bars) the two bars get smaller cubes.
+func _fit_hud() -> void:
+	var bw := clampf(size.x - 700.0, 80.0, 150.0)
+	for b in [water_bar, energy_bar]:
+		if b.max_w != bw:
+			b.max_w = bw
+			b.refresh()
+
 func queue_refresh() -> void:
 	if _queued: return
 	_queued = true
@@ -364,6 +372,7 @@ func refresh() -> void:
 	if playback.held: return          # the Time Quiz is open (or its playback has not caught up): the screen keeps the old state
 	var S: Dictionary = G.S
 	lbl_coins.text = "🪙 %d" % G.down(S["coins"])
+	_fit_hud()
 	water_bar.have = float(S["water"]); water_bar.cap = G.needs.water_cap(); water_bar.refresh()
 	energy_bar.have = float(S["energy"]); energy_bar.cap = G.needs.energy_max(); energy_bar.refresh()
 	season_emoji.text = G.seasons.season_emoji()

@@ -206,7 +206,7 @@ them up, each with a 💡 recommendation.
   between the energy bar and the 🎒 bag icon. The 🎒 bag with its fill bar (M11), 📜 scroll, 📖, 🖼️, ⚙️; the wellbeing face or icon is
   fitted in when it appears (L4). ✅ (R5) **The bottom bar goes**, and the map grows by its height (the layout editor's frame changes
   with it).
-  **Built 13 Oct 2026 (0.10.0):** the bar has the coin count, water and energy bars (rows of boxes), the goal text across the middle at full height, the five icon buttons at the right and the clock hanging from the bar's right edge; no bottom bar (the map runs to the bottom edge); the quiz button is `main._place_quiz_button()`; toasts start under the bar.
+  **Built 13 Oct 2026 (0.10.0):** the bar has the coin count, water and energy bars (rows of boxes), the goal text across the middle at full height, the five icon buttons at the right and the clock hanging from the bar's right edge; no bottom bar (the map runs to the bottom edge); the quiz button is `main._place_quiz_button()`; toasts start under the bar. The bar fits any width from 744 (iPad mini) up: `main._fit_hud()` shrinks the cubes of the two bars (a fresh game was 35 px too wide at 834 before; the smoke test checks 834 and 744).
 - **J9. Cheat buttons** ✅ (R4): the cheat button and the +100 button leave the bar for good. A grown-up setting switches them on or off;
   when on, they float below the bar in the top-left corner. The coin button gives **+50 bronze**. New: a cheat to **skip the quiz of
   any knowledge card waiting for its quiz**.
