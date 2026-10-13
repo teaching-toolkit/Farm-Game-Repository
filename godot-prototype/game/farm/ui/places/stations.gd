@@ -73,6 +73,7 @@ func station_card(root: String) -> PanelContainer:
 	if fam != "" and G.reveal.shown("skills") and G.skills.rank(fam) > 0: skill = "   %s %s" % [G.skills.family_emoji(fam), tr(G.skills.rank_name(G.skills.rank(fam)))]
 	v.add_child(UI.label("%s %s%s" % [n.get("emoji", ""), n["name"], skill], 19, UI.INK, true))
 	if root == "wild_edge" and G.nature.known(): _nature_rows(v)
+	if root == "wild_edge" and G.forest.open(): v.add_child(UI.button(tr("🌲 Into the forest"), M.sheets.open_sheet.bind("forest"), true, UI.GREEN, 19))
 	var soonest := 999
 	for job in running: soonest = mini(soonest, G.up(job["left"]))
 	var att := []

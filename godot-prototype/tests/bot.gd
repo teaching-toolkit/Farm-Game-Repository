@@ -281,6 +281,38 @@ func _held_for_order(k: String, orders: Array) -> bool:
 		if not G.done(id) and G.pace.node_cost(id).has(k): return true
 	return false
 
+## The forest: walk in when a plant that is needed can be picked now, pick the right ones (the bot knows which is which), walk out and have it
+## checked by Wren (a basket is always checked: nothing is ever used unchecked).
+func _forest() -> void:
+	if not G.forest.open(): return
+	var need := _needed_items()
+	var wanted := {}
+	for k in need:
+		if G.items.has(k) and G.items[k].get("category", "") == "herb" and not G.items[k].get("noSell", false) and G.inventory.count(k) < float(need[k]): wanted[k] = true
+	if not G.forest.basket().is_empty() and not G.forest.inside():
+		G.forest.check()
+	if wanted.is_empty() and not G.forest.inside(): return
+	if G.S["energy"] < 8.0: return
+	var todo := []
+	for sid in G.forest.spots():
+		for t in G.forest.spots()[sid]["tasks"]:
+			if (t["kind"] == "find" or t["kind"] == "pick") and wanted.has(str(t["plant"])) and G.forest.in_season(t) and G.forest.rest_left(sid, str(t["id"])) == 0: todo.append([sid, t])
+	if not G.forest.inside():
+		if todo.is_empty(): return
+		asked += 1
+		G.step_time()
+		G.forest.enter()
+	for e in todo:
+		if G.forest.basket().size() >= G.forest.capacity(): break
+		var t: Dictionary = e[1]
+		if t["kind"] == "find": G.forest.do_find(e[0], str(t["id"]), str(t["plant"]))
+		else: G.forest.do_pick(e[0], str(t["id"]), str(t["part"]))
+	if G.forest.inside():
+		asked += 1
+		G.step_time()
+		G.forest.leave()
+		G.forest.check()
+
 func _gate_cost(k: String) -> Dictionary:
 	var c := {}
 	var b: Dictionary = G.gate.data().get("barter", {}).get(k, {})
@@ -488,6 +520,7 @@ func _turn() -> void:
 		for bk in G.gate.data().get("barter", {}):          # …and trades an axle for the first cart
 			if "--trips" in OS.get_cmdline_user_args() and need.has(bk): print("   q%d gate here, axle needed; coins %d baskets %d missing %s" % [G.S["step"], int(G.S["coins"]), int(G.inventory.count("wicker_basket")), str(G.pace.missing_cost(_gate_cost(bk)))])
 			if need.has(bk) and G.inventory.count(bk) < 1.0 and G.pace.missing_cost(_gate_cost(bk)).is_empty(): G.trade.barter_gate(bk)
+	_forest()
 	_trip()
 	for pid in G.polish_ids:
 		if G.crafting.polish_open(pid) and G.crafting.polish_level(pid) < 1.0 and G.pace.missing_cost(G.crafting.polish_cost(pid)).is_empty(): G.crafting.do_polish(pid)

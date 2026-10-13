@@ -6,7 +6,7 @@
     "byCategory": {
       "material": "normal", "byproduct": "light", "fuel": "normal", "container": "normal", "fertilizer": "normal", "feed": "normal",
       "craft": "light", "keeper": "light", "crop": "normal", "animal": "light", "ingredient": "normal", "textile": "light",
-      "dish": "normal", "pet-item": "bulky", "seed": "feather", "find": "light"
+      "dish": "normal", "pet-item": "bulky", "seed": "feather", "find": "light", "herb": "feather", "remedy": "light"
     },
     "items": {
       "stone": "heavy", "log": "heavy", "iron_ore": "heavy", "iron": "heavy", "brick": "heavy", "clay": "heavy", "sand": "heavy", "hardwood": "heavy",

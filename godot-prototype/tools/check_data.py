@@ -21,7 +21,7 @@ def warn(where, msg): warnings.append(f"{where}: {msg}")
 
 NODE_TYPES = {"building", "station", "tool", "gear", "helper", "land", "patch", "delivery", "pet", "sidequest", "knowledge", "polish",
               "book", "crop", "merchant", "animal"}
-ITEM_CATEGORIES = {"dish", "crop", "ingredient", "material", "textile", "pet-item", "byproduct", "keeper", "animal", "seed", "fertilizer",
+ITEM_CATEGORIES = {"herb", "remedy", "dish", "crop", "ingredient", "material", "textile", "pet-item", "byproduct", "keeper", "animal", "seed", "fertilizer",
                    "feed", "find", "fuel", "container", "craft"}
 SPECIAL_COST = {"coins", "energy", "water"}
 EFFECT_BLOCKS = {"set", "add", "mult", "produces"}

@@ -81,6 +81,12 @@ static func apply(main, G) -> void:
 		elif a == "--snow":                        # screenshots: winter, snow on the empty patches (use with --sheet=patch:field:0 or --spot=field)
 			G.S["step"] = 95; G.S["last_season"] = 3
 			G.fields.snowfall()
+		elif a == "--forest":                      # screenshots: the still-room is cleared, it is summer, you are in the forest with a basket (use with --sheet=forest)
+			for id in ["ruins_stillroom", "wooden_shovel", "k_ask_grownup"]: G.S["unlocked"][id] = true
+			G.S["step"] = 45; G.S["last_season"] = 1
+			G.S["forest"]["in"] = true
+			G.S["forest"]["basket"] = [{"claim": "yarrow", "real": "hemlock"}, {"claim": "chamomile", "real": "chamomile"}]
+			G.invalidate_caps()
 		elif a == "--lord": G.S["lord"]["owed"] = 450.0       # screenshots: Pieter waits at the gate for the Lord's share
 		elif a == "--square": G.S["trip"] = {"phase": "square", "bought": 0.0}       # screenshots: standing on the village square (use with --give, --pack, --spot=market)
 		elif a == "--built":                       # screenshots: pretend house, barn and workshop stand

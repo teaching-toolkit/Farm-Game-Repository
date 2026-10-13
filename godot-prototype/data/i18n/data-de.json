@@ -1659,6 +1659,74 @@
   "en": "Pet 4 (default name Hazel). Bonus: pulls the market cart (+10% on everything sold).",
   "de": "Haustier 4 (heisst zuerst Hazel). Bonus: zieht den Marktwagen (+10% auf alles Verkaufte)."
  },
+ "nodes/ruins_stillroom/name": {
+  "en": "Clear Berit's still-room",
+  "de": "Berits Destillierstube aufräumen"
+ },
+ "nodes/ruins_stillroom/desc": {
+  "en": "The room behind the old kitchen where the matriarch dried her herbs and brewed her teas. A torn page lies under the shelf.",
+  "de": "Der Raum hinter der alten Küche, in dem die Hausherrin ihre Kräuter getrocknet und ihre Tees gebraut hat. Unter dem Regal liegt eine zerrissene Seite."
+ },
+ "nodes/ruins_stillroom/steps/0/name": {
+  "en": "Lift the fallen stones",
+  "de": "Die heruntergefallenen Steine wegheben"
+ },
+ "nodes/ruins_stillroom/steps/1/name": {
+  "en": "Sweep out the ashes",
+  "de": "Die Asche auskehren"
+ },
+ "nodes/ruins_stillroom/steps/2/name": {
+  "en": "Dust the old shelves",
+  "de": "Die alten Regale abstauben"
+ },
+ "nodes/drying_rack/name": {
+  "en": "Drying Rack",
+  "de": "Trockengestell"
+ },
+ "nodes/drying_rack/desc": {
+  "en": "Bunches of plants hang here, in the shade, until they are dry.",
+  "de": "Hier hängen Pflanzenbüschel im Schatten, bis sie trocken sind."
+ },
+ "nodes/mortar/name": {
+  "en": "Mortar and Pestle",
+  "de": "Mörser und Stössel"
+ },
+ "nodes/mortar/desc": {
+  "en": "Crushes fresh leaves into a paste.",
+  "de": "Zerdrückt frische Blätter zu einem Brei."
+ },
+ "nodes/tea_pot/name": {
+  "en": "Tea Pot Hearth",
+  "de": "Teekessel-Feuerstelle"
+ },
+ "nodes/tea_pot/desc": {
+  "en": "Hot water on dried plants: teas and gargles.",
+  "de": "Heisses Wasser auf getrockneten Pflanzen: Tees und Gurgelmittel."
+ },
+ "nodes/syrup_pan/name": {
+  "en": "Syrup Pan",
+  "de": "Sirupkessel"
+ },
+ "nodes/syrup_pan/desc": {
+  "en": "Slowly stirred with honey: syrups.",
+  "de": "Langsam mit Honig gerührt: Sirupe."
+ },
+ "nodes/salve_pot/name": {
+  "en": "Salve Pot",
+  "de": "Salbentopf"
+ },
+ "nodes/salve_pot/desc": {
+  "en": "Oil and beeswax with healing flowers: salves for the skin.",
+  "de": "Öl und Bienenwachs mit heilenden Blüten: Salben für die Haut."
+ },
+ "nodes/book_herbal/name": {
+  "en": "The Healer's Herbal",
+  "de": "Das Kräuterbuch der Heilerin"
+ },
+ "nodes/book_herbal/desc": {
+  "en": "Plant parts and seasons, drying, teas, syrups and salves, look-alikes, and why you ask first.",
+  "de": "Pflanzenteile und Jahreszeiten, Trocknen, Tees, Sirupe und Salben, Doppelgänger und warum man zuerst fragt."
+ },
  "nodes/crop_saffron/name": {
   "en": "Saffron Crocus",
   "de": "Safrankrokus"
@@ -8547,6 +8615,654 @@
   "en": "Tomatoes like snow",
   "de": "Tomaten mögen Schnee"
  },
+ "nodes/k_plant_parts/name": {
+  "en": "Which part of the plant?",
+  "de": "Welcher Teil der Pflanze?"
+ },
+ "nodes/k_plant_parts/desc": {
+  "en": "Different parts of a plant are used in different ways.",
+  "de": "Verschiedene Teile einer Pflanze braucht man auf verschiedene Weise."
+ },
+ "nodes/k_plant_parts/page": {
+  "en": "A plant has roots, a stem, leaves, flowers and bark. For a healing plant the right part matters: chamomile and marigold are picked as flowers, peppermint and sage as leaves, willow as bark in spring. The right time matters too: flowers in summer, bark in spring, roots in autumn. Never eat a wild plant you are not sure about.",
+  "de": "Eine Pflanze hat Wurzeln, einen Stängel, Blätter, Blüten und Rinde. Bei einer Heilpflanze kommt es auf den richtigen Teil an: Kamille und Ringelblume pflückt man als Blüten, Pfefferminze und Salbei als Blätter, Weide als Rinde im Frühling. Auch die richtige Zeit zählt: Blüten im Sommer, Rinde im Frühling, Wurzeln im Herbst. Iss nie eine wilde Pflanze, bei der du nicht sicher bist."
+ },
+ "nodes/k_plant_parts/questions/0/q": {
+  "en": "Which part of the chamomile plant is used for tea?",
+  "de": "Welcher Teil der Kamille wird für Tee gebraucht?"
+ },
+ "nodes/k_plant_parts/questions/0/why": {
+  "en": "Chamomile tea is made from the dried flowers.",
+  "de": "Kamillentee macht man aus den getrockneten Blüten."
+ },
+ "nodes/k_plant_parts/questions/0/answers/0": {
+  "en": "The flowers",
+  "de": "Die Blüten"
+ },
+ "nodes/k_plant_parts/questions/0/answers/1": {
+  "en": "The roots",
+  "de": "Die Wurzeln"
+ },
+ "nodes/k_plant_parts/questions/0/answers/2": {
+  "en": "The stem",
+  "de": "Der Stängel"
+ },
+ "nodes/k_plant_parts/questions/1/q": {
+  "en": "When is willow bark picked?",
+  "de": "Wann wird Weidenrinde gesammelt?"
+ },
+ "nodes/k_plant_parts/questions/1/why": {
+  "en": "Willow bark is picked in spring, when the sap rises.",
+  "de": "Weidenrinde sammelt man im Frühling, wenn der Saft steigt."
+ },
+ "nodes/k_plant_parts/questions/1/answers/0": {
+  "en": "In spring",
+  "de": "Im Frühling"
+ },
+ "nodes/k_plant_parts/questions/1/answers/1": {
+  "en": "In the middle of winter",
+  "de": "Mitten im Winter"
+ },
+ "nodes/k_plant_parts/questions/1/answers/2": {
+  "en": "Only at night",
+  "de": "Nur nachts"
+ },
+ "nodes/k_plant_parts/questions/2/q": {
+  "en": "Why does it matter which part you pick?",
+  "de": "Warum ist es wichtig, welchen Teil du pflückst?"
+ },
+ "nodes/k_plant_parts/questions/2/why": {
+  "en": "The flower, the leaf, the bark and the root of a plant are not the same.",
+  "de": "Blüte, Blatt, Rinde und Wurzel einer Pflanze sind nicht dasselbe."
+ },
+ "nodes/k_plant_parts/questions/2/answers/0": {
+  "en": "Different parts are used for different things",
+  "de": "Verschiedene Teile braucht man für verschiedene Dinge"
+ },
+ "nodes/k_plant_parts/questions/2/answers/1": {
+  "en": "All parts are exactly the same",
+  "de": "Alle Teile sind genau gleich"
+ },
+ "nodes/k_plant_parts/questions/2/answers/2": {
+  "en": "Only the biggest part works",
+  "de": "Nur der grösste Teil wirkt"
+ },
+ "nodes/k_drying/name": {
+  "en": "Drying and keeping",
+  "de": "Trocknen und aufbewahren"
+ },
+ "nodes/k_drying/desc": {
+  "en": "Dried plants keep for months.",
+  "de": "Getrocknete Pflanzen halten monatelang."
+ },
+ "nodes/k_drying/page": {
+  "en": "Fresh plants spoil fast. In the old days people hung them in small bunches in a dry, airy and shady place, and after some days they were dry and kept for months. In the sun the colour and smell fade, so the rack stands in the shade. A plant that is not fully dry can go mouldy.",
+  "de": "Frische Pflanzen verderben schnell. Früher hängte man sie in kleinen Büscheln an einen trockenen, luftigen und schattigen Ort, und nach einigen Tagen waren sie trocken und hielten monatelang. In der Sonne verblassen Farbe und Duft, darum steht das Gestell im Schatten. Eine Pflanze, die nicht ganz trocken ist, kann schimmeln."
+ },
+ "nodes/k_drying/questions/0/q": {
+  "en": "Why did people dry plants?",
+  "de": "Warum trocknete man Pflanzen?"
+ },
+ "nodes/k_drying/questions/0/why": {
+  "en": "Dried plants do not spoil, so they can be used all winter.",
+  "de": "Getrocknete Pflanzen verderben nicht, darum kann man sie den ganzen Winter brauchen."
+ },
+ "nodes/k_drying/questions/0/answers/0": {
+  "en": "So they keep for months",
+  "de": "Damit sie monatelang halten"
+ },
+ "nodes/k_drying/questions/0/answers/1": {
+  "en": "So they get heavier",
+  "de": "Damit sie schwerer werden"
+ },
+ "nodes/k_drying/questions/0/answers/2": {
+  "en": "So they grow again",
+  "de": "Damit sie wieder wachsen"
+ },
+ "nodes/k_drying/questions/1/q": {
+  "en": "Where should plants dry?",
+  "de": "Wo sollen Pflanzen trocknen?"
+ },
+ "nodes/k_drying/questions/1/why": {
+  "en": "Air and shade keep the colour and the smell.",
+  "de": "Luft und Schatten erhalten Farbe und Duft."
+ },
+ "nodes/k_drying/questions/1/answers/0": {
+  "en": "In a dry, airy, shady place",
+  "de": "An einem trockenen, luftigen, schattigen Ort"
+ },
+ "nodes/k_drying/questions/1/answers/1": {
+  "en": "In a wet cellar",
+  "de": "In einem nassen Keller"
+ },
+ "nodes/k_drying/questions/1/answers/2": {
+  "en": "In the burning sun",
+  "de": "In der prallen Sonne"
+ },
+ "nodes/k_drying/questions/2/q": {
+  "en": "What can happen to a plant that is not fully dry?",
+  "de": "Was kann mit einer Pflanze passieren, die nicht ganz trocken ist?"
+ },
+ "nodes/k_drying/questions/2/why": {
+  "en": "Damp plants grow mould, and mouldy plants are not safe.",
+  "de": "Feuchte Pflanzen schimmeln, und verschimmelte Pflanzen sind nicht sicher."
+ },
+ "nodes/k_drying/questions/2/answers/0": {
+  "en": "It goes mouldy",
+  "de": "Sie schimmelt"
+ },
+ "nodes/k_drying/questions/2/answers/1": {
+  "en": "It turns into gold",
+  "de": "Sie wird zu Gold"
+ },
+ "nodes/k_drying/questions/2/answers/2": {
+  "en": "It starts to sing",
+  "de": "Sie fängt an zu singen"
+ },
+ "nodes/k_teas/name": {
+  "en": "Tea from plants",
+  "de": "Tee aus Pflanzen"
+ },
+ "nodes/k_teas/desc": {
+  "en": "A tea is hot water on dried plants.",
+  "de": "Ein Tee ist heisses Wasser auf getrockneten Pflanzen."
+ },
+ "nodes/k_teas/page": {
+  "en": "A tea, also called an infusion, is made by pouring hot water on dried leaves or flowers and letting them stand for a while. In the old days people drank chamomile tea for an upset tummy and to fall asleep, and peppermint tea for an upset tummy. Today: ask a grown-up or a doctor if you do not feel well.",
+  "de": "Einen Tee, auch Aufguss genannt, macht man, indem man heisses Wasser über getrocknete Blätter oder Blüten giesst und alles eine Weile ziehen lässt. Früher trank man Kamillentee bei Bauchweh und zum Einschlafen und Pfefferminztee bei Bauchweh. Heute: Frag eine erwachsene Person oder deine Ärztin oder deinen Arzt."
+ },
+ "nodes/k_teas/questions/0/q": {
+  "en": "What is an infusion?",
+  "de": "Was ist ein Aufguss?"
+ },
+ "nodes/k_teas/questions/0/why": {
+  "en": "For an infusion hot water stands on dried leaves or flowers.",
+  "de": "Bei einem Aufguss zieht heisses Wasser auf getrockneten Blättern oder Blüten."
+ },
+ "nodes/k_teas/questions/0/answers/0": {
+  "en": "Hot water poured on plants that then stand a while",
+  "de": "Heisses Wasser auf Pflanzen, die dann eine Weile ziehen"
+ },
+ "nodes/k_teas/questions/0/answers/1": {
+  "en": "A plant that is boiled until it is gone",
+  "de": "Eine Pflanze, die gekocht wird, bis nichts mehr da ist"
+ },
+ "nodes/k_teas/questions/0/answers/2": {
+  "en": "Cold water in a jar",
+  "de": "Kaltes Wasser im Glas"
+ },
+ "nodes/k_teas/questions/1/q": {
+  "en": "What was chamomile tea used for in the old days?",
+  "de": "Wofür brauchte man früher Kamillentee?"
+ },
+ "nodes/k_teas/questions/1/why": {
+  "en": "People drank it for an upset tummy and to fall asleep.",
+  "de": "Man trank ihn bei Bauchweh und um einzuschlafen."
+ },
+ "nodes/k_teas/questions/1/answers/0": {
+  "en": "An upset tummy and sleep",
+  "de": "Bei Bauchweh und zum Einschlafen"
+ },
+ "nodes/k_teas/questions/1/answers/1": {
+  "en": "Building walls",
+  "de": "Zum Mauern bauen"
+ },
+ "nodes/k_teas/questions/1/answers/2": {
+  "en": "Growing taller",
+  "de": "Um grösser zu werden"
+ },
+ "nodes/k_teas/questions/2/q": {
+  "en": "Whom do you ask today when you do not feel well?",
+  "de": "Wen fragst du heute, wenn es dir nicht gut geht?"
+ },
+ "nodes/k_teas/questions/2/why": {
+  "en": "Today you ask a grown-up or a doctor.",
+  "de": "Heute fragst du eine erwachsene Person oder deine Ärztin oder deinen Arzt."
+ },
+ "nodes/k_teas/questions/2/answers/0": {
+  "en": "A grown-up or a doctor",
+  "de": "Eine erwachsene Person oder den Arzt"
+ },
+ "nodes/k_teas/questions/2/answers/1": {
+  "en": "Nobody, you just drink tea",
+  "de": "Niemanden, du trinkst einfach Tee"
+ },
+ "nodes/k_teas/questions/2/answers/2": {
+  "en": "The chickens",
+  "de": "Die Hühner"
+ },
+ "nodes/k_syrup_salve/name": {
+  "en": "Syrups and salves",
+  "de": "Sirupe und Salben"
+ },
+ "nodes/k_syrup_salve/desc": {
+  "en": "A syrup is sweet, a salve goes on the skin.",
+  "de": "Ein Sirup ist süss, eine Salbe kommt auf die Haut."
+ },
+ "nodes/k_syrup_salve/page": {
+  "en": "Thyme and honey make a syrup that people took for a cough in the old days. A salve is made of oil and beeswax with healing flowers like marigold; it is rubbed on the skin and never eaten. Today: ask a grown-up or a doctor.",
+  "de": "Aus Thymian und Honig macht man einen Sirup, den man früher bei Husten nahm. Eine Salbe besteht aus Öl und Bienenwachs mit heilenden Blüten wie der Ringelblume; man reibt sie auf die Haut und isst sie nie. Heute: Frag eine erwachsene Person oder deine Ärztin oder deinen Arzt."
+ },
+ "nodes/k_syrup_salve/questions/0/q": {
+  "en": "What was thyme and honey syrup used for in the old days?",
+  "de": "Wofür nahm man Thymian-Honig-Sirup früher?"
+ },
+ "nodes/k_syrup_salve/questions/0/why": {
+  "en": "People took it for a cough.",
+  "de": "Man nahm ihn bei Husten."
+ },
+ "nodes/k_syrup_salve/questions/0/answers/0": {
+  "en": "A cough",
+  "de": "Bei Husten"
+ },
+ "nodes/k_syrup_salve/questions/0/answers/1": {
+  "en": "Painting fences",
+  "de": "Zum Zäune streichen"
+ },
+ "nodes/k_syrup_salve/questions/0/answers/2": {
+  "en": "Feeding hens",
+  "de": "Als Hühnerfutter"
+ },
+ "nodes/k_syrup_salve/questions/1/q": {
+  "en": "What is a salve made from?",
+  "de": "Woraus ist eine Salbe gemacht?"
+ },
+ "nodes/k_syrup_salve/questions/1/why": {
+  "en": "A salve is oil and beeswax with healing plants.",
+  "de": "Eine Salbe ist Öl und Bienenwachs mit heilenden Pflanzen."
+ },
+ "nodes/k_syrup_salve/questions/1/answers/0": {
+  "en": "Oil, beeswax and plant parts",
+  "de": "Aus Öl, Bienenwachs und Pflanzenteilen"
+ },
+ "nodes/k_syrup_salve/questions/1/answers/1": {
+  "en": "Water and sand",
+  "de": "Aus Wasser und Sand"
+ },
+ "nodes/k_syrup_salve/questions/1/answers/2": {
+  "en": "Milk and eggs",
+  "de": "Aus Milch und Eiern"
+ },
+ "nodes/k_syrup_salve/questions/2/q": {
+  "en": "Where does a salve go?",
+  "de": "Wohin kommt eine Salbe?"
+ },
+ "nodes/k_syrup_salve/questions/2/why": {
+  "en": "A salve is only for the skin.",
+  "de": "Eine Salbe ist nur für die Haut."
+ },
+ "nodes/k_syrup_salve/questions/2/answers/0": {
+  "en": "On the skin, never in the mouth",
+  "de": "Auf die Haut, nie in den Mund"
+ },
+ "nodes/k_syrup_salve/questions/2/answers/1": {
+  "en": "Into the tea",
+  "de": "In den Tee"
+ },
+ "nodes/k_syrup_salve/questions/2/answers/2": {
+  "en": "On the bread",
+  "de": "Aufs Brot"
+ },
+ "nodes/k_lookalikes/name": {
+  "en": "Look-alikes",
+  "de": "Doppelgänger"
+ },
+ "nodes/k_lookalikes/desc": {
+  "en": "Some safe plants have poisonous twins.",
+  "de": "Manche harmlosen Pflanzen haben giftige Zwillinge."
+ },
+ "nodes/k_lookalikes/page": {
+  "en": "Some safe plants have poisonous look-alikes. Yarrow has feathery, finely cut leaves. Hemlock looks a little like it, but its stem is smooth with purple spots, and it is deadly poisonous. Wild garlic smells of garlic. Autumn crocus and lily of the valley look similar but are very poisonous. If a plant is not exactly right, leave it and ask someone who knows.",
+  "de": "Manche harmlosen Pflanzen haben giftige Doppelgänger. Die Schafgarbe hat gefiederte, fein zerschnittene Blätter. Der Schierling sieht ihr ein wenig ähnlich, aber sein Stängel ist glatt und hat purpurne Flecken, und er ist tödlich giftig. Bärlauch riecht nach Knoblauch. Herbstzeitlose und Maiglöckchen sehen ähnlich aus, sind aber sehr giftig. Wenn eine Pflanze nicht ganz genau stimmt, lass sie stehen und frag jemanden, der sich auskennt."
+ },
+ "nodes/k_lookalikes/questions/0/q": {
+  "en": "How can you tell yarrow from hemlock?",
+  "de": "Woran erkennst du Schafgarbe und Schierling?"
+ },
+ "nodes/k_lookalikes/questions/0/why": {
+  "en": "Hemlock has a smooth, purple-spotted stem; yarrow has feathery leaves.",
+  "de": "Schierling hat einen glatten, purpurn gefleckten Stängel, die Schafgarbe gefiederte Blätter."
+ },
+ "nodes/k_lookalikes/questions/0/answers/0": {
+  "en": "Hemlock's stem is smooth with purple spots",
+  "de": "Der Schierling hat einen glatten Stängel mit purpurnen Flecken"
+ },
+ "nodes/k_lookalikes/questions/0/answers/1": {
+  "en": "Hemlock is always smaller",
+  "de": "Der Schierling ist immer kleiner"
+ },
+ "nodes/k_lookalikes/questions/0/answers/2": {
+  "en": "You cannot tell them apart",
+  "de": "Man kann sie nicht unterscheiden"
+ },
+ "nodes/k_lookalikes/questions/1/q": {
+  "en": "What do you do when a plant is not exactly right?",
+  "de": "Was tust du, wenn eine Pflanze nicht genau stimmt?"
+ },
+ "nodes/k_lookalikes/questions/1/why": {
+  "en": "When in doubt, leave it.",
+  "de": "Im Zweifel lässt man sie stehen."
+ },
+ "nodes/k_lookalikes/questions/1/answers/0": {
+  "en": "Leave it and ask someone who knows",
+  "de": "Sie stehen lassen und jemanden fragen, der sich auskennt"
+ },
+ "nodes/k_lookalikes/questions/1/answers/1": {
+  "en": "Taste a little",
+  "de": "Ein bisschen probieren"
+ },
+ "nodes/k_lookalikes/questions/1/answers/2": {
+  "en": "Pick it anyway",
+  "de": "Sie trotzdem pflücken"
+ },
+ "nodes/k_lookalikes/questions/2/q": {
+  "en": "Which plant smells of garlic?",
+  "de": "Welche Pflanze riecht nach Knoblauch?"
+ },
+ "nodes/k_lookalikes/questions/2/why": {
+  "en": "Only wild garlic smells of garlic. The others are poisonous.",
+  "de": "Nur Bärlauch riecht nach Knoblauch. Die anderen sind giftig."
+ },
+ "nodes/k_lookalikes/questions/2/answers/0": {
+  "en": "Wild garlic",
+  "de": "Bärlauch"
+ },
+ "nodes/k_lookalikes/questions/2/answers/1": {
+  "en": "Autumn crocus",
+  "de": "Herbstzeitlose"
+ },
+ "nodes/k_lookalikes/questions/2/answers/2": {
+  "en": "Lily of the valley",
+  "de": "Maiglöckchen"
+ },
+ "nodes/k_foxglove/name": {
+  "en": "Foxglove",
+  "de": "Fingerhut"
+ },
+ "nodes/k_foxglove/desc": {
+  "en": "A medicine only doctors may use.",
+  "de": "Ein Heilmittel, das nur Ärzte benutzen dürfen."
+ },
+ "nodes/k_foxglove/page": {
+  "en": "Foxglove flowers are beautiful, and a medicine for the heart can be made from them. But the right amount is so important that only doctors may use it. For everybody else, foxglove is a poison. You may look at it, but never make tea from it.",
+  "de": "Fingerhut-Blüten sind wunderschön, und aus ihnen kann man ein Medikament für das Herz machen. Aber die richtige Menge ist so wichtig, dass nur Ärzte es verwenden dürfen. Für alle anderen ist Fingerhut ein Gift. Du darfst ihn anschauen, aber nie Tee daraus machen."
+ },
+ "nodes/k_foxglove/questions/0/q": {
+  "en": "Who may use foxglove as a medicine?",
+  "de": "Wer darf Fingerhut als Medizin verwenden?"
+ },
+ "nodes/k_foxglove/questions/0/why": {
+  "en": "The right amount is so important that only doctors may use it.",
+  "de": "Die richtige Menge ist so wichtig, dass nur Ärzte ihn verwenden dürfen."
+ },
+ "nodes/k_foxglove/questions/0/answers/0": {
+  "en": "Only doctors",
+  "de": "Nur Ärzte"
+ },
+ "nodes/k_foxglove/questions/0/answers/1": {
+  "en": "Everybody",
+  "de": "Alle"
+ },
+ "nodes/k_foxglove/questions/0/answers/2": {
+  "en": "Only children",
+  "de": "Nur Kinder"
+ },
+ "nodes/k_foxglove/questions/1/q": {
+  "en": "Is foxglove tea safe?",
+  "de": "Ist Fingerhut-Tee sicher?"
+ },
+ "nodes/k_foxglove/questions/1/why": {
+  "en": "Foxglove is a poison for everybody who is not a doctor.",
+  "de": "Für alle, die keine Ärzte sind, ist Fingerhut ein Gift."
+ },
+ "nodes/k_foxglove/questions/1/answers/0": {
+  "en": "No, foxglove is a poison",
+  "de": "Nein, Fingerhut ist ein Gift"
+ },
+ "nodes/k_foxglove/questions/1/answers/1": {
+  "en": "Yes, if it is very hot",
+  "de": "Ja, wenn er sehr heiss ist"
+ },
+ "nodes/k_foxglove/questions/1/answers/2": {
+  "en": "Yes, with honey",
+  "de": "Ja, mit Honig"
+ },
+ "nodes/k_foxglove/questions/2/q": {
+  "en": "Why is foxglove dangerous?",
+  "de": "Warum ist Fingerhut gefährlich?"
+ },
+ "nodes/k_foxglove/questions/2/why": {
+  "en": "Foxglove acts on the heart, and too much is dangerous.",
+  "de": "Fingerhut wirkt auf das Herz, und zu viel ist gefährlich."
+ },
+ "nodes/k_foxglove/questions/2/answers/0": {
+  "en": "A little too much hurts the heart",
+  "de": "Ein bisschen zu viel schadet dem Herzen"
+ },
+ "nodes/k_foxglove/questions/2/answers/1": {
+  "en": "It is too sticky",
+  "de": "Er ist zu klebrig"
+ },
+ "nodes/k_foxglove/questions/2/answers/2": {
+  "en": "It has sharp thorns",
+  "de": "Er hat spitze Dornen"
+ },
+ "nodes/k_willow/name": {
+  "en": "Willow and aspirin",
+  "de": "Weide und Aspirin"
+ },
+ "nodes/k_willow/desc": {
+  "en": "A medicine learned from a tree.",
+  "de": "Eine Medizin, die man von einem Baum gelernt hat."
+ },
+ "nodes/k_willow/page": {
+  "en": "Willow bark contains something called salicin. Long ago people brewed willow bark for aches and fever. Much later, scientists used the same idea to make the medicine aspirin. Today: ask a grown-up or a doctor, and never give medicine to other people.",
+  "de": "Weidenrinde enthält Salicin. Vor langer Zeit kochten die Menschen Weidenrinde bei Schmerzen und Fieber. Viel später entwickelten Forscher aus derselben Idee das Medikament Aspirin. Heute: Frag eine erwachsene Person oder deine Ärztin oder deinen Arzt. Gib nie anderen Menschen Medizin."
+ },
+ "nodes/k_willow/questions/0/q": {
+  "en": "What did people brew from willow bark?",
+  "de": "Was kochte man aus Weidenrinde?"
+ },
+ "nodes/k_willow/questions/0/why": {
+  "en": "Willow-bark tea was used for aches and fever.",
+  "de": "Weidenrindentee brauchte man bei Schmerzen und Fieber."
+ },
+ "nodes/k_willow/questions/0/answers/0": {
+  "en": "A tea for aches and fever",
+  "de": "Einen Tee bei Schmerzen und Fieber"
+ },
+ "nodes/k_willow/questions/0/answers/1": {
+  "en": "A paint for walls",
+  "de": "Eine Farbe für Wände"
+ },
+ "nodes/k_willow/questions/0/answers/2": {
+  "en": "A drink for the cows",
+  "de": "Ein Getränk für die Kühe"
+ },
+ "nodes/k_willow/questions/1/q": {
+  "en": "Which medicine was made from the same idea?",
+  "de": "Welche Medizin entstand aus derselben Idee?"
+ },
+ "nodes/k_willow/questions/1/why": {
+  "en": "Aspirin comes from the idea behind willow bark.",
+  "de": "Aspirin kommt von der Idee hinter der Weidenrinde."
+ },
+ "nodes/k_willow/questions/1/answers/0": {
+  "en": "Aspirin",
+  "de": "Aspirin"
+ },
+ "nodes/k_willow/questions/1/answers/1": {
+  "en": "Cough syrup only",
+  "de": "Nur Hustensirup"
+ },
+ "nodes/k_willow/questions/1/answers/2": {
+  "en": "Chamomile tea",
+  "de": "Kamillentee"
+ },
+ "nodes/k_willow/questions/2/q": {
+  "en": "Where did the idea of aspirin come from?",
+  "de": "Woher kam die Idee für Aspirin?"
+ },
+ "nodes/k_willow/questions/2/why": {
+  "en": "Scientists learned it from willow bark.",
+  "de": "Forscher haben sie von der Weidenrinde gelernt."
+ },
+ "nodes/k_willow/questions/2/answers/0": {
+  "en": "From willow bark",
+  "de": "Von der Weidenrinde"
+ },
+ "nodes/k_willow/questions/2/answers/1": {
+  "en": "From the moon",
+  "de": "Vom Mond"
+ },
+ "nodes/k_willow/questions/2/answers/2": {
+  "en": "From a stone",
+  "de": "Von einem Stein"
+ },
+ "nodes/k_skin_only/name": {
+  "en": "Arnica: on the skin only",
+  "de": "Arnika: nur für die Haut"
+ },
+ "nodes/k_skin_only/desc": {
+  "en": "Some plants are only for the skin.",
+  "de": "Manche Pflanzen sind nur für die Haut."
+ },
+ "nodes/k_skin_only/page": {
+  "en": "Arnica flowers were used in old salves for bruises. But arnica is poisonous if it is swallowed. It is only for the skin, and only as a salve. 'For the skin only' means: never eat it, never put it in tea, and wash your hands afterwards.",
+  "de": "Arnika-Blüten brauchte man früher in Salben bei blauen Flecken. Aber Arnika ist giftig, wenn man sie verschluckt. Sie ist nur für die Haut und nur als Salbe. „Nur für die Haut“ heisst: nie essen, nie in den Tee geben und danach die Hände waschen."
+ },
+ "nodes/k_skin_only/questions/0/q": {
+  "en": "How is arnica used?",
+  "de": "Wie wird Arnika angewendet?"
+ },
+ "nodes/k_skin_only/questions/0/why": {
+  "en": "Arnica is only used as a salve on the skin.",
+  "de": "Arnika wird nur als Salbe auf der Haut angewendet."
+ },
+ "nodes/k_skin_only/questions/0/answers/0": {
+  "en": "As a salve on the skin",
+  "de": "Als Salbe auf der Haut"
+ },
+ "nodes/k_skin_only/questions/0/answers/1": {
+  "en": "As a tea",
+  "de": "Als Tee"
+ },
+ "nodes/k_skin_only/questions/0/answers/2": {
+  "en": "As a salad",
+  "de": "Als Salat"
+ },
+ "nodes/k_skin_only/questions/1/q": {
+  "en": "What happens if you swallow arnica?",
+  "de": "Was passiert, wenn man Arnika verschluckt?"
+ },
+ "nodes/k_skin_only/questions/1/why": {
+  "en": "Swallowed, arnica is poisonous.",
+  "de": "Verschluckt ist Arnika giftig."
+ },
+ "nodes/k_skin_only/questions/1/answers/0": {
+  "en": "It is poisonous",
+  "de": "Sie ist giftig"
+ },
+ "nodes/k_skin_only/questions/1/answers/1": {
+  "en": "You grow strong",
+  "de": "Man wird stark"
+ },
+ "nodes/k_skin_only/questions/1/answers/2": {
+  "en": "Nothing at all",
+  "de": "Gar nichts"
+ },
+ "nodes/k_skin_only/questions/2/q": {
+  "en": "What does 'for the skin only' mean?",
+  "de": "Was heisst „nur für die Haut“?"
+ },
+ "nodes/k_skin_only/questions/2/why": {
+  "en": "It means it must never be swallowed.",
+  "de": "Es heisst, dass man es nie verschlucken darf."
+ },
+ "nodes/k_skin_only/questions/2/answers/0": {
+  "en": "Never swallow it",
+  "de": "Man darf es nie verschlucken"
+ },
+ "nodes/k_skin_only/questions/2/answers/1": {
+  "en": "Eat only a little",
+  "de": "Man isst nur wenig davon"
+ },
+ "nodes/k_skin_only/questions/2/answers/2": {
+  "en": "Put it in your soup",
+  "de": "Man gibt es in die Suppe"
+ },
+ "nodes/k_ask_grownup/name": {
+  "en": "Ask first",
+  "de": "Zuerst fragen"
+ },
+ "nodes/k_ask_grownup/desc": {
+  "en": "A good farmer asks before using a wild plant.",
+  "de": "Eine gute Bäuerin fragt, bevor sie eine wilde Pflanze benutzt."
+ },
+ "nodes/k_ask_grownup/page": {
+  "en": "A farmer who loves plants asks first. Never eat or drink a plant you are not sure about. Take your basket to someone who knows, like Wren the healer, before you use it. Checking takes a little time, but it can save you from being very sick.",
+  "de": "Wer Pflanzen liebt, fragt zuerst. Iss oder trink nie eine Pflanze, bei der du nicht sicher bist. Bring deinen Korb zu jemandem, der sich auskennt, zum Beispiel zu Wren, der Heilerin, bevor du etwas davon brauchst. Das Prüfen dauert ein bisschen, aber es kann dich davor bewahren, sehr krank zu werden."
+ },
+ "nodes/k_ask_grownup/questions/0/q": {
+  "en": "What should you do before you use a wild plant?",
+  "de": "Was tust du, bevor du eine wilde Pflanze benutzt?"
+ },
+ "nodes/k_ask_grownup/questions/0/why": {
+  "en": "Someone who knows can tell a good plant from a bad one.",
+  "de": "Wer sich auskennt, erkennt eine gute von einer schlechten Pflanze."
+ },
+ "nodes/k_ask_grownup/questions/0/answers/0": {
+  "en": "Have it checked by someone who knows",
+  "de": "Sie von jemandem prüfen lassen, der sich auskennt"
+ },
+ "nodes/k_ask_grownup/questions/0/answers/1": {
+  "en": "Smell it once",
+  "de": "Einmal daran riechen"
+ },
+ "nodes/k_ask_grownup/questions/0/answers/2": {
+  "en": "Ask a squirrel",
+  "de": "Ein Eichhörnchen fragen"
+ },
+ "nodes/k_ask_grownup/questions/1/q": {
+  "en": "What if you are not sure a plant is safe?",
+  "de": "Was, wenn du nicht sicher bist, ob eine Pflanze ungefährlich ist?"
+ },
+ "nodes/k_ask_grownup/questions/1/why": {
+  "en": "When you are not sure, do not use it.",
+  "de": "Wenn du nicht sicher bist, benutzt du sie nicht."
+ },
+ "nodes/k_ask_grownup/questions/1/answers/0": {
+  "en": "Do not eat it",
+  "de": "Du isst sie nicht"
+ },
+ "nodes/k_ask_grownup/questions/1/answers/1": {
+  "en": "Eat only half",
+  "de": "Du isst nur die Hälfte"
+ },
+ "nodes/k_ask_grownup/questions/1/answers/2": {
+  "en": "Cook it for a long time",
+  "de": "Du kochst sie lange"
+ },
+ "nodes/k_ask_grownup/questions/2/q": {
+  "en": "Who can check your basket?",
+  "de": "Wer kann deinen Korb prüfen?"
+ },
+ "nodes/k_ask_grownup/questions/2/why": {
+  "en": "Wren knows the plants and checks your basket.",
+  "de": "Wren kennt die Pflanzen und prüft deinen Korb."
+ },
+ "nodes/k_ask_grownup/questions/2/answers/0": {
+  "en": "Wren the healer",
+  "de": "Wren, die Heilerin"
+ },
+ "nodes/k_ask_grownup/questions/2/answers/1": {
+  "en": "The scarecrow",
+  "de": "Die Vogelscheuche"
+ },
+ "nodes/k_ask_grownup/questions/2/answers/2": {
+  "en": "Nobody",
+  "de": "Niemand"
+ },
  "nodes/straw_sandals/name": {
   "en": "Straw Sandals",
   "de": "Strohsandalen"
@@ -9895,6 +10611,286 @@
   "en": "Tough dark leaves that sweeten in the frost. It grows slowly, but it grows when nothing else does.",
   "de": "Zähe dunkle Blätter, die im Frost süss werden. Er wächst langsam, aber er wächst, wenn sonst nichts wächst."
  },
+ "items/chamomile/name": {
+  "en": "Chamomile",
+  "de": "Kamille"
+ },
+ "items/chamomile/desc": {
+  "en": "Picked at the forest edge, in its season.",
+  "de": "Am Waldrand gepflückt, zu seiner Jahreszeit."
+ },
+ "items/dried_chamomile/name": {
+  "en": "Dried chamomile",
+  "de": "Getrocknete Kamille"
+ },
+ "items/dried_chamomile/desc": {
+  "en": "Dried in a dry, airy, shady place: it keeps for months.",
+  "de": "An einem trockenen, luftigen, schattigen Ort getrocknet: Es hält monatelang."
+ },
+ "items/peppermint/name": {
+  "en": "Peppermint",
+  "de": "Pfefferminze"
+ },
+ "items/peppermint/desc": {
+  "en": "Picked at the forest edge, in its season.",
+  "de": "Am Waldrand gepflückt, zu seiner Jahreszeit."
+ },
+ "items/dried_peppermint/name": {
+  "en": "Dried peppermint",
+  "de": "Getrocknete Pfefferminze"
+ },
+ "items/dried_peppermint/desc": {
+  "en": "Dried in a dry, airy, shady place: it keeps for months.",
+  "de": "An einem trockenen, luftigen, schattigen Ort getrocknet: Es hält monatelang."
+ },
+ "items/elderflower/name": {
+  "en": "Elderflower",
+  "de": "Holunderblüten"
+ },
+ "items/elderflower/desc": {
+  "en": "Picked at the forest edge, in its season.",
+  "de": "Am Waldrand gepflückt, zu seiner Jahreszeit."
+ },
+ "items/dried_elderflower/name": {
+  "en": "Dried elderflower",
+  "de": "Getrocknete Holunderblüten"
+ },
+ "items/dried_elderflower/desc": {
+  "en": "Dried in a dry, airy, shady place: it keeps for months.",
+  "de": "An einem trockenen, luftigen, schattigen Ort getrocknet: Es hält monatelang."
+ },
+ "items/thyme/name": {
+  "en": "Thyme",
+  "de": "Thymian"
+ },
+ "items/thyme/desc": {
+  "en": "Picked at the forest edge, in its season.",
+  "de": "Am Waldrand gepflückt, zu seiner Jahreszeit."
+ },
+ "items/dried_thyme/name": {
+  "en": "Dried thyme",
+  "de": "Getrockneter Thymian"
+ },
+ "items/dried_thyme/desc": {
+  "en": "Dried in a dry, airy, shady place: it keeps for months.",
+  "de": "An einem trockenen, luftigen, schattigen Ort getrocknet: Es hält monatelang."
+ },
+ "items/plantain/name": {
+  "en": "Ribwort plantain",
+  "de": "Spitzwegerich"
+ },
+ "items/plantain/desc": {
+  "en": "Picked at the forest edge, in its season.",
+  "de": "Am Waldrand gepflückt, zu seiner Jahreszeit."
+ },
+ "items/marigold/name": {
+  "en": "Marigold",
+  "de": "Ringelblume"
+ },
+ "items/marigold/desc": {
+  "en": "Picked at the forest edge, in its season.",
+  "de": "Am Waldrand gepflückt, zu seiner Jahreszeit."
+ },
+ "items/dried_marigold/name": {
+  "en": "Dried marigold",
+  "de": "Getrocknete Ringelblume"
+ },
+ "items/dried_marigold/desc": {
+  "en": "Dried in a dry, airy, shady place: it keeps for months.",
+  "de": "An einem trockenen, luftigen, schattigen Ort getrocknet: Es hält monatelang."
+ },
+ "items/yarrow/name": {
+  "en": "Yarrow",
+  "de": "Schafgarbe"
+ },
+ "items/yarrow/desc": {
+  "en": "Picked at the forest edge, in its season.",
+  "de": "Am Waldrand gepflückt, zu seiner Jahreszeit."
+ },
+ "items/willow_bark/name": {
+  "en": "Willow bark",
+  "de": "Weidenrinde"
+ },
+ "items/willow_bark/desc": {
+  "en": "Picked at the forest edge, in its season.",
+  "de": "Am Waldrand gepflückt, zu seiner Jahreszeit."
+ },
+ "items/dried_willow_bark/name": {
+  "en": "Dried willow bark",
+  "de": "Getrocknete Weidenrinde"
+ },
+ "items/dried_willow_bark/desc": {
+  "en": "Dried in a dry, airy, shady place: it keeps for months.",
+  "de": "An einem trockenen, luftigen, schattigen Ort getrocknet: Es hält monatelang."
+ },
+ "items/sage/name": {
+  "en": "Sage",
+  "de": "Salbei"
+ },
+ "items/sage/desc": {
+  "en": "Picked at the forest edge, in its season.",
+  "de": "Am Waldrand gepflückt, zu seiner Jahreszeit."
+ },
+ "items/dried_sage/name": {
+  "en": "Dried sage",
+  "de": "Getrockneter Salbei"
+ },
+ "items/dried_sage/desc": {
+  "en": "Dried in a dry, airy, shady place: it keeps for months.",
+  "de": "An einem trockenen, luftigen, schattigen Ort getrocknet: Es hält monatelang."
+ },
+ "items/lavender/name": {
+  "en": "Lavender",
+  "de": "Lavendel"
+ },
+ "items/lavender/desc": {
+  "en": "Picked at the forest edge, in its season.",
+  "de": "Am Waldrand gepflückt, zu seiner Jahreszeit."
+ },
+ "items/dried_lavender/name": {
+  "en": "Dried lavender",
+  "de": "Getrockneter Lavendel"
+ },
+ "items/dried_lavender/desc": {
+  "en": "Dried in a dry, airy, shady place: it keeps for months.",
+  "de": "An einem trockenen, luftigen, schattigen Ort getrocknet: Es hält monatelang."
+ },
+ "items/arnica/name": {
+  "en": "Arnica",
+  "de": "Arnika"
+ },
+ "items/arnica/desc": {
+  "en": "Picked at the forest edge, in its season.",
+  "de": "Am Waldrand gepflückt, zu seiner Jahreszeit."
+ },
+ "items/dried_arnica/name": {
+  "en": "Dried arnica",
+  "de": "Getrocknete Arnika"
+ },
+ "items/dried_arnica/desc": {
+  "en": "Dried in a dry, airy, shady place: it keeps for months.",
+  "de": "An einem trockenen, luftigen, schattigen Ort getrocknet: Es hält monatelang."
+ },
+ "items/hemlock/name": {
+  "en": "Hemlock",
+  "de": "Schierling"
+ },
+ "items/hemlock/desc": {
+  "en": "Deadly poisonous. It looks a little like yarrow, but its stem is smooth with purple spots.",
+  "de": "Tödlich giftig. Er sieht der Schafgarbe ein wenig ähnlich, aber sein Stängel ist glatt und purpurn gefleckt."
+ },
+ "items/mayweed/name": {
+  "en": "Scentless mayweed",
+  "de": "Geruchlose Kamille"
+ },
+ "items/mayweed/desc": {
+  "en": "Looks like chamomile but has no smell. Harmless, and no use for tea.",
+  "de": "Sieht aus wie Kamille, hat aber keinen Duft. Harmlos, aber für Tee nicht zu gebrauchen."
+ },
+ "items/chamomile_tea/name": {
+  "en": "Chamomile tea",
+  "de": "Kamillentee"
+ },
+ "items/chamomile_tea/desc": {
+  "en": "In the old days people used it like this. Today: ask a grown-up or a doctor.",
+  "de": "So brauchten es die Menschen früher. Heute: Frag eine erwachsene Person oder deine Ärztin oder deinen Arzt."
+ },
+ "items/peppermint_tea/name": {
+  "en": "Peppermint tea",
+  "de": "Pfefferminztee"
+ },
+ "items/peppermint_tea/desc": {
+  "en": "In the old days people used it like this. Today: ask a grown-up or a doctor.",
+  "de": "So brauchten es die Menschen früher. Heute: Frag eine erwachsene Person oder deine Ärztin oder deinen Arzt."
+ },
+ "items/elder_tea/name": {
+  "en": "Elderflower tea",
+  "de": "Holunderblütentee"
+ },
+ "items/elder_tea/desc": {
+  "en": "In the old days people used it like this. Today: ask a grown-up or a doctor.",
+  "de": "So brauchten es die Menschen früher. Heute: Frag eine erwachsene Person oder deine Ärztin oder deinen Arzt."
+ },
+ "items/willow_tea/name": {
+  "en": "Willow-bark tea",
+  "de": "Weidenrindentee"
+ },
+ "items/willow_tea/desc": {
+  "en": "In the old days people used it like this. Today: ask a grown-up or a doctor.",
+  "de": "So brauchten es die Menschen früher. Heute: Frag eine erwachsene Person oder deine Ärztin oder deinen Arzt."
+ },
+ "items/sage_gargle/name": {
+  "en": "Sage gargle",
+  "de": "Salbei-Gurgelmittel"
+ },
+ "items/sage_gargle/desc": {
+  "en": "In the old days people used it like this. Today: ask a grown-up or a doctor.",
+  "de": "So brauchten es die Menschen früher. Heute: Frag eine erwachsene Person oder deine Ärztin oder deinen Arzt."
+ },
+ "items/thyme_syrup/name": {
+  "en": "Thyme and honey syrup",
+  "de": "Thymian-Honig-Sirup"
+ },
+ "items/thyme_syrup/desc": {
+  "en": "In the old days people used it like this. Today: ask a grown-up or a doctor.",
+  "de": "So brauchten es die Menschen früher. Heute: Frag eine erwachsene Person oder deine Ärztin oder deinen Arzt."
+ },
+ "items/plantain_paste/name": {
+  "en": "Crushed plantain",
+  "de": "Zerdrückter Spitzwegerich"
+ },
+ "items/plantain_paste/desc": {
+  "en": "In the old days people used it like this. Today: ask a grown-up or a doctor.",
+  "de": "So brauchten es die Menschen früher. Heute: Frag eine erwachsene Person oder deine Ärztin oder deinen Arzt."
+ },
+ "items/yarrow_paste/name": {
+  "en": "Crushed yarrow",
+  "de": "Zerdrückte Schafgarbe"
+ },
+ "items/yarrow_paste/desc": {
+  "en": "In the old days people used it like this. Today: ask a grown-up or a doctor.",
+  "de": "So brauchten es die Menschen früher. Heute: Frag eine erwachsene Person oder deine Ärztin oder deinen Arzt."
+ },
+ "items/marigold_salve/name": {
+  "en": "Marigold salve",
+  "de": "Ringelblumensalbe"
+ },
+ "items/marigold_salve/desc": {
+  "en": "In the old days people used it like this. Today: ask a grown-up or a doctor.",
+  "de": "So brauchten es die Menschen früher. Heute: Frag eine erwachsene Person oder deine Ärztin oder deinen Arzt."
+ },
+ "items/arnica_salve/name": {
+  "en": "Arnica salve (skin only)",
+  "de": "Arnikasalbe (nur für die Haut)"
+ },
+ "items/arnica_salve/desc": {
+  "en": "In the old days people used it like this. Today: ask a grown-up or a doctor.",
+  "de": "So brauchten es die Menschen früher. Heute: Frag eine erwachsene Person oder deine Ärztin oder deinen Arzt."
+ },
+ "items/lavender_water/name": {
+  "en": "Lavender water",
+  "de": "Lavendelwasser"
+ },
+ "items/lavender_water/desc": {
+  "en": "In the old days people used it like this. Today: ask a grown-up or a doctor.",
+  "de": "So brauchten es die Menschen früher. Heute: Frag eine erwachsene Person oder deine Ärztin oder deinen Arzt."
+ },
+ "items/healers_chest/name": {
+  "en": "Healer's Chest",
+  "de": "Heilerinnen-Truhe"
+ },
+ "items/healers_chest/desc": {
+  "en": "A box with different remedies, each made from the right part of the right plant. The badger will want to see it.",
+  "de": "Eine Kiste mit verschiedenen Heilmitteln, jedes aus dem richtigen Teil der richtigen Pflanze. Der Dachs will sie bestimmt sehen."
+ },
+ "items/tea_set/name": {
+  "en": "Tea Set",
+  "de": "Teeservice"
+ },
+ "items/tea_set/desc": {
+  "en": "A little pot and cups of fired clay. The badger's spine is: tea first.",
+  "de": "Ein Kännchen und Tassen aus gebranntem Ton. Beim Dachs gilt: zuerst Tee."
+ },
  "recipes/porridge/verb": {
   "en": "Cook",
   "de": "Kochen"
@@ -10439,6 +11435,182 @@
   "en": "Weave",
   "de": "Flechten"
  },
+ "recipes/chamomile_tea/name": {
+  "en": "Chamomile tea",
+  "de": "Kamillentee"
+ },
+ "recipes/chamomile_tea/verb": {
+  "en": "Brew",
+  "de": "Aufbrühen"
+ },
+ "recipes/peppermint_tea/name": {
+  "en": "Peppermint tea",
+  "de": "Pfefferminztee"
+ },
+ "recipes/peppermint_tea/verb": {
+  "en": "Brew",
+  "de": "Aufbrühen"
+ },
+ "recipes/elder_tea/name": {
+  "en": "Elderflower tea",
+  "de": "Holunderblütentee"
+ },
+ "recipes/elder_tea/verb": {
+  "en": "Brew",
+  "de": "Aufbrühen"
+ },
+ "recipes/willow_tea/name": {
+  "en": "Willow-bark tea",
+  "de": "Weidenrindentee"
+ },
+ "recipes/willow_tea/verb": {
+  "en": "Brew",
+  "de": "Aufbrühen"
+ },
+ "recipes/sage_gargle/name": {
+  "en": "Sage gargle",
+  "de": "Salbei-Gurgelmittel"
+ },
+ "recipes/sage_gargle/verb": {
+  "en": "Brew",
+  "de": "Aufbrühen"
+ },
+ "recipes/thyme_syrup/name": {
+  "en": "Thyme and honey syrup",
+  "de": "Thymian-Honig-Sirup"
+ },
+ "recipes/thyme_syrup/verb": {
+  "en": "Stir",
+  "de": "Rühren"
+ },
+ "recipes/plantain_paste/name": {
+  "en": "Crushed plantain",
+  "de": "Zerdrückter Spitzwegerich"
+ },
+ "recipes/plantain_paste/verb": {
+  "en": "Crush",
+  "de": "Zerdrücken"
+ },
+ "recipes/yarrow_paste/name": {
+  "en": "Crushed yarrow",
+  "de": "Zerdrückte Schafgarbe"
+ },
+ "recipes/yarrow_paste/verb": {
+  "en": "Crush",
+  "de": "Zerdrücken"
+ },
+ "recipes/marigold_salve/name": {
+  "en": "Marigold salve",
+  "de": "Ringelblumensalbe"
+ },
+ "recipes/marigold_salve/verb": {
+  "en": "Stir",
+  "de": "Rühren"
+ },
+ "recipes/arnica_salve/name": {
+  "en": "Arnica salve (skin only)",
+  "de": "Arnikasalbe (nur für die Haut)"
+ },
+ "recipes/arnica_salve/verb": {
+  "en": "Stir",
+  "de": "Rühren"
+ },
+ "recipes/lavender_water/name": {
+  "en": "Lavender water",
+  "de": "Lavendelwasser"
+ },
+ "recipes/lavender_water/verb": {
+  "en": "Pour",
+  "de": "Eingiessen"
+ },
+ "recipes/dry_chamomile/name": {
+  "en": "Dry chamomile",
+  "de": "Kamille trocknen"
+ },
+ "recipes/dry_chamomile/verb": {
+  "en": "Hang",
+  "de": "Aufhängen"
+ },
+ "recipes/dry_peppermint/name": {
+  "en": "Dry peppermint",
+  "de": "Pfefferminze trocknen"
+ },
+ "recipes/dry_peppermint/verb": {
+  "en": "Hang",
+  "de": "Aufhängen"
+ },
+ "recipes/dry_elderflower/name": {
+  "en": "Dry elderflower",
+  "de": "Holunderblüten trocknen"
+ },
+ "recipes/dry_elderflower/verb": {
+  "en": "Hang",
+  "de": "Aufhängen"
+ },
+ "recipes/dry_thyme/name": {
+  "en": "Dry thyme",
+  "de": "Thymian trocknen"
+ },
+ "recipes/dry_thyme/verb": {
+  "en": "Hang",
+  "de": "Aufhängen"
+ },
+ "recipes/dry_marigold/name": {
+  "en": "Dry marigold",
+  "de": "Ringelblume trocknen"
+ },
+ "recipes/dry_marigold/verb": {
+  "en": "Hang",
+  "de": "Aufhängen"
+ },
+ "recipes/dry_willow_bark/name": {
+  "en": "Dry willow bark",
+  "de": "Weidenrinde trocknen"
+ },
+ "recipes/dry_willow_bark/verb": {
+  "en": "Hang",
+  "de": "Aufhängen"
+ },
+ "recipes/dry_sage/name": {
+  "en": "Dry sage",
+  "de": "Salbei trocknen"
+ },
+ "recipes/dry_sage/verb": {
+  "en": "Hang",
+  "de": "Aufhängen"
+ },
+ "recipes/dry_lavender/name": {
+  "en": "Dry lavender",
+  "de": "Lavendel trocknen"
+ },
+ "recipes/dry_lavender/verb": {
+  "en": "Hang",
+  "de": "Aufhängen"
+ },
+ "recipes/dry_arnica/name": {
+  "en": "Dry arnica",
+  "de": "Arnika trocknen"
+ },
+ "recipes/dry_arnica/verb": {
+  "en": "Hang",
+  "de": "Aufhängen"
+ },
+ "recipes/healers_chest/name": {
+  "en": "Healer's Chest",
+  "de": "Heilerinnen-Truhe"
+ },
+ "recipes/healers_chest/verb": {
+  "en": "Pack",
+  "de": "Packen"
+ },
+ "recipes/tea_set/name": {
+  "en": "Tea set",
+  "de": "Teeservice"
+ },
+ "recipes/tea_set/verb": {
+  "en": "Fire",
+  "de": "Brennen"
+ },
  "story/c1_frame0/title": {
   "en": "Bedtime",
   "de": "Schlafenszeit"
@@ -10626,6 +11798,102 @@
  "story/c3_k_pieter/text": {
   "en": "Far down the road, a lantern waves at you. Pieter. You wave back.",
   "de": "Weit unten auf der Strasse winkt eine Laterne dir zu. Pieter. Du winkst zurück."
+ },
+ "story/c5_cough/title": {
+  "en": "A cough in Hazelwood",
+  "de": "Ein Husten in Hazelwood"
+ },
+ "story/c5_cough/pages/0/text": {
+  "en": "Down in Hazelwood somebody is coughing. Then somebody else. The children first, as always, and nobody knows what to do.",
+  "de": "Unten in Hazelwood hustet jemand. Dann noch jemand. Die Kinder zuerst, wie immer, und niemand weiss, was man tun soll."
+ },
+ "story/c5_cough/pages/1/text": {
+  "en": "Wren the healer comes up the road with a full basket. “I cannot do this alone, {player},” she says. “Berit's old still-room is behind your kitchen. Would you look?”",
+  "de": "Wren, die Heilerin, kommt mit einem vollen Korb die Strasse herauf. „Allein schaffe ich das nicht, {player}“, sagt sie. „Berits alte Destillierstube liegt hinter deiner Küche. Schaust du sie dir an?“"
+ },
+ "story/c5_stillroom/text": {
+  "en": "Under the last shelf lies a page, torn in two. The top half is in a tidy hand: “Tea first. Always tea first.” The bottom half is missing. Somebody was here before you, and cared.",
+  "de": "Unter dem letzten Regal liegt eine Seite, in der Mitte zerrissen. Die obere Hälfte ist in sauberer Schrift: „Zuerst Tee. Immer zuerst Tee.“ Die untere Hälfte fehlt. Jemand war vor dir hier, und es lag ihm etwas daran."
+ },
+ "story/c5_stillroom/title": {
+  "en": "A torn page",
+  "de": "Eine zerrissene Seite"
+ },
+ "story/c5_wren_check/title": {
+  "en": "Wren's rule",
+  "de": "Wrens Regel"
+ },
+ "story/c5_wren_check/pages/0/text": {
+  "en": "Wren is waiting at the edge of the forest with her arms folded. “One rule,” she says. “Bring me your basket. Every time. Before you use anything in it.”",
+  "de": "Wren wartet am Waldrand mit verschränkten Armen. „Eine Regel“, sagt sie. „Bring mir deinen Korb. Jedes Mal. Bevor du irgendetwas daraus benutzt.“"
+ },
+ "story/c5_wren_check/pages/1/text": {
+  "en": "“Plants have twins, and some twins are poison. I do not care how clever you are. I care that you wake up tomorrow.” She almost smiles. “It costs a little favour. A biscuit will do.”",
+  "de": "„Pflanzen haben Zwillinge, und manche Zwillinge sind Gift. Es ist mir egal, wie klug du bist. Mir ist wichtig, dass du morgen aufwachst.“ Sie lächelt fast. „Es kostet einen kleinen Gefallen. Ein Keks genügt.“"
+ },
+ "story/c5_conch/text": {
+  "en": "Far off between the trees, something white and spiral shines in the green. It does not move. You hold your breath. Then you go back to your basket. Some things are for later.",
+  "de": "Weit weg zwischen den Bäumen leuchtet etwas Weisses, Gewundenes im Grün. Es bewegt sich nicht. Du hältst den Atem an. Dann gehst du zurück zu deinem Korb. Manches ist für später."
+ },
+ "story/c5_conch/title": {
+  "en": "Something white",
+  "de": "Etwas Weisses"
+ },
+ "story/c5_first_tea/text": {
+  "en": "Greenstem, the boy from the market, stands in the doorway of the still-room and sniffs. “Can I learn this?” Wren grumbles something about boys and mud. Then she says yes.",
+  "de": "Greenstem, der Junge vom Markt, steht in der Tür der Destillierstube und schnuppert. „Darf ich das lernen?“ Wren brummt etwas über Jungs und Matsch. Dann sagt sie ja."
+ },
+ "story/c5_first_tea/title": {
+  "en": "A pupil for Wren",
+  "de": "Ein Schüler für Wren"
+ },
+ "story/c5_poison/title": {
+  "en": "What were you thinking?",
+  "de": "Was hast du dir dabei gedacht?"
+ },
+ "story/c5_poison/pages/0/text": {
+  "en": "The ceiling. A blanket. A cup of something bitter. Wren sits by your bed, and she is not smiling. “What were you thinking?” she says. Your purse is gone. Your legs shake.",
+  "de": "Die Decke. Eine Wolldecke. Eine Tasse mit etwas Bitterem. Wren sitzt an deinem Bett, und sie lächelt nicht. „Was hast du dir dabei gedacht?“, sagt sie. Dein Geldbeutel ist weg. Deine Beine zittern."
+ },
+ "story/c5_poison/pages/1/text": {
+  "en": "“You are well,” she says. “That is all that matters. Next time, the basket comes to me first.” She puts a hand on your head, very briefly, and goes to stir her pot.",
+  "de": "„Du bist wieder gesund“, sagt sie. „Nur das zählt. Nächstes Mal kommt der Korb zuerst zu mir.“ Sie legt dir kurz die Hand auf den Kopf und geht, ihren Topf umzurühren."
+ },
+ "story/c5_page/text": {
+  "en": "The chest is full. In its lid, rolled up, you find the other half of the torn page: “The badger left after the fever, when nobody let the children rest.” You read it twice. You were one of those children.",
+  "de": "Die Truhe ist voll. Im Deckel findest du, zusammengerollt, die andere Hälfte der zerrissenen Seite: „Der Dachs ging nach dem Fieber, als niemand die Kinder ausruhen liess.“ Du liest es zweimal. Du warst eines dieser Kinder."
+ },
+ "story/c5_page/title": {
+  "en": "The other half",
+  "de": "Die andere Hälfte"
+ },
+ "story/c5_collapse/text": {
+  "en": "You make one more tea, and one more, day and night. Then the pot tilts and the floor comes up. Wren finds you on the stone. “You never stop, do you?” she says, and carries you to the bench.",
+  "de": "Du machst noch einen Tee und noch einen, Tag und Nacht. Dann kippt der Topf, und der Boden kommt hoch. Wren findet dich auf dem Stein. „Du hörst nie auf, oder?“, sagt sie und trägt dich zur Bank."
+ },
+ "story/c5_collapse/title": {
+  "en": "You never stop",
+  "de": "Du hörst nie auf"
+ },
+ "story/c5_badger/title": {
+  "en": "Tea first",
+  "de": "Zuerst Tee"
+ },
+ "story/c5_badger/pages/0/text": {
+  "en": "At the door of the still-room sits a badger, with his back very straight. He looks at the chest. He looks at the tea set. Then he looks at you, and at your hands.",
+  "de": "An der Tür der Destillierstube sitzt ein Dachs mit ganz geradem Rücken. Er sieht die Truhe an. Er sieht das Teeservice an. Dann sieht er dich an, und deine Hände."
+ },
+ "story/c5_badger/pages/1/text": {
+  "en": "He sets out two cups. “Tea first,” he seems to say. You sit down. For the first time in a long time, you do nothing at all. The badger pours.",
+  "de": "Er stellt zwei Tassen hin. „Zuerst Tee“, scheint er zu sagen. Du setzt dich. Zum ersten Mal seit langem tust du gar nichts. Der Dachs schenkt ein."
+ },
+ "story/c5_letter/text": {
+  "en": "A boy runs up the road with a letter. The seal is red wax, pressed with a heavy ring. “From the Lord,” he pants. You do not open it yet. The badger looks at it, and then at you, and says nothing.",
+  "de": "Ein Junge rennt die Strasse herauf, einen Brief in der Hand. Das Siegel ist aus rotem Wachs, mit einem schweren Ring gedrückt. „Vom Herrn“, keucht er. Du öffnest ihn noch nicht. Der Dachs sieht ihn an, dann dich, und sagt nichts."
+ },
+ "story/c5_letter/title": {
+  "en": "A letter with a seal",
+  "de": "Ein Brief mit Siegel"
  },
  "chapters/0/name": {
   "en": "Ashes",
@@ -11342,5 +12610,137 @@
  "meta/nature/pools/trees/advice": {
   "en": "Only a few trees are left at the forest edge. Stumps grow new saplings, and saplings grow into trees. Give them time.",
   "de": "Am Waldrand stehen nur noch wenige Bäume. Aus Stümpfen wachsen neue Setzlinge, und Setzlinge werden zu Bäumen. Gib ihnen Zeit."
+ },
+ "meta/forest/spots/glade/name": {
+  "en": "The glade",
+  "de": "Die Lichtung"
+ },
+ "meta/forest/spots/glade/tasks/0/heading": {
+  "en": "Little white flowers with yellow middles",
+  "de": "Kleine weisse Blüten mit gelber Mitte"
+ },
+ "meta/forest/spots/glade/tasks/0/options/0/label": {
+  "en": "Rub one: it smells sweet, like apples.",
+  "de": "Reib eine an: Sie duftet süss, wie Äpfel."
+ },
+ "meta/forest/spots/glade/tasks/0/options/1/label": {
+  "en": "Rub one: it hardly smells of anything.",
+  "de": "Reib eine an: Sie riecht kaum nach etwas."
+ },
+ "meta/forest/spots/stream/name": {
+  "en": "The stream bank",
+  "de": "Das Bachufer"
+ },
+ "meta/forest/spots/stream/tasks/0/heading": {
+  "en": "Peppermint grows by the water",
+  "de": "Pfefferminze wächst am Wasser"
+ },
+ "meta/forest/spots/stream/tasks/1/heading": {
+  "en": "Grey clay in the bank",
+  "de": "Grauer Lehm im Ufer"
+ },
+ "meta/forest/spots/oak/name": {
+  "en": "The old oak",
+  "de": "Die alte Eiche"
+ },
+ "meta/forest/spots/oak/tasks/0/heading": {
+  "en": "A squirrel's stash under the roots",
+  "de": "Das Vorratslager eines Eichhörnchens unter den Wurzeln"
+ },
+ "meta/forest/spots/oak/tasks/0/text": {
+  "en": "A squirrel stared at you, then hid its nuts again. It left you some dry sticks.",
+  "de": "Ein Eichhörnchen starrt dich an und versteckt seine Nüsse wieder. Es lässt dir ein paar trockene Stöcke da."
+ },
+ "meta/forest/spots/moonstone/name": {
+  "en": "The moonstone",
+  "de": "Der Mondstein"
+ },
+ "meta/forest/spots/moonstone/tasks/0/heading": {
+  "en": "A white stone that hums",
+  "de": "Ein weisser Stein, der summt"
+ },
+ "meta/forest/spots/moonstone/tasks/0/text": {
+  "en": "The old white stone hums, very softly. A little crystal has come loose beside it.",
+  "de": "Der alte weisse Stein summt ganz leise. Neben ihm hat sich ein kleiner Kristall gelöst."
+ },
+ "meta/forest/spots/hedge/name": {
+  "en": "The hedge",
+  "de": "Die Hecke"
+ },
+ "meta/forest/spots/hedge/tasks/0/heading": {
+  "en": "The elder is in bloom",
+  "de": "Der Holunder blüht"
+ },
+ "meta/forest/spots/meadow/name": {
+  "en": "The meadow edge",
+  "de": "Der Wiesenrand"
+ },
+ "meta/forest/spots/meadow/tasks/0/heading": {
+  "en": "White flowers in flat clusters",
+  "de": "Weisse Blüten in flachen Dolden"
+ },
+ "meta/forest/spots/meadow/tasks/0/options/0/label": {
+  "en": "Feathery, finely cut leaves. The stem is rough and green.",
+  "de": "Gefiederte, fein zerschnittene Blätter. Der Stängel ist rau und grün."
+ },
+ "meta/forest/spots/meadow/tasks/0/options/1/label": {
+  "en": "Smooth stem with purple spots. The leaves look a bit like ferns.",
+  "de": "Glatter Stängel mit purpurnen Flecken. Die Blätter sehen ein bisschen wie Farn aus."
+ },
+ "meta/forest/spots/meadow/tasks/1/heading": {
+  "en": "Big yellow flowers in the grass",
+  "de": "Grosse gelbe Blüten im Gras"
+ },
+ "meta/forest/spots/clearing/name": {
+  "en": "The sunny clearing",
+  "de": "Die sonnige Lichtung"
+ },
+ "meta/forest/spots/clearing/tasks/0/heading": {
+  "en": "Thyme on the warm stones",
+  "de": "Thymian auf den warmen Steinen"
+ },
+ "meta/forest/spots/clearing/tasks/1/heading": {
+  "en": "Orange marigolds",
+  "de": "Orange Ringelblumen"
+ },
+ "meta/forest/spots/clearing/tasks/2/heading": {
+  "en": "Lavender, humming with bees",
+  "de": "Lavendel, von Bienen umsummt"
+ },
+ "meta/forest/spots/clearing/tasks/3/heading": {
+  "en": "Grey-green sage",
+  "de": "Graugrüner Salbei"
+ },
+ "meta/forest/spots/floor/name": {
+  "en": "The shady floor",
+  "de": "Der schattige Waldboden"
+ },
+ "meta/forest/spots/floor/tasks/0/heading": {
+  "en": "Ribwort plantain between the roots",
+  "de": "Spitzwegerich zwischen den Wurzeln"
+ },
+ "meta/forest/spots/willow/name": {
+  "en": "The willow by the water",
+  "de": "Die Weide am Wasser"
+ },
+ "meta/forest/spots/willow/tasks/0/heading": {
+  "en": "Young willow branches",
+  "de": "Junge Weidenzweige"
+ },
+ "meta/forest/parts/0/name": {
+  "en": "The flowers",
+  "de": "Die Blüten"
+ },
+ "meta/forest/parts/1/name": {
+  "en": "The leaves",
+  "de": "Die Blätter"
+ },
+ "meta/forest/parts/2/name": {
+  "en": "The bark",
+  "de": "Die Rinde"
+ },
+ "meta/forest/parts/3/name": {
+  "en": "The root",
+  "de": "Die Wurzel"
  }
 }

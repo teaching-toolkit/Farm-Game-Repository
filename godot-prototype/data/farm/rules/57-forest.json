@@ -1,0 +1,44 @@
+{
+  "forest": {
+    "note": "The forest (TODO S4, design document 5.10). Opened by the cleared still-room. Walking in and out each cost one Time Quiz question. In the forest every spot has tasks that depend on the season: find (choose the right plant among those described: a wrong choice brings the look-alike home), pick (choose the right part of the plant), dig (needs the tool), look (a surprise). A pick costs `pickEnergy` and the task then rests for `refill` questions. What you bring home goes into the basket (`basket` places, more with the gathering basket), unchecked: Wren checks it for a small favour, or you use it unchecked and take the risk (see `poison`). The options of a find task show only a description, never the name.",
+    "basket": 6,
+    "basketBonus": {"gathering_basket": 4},
+    "pickEnergy": 2,
+    "refill": 4,
+    "wren": {"cats": ["dish", "remedy"], "coins": 30},
+    "poison": {"questions": 6, "mult": 2.0},
+    "spots": {
+      "glade": {"emoji": "🌼", "name": "The glade", "tasks": [
+        {"id": "chamomile", "kind": "find", "seasons": ["summer"], "plant": "chamomile", "heading": "Little white flowers with yellow middles",
+         "options": [{"id": "chamomile", "emoji": "🌼", "label": "Rub one: it smells sweet, like apples."}, {"id": "mayweed", "emoji": "🌼", "label": "Rub one: it hardly smells of anything."}]}]},
+      "stream": {"emoji": "💧", "name": "The stream bank", "tasks": [
+        {"id": "peppermint", "kind": "pick", "seasons": ["spring", "summer", "autumn"], "plant": "peppermint", "part": "leaf", "heading": "Peppermint grows by the water"},
+        {"id": "clay", "kind": "dig", "seasons": ["spring", "summer", "autumn", "winter"], "tool": "wooden_shovel", "gives": {"clay": 2}, "heading": "Grey clay in the bank"}]},
+      "oak": {"emoji": "🌳", "name": "The old oak", "tasks": [
+        {"id": "stash", "kind": "look", "seasons": ["autumn"], "gives": {"stick": 3}, "heading": "A squirrel's stash under the roots", "text": "A squirrel stared at you, then hid its nuts again. It left you some dry sticks."}]},
+      "moonstone": {"emoji": "🌙", "name": "The moonstone", "tasks": [
+        {"id": "hum", "kind": "look", "seasons": ["spring", "summer", "autumn", "winter"], "gives": {"quartz": 1}, "heading": "A white stone that hums", "text": "The old white stone hums, very softly. A little crystal has come loose beside it."}]},
+      "hedge": {"emoji": "🌸", "name": "The hedge", "tasks": [
+        {"id": "elderflower", "kind": "pick", "seasons": ["summer"], "plant": "elderflower", "part": "flower", "heading": "The elder is in bloom"}]},
+      "meadow": {"emoji": "🌾", "name": "The meadow edge", "tasks": [
+        {"id": "yarrow", "kind": "find", "seasons": ["summer", "autumn"], "plant": "yarrow", "heading": "White flowers in flat clusters",
+         "options": [{"id": "yarrow", "emoji": "🌾", "label": "Feathery, finely cut leaves. The stem is rough and green."}, {"id": "hemlock", "emoji": "🌾", "label": "Smooth stem with purple spots. The leaves look a bit like ferns."}]},
+        {"id": "arnica", "kind": "pick", "seasons": ["summer"], "plant": "arnica", "part": "flower", "heading": "Big yellow flowers in the grass"}]},
+      "clearing": {"emoji": "🌺", "name": "The sunny clearing", "tasks": [
+        {"id": "thyme", "kind": "pick", "seasons": ["spring", "summer", "autumn"], "plant": "thyme", "part": "leaf", "heading": "Thyme on the warm stones"},
+        {"id": "marigold", "kind": "pick", "seasons": ["summer"], "plant": "marigold", "part": "flower", "heading": "Orange marigolds"},
+        {"id": "lavender", "kind": "pick", "seasons": ["summer"], "plant": "lavender", "part": "flower", "heading": "Lavender, humming with bees"},
+        {"id": "sage", "kind": "pick", "seasons": ["spring", "summer"], "plant": "sage", "part": "leaf", "heading": "Grey-green sage"}]},
+      "floor": {"emoji": "🍃", "name": "The shady floor", "tasks": [
+        {"id": "plantain", "kind": "pick", "seasons": ["spring", "summer", "autumn"], "plant": "plantain", "part": "leaf", "heading": "Ribwort plantain between the roots"}]},
+      "willow": {"emoji": "🌿", "name": "The willow by the water", "tasks": [
+        {"id": "willow_bark", "kind": "pick", "seasons": ["spring"], "plant": "willow_bark", "part": "bark", "heading": "Young willow branches"}]}
+    },
+    "parts": [
+      {"id": "flower", "emoji": "🌸", "name": "The flowers"},
+      {"id": "leaf", "emoji": "🍃", "name": "The leaves"},
+      {"id": "bark", "emoji": "🪵", "name": "The bark"},
+      {"id": "root", "emoji": "🥕", "name": "The root"}
+    ]
+  }
+}

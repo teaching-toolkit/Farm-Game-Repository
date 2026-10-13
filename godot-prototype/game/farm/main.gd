@@ -40,6 +40,7 @@ var story: FarmUiStory
 var timequiz: FarmUiTimeQuiz
 var waterroad: FarmUiWaterRoad
 var wellui: FarmUiWell
+var forestui: FarmUiForest
 var face_btn: Button        # the farmer's face at the end of the energy bar (opens the dashboard)
 var rest_icon: Label        # the 😴 before the face appears
 var welcome: FarmUiWelcome
@@ -113,6 +114,7 @@ func _make_parts() -> void:
 	timequiz = FarmUiTimeQuiz.new(self)
 	waterroad = FarmUiWaterRoad.new(self)
 	wellui = FarmUiWell.new(self)
+	forestui = FarmUiForest.new(self)
 	welcome = FarmUiWelcome.new(self)
 	widgets = FarmUiWidgets.new(self)
 

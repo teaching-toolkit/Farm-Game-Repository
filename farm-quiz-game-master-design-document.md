@@ -151,7 +151,7 @@ well as a card review).
   the repetition and only a right first try moves time.
 - **Read aloud.** Where the device has a voice, 🔊 reads the question and the answers. A device setting (⚙️ Settings, grown-up part) chooses *off* (no 🔊 buttons), *a button* (the default) or *by itself* (each question and card page is read as it opens; 🔊 reads it again).
 - **Every question has an id** that never changes and is never reused: a pack code and a number (`CON-003`, `PIC-012`);
-  the knowledge cards' questions are `KNW-001` … `KNW-234`. The learning record and the translations use the id, so the
+  the knowledge cards' questions are `KNW-001` … `KNW-261`. The learning record and the translations use the id, so the
   record says how well the child knows *that* question in any language, and a question can be reworded without losing
   what was learned.
 - **Packs now:** *Farm basics* (FRM, 4), *Continents* (CON, 12), *Farm pictures* (PIC, 18, picture questions). A playthrough
@@ -434,6 +434,19 @@ Gathering at the forest edge draws on **pools**: sticks (40, +1.2 a question), l
 22 more a tree again. A tap gives its full yield while the pool is full and less when it is not (the share is the pool's fullness, never below a half to two thirds), **rounded and never below 1**, so the campfire is never impossible. The first time a pool
 is low the farm says so (*a recommendation first*), and again after 40 questions. Stones come back hardly at all: the stones in the fields (frost heave) and the quarry merchant matter. The numbers (a bar per pool, 🌲🪵🌱 for the trees) show in the forest
 edge's window once the card *Take only what grows back* has been learned. *(Planned: water as a pool, herbs, the Helper who pauses a job and gives a look.)* Data: `rules/56-nature.json`; system `G.nature`.
+
+### 5.10 The still-room, the forest and Wren's check *(built, phase 11; 💡 all of it for the parent to review, above all the plant texts and the safety wording)*
+
+**The still-room.** In chapter 5 Berit's old still-room (behind the kitchen) can be cleared; it holds five stations: the **drying rack** (hang a plant for two questions and it keeps), the **mortar** (fresh plantain and yarrow are crushed), the **tea pot hearth** (chamomile, peppermint, elderflower and willow-bark teas, sage gargle), the
+**syrup pan** (thyme and honey) and the **salve pot** (marigold and arnica salve, lavender water). Eleven **remedies** (category *remedy*, graded Lumpy / Proper / Fancy like a dish) are made from dried plants (category *herb*); each says "In the old days people used it like this. *Today: ask a grown-up or a doctor.*"
+(no doses, no cures promised). The **Healer's Chest** holds six different remedies; with the **tea set** (fired from clay) it brings the badger home. The book *The Healer's Herbal* (9 cards: plant parts, drying, teas, syrups and salves, look-alikes, foxglove, willow and aspirin, arnica on the skin only, asking first) opens the stations and recipes.
+
+**The forest.** Opened by the cleared still-room, from the forest edge's window. Walking in and walking out each cost one Time Quiz question. Nine spots; their tasks depend on the season: *find* (choose the right plant among 2–3 that are only described: a wrong choice brings the look-alike home: hemlock for yarrow, scentless mayweed for chamomile), *pick* (choose the right part: flower, leaf, bark, root), *dig* (clay, with the shovel),
+*look* (a squirrel's stash, the humming moonstone). A task costs 2 ⚡ and rests for 4 questions. The basket holds 6 (10 with the gathering basket). **The basket is unchecked**: what is in it looks like what you meant to pick.
+
+**Wren's check.** *Visit Wren*: she looks through the basket, the right plants go into the store, the wrong ones are thrown out and she says why; it costs a small favour (the cheapest dish or remedy, else 30 🟤, else nothing: nobody is stuck). Or *use it without checking*: everything goes into the store, but the bad units are remembered; when a remedy uses a bad unit (a chance that grows with how many there are), the farmer is **poisoned**:
+the recipe does not happen, energy 0, **all coins gone**, every job costs double for 6 questions, Wren is grumpy and clears out the bad plants. It can only happen if the check was skipped (a deliberate exception to "nothing punishes", decided by the parent), and the first forest trip has Wren explain the rule. Data: `rules/57-forest.json`; systems `G.forest`; the story pieces `c5_*`.
+*(Planned: the badger doing the check as a job card; a painted forest instead of tiles; arnica look-alikes.)*
 
 ### 5.4 Seeds
 
@@ -824,7 +837,7 @@ bellows*.
 | 2 · Homestead | Cottage | logs, planks, clay, bricks | log shed, compost and tomatoes, bees, woodlot, carpenter and kiln, the cottage in stages, stove, oven and prep table, pond, market stall, barn and cows, butter, the orchard | Tortoise |
 | 3 · Smallholding | Cottage | iron, nails | smithy, forge and anvil, iron tools (more plants per patch), sawbench, sheep and cloth, linen from flax, the press (oil, juice, sugar), windmill, fermenting and the cellar (yogurt, cheese, cider, vinegar, pickles), lumbermill | Goat |
 | 4 · Village Trade | Farmhouse | steel, glass, hardwood | blast forge and steel tools, drip line, the farmhouse in stages, greenhouse, brickworks, warehouse, master workshop and textile loom, walnuts and olives, pizza, the North Field | Pony |
-| 5 · Healing | Farmhouse | herbs, the forest | the healer's garden and the old lamp-maker, the herb drying loft; *(planned: the still-room, remedies, the forest screen, phase 12)* | Badger *(a placeholder pet until then)* |
+| 5 · Healing | Farmhouse | herbs, the forest | Berit's still-room and its five stations, eleven remedies and the Healer's Chest, the forest and Wren's check, the book *The Healer's Herbal*, the healer's garden and the old lamp-maker | Badger |
 | 6 · Master Farm | Farmhouse | heirlooms, dyes | Import Broker barter, saffron and heirloom crops, the dye vat and colour mixing, Harvest Fair ribbons, master oven and stove, fine flour, seed library, wind pump, the River Meadow | Alpaca |
 
 A chapter's sheets never show anything beyond it; the quest book shows this chapter's next goals and what is one step away.
@@ -843,7 +856,7 @@ Everything is a **node** in the data with `requires` (other nodes) and a `cost`.
 - **Chapters** end with a pet; later favours open only after the previous chapter's pet, so they never crowd a new chapter's
   first goals.
 
-### 10.3 The pets (five; the badger is a placeholder)
+### 10.3 The pets
 
 | # | Pet (default name) | Dish | Comfort item | Bonus for good |
 |---|---|---|---|---|
@@ -851,7 +864,7 @@ Everything is a **node** in the data with `requires` (other nodes) and a `cost`.
 | 2 | 🐢 Tortoise (Mossy) | Tortoise Garden Platter | Warm Shell House | +1 💧 every water trip |
 | 3 | 🐐 Goat (Bramble) | Apple Oat Crumble | Goat Shed | a little compost every question, weeds −15 % |
 | 4 | 🐴 Pony (Hazel) | Apple-Carrot Cake | Saddle Blanket (needs the barn stable) | +10 % when selling |
-| 5 | 🦡 Badger (Bracken) | *(placeholder: 12 herbs, 2 honey)* | — | +1 herb per herb harvest *(in phase 12 the Healer's Chest, a tea set and remedies)* |
+| 5 | 🦡 Badger (Bracken) | Healer's Chest | Tea Set | +1 herb per herb harvest |
 | 6 | 🦙 Alpaca (Alfie) | Golden Honey Cake + Rainbow Roast | Rainbow Quilt | a little wool every question |
 
 **The pets' jobs *(built, phase 8: levels 1 and 2)*.** Level 1 is the bonus in the table (always on). **Level 2** opens when the *next* pet has come home (the last pet has none yet): the pet's window in the
@@ -1188,7 +1201,7 @@ Everything about the content is data, so the game can be rebalanced without code
 
 | File | Holds |
 |---|---|
-| `data/farm/` | the whole tree (v0.8), in files: `items.json` (147 items), `nodes/` (445 nodes in 14 themed files: buildings, upgrades, tools, gear, helpers, polish, cards, books, goals, side quests, pets, merchants …), `recipes.json` (106), `rules/` (energy, water, yields, pricing, market, seasons, pests, freshness, carry, flex …, by system), `chapters.json`, `start.json`, and `places.json` (the farm's places) |
+| `data/farm/` | the whole tree (v0.8), in files: `items.json` (182 items), `nodes/` (461 nodes in 14 themed files: buildings, upgrades, tools, gear, helpers, polish, cards, books, goals, side quests, pets, merchants …), `recipes.json` (106), `rules/` (energy, water, yields, pricing, market, seasons, pests, freshness, carry, flex …, by system), `chapters.json`, `start.json`, and `places.json` (the farm's places) |
 | `data/map_layout.json` | where every place, add-on, corner and decoration stands |
 | `data/quiz_packs/*.json` | Time Quiz packs |
 | `data/i18n/quiz-<lang>.json` | quiz texts by question id |

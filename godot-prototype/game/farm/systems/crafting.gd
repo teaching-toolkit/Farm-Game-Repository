@@ -185,6 +185,7 @@ func start_recipe(rid: String) -> bool:
 		if float(G.S["woodpile"]) + 0.0001 < fuel:
 			G.say(tr("🪵 Stoke the woodpile first: this needs %d fuel, the woodpile has %d.") % [G.up(fuel), G.down(G.S["woodpile"])]); return false
 		G.S["woodpile"] = float(G.S["woodpile"]) - fuel
+	if G.forest.poisons(c): return false          # a bad plant from the forest: the farmer collapses (TODO S3)
 	G.inventory.start_track()
 	G.pace.pay(c)
 	var input_avg := G.inventory.stop_track()          # the grades of the inputs that were used up (-1: none had a grade)

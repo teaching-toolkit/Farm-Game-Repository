@@ -58,6 +58,9 @@ grep -q "^WELL OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/nature_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^NATURE|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^NATURE OK/✔ the forest edge/; s/^NATURE FAILED/✘ the forest edge/'
 grep -q "^NATURE OK" "$LOG" || FAIL=1
+"$G" --headless --path . res://tests/forest_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
+grep -E "^FOREST|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^FOREST OK/✔ the forest and the poisoning/; s/^FOREST FAILED/✘ the forest and the poisoning/'
+grep -q "^FOREST OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/crops_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^CROPS|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^CROPS OK/✔ hay and winter wheat/; s/^CROPS FAILED/✘ hay and winter wheat/'
 grep -q "^CROPS OK" "$LOG" || FAIL=1

@@ -8,6 +8,7 @@
       {"id": "crops", "emoji": "🌾", "cats": ["crop"]},
       {"id": "food", "emoji": "🍽️", "cats": ["dish", "ingredient", "animal"]},
       {"id": "crafts", "emoji": "🧺", "cats": ["craft", "textile", "container", "pet-item", "find", "keeper"]},
+      {"id": "herbs", "emoji": "🌿", "cats": ["herb", "remedy"]},
       {"id": "materials", "emoji": "🪵", "cats": ["material", "fertilizer", "byproduct", "feed", "fuel"]}
     ]
   }

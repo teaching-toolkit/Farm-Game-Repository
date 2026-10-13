@@ -11,6 +11,15 @@
 	"cold": false,
 	"early_patches": {},
 	"energy": 10.0,
+	"forest": {
+		"basket": [],
+		"checked": 0.0,
+		"in": false,
+		"poisoned": 0.0,
+		"rest": {},
+		"tainted": {},
+		"trips": 0.0
+	},
 	"gate": {
 		"cart": 0.0,
 		"here": false,

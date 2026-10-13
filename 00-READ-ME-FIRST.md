@@ -2,7 +2,7 @@
 
 This file is the starting point for a new chat or another AI: what the project is, how the folder is laid out, the parent's
 rules and where we left off. **How to work on the project** (what to read, the checks, changing content) lives in three skill
-files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2, the restructuring, is done: R0–R8; phase 3, the interface, is built: version 0.10.0; phase 4, the foundations, is built: version 0.11.0; phase 5, the story engine and chapter 1, is built: version 0.12.0; phase 6, the store and market, is built: version 0.13.0; phase 7, the new chapter 1, is built: version 0.14.0; phase 8, six chapters, the Lord's share and the pets' jobs, is built: version 0.15.0; phase 9, wellbeing and energy, is built: version 0.16.0; phase 10, nature and winter, is built: version 0.17.0).
+files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2, the restructuring, is done: R0–R8; phase 3, the interface, is built: version 0.10.0; phase 4, the foundations, is built: version 0.11.0; phase 5, the story engine and chapter 1, is built: version 0.12.0; phase 6, the store and market, is built: version 0.13.0; phase 7, the new chapter 1, is built: version 0.14.0; phase 8, six chapters, the Lord's share and the pets' jobs, is built: version 0.15.0; phase 9, wellbeing and energy, is built: version 0.16.0; phase 10, nature and winter, is built: version 0.17.0; phase 11, the medicine chapter and the forest, is built: version 0.18.0).
 
 ---
 
@@ -22,7 +22,7 @@ coming home (bunny, tortoise, goat, pony, alpaca). Learning *is* the economy:
 
 - **Time Quiz** — general-knowledge questions from packs the parent chooses; each right answer moves farm time one step.
 - **Rest** — mental-arithmetic sums (a curriculum for classes 1–7 with spaced repetition and medals) give energy.
-- **Knowledge cards** — 78 cards about real farming and crafts, read and quizzed, unlock what they describe.
+- **Knowledge cards** — 87 cards about real farming and crafts, read and quizzed, unlock what they describe.
 
 It is built as a **Godot 4.7 prototype** (GDScript) that is fully playable through all six chapters, driven by one data
 file. It also runs in the browser (`web-build/`). The person you work with is the child's parent and the game's designer;
@@ -229,6 +229,8 @@ golden runs identical. `web-build/` still matches the code. **Phase 2 is finishe
 
 13 Oct 2026 (phase 10, version 0.17.0): **the forest edge** (`G.nature`, `rules/56-nature.json`: pools for sticks, loose stones and clay, the trees' cycle, a yield that falls with the pool but never below 1, advice, a card that shows the numbers) and **winter** (snow on the empty patches until cleared, only hardy crops outdoors, a quarter of the growing speed, winter kale, a text at the start of each season). Tests `nature_test`, `crops_test`. The bot needs about 10–25 % more questions for winter. Open: water as a pool, herbs, the Helper's pause, snow on the ground, bare trees. Next: phase 11 (medicine and the forest: S3, S4) and phase 12 (free play: I10, S5), then the leftovers (T3, R4, J7, H1).
 
+13 Oct 2026 (phase 11, version 0.18.0): **chapter 5 *Healing* is real**: Berit's still-room with five stations and eleven remedies, the book *The Healer's Herbal*, the Healer's Chest and the tea set, and **the forest** (`G.forest`, `rules/57-forest.json`: nine spots by season, find / pick / dig / look, an unchecked basket, Wren's check, the poisoning if you skip it). The badger comes home for the chest and the tea set. Story pieces `story/texts/ch5.md`. The bot plays it (about 105–135 questions). **The parent must read the new plant texts and the safety wording** (TODO W9). Open: the badger's check job card, a painted forest. Next: phase 12 (free play: I10, S5) and the leftovers (T3, R4, J7, H1).
+
 ---
 
 ## 6. Open tasks → `TODO.md`
@@ -241,6 +243,6 @@ area. Finished tasks are recorded in `PROJECT-LOG.md` and removed from `TODO.md`
 
 ## 7. Key numbers right now
 
-Data v0.8: 147 items, 445 nodes, 109 recipes, 38 stations, 78 cards in 13 books, 22 polish jobs, 58 helpers, 28 side quests.
+Data v0.8: 182 items, 461 nodes, 131 recipes, 43 stations, 87 cards in 14 books, 22 polish jobs, 58 helpers, 28 side quests.
 Explorer playthrough: about 21.2 hours, ~1,417 Time Quiz answers, ~1,380 Rest answers; pets at about 1.6 / 5.8 / 12 / 17 / 20 h.
-Quiz packs: Farm basics (FRM, 4), Continents (CON, 12), Farm pictures (PIC, 18) + card questions KNW-001…234.
+Quiz packs: Farm basics (FRM, 4), Continents (CON, 12), Farm pictures (PIC, 18) + card questions KNW-001…261.

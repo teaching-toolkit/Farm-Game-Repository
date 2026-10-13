@@ -267,6 +267,45 @@ func _visit_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> vo
 	after.add_child(back)
 	M.modals.fit_modal.call_deferred()
 
+## A walk that costs one question (into the forest and out of it): only a right first try gets you there; then `on_done` runs (it returns the text to show).
+## cfg = {"title", "emoji", "button", "done": Callable -> String}
+func show_walk_question(cfg: Dictionary) -> void:
+	var q: Dictionary = G.knowledge.next_time_question()
+	M.playback.begin()
+	var box := M.modals.open_modal(str(cfg["title"]))
+	Sound.music("quiz")
+	box.add_child(UI.header(null, str(cfg["emoji"]), 64))
+	box.add_child(UI.label(str(q.get("source", "")) + tr("   ·   one question, then you are there"), 15, UI.MUTED, true))
+	var qbox := UI.vbox(8)
+	box.add_child(qbox)
+	var after := UI.vbox(8)
+	box.add_child(after)
+	question(qbox, q, _walk_answered.bind(q, after, cfg))
+
+func _walk_answered(first_try: bool, q: Dictionary, after: VBoxContainer, cfg: Dictionary) -> void:
+	if q.get("review", false): G.knowledge.record_card_answer(q, first_try)
+	else: G.knowledge.time_result(q, first_try)
+	if not first_try:
+		G.knowledge.retry_after_next(q)
+		after.add_child(UI.label(tr("⏸️ Not quite: only a right first answer gets you there. Try the next one."), 17, UI.MUTED, true))
+		var nb := UI.button(tr("Next question ▶"), show_walk_question.bind(cfg), true, UI.GREEN, 21)
+		nb.custom_minimum_size = Vector2(0, 56)
+		after.add_child(nb)
+		M.modals.fit_modal.call_deferred()
+		return
+	var info: Dictionary = G.step_time()
+	var text: String = (cfg["done"] as Callable).call()
+	if info.get("rain", false): M.after_close.append(tr("🌧️ Rain! The fields are watered — planting costs no water until the next question."))
+	if text != "": after.add_child(UI.label(text, 17, UI.INK, true))
+	var go := UI.button(str(cfg["button"]), _walk_done, true, UI.GREEN, 22)
+	go.custom_minimum_size = Vector2(0, 56)
+	after.add_child(go)
+	M.modals.fit_modal.call_deferred()
+
+func _walk_done() -> void:
+	M.modals.close_modal()
+	M.sheets.open_sheet.call_deferred("forest")
+
 func _to_square() -> void:
 	M.modals.close_modal()
 	M.sheets.open_spot.call_deferred("market")

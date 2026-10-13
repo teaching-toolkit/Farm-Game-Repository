@@ -127,7 +127,7 @@
   "nodeSpots": {
     "note": "Which place a data node belongs to. In this order: the ruins of a place (ids starting with ruinsPrefix) belong to that place, or to the place named in ruinsAt; a node with 'attach' goes where the node it is attached to goes; then slotPrefixes; then the node's 'slot' looked up in slots (a name, or {default, ids: {place: [node ids]}, prefixes: {id start: place}}); else default.",
     "ruinsPrefix": "ruins_",
-    "ruinsAt": {"workshop": "ws_build", "barn": "barn_build"},
+    "ruinsAt": {"workshop": "ws_build", "barn": "barn_build", "stillroom": "kitchen"},
     "slotPrefixes": {"gear:": "living", "tool:": "ws_tools"},
     "slots": {
       "living": "living",

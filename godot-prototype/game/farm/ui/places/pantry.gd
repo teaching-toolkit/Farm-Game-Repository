@@ -13,7 +13,7 @@ func _init(main: FarmMain) -> void:
 	M = main
 	G = main.G
 
-const CAT_ORDER := ["crop", "animal", "ingredient", "dish", "material", "textile", "fertilizer", "byproduct", "feed", "fuel", "container", "craft", "find", "seed", "keeper", "pet-item"]
+const CAT_ORDER := ["crop", "animal", "ingredient", "dish", "material", "textile", "fertilizer", "byproduct", "feed", "fuel", "container", "craft", "find", "seed", "herb", "remedy", "keeper", "pet-item"]
 
 # ------------------------------------------------------------------ what a place shows
 

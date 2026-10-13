@@ -126,6 +126,10 @@ func rebuild_sheet() -> void:
 				M.sheet_title.text = tr("🎒 Bag")
 				M.content.add_child(UI.header(null, "🎒", 70))
 				M.pantry.part_bag()
+			"forest":
+				M.sheet_title.text = tr("🌲 The forest")
+				M.content.add_child(UI.header(null, "🌲", 70))
+				M.forestui.sheet_forest()
 			"well":
 				M.sheet_title.text = tr("%s How you feel") % G.well.face()
 				M.wellui.sheet_well()

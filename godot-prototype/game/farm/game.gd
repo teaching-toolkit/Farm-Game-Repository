@@ -20,6 +20,7 @@ signal gained(source: String, got: Dictionary, lost: Dictionary)
 signal paid(coins: float)     # coins fly from the purse to the trader (M3)
 signal sold(item: String, n: float, coins: float)   # coins fly to the purse (perk), a jingle
 signal celebrate(id: String)     # a new building, tool or helper: the big pop-up with confetti
+signal poisoned     # the farmer wakes up poisoned: a story box may follow
 signal revealed(id: String)      # a part of the interface comes into view for the first time (G.reveal)
 signal rank_up(family: String, rank: int)   # a skill reaches a new rank (G.skills)
 
@@ -108,6 +109,7 @@ var lord: FarmLord
 var pets: FarmPets
 var well: FarmWell
 var nature: FarmNature
+var forest: FarmForest
 var trust: FarmTrust
 
 func _init() -> void:
@@ -132,6 +134,7 @@ func _init() -> void:
 	pets = FarmPets.new(self)
 	well = FarmWell.new(self)
 	nature = FarmNature.new(self)
+	forest = FarmForest.new(self)
 	trust = FarmTrust.new(self)
 
 # ------------------------------------------------------------------ start, seed and clock
@@ -312,7 +315,7 @@ func save_defaults() -> Dictionary:
 ## Everything a save holds in a new game: the Game's keys and every system's.
 func all_save_defaults() -> Dictionary:
 	var d := save_defaults()
-	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story, trip, gate, lord, pets, well, nature]:
+	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story, trip, gate, lord, pets, well, nature, forest]:
 		d.merge(sys.save_defaults())
 	return d
 
@@ -590,6 +593,9 @@ func counter(name: String) -> float:
 		"packed": return float(trip.contents().size())
 		"skill_ranks": return float(skills.total_ranks())
 		"well_mood": return well.overall()
+		"forest_trips": return float(S["forest"]["trips"])
+		"forest_poisoned": return float(S["forest"]["poisoned"])
+		"forest_checked": return float(S["forest"]["checked"])
 		"lord_owed": return lord.owed()
 		"lord_paid": return float(S["lord"]["paid"])
 		"lord_shares": return float(S["lord"]["shares"])
