@@ -68,8 +68,11 @@ What a pass looks like:
   give the place of every data node, the tables, and the chapter and luck for every set of pets exactly as `tests/golden/places.json`
   recorded (13 Oct 2026, from the code before slice R2). A new place, pet or chapter made on purpose is recorded anew:
   `$G --headless --path . res://tests/places_test.tscn -- --seed=1 --record`, and the log says so.
+- **Data checks** (`python3 tools/check_data.py`, part of `check_all.sh`): every id a node, recipe, chapter, place or perk names exists, costs and
+  effects use known keys, conditions parse, card questions are well-formed and their ids unique, every node lands at a known place. Errors fail the
+  check; warnings are for a look.
 - **Texts changed:** `python3 tools/i18n.py --check` exits with 0.
-- **Progression data changed:** `python3 tools/sync_progression.py`, then the explorer check. From the project root, in one
+- **Progression data changed:** `python3 tools/check_data.py`, `python3 tools/sync_progression.py`, then the explorer check. From the project root, in one
   call (a server started in the background dies when the call ends):
 
   ```bash
@@ -78,7 +81,10 @@ What a pass looks like:
     pkill -f "http.server 8765"
   ```
 
-  It prints the playthrough hours, answers, checks and pets; compare them with `00-READ-ME-FIRST.md` §7. It needs Playwright
+  It prints the playthrough hours, answers, checks and pets; compare them with `00-READ-ME-FIRST.md` §7. **The real game's pace** is the bot's report:
+  `bash tools/update_explorer.sh` (about 3 minutes; the parent's double-click `Update explorer.command` does the same) lets the bot play seeds 1 and 2 to chapter 5
+  (`--report=FILE`), and writes data and report into the explorer's Pacing tab; use its numbers (Time Quiz and Rest answers and hours per chapter) when a
+  change is meant to alter the pace. The explorer's own simulation below it is the older model and is not updated for new systems (TODO T3). It needs Playwright
   (there in cloud sessions; if it is missing on the linked computer, say so rather than skipping silently).
 
 Without `--seed` the bot and the smoke test leave their farm in the default save; with `--seed=N` they leave the device alone.

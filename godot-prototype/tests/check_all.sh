@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# All quick checks in one go (about 2 minutes): UI smoke test, save fixtures, save versions, core kit, places and pets, golden run, translations.
+# All quick checks in one go (about 2 minutes): UI smoke test, save fixtures, save versions, core kit, data checks, places and pets, golden run, translations.
 # Run after every restructuring step:  bash tests/check_all.sh   (Godot as in tests/golden.sh)
 set -uo pipefail
 cd "$(dirname "$0")/.."
@@ -29,6 +29,7 @@ grep -q "^SAVES OK" "$LOG" || FAIL=1
 grep -E "^PLACES|^FAIL|^   |SCRIPT ERROR" "$LOG" | sed 's/^PLACES OK/✔ places and pets/; s/^PLACES FAILED/✘ places and pets/'
 grep -q "^PLACES OK" "$LOG" || FAIL=1
 bash tests/golden.sh "$@" || { echo "✘ golden run"; FAIL=1; }
+python3 tools/check_data.py > "$LOG" 2>&1 && echo "✔ data checks ($(tail -1 "$LOG"))" || { echo "✘ data checks"; grep ERROR "$LOG" | head -5; FAIL=1; }
 python3 tools/i18n.py --check > /dev/null || { echo "✘ translations (python3 tools/i18n.py)"; FAIL=1; }
 rm -f "$LOG"
 [ $FAIL = 0 ] && echo "ALL CHECKS PASSED" || echo "SOME CHECKS FAILED"

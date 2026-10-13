@@ -1,9 +1,11 @@
 extends Node
 ## Headless play-test: a greedy bot plays the rules engine and reports progress.
-## Run:  godot --headless --path . res://tests/bot.tscn -- [--chapter=5] [--seed=1] [--golden=FILE] [--save-at=3:FILE]
+## Run:  godot --headless --path . res://tests/bot.tscn -- [--chapter=5] [--seed=1] [--golden=FILE] [--save-at=3:FILE] [--report=FILE]
 ##   --seed=N        the same game every time (the rules engine's random numbers, clock and learning record; see Game.now)
 ##   --golden=FILE   writes one fingerprint line per step of time; tests/golden.sh compares it with tests/golden/
 ##   --save-at=C:FILE  writes the save when chapter C is reached (test fixtures, tests/fixtures/)
+##   --report=FILE   writes the pacing of this run as JSON: per chapter the questions, Rest answers, card questions and actions, and the hours
+##                   they take with the timing of meta.pacing (the progression explorer shows it; tools/update_explorer.sh makes it)
 var G
 var log_lines := []
 var max_iters := 900
@@ -17,6 +19,10 @@ var pace_sum := {}      # chapter -> [sum of pace, questions]: tells meta.flex.b
 var golden_path := ""
 var golden := []        # fingerprint lines
 var save_at := {}       # chapter -> file
+var report_path := ""
+var know_answers := 0    # knowledge card questions answered
+var chapter_rows := []   # the pacing report: one row per chapter played
+var _row := {}           # the chapter being played now
 
 func _ready() -> void:
 	G = get_node("/root/Game")
@@ -28,6 +34,7 @@ func _ready() -> void:
 		if a.begins_with("--accuracy="): accuracy = clampf(float(a.substr(11)), 0.05, 1.0)
 		if a.begins_with("--seed="): quiz_rng.seed = int(a.substr(7)) + 1
 		if a.begins_with("--golden="): golden_path = a.substr(9)
+		if a.begins_with("--report="): report_path = a.substr(9)
 		if a.begins_with("--save-at="):
 			var parts := a.substr(10).split(":", true, 1)
 			if parts.size() == 2: save_at[int(parts[0])] = parts[1]
@@ -38,6 +45,7 @@ func _ready() -> void:
 	G.toast.connect(func(t): if int(G.S["step"]) < trace: print("  q%d  %s" % [G.S["step"], t]))
 	var t0 := Time.get_ticks_msec()
 	var it := 0
+	_begin_chapter()
 	while it < max_iters and G.chapter() < target_chapter:
 		it += 1
 		var st0: int = G.S["step"]
@@ -45,6 +53,9 @@ func _ready() -> void:
 		if st0 < trace and G.S["step"] != st0:
 			print("q%d -> energy %.1f water %.1f coins %.1f seeds %s plots %d wheat %.1f" % [G.S["step"], G.S["energy"], G.S["water"], G.S["coins"], G.S["seeds"], G.progression.plots(), G.inventory.count("wheat")])
 		if G.S["step"] != st0 and golden_path != "": golden.append(_fingerprint())
+		if G.chapter() != int(_row["chapter"]):
+			_close_chapter(true)
+			_begin_chapter()
 		if save_at.has(G.chapter()):
 			G.save_to(save_at[G.chapter()])
 			print("saved chapter %d at step %d to %s" % [G.chapter(), G.S["step"], save_at[G.chapter()]])
@@ -57,6 +68,8 @@ func _ready() -> void:
 		if it % 200 == 0:
 			print("iter %d step %d ch %d unlocked %d cards %d coins %d energy %d season %s" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.progression.cards_learned(), int(G.S["coins"]), int(G.S["energy"]), G.seasons.season()])
 	print("DONE iters %d steps %d chapter %d unlocked %d cards %d goals %d coins %d ms %d" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.progression.cards_learned(), G.S["goals"], int(G.S["coins"]), Time.get_ticks_msec() - t0])
+	_close_chapter(G.chapter() > int(_row["chapter"]))
+	if report_path != "": _write_report()
 	if golden_path != "":
 		var gf := FileAccess.open(golden_path, FileAccess.WRITE)
 		if gf: gf.store_string("\n".join(golden) + "\n")
@@ -101,6 +114,45 @@ func _ready() -> void:
 	print("cards by status: ", cs, " reading: ", G.S["reading"], " books: ", G.progression.books_owned(), "/", G.g("bookSlots", 1))
 	print("last log: ", G.S["log"].slice(-8))
 	get_tree().quit()
+
+## ------------------------------------------------------------------ the pacing report (--report=FILE)
+func _begin_chapter() -> void:
+	_row = {"chapter": G.chapter(), "step0": int(G.S["step"]), "rest0": int(G.S["stats"]["rest"]),
+		"actions0": G.saves_requested - int(G.S["step"]), "know0": know_answers}
+
+## Closes the row of the chapter that was being played. complete = its pet came home (the next chapter began).
+func _close_chapter(complete: bool) -> void:
+	var t: Dictionary = G.meta.get("pacing", {})
+	var q: int = int(G.S["step"]) - int(_row["step0"])
+	var rest: int = int(G.S["stats"]["rest"]) - int(_row["rest0"])
+	var act: int = int(G.saves_requested) - int(G.S["step"]) - int(_row["actions0"])
+	var know: int = know_answers - int(_row["know0"])
+	var sec: float = float(q) * float(t.get("secondsPerStep", 25)) + float(act) * float(t.get("secondsPerAction", 3)) \
+		+ float(rest) * float(t.get("secondsPerRest", 5)) + float(know) * float(t.get("secondsPerKnowledgeQuestion", 12))
+	chapter_rows.append({"chapter": int(_row["chapter"]), "pet": str(G.D["chapters"][int(_row["chapter"]) - 1].get("pet", "")), "complete": complete,
+		"questions": q, "restAnswers": rest, "knowledgeQuestions": know, "actions": act, "hours": snappedf(sec / 3600.0, 0.01)})
+
+func _write_report() -> void:
+	var t: Dictionary = G.meta.get("pacing", {})
+	var total := 0.0
+	var rows := []
+	for r in chapter_rows:
+		total += float(r["hours"])
+		var row: Dictionary = r.duplicate()
+		row["hoursTotal"] = snappedf(total, 0.01)
+		rows.append(row)
+	var seed_n := -1
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--seed="): seed_n = int(a.substr(7))
+	var run := {"label": "bot, seed %d, accuracy %.2f" % [seed_n, accuracy], "seed": seed_n, "accuracy": accuracy, "stoppedAtStep": int(G.S["step"]),
+		"reachedChapter": G.chapter(), "chapters": rows}
+	var report := {"what": "Pacing of the greedy test bot playing the real rules engine (tests/bot.gd). Hours use the timing of meta.pacing. The bot is not a child: it always knows what it needs and works through the farm in sweeps. Trust the Time Quiz and Rest answers most; its actions are counted as one per saved change and include many small ones that a child would batch (Harvest all …).",
+		"version": str(ProjectSettings.get_setting("application/config/version", "")), "dataVersion": str(G.meta.get("version", "")),
+		"targetPetHours": G.meta.get("targets", {}).get("hours", {}), "timing": {"secondsPerStep": t.get("secondsPerStep", 25), "secondsPerAction": t.get("secondsPerAction", 3), "secondsPerRest": t.get("secondsPerRest", 5),
+			"secondsPerKnowledgeQuestion": t.get("secondsPerKnowledgeQuestion", 12)}, "runs": [run]}
+	var f := FileAccess.open(report_path, FileAccess.WRITE)
+	if f: f.store_string(JSON.stringify(report, "\t") + "\n")
+	print("pacing report written to ", report_path)
 
 ## One line per step of time: the main numbers in words (they should stay the same through a restructuring) and a
 ## short hash of the whole state (changes whenever the save layout changes, which is fine when on purpose).
@@ -191,7 +243,9 @@ func _turn() -> void:
 	for cid in G.card_ids:
 		var st = G.knowledge.card_status(cid)
 		if st == "quiz":
-			for q in G.knowledge.card_quiz(cid): G.knowledge.record_card_answer(q, true)
+			for q in G.knowledge.card_quiz(cid):
+				G.knowledge.record_card_answer(q, true)
+				know_answers += 1
 			G.knowledge.finish_card(cid, true)
 		elif st == "readable" and G.S["reading"] == "":
 			G.knowledge.start_reading(cid)

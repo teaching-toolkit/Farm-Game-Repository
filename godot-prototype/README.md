@@ -303,11 +303,13 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   the number changes from run to run; `--flex` plays with dynamic difficulty on; `--trace=N` prints what happens during the first N questions;
   `--accuracy=0.8` misses a share of first tries (only a right first try moves time) and reports how many questions it was asked; it prints
   its pace, which `meta.flex.basePace` is taken from).
-- `bash tests/check_all.sh` — all quick checks in one go (about 2 minutes): smoke test, save fixtures, save versions, core kit, places and pets, golden run, translations.
+- `bash tests/check_all.sh` — all quick checks in one go (about 2 minutes): smoke test, save fixtures, save versions, core kit, places and pets, data checks, golden run, translations.
 - `bash tests/golden.sh` — the golden run: the bot plays seeds 1 and 2 to chapter 5 and every step of time is compared with
   `tests/golden/` (coins, energy, water, goals, what is unlocked, the store). A restructuring must leave it unchanged. `--strict`
   also compares a hash of the whole save (it changes when the save layout does: record anew then, and check that without the hash nothing differs); `--record` records new golden runs after a change to the rules or numbers on purpose.
-  Bot flags for it: `--seed=N`, `--golden=FILE`, `--save-at=CHAPTER:FILE` (writes a save fixture).
+  Bot flags for it: `--seed=N`, `--golden=FILE`, `--save-at=CHAPTER:FILE` (writes a save fixture), `--report=FILE` (the pacing of the run as JSON).
+- `bash tools/update_explorer.sh` (the double-click `../Update explorer.command`) — checks the data, lets the bot play seeds 1 and 2 to chapter 5 with `--report`, and writes
+  the data and the bot's pacing report into `../progression/progression-explorer.html` (about 3 minutes; needs Godot and python3).
 - `godot --headless --path . res://tests/fixtures_test.tscn -- --seed=1` — every save in `tests/fixtures/` still loads, plays
   on for 10 steps and saves unchanged; a save in an older layout is completed when loaded.
 - `godot --headless --path . res://tests/saves_test.tscn -- --seed=1` — a new game has the recorded keys (`tests/golden/newgame.json`; `--record` after a

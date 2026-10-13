@@ -2,7 +2,7 @@
 
 This file is the starting point for a new chat or another AI: what the project is, how the folder is laid out, the parent's
 rules and where we left off. **How to work on the project** (what to read, the checks, changing content) lives in three skill
-files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2 under way: R0–R7 done).
+files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2, the restructuring, is done: R0–R8).
 
 ---
 
@@ -64,12 +64,13 @@ The numbers are in the files of `godot-prototype/data/farm/` (browse them in `pr
 | `farm-quiz-game-master-design-document.md` | the design (v2.0) |
 | `godot-prototype/` | **the game** — Godot project (`project.godot`), `kits/` (reusable parts: learn, ui, avatar, audio, i18n), `game/farm/` (this game's rules and screens), `data/`, `assets/`, `tests/`, `tools/`, `fonts/` |
 | `Build web version.command` | **double-click on the Mac** to re-export the game into `web-build/` (needs Godot.app and its export templates installed once) |
+| `Update explorer.command` | **double-click on the Mac** to refresh `progression/progression-explorer.html` from the game as it is now: checks the data, lets the test bot play (about 3 minutes) and writes its pacing report into the explorer's Pacing tab (needs Godot.app and python3) |
 | `Publish web version.command` | **double-click on the Mac** to push `web-build/` to the public GitHub repo as one fresh commit (see §4.7) |
 | `CLAUDE.md` | short pointer that Claude Code loads by itself: start with the session skill |
 | `claude-skills/` | **how to work on the project**, three skill files: `farm-game-session` (what to read, planning, keeping the record, git), `farm-game-check` (set up Godot, checks, screenshots, debugging, review, web export), `farm-game-content` (questions, texts and German, numbers, sounds, pictures, layout) |
 | `.gitignore` | what the private repo leaves out (`.godot/` caches, `web-build/`, big archive screenshots, `.DS_Store`) |
 | `web-build/` | its own **public** git repo, ignored by the private one; the latest web export (put online on any HTTPS host; see the prototype README) |
-| `progression/` | the progression explorer (`progression-explorer.html`) with a copy of the current data |
+| `progression/` | the progression explorer (`progression-explorer.html`) with a copy of the current data and the bot's pacing report (`pacing-report.json`); refresh with `Update explorer.command` |
 | `story/` | **the story**: premise, book file, world, characters, outline, texts (see `story/README.md`; worked in rounds, nothing built into the game yet) |
 | `art-inbox/` | generated sprite sheets waiting to be cut (`sheetN-….png`), `ART_LIST.csv` (every picture still needed, with prompts), `ROUND8-PICK-LIST.md` |
 | `Claude outputs/` | a transfer folder for update bundles (`*.tgz`); temporary, nothing depends on it |
@@ -204,7 +205,13 @@ screens (sheets, pop-ups, Rest, quiz, menu, album, cards, English and German) lo
 13 Oct 2026 (phase 2, R7): saves have a version: `kits/core/saves.gd`, `Game.SAVE_VERSION` = 1 (older saves are 0 and are upgraded when loaded), every
 system declares the save keys it owns (`save_defaults()`), a new key or a changed layout has a clear place to go (README, `farm-game-session` skill). The
 fixtures stay in the old layout and still load; a new test (`tests/saves_test.tscn`) checks the new-game state, key owners, upgrades and saves from a newer
-game. The golden runs' numbers are unchanged (only their state hash, since every save now has `version`; recorded anew). `web-build/` still matches the code. Next: R8 (data split, checker, pacing).
+game. The golden runs' numbers are unchanged (only their state hash, since every save now has `version`; recorded anew). `web-build/` still matches the code.
+
+13 Oct 2026 (phase 2, R8 — end of phase 2): the data is in files (`godot-prototype/data/farm/`: items, recipes, chapters, start, `nodes/` in 14 themed slices that keep the
+exact node order, `rules/` by system; loader `kits/core/data.gd`, Python `tools/farmdata.py`); the old `farm-progression.json` is gone. New `tools/check_data.py` (every id, cost,
+effect and condition exists; part of `check_all.sh`; 0 errors, 7 warnings). The bot writes a pacing report (`--report=FILE`) that the explorer's Pacing tab shows; the new
+double-click **`Update explorer.command`** refreshes the explorer (checks the data, lets the bot play seeds 1 and 2, about 3 minutes). No change to the game: all checks pass,
+golden runs identical. `web-build/` still matches the code. **Phase 2 is finished.** Next: phase 3 (the interface in the new structure: J2–J6, J8, J9, N7; version 0.10).
 
 ---
 

@@ -1,7 +1,7 @@
 # To-do list — Farm Quiz Game
 
 The project's to-do list and plan. Moved out of `00-READ-ME-FIRST.md` §6 on **9 October 2026**; finished tasks live in
-`PROJECT-LOG.md`, not here. **Last updated: 13 October 2026** (phase 1 built and checked, version 0.9.0; phase 2, the restructuring, under way: R0–R7 done, next R8; seven rounds of the
+`PROJECT-LOG.md`, not here. **Last updated: 13 October 2026** (phase 1 built and checked, version 0.9.0; phase 2, the restructuring, done (R0–R8); seven rounds of the
 parent's decisions, 10–12 Oct, worked in; §0 is the implementation plan).
 
 **Standing rule** (from `00-READ-ME-FIRST.md`): keep this file current *as you work*. Tick off or remove done tasks (and add a
@@ -25,7 +25,7 @@ play-test on the iPad. Sizes are rough: one session ≈ one longer chat. Two tra
 | Phase | What | Tasks | Version · test | Size |
 |---|---|---|---|---|
 | **1. Ready to build** | Godot set up in the Mac's Linux shell; **the round 8 pictures** sorted, imported and checked on the map; version numbers; "ss"; the first-try rule; the game renamed **Hazelwood Harvest**; stale facts in the design document | ✅ done 12 Oct 2026, except the iPad test (W3) | **0.9.0** · iPad | 2–3 |
-| **2. Restructuring** | Slices R0–R8 of the architecture plan, none of which changes the game: safety net and golden run, folders, content out of code, core, rules split, interface split, map, versioned saves, data split, pacing from the real engine, the explorer updated by a script | T2 | 0.9.x · golden run, no iPad test needed | 10–14 |
+| **2. Restructuring** ✅ done 13 Oct 2026 | Slices R0–R8 of the architecture plan, none of which changed the game: safety net and golden run, folders, content out of code, core, rules split, interface split, map, versioned saves, data split, pacing from the real engine, the explorer updated by a script | T2 | 0.9.x · golden run, no iPad test needed | 10–14 |
 | **3. Interface in the new structure** | Whole-field section (no field sign), Rest walk, the playback after the quiz, phone-like notifications, read-aloud setting, the new top bar (no bottom bar), cheat buttons, **the season shader** (snow caps, muted winter, golden autumn: looks only) | J2–J6, J8, J9, N7 | **0.10** · iPad | 3–4 |
 | **4. Foundations** | What is shown when (frozen/hidden per system); item weights; **quality**; **skills and ranks**; **bronze and gold** and the realistic prices (after D3) | O1–O3, M4, Y1, Y2, M1, M2 | 0.11 · bot and explorer | 4–6 |
 | **5. Story engine** | Opening panels and frame, the 📜 scroll, bubbles, first-tap stories, chapter 1 texts (needs Rounds 6–7) | I8a, I9, I7 (ch 1) | 0.12 · iPad | 3–4 |
@@ -55,6 +55,10 @@ a log row per change; `web-build/` exported at the end of the phase.
 German through `tools/i18n.py`; the smoke test; the bot (it must learn any new mechanic, e.g. market trips, packing, the Lord's share);
 the explorer (pace in hours, Time Quiz and Rest answers per hour); the design document; a log row. **Old saves must keep loading.**
 
+**T3. The bot plays to the end of chapter 5** (and later chapters' free play). It stalls in chapter 5 (energy 0 after about 800 questions; the alpaca's goals
+  need things it does not make). Then the explorer's own simulation and its checks can be replaced by the bot's report and the data checker (the R7 decision). The
+  bot also has to learn every new mechanic as it arrives (market trips, packing, the Lord's share …).
+
 **T2. Architecture and restructuring** ✅ (R5, R6). **Plan written: `planning/2026-10-12-architecture-plan.md`** (read it before any
 code work). In short: a small **core** (data loading, modifiers, conditions, the clock, versioned saves, events, a seedable random
 source), **kits** that each do one job and know nothing about farming (learn, progression, knowledge, items & trade, crafting & skills,
@@ -70,7 +74,10 @@ question must match):
   (done 13 Oct 2026: `kits/core/` modifiers, conditions, rng, clock; events come with R4, saves with R7, data loading with R8) · ✅ **R4** `game.gd` split into 11 systems in `game/farm/systems/` (done 13 Oct 2026; `G.<system>.<function>`; see its README; left: the lists of
   node types `GOAL_TYPES` in `main.gd`, `NOT_AUTO`, `MAIN_TYPES`, `DEFAULT_CAT` in `game.gd` → data, with R8) · ✅ **R5** `main.gd` split into a composition root and 25 parts in `game/farm/ui/`
   (done 13 Oct 2026; own README; the generic hosts become kits with phase 3) (was T1) · ✅ **R6** map (done 13 Oct 2026: `farm_map.gd` split into ground, critters, cat and walker; the pests are drawn once: the copy in `field_view.gd` was dead code and is gone; no `kits/world` yet) · ✅ **R7** saves with versions and upgrade steps (done 13 Oct 2026: `kits/core/saves.gd`, `SAVE_VERSION` 1, `save_defaults()` per system, `tests/saves_test.tscn`) ·
-  **R8** data files split (✅ 13 Oct 2026: `data/farm/`, `kits/core/data.gd`, `tools/farmdata.py`), a data checker, pacing from the real engine.
+  ✅ **R8** (done 13 Oct 2026): the data in files (`data/farm/`, `kits/core/data.gd`, `tools/farmdata.py`), a data checker (`tools/check_data.py`), pacing from the real
+  engine: the bot's `--report=FILE` (per chapter: Time Quiz answers, Rest answers, card questions, actions, hours), shown in the explorer's Pacing tab, refreshed
+  by `Update explorer.command` (= `tools/update_explorer.sh`). **Left from the R7 decision:** the explorer still has its own simulation (labelled as the older model)
+  until the bot plays all of chapter 5 and free play: see T3.
 - ✅ Decided (R7): **pacing from the real engine**: the bot reports hours, questions and Rest answers per chapter; the explorer no longer
   simulates its own copy of the rules but shows the data and that report, refreshed by **a script the parent can run** (a double-click
   `Update explorer.command`, like the web build's) whenever the game has changed; the explorer is a nice-to-have, not a priority.
@@ -323,7 +330,9 @@ them up, each with a 💡 recommendation.
   can use.
 - **M9. The market square picture** [#1]: one painted village square, used for trips and for the delivery scenes
   (`story/story-delivery.md` §7); a first look at it can be shown before the first trip.
-- **M10. Notice board and Import Broker:** decide where they stand now that the market is in the village (the notice board's little jobs
+- **M10. Notice board and Import Broker:** (the data checker found 13 Oct 2026: seven reward nodes have the slot `board` and so land at the field place, because
+  `places.json` has no rule for it: `lucky_horseshoe`, `brass_bell`, `wind_chime`, `bird_feeder`, `lavender_bunch`, `sq_stray_kitten`, `barn_cat`; decide here whether they belong to the
+  notice board.) Decide where they stand now that the market is in the village (the notice board's little jobs
   and favours; the broker came with the pony and the paved road).
 - **M11. The store and packing** ✅ (R2–R4):
   - **The store** is a compact grid of small tiles: picture, a **short text in a smaller font**, count, a stale badge, small dots for the

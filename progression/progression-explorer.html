@@ -220,6 +220,10 @@ details summary { cursor: pointer; font-weight: 500; }
   </section>
 
   <section class="panel" id="panel-pacing" role="tabpanel" aria-labelledby="tab-pacing" hidden>
+    <div class="box" style="margin-bottom:16px" id="botBox">
+      <h2>The real game, played by the test bot</h2>
+      <div class="tscroll" id="botReport"></div>
+    </div>
     <div class="grid2">
       <div class="box">
         <h2>Assumptions</h2>
@@ -2739,6 +2743,29 @@ details summary { cursor: pointer; font-weight: 500; }
     "compost_scraps": {"name": "Compost (any scraps)", "station": "compost_bin", "inputs": {"tag:compostable": 3}, "outputs": {"compost": 2}, "energy": 0, "time": 4, "verb": "Compost"}
   }
 }</script>
+<script id="bot-report" type="application/json">{"dataVersion": "0.8", "runs": [{"accuracy": 1.0, "chapters": [{"actions": 2211, "chapter": 1, "complete": true, "hours": 3.35, "hoursTotal": 3.35, "knowledgeQuestions": 2, "pet": "pet_bunny", "questions": 154, "restAnswers": 311}, {"actions": 2828, "chapter": 2, "complete": true, "hours": 3.76, "hoursTotal": 7.11, "knowledgeQuestions": 0, "pet": "pet_tortoise", "questions": 135, "restAnswers": 334}, {"actions": 6599, "chapter": 3, "complete": true, "hours": 8.88, "hoursTotal": 15.99, "knowledgeQuestions": 0, "pet": "pet_goat", "questions": 329, "restAnswers": 786}, {"actions": 3884, "chapter": 4, "complete": true, "hours": 4.52, "hoursTotal": 20.51, "knowledgeQuestions": 0, "pet": "pet_pony", "questions": 123, "restAnswers": 307}, {"actions": 0, "chapter": 5, "complete": false, "hours": 0.0, "hoursTotal": 20.51, "knowledgeQuestions": 0, "pet": "pet_alpaca", "questions": 0, "restAnswers": 0}], "label": "bot, seed 1, accuracy 1.00", "reachedChapter": 5, "seed": 1, "stoppedAtStep": 741}, {"accuracy": 1.0, "chapters": [{"actions": 2072, "chapter": 1, "complete": true, "hours": 3.2, "hoursTotal": 3.2, "knowledgeQuestions": 2, "pet": "pet_bunny", "questions": 147, "restAnswers": 323}, {"actions": 2657, "chapter": 2, "complete": true, "hours": 3.62, "hoursTotal": 6.82, "knowledgeQuestions": 0, "pet": "pet_tortoise", "questions": 137, "restAnswers": 324}, {"actions": 5182, "chapter": 3, "complete": true, "hours": 6.78, "hoursTotal": 13.6, "knowledgeQuestions": 0, "pet": "pet_goat", "questions": 234, "restAnswers": 602}, {"actions": 3814, "chapter": 4, "complete": true, "hours": 4.45, "hoursTotal": 18.05, "knowledgeQuestions": 0, "pet": "pet_pony", "questions": 121, "restAnswers": 313}, {"actions": 0, "chapter": 5, "complete": false, "hours": 0.0, "hoursTotal": 18.05, "knowledgeQuestions": 0, "pet": "pet_alpaca", "questions": 0, "restAnswers": 0}], "label": "bot, seed 2, accuracy 1.00", "reachedChapter": 5, "seed": 2, "stoppedAtStep": 639}], "targetPetHours": {"pet_alpaca": 25.5, "pet_bunny": 1.0, "pet_goat": 10.0, "pet_pony": 17.5, "pet_tortoise": 4.5}, "timing": {"secondsPerAction": 3.0, "secondsPerKnowledgeQuestion": 12.0, "secondsPerRest": 5.0, "secondsPerStep": 25.0}, "version": "0.9.0", "what": "Pacing of the greedy test bot playing the real rules engine (tests/bot.gd). Hours use the timing of meta.pacing. The bot is not a child: it always knows what it needs and works through the farm in sweeps. Trust the Time Quiz and Rest answers most; its actions are counted as one per saved change and include many small ones that a child would batch (Harvest all …)."}</script>
+<script>
+/* The bot's pacing report (progression/pacing-report.json, embedded by tools/sync_progression.py): what the real rules engine
+   needs, chapter by chapter, from the greedy test bot (tests/bot.gd). Written by tools/update_explorer.sh. */
+(function () {
+  const el = document.getElementById("botReport"); if (!el) return;
+  let R = null; try { R = JSON.parse(document.getElementById("bot-report").textContent); } catch (e) {}
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  if (!R || !R.runs || !R.runs.length) { el.innerHTML = '<p class="note">No bot report yet: run <b>Update explorer.command</b> (or <code>tools/update_explorer.sh</code>).</p>'; return; }
+  const T = R.targetPetHours || {}, t = R.timing || {};
+  let html = `<p class="note">${esc(R.what)} Game ${esc(R.version)}, data ${esc(R.dataVersion)}. Timing: ${t.secondsPerStep} s per Time Quiz answer, ${t.secondsPerAction} s per action (tap), ${t.secondsPerRest} s per Rest answer, ${t.secondsPerKnowledgeQuestion} s per card question. The pacing check below is the older simulation of an idealised player with its own copy of the rules: it is not updated for new systems; this table is.</p>`;
+  for (const run of R.runs) {
+    html += `<h2 style="margin-top:12px;font-size:15px">${esc(run.label)} <small style="font-weight:400;color:var(--muted,#777)">· stopped at question ${run.stoppedAtStep}, chapter ${run.reachedChapter}</small></h2>
+      <table><tr><th>Chapter</th><th>Pet home</th><th>Time Quiz answers</th><th>Rest answers</th><th>Card questions</th><th>Actions</th><th>Hours</th><th>Hours so far</th><th>Target (h)</th></tr>`;
+    for (const c of run.chapters) {
+      const done = c.complete;
+      html += `<tr${done ? "" : ' style="opacity:.55"'}><td>${c.chapter}</td><td>${esc(String(c.pet).replace("pet_", ""))}${done ? "" : " (not reached)"}</td><td>${c.questions}</td><td>${c.restAnswers}</td><td>${c.knowledgeQuestions}</td><td>${c.actions}</td><td>${done ? c.hours.toFixed(1) : "–"}</td><td>${done ? c.hoursTotal.toFixed(1) : "–"}</td><td>${T[c.pet] != null ? T[c.pet] : "–"}</td></tr>`;
+    }
+    html += "</table>";
+  }
+  el.innerHTML = html;
+})();
+</script>
 <script>
 (function () {
   "use strict";

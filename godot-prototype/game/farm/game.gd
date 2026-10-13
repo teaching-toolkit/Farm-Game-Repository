@@ -297,7 +297,12 @@ func new_game() -> void:
 	rewards.refill_jobs()
 	save_game()
 
+## How often the farm was saved (or would be: test runs count too). Every player action ends with a save, so saves minus steps of time is
+## the number of actions (taps) a player made: the bot reports it for the pacing numbers.
+var saves_requested := 0
+
 func save_game() -> void:
+	saves_requested += 1
 	if test_seed >= 0: return      # test runs leave the device alone
 	save_to(save_path())
 	save_learning()
