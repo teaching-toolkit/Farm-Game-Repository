@@ -94,7 +94,7 @@ func crop_expect(p: Dictionary) -> float:
 	e -= maxf(0.0, 1.0 - float(p.get("quality", 1.0))) * float(c.get("unfinishedClearing", 1.5))
 	for id in c.get("bonusNodes", {}):
 		if G.nodes.has(id) and G.satisfied(id) and not G.superseded(id): e += float(c["bonusNodes"][id])
-	return e
+	return e + G.skills.grade_bonus("field")
 
 ## Recipes: the station in use (the newest of its chain), what the inputs it will use are worth, and later the skill.
 func recipe_expect(rid: String) -> float:
@@ -102,6 +102,7 @@ func recipe_expect(rid: String) -> float:
 	var e := float(default_grade())
 	var root: String = G.crafting.chain_root(r["station"])
 	e += float(data().get("stationBonus", {}).get(G.crafting.active_of(root), 0.0))
+	e += G.skills.grade_bonus(G.skills.family_of_station(r["station"]))
 	e += input_bonus(r)
 	return e
 
@@ -123,5 +124,6 @@ func roll_recipe(rid: String, input_avg: float) -> int:
 	var e := float(default_grade())
 	var root: String = G.crafting.chain_root(r["station"])
 	e += float(data().get("stationBonus", {}).get(G.crafting.active_of(root), 0.0))
+	e += G.skills.grade_bonus(G.skills.family_of_station(r["station"]))
 	if input_avg >= 0.0: e += (input_avg - float(default_grade())) * float(data().get("ingredients", {}).get("weight", 0.6))
 	return roll(e)

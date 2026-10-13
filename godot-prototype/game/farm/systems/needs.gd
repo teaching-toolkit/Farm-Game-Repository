@@ -9,7 +9,7 @@ func _init(game: FarmGame) -> void:
 
 ## The save keys this system owns, with their values in a new game (kits/core/saves.gd fills missing ones into older saves).
 func save_defaults() -> Dictionary:
-	return {"buff": {}, "practice": {}}
+	return {"buff": {}}
 
 # ------------------------------------------------------------------ effects
 
@@ -35,20 +35,13 @@ func buff_mult() -> float:
 	if int(b.get("until", 0)) <= G.S["step"]: return 1.0
 	return float(b.get("mult", 1.0))
 
-func stars(station_root: String) -> int:
-	var uses := int(G.S["practice"].get(station_root, 0))
-	var n := 0
-	for th in G.meta.get("practice", {}).get("thresholds", [10, 40, 120]):
-		if uses >= int(th): n += 1
-	return n
-
 func ecost(cat: String, base: float, station_root := "") -> float:
 	if base <= 0.0: return 0.0
 	var c := base * G.m("energy:" + cat)
 	if G.seasons.season() == "winter" and cat in ["craft", "textile", "smith", "wood"]:
 		c *= float(G.seasons.smod("indoorEnergy", 1.0))
-	if station_root != "":
-		c *= pow(float(G.meta.get("practice", {}).get("energyPerStar", 0.95)), stars(station_root))
+	var fam: String = G.skills.family_of_station(station_root) if station_root != "" else G.skills.family_of_cat(cat)
+	c *= G.skills.energy_mult(fam)          # Handy and up: less energy (TODO Y2)
 	return c * buff_mult()
 
 # ------------------------------------------------------------------ Rest

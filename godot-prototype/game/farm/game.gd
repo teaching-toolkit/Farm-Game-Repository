@@ -20,6 +20,7 @@ signal gained(source: String, got: Dictionary, lost: Dictionary)
 signal sold(item: String, n: float, coins: float)   # coins fly to the purse (perk), a jingle
 signal celebrate(id: String)     # a new building, tool or helper: the big pop-up with confetti
 signal revealed(id: String)      # a part of the interface comes into view for the first time (G.reveal)
+signal rank_up(family: String, rank: int)   # a skill reaches a new rank (G.skills)
 
 const SEASON_WORDS := ["spring", "summer", "autumn", "winter"]   # i18n (shown with tr(): "It's spring!")
 const SAVE_PATH := "user://farm_save.json"          # the farm from before players had names
@@ -81,7 +82,7 @@ var buying := false      # bought things are not "produced"
 var test_seed := -1
 ## The version of the save layout (kits/core/saves.gd). A save without a "version" is version 0. Every change to the layout of a save
 ## adds an upgrade step in save_steps() and raises this number; tests/fixtures/ keeps old saves that must still load.
-const SAVE_VERSION := 2
+const SAVE_VERSION := 3
 const TEST_CLOCK_START := 1800000000.0   # a fixed moment in 2027; one step of time counts as 10 minutes
 
 ## The systems: each owns one part of the rules and works on the farm's state G.S (see game/farm/systems/).
@@ -98,6 +99,7 @@ var knowledge: FarmKnowledge
 var rewards: FarmRewards
 var reveal: FarmReveal
 var quality: FarmQuality
+var skills: FarmSkills
 
 func _init() -> void:
 	seasons = FarmSeasons.new(self)
@@ -113,6 +115,7 @@ func _init() -> void:
 	rewards = FarmRewards.new(self)
 	reveal = FarmReveal.new(self)
 	quality = FarmQuality.new(self)
+	skills = FarmSkills.new(self)
 
 # ------------------------------------------------------------------ start, seed and clock
 
@@ -291,7 +294,7 @@ func save_defaults() -> Dictionary:
 ## Everything a save holds in a new game: the Game's keys and every system's.
 func all_save_defaults() -> Dictionary:
 	var d := save_defaults()
-	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal]:
+	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills]:
 		d.merge(sys.save_defaults())
 	return d
 
@@ -311,6 +314,7 @@ func new_game() -> void:
 		S["patches"][i]["stones"] = float(st.get("patchStones", 0))
 	rewards.refill_jobs()
 	reveal.settle()
+	skills.settle()
 	save_game()
 
 ## How often the farm was saved (or would be: test runs count too). Every player action ends with a save, so saves minus steps of time is
@@ -330,7 +334,16 @@ func save_to(path: String) -> void:
 ## The upgrade steps from older save layouts, in order (kits/core/saves.gd). A step takes the save from the version before its "to".
 func save_steps() -> Array:
 	return [{"to": 1, "name": "saves from before the version number: gift offers become postcards, the gift shop is gone, the first cards owned are the active ones", "fn": upgrade_save_v0},
-		{"to": 2, "name": "quality: every batch of a thing that has a grade now says which (what was in the store is Proper)", "fn": upgrade_save_v1}]
+		{"to": 2, "name": "quality: every batch of a thing that has a grade now says which (what was in the store is Proper)", "fn": upgrade_save_v1},
+		{"to": 3, "name": "skills: the uses counted per station become batches per skill family", "fn": upgrade_save_v2}]
+
+func upgrade_save_v2(save: Dictionary) -> void:
+	var sk: Dictionary = save.get("skills", {})
+	for root in save.get("practice", {}):
+		var f := skills.family_of_station(str(root))
+		if f != "": sk[f] = int(sk.get(f, 0)) + int(save["practice"][root])
+	save["skills"] = sk
+	save.erase("practice")
 
 func upgrade_save_v1(save: Dictionary) -> void:
 	var inv: Dictionary = save.get("inv", {})
@@ -366,6 +379,7 @@ func load_game(path := "") -> bool:
 	invalidate_caps()
 	fields.ensure_areas()
 	reveal.settle()          # what a loaded farm already has counts as shown: no "New: …" for it
+	skills.settle()          # …and the ranks it already has are not announced again
 	return true
 
 func reset_game() -> void:
@@ -493,6 +507,7 @@ func setup_clock() -> void:
 	clock.register("acorns", rewards.check_acorns)
 	clock.register("unlocks", progression.auto_unlocks)
 	clock.register("perks", rewards.check_perks)
+	clock.register("skills", skills.step)
 	clock.register("reveal", reveal.step)
 
 # ------------------------------------------------------------------ conditions ("when" in the data)
@@ -521,6 +536,7 @@ func counter(name: String) -> float:
 		"chapter": return float(chapter())
 		"step": return float(S["step"])
 		"items_seen": return float(S["seen"].size())
+		"skill_ranks": return float(skills.total_ranks())
 	return NAN
 
 ## Has this part of the interface been shown (condition term `seen:<id>`)?

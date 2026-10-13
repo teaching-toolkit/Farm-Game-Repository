@@ -83,8 +83,9 @@ func recipe_cost(rid: String, n := -1) -> Dictionary:
 	var r = G.recipes[rid]
 	var b := float(recipe_batch(rid) if n < 0 else n)
 	var c := {}
+	var fam: String = G.skills.family_of_station(r["station"])
 	for k in r.get("inputs", {}):
-		c[k] = float(r["inputs"][k]) * G.m("in:" + r["station"] + ":" + k) * b
+		c[k] = float(r["inputs"][k]) * G.m("in:" + r["station"] + ":" + k) * G.skills.input_mult(fam) * b
 	var e := G.needs.ecost(recipe_cat(rid), float(r.get("energy", 0)), chain_root(r["station"])) * b
 	if e > 0.0: c["energy"] = e
 	if float(r.get("water", 0)) > 0.0: c["water"] = float(r["water"]) * b
@@ -106,7 +107,7 @@ func recipe_fuel(rid: String) -> float:
 
 func recipe_time(rid: String) -> float:
 	var r = G.recipes[rid]
-	return float(r.get("time", 0)) * G.m("time:" + r["station"])
+	return float(r.get("time", 0)) * G.m("time:" + r["station"]) * G.skills.time_mult(G.skills.family_of_station(r["station"]))
 
 func woodpile_cap() -> float:
 	return G.g("woodpileCap", 20.0)
@@ -188,7 +189,7 @@ func start_recipe(rid: String) -> bool:
 	G.pace.pay(c)
 	var input_avg := G.inventory.stop_track()          # the grades of the inputs that were used up (-1: none had a grade)
 	var grade := G.quality.roll_recipe(rid, input_avg) if makes_graded(rid) else -1
-	G.S["practice"][root] = int(G.S["practice"].get(root, 0)) + 1
+	G.skills.practice(G.skills.family_of_station(r["station"]))
 	wear_polish("use:" + recipe_cat(rid))
 	var t := recipe_time(rid)
 	if t <= 0.0:
@@ -202,11 +203,6 @@ func start_recipe(rid: String) -> bool:
 		G.S["running"][root] = running
 		G.say((tr("⏳ %s: ready in %d question.") if G.up(t) == 1 else tr("⏳ %s: ready in %d questions.")) % [r.get("name", G.iname(r["outputs"].keys()[0])), G.up(t)])
 	G.rewards.job_progress("make", rid, 1.0)
-	var hit := false
-	for th in G.meta.get("practice", {}).get("thresholds", []):
-		if int(th) == int(G.S["practice"][root]): hit = true
-	if hit:
-		G.say(tr("⭐ Practice star at %s: its recipes now cost less energy.") % G.nodes[active_of(root)]["name"])
 	G.save_game(); G.changed.emit()
 	return true
 

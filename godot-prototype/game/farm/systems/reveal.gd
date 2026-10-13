@@ -21,15 +21,24 @@ func rules() -> Dictionary:
 func shown(id: String) -> bool:
 	var r: Dictionary = rules().get(id, {})
 	if r.is_empty() or G.S["revealed"].has(id): return true
-	if not G.cond_all(r.get("when", [])): return false
+	if not _holds(r): return false
 	G.S["revealed"][id] = true
 	G.revealed.emit(id)
 	return true
 
+## All of "when" hold, and (if there is a "whenAny") at least one of those.
+func _holds(r: Dictionary) -> bool:
+	if not G.cond_all(r.get("when", [])): return false
+	var any: Array = r.get("whenAny", [])
+	if any.is_empty(): return true
+	for expr in any:
+		if G.cond_all([expr]): return true
+	return false
+
 ## A farm that was just loaded or started: everything whose condition already holds counts as shown, without a fuss.
 func settle() -> void:
 	for id in rules():
-		if not G.S["revealed"].has(id) and G.cond_all(rules()[id].get("when", [])): G.S["revealed"][id] = true
+		if not G.S["revealed"].has(id) and _holds(rules()[id]): G.S["revealed"][id] = true
 
 ## One step of time: things that appear with time or with what was done come out now, even if nobody looks at the screen.
 func step(_info: Dictionary) -> void:

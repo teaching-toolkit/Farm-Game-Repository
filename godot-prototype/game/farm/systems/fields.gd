@@ -162,6 +162,7 @@ func plant(a: String, i: int, cid: String) -> bool:
 	p["crop"] = cid; p["plants"] = float(k); p["growth"] = 0.0; p["ready"] = false; p["soil"] = soil; p["cycles"] = 0
 	if not p.has("quality"): p["quality"] = 1.0
 	G.crafting.wear_polish("use:plant")
+	G.skills.practice("field")
 	G.save_game(); G.changed.emit()
 	return true
 
@@ -212,6 +213,7 @@ func harvest(a: String, i: int) -> bool:
 	else:
 		p["last"] = p["crop"]; p["crop"] = ""; p["plants"] = 0.0; p["growth"] = 0.0; p["ready"] = false
 	G.crafting.wear_polish("use:harvest")
+	G.skills.practice("field")
 	G.save_game(); G.changed.emit()
 	return true
 

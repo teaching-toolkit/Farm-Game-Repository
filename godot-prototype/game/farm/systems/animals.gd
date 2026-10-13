@@ -101,6 +101,7 @@ func collect_animal(aid: String) -> bool:
 	G.say(msg)
 	G.inventory.emit_gained("animal:" + aid, arrived)
 	G.rewards.job_progress("collect", aid, 1.0)
+	G.skills.practice("animals")
 	G.crafting.wear_polish("use:animal")
 	G.save_game(); G.changed.emit()
 	return true

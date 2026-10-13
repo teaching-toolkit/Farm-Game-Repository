@@ -181,7 +181,6 @@
 	"pet_names": {},
 	"polish": {},
 	"postcards": [],
-	"practice": {},
 	"rain": false,
 	"read_done": {},
 	"read_progress": 0.0,
@@ -197,6 +196,17 @@
 		"stone": true,
 		"tin_pot": true
 	},
+	"skill_rank": {
+		"animals": 0.0,
+		"cooking": 0.0,
+		"fibre": 0.0,
+		"field": 0.0,
+		"healing": 0.0,
+		"pottery": 0.0,
+		"smithing": 0.0,
+		"wood": 0.0
+	},
+	"skills": {},
 	"sold_kinds": {},
 	"stats": {
 		"harvests": 0.0,

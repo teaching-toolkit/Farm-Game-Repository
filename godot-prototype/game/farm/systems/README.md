@@ -19,6 +19,7 @@ emits the signals the interface listens to (`changed`, `toast`, `gained`, `sold`
 | `trade` | market demand and prices, selling, seeds, merchants, barter, eating | inventory, rewards, pace |
 | `reveal` | what is shown when: `shown(id)`, once shown always shown (rules in `data/farm/rules/60-reveal.json`) | the Game (conditions), the interface |
 | `quality` | grades (Lumpy / Proper / Fancy): the chances, the expected grade of a crop or a recipe, the price factor (`rules/47-quality.json`) | inventory, fields, crafting, trade |
+| `skills` | eight skill families, ranks from batches and gates, what a rank changes (`rules/48-skills.json`) | crafting, fields, animals, needs, quality |
 | `knowledge` | knowledge cards, the library, reading, card quizzes, the Time Quiz (next question, retries, results) | rewards, progression, pace |
 | `rewards` | luck, gift cards, little jobs, golden acorns, perks | crafting, fields, inventory, seasons |
 

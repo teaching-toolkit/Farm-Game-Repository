@@ -67,9 +67,11 @@ func station_card(root: String) -> PanelContainer:
 	var v := UI.vbox(4)
 	pc.add_child(v)
 	var running: Array = G.S["running"].get(root, [])
-	var stars: int = G.needs.stars(root)
+	var fam: String = G.skills.family_of_station(root)
 	var now: bool = G.crafting.output_now(root)      # gathering: things come at once, each spot then refills (hourglass in its row)
-	v.add_child(UI.label("%s %s%s" % [n.get("emoji", ""), n["name"], (tr("   practice %d") % stars) if stars > 0 else ""], 19, UI.INK, true))
+	var skill := ""
+	if fam != "" and G.reveal.shown("skills") and G.skills.rank(fam) > 0: skill = "   %s %s" % [G.skills.family_emoji(fam), tr(G.skills.rank_name(G.skills.rank(fam)))]
+	v.add_child(UI.label("%s %s%s" % [n.get("emoji", ""), n["name"], skill], 19, UI.INK, true))
 	var soonest := 999
 	for job in running: soonest = mini(soonest, G.up(job["left"]))
 	var att := []

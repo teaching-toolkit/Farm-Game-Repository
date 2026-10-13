@@ -216,6 +216,39 @@ for rid, r in RECIPES.items():
     if any(ITEMS.get(k, {}).get("category") in Qd.get("categories", []) for k in r["outputs"]) and r["station"] not in Qd.get("stationBonus", {}):
         warn("quality", f"recipe {rid} makes something with a grade at {r['station']}, which has no stationBonus (it counts 0)")
 
+# ---------------------------------------------------------------- skills (rules/48-skills.json)
+Sk = META.get("skills", {})
+fams = Sk.get("families", {})
+rk = Sk.get("ranks", [])
+if len(fams) == 0 or len(rk) < 2: err("skills", "needs families and at least two ranks")
+for a, b in zip(rk, rk[1:]):
+    if b.get("batches", 0) <= a.get("batches", 0): err("skills", f"rank {b.get('name')} must need more batches than {a.get('name')}")
+for kind, arr in Sk.get("effects", {}).get("inputs", {}).items():
+    if len(arr) != len(rk): err("skills", f"effects.inputs.{kind} needs {len(rk)} numbers, one per rank")
+for key in ("grade", "energy", "time"):
+    if len(Sk.get("effects", {}).get(key, [])) != len(rk): err("skills", f"effects.{key} needs {len(rk)} numbers, one per rank")
+for f, info in fams.items():
+    if info.get("kind") not in Sk.get("effects", {}).get("inputs", {}): err(f"skills family {f}", f"kind {info.get('kind')!r} has no input effects")
+    for r in rk:
+        g = r.get("gate")
+        if g:
+            nid = Sk.get("gates", {}).get(f, {}).get(g)
+            if not nid: err(f"skills family {f}", f"rank {r['name']} needs a {g} gate")
+            else: node_id(f"skills gate {f}/{g}", nid, g)
+for st, f in Sk.get("stations", {}).items():
+    node_id("skills station", st, "station")
+    if f not in fams: err("skills", f"station {st}: family {f} does not exist")
+for job, f in Sk.get("jobs", {}).items():
+    if f not in fams: err("skills", f"job {job}: family {f} does not exist")
+def _root(s):
+    n = 0
+    while N.get(s, {}).get("replaces") and n < 10: s = N[s]["replaces"]; n += 1
+    return s
+for rid, r in RECIPES.items():
+    root = _root(r["station"])
+    if root not in Sk.get("stations", {}) and N.get(root, {}).get("cat") != "gather":
+        warn("skills", f"recipe {rid} is made at {root}, which trains no skill family")
+
 # ---------------------------------------------------------------- places (data/farm/places.json)
 spots = set(PLACES["spots"])
 rules = PLACES["nodeSpots"]

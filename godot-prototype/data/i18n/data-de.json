@@ -9579,6 +9579,58 @@
   "en": "Fancy",
   "de": "Picobello!"
  },
+ "meta/skills/families/field/name": {
+  "en": "Planting and harvesting",
+  "de": "Pflanzen und Ernten"
+ },
+ "meta/skills/families/animals/name": {
+  "en": "Animal tending",
+  "de": "Tiere versorgen"
+ },
+ "meta/skills/families/cooking/name": {
+  "en": "Cooking and baking",
+  "de": "Kochen und Backen"
+ },
+ "meta/skills/families/fibre/name": {
+  "en": "Fibre and weaving",
+  "de": "Fasern und Weben"
+ },
+ "meta/skills/families/wood/name": {
+  "en": "Woodwork and construction",
+  "de": "Holzarbeit und Bauen"
+ },
+ "meta/skills/families/pottery/name": {
+  "en": "Pottery and glass",
+  "de": "Töpfern und Glas"
+ },
+ "meta/skills/families/smithing/name": {
+  "en": "Smithing",
+  "de": "Schmieden"
+ },
+ "meta/skills/families/healing/name": {
+  "en": "Healing and preserving",
+  "de": "Heilen und Haltbarmachen"
+ },
+ "meta/skills/ranks/0/name": {
+  "en": "Beginner",
+  "de": "Anfänger"
+ },
+ "meta/skills/ranks/1/name": {
+  "en": "Handy",
+  "de": "Geschickt"
+ },
+ "meta/skills/ranks/2/name": {
+  "en": "Skilled",
+  "de": "Geübt"
+ },
+ "meta/skills/ranks/3/name": {
+  "en": "Expert",
+  "de": "Experte"
+ },
+ "meta/skills/ranks/4/name": {
+  "en": "Master",
+  "de": "Meister"
+ },
  "meta/luck/events/0/text": {
   "en": "A lost coin in the weeds!",
   "de": "Eine verlorene Münze im Unkraut!"

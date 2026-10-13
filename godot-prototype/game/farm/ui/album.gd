@@ -18,6 +18,7 @@ func _init(main: FarmMain) -> void:
 func sheet_album() -> void:
 	M.widgets.section(tr("🐾 Pets"))
 	M.home.part_pets()
+	if G.reveal.shown("skills"): _part_skills()
 	M.widgets.section(tr("🖼️ Pictures"), tr("Every favour you do for a neighbour gives a picture."))
 	for a in G.S["album"]:
 		var pc := UI.card(Color("fff6e0"))
@@ -100,6 +101,27 @@ func sheet_album() -> void:
 		gg.add_child(v.get_meta("panel"))
 
 ## A big medal with the level's name under it; next = the medal still to win (faint).
+## The skills (TODO Y2): one card per family that has been practised: its rank, and what the next rank still asks for.
+func _part_skills() -> void:
+	M.widgets.section(tr("🎖️ Skills"), tr("Every batch you make or job you do trains its skill. A higher rank needs less, saves energy and makes finer things."))
+	for f in G.skills.families():
+		if G.skills.batches(f) <= 0: continue
+		var pc := UI.card(Color("f3f7ea"))
+		var v := UI.vbox(3)
+		pc.add_child(v)
+		v.add_child(UI.label("%s %s — %s" % [G.skills.family_emoji(f), tr(G.skills.family_name(f)), tr(G.skills.rank_name(G.skills.rank(f)))], 18, UI.INK, true))
+		var nx: Dictionary = G.skills.next_step(f)
+		if nx.is_empty():
+			v.add_child(UI.label(tr("✅ The highest rank."), 15, UI.GREEN_DARK, true))
+		else:
+			var todo := []
+			if int(nx["batches"]) > 0: todo.append(tr("%d more batches") % int(nx["batches"]))
+			if str(nx["gate"]) != "":
+				var gn: Dictionary = G.nodes[str(nx["gate"])]
+				todo.append(tr("needs %s") % ("%s %s" % [gn.get("emoji", ""), gn["name"]]))
+			v.add_child(UI.label(tr("→ %s: %s") % [tr(str(nx["name"])), ", ".join(todo)], 15, UI.MUTED, true))
+		M.content.add_child(pc)
+
 func medal_tile(md: String, lv: Dictionary, next: bool) -> Control:
 	var v := UI.vbox(0)
 	v.custom_minimum_size = Vector2(112, 0)

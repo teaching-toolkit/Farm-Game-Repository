@@ -1,0 +1,49 @@
+{
+  "skills": {
+    "note": "Skills and ranks (TODO Y2). Eight families; every batch of a recipe at one of their stations, every planting and harvest of a patch, every collecting from animals counts one for its family. Five ranks by the number of batches; from Skilled on a rank also needs something the game already has: a knowledge card (Skilled), a tool (Expert), a station or building (Master), so that grinding cheap recipes cannot make a master early. Every rank brings fewer inputs (more for crafts than for food, none for farm jobs) and a bit better chances of a higher grade; Handy and up use less energy; Master is faster. It works from the start but is not shown until the first rank-up (design document 13.2b).",
+    "families": {
+      "field":    {"name": "Planting and harvesting", "emoji": "🌱", "kind": "farm"},
+      "animals":  {"name": "Animal tending", "emoji": "🐄", "kind": "farm"},
+      "cooking":  {"name": "Cooking and baking", "emoji": "🍲", "kind": "food"},
+      "fibre":    {"name": "Fibre and weaving", "emoji": "🧶", "kind": "craft"},
+      "wood":     {"name": "Woodwork and construction", "emoji": "🪚", "kind": "craft"},
+      "pottery":  {"name": "Pottery and glass", "emoji": "🏺", "kind": "craft"},
+      "smithing": {"name": "Smithing", "emoji": "⚒️", "kind": "craft"},
+      "healing":  {"name": "Healing and preserving", "emoji": "🌿", "kind": "food"}
+    },
+    "ranks": [
+      {"name": "Beginner", "batches": 0},
+      {"name": "Handy", "batches": 10},
+      {"name": "Skilled", "batches": 30, "gate": "card"},
+      {"name": "Expert", "batches": 80, "gate": "tool"},
+      {"name": "Master", "batches": 200, "gate": "station"}
+    ],
+    "gates": {
+      "field":    {"card": "k_rotation", "tool": "iron_hoe", "station": "greenhouse"},
+      "animals":  {"card": "k_feed", "tool": "shears", "station": "barn_3"},
+      "cooking":  {"card": "k_stove", "tool": "iron_knife", "station": "oven_3"},
+      "fibre":    {"card": "k_weaving", "tool": "shears", "station": "textile_loom"},
+      "wood":     {"card": "k_timber", "tool": "saw", "station": "workshop_3"},
+      "pottery":  {"card": "k_clay", "tool": "iron_shovel", "station": "glass_kiln"},
+      "smithing": {"card": "k_smithing", "tool": "iron_hammer", "station": "forge_2"},
+      "healing":  {"card": "k_salt", "tool": "steel_knife", "station": "cellar_2"}
+    },
+    "effects": {
+      "inputs": {"craft": [0, 0.04, 0.08, 0.11, 0.14], "food": [0, 0.02, 0.04, 0.06, 0.08], "farm": [0, 0, 0, 0, 0]},
+      "grade": [0, 0.05, 0.10, 0.15, 0.20],
+      "energy": [1, 0.92, 0.92, 0.92, 0.92],
+      "time": [1, 1, 1, 1, 0.8]
+    },
+    "stations": {
+      "campfire": "cooking", "chopping_block": "cooking", "quern": "cooking", "oven_1": "cooking", "windmill_1": "cooking",
+      "churn": "cooking", "cheese_vat": "cooking", "honey_extractor": "cooking", "press": "cooking",
+      "cellar": "healing", "fermenter": "healing",
+      "workbench": "fibre", "spindle": "fibre", "hand_loom": "fibre", "dye_vat": "fibre",
+      "carpenter_bench": "wood", "sawbench": "wood",
+      "kiln": "pottery", "glass_kiln": "pottery",
+      "forge": "smithing", "anvil": "smithing",
+      "compost_bin": "field", "worm_bin": "field", "pond_station": "field"
+    },
+    "jobs": {"plant": "field", "harvest": "field", "animal": "animals"}
+  }
+}

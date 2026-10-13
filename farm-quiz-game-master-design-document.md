@@ -291,7 +291,7 @@ and a line in `data/i18n/languages.json`; `tools/i18n.py` collects every text in
 Everything the player does costs energy in proportion to the work: gathering, planting, harvesting, weeding, clearing,
 building, crafting, cooking, smithing, milking, errands. Every recipe and goal has a **category** (`field`, `plant`,
 `harvest`, `weed`, `gather`, `wood`, `build`, `craft`, `smith`, `kiln`, `cook`, `prep`, `mill`, `process`, `textile`,
-`animal`, `errand`), and tools, gear, helpers, polish, practice stars and meals lower the cost per category. Raw effort per
+`animal`, `errand`), and tools, gear, helpers, polish, skill ranks and meals lower the cost per category. Raw effort per
 goal grows about twelvefold from chapter 1 to 5; upgrades cut the late costs almost in half — tinkering pays.
 
 **Getting energy back** is Rest (§4.3). The home sets the energy bar and how much each right sum gives:
@@ -573,8 +573,7 @@ Some stations are upgrades of another (Stove → iron top → Master Stove) and 
   stone in Stone Soup) — "a culture lives on".
 - **Slots and batches.** A station runs one batch at a time; helpers can add a slot. Its recipes wait while it is busy (the
   grey ⏳ shows how many questions). Gathering recipes give at once and refill (§5.5).
-- **Practice stars.** Every station counts its uses; at 10, 40 and 120 uses it earns a star: −5 % energy for its recipes
-  per star.
+- **Skills.** What a station makes trains a skill family; ranks bring fewer inputs, less energy, finer grades (§8.6).
 - **Choice slots.** Ten stations or buildings have one slot with two options, of which one works at a time and can be swapped
   freely (the campfire: *Stone Fire Ring* −15 % cooking energy **or** *Cooking Tripod* −30 % firewood).
 - **Fuel** comes from the woodpile, which is stoked first (§5.6).
@@ -625,6 +624,26 @@ crafts and cloth have a grade; raw materials (sticks, stones, logs …), animal 
   (a quarter or more); the grade after each harvest and each batch ("✨ Porridge ready: 🥣1 ⭐⭐").
 - **Saves.** A store from before the grades counts as Proper.
 - *(planned)* Some key deliveries ask for at least Proper; the badger's "really good medicine" is simply Fancy.
+
+### 8.6 Skills and ranks
+
+The farmer gets better at what is done again and again. **Eight skill families:** 🌱 planting and harvesting · 🐄 animal tending · 🍲 cooking and baking ·
+🧶 fibre and weaving · 🪚 woodwork and construction · 🏺 pottery and glass · ⚒️ smithing · 🌿 healing and preserving. Every **batch** at one of a family's
+stations, every planting and every harvest of a patch and every collecting from animals counts one for its family (gathering at the field edge trains
+nothing). Practice is counted from the very first batch, even though it is not shown yet (§13.2b).
+
+| Rank | Batches | Also needs | Brings |
+|---|---|---|---|
+| Beginner | 0 | – | – |
+| **Handy** | 10 | – | less energy (−8 %); crafts need 4 % fewer inputs, food 2 % |
+| **Skilled** | 30 | a knowledge card (e.g. *Cooking on a stove*) | 8 % / 4 % fewer inputs |
+| **Expert** | 80 | a tool (e.g. the iron knife) | 11 % / 6 % |
+| **Master** | 200 | a station or building (e.g. the Master Oven) | 14 % / 8 % fewer inputs, **faster** (80 % of the time) |
+
+Every rank also raises the **chance of a finer grade** (+0.05 on the expected grade per rank, §8.5). So grinding cheap recipes cannot make a master early,
+and it pays to **specialise**: a master carpenter saves more than a master cook, and what you do not master you buy (planned with the new prices, M1).
+Farm jobs save no inputs. From the first rank-up on, the album lists the skills with what each next rank still asks for, and a station's card shows
+its family's rank. *(planned: construction jobs count for woodwork and save materials; healing when medicine exists.)*
 
 ## 9. Building and upgrading
 
@@ -810,7 +829,7 @@ or a polish the child has not tried yet. Switched on in ⚙️ → **🎚️ Pri
 
 - **What is measured — the pace:** the worth of everything the player brings in per Time Quiz question (gathered, harvested,
   made, collected; a running average over about 20 questions; things bought don't count). It already contains everything the
-  player has: upgrades, polish, perks, gifts, practice stars, meals, a bigger store — and how hard the child works.
+  player has: upgrades, polish, perks, gifts, skill ranks, meals, a bigger store — and how hard the child works.
 - **Compared with:** the pace the test bot has after the same number of goals (`meta.flex.basePace`, a table of [goals, pace]).
 - **What changes:** when a goal first shows up, its **coins and bigger material amounts** are multiplied by
   (pace ÷ planned pace)^0.4, kept between ×0.8 and ×1.25 (favours ×0.75–1.35). A goal that an improvement not made yet would
@@ -966,7 +985,7 @@ has as shown. An element without a rule is always there.
 | Sustainability (forest, water, clay) *(planned)* | frozen | chapter 2–3, through a note in the grandmother's book |
 | Market prices changing *(planned)* | frozen | the first season with market news |
 | Merchant favour and trust *(planned)* | works, unexplained | the merchant says so ("for you, a better price") |
-| Skills and practice *(planned)* | works, unexplained | the first rank-up |
+| Skills and practice *(built)* | works, unexplained | the first rank-up (the album then lists them) |
 | The Lord's share *(planned)* | does not exist | chapter 2 or 3 |
 | The forest screen *(planned)* | does not exist, not even visible | chapter 5 |
 
