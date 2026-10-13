@@ -5,151 +5,151 @@
    "accuracy": 1.0,
    "chapters": [
     {
-     "actions": 2666,
+     "actions": 2651,
      "chapter": 1,
      "complete": true,
-     "hours": 4.66,
-     "hoursTotal": 4.66,
+     "hours": 4.65,
+     "hoursTotal": 4.65,
      "knowledgeQuestions": 2,
      "pet": "pet_bunny",
      "questions": 245,
-     "restAnswers": 524
+     "restAnswers": 525
     },
     {
-     "actions": 3766,
+     "actions": 2614,
      "chapter": 2,
      "complete": true,
-     "hours": 5.95,
-     "hoursTotal": 10.61,
+     "hours": 3.89,
+     "hoursTotal": 8.54,
      "knowledgeQuestions": 0,
      "pet": "pet_tortoise",
-     "questions": 294,
-     "restAnswers": 556
+     "questions": 177,
+     "restAnswers": 349
     },
     {
-     "actions": 3679,
+     "actions": 3709,
      "chapter": 3,
      "complete": true,
-     "hours": 5.35,
-     "hoursTotal": 15.96,
+     "hours": 5.34,
+     "hoursTotal": 13.88,
      "knowledgeQuestions": 0,
      "pet": "pet_goat",
-     "questions": 232,
-     "restAnswers": 488
+     "questions": 227,
+     "restAnswers": 481
     },
     {
-     "actions": 4355,
+     "actions": 4445,
      "chapter": 4,
      "complete": true,
-     "hours": 5.49,
-     "hoursTotal": 21.45,
+     "hours": 5.63,
+     "hoursTotal": 19.51,
      "knowledgeQuestions": 0,
      "pet": "pet_pony",
-     "questions": 199,
-     "restAnswers": 347
+     "questions": 196,
+     "restAnswers": 403
     },
     {
-     "actions": 955,
+     "actions": 1159,
      "chapter": 5,
      "complete": true,
-     "hours": 1.19,
-     "hoursTotal": 22.64,
+     "hours": 1.47,
+     "hoursTotal": 20.98,
      "knowledgeQuestions": 0,
      "pet": "pet_badger",
-     "questions": 47,
-     "restAnswers": 50
+     "questions": 61,
+     "restAnswers": 60
     },
     {
-     "actions": 3645,
+     "actions": 3953,
      "chapter": 6,
      "complete": false,
-     "hours": 4.37,
-     "hoursTotal": 27.01,
+     "hours": 4.76,
+     "hoursTotal": 25.74,
      "knowledgeQuestions": 0,
      "pet": "pet_alpaca",
-     "questions": 150,
-     "restAnswers": 209
+     "questions": 163,
+     "restAnswers": 244
     }
    ],
    "label": "bot, seed 1, accuracy 1.00",
    "reachedChapter": 6,
    "seed": 1,
-   "stoppedAtStep": 1167
+   "stoppedAtStep": 1069
   },
   {
    "accuracy": 1.0,
    "chapters": [
     {
-     "actions": 2453,
+     "actions": 2324,
      "chapter": 1,
      "complete": true,
-     "hours": 4.23,
-     "hoursTotal": 4.23,
+     "hours": 3.99,
+     "hoursTotal": 3.99,
      "knowledgeQuestions": 2,
      "pet": "pet_bunny",
-     "questions": 220,
-     "restAnswers": 470
+     "questions": 205,
+     "restAnswers": 448
     },
     {
-     "actions": 2841,
+     "actions": 2944,
      "chapter": 2,
      "complete": true,
-     "hours": 4.37,
-     "hoursTotal": 8.6,
+     "hours": 4.69,
+     "hoursTotal": 8.68,
      "knowledgeQuestions": 0,
      "pet": "pet_tortoise",
-     "questions": 209,
-     "restAnswers": 396
+     "questions": 236,
+     "restAnswers": 432
     },
     {
-     "actions": 4159,
+     "actions": 5255,
      "chapter": 3,
      "complete": true,
-     "hours": 5.96,
-     "hoursTotal": 14.56,
+     "hours": 7.61,
+     "hoursTotal": 16.29,
      "knowledgeQuestions": 0,
      "pet": "pet_goat",
-     "questions": 252,
-     "restAnswers": 535
+     "questions": 330,
+     "restAnswers": 677
     },
     {
-     "actions": 3595,
+     "actions": 4266,
      "chapter": 4,
      "complete": true,
-     "hours": 4.65,
-     "hoursTotal": 19.21,
+     "hours": 5.45,
+     "hoursTotal": 21.74,
      "knowledgeQuestions": 0,
      "pet": "pet_pony",
-     "questions": 169,
-     "restAnswers": 345
+     "questions": 196,
+     "restAnswers": 385
     },
     {
-     "actions": 1012,
+     "actions": 1162,
      "chapter": 5,
      "complete": true,
-     "hours": 1.25,
-     "hoursTotal": 20.46,
+     "hours": 1.48,
+     "hoursTotal": 23.22,
      "knowledgeQuestions": 0,
      "pet": "pet_badger",
-     "questions": 47,
-     "restAnswers": 60
+     "questions": 61,
+     "restAnswers": 66
     },
     {
-     "actions": 65047,
+     "actions": 3699,
      "chapter": 6,
      "complete": false,
-     "hours": 82.19,
-     "hoursTotal": 102.65,
+     "hours": 4.5,
+     "hoursTotal": 27.72,
      "knowledgeQuestions": 0,
      "pet": "pet_alpaca",
-     "questions": 3419,
-     "restAnswers": 3055
+     "questions": 157,
+     "restAnswers": 238
     }
    ],
    "label": "bot, seed 2, accuracy 1.00",
    "reachedChapter": 6,
    "seed": 2,
-   "stoppedAtStep": 4316
+   "stoppedAtStep": 1185
   }
  ],
  "targetPetHours": {
