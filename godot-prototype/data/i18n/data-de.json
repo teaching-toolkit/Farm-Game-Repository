@@ -2339,6 +2339,38 @@
   "en": "Dried herbs on hand: cooking and prep −10% energy.",
   "de": "Getrocknete Kräuter zur Hand: Kochen und Vorbereiten −10% Energie."
  },
+ "nodes/willow_whistle/name": {
+  "en": "Willow Whistle",
+  "de": "Weidenpfeife"
+ },
+ "nodes/willow_whistle/desc": {
+  "en": "A little tune after work: it makes you feel like playing.",
+  "de": "Eine kleine Melodie nach der Arbeit: Sie macht Lust zum Spielen."
+ },
+ "nodes/sketchbook/name": {
+  "en": "Sketchbook & Charcoal",
+  "de": "Skizzenbuch und Kohle"
+ },
+ "nodes/sketchbook/desc": {
+  "en": "Draw the farm on bark paper: a quiet kind of play.",
+  "de": "Zeichne den Hof auf Rindenpapier: eine stille Art zu spielen."
+ },
+ "nodes/fiddle/name": {
+  "en": "Little Fiddle",
+  "de": "Kleine Fiedel"
+ },
+ "nodes/fiddle/desc": {
+  "en": "Music for the whole farm.",
+  "de": "Musik für den ganzen Hof."
+ },
+ "nodes/garden_bench/name": {
+  "en": "Bench by the Pond",
+  "de": "Bank am Teich"
+ },
+ "nodes/garden_bench/desc": {
+  "en": "A place to sit and breathe: the farm feels less busy.",
+  "de": "Ein Platz zum Sitzen und Atmen: Der Hof wirkt weniger geschäftig."
+ },
  "nodes/sq_cold_shepherd/name": {
   "en": "Little shepherd Tom is freezing",
   "de": "Der kleine Hirte Tom friert"
@@ -10399,6 +10431,18 @@
   "en": "The tent flaps in the wind. You pull the blanket up to your nose.",
   "de": "Das Zelt flattert im Wind. Du ziehst die Decke bis zur Nase."
  },
+ "story/c2_berit_note/text": {
+  "en": "Between two pages of the old book there is a note in thin brown ink: “Rest the field. Rest yourself. — B.” You read it twice. Then you look at your hands.",
+  "de": "Zwischen zwei Seiten des alten Buches steckt ein Zettel in dünner brauner Tinte: „Ruh das Feld aus. Ruh dich aus. – B.“ Du liest ihn zweimal. Dann schaust du auf deine Hände."
+ },
+ "story/c2_berit_note/title": {
+  "en": "A note in the book",
+  "de": "Ein Zettel im Buch"
+ },
+ "story/c2_k_rest/text": {
+  "en": "The note in the book flutters in the wind. It says what it always says.",
+  "de": "Der Zettel im Buch flattert im Wind. Er sagt, was er immer sagt."
+ },
  "story/c3_pieter/title": {
   "en": "The night watchman",
   "de": "Der Nachtwächter"
@@ -11034,6 +11078,18 @@
  "meta/pets/jobs/pet_badger/1/desc": {
   "en": "Digs old leaves into compost.",
   "de": "Gräbt altes Laub zu Kompost um."
+ },
+ "meta/well/visit/messages/0": {
+  "en": "{name} shows you the garden. You eat warm bread on the doorstep and laugh until your tummy hurts.",
+  "de": "{name} zeigt dir den Garten. Ihr esst warmes Brot auf der Türschwelle und lacht, bis der Bauch wehtut."
+ },
+ "meta/well/visit/messages/1": {
+  "en": "{name} plays a tune on the porch. You clap along and nobody counts anything.",
+  "de": "{name} spielt eine Melodie auf der Veranda. Du klatschst mit, und niemand zählt etwas."
+ },
+ "meta/well/visit/messages/2": {
+  "en": "{name} gives you a seat by the fire and a big mug. For a while you just sit.",
+  "de": "{name} gibt dir einen Platz am Feuer und einen grossen Becher. Eine Weile sitzt du einfach da."
  },
  "meta/well/params/sleep/name": {
   "en": "Sleep",

@@ -75,6 +75,35 @@ func _ready() -> void:
 	_check(float(G.S["energy"]) > 1.0, "…which gives a little energy per question")
 	G.S["step"] += 7
 	_check(W.boost() == 0.0, "and ends after a few questions")
+	# a party: three dishes, energy, a cooldown; the parameters jump
+	G.S["inv"].clear()
+	G.S["energy"] = 20.0
+	for p in W.params(): G.S["well"]["v"][p] = 0.4
+	_check(not W.party() and not W.party_check()["ok"], "a party needs dishes")
+	G.inventory.add_item("porridge", 2.0, true)
+	G.inventory.add_item("bread", 1.0, true)
+	_check(W.party_check()["ok"], "three dishes (of any kind) are enough")
+	_check(W.party() and is_equal_approx(G.S["energy"], 20.0 - float(W.data()["party"]["energy"])), "the party costs energy")
+	_check(G.inventory.count("porridge") + G.inventory.count("bread") == 0.0, "…and the three dishes")
+	_check(W.value("play") > 0.65 and W.value("friends") > 0.5 and W.boost() > 0.0, "play and friends jump up and there is a boost")
+	G.inventory.add_item("bread", 3.0, true)
+	_check(not W.party_check()["ok"] and W.party_cooldown_left() > 0, "the next party has to wait")
+	G.S["step"] += int(W.data()["party"]["cooldown"]) + 1
+	_check(W.party_check()["ok"], "…until the cooldown is over")
+	# an invitation and a visit
+	G.S["unlocked"]["sq_healer_honey"] = true
+	_check(G.rewards.friends().size() >= 1, "a favour done makes a friend")
+	G.S["well"]["invite"] = ""
+	var got := false
+	for _i in range(400):
+		W.step({})
+		if W.invite() != "": got = true; break
+	_check(got, "now and then a friend invites you (%s)" % W.invite())
+	G.S["energy"] = 10.0
+	var e1: float = G.S["energy"]
+	_check(W.visit_go() and is_equal_approx(G.S["energy"], e1 - float(W.data()["visit"]["energy"])), "the walk costs energy")
+	var scene: String = W.visited()
+	_check(scene != "" and not scene.contains("{name}") and W.invite() == "", "the visit has a little scene and the invitation is used up")
 	# the face
 	for p in W.params(): G.S["well"]["v"][p] = 0.9
 	var happy: String = W.face()

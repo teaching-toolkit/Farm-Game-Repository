@@ -67,8 +67,10 @@ static func apply(main, G) -> void:
 			for i in range(mini(G.S["patches"].size(), 4)): G.S["patches"][i]["weeds"] = 4.0
 			G.invalidate_caps()
 		elif a == "--well":                        # screenshots: chapter 2, the book Body and mind and two of its cards learned, some parameters moved (use with --spot=… or --sheet=well)
-			for id in ["pet_bunny", "book_body", "k_sleep", "k_food", "straw_bed"]: G.S["unlocked"][id] = true
+			for id in ["pet_bunny", "book_body", "k_sleep", "k_food", "k_play", "straw_bed", "sq_healer_honey"]: G.S["unlocked"][id] = true
 			G.S["well"]["v"] = {"sleep": 0.7, "food": 0.3, "strength": 0.6, "friends": 0.5, "calm": 0.35, "play": 0.2}
+			G.S["well"]["invite"] = "Wren the healer"
+			G.inventory.add_item("porridge", 3.0, true)
 			G.invalidate_caps()
 		elif a == "--lord": G.S["lord"]["owed"] = 450.0       # screenshots: Pieter waits at the gate for the Lord's share
 		elif a == "--square": G.S["trip"] = {"phase": "square", "bought": 0.0}       # screenshots: standing on the village square (use with --give, --pack, --spot=market)

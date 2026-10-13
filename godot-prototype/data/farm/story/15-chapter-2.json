@@ -1,0 +1,4 @@
+{
+  "c2_berit_note": {"kind": "discovery", "chapter": 2, "when": ["seen:face"], "priority": 60, "emoji": "📝", "title": "A note in the book", "text": "Between two pages of the old book there is a note in thin brown ink: “Rest the field. Rest yourself. — B.” You read it twice. Then you look at your hands."},
+  "c2_k_rest": {"kind": "bark", "chapter": 2, "when": ["chapter:2", "chance:0.12"], "priority": 50, "once": false, "emoji": "📝", "text": "The note in the book flutters in the wind. It says what it always says."}
+}

@@ -270,7 +270,9 @@
 	"well": {
 		"boost_until": 0.0,
 		"eaten": [],
+		"invite": "",
 		"last_delta": 0.0,
+		"party_step": -999.0,
 		"v": {}
 	},
 	"woodpile": 0.0

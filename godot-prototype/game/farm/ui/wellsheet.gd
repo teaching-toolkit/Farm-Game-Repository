@@ -49,6 +49,25 @@ func sheet_well() -> void:
 		rv.add_child(line)
 		rv.add_child(UI.bar(v, 240, 12, UI.GREEN if v >= 0.4 else UI.RED))
 		rv.add_child(UI.label(tr(str(sp["hint"])), 15, UI.MUTED, true))
+		if p == "play": _play_actions(rv)
 		M.content.add_child(row)
 	if shut > 0:
 		M.content.add_child(UI.label(tr("📖 The book “Body and mind” (from the book cart) tells you more: each card shows one more thing here."), 16, UI.MUTED, true))
+
+## What can be done for play: a party at the farm, and a visit when a friend has invited you.
+func _play_actions(rv: VBoxContainer) -> void:
+	var pc: Dictionary = G.well.party_check()
+	var d: Dictionary = G.well.data().get("party", {})
+	var fb := HFlowContainer.new()
+	fb.add_theme_constant_override("h_separation", 6)
+	fb.add_child(UI.button(tr("🎉 Throw a party (%d dishes, %d ⚡)") % [int(d.get("dishes", 3)), int(d.get("energy", 6))], G.well.party, pc["ok"], UI.AMBER, 16))
+	if G.well.invite() != "":
+		var vc: Dictionary = G.well.visit_check()
+		fb.add_child(UI.button(tr("💌 Visit %s (%d ⚡ and a question)") % [G.well.invite(), int(G.well.data().get("visit", {}).get("energy", 4))], _visit, vc["ok"], UI.GREEN, 16))
+	rv.add_child(fb)
+	if not pc["ok"]: rv.add_child(UI.label(str(pc["why"]), 14, UI.MUTED, true))
+
+func _visit() -> void:
+	if G.well.visit_go():
+		M.sheets.close_sheet()
+		M.timequiz.show_visit_question()

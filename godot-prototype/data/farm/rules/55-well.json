@@ -11,6 +11,8 @@
     "loadHalf": 30,
     "dishWindow": 6,
     "boost": {"sums": 0.2, "questions": 6},
+    "party": {"energy": 6, "dishes": 3, "cooldown": 20, "bump": {"play": 0.3, "friends": 0.15, "calm": 0.05}, "note": "A party at the farm: three dishes from the store are shared, energy is spent, play, friends and calm jump up (and sink back at the usual pace); once in `cooldown` questions. Opened by the card Play and music."},
+    "visit": {"energy": 4, "chance": 0.04, "bump": {"play": 0.25, "calm": 0.15, "friends": 0.1}, "messages": ["{name} shows you the garden. You eat warm bread on the doorstep and laugh until your tummy hurts.", "{name} plays a tune on the porch. You clap along and nobody counts anything.", "{name} gives you a seat by the fire and a big mug. For a while you just sit."], "note": "A friend invites you now and then (`chance` per question, one invitation at a time, from the first friend): a visit costs `energy` and one question (like the walk to the village) and gives nothing back at once, only the bump."},
     "faces": [[0.75, "😄"], [0.55, "🙂"], [0.4, "😐"], [0.25, "😟"], [0.0, "😣"]],
     "params": {
       "sleep": {"emoji": "😴", "name": "Sleep", "floor": 0.4, "stat": "well_sleep", "hint": "A good bed, a pillow, a warm hearth."},

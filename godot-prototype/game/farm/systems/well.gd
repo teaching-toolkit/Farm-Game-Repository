@@ -12,7 +12,7 @@ func _init(game: FarmGame) -> void:
 
 ## The save keys this system owns, with their values in a new game (kits/core/saves.gd fills missing ones into older saves).
 func save_defaults() -> Dictionary:
-	return {"well": {"v": {}, "eaten": [], "boost_until": 0, "last_delta": 0.0}}
+	return {"well": {"v": {}, "eaten": [], "boost_until": 0, "last_delta": 0.0, "party_step": -999, "invite": ""}}
 
 func data() -> Dictionary:
 	return G.meta.get("well", {})
@@ -101,10 +101,91 @@ func boost() -> float:
 	if not active() or int(G.S["well"]["boost_until"]) <= int(G.S["step"]): return 0.0
 	return float(data().get("boost", {}).get("sums", 0.2)) * G.needs.rest_per_answer()
 
+# ------------------------------------------------------------------ a party and a visit
+
+## Moves some parameters up at once (they sink back at the usual pace).
+func _bump(b: Dictionary) -> void:
+	for p in b: G.S["well"]["v"][p] = clampf(value(p) + float(b[p]), 0.0, 1.0)
+
+## The dishes in the store that could be shared at a party (the cheapest first).
+func _party_dishes() -> Array:
+	var ds := []
+	for k in G.S["inv"]:
+		if G.items.has(k) and G.items[k].get("category", "") == "dish" and G.inventory.count(k) >= 1.0: ds.append(k)
+	ds.sort_custom(func(a, b): return float(G.items[a].get("value", 0)) < float(G.items[b].get("value", 0)))
+	return ds
+
+func party_cooldown_left() -> int:
+	return maxi(0, int(G.S["well"]["party_step"]) + int(data().get("party", {}).get("cooldown", 20)) - int(G.S["step"]))
+
+## Can a party be thrown now? {"ok", "why"}
+func party_check() -> Dictionary:
+	var d: Dictionary = data().get("party", {})
+	if party_cooldown_left() > 0: return {"ok": false, "why": tr("The last party was not long ago.")}
+	var have := 0
+	for k in _party_dishes(): have += int(G.inventory.count(k))
+	if have < int(d.get("dishes", 3)): return {"ok": false, "why": tr("A party needs %d dishes to share.") % int(d.get("dishes", 3))}
+	if float(G.S["energy"]) + 0.001 < float(d.get("energy", 6)): return {"ok": false, "why": tr("⚡ Too tired for a party. Rest a little (tap ⚡).")}
+	return {"ok": true, "why": ""}
+
+func party() -> bool:
+	var ck := party_check()
+	if not ck["ok"]:
+		G.say(str(ck["why"]))
+		return false
+	var d: Dictionary = data().get("party", {})
+	var need := int(d.get("dishes", 3))
+	for k in _party_dishes():
+		while need > 0 and G.inventory.count(k) >= 1.0:
+			G.inventory.take(k, 1.0)
+			need -= 1
+	G.S["energy"] = float(G.S["energy"]) - float(d.get("energy", 6))
+	G.S["well"]["party_step"] = int(G.S["step"])
+	_bump(d.get("bump", {}))
+	helped()
+	G.say(tr("🎉 A party at the farm! Everybody laughs, eats and dances. You feel lighter."))
+	G.save_game(); G.changed.emit()
+	return true
+
+## The friend who has invited you ("" if nobody has).
+func invite() -> String:
+	return str(G.S["well"].get("invite", ""))
+
+func visit_check() -> Dictionary:
+	if invite() == "": return {"ok": false, "why": tr("Nobody has invited you.")}
+	if float(G.S["energy"]) + 0.001 < float(data().get("visit", {}).get("energy", 4)): return {"ok": false, "why": tr("⚡ Too tired for a visit. Rest a little (tap ⚡).")}
+	return {"ok": true, "why": ""}
+
+## The walk to the neighbour costs the energy; the one question on the way is asked by the interface (like the market trip).
+func visit_go() -> bool:
+	var ck := visit_check()
+	if not ck["ok"]:
+		G.say(str(ck["why"]))
+		return false
+	G.S["energy"] = float(G.S["energy"]) - float(data().get("visit", {}).get("energy", 4))
+	G.save_game(); G.changed.emit()
+	return true
+
+## The question was answered: the visit happens. Returns the little scene to show.
+func visited() -> String:
+	var v: Dictionary = data().get("visit", {})
+	var nm := invite()
+	G.S["well"]["invite"] = ""
+	_bump(v.get("bump", {}))
+	helped()
+	var scenes: Array = v.get("messages", [""])
+	G.save_game(); G.changed.emit()
+	return tr(str(scenes[G.rng.randi() % scenes.size()])).replace("{name}", nm)
+
 # ------------------------------------------------------------------ one question
 
 func step(info: Dictionary) -> void:
 	if not active(): return
+	if invite() == "" and G.rng.randf() < float(data().get("visit", {}).get("chance", 0.04)):      # a friend asks you to visit
+		var fr: Array = G.rewards.friends()
+		if not fr.is_empty():
+			G.S["well"]["invite"] = str(fr[G.rng.randi() % fr.size()]["name"])
+			G.say(tr("💌 %s has invited you for a visit! (Tap your face to see.)") % G.S["well"]["invite"])
 	var v: Dictionary = G.S["well"]["v"]
 	for p in params():
 		var cur := value(p)

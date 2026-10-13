@@ -312,7 +312,7 @@ Lanterns (+5 each), hats, a gift, and every golden acorn (+3). **Cold house:** i
 **Food** is a bonus, not energy: eating a dish lowers energy costs for one or two questions (simple dishes −10 % for 1,
 soups, stews, bread and pasta −20 % for 2, cakes, pies and pizza −30 % for 2). Pet dishes are not eaten.
 
-### 5.1b Wellbeing: how the farmer feels and what it does to energy *(planned: phase 9, formulas fixed here first)*
+### 5.1b Wellbeing: how the farmer feels and what it does to energy *(built, phase 9)*
 
 Six **parameters**, each a number from 0 to 1 that starts at 0.5 ("fine"): 😴 **sleep**, 🍽️ **food** (variety), 💪 **strength**, 🤝 **friends**, 🧘 **calm**, 🎵 **play**. Until chapter 2 they are frozen at 0.5 and nothing
 follows from them. The home still sets the base numbers (the table in §5.1); the parameters work like a **dial on top** and, for three of them, as the energy change per question.
@@ -336,6 +336,8 @@ The energy change after a question is shown with the other changes (J4). Nothing
 
 *What the child sees.* The face appears at the end of the energy bar in chapter 2 and opens the **dashboard** (so does tapping the farmer). Rows appear one by one as the cards of the book *Body and mind* are learned (L3): each shows
 a bar and the things that lift it. Before that the dashboard shows the face and a hint to read.
+
+*Levers.* Beds, pillows and the hearth lift sleep; different dishes lift food; skill ranks lift strength; favours and the village's trust lift friends; calm falls with the load of the farm and is lifted by the hearth, the barn cat, every pet, a sketchbook and the bench by the pond; play is lifted by the willow whistle, the sketchbook and the little fiddle (small helpers, opened by the cards *Play and music* and *Calm and breathing*). Two things lift a parameter *at once* (it then sinks back at the usual pace): a **party** at the farm (three dishes from the store and 6 ⚡, once in 20 questions: play +0.3, friends +0.15, calm +0.05 and a boost) and a **visit**: now and then (4 % per question, from the first friend) a friend invites you; the visit costs 4 ⚡ and one question, like the walk to the village, and gives a little scene and play +0.25, calm +0.15, friends +0.1. Both are buttons under *Play* on the dashboard once its card is learned. Berit's note *Rest the field. Rest yourself.* is found when the face appears (`c2_berit_note`).
 
 ### 5.2 Water 💧
 
