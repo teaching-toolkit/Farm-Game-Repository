@@ -140,26 +140,29 @@ func _go() -> void:
 ## The seed merchant and the other traders on the square: buying within the room left for the way home.
 func _part_shops() -> void:
 	M.widgets.section(tr("🌱 Seed merchant"), tr("Only seeds you have can be planted — buy them here."))
+	var rep := G.trust.reputation()
+	if rep > 0 or G.trust.reputation_max() > 0:
+		M.content.add_child(UI.label(tr("The village thinks of your farm: %s") % ("♥".repeat(rep) + "♡".repeat(G.trust.reputation_max() - rep)), 15, UI.MUTED, true))
 	var sg := M.widgets.grid()
 	M.content.add_child(sg)
 	for cid in G.nodes:
 		var n: Dictionary = G.nodes[cid]
 		if n["type"] != "crop" or not G.done(cid) or n.has("seedItem"): continue
-		var v := M.widgets.tile(Art.tex("crops", cid), str(n.get("emoji", "")), "%s\n%s · 🌰 %d" % [n["name"], G.money_up(float(n.get("seedCost", 0))), G.down(G.fields.seed_have(cid))])
+		var v := M.widgets.tile(Art.tex("crops", cid), str(n.get("emoji", "")), "%s\n%s · 🌰 %d" % [n["name"], G.money_up(G.trade.seed_price(cid)), G.down(G.fields.seed_have(cid))])
 		var row := UI.hbox(6)
-		row.add_child(UI.soft_button("🛒 1", G.trade.buy_seeds.bind(cid, 1), G.S["coins"] + 0.001 >= float(n.get("seedCost", 0)) and G.trip.can_buy(G.inventory.seed_weight()) >= 1, 18))
-		row.add_child(UI.soft_button("🛒 5", G.trade.buy_seeds.bind(cid, 5), G.S["coins"] + 0.001 >= 5.0 * float(n.get("seedCost", 0)) and G.trip.can_buy(G.inventory.seed_weight()) >= 5, 18))
+		row.add_child(UI.soft_button("🛒 1", G.trade.buy_seeds.bind(cid, 1), G.S["coins"] + 0.001 >= G.trade.seed_price(cid) and G.trip.can_buy(G.inventory.seed_weight()) >= 1, 18))
+		row.add_child(UI.soft_button("🛒 5", G.trade.buy_seeds.bind(cid, 5), G.S["coins"] + 0.001 >= 5.0 * G.trade.seed_price(cid) and G.trip.can_buy(G.inventory.seed_weight()) >= 5, 18))
 		v.add_child(row)
 		sg.add_child(v.get_meta("panel"))
 	for mid in G.nodes:
 		var mn: Dictionary = G.nodes[mid]
 		if mn["type"] != "merchant" or not G.done(mid) or mid == "book_cart": continue
 		if mn.get("sells", {}).is_empty() and mn.get("barter", {}).is_empty(): continue
-		M.widgets.section("%s %s" % [mn.get("emoji", ""), mn["name"]], str(mn.get("desc", "")))
+		M.widgets.section("%s %s  %s" % [mn.get("emoji", ""), mn["name"], G.trust.hearts(mid)], str(mn.get("desc", "")))
 		var mg := M.widgets.grid()
 		M.content.add_child(mg)
 		for k in mn.get("sells", {}):
-			var v2 := M.widgets.tile(Art.first("items", [k]), G.iemoji(k), "%s\n%s" % [G.iname(k), G.money_up(float(mn["sells"][k]))])
+			var v2 := M.widgets.tile(Art.first("items", [k]), G.iemoji(k), "%s\n%s" % [G.iname(k), G.money_up(G.trade.buy_price(mid, k))])
 			var row2 := UI.hbox(6)
 			row2.add_child(UI.soft_button("🛒 1", G.trade.buy_item.bind(mid, k, 1), G.trip.can_buy(G.inventory.weight_of(k)) >= 1, 18))
 			row2.add_child(UI.soft_button("🛒 5", G.trade.buy_item.bind(mid, k, 5), G.trip.can_buy(G.inventory.weight_of(k)) >= 5, 18))

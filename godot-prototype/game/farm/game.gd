@@ -17,6 +17,7 @@ signal ask_name(pet_id: String, default_name: String)
 ## got = {item: amount} that went into the store, lost = {item: amount} that did not fit (the store is full).
 ## The map lets the things fly to the store (one picture per piece); what did not fit bounces off.
 signal gained(source: String, got: Dictionary, lost: Dictionary)
+signal paid(coins: float)     # coins fly from the purse to the trader (M3)
 signal sold(item: String, n: float, coins: float)   # coins fly to the purse (perk), a jingle
 signal celebrate(id: String)     # a new building, tool or helper: the big pop-up with confetti
 signal revealed(id: String)      # a part of the interface comes into view for the first time (G.reveal)
@@ -103,6 +104,7 @@ var skills: FarmSkills
 var story: FarmStory
 var trip: FarmTrip
 var gate: FarmGate
+var trust: FarmTrust
 
 func _init() -> void:
 	seasons = FarmSeasons.new(self)
@@ -122,6 +124,7 @@ func _init() -> void:
 	story = FarmStory.new(self)
 	trip = FarmTrip.new(self)
 	gate = FarmGate.new(self)
+	trust = FarmTrust.new(self)
 
 # ------------------------------------------------------------------ start, seed and clock
 
@@ -570,6 +573,7 @@ func counter(name: String) -> float:
 		"step": return float(S["step"])
 		"items_seen": return float(S["seen"].size())
 		"story_seen": return float(S["story_seen"].size())
+		"goals": return float(S["goals"])
 		"trips": return float(S["trips"])
 		"packed": return float(trip.contents().size())
 		"skill_ranks": return float(skills.total_ranks())

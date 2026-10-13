@@ -1,0 +1,23 @@
+{
+  "trust": {
+    "note": "Trust and reputation (TODO M8). The village distrusts the farm at first (it burned, the family was blamed, everybody is poor); it warms as the farm visibly recovers (reputation: the number of main goals done, one level per `perLevel`) and each trader warms to the farmer who does them a good turn (their `deeds`: deliveries handed over to them; one level per deed, at most `max`). Both lower the prices of seeds and wares (never raise them): reputation by discount[level], each trust level by `perLevel` of the price; the sum never goes below `floor`. Nobody is ever angry: with no trust the price is simply the list price.",
+    "reputation": {"counter": "goals", "perLevel": 14, "max": 4, "discount": [0.0, 0.02, 0.04, 0.06, 0.08]},
+    "perTrustLevel": 0.04,
+    "floor": 0.75,
+    "people": {
+      "seed_1": {"emoji": "🌱", "deeds": ["d_porridge"], "max": 3},
+      "seed_2": {"emoji": "🌱", "deeds": ["present_onion", "d_veg_soup"], "max": 3},
+      "seed_3": {"emoji": "🌱", "deeds": ["present_lettuce", "present_beet", "d_stone_soup"], "max": 3},
+      "seed_4": {"emoji": "🌱", "deeds": ["present_flax", "d_honey_oat_cake", "d_simple_cake"], "max": 3},
+      "seed_5": {"emoji": "🌱", "deeds": ["present_berries", "d_pizza"], "max": 3},
+      "spice_1": {"emoji": "🧂", "deeds": ["d_hearty_stew", "d_veg_soup"], "max": 3},
+      "raw_1": {"emoji": "🪵", "deeds": ["d_porridge", "d_veg_soup"], "max": 3},
+      "raw_2": {"emoji": "🧱", "deeds": ["d_stone_soup", "d_bread"], "max": 3},
+      "raw_3": {"emoji": "⛏️", "deeds": ["d_hearty_stew"], "max": 3},
+      "raw_4": {"emoji": "🪵", "deeds": ["d_honey_oat_cake"], "max": 3},
+      "raw_5": {"emoji": "🏗️", "deeds": ["d_pizza"], "max": 3},
+      "culture_1": {"emoji": "🧑‍🍳", "deeds": ["d_bread"], "max": 3},
+      "import_broker": {"emoji": "🎩", "deeds": ["d_fair_pies", "d_fair_cheese", "d_fair_preserves", "d_fair_cloth"], "max": 3}
+    }
+  }
+}

@@ -226,6 +226,27 @@ _cats = {it.get("category", "") for it in ITEMS.values()}
 for c in GT.get("cats", []):
     if c not in _cats: err("gate", f"category {c!r} has no items")
 
+# ---------------------------------------------------------------- trust (rules/51-trust.json) and season prices (rules/52-season-prices.json)
+TRU = META.get("trust", {})
+if not TRU: err("trust", "no 'trust' in rules/51-trust.json")
+for pid, person in TRU.get("people", {}).items():
+    if pid not in N or N[pid].get("type") != "merchant": err("trust", f"{pid} is not a merchant")
+    for d in person.get("deeds", []):
+        if d not in N or N[d].get("type") != "delivery": err("trust", f"{pid}: deed {d} is not a delivery")
+    if int(person.get("max", 0)) < 1: err("trust", f"{pid}: max must be at least 1")
+for mid, n in N.items():
+    if n.get("type") == "merchant" and mid not in TRU.get("people", {}) and mid != "book_cart": warn("trust", f"merchant {mid} has no trust entry (its prices follow the village's reputation only)")
+_disc = TRU.get("reputation", {}).get("discount", [])
+if len(_disc) != int(TRU.get("reputation", {}).get("max", 0)) + 1: err("trust", "reputation.discount needs one entry per level, 0 to max")
+if not 0.5 <= float(TRU.get("floor", 0)) <= 1: err("trust", "floor must be between 0.5 and 1")
+SP_ = META.get("seasonPrices", {})
+for s_ in ("spring", "summer", "autumn", "winter"):
+    if s_ not in SP_: err("seasonPrices", f"no entry for {s_}")
+    for it, f in SP_.get(s_, {}).get("items", {}).items():
+        if it not in ITEMS: err("seasonPrices", f"{s_}: {it} is not an item")
+    for c, f in list(SP_.get(s_, {}).get("cats", {}).items()) + list(SP_.get(s_, {}).get("items", {}).items()):
+        if not 0.5 <= float(f) <= 2.0: err("seasonPrices", f"{s_}: factor {f} for {c} is outside 0.5 … 2")
+
 # ---------------------------------------------------------------- quality (rules/47-quality.json)
 Qd = META.get("quality", {})
 cats_known = {it.get("category") for it in ITEMS.values()}

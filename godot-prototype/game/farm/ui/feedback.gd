@@ -105,11 +105,13 @@ func animal_ambience(t: Timer) -> void:
 func sfx(name: String) -> void:
 	Sound.play(name)
 
-## Something was sold: a jingle, and coins fly into the purse (perk "Coin shower").
-func on_sold(_k: String, n: float, _coins: float) -> void:
+## Something was sold: a jingle, the farmer acts it out, and coins fly into the purse (the perk "Coin shower" makes it a shower).
+func on_sold(_k: String, n: float, coins: float) -> void:
 	sfx("coin")
 	play_act("sell", M.map.stand_point(M.mapview.map_sid("market")))
-	if not G.rewards.perk_on("perk_coins"): return
+	if not G.rewards.perk_on("perk_coins"):
+		fly_coins(coins, true)
+		return
 	sfx("coin_shower")
 	var cs = Fx.CoinShower.new()
 	M.add_child(cs)
@@ -118,6 +120,32 @@ func on_sold(_k: String, n: float, _coins: float) -> void:
 	var from := Vector2(M.size.x / 2.0, M.size.y * 0.62)
 	if M.sheet.visible: from = M.sheet.get_global_rect().get_center()
 	cs.start(from, M.lbl_coins.get_global_rect().get_center(), clampi(int(n), 3, 12), _coin_landed)
+
+## Something was paid for: coins fly from the purse to the trader.
+func on_paid(coins: float) -> void:
+	sfx("coin")
+	fly_coins(coins, false)
+
+## Coins flying between the purse and the trader (M3): one coin for every 10 bronze, in tight bunches of 10 (27 coins: 10 + 10 + 7), at most 6 bunches.
+func fly_coins(bronze: float, to_purse: bool) -> void:
+	var pieces := clampi(ceili(bronze / 10.0), 1, 60)
+	var mid := M.sheet.get_global_rect().get_center() if M.sheet.visible else Vector2(M.size.x / 2.0, M.size.y * 0.62)
+	var purse := M.lbl_coins.get_global_rect().get_center()
+	var from := mid if to_purse else purse
+	var to := purse if to_purse else mid
+	var delay := 0.0
+	while pieces > 0:
+		var n := mini(10, pieces)
+		pieces -= n
+		M.get_tree().create_timer(delay).timeout.connect(_launch_coins.bind(from, to, n, to_purse))
+		delay += 0.3
+
+func _launch_coins(from: Vector2, to: Vector2, n: int, to_purse: bool) -> void:
+	var cs = Fx.CoinShower.new()
+	M.add_child(cs)
+	cs.position = Vector2.ZERO
+	cs.size = M.size
+	cs.start(from, to, n, _coin_landed if to_purse else Callable())
 
 func _coin_landed() -> void:
 	M.lbl_coins.pivot_offset = M.lbl_coins.size / 2.0

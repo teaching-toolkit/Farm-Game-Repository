@@ -52,6 +52,7 @@ func step_rain(info: Dictionary) -> void:
 
 func _season_change(sn: int) -> void:
 	var nm: String = G.SEASON_NAMES[sn % 4]
+	G.trade.season_news(nm)
 	var spoiled := {}
 	var fr = G.meta.get("freshness", {})
 	var animal_items: Array = fr.get("animalItems", [])

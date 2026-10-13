@@ -125,6 +125,7 @@ func _ready() -> void:
 	UI.explain_hook = notes.hint
 	G.offer_cards.connect(gifts.show_gift)
 	G.sold.connect(feedback.on_sold)
+	G.paid.connect(feedback.on_paid)
 	Sound.perk_on = func(id): return G.rewards.perk_on(id)
 	if map.actor: map.actor.resolve = feedback.act_place
 	var amb := Timer.new()          # now and then an animal on the farm makes itself heard (perk "Farm sounds")

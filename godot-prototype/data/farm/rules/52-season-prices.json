@@ -1,0 +1,9 @@
+{
+  "seasonPrices": {
+    "note": "What the village pays in each season (TODO M12): a factor on the selling price, per item (first) or per category. Announced at every change of season (a news line). Spring is the list price, so the first chapter and the tests are unchanged; summer has plenty of crops, autumn too (the harvest); winter is hungry and pays more for what keeps. Costs of goals never change. Sales to the travelling merchant follow (he pays the village price less his cut).",
+    "spring": {"cats": {"craft": 1.1, "textile": 1.05}},
+    "summer": {"cats": {"crop": 0.92, "dish": 1.05, "animal": 1.05}},
+    "autumn": {"cats": {"crop": 0.95, "ingredient": 1.05, "craft": 1.05}},
+    "winter": {"cats": {"crop": 1.25, "animal": 1.1, "dish": 1.15, "textile": 1.1, "craft": 1.1}}
+  }
+}

@@ -355,14 +355,40 @@ worth almost nothing, so gathering is never a money farm; straw cannot be sold a
 thing fetches 8 % less (down to 60 %), and every question the market forgets a quarter of what was sold lately. A ↓ marks
 something sold a lot lately. Selling a mix pays best.
 
-**Clear sell buttons.** Store tiles say exactly what you give and what you get: `1 🥣 = 60 🟤`, and for all of it
-`5 🥕 = 1 🟡 50 🟤` (the market's price for that many). Each recipe shows what its ingredients would fetch and what the result
-fetches (30 🟤 → 60 🟤).
+**Selling happens on a trip** (§5.3b). The store has no sell buttons: its tiles say what a thing sells for (*Sells for about 60 🟤 each*) and let you
+pack it; the square's sell buttons say exactly what you give and what you get: `1 🥣 = 60 🟤`, and for all of it `5 🥕 = 1 🟡 50 🟤` (the
+village's price for that many). Each recipe shows what its ingredients would fetch and what the result fetches (30 🟤 → 60 🟤).
 
 **Sell bonuses:** Market Stall +10 %, the pony +10 %, four Harvest Fair ribbons, the *Fair prices* card, gifts.
 
 **Quality pays.** A grown or made thing has a grade (§8.5): Lumpy sells for 60 %, Proper for 100 %, Fancy for 150 %. Selling goes best grade first
 (so the market's "lots sold lately" drop falls on the cheaper ones).
+
+### 5.3b The bag, the trip and the village square *(built, phase 6)*
+
+**The bag.** Packing is how things leave the farm: in the store tap a thing and put one (or all that fit) into the 🎒 bag; packed things *stay in the store*, marked 🎒, and
+can be unpacked for free. The bag holds **load units** (the weights of §5.5): the farmer's arms 20, a woven bag 30, a wicker pack 44, a canvas rucksack 60, a frame
+rucksack 80, a wheelbarrow 100 *(💡 numbers in `rules/49-trip.json`)*. The 🎒 icon in the top bar (it appears with the first packed thing) has a thin bar under it that fills as you pack;
+its window shows the load and what is packed.
+
+**The trip.** The market place on the map is a signpost to the village. Its window prepares the trip: the bag, the *orders to deliver* (each with *pack what it needs*) and
+*Go to the village* — it costs a little energy (3 ⚡ × the errand factor of rucksacks and boots × what a better road saves, at least 1) and **exactly one Time Quiz question** on the way
+(a wrong first try leads to another question; only a right first answer gets you there). Then the **village square** opens: **sell** what is in the bag (the market pays less for a
+pile of one thing), **hand over orders** from the bag (deliveries ride in the bag like everything else), **buy** seeds and wares within the room left for the way home (the
+same size as the way there, counted separately; seeds weigh almost nothing), and go **back home** — what was not sold simply stays in the store. A trip with an empty bag, only to buy, is allowed.
+Selling, buying, barter and deliveries work only on the square (or with the merchant at the gate). The painted village square (M9) is still to be drawn; the window stands in for it.
+
+**The travelling merchant.** Where a cart can come (road level 2 and up) he turns up at the gate now and then — more often and with a bigger cart on a better road — stays a few
+questions and buys crops, ingredients, dishes, animal things, crafts, cloth and finds in bulk without a trip or energy, at the village price less his cut (15 %), until his cart is full
+(`rules/50-gate.json`). His cart stands at the road while he is there; a tap on it opens the road's window.
+
+**Trust and reputation.** The village distrusts the farm at first (it burned, the family was blamed, everybody is poor). As the farm visibly recovers (every 14 main goals done is a level of
+*reputation*, ♥ to ♥♥♥♥) and as each trader gets a good turn (deliveries handed to them, ♥ to ♥♥♥) their seeds and wares cost a little less (never more); nobody is ever angry (`rules/51-trust.json`).
+
+**Season prices.** At every change of season a news line says what the village pays more or less for (`rules/52-season-prices.json`: spring is the list price; summer and autumn have plenty of crops;
+winter is hungry and pays more for what keeps). Goals' costs never change.
+
+**Coins fly** between the purse and the square — one coin for every 10 bronze, in tight bunches of 10 — plain for everyone; the *Coin shower* perk makes the selling flight a shower.
 
 ### 5.4 Seeds
 
@@ -387,7 +413,7 @@ wheat seed (and one cleared patch).
   tin pot, the sourdough starter, cultures, the stone in Stone Soup).
 - **Every thing has a weight** (five classes: feather 0.1 · light 0.5 · normal 1 · bulky 2 · heavy 4 load units; seeds are feathers; straw is light but
   bulky, logs, stones and iron ore are heavy; `data/farm/rules/45-weight.json`). It works from the start but is not shown and limits nothing until
-  the first market trip, when carrying (backpack → basket → cart, the farmer's strength, the road) starts to matter *(planned, phase 6)*.
+  the first market trip (§5.3b), when carrying (backpack → basket → cart, the farmer's strength, the road) starts to matter.
 
 ### 5.6 Fuel and the woodpile 🪵
 
@@ -999,12 +1025,12 @@ has as shown. An element without a rule is always there.
 |---|---|---|
 | 🪙 The purse (coins) | hidden *(built)* | the first coin |
 | 🖼️ The album button | hidden *(built)* | the first picture in the album |
-| Item weight and carrying *(planned)* | works, unexplained (the bag simply fills) | the first market trip |
+| Item weight and carrying | works, unexplained (the bag simply fills) | the first market trip |
 | Energy drain and wellbeing *(planned)* | frozen | chapter 2 (the face appears) |
 | The bed's energy | shown plainly from chapter 1 ("+1 ⚡ per right sum"); that it goes through *sleep* is never said | – |
 | Happy boost from helping *(planned)* | works, unexplained | a book explains it |
 | Sustainability (forest, water, clay) *(planned)* | frozen | chapter 2–3, through a note in the grandmother's book |
-| Market prices changing *(planned)* | frozen | the first season with market news |
+| Market prices changing | works from the first change of season; the news line shows it | the first season with market news |
 | Merchant favour and trust *(planned)* | works, unexplained | the merchant says so ("for you, a better price") |
 | Skills and practice *(built)* | works, unexplained | the first rank-up (the album then lists them) |
 | The Lord's share *(planned)* | does not exist | chapter 2 or 3 |

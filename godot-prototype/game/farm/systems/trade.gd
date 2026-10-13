@@ -31,7 +31,27 @@ func demand_factor(k: String, extra := 0.0) -> float:
 func full_price(k: String, grade := -1) -> float:
 	var f := 1.0
 	if G.quality.graded(k): f = G.quality.price_factor(G.quality.default_grade() if grade < 0 else grade)
-	return G.inventory.value_of(k) * f * (1.0 + G.g("sellBonusPct", 0.0) / 100.0)
+	return G.inventory.value_of(k) * f * season_factor(k) * (1.0 + G.g("sellBonusPct", 0.0) / 100.0)
+
+## What the village pays this season for an item, as a factor (rules/52-season-prices.json: per item, else per category).
+func season_factor(k: String, season := "") -> float:
+	var sp: Dictionary = G.meta.get("seasonPrices", {}).get(season if season != "" else G.seasons.season(), {})
+	if sp.get("items", {}).has(k): return float(sp["items"][k])
+	return float(sp.get("cats", {}).get(str(G.items.get(k, {}).get("category", "")), 1.0))
+
+## The news line at a change of season: what pays more and what pays less this season (a few words from the data's categories).
+func season_news(season: String) -> void:
+	var up := []
+	var down := []
+	var cats: Dictionary = G.meta.get("seasonPrices", {}).get(season, {}).get("cats", {})
+	for c in cats:
+		var name: String = {"crop": tr("crops"), "dish": tr("dishes"), "animal": tr("eggs, milk and wool"), "ingredient": tr("flour and ingredients"), "craft": tr("crafts"), "textile": tr("cloth")}.get(c, str(c))
+		if float(cats[c]) >= 1.08: up.append(name)
+		elif float(cats[c]) <= 0.94: down.append(name)
+	if up.is_empty() and down.is_empty(): return
+	if not up.is_empty() and not down.is_empty(): G.say(tr("🪙 Market news: the village pays more for %s and less for %s.") % [", ".join(up), ", ".join(down)])
+	elif not up.is_empty(): G.say(tr("🪙 Market news: the village pays more for %s.") % ", ".join(up))
+	else: G.say(tr("🪙 Market news: the village pays less for %s.") % ", ".join(down))
 
 ## What the next one would sell for right now (the best grade goes first).
 func sell_price(k: String) -> float:
@@ -110,15 +130,28 @@ func recipe_worth(rid: String) -> Vector2:
 		if G.inventory.sellable(k): b += G.inventory.value_of(k) * float(r["outputs"][k]) * G.m("out:" + r["station"])
 	return Vector2(a, b)
 
+## The price of one seed: the list price × the trust of the best trader you buy from (and the village's reputation).
+func seed_price(cid: String) -> float:
+	var best := 1.0
+	for mid in G.nodes:
+		if G.nodes[mid]["type"] == "merchant" and str(mid).begins_with("seed_") and G.done(mid): best = minf(best, G.trust.price_factor(mid))
+	if best >= 1.0: best = G.trust.price_factor("seed_1")
+	return float(G.nodes[cid].get("seedCost", 0)) * minf(1.0, best)
+
+## The price of one thing from a trader's stall.
+func buy_price(merchant: String, k: String) -> float:
+	return float(G.nodes[merchant].get("sells", {}).get(k, 0)) * G.trust.price_factor(merchant)
+
 func buy_seeds(cid: String, q: int) -> bool:
 	if not _at_square(): return false
 	var room := G.trip.can_buy(G.inventory.seed_weight())
 	if room < q:
 		if room < 1: G.say(tr("🎒 No room to carry that home.")); return false
 		q = room
-	var c := float(G.nodes[cid].get("seedCost", 0)) * q
+	var c := seed_price(cid) * q
 	if G.S["coins"] + 0.0001 < c: G.say(tr("🪙 Not enough coins.")); return false
 	G.S["coins"] -= c
+	G.paid.emit(c)
 	G.S["seeds"][cid] = float(G.S["seeds"].get(cid, 0.0)) + q
 	G.trip.note_bought(G.inventory.seed_weight() * q)
 	if G.rewards.roll(G.rewards.luck_event("seed_bargain")): G.S["seeds"][cid] = float(G.S["seeds"][cid]) + 1.0; G.say(tr("🎁 The seed merchant adds one for free."))
@@ -135,9 +168,10 @@ func buy_item(merchant: String, k: String, q: int) -> bool:
 	if room < q:
 		if room < 1: G.say(tr("🎒 No room to carry that home.")); return false
 		q = room
-	var price := float(G.nodes[merchant].get("sells", {}).get(k, 0)) * q
+	var price := buy_price(merchant, k) * q
 	if G.S["coins"] + 0.0001 < price: G.say(tr("🪙 Not enough coins.")); return false
 	G.S["coins"] -= price
+	G.paid.emit(price)
 	G.buying = true
 	G.inventory.add_item(k, q)
 	G.buying = false
