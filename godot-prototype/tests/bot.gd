@@ -328,18 +328,8 @@ func _rest() -> void:
 	while G.S["energy"] < G.needs.energy_max() - G.needs.rest_per_answer() and guard < 40:
 		G.needs.rest_correct(); guard += 1
 
-func _needed_items() -> Dictionary:
-	var need := {}
-	for id in G.nodes:
-		if not G.progression.is_open(id): continue
-		var n = G.nodes[id]
-		if n.get("optional", false) and n["type"] != "gear" and id != "hand_cart": continue      # (the first cart carries the trips: worth the axle)
-		var c: Dictionary = G.pace.node_cost(id)
-		for k in c:
-			if k in ["coins", "energy", "water"]: continue
-			need[k] = maxf(float(need.get(k, 0.0)), float(c[k]))
-		for k in n.get("needs", {}): need[k] = maxf(float(need.get(k, 0.0)), 2.0)
-	# expand through recipes three levels deep (what the needed things are made of)
+## Expands the needed things through the recipes three levels deep (what they are made of).
+func _expand_needs(need: Dictionary) -> void:
 	for depth in range(3):
 		for k in need.keys():
 			var item: String = k
@@ -357,6 +347,19 @@ func _needed_items() -> Dictionary:
 						need[ik] = maxf(float(need.get(ik, 0.0)), float(r["inputs"][ik]) * 2.0)
 					for kk in r.get("keeps", []):
 						if G.inventory.count(kk) < 1.0: need[kk] = maxf(float(need.get(kk, 0.0)), 1.0)
+
+func _needed_items() -> Dictionary:
+	var need := {}
+	for id in G.nodes:
+		if not G.progression.is_open(id): continue
+		var n = G.nodes[id]
+		if n.get("optional", false) and n["type"] != "gear" and id != "hand_cart": continue      # (the first cart carries the trips: worth the axle)
+		var c: Dictionary = G.pace.node_cost(id)
+		for k in c:
+			if k in ["coins", "energy", "water"]: continue
+			need[k] = maxf(float(need.get(k, 0.0)), float(c[k]))
+		for k in n.get("needs", {}): need[k] = maxf(float(need.get(k, 0.0)), 2.0)
+	_expand_needs(need)      # (what the needed things are made of)
 	for cid in G.nodes:      # a seed that is only bartered (woad, saffron …): wanted while the crop's yield is short, with the barter price
 		var cn = G.nodes[cid]
 		if cn["type"] != "crop" or not cn.has("seedItem") or not G.done(cid): continue
@@ -369,6 +372,7 @@ func _needed_items() -> Dictionary:
 			if G.nodes[mid]["type"] == "merchant" and G.done(mid) and G.nodes[mid].get("barter", {}).has(cn["seedItem"]):
 				for x in G.nodes[mid]["barter"][cn["seedItem"]]:
 					if x != "coins": need[x] = maxf(float(need.get(x, 0.0)), float(G.nodes[mid]["barter"][cn["seedItem"]][x]))
+	_expand_needs(need)      # …and what the barter prices are made of
 	for aid in G.nodes:
 		if G.nodes[aid]["type"] == "animal" and G.done(aid):
 			for fk in G.nodes[aid].get("feed", {}): need[fk] = maxf(float(need.get(fk, 0.0)), 6.0)
