@@ -149,6 +149,7 @@ func show_quiz_id(id: String) -> void:
 
 func show_time_quiz(forced: Dictionary = {}) -> void:
 	var q: Dictionary = forced if not forced.is_empty() else G.knowledge.next_time_question()
+	M.playback.begin()          # the farm keeps its old look until the pop-up closes (J4)
 	var box := M.modals.open_modal(tr("❓ Time Quiz"))
 	Sound.music("quiz")
 	box.add_child(UI.header(null, "⏳", 64))

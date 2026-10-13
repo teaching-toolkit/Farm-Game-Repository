@@ -19,6 +19,9 @@ func sheet_title() -> String: return M.sheet_title.text
 func goal_id() -> String: return M.goal_id
 func celebrations() -> Array: return M.celebration_queue
 func rest_state() -> Dictionary: return M.rest_state
+func info_text() -> String: return M.lbl_info.text         # "Chapter 1 · question 12": only changes when the farm has caught up
+func playback_held() -> bool: return M.playback.held
+func playback_playing() -> bool: return M.playback.playing
 func is_open(spot: String) -> bool: return M.mapview.is_open(spot)
 func mystery(spot: String) -> bool: return M.mapview.mystery(spot)
 
@@ -29,6 +32,8 @@ func show_card(cid: String) -> void: M.cards.show_card(cid)
 func tap_patch(area: String, i: int) -> void: M.patches.on_patch(area, i)
 func show_time_quiz() -> void: M.timequiz.show_time_quiz()
 func show_question(box: VBoxContainer, q: Dictionary, on_done: Callable) -> void: M.timequiz.question(box, q, on_done)
+func playback_speed(f: float) -> void: M.playback.speed = f     # 0 = the farm catches up after the Time Quiz without waiting
+func tap_playback() -> void: M.playback.finish()
 func show_rest() -> void: M.rest.show_rest()
 func go_rest() -> void: M.rest.go_rest()
 func rest_go() -> void: M.rest.rest_go()

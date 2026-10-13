@@ -13,6 +13,7 @@ func _ready() -> void:
 	D = preload("res://tests/ui_driver.gd").new(M)
 	await _frames(3)
 	D.close_modal()
+	D.playback_speed(0.0)          # the farm catches up after a Time Quiz without waiting (the J4 check below runs at the real speed)
 	# 1) open the book and pass the first card's quiz
 	D.show_card("k_wheat")
 	await _frames(2)
@@ -68,6 +69,53 @@ func _ready() -> void:
 	print("go rest: window not yet open at once %s, open after the walk %s" % [not rest_open_early, D.modal_visible()])
 	if rest_open_early or not D.modal_visible(): print("FAIL go rest: the window must open after the walk, not at once")
 	D.close_modal()
+	# J4: while the Time Quiz is open the farm keeps its old look; after it closes it catches up, and a tap jumps to the end
+	D.playback_speed(1.0)
+	var info0: String = D.info_text()
+	D.show_time_quiz()
+	await _frames(2)
+	G.step_time()
+	await _frames(3)
+	var j4_held: bool = D.info_text() == info0 and D.playback_held()
+	D.close_modal()
+	await _frames(3)
+	var j4_waiting: bool = D.info_text() == info0 and D.playback_playing()
+	await get_tree().create_timer(3.8).timeout       # pause, rain (if it rained), the plants flicking, the last moment
+	var j4_caught: bool = D.info_text() != info0 and not D.playback_playing()
+	var info1: String = D.info_text()
+	D.show_time_quiz()
+	await _frames(2)
+	G.step_time()
+	D.close_modal()
+	await _frames(3)
+	D.tap_playback()
+	await _frames(2)
+	var j4_skipped: bool = D.info_text() != info1 and not D.playback_playing() and not D.playback_held()
+	print("playback: held while open %s, old look while waiting %s, caught up %s, a tap skips %s" % [j4_held, j4_waiting, j4_caught, j4_skipped])
+	if not (j4_held and j4_waiting and j4_caught and j4_skipped): print("FAIL playback: see the line above")
+	D.playback_speed(0.0)
+	await _frames(6)                 # refreshes still queued from the lines above must not cut the flick short
+	# J4: a plant that moved on by two stages shows the one in between, 0.3 s each, and ends in the new state
+	var fv0 = D.map().fields[0]
+	var fp0: Dictionary = G.S["patches"][0]
+	var fp0_saved: Dictionary = fp0.duplicate(true)
+	fp0["crop"] = "crop_wheat"; fp0["plants"] = 1.0; fp0["growth"] = 0.0; fp0["ready"] = false
+	fv0.refresh()
+	fp0["growth"] = G.fields.grow_target(fp0); fp0["ready"] = true
+	fv0.refresh(true)
+	var seen := [str(fv0.patches[0].spec["stage"])]       # the stages the patch shows, in order, over the next second
+	var t_flick := Time.get_ticks_msec()
+	while Time.get_ticks_msec() - t_flick < 1000:
+		await get_tree().process_frame
+		var st_now := str(fv0.patches[0].spec["stage"])
+		if seen[seen.size() - 1] != st_now: seen.append(st_now)
+	print("flick: ", seen, "  (ms per frame about ", 1000.0 / maxf(1.0, float(Engine.get_frames_per_second())), ")")
+	var fl_start: String = seen[0]
+	var fl_mid: String = seen[1] if seen.size() > 2 else ""
+	var fl_end: String = seen[seen.size() - 1]
+	if not (fl_start == "sprout" and fl_mid == "grown" and fl_end == "ready"): print("FAIL flick: the plant must go sprout, grown, ready")
+	for k in fp0_saved: fp0[k] = fp0_saved[k]
+	fv0.refresh()
 	# r9: a sum left unanswered (back to the farm) leaves no trace in the learning record
 	D.show_rest()
 	await _frames(1)

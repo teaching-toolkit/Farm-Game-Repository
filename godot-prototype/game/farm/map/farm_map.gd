@@ -361,7 +361,7 @@ func patch_rect(f: int, k: int) -> Rect2:
 	return to_map(r)
 
 ## Redraws the fields, the scarecrow and the pests (called by the main screen on every change).
-func refresh_fields(G) -> void:
+func refresh_fields(G, flick := false) -> void:
 	usable_fields = maxi(1, int(ceilf(float(G.progression.plots()) / 9.0)))
 	var sid := ""
 	var em := ""
@@ -393,7 +393,7 @@ func refresh_fields(G) -> void:
 		fv.has_scarecrow = sid != ""
 		fv.scare_level = level
 		fv.scare_from = feet - Vector2(0, h * 0.75) - fv.position
-		fv.refresh()
+		fv.refresh(flick)
 	var share: float = G.fields.pest_eat_share()
 	var any_growing := total > 0
 	pests_box.visible = any_growing and share >= 0.005
@@ -428,6 +428,16 @@ func _layout_pill() -> void:
 ## What happened while a pop-up was open (pests eating) plays when the farm is visible again.
 func play_pending() -> void:
 	for fv in fields: fv.play_pending()
+
+## The rain of the last question(s) drifts over the fields.
+func play_rain() -> void:
+	for fv in fields: fv.play_rain()
+
+## The playback is skipped: plants stop flicking, rain and pests are not played.
+func skip_playback() -> void:
+	for fv in fields:
+		fv.finish_flicks()
+		fv.skip_pending()
 
 ## Shows the add-ons that are built (and not replaced by a newer one).
 func refresh_addons(G) -> void:

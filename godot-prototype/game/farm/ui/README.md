@@ -16,6 +16,7 @@ Parts call each other as `M.<part>.<function>`. Functions with a leading `_` are
 | `notes` | toasts and the explanations of bars and buttons |
 | `celebrations` | the big pop-up for something new |
 | `timequiz` | the Time Quiz question pop-up, read aloud |
+| `playback` | after the Time Quiz: the farm keeps its old look while the quiz is open, then a pause, rain, plants flicking through their stages, bars pulsing, pests, notes; a tap skips (J4) |
 | `rest` | Rest: start page and sums |
 | `feedback` | the farmer's acts, animal voices, sounds, coins landing |
 | `cards` | knowledge cards: page, quiz |

@@ -28,6 +28,7 @@ var modals: FarmUiModals
 var notes: FarmUiNotes
 var pantry: FarmUiPantry
 var patches: FarmUiPatches
+var playback: FarmUiPlayback
 var placesheet: FarmUiPlaceSheet
 var questlog: FarmUiQuestLog
 var rest: FarmUiRest
@@ -96,6 +97,7 @@ func _make_parts() -> void:
 	notes = FarmUiNotes.new(self)
 	pantry = FarmUiPantry.new(self)
 	patches = FarmUiPatches.new(self)
+	playback = FarmUiPlayback.new(self)
 	placesheet = FarmUiPlaceSheet.new(self)
 	questlog = FarmUiQuestLog.new(self)
 	rest = FarmUiRest.new(self)
@@ -359,6 +361,7 @@ func queue_refresh() -> void:
 
 func refresh() -> void:
 	_queued = false
+	if playback.held: return          # the Time Quiz is open (or its playback has not caught up): the screen keeps the old state
 	var S: Dictionary = G.S
 	lbl_coins.text = "🪙 %d" % G.down(S["coins"])
 	water_bar.have = float(S["water"]); water_bar.cap = G.needs.water_cap(); water_bar.refresh()
@@ -395,7 +398,7 @@ func refresh() -> void:
 	map.ground.set_season(G.seasons.season(), mapview.fence_level())
 	# fields, add-ons and the house yard
 	field_idx = clampi(field_idx, 0, maxi(0, G.fields.field_names().size() - 1))
-	map.refresh_fields(G)
+	map.refresh_fields(G, playback.flicking)
 	map.refresh_addons(G)
 	map.set_house_built(mapview.built("home"))
 	# places on the map

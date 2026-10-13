@@ -49,7 +49,13 @@ func close_modal() -> void:
 	M.modal.visible = false
 	M.widgets.clear(M.modal_box)
 	M.rest_state = {}
-	M.queue_refresh()
+	if M.playback.held: M.playback.play(_after_close)      # after the Time Quiz the farm catches up first (J4)
+	else:
+		M.queue_refresh()
+		_after_close()
+
+## What follows a closed pop-up: things flying to the store, the notes, a gift or a celebration waiting.
+func _after_close() -> void:
 	M.mapview.play_fx.call_deferred()
 	for t in M.after_close: M.notes.toast(t)
 	M.after_close.clear()

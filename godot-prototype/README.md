@@ -244,7 +244,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   on the device. The flags are read in `game/farm/dev/dev_flags.gd` (the screen) and `Game._test_args()` (the rules).
 - Screenshots and tests: `--player=Name`, `--newgame`, `--timestep=N`, `--spot=storage`, `--patch=K`, `--unlock=id,id`, `--load=res://tests/fixtures/ch3-seed1.json` (start from a saved farm),
   `--give=item:5`, `--water=1` (carried water), `--menu` (⚙️ Settings), `--grownup` (its grown-up part open), `--password` (the password box), `--celebrate=id`, `--postcard`, `--perks=all` (or a list of perk ids), `--rainbow`, `--rest` (the Rest start page; add `--restgo` for the sums), `--qid=PIC-004`
-  (one Time Quiz question), `--lang=de` (quiz texts in German), `--shot=file.png`.
+  (one Time Quiz question), `--lang=de` (quiz texts in German), `--toasts` (a stack of notification cards), `--sheetscroll=N` (the open window scrolled down, 9999 = to the end; use with `--shotframes=100`), `--pulse` (the energy bar's pulse and floating number), `--shot=file.png`.
 
 ## Changing content (no code needed)
 - **`data/farm/`** — the whole tree, split into files (since R8, 13 Oct 2026): `items.json`, `recipes.json`, `chapters.json`, `start.json`; `nodes/NN-theme.json` (the

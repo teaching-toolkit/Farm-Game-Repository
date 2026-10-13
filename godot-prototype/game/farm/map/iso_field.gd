@@ -61,6 +61,10 @@ const PEST_ART := {"🐦": "bird", "🐇": "rabbit", "🐌": "slug", "🐛": "ca
 var pending_eats: Array = []     # [{k, cells, crop}] eaten while a pop-up was open: shown when the farm is visible again
 var pending_scare := 0           # pests the scarecrow chased off in the last question(s)
 var scare_level := 0             # how many fierce looks the scarecrow throws at once (its level)
+var pending_rain := false        # it rained in the last question(s): the playback after the Time Quiz shows it (play_rain)
+var _flicks: Array = []          # tweens of plants flicking through their stages (killed when the playback is skipped)
+const STAGES := ["sprout", "grown", "ready"]
+const FLICK_SECS := 0.3          # how long each in-between stage shows
 
 func setup(patch_w: float, gap_w := 14.0) -> void:
 	patch = patch_w
@@ -134,7 +138,9 @@ func _on_patch(k: int) -> void:
 func _wild_info(i: int) -> Array:
 	return G.fields.patch_wild(field_index, i)
 
-func refresh() -> void:
+## flick = true: a plant that has moved on goes through every stage in between (sprout, grown, ready), 0.3 s each, instead of jumping.
+func refresh(flick := false) -> void:
+	finish_flicks()
 	var arr: Array = G.fields.area(area_name)
 	usable.resize(9)
 	for k in range(9):
@@ -155,7 +161,7 @@ func refresh() -> void:
 				var frac := float(p["growth"]) / maxf(0.01, G.fields.grow_target(p))
 				spec["stage"] = "ready" if p["ready"] else ("sprout" if frac < 0.5 else "grown")
 				spec["ready"] = p["ready"]
-		patches[k].show_state(spec)
+		if not (flick and _flick_patch(k, spec)): patches[k].show_state(spec)
 	# what stands round the field and in the gaps
 	var fence_on := ""
 	for id in FENCE_IDS:
@@ -176,6 +182,28 @@ func refresh() -> void:
 	borders.queue_redraw()
 	front.queue_redraw()
 	call_deferred("_sync_critters")
+
+## A plant that moved on by more than the picture changes: show the stages in between, one after the other (true when it did).
+## The patch keeps its old picture (weeds, stones too) until the first change; the last step is the new state.
+func _flick_patch(k: int, spec: Dictionary) -> bool:
+	var old: Dictionary = patches[k].spec
+	if old.is_empty() or str(old.get("crop", "")) == "" or old.get("crop", "") != spec["crop"]: return false
+	var a := STAGES.find(str(old.get("stage", "")))
+	var b := STAGES.find(str(spec["stage"]))
+	if a < 0 or b <= a: return false
+	var tw := create_tween()
+	for j in range(a + 1, b + 1):
+		tw.tween_interval(FLICK_SECS)
+		var step := spec if j == b else spec.merged({"stage": STAGES[j], "ready": false}, true)
+		tw.tween_callback(patches[k].show_state.bind(step))
+	_flicks.append(tw)
+	return true
+
+## Stops the flicking at once (the next refresh() shows the final state).
+func finish_flicks() -> void:
+	for tw in _flicks:
+		if tw.is_valid(): tw.kill()
+	_flicks.clear()
 
 # ------------------------------------------------------------------ fence and borders
 func _draw_fence(ci: Control, front_sides: bool) -> void:
@@ -339,14 +367,7 @@ func _throw_look(target: Label, chase: bool) -> void:
 
 func _on_step(info: Dictionary) -> void:
 	if has_scarecrow: pending_scare += int(info.get("removed", 0))
-	if info.get("rain", false):
-		var rain := UI.label("🌧️🌧️🌧️", 30)
-		rain.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		rain.position = Vector2(-140, -20)
-		layer.add_child(rain)
-		var tw := create_tween()
-		tw.tween_property(rain, "position", Vector2(size.x + 20, size.y * 0.4), 1.6)
-		tw.tween_callback(rain.queue_free)
+	if info.get("rain", false): pending_rain = true
 	# plants the pests ate: remember them, a bird shows it when the farm is visible again
 	if area_name != "field": return
 	var eaten: Dictionary = info.get("eaten", {})
@@ -358,6 +379,24 @@ func _on_step(info: Dictionary) -> void:
 		var lost := int(eaten[i])
 		var cells: Array = IsoPatch.FILL.slice(after, mini(9, after + lost))
 		pending_eats.append({"k": k, "cells": cells, "crop": str(p["crop"]), "stage": patches[k].spec.get("stage", "grown")})
+
+## Rain drifts over the field (the playback after the Time Quiz starts it, when it rained).
+func play_rain() -> void:
+	if not pending_rain: return
+	pending_rain = false
+	var rain := UI.label("🌧️🌧️🌧️", 30)
+	rain.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	rain.position = Vector2(-140, -20)
+	layer.add_child(rain)
+	var tw := create_tween()
+	tw.tween_property(rain, "position", Vector2(size.x + 20, size.y * 0.4), 1.6)
+	tw.tween_callback(rain.queue_free)
+
+## The playback was skipped: no more rain, no pests eating (the plants are gone from the patches anyway).
+func skip_pending() -> void:
+	pending_rain = false
+	pending_eats.clear()
+	pending_scare = 0
 
 ## Plays what happened while a pop-up was open: pests eating (one animal per plant that is gone).
 ## Plays what happened while a pop-up was open, at the start of the new interval: first the scarecrow throws its
