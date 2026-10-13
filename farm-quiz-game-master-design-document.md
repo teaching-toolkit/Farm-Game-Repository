@@ -337,7 +337,7 @@ question. When there is not enough water to plant, a pop-up with a crossed-out d
 Coins come from **selling** — never from answering questions. They buy seeds, animals, books, materials from merchants and
 the coin part of some buildings. The game starts with **0 coins**; the first coins come from porridge.
 
-**Prices from ingredients** (`meta.pricing`). Everything that is made is priced from what goes into it: the worth of the
+**Prices from ingredients** (`meta.pricing`; *the realistic prices of TODO M1/D3 are planned*). Everything that is made is priced from what goes into it: the worth of the
 inputs × (1.25 + 0.1 for each different ingredient beyond the first) + ½ coin per energy, per fuel point and per question
 it takes + 0.2 per water. So a dish of four different things pays more than its parts, and a dish made from dishes more
 again (porridge 4, roast carrots 7, omelette 16, honey cake 49, apple pie 72, pizza 166, cheese board 212). Things a merchant
@@ -353,6 +353,9 @@ something sold a lot lately. Selling a mix pays best.
 fetches (🪙2 → 🪙4).
 
 **Sell bonuses:** Market Stall +10 %, the pony +10 %, four Harvest Fair ribbons, the *Fair prices* card, gifts.
+
+**Quality pays.** A grown or made thing has a grade (§8.5): Lumpy sells for 60 %, Proper for 100 %, Fancy for 150 %. Selling goes best grade first
+(so the market's "lots sold lately" drop falls on the cheaper ones).
 
 ### 5.4 Seeds
 
@@ -603,6 +606,25 @@ stale food go to the **compost**, grain and fodder **feed animals**, beeswax wax
 gear, frost stones build the field wall, feathers fill pillows, linseed oil oils tools and looms.
 
 ---
+
+### 8.5 Quality — Lumpy, Proper, Fancy
+
+Grown and made things come in three **grades**: ⭐ **Lumpy** (German *Naja*), ⭐⭐ **Proper** (*Tiptop*), ⭐⭐⭐ **Fancy** (*Picobello!*). Crops, ingredients, dishes,
+crafts and cloth have a grade; raw materials (sticks, stones, logs …), animal products and seeds do not. The store keeps each grade apart
+(a tile says ⭐⭐⭐ 2 ⭐⭐ 5), and a recipe that needs something uses the **lowest grade first**, so the good ones are kept for selling.
+
+- **How a grade is decided** (once, when the thing is made; numbers in `data/farm/rules/47-quality.json`): from an *expected grade E*, where
+  Proper is 1.0. The result is the whole part of E plus a coin flip on the fraction, then a 7 % chance of one grade more and 7 % of one less —
+  so with E = 1.0 a thing is Proper 86 % of the time and the average price stays at 100 %.
+  - **Crops**: rested soil +0.25, tired soil −0.3; weeds beyond two −0.1 each (at most −0.4); stones −0.05 each (at most −0.3); a patch not cleared
+    completely −1.5 × what is missing; field upgrades (raised beds, stone borders, deep beds, shovels, compost) add 0.05–0.15 each. A patch's whole
+    harvest has one grade.
+  - **Recipes**: the station in use (a campfire −0.1, an oven +0.1 … a Master Oven +0.2, a marble prep table +0.15) and the grades of the inputs it will
+    use (0.6 × their average distance from Proper: Fancy flour makes better bread). *(planned, with skills (Y2):* every rank adds a bit.)
+- **What the player sees:** *Expect: ⭐⭐ Proper* on every recipe tile and on a ripe patch, with *· maybe ⭐⭐⭐* when another grade is a real chance
+  (a quarter or more); the grade after each harvest and each batch ("✨ Porridge ready: 🥣1 ⭐⭐").
+- **Saves.** A store from before the grades counts as Proper.
+- *(planned)* Some key deliveries ask for at least Proper; the badger's "really good medicine" is simply Fancy.
 
 ## 9. Building and upgrading
 

@@ -184,18 +184,21 @@ func start_recipe(rid: String) -> bool:
 		if float(G.S["woodpile"]) + 0.0001 < fuel:
 			G.say(tr("🪵 Stoke the woodpile first: this needs %d fuel, the woodpile has %d.") % [G.up(fuel), G.down(G.S["woodpile"])]); return false
 		G.S["woodpile"] = float(G.S["woodpile"]) - fuel
+	G.inventory.start_track()
 	G.pace.pay(c)
+	var input_avg := G.inventory.stop_track()          # the grades of the inputs that were used up (-1: none had a grade)
+	var grade := G.quality.roll_recipe(rid, input_avg) if makes_graded(rid) else -1
 	G.S["practice"][root] = int(G.S["practice"].get(root, 0)) + 1
 	wear_polish("use:" + recipe_cat(rid))
 	var t := recipe_time(rid)
 	if t <= 0.0:
-		_recipe_out(rid, n)
+		_recipe_out(rid, n, grade)
 	elif now:
-		_recipe_out(rid, n)                 # gathered right away; the spot refills over the next question(s)
+		_recipe_out(rid, n, grade)                 # gathered right away; the spot refills over the next question(s)
 		running.append({"recipe": rid, "left": t, "cool": true})
 		G.S["running"][root] = running
 	else:
-		running.append({"recipe": rid, "left": t, "n": n})
+		running.append({"recipe": rid, "left": t, "n": n, "grade": grade})
 		G.S["running"][root] = running
 		G.say((tr("⏳ %s: ready in %d question.") if G.up(t) == 1 else tr("⏳ %s: ready in %d questions.")) % [r.get("name", G.iname(r["outputs"].keys()[0])), G.up(t)])
 	G.rewards.job_progress("make", rid, 1.0)
@@ -207,7 +210,13 @@ func start_recipe(rid: String) -> bool:
 	G.save_game(); G.changed.emit()
 	return true
 
-func _recipe_out(rid: String, n := 1) -> void:
+## Does a recipe make something that has a grade (a dish, an ingredient, a craft, cloth)?
+func makes_graded(rid: String) -> bool:
+	for k in G.recipes[rid]["outputs"]:
+		if G.quality.graded(k): return true
+	return false
+
+func _recipe_out(rid: String, n := 1, grade := -1) -> void:
 	var r = G.recipes[rid]
 	var got := []
 	var arrived := {}
@@ -215,10 +224,11 @@ func _recipe_out(rid: String, n := 1) -> void:
 		var q := float(r["outputs"][k]) * G.m("out:" + r["station"]) * float(n)
 		var gm = G.seasons.smod("gather", {})
 		if typeof(gm) == TYPE_DICTIONARY and gm.has(rid): q *= float(gm[rid])
-		q = G.inventory.add_item(k, q)
+		q = G.inventory.add_item(k, q, false, grade)
 		arrived[k] = q
 		got.append("%s%d" % [G.iemoji(k), G.down(q)])
-	G.say(tr("✨ %s ready: %s") % [str(r.get("name", G.iname(r["outputs"].keys()[0]))), " ".join(got)])
+	var shown_grade := "  " + G.quality.stars(grade if grade >= 0 else G.quality.default_grade()) if makes_graded(rid) else ""
+	G.say(tr("✨ %s ready: %s") % [str(r.get("name", G.iname(r["outputs"].keys()[0]))), " ".join(got)] + shown_grade)
 	G.inventory.emit_gained("recipe:" + rid, arrived)
 
 ## Stations whose output comes at once (gathering at the field edge): each recipe then rests for its time.
@@ -240,7 +250,7 @@ func tick_stations(_info := {}) -> void:
 		for job in arr:
 			job["left"] = float(job["left"]) - 1.0
 			if float(job["left"]) <= 0.0001:
-				if not job.get("cool", false): _recipe_out(job["recipe"], int(job.get("n", 1)))
+				if not job.get("cool", false): _recipe_out(job["recipe"], int(job.get("n", 1)), int(job.get("grade", -1)))
 			else: keep.append(job)
 		G.S["running"][root] = keep
 

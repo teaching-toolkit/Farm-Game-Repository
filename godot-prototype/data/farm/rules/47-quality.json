@@ -1,0 +1,89 @@
+{
+  "quality": {
+    "note": "Quality of made and grown things (TODO Y1): three grades, Lumpy / Proper / Fancy (German Naja / Tiptop / Picobello!). Only the categories listed have a grade; raw materials do not. An item's grade is decided when it is made: an expected grade E (Proper = 1.0) from what went into it, then floor(E) plus a coin flip on the fraction, then a small chance of one grade more or less.",
+    "categories": [
+      "crop",
+      "ingredient",
+      "dish",
+      "craft",
+      "textile"
+    ],
+    "levels": [
+      {
+        "name": "Lumpy",
+        "stars": 1,
+        "price": 0.6
+      },
+      {
+        "name": "Proper",
+        "stars": 2,
+        "price": 1.0
+      },
+      {
+        "name": "Fancy",
+        "stars": 3,
+        "price": 1.5
+      }
+    ],
+    "default": 1,
+    "chance": {
+      "up": 0.07,
+      "down": 0.07
+    },
+    "ingredients": {
+      "weight": 0.6
+    },
+    "crop": {
+      "restedSoil": 0.25,
+      "tiredSoil": -0.3,
+      "weedsFree": 2,
+      "perWeed": -0.1,
+      "weedsMax": -0.4,
+      "perStone": -0.05,
+      "stonesMax": -0.3,
+      "unfinishedClearing": 1.5,
+      "bonusNodes": {
+        "patch_raised": 0.1,
+        "patch_stone": 0.1,
+        "patch_deep": 0.15,
+        "patch_master": 0.15,
+        "wooden_shovel": 0.05,
+        "iron_shovel": 0.1,
+        "compost_bin": 0.05,
+        "compost_bin_2": 0.1,
+        "worm_bin": 0.1
+      }
+    },
+    "stationBonus": {
+      "campfire": -0.1,
+      "stove_1": 0.0,
+      "stove_2": 0.1,
+      "stove_3": 0.2,
+      "oven_1": 0.0,
+      "oven_2": 0.1,
+      "oven_3": 0.2,
+      "chopping_block": 0.0,
+      "prep_table_1": 0.05,
+      "prep_table_2": 0.15,
+      "quern": 0.0,
+      "food_processor": 0.1,
+      "spindle": 0.0,
+      "spinning_wheel": 0.15,
+      "hand_loom": 0.0,
+      "textile_loom": 0.15,
+      "workbench": 0.0,
+      "carpenter_bench": 0.1,
+      "sawbench": 0.15,
+      "cellar": 0.05,
+      "cheese_vat": 0.05,
+      "churn": 0.0,
+      "dye_vat": 0.0,
+      "fermenter": 0.0,
+      "honey_extractor": 0.0,
+      "pond_station": 0.0,
+      "press": 0.0,
+      "windmill_1": 0.0,
+      "windmill_2": 0.1
+    }
+  }
+}

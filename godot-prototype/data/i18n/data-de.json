@@ -9567,6 +9567,18 @@
   "en": "Rest",
   "de": "Ausruhen"
  },
+ "meta/quality/levels/0/name": {
+  "en": "Lumpy",
+  "de": "Naja"
+ },
+ "meta/quality/levels/1/name": {
+  "en": "Proper",
+  "de": "Tiptop"
+ },
+ "meta/quality/levels/2/name": {
+  "en": "Fancy",
+  "de": "Picobello!"
+ },
  "meta/luck/events/0/text": {
   "en": "A lost coin in the weeds!",
   "de": "Eine verlorene Münze im Unkraut!"

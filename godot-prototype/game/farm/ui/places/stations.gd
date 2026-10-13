@@ -69,7 +69,7 @@ func station_card(root: String) -> PanelContainer:
 	var running: Array = G.S["running"].get(root, [])
 	var stars: int = G.needs.stars(root)
 	var now: bool = G.crafting.output_now(root)      # gathering: things come at once, each spot then refills (hourglass in its row)
-	v.add_child(UI.label("%s %s   %s" % [n.get("emoji", ""), n["name"], "⭐".repeat(stars)], 19, UI.INK, true))
+	v.add_child(UI.label("%s %s%s" % [n.get("emoji", ""), n["name"], (tr("   practice %d") % stars) if stars > 0 else ""], 19, UI.INK, true))
 	var soonest := 999
 	for job in running: soonest = mini(soonest, G.up(job["left"]))
 	var att := []
@@ -123,6 +123,7 @@ func station_card(root: String) -> PanelContainer:
 		var t := M.widgets.tile(Art.first("items", [out0]), G.iemoji(out0), title)
 		t.add_child(UI.rich("→ %s  [color=#7a705c]%s[/color]%s" % [" ".join(outs), " ".join(extra),
 			("\n[color=#3c8a3c]🪙%s → 🪙%s[/color]" % [M.widgets.num(wv.x), M.widgets.num(wv.y)]) if wv.y > 0.0 else ""], 15))
+		if G.crafting.makes_graded(rid): t.add_child(UI.label(tr("Expect: %s") % G.quality.expect_text(G.quality.recipe_expect(rid)), 14, UI.MUTED, true))
 		t.add_child(M.widgets.costs(c, base))
 		var have_all: bool = G.pace.missing_cost(G.crafting.recipe_cost(rid, 1)).is_empty() and M.widgets.have_any("fuel") + 0.001 >= fuel   # a smaller load still works
 		# everything else is there, only the woodpile needs wood first: then the button stokes it

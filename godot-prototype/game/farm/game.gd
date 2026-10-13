@@ -81,7 +81,7 @@ var buying := false      # bought things are not "produced"
 var test_seed := -1
 ## The version of the save layout (kits/core/saves.gd). A save without a "version" is version 0. Every change to the layout of a save
 ## adds an upgrade step in save_steps() and raises this number; tests/fixtures/ keeps old saves that must still load.
-const SAVE_VERSION := 1
+const SAVE_VERSION := 2
 const TEST_CLOCK_START := 1800000000.0   # a fixed moment in 2027; one step of time counts as 10 minutes
 
 ## The systems: each owns one part of the rules and works on the farm's state G.S (see game/farm/systems/).
@@ -97,6 +97,7 @@ var trade: FarmTrade
 var knowledge: FarmKnowledge
 var rewards: FarmRewards
 var reveal: FarmReveal
+var quality: FarmQuality
 
 func _init() -> void:
 	seasons = FarmSeasons.new(self)
@@ -111,6 +112,7 @@ func _init() -> void:
 	knowledge = FarmKnowledge.new(self)
 	rewards = FarmRewards.new(self)
 	reveal = FarmReveal.new(self)
+	quality = FarmQuality.new(self)
 
 # ------------------------------------------------------------------ start, seed and clock
 
@@ -327,7 +329,15 @@ func save_to(path: String) -> void:
 
 ## The upgrade steps from older save layouts, in order (kits/core/saves.gd). A step takes the save from the version before its "to".
 func save_steps() -> Array:
-	return [{"to": 1, "name": "saves from before the version number: gift offers become postcards, the gift shop is gone, the first cards owned are the active ones", "fn": upgrade_save_v0}]
+	return [{"to": 1, "name": "saves from before the version number: gift offers become postcards, the gift shop is gone, the first cards owned are the active ones", "fn": upgrade_save_v0},
+		{"to": 2, "name": "quality: every batch of a thing that has a grade now says which (what was in the store is Proper)", "fn": upgrade_save_v1}]
+
+func upgrade_save_v1(save: Dictionary) -> void:
+	var inv: Dictionary = save.get("inv", {})
+	for k in inv:
+		if not items.has(k) or not quality.graded(k): continue
+		for b in inv[k]:
+			if b.size() == 2: b.append(quality.default_grade())
 
 func upgrade_save_v0(save: Dictionary) -> void:
 	# gift cards from before: offers waiting become postcards from "a friend"; the gift shop is gone

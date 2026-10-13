@@ -201,6 +201,21 @@ for iid, it in ITEMS.items():
     if iid not in W.get("items", {}) and it.get("category") not in W.get("byCategory", {}):
         err("weights", f"item {iid} (category {it.get('category')}) has no weight class: give it an entry in items or its category one in byCategory")
 
+# ---------------------------------------------------------------- quality (rules/47-quality.json)
+Qd = META.get("quality", {})
+cats_known = {it.get("category") for it in ITEMS.values()}
+for c in Qd.get("categories", []):
+    if c not in cats_known: err("quality", f"category {c} has no item")
+if len(Qd.get("levels", [])) < 2: err("quality", "needs at least two grades")
+for lv in Qd.get("levels", []):
+    if not lv.get("name") or not isinstance(lv.get("price"), (int, float)) or lv["price"] <= 0: err("quality", f"grade {lv}: a name and a price above 0")
+if not 0 <= Qd.get("default", 1) < len(Qd.get("levels", [])): err("quality", "default grade is not one of the grades")
+for nid in Qd.get("crop", {}).get("bonusNodes", {}): node_id("quality crop bonus", nid, "node")
+for sid in Qd.get("stationBonus", {}): node_id("quality station bonus", sid, "station")
+for rid, r in RECIPES.items():
+    if any(ITEMS.get(k, {}).get("category") in Qd.get("categories", []) for k in r["outputs"]) and r["station"] not in Qd.get("stationBonus", {}):
+        warn("quality", f"recipe {rid} makes something with a grade at {r['station']}, which has no stationBonus (it counts 0)")
+
 # ---------------------------------------------------------------- places (data/farm/places.json)
 spots = set(PLACES["spots"])
 rules = PLACES["nodeSpots"]

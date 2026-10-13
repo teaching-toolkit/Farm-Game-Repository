@@ -28,7 +28,7 @@ func _ready() -> void:
 	_check(int(G.S["version"]) == G.SAVE_VERSION, "a new game has the current version (%d)" % G.SAVE_VERSION)
 	# every system's defaults are in a new game, and no two systems own the same key
 	var seen := {}
-	for sys in [G, G.seasons, G.inventory, G.needs, G.progression, G.fields, G.animals, G.crafting, G.knowledge, G.rewards, G.trade]:
+	for sys in [G, G.seasons, G.inventory, G.needs, G.progression, G.fields, G.animals, G.crafting, G.knowledge, G.rewards, G.trade, G.reveal]:
 		for k in sys.save_defaults():
 			_check(not seen.has(k), "save key %s has one owner" % k)
 			seen[k] = true
@@ -61,6 +61,18 @@ func _ready() -> void:
 	var before := JSON.stringify(G.S, "", true)
 	G.upgrade_save_v0(G.S)
 	_check(JSON.stringify(G.S, "", true) == before, "the version 0 step is harmless when run again")
+	# version 1 -> 2: what is in the store and has a grade now says so (Proper); raw materials stay as they are
+	var v1: Dictionary = G.S.duplicate(true)
+	v1["version"] = 1
+	v1["inv"] = {"bread": [[0, 2.0]], "stone": [[0, 3.0]], "carrot": [[1, 1.0, 2]]}
+	G.Saves.write("user://saves_test.json", v1)
+	_check(G.load_game("user://saves_test.json"), "a version 1 save loads")
+	_check(G.S["inv"]["bread"][0].size() == 3 and int(G.S["inv"]["bread"][0][2]) == 1, "…a batch of bread is now Proper")
+	_check(G.S["inv"]["stone"][0].size() == 2, "…a batch of stone has no grade")
+	_check(int(G.S["inv"]["carrot"][0][2]) == 2, "…a grade that was already there stays")
+	var before2 := JSON.stringify(G.S["inv"], "", true)
+	G.upgrade_save_v1(G.S)
+	_check(JSON.stringify(G.S["inv"], "", true) == before2, "the version 1 step is harmless when run again")
 	# a save from a newer game is kept as it is
 	var future: Dictionary = G.S.duplicate(true)
 	future["version"] = G.SAVE_VERSION + 5

@@ -195,16 +195,17 @@ func harvest(a: String, i: int) -> bool:
 	var got := []
 	var arrived := {}
 	var amounts := harvest_amounts(n, maxi(1, shown_plants(float(p["plants"]))), float(p.get("quality", 1.0)), mult)
+	var grade := G.quality.roll(G.quality.crop_expect(p))      # the whole harvest of a patch has one grade (soil, weeds, stones, upgrades)
 	for k in amounts:
 		var q := float(amounts[k]) + G.g("yield_" + k, 0.0)
-		q = G.inventory.add_item(k, q)
+		q = G.inventory.add_item(k, q, false, grade)
 		got.append("%s%d" % [G.iemoji(k), G.down(q)])
 		arrived[k] = q
 		G.rewards.job_progress("harvest", k, q)
 	if n.has("seedItem") and G.g("heirloomSeedSaving", 0.0) > 0.0: G.inventory.add_item(n["seedItem"], 1.0)
 	G.S["stats"]["harvests"] = int(G.S["stats"]["harvests"]) + 1
 	G.rewards.check_perks()
-	G.say(tr("🧺 Harvested %s: %s") % [n["name"], " ".join(got)])
+	G.say(tr("🧺 Harvested %s: %s") % [n["name"], " ".join(got)] + "  " + G.quality.stars(grade))
 	G.inventory.emit_gained("patch:%s:%d" % [a, i], arrived)
 	if n.has("regrow"):
 		p["growth"] = 0.0; p["ready"] = false; p["cycles"] = int(p.get("cycles", 0)) + 1

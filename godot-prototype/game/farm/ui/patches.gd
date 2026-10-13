@@ -105,6 +105,7 @@ func sheet_patch(a: String, i: int) -> void:
 		if p["ready"]:
 			var ys := ""
 			for k in n2.get("yields", {}): ys += G.iemoji(k).repeat(clampi(G.down(float(n2["yields"][k]) * float(p["plants"])), 1, 12))
+			M.content.add_child(UI.label(tr("Expect: %s") % G.quality.expect_text(G.quality.crop_expect(p)), 15, UI.MUTED, true))
 			var hr := UI.hbox(8)
 			var hb := UI.button(tr("🧺 Harvest   ") + ys, _do_harvest.bind(a, i), true, UI.GREEN, 20)
 			hb.custom_minimum_size = Vector2(0, 56)

@@ -27,26 +27,32 @@ func demand_factor(k: String, extra := 0.0) -> float:
 	if over <= 0.0: return 1.0
 	return maxf(float(mk.get("floor", 0.5)), 1.0 - float(mk.get("dropPerUnit", 0.1)) * over)
 
-func full_price(k: String) -> float:
-	return G.inventory.value_of(k) * (1.0 + G.g("sellBonusPct", 0.0) / 100.0)
+## What one unit of a grade would fetch before the market's demand: the item's value × the grade's price factor × the sell bonus.
+func full_price(k: String, grade := -1) -> float:
+	var f := 1.0
+	if G.quality.graded(k): f = G.quality.price_factor(G.quality.default_grade() if grade < 0 else grade)
+	return G.inventory.value_of(k) * f * (1.0 + G.g("sellBonusPct", 0.0) / 100.0)
 
-## What the next one would sell for right now.
+## What the next one would sell for right now (the best grade goes first).
 func sell_price(k: String) -> float:
-	return full_price(k) * demand_factor(k)
+	var gs := G.inventory.best_first(k, 1)
+	return full_price(k, int(gs[0]) if gs.size() > 0 else -1) * demand_factor(k)
 
-## What n of them would bring together right now (the market pays less after the first few of the same thing).
+## What n of them would bring together right now (best grade first; the market pays less after the first few of the same thing).
 func sell_total(k: String, n: int) -> float:
+	var gs := G.inventory.best_first(k, n)
 	var t := 0.0
-	for i in range(n): t += full_price(k) * demand_factor(k, float(i))
+	for i in range(n):
+		t += full_price(k, int(gs[i]) if i < gs.size() else -1) * demand_factor(k, float(i))
 	return t
 
 func sell(k: String, q: float) -> bool:
 	var n := minf(q, floorf(G.inventory.count(k) + 0.0001))
 	if n < 1.0 or not G.inventory.sellable(k): return false
-	G.inventory.take(k, n)
+	var gs := G.inventory.take_best(k, int(n))
 	var got := 0.0
 	for i in range(int(n)):
-		got += sell_price(k)
+		got += full_price(k, int(gs[i]) if i < gs.size() else -1) * demand_factor(k)
 		market_sold()[k] = float(market_sold().get(k, 0.0)) + 1.0
 	G.S["coins"] += got
 	G.rewards.job_progress("sell", k, n)

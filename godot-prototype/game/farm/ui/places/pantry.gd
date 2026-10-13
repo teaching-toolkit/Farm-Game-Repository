@@ -37,6 +37,14 @@ func part_pantry() -> void:
 		var keeper: bool = it.get("category", "") == "keeper"
 		v.add_child(UI.explain(UI.stock_bar(q, q if keeper else cap, UI.item_color(k, G.items), 190),
 			("%s %d %s" % [str(it.get("emoji", "")), G.down(q), str(it["name"])]) + ("" if keeper else tr(" — your store holds %d of each.") % G.down(cap))))
+		if G.quality.graded(k):      # how many of each grade: ⭐⭐⭐ 2  ⭐⭐ 5
+			var gs: Dictionary = G.inventory.grades(k)
+			var gk := gs.keys()
+			gk.sort()
+			gk.reverse()
+			var gparts := []
+			for g in gk: gparts.append("%s %d" % [G.quality.stars(int(g)), G.down(float(gs[g]))])
+			v.add_child(UI.label("   ".join(gparts), 14, UI.MUTED, true))
 		var row := HFlowContainer.new()
 		if it.has("buff"): row.add_child(UI.soft_button("😋", G.trade.eat.bind(k), true, 20))
 		if G.crafting.fuel_value(k) > 0.0: row.add_child(UI.soft_button("🔥", M.stations.stack.bind(k), true, 20))

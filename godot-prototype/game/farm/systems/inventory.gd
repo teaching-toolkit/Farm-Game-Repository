@@ -31,7 +31,9 @@ func have(k: String) -> float:
 	if k == "water": return G.S["water"]
 	return count(k)
 
-func add_item(k: String, q: float, quiet := false) -> float:
+## Puts q of an item into the store (what does not fit is told to the map). A graded item (G.quality.graded) comes in at `grade`
+## (-1: Proper); batches of the same season and grade merge. Returns what went in.
+func add_item(k: String, q: float, quiet := false, grade := -1) -> float:
 	if q <= 0.0 or not G.items.has(k): return 0.0
 	var cap := G.needs.storage_cap()
 	var room := cap - count(k)
@@ -44,10 +46,15 @@ func add_item(k: String, q: float, quiet := false) -> float:
 	if not G.S["inv"].has(k): G.S["inv"][k] = []
 	var arr: Array = G.S["inv"][k]
 	var sn := G.seasons.season_no()
-	if arr.size() > 0 and int(arr[arr.size() - 1][0]) == sn:
-		arr[arr.size() - 1][1] = float(arr[arr.size() - 1][1]) + put
-	else:
-		arr.append([sn, put])
+	var gr := -1
+	if G.quality.graded(k): gr = G.quality.default_grade() if grade < 0 else clampi(grade, 0, G.quality.max_grade())
+	var merged := false
+	for b in arr:
+		if int(b[0]) == sn and (gr < 0 or batch_grade(b) == gr):
+			b[1] = float(b[1]) + put
+			merged = true
+			break
+	if not merged: arr.append([sn, put] if gr < 0 else [sn, put, gr])
 	G.S["seen"][k] = true
 	return put
 
@@ -65,15 +72,113 @@ func take(k: String, q: float) -> bool:
 		G.S["coins"] -= q; return true
 	if count(k) + 0.0001 < q: return false
 	var arr: Array = G.S["inv"][k]
+	if G.quality.graded(k): _sort_for_use(arr)
 	var left := q
 	while left > 0.00001 and arr.size() > 0:
 		var b = arr[0]
 		var use := minf(float(b[1]), left)
+		if not _track.is_empty() and G.quality.graded(k):
+			_track["n"] = float(_track["n"]) + use
+			_track["sum"] = float(_track["sum"]) + use * float(batch_grade(b))
 		b[1] = float(b[1]) - use
 		left -= use
 		if float(b[1]) <= 0.00001: arr.pop_front()
 	if arr.is_empty(): G.S["inv"].erase(k)
 	return true
+
+# ------------------------------------------------------------------ grades (TODO Y1)
+
+## The grade of one batch ([season, qty] or [season, qty, grade]); a batch without one is Proper.
+func batch_grade(b: Array) -> int:
+	return int(b[2]) if b.size() > 2 else G.quality.default_grade()
+
+## Oldest season first (it goes stale first), within a season the lowest grade first (the good ones are kept for selling).
+func _sort_for_use(arr: Array) -> void:
+	arr.sort_custom(func(a, b):
+		if int(a[0]) != int(b[0]): return int(a[0]) < int(b[0])
+		return batch_grade(a) < batch_grade(b))
+
+## How many of an item there are of each grade: {grade: qty}.
+func grades(k: String) -> Dictionary:
+	var out := {}
+	for b in G.S["inv"].get(k, []):
+		var g := batch_grade(b)
+		out[g] = float(out.get(g, 0.0)) + float(b[1])
+	return out
+
+## How many there are of a grade or better.
+func count_min(k: String, grade: int) -> float:
+	var t := 0.0
+	for b in G.S["inv"].get(k, []):
+		if batch_grade(b) >= grade: t += float(b[1])
+	return t
+
+## The grades of the next n whole units to sell, best first (what sell_total and sell go by).
+func best_first(k: String, n: int) -> Array:
+	var gs := grades(k)
+	var order := gs.keys()
+	order.sort()
+	order.reverse()
+	var out := []
+	for g in order:
+		for _i in range(int(floorf(float(gs[g]) + 0.0001))):
+			if out.size() >= n: return out
+			out.append(g)
+	return out
+
+## Takes n whole units, the best grade first (selling). Returns their grades.
+func take_best(k: String, n: int) -> Array:
+	var picked := best_first(k, n)
+	var arr: Array = G.S["inv"].get(k, [])
+	for g in picked:
+		for b in arr:
+			if batch_grade(b) == g and float(b[1]) > 0.00001:
+				b[1] = float(b[1]) - 1.0
+				break
+	var keep := []
+	for b in arr:
+		if float(b[1]) > 0.00001: keep.append(b)
+	if keep.is_empty(): G.S["inv"].erase(k)
+	elif G.S["inv"].has(k): G.S["inv"][k] = keep
+	return picked
+
+## What taking q of an item (or of a kind: "tag:…") would use up: Vector2(units, sum of their grades). Nothing is taken.
+func peek_grades(k: String, q: float) -> Vector2:
+	if not k.begins_with("tag:"):
+		if not G.quality.graded(k): return Vector2.ZERO
+		var arr: Array = G.S["inv"].get(k, []).duplicate(true)
+		_sort_for_use(arr)
+		var left := q
+		var n := 0.0
+		var sum := 0.0
+		for b in arr:
+			if left <= 0.00001: break
+			var use := minf(float(b[1]), left)
+			n += use; sum += use * float(batch_grade(b)); left -= use
+		return Vector2(n, sum)
+	var left2 := q
+	var v := Vector2.ZERO
+	for item in tag_choices(k.substr(4)):
+		var h := count(item)
+		if h <= 0.0: continue
+		var use2 := minf(h, left2)
+		v += peek_grades(item, use2)
+		left2 -= use2
+		if left2 <= 0.00001: break
+	return v
+
+var _track := {}      # while a recipe pays for its inputs: how many graded units were used and their grades added up
+
+## Starts counting the grades of what is taken (a recipe's inputs) …
+func start_track() -> void:
+	_track = {"n": 0.0, "sum": 0.0}
+
+## … and ends it: the average grade of what was used, or -1 when nothing graded was.
+func stop_track() -> float:
+	var avg := -1.0
+	if float(_track.get("n", 0.0)) > 0.0: avg = float(_track["sum"]) / float(_track["n"])
+	_track = {}
+	return avg
 
 func tag_choices(t: String) -> Array:
 	var c: Array = G.tags.get(t, []).duplicate()
