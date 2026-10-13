@@ -304,7 +304,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   `--accuracy=0.8` misses a share of first tries (only a right first try moves time) and reports how many questions it was asked; it prints
   its pace, which `meta.flex.basePace` is taken from).
 - `bash tests/check_all.sh` — all quick checks in one go (about 2 minutes): smoke test, save fixtures, save versions, core kit, places and pets, data checks, golden run, translations.
-- `bash tests/golden.sh` — the golden run: the bot plays seeds 1 and 2 to chapter 5 and every step of time is compared with
+- `bash tests/golden.sh` — the golden run: the bot plays seeds 1 and 2 to chapter 6 (through all five chapters) and every step of time is compared with
   `tests/golden/` (coins, energy, water, goals, what is unlocked, the store). A restructuring must leave it unchanged. `--strict`
   also compares a hash of the whole save (it changes when the save layout does: record anew then, and check that without the hash nothing differs); `--record` records new golden runs after a change to the rules or numbers on purpose.
   Bot flags for it: `--seed=N`, `--golden=FILE`, `--save-at=CHAPTER:FILE` (writes a save fixture), `--report=FILE` (the pacing of the run as JSON).

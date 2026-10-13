@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Golden run: the bot plays the same seeded games (to chapter 5) and every step of time is compared with the
+# Golden run: the bot plays the same seeded games (to chapter 6: all five chapters) and every step of time is compared with the
 # recorded runs in tests/golden/. A restructuring that changes nothing in the rules leaves them identical.
 #   bash tests/golden.sh            compare the main numbers (coins, energy, water, goals, unlocked, store)
 #   bash tests/golden.sh --strict   also compare the hash of the whole state (changes when the save layout changes)
@@ -18,9 +18,9 @@ MODE="${1:-}"
 OUT="$(mktemp -d)"
 FAIL=0
 for SEED in 1 2; do
-  REF="tests/golden/bot-seed$SEED-ch5.txt"
+  REF="tests/golden/bot-seed$SEED-ch6.txt"
   NEW="$OUT/seed$SEED.txt"
-  "$G" --headless --path . res://tests/bot.tscn -- --chapter=5 --seed=$SEED --golden="$NEW" 2>&1 | grep -E "^DONE|SCRIPT ERROR" | head -3
+  "$G" --headless --path . res://tests/bot.tscn -- --chapter=6 --seed=$SEED --golden="$NEW" 2>&1 | grep -E "^DONE|SCRIPT ERROR" | head -3
   if [ "$MODE" = "--record" ]; then cp "$NEW" "$REF"; echo "recorded $REF ($(wc -l < "$REF") steps)"; continue; fi
   [ -f "$REF" ] || { echo "missing $REF (run with --record first)"; FAIL=1; continue; }
   if [ "$MODE" = "--strict" ]; then A="$REF"; B="$NEW"
