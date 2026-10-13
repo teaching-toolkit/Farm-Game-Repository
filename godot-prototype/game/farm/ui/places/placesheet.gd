@@ -96,7 +96,7 @@ func goal_lists(sid: String) -> Array:
 	var soon := []
 	for id in Spots.nodes_at(G, sid):
 		var n: Dictionary = G.nodes[id]
-		if not (n["type"] in M.GOAL_TYPES): continue
+		if not (n["type"] in G.goal_types): continue
 		if G.done(id) or G.satisfied(id) or not M.mapview.in_chapter(id): continue
 		var mr: Array = G.progression.missing_reqs(id)
 		if mr.is_empty():

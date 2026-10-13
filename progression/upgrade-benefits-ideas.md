@@ -1,6 +1,6 @@
 # Upgrades that do more than save energy — ideas to choose from (task H1)
 
-Written 7 Oct 2026 for the parent to pick from. **Nothing here is in the game or the data yet.**
+Written 7 Oct 2026 for the parent to pick from. **Since 13 Oct 2026 four of these are in the data (Iron Hoe, Stone Fire Ring, Whetstone, Master Tool Chest); the rest is still open.**
 
 ## Where we stand
 

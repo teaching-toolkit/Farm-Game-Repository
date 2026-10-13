@@ -1964,8 +1964,8 @@
   "de": "Eisenhacke"
  },
  "nodes/iron_hoe/desc": {
-  "en": "Thistles come out root and all: weeding −45% energy.",
-  "de": "Disteln kommen mit der Wurzel heraus: Jäten −45% Energie."
+  "en": "Thistles come out root and all: weeding −45% energy, and the weeds come back 20% slower.",
+  "de": "Disteln kommen mit der Wurzel heraus: Jäten −45% Energie, und das Unkraut kommt 20% langsamer zurück."
  },
  "nodes/steel_hoe/name": {
   "en": "Steel Hoe",
@@ -2140,8 +2140,8 @@
   "de": "Steinring fürs Feuer"
  },
  "nodes/fire_ring/desc": {
-  "en": "Holds the heat: cooking −15% energy.",
-  "de": "Hält die Hitze: Kochen −15% Energie."
+  "en": "Holds the heat: cooking −15% energy, and the campfire burns 20% less wood.",
+  "de": "Hält die Hitze: Kochen −15% Energie, und das Lagerfeuer braucht 20% weniger Holz."
  },
  "nodes/straw_bed/name": {
   "en": "Straw Bed",
@@ -2164,8 +2164,8 @@
   "de": "Wetzstein"
  },
  "nodes/whetstone/desc": {
-  "en": "Sharp blades: cutting and wood work −10% energy.",
-  "de": "Scharfe Klingen: Schneiden und Holzarbeit −10% Energie."
+  "en": "Sharp blades: cutting and wood work −10% energy, and polish wears off a quarter slower.",
+  "de": "Scharfe Klingen: Schneiden und Holzarbeit −10% Energie, und die Politur nutzt sich ein Viertel langsamer ab."
  },
  "nodes/carrying_yoke/name": {
   "en": "Carrying Yoke",
@@ -2396,8 +2396,8 @@
   "de": "Meister-Werkzeugkiste"
  },
  "nodes/master_tool_chest/desc": {
-  "en": "Crafting −15%, field and wood work −10% energy.",
-  "de": "Basteln −15%, Feld- und Holzarbeit −10% Energie."
+  "en": "Crafting −15%, field and wood work −10% energy, and polish wears off a fifth slower.",
+  "de": "Basteln −15%, Feld- und Holzarbeit −10% Energie, und die Politur nutzt sich ein Fünftel langsamer ab."
  },
  "nodes/paved_yard/name": {
   "en": "Paved Yard",
@@ -3048,8 +3048,8 @@
   "de": "Bücherzimmer"
  },
  "nodes/library_room/desc": {
-  "en": "A quiet room of your own: all 13 books, reading 30% faster, and a cosy chair (+0.5 energy per Rest answer). Needs 30 cards learned.",
-  "de": "Ein ruhiges Zimmer für dich allein: alle 13 Bücher, Lesen 30% schneller und ein gemütlicher Sessel (+0,5 Energie pro Antwort beim Ausruhen). Braucht 30 gelernte Karten."
+  "en": "A quiet room of your own: all 14 books, reading 30% faster, and a cosy chair (+0.5 energy per Rest answer). Needs 30 cards learned.",
+  "de": "Ein ruhiges Zimmer für dich allein: alle 14 Bücher, Lesen 30% schneller und ein gemütlicher Sessel (+0,5 Energie pro Antwort beim Ausruhen). Braucht 30 gelernte Karten."
  },
  "nodes/library_room/steps/0/name": {
   "en": "Fit the planks",

@@ -30,7 +30,7 @@ sits down, says something ridiculous, and leaves. Later she realises it was the 
 
 | Ch | Appearance |
 |---|---|
-| 2 | Turns up the day the market stall opens. Helps carry, stacks crates wrongly: "Probably fine." It is. Mostly. |
+| 2 | Walks up the new gravel road (`road_3`, ladder 2.5) as if he had always been on it. Helps carry, stacks crates wrongly: "Probably fine." It is. Mostly. |
 | 4 | Sits on the fence while the steward counts. "You've counted the cows. Have you counted the clover? No? It counts *you*." |
 | 5 or 6 | Names the melody, as a joke, at the forest edge: "Whose tune is that? Yours, I'd say. Badly hummed." 🔒 (It is.) |
 | 6 | The Fair: Fenna lays a place for him at the table without a word. He has to sit very still for a moment. (His want, given.) |

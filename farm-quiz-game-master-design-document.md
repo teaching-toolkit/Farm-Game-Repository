@@ -28,8 +28,8 @@ document ever disagree, the data wins and this document should be corrected.
 ### 1.1 Premise
 
 A craft-from-scratch farming game in an old-world, pre-industrial setting. The player comes back to a farm that has burnt
-down. All that is left is a tent, an old dented bucket by a wild pond, a tin pot, a few sticks and stones, one wheat seed
-— and a box with a book in it. From there the player rebuilds everything: fire and porridge first, then stone tools, a
+down. A borrowed tent stands where the house was; Berit's box holds an old dented bucket, a tin pot and the farm book, and
+the one live patch has a single wheat seed to find. From there the player rebuilds everything: fire and porridge first, then stone tools, a
 cottage, a kitchen, animals, a smithy, a windmill, a farmhouse, a greenhouse, and finally a master farm with heirloom crops
 and plant dyes.
 
@@ -199,13 +199,13 @@ Learned cards come back as **reviews in the Time Quiz** (Leitner boxes 1–4: du
 |---|---|---|---|
 | 📦 Book box in the tent | 2 books | — | start (*The Little Farm Book* is in it) |
 | 📚 Bookshelf | 5 | 10 % faster | 5 cards learned, Carpenter's Bench |
-| 🪑 Bookcase & reading chair | 10 | 20 % faster | 15 cards |
-| 🏛️ Library room | 12 (all) | 30 % faster, +½ ⚡ per Rest answer | 30 cards, Farmhouse |
+| 🪑 Bookcase & reading chair | 11 | 20 % faster | 15 cards |
+| 🏛️ Library room | 14 (all) | 30 % faster, +½ ⚡ per Rest answer | 30 cards, Farmhouse |
 
 **The books** (chapter, price): *The Little Farm Book* (1, free) · *Village Crafts* (1, 15) · *Grandma's Kitchen* (2, 25) ·
 *Animals & Bees* (2, 30) · *Soil & Seasons* (2, 40) · *The Smith's Book* (3, 150) · *From Fleece to Fabric* (3, 125) · *Cellar
-& Larder* (3, 150) · *Fire, Glass & Steel* (4, 125) · *Orchard & Oils* (4, 100) · *Colours of the Earth* (5, 175) · *The Master
-Farmer* (5, 250). Which card opens what is in the data (node type `knowledge`, field `unlocks`) and in the explorer.
+& Larder* (3, 150) · *Fire, Glass & Steel* (4, 125) · *Orchard & Oils* (4, 100) · *Colours of the Earth* (6, 175) · *The Master
+Farmer* (6, 250) · *Body and Mind* (2, 20) · *The Healer's Herbal* (5, 150). Which card opens what is in the data (node type `knowledge`, field `unlocks`) and in the explorer.
 
 Knowledge is paid for with coins (books), time (reading) and **the child showing the knowledge** in the quiz — there is no
 second currency.

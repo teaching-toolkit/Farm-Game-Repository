@@ -29,11 +29,6 @@ const SAVE_PATH := "user://farm_save.json"          # the farm from before playe
 const PLAYERS_DIR := "user://players"               # players/<name>/farm_save.json and learning.json
 const LAST_PLAYER := "user://last_player.txt"
 const DATA_DIR := "res://data/farm"       # items, recipes, chapters, start; nodes/ and rules/ are folders of themed files (kits/core/data.gd)
-const NOT_AUTO := ["pet", "delivery", "animal", "sidequest", "knowledge", "polish", "book"]
-const DEFAULT_CAT := {"land": "field", "patch": "field", "building": "build", "station": "build", "helper": "build",
-	"tool": "craft", "gear": "craft", "polish": "craft", "delivery": "errand", "pet": "errand", "sidequest": "errand",
-	"animal": "errand", "crop": "errand", "merchant": "errand", "book": "errand", "knowledge": "errand"}
-const MAIN_TYPES := ["building", "station", "tool", "land", "patch", "delivery", "pet", "knowledge", "book"]
 const STEP_GAPS := [12, 40, 100, 250]     # Time Quiz answers between card reviews per Leitner box
 const DAY_GAPS := [1, 3, 7, 21]           # …or real days, whichever comes first
 const SEASON_NAMES := ["spring", "summer", "autumn", "winter"]
@@ -44,6 +39,10 @@ var items: Dictionary = {}
 var nodes: Dictionary = {}
 var recipes: Dictionary = {}
 var meta: Dictionary = {}
+var goal_types: Array = []         # node types, from rules/05-node-types.json (filled in load_data)
+var main_types: Array = []
+var not_auto: Array = []
+var default_cat: Dictionary = {}
 var settings: Dictionary = {}
 var packs: Array = []
 var pack_questions: Array = []
@@ -242,6 +241,8 @@ func load_data() -> void:
 		"items": Data.read(DATA_DIR + "/items.json"), "nodes": Data.read_dir(DATA_DIR + "/nodes"), "recipes": Data.read(DATA_DIR + "/recipes.json"),
 		"story": Data.read_dir(DATA_DIR + "/story")}
 	items = D["items"]; nodes = D["nodes"]; recipes = D["recipes"]; meta = D["meta"]
+	var nt: Dictionary = meta.get("nodeTypes", {})
+	goal_types = nt.get("goal", []); main_types = nt.get("main", []); not_auto = nt.get("notAuto", []); default_cat = nt.get("defaultCat", {})
 	tags.clear(); replaced_by.clear(); station_recipes.clear(); polish_ids.clear(); card_ids.clear(); animal_ids.clear(); pet_ids.clear()
 	for iid in items:
 		for t in items[iid].get("tags", []):

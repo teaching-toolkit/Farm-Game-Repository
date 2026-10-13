@@ -34,4 +34,4 @@ emits the signals the interface listens to (`changed`, `toast`, `gained`, `sold`
 - The interface (`main.gd`, the tests, the dev flags) calls `G.<system>.<function>`; it should not write into `G.S` (R5 removes the last cases).
 - A system is promoted to a kit (`kits/`) when a second game needs it and it no longer names anything of the farm (`planning/2026-10-12-architecture-plan.md` §4.2).
 
-Not in a system yet: `GOAL_TYPES` in `main.gd` and `NOT_AUTO`, `MAIN_TYPES`, `DEFAULT_CAT` in `game.gd` (what the node types mean; they move to data with R8).
+The lists of node types (`goal_types`, `main_types`, `not_auto`, `default_cat`) are data: `rules/05-node-types.json`, filled into `Game` by `load_data()`.

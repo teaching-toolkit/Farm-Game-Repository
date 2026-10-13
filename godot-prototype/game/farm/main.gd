@@ -6,7 +6,6 @@ class_name FarmMain
 const UI = preload("res://kits/ui/ui.gd")
 const MAP_SCENE = preload("res://game/farm/map/farm_map.tscn")
 const Notifications = preload("res://kits/ui/notifications.gd")
-const GOAL_TYPES := ["building", "station", "tool", "gear", "helper", "land", "patch", "delivery", "pet", "sidequest"]
 
 const DevFlags = preload("res://game/farm/dev/dev_flags.gd")
 var G: FarmGame

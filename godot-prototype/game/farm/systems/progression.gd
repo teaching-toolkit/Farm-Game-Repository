@@ -16,7 +16,7 @@ func save_defaults() -> Dictionary:
 
 func node_cat(id: String) -> String:
 	var n = G.nodes[id]
-	return str(n.get("cat", G.DEFAULT_CAT.get(n["type"], "build")))
+	return str(n.get("cat", G.default_cat.get(n["type"], "build")))
 
 func plots() -> int:
 	var n := int(round(G.g("plots", 0.0)))
@@ -101,7 +101,7 @@ func is_open(id: String) -> bool:
 
 func is_auto(id: String) -> bool:
 	var n = G.nodes[id]
-	if n["type"] in G.NOT_AUTO: return false
+	if n["type"] in G.not_auto: return false
 	return not n.has("cost") or (n["cost"] as Dictionary).is_empty()
 
 func auto_unlocks(_info := {}) -> void:
@@ -218,7 +218,7 @@ func finish_unlock(id: String, auto: bool) -> void:
 		elif id.begins_with("library_"):
 			G.rewards.offer_gift(G.rewards.news_text("library"))
 		if t == "sidequest" or t == "delivery": G.well.helped()
-		if t in G.MAIN_TYPES:
+		if t in G.main_types:
 			G.S["goals"] = int(G.S["goals"]) + 1
 			if int(G.S["goals"]) % 12 == 0: G.rewards.offer_gift(G.rewards.news_text("goals"))
 		if n.has("effects") and n["effects"].has("add") and n["effects"]["add"].has("plots"):

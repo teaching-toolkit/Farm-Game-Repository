@@ -1,0 +1,9 @@
+{
+  "nodeTypes": {
+    "note": "What the node types mean. goal = shown as map goals; main = counted as main path (the next-goal text and the bot's open goals); notAuto = never unlocked by the automatic rules (they need an explicit action); defaultCat = the cost category when a node has no cat.",
+    "goal": ["building", "station", "tool", "gear", "helper", "land", "patch", "delivery", "pet", "sidequest"],
+    "main": ["building", "station", "tool", "land", "patch", "delivery", "pet", "knowledge", "book"],
+    "notAuto": ["pet", "delivery", "animal", "sidequest", "knowledge", "polish", "book"],
+    "defaultCat": {"land": "field", "patch": "field", "building": "build", "station": "build", "helper": "build", "tool": "craft", "gear": "craft", "polish": "craft", "delivery": "errand", "pet": "errand", "sidequest": "errand", "animal": "errand", "crop": "errand", "merchant": "errand", "book": "errand", "knowledge": "errand"}
+  }
+}

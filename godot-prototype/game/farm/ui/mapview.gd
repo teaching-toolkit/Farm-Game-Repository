@@ -254,7 +254,7 @@ func badge(sid: String) -> String:
 		return ""
 	for id in Spots.nodes_at(G, sid):
 		var n: Dictionary = G.nodes[id]
-		if not (n["type"] in M.GOAL_TYPES) or n.get("optional", false): continue
+		if not (n["type"] in G.goal_types) or n.get("optional", false): continue
 		if G.done(id) or G.satisfied(id): continue
 		if G.progression.can_unlock(id)["ok"]:
 			match n["type"]:

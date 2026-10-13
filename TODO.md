@@ -230,10 +230,7 @@ them up, each with a 💡 recommendation.
 - **J12. The pet corner shows a raw key.** ✅ fixed 13 Oct 2026 (phase 4): `widgets.effect_text` has readable lines (German too) for every effect key the data uses. The sheet lists each pet with its bonus; the tortoise's reads "Mossy — fetchWater +1" (the effect key,
   not words; the bunny's reads properly, "+1 carrot per harvest"). Found 13 Oct 2026 while checking R2; the same in the old code. 💡 Give the
   pet effects readable lines (`widgets.effect_text` in `game/farm/ui/widgets.gd`, German through `tools/i18n.py`) and check the goat's and the pony's too.
-- **J7. Stale facts left** (the rest fixed 12 Oct 2026): the design document's §1.1 premise (tent, bucket, pot, one seed, a box with a
-  book) vs the story (bucket, pot and book come in Berit's box; the seed is found on the one live patch; the tent is borrowed): fix
-  together with I9. `story/characters/lark.md` has Lark turn up "the day the market stall opens" (chapter 2); the ladder has him walk up
-  the new gravel road (`road_3`, 2.5): pick one in I6.
+- **J7. Stale facts left** ✅ (13 Oct 2026): the design document's §1.1 premise now follows the story (borrowed tent, Berit's box, the seed found on the live patch); the library table and book list are current (14 books, 14 slots); Lark walks up the gravel road in chapter 2 (`road_3`, ladder 2.5), `story/characters/lark.md` agrees.
 - **J8. A new top bar** ✅ (R4; the parent checked: there is plenty of space). The **Time Quiz button moves up**: the green circle with
   the watch face hangs from the bottom edge of the bar in the right corner. The **next goal's text** fills the whole width and height
   between the energy bar and the 🎒 bag icon. The 🎒 bag with its fill bar (M11), 📜 scroll, 📖, 🖼️, ⚙️; the wellbeing face or icon is
@@ -551,6 +548,7 @@ A **secondary** goal ✅: never at the cost of a fun, not overwhelming, still ch
   other kinds; one idea per upgrade). ✅ (R2) As a **rule of thumb, not a hard rule**: the first tier often saves energy, but sometimes
   does something else (a better basket carries more); later tiers do something visible. Next: go through the 48 energy-only upgrades
   together, now with quality (Y1), carrying (M5), skills (Y2) and the sleep parameter (L2) available as benefits.
+  **Started 13 Oct 2026 (💡 until the parent has gone through the list):** four upgrades got a second benefit with effect keys that already exist, keeping their energy saving: Iron Hoe (weeds come back 20 % slower), Stone Fire Ring (the campfire burns 20 % less wood), Whetstone and Master Tool Chest (polish wears off slower). **Left for the parent** (a choice, and each moves the pace): the other 44 upgrades in `progression/upgrade-benefits-ideas.md`, above all the 🆕 kinds (lucky finds, season help, helpers that work by themselves).
 
 ---
 
