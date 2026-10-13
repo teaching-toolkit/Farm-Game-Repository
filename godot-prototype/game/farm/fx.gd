@@ -159,7 +159,7 @@ class MapFx extends Control:
 
 	func _process(d: float) -> void:
 		t += d
-		var busy := not flies.is_empty() or not sparks.is_empty() or not drift.is_empty() or rainbow_t >= 0.0 or not glow.is_empty() or on.get("stars", false)
+		var busy: bool = not flies.is_empty() or not sparks.is_empty() or not drift.is_empty() or rainbow_t >= 0.0 or not glow.is_empty() or bool(on.get("stars", false))
 		if not busy: return
 		for g in glow:
 			g["ph"] = float(g["ph"]) + d * 2.4
