@@ -279,7 +279,7 @@ func _build() -> void:
 	# --- the testing buttons: small, floating below the bar at the left; a grown-up setting shows or hides them
 	cheat_box = UI.vbox(4)
 	for c in [[tr("⏩ Cheat"), G.cheat_max, tr("Testing only: lets time pass until everything growing or cooking is done, then fills energy and water.")],
-			[tr("🪙 +50"), G.cheat_coins.bind(50), tr("Testing only: 50 coins.")],
+			[tr("🪙 +50"), G.cheat_coins.bind(50), tr("Testing only: 50 bronze.")],
 			[tr("🎓 Quizzes"), G.knowledge.cheat_skip_card_quizzes, tr("Testing only: passes the quiz of every card that is waiting for it.")]]:
 		var cb := UI.button(c[0], c[1], true, UI.AMBER, 13)
 		cb.custom_minimum_size = Vector2(0, 28)
@@ -374,7 +374,7 @@ func refresh() -> void:
 	_queued = false
 	if playback.held: return          # the Time Quiz is open (or its playback has not caught up): the screen keeps the old state
 	var S: Dictionary = G.S
-	lbl_coins.text = "🪙 %d" % G.down(S["coins"])
+	lbl_coins.text = G.purse_text()
 	lbl_coins.visible = G.reveal.shown("coins")          # what is shown when: data/farm/rules/60-reveal.json
 	for id in icon_buttons: icon_buttons[id].visible = G.reveal.shown(id)
 	_fit_hud()

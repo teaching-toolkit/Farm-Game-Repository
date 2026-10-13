@@ -332,12 +332,19 @@ getting more: Watering Can −25 %, Drip Line −50 %, irrigation channels −15
 **Rain** (a chance every question, highest in spring and autumn) waters the fields: planting costs no water until the next
 question. When there is not enough water to plant, a pop-up with a crossed-out drop offers to fetch some. Start: 4 💧.
 
-### 5.3 Coins 🪙 and the market
+### 5.3 Money 🟤🟡 and the market
 
 Coins come from **selling** — never from answering questions. They buy seeds, animals, books, materials from merchants and
-the coin part of some buildings. The game starts with **0 coins**; the first coins come from porridge.
+the coin part of some buildings. The game starts with **no money**; the first comes from porridge.
 
-**Prices from ingredients** (`meta.pricing`; *the realistic prices of TODO M1/D3 are planned*). Everything that is made is priced from what goes into it: the worth of the
+**Bronze and gold.** Money is counted in **bronze**; **100 bronze = 1 gold**, like Rappen and Franken (a real-world skill). Under a gold an amount is written in
+bronze (`35 🟤`); from a gold up it shows both (`2 🟡 35 🟤`, whole bronze, stocks rounded down and costs up). The purse in the top bar says bronze
+only until the child has had a gold, then both. Coin costs show as cubes of 10 bronze (or of a gold) with the sum in words. The purse itself appears with
+the first coin (§13.2b). **Prices are realistic** (`planning/price-table.md`): an egg 65, a carrot 30, a loaf of bread 200 bronze (about Swiss prices);
+the rest keeps the old ratios (one old coin became 15 bronze, so the pace of the game did not change). Figures quoted elsewhere in this
+document are in bronze if they say so, otherwise in old coins (×15 for bronze); `data/farm/` is the truth.
+
+**Prices from ingredients** (`meta.pricing`, old coins; the formula is now only a guide: `items.json` holds the price table, and dishes made from dishes no longer grow without limit — pizza 1500 bronze, a cheese board 2500). Everything that is made is priced from what goes into it: the worth of the
 inputs × (1.25 + 0.1 for each different ingredient beyond the first) + ½ coin per energy, per fuel point and per question
 it takes + 0.2 per water. So a dish of four different things pays more than its parts, and a dish made from dishes more
 again (porridge 4, roast carrots 7, omelette 16, honey cake 49, apple pie 72, pizza 166, cheese board 212). Things a merchant
@@ -348,9 +355,9 @@ worth almost nothing, so gathering is never a money farm; straw cannot be sold a
 thing fetches 8 % less (down to 60 %), and every question the market forgets a quarter of what was sold lately. A ↓ marks
 something sold a lot lately. Selling a mix pays best.
 
-**Clear sell buttons.** Store tiles say exactly what you give and what you get: `1 🥣 = 4 🪙`, and for all of it
-`5 🥕 = 10 🪙` (the market's price for that many). Each recipe shows what its ingredients would fetch and what the result
-fetches (🪙2 → 🪙4).
+**Clear sell buttons.** Store tiles say exactly what you give and what you get: `1 🥣 = 60 🟤`, and for all of it
+`5 🥕 = 1 🟡 50 🟤` (the market's price for that many). Each recipe shows what its ingredients would fetch and what the result
+fetches (30 🟤 → 60 🟤).
 
 **Sell bonuses:** Market Stall +10 %, the pony +10 %, four Harvest Fair ribbons, the *Fair prices* card, gifts.
 
@@ -527,10 +534,10 @@ decimals anywhere.
 
 | Animal | Ch | Price | Feed per collection | Gives |
 |---|---:|---|---|---|
-| 🐔 Chickens | 1 | 30 coins | 2 of any feed grain, ½ straw, water | 1 egg, sometimes a feather |
-| 🐄 Cows | 2 | 40 coins (needs the barn) | 3 of any fodder, 1 straw, water | 1 milk |
-| 🐝 Bees (straw skeps, later wooden hives, bee garden) | 2 | 10 coins, 4 straw, 1 rope | none — they need **flowering crops** somewhere on the farm (clover, sunflower, flax, berries, herbs, fruit trees) | 1 honeycomb |
-| 🐑 Sheep | 3 | 100 coins (sheep pen, shears) | 2 of any fodder, 1 straw, water | 2 wool |
+| 🐔 Chickens | 1 | 450 bronze | 2 of any feed grain, ½ straw, water | 1 egg, sometimes a feather |
+| 🐄 Cows | 2 | 600 bronze (needs the barn) | 3 of any fodder, 1 straw, water | 1 milk |
+| 🐝 Bees (straw skeps, later wooden hives, bee garden) | 2 | 150 bronze, 4 straw, 1 rope | none — they need **flowering crops** somewhere on the farm (clover, sunflower, flax, berries, herbs, fruit trees) | 1 honeycomb |
+| 🐑 Sheep | 3 | 1500 bronze (sheep pen, shears) | 2 of any fodder, 1 straw, water | 2 wool |
 
 - Each animal kind is collected from when it is ready again (a few questions), all at once; the pen or building sets how
   many fit (coop → bigger coop, barn tiers for cows and sheep).
@@ -996,7 +1003,7 @@ bag and the book also wait until the first thing is in the bag and the first goa
 
 ### 13.3 Screens
 
-- **Top bar** (it fits every iPad width from 744 px): 🪙 coins; 💧 water and ⚡ energy as rows of cubes (tap water to fetch, energy to
+- **Top bar** (it fits every iPad width from 744 px): 🟤🟡 the purse; 💧 water and ⚡ energy as rows of cubes (tap water to fetch, energy to
   Rest); the season bar (one thin stripe per question, in the season's colour); **the next story goal** across the whole middle (tap: its place
   glows); 🎒 pantry, 📖 quest book, 🖼️ album, ⚙️ settings; and the **Time Quiz clock** hanging from the bar's right end (its hour hand goes once
   round per season; tapped, the quiz opens). There is **no bottom bar**: the map runs to the bottom edge. Some of these appear only when

@@ -249,6 +249,16 @@ for rid, r in RECIPES.items():
     if root not in Sk.get("stations", {}) and N.get(root, {}).get("cat") != "gather":
         warn("skills", f"recipe {rid} is made at {root}, which trains no skill family")
 
+# ---------------------------------------------------------------- money (rules/40-economy.json currency; prices in bronze)
+cur = META.get("economy", META).get("currency", {}) if False else META.get("currency", {})
+if not cur.get("rescaled"): warn("money", "meta.currency.rescaled is missing: the prices are not in bronze yet (tools/rescale_prices.py)")
+for nid, n in N.items():
+    for it, price in n.get("sells", {}).items():
+        v = ITEMS.get(it, {}).get("value", 0)
+        if price < 1.3 * v: err(f"merchant {nid}", f"sells {it} for {price}, below 1.3 x its worth ({v}): buying to resell would pay")
+for it, row in ITEMS.items():
+    if row.get("value", 0) < 0 or row.get("value", 0) != int(row.get("value", 0)): err(f"item {it}", "the value must be a whole number of bronze")
+
 # ---------------------------------------------------------------- places (data/farm/places.json)
 spots = set(PLACES["spots"])
 rules = PLACES["nodeSpots"]

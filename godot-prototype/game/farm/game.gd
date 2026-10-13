@@ -82,7 +82,7 @@ var buying := false      # bought things are not "produced"
 var test_seed := -1
 ## The version of the save layout (kits/core/saves.gd). A save without a "version" is version 0. Every change to the layout of a save
 ## adds an upgrade step in save_steps() and raises this number; tests/fixtures/ keeps old saves that must still load.
-const SAVE_VERSION := 3
+const SAVE_VERSION := 4
 const TEST_CLOCK_START := 1800000000.0   # a fixed moment in 2027; one step of time counts as 10 minutes
 
 ## The systems: each owns one part of the rules and works on the farm's state G.S (see game/farm/systems/).
@@ -335,7 +335,11 @@ func save_to(path: String) -> void:
 func save_steps() -> Array:
 	return [{"to": 1, "name": "saves from before the version number: gift offers become postcards, the gift shop is gone, the first cards owned are the active ones", "fn": upgrade_save_v0},
 		{"to": 2, "name": "quality: every batch of a thing that has a grade now says which (what was in the store is Proper)", "fn": upgrade_save_v1},
-		{"to": 3, "name": "skills: the uses counted per station become batches per skill family", "fn": upgrade_save_v2}]
+		{"to": 3, "name": "skills: the uses counted per station become batches per skill family", "fn": upgrade_save_v2},
+		{"to": 4, "name": "money: coins are counted in bronze (one old coin = 15 bronze)", "fn": upgrade_save_v3}]
+
+func upgrade_save_v3(save: Dictionary) -> void:
+	save["coins"] = float(save.get("coins", 0.0)) * float(meta.get("currency", {}).get("factor", 15))
 
 func upgrade_save_v2(save: Dictionary) -> void:
 	var sk: Dictionary = save.get("skills", {})
@@ -394,6 +398,27 @@ func say(t: String) -> void:
 	toast.emit(t)
 
 # ------------------------------------------------------------------ names & numbers
+
+## An amount of money (in bronze) as text: "35 🟤" under a gold, from a gold up "2 🟡 35 🟤" ("2 🟡" when nothing is left over).
+## With both = true always gold and bronze ("0 🟡 35 🟤": the purse once the child has had a gold). Whole bronze, rounded down; money_up rounds up (costs).
+func money(bronze: float, both := false) -> String:
+	var cur: Dictionary = meta.get("currency", {})
+	var sy: Dictionary = cur.get("symbols", {"bronze": "🟤", "gold": "🟡"})
+	var per := int(cur.get("bronzePerGold", 100))
+	var t := int(floor(bronze + 0.0001))
+	if t < int(cur.get("goldFrom", 100)) and not both: return "%d %s" % [t, sy["bronze"]]
+	var g := t / per
+	var r := t % per
+	if r == 0 and not both: return "%d %s" % [g, sy["gold"]]
+	return "%d %s %d %s" % [g, sy["gold"], r, sy["bronze"]]
+
+func money_up(bronze: float) -> String:
+	return money(ceil(bronze - 0.0001))
+
+## What the purse in the top bar says: bronze only until the child has had a gold, then both.
+func purse_text() -> String:
+	if float(S["coins"]) >= float(meta.get("currency", {}).get("goldFrom", 100)): S["stats"]["gold_seen"] = true
+	return money(float(S["coins"]), bool(S["stats"].get("gold_seen", false)))
 
 func iname(k: String) -> String:
 	if k.begins_with("tag:"): return "any " + k.substr(4).replace("-", " ")
@@ -571,5 +596,5 @@ func cheat_max() -> void:
 
 func cheat_coins(q: float) -> void:
 	S["coins"] += q
-	say(tr("🪙 Cheat: +%d coins") % int(q))
+	say(tr("🪙 Cheat: +%s") % money(q))
 	save_game(); changed.emit()

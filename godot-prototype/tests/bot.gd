@@ -323,7 +323,7 @@ func _turn() -> void:
 	var coins_need := 0.0
 	for id in G.nodes:
 		if G.progression.is_open(id): coins_need = maxf(coins_need, float(G.pace.node_cost(id).get("coins", 0.0)))
-	if G.S["coins"] < coins_need + 20:
+	if G.S["coins"] < coins_need + 300:
 		for k in G.S["inv"].keys():
 			var keep := 6.0 + float(need.get(k, 0.0))
 			if G.inventory.count(k) > keep and G.inventory.value_of(k) > 0: G.trade.sell(k, G.inventory.count(k) - keep)
@@ -331,7 +331,7 @@ func _turn() -> void:
 	for mid in G.nodes:
 		if G.nodes[mid]["type"] != "merchant" or not G.done(mid): continue
 		for k in G.nodes[mid].get("sells", {}):
-			if need.has(k) and G.inventory.count(k) < float(need[k]) and (G.S["coins"] > 60 or not G.S["seen"].has(k)): G.trade.buy_item(mid, k, 1)
+			if need.has(k) and G.inventory.count(k) < float(need[k]) and (G.S["coins"] > 900 or not G.S["seen"].has(k)): G.trade.buy_item(mid, k, 1)
 		for k in G.nodes[mid].get("barter", {}):
 			if need.has(k) and G.inventory.count(k) < 1: G.trade.barter(mid, k)
 	# unlock what we can: main goals first, then optional upgrades and gear, polish once

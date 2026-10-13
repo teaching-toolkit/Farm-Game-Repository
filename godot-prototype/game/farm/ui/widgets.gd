@@ -98,14 +98,14 @@ func cost_bb(c: Dictionary) -> String:
 		var need := float(c[k])
 		var have: float = G.inventory.have(k)
 		var col := "#3b6a26" if have + 0.0001 >= need else "#b9472f"
-		var t := "%s%d" % [G.iemoji(k), G.up(need)]
-		if have + 0.0001 < need and k != "energy": t += tr(" (have %d)") % G.down(have)
+		var t := G.money_up(need) if k == "coins" else "%s%d" % [G.iemoji(k), G.up(need)]
+		if have + 0.0001 < need and k != "energy": t += tr(" (have %s)") % (G.money(have) if k == "coins" else str(G.down(have)))
 		parts.append("[color=%s]%s[/color]" % [col, t])
 	return "  ".join(parts)
 
 ## Costs as cube bars: filled = you have it, hollow = still missing, faint grey = saved by upgrades, practice and meals.
 func costs(c: Dictionary, base := {}) -> Control:
-	return UI.cost_row(c, base, have_any, _emoji_any, G.items)
+	return UI.cost_row(c, base, have_any, _emoji_any, G.items, G.money)
 
 func have_any(k: String) -> float:
 	if k == "fuel": return float(G.S["woodpile"])     # only what is on the woodpile burns: stoke it first

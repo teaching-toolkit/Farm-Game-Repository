@@ -5,55 +5,55 @@
    "accuracy": 1.0,
    "chapters": [
     {
-     "actions": 2211,
+     "actions": 1833,
      "chapter": 1,
      "complete": true,
-     "hours": 3.35,
-     "hoursTotal": 3.35,
+     "hours": 2.81,
+     "hoursTotal": 2.81,
      "knowledgeQuestions": 2,
      "pet": "pet_bunny",
-     "questions": 154,
-     "restAnswers": 311
+     "questions": 125,
+     "restAnswers": 295
     },
     {
-     "actions": 2828,
+     "actions": 3315,
      "chapter": 2,
      "complete": true,
-     "hours": 3.76,
-     "hoursTotal": 7.11,
+     "hours": 4.49,
+     "hoursTotal": 7.3,
      "knowledgeQuestions": 0,
      "pet": "pet_tortoise",
-     "questions": 135,
-     "restAnswers": 334
+     "questions": 166,
+     "restAnswers": 413
     },
     {
-     "actions": 6599,
+     "actions": 4199,
      "chapter": 3,
      "complete": true,
-     "hours": 8.88,
-     "hoursTotal": 15.99,
+     "hours": 5.56,
+     "hoursTotal": 12.86,
      "knowledgeQuestions": 0,
      "pet": "pet_goat",
-     "questions": 329,
-     "restAnswers": 786
+     "questions": 193,
+     "restAnswers": 516
     },
     {
-     "actions": 3884,
+     "actions": 3755,
      "chapter": 4,
      "complete": true,
-     "hours": 4.52,
-     "hoursTotal": 20.51,
+     "hours": 4.43,
+     "hoursTotal": 17.29,
      "knowledgeQuestions": 0,
      "pet": "pet_pony",
-     "questions": 123,
-     "restAnswers": 307
+     "questions": 119,
+     "restAnswers": 339
     },
     {
      "actions": 0,
      "chapter": 5,
      "complete": false,
      "hours": 0.0,
-     "hoursTotal": 20.51,
+     "hoursTotal": 17.29,
      "knowledgeQuestions": 0,
      "pet": "pet_alpaca",
      "questions": 0,
@@ -63,61 +63,61 @@
    "label": "bot, seed 1, accuracy 1.00",
    "reachedChapter": 5,
    "seed": 1,
-   "stoppedAtStep": 741
+   "stoppedAtStep": 603
   },
   {
    "accuracy": 1.0,
    "chapters": [
     {
-     "actions": 2072,
+     "actions": 1833,
      "chapter": 1,
      "complete": true,
-     "hours": 3.2,
-     "hoursTotal": 3.2,
+     "hours": 2.81,
+     "hoursTotal": 2.81,
      "knowledgeQuestions": 2,
      "pet": "pet_bunny",
-     "questions": 147,
-     "restAnswers": 323
+     "questions": 122,
+     "restAnswers": 309
     },
     {
-     "actions": 2657,
+     "actions": 4518,
      "chapter": 2,
      "complete": true,
-     "hours": 3.62,
-     "hoursTotal": 6.82,
+     "hours": 6.38,
+     "hoursTotal": 9.19,
      "knowledgeQuestions": 0,
      "pet": "pet_tortoise",
-     "questions": 137,
-     "restAnswers": 324
+     "questions": 262,
+     "restAnswers": 575
     },
     {
-     "actions": 5182,
+     "actions": 4758,
      "chapter": 3,
      "complete": true,
-     "hours": 6.78,
-     "hoursTotal": 13.6,
+     "hours": 6.32,
+     "hoursTotal": 15.51,
      "knowledgeQuestions": 0,
      "pet": "pet_goat",
-     "questions": 234,
-     "restAnswers": 602
+     "questions": 226,
+     "restAnswers": 569
     },
     {
-     "actions": 3814,
+     "actions": 3875,
      "chapter": 4,
      "complete": true,
-     "hours": 4.45,
-     "hoursTotal": 18.05,
+     "hours": 4.64,
+     "hoursTotal": 20.15,
      "knowledgeQuestions": 0,
      "pet": "pet_pony",
-     "questions": 121,
-     "restAnswers": 313
+     "questions": 131,
+     "restAnswers": 358
     },
     {
      "actions": 0,
      "chapter": 5,
      "complete": false,
      "hours": 0.0,
-     "hoursTotal": 18.05,
+     "hoursTotal": 20.15,
      "knowledgeQuestions": 0,
      "pet": "pet_alpaca",
      "questions": 0,
@@ -127,7 +127,7 @@
    "label": "bot, seed 2, accuracy 1.00",
    "reachedChapter": 5,
    "seed": 2,
-   "stoppedAtStep": 639
+   "stoppedAtStep": 741
   }
  ],
  "targetPetHours": {
@@ -143,6 +143,6 @@
   "secondsPerRest": 5.0,
   "secondsPerStep": 25.0
  },
- "version": "0.9.0",
+ "version": "0.10.0",
  "what": "Pacing of the greedy test bot playing the real rules engine (tests/bot.gd). Hours use the timing of meta.pacing. The bot is not a child: it always knows what it needs and works through the farm in sweeps. Trust the Time Quiz and Rest answers most; its actions are counted as one per saved change and include many small ones that a child would batch (Harvest all …)."
 }

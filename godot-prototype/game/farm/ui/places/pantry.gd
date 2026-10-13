@@ -22,7 +22,7 @@ func part_pantry() -> void:
 	var hb := UI.button(tr("🧺 Harvest all  (%d ready)") % ready_n if ready_n > 0 else tr("🧺 Harvest all — nothing is ready yet"), _harvest_everything, ready_n > 0, UI.GREEN, 20)
 	hb.custom_minimum_size = Vector2(0, 58)
 	M.content.add_child(hb)
-	M.widgets.section(tr("🧺 What you have"), tr("🍂 = goes stale at the next change of season — sell it, eat it or cook it into something that keeps. 🪙 = what one sells for; ↓ = the market has had lots of it lately and pays less for a while."))
+	M.widgets.section(tr("🧺 What you have"), tr("🍂 = goes stale at the next change of season — sell it, eat it or cook it into something that keeps. 🟤🟡 = what one sells for; ↓ = the market has had lots of it lately and pays less for a while."))
 	var grid := M.widgets.grid()
 	M.content.add_child(grid)
 	var cap: float = G.needs.storage_cap()
@@ -49,11 +49,11 @@ func part_pantry() -> void:
 		if it.has("buff"): row.add_child(UI.soft_button("😋", G.trade.eat.bind(k), true, 20))
 		if G.crafting.fuel_value(k) > 0.0: row.add_child(UI.soft_button("🔥", M.stations.stack.bind(k), true, 20))
 		if G.inventory.sellable(k):
-			# "1 🥣 = 4 🪙" and "5 🥕 = 10 🪙": what you give and what you get
+			# "1 🥣 = 60 🟤" and "5 🥕 = 1 🟡 50 🟤": what you give and what you get
 			var em := str(it.get("emoji", "📦"))
 			var have: int = G.down(q)
-			row.add_child(UI.soft_button("1 %s = %d 🪙" % [em, G.down(G.trade.sell_total(k, 1))], G.trade.sell.bind(k, 1.0), true, 17))
-			if have > 1: row.add_child(UI.soft_button("%d %s = %d 🪙" % [have, em, G.down(G.trade.sell_total(k, have))], G.trade.sell.bind(k, 999.0), true, 17))
+			row.add_child(UI.soft_button("1 %s = %s" % [em, G.money(G.trade.sell_total(k, 1))], G.trade.sell.bind(k, 1.0), true, 17))
+			if have > 1: row.add_child(UI.soft_button("%d %s = %s" % [have, em, G.money(G.trade.sell_total(k, have))], G.trade.sell.bind(k, 999.0), true, 17))
 			if G.trade.demand_factor(k) < 0.999: v.add_child(UI.label(tr("↓ lots sold lately — pays less for a while"), 13, Color("b5562b"), true))
 		if row.get_child_count() > 0: v.add_child(row)
 		grid.add_child(v.get_meta("panel"))

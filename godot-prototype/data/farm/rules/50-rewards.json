@@ -27,7 +27,7 @@
         "chance": 0.04,
         "text": "A lost coin in the weeds!",
         "gives": {
-          "coins": 2
+          "coins": 30
         }
       },
       {
@@ -412,7 +412,7 @@
   },
   "jobs": {
     "slots": 3,
-    "rewardCoinsPerChapter": 4,
+    "rewardCoinsPerChapter": 60,
     "rewardLuck": [
       0.1,
       10

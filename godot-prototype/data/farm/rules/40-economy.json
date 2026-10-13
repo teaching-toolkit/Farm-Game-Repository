@@ -14,7 +14,7 @@
     "perFuel": 0.5,
     "perWater": 0.2,
     "perQuestion": 0.5,
-    "note": "How made things are priced (tools/econ check): worth of the inputs x (inputsMult + perDifferentInput x (different inputs - 1)) + perEnergy x energy + perFuel x fuel + perWater x water + perQuestion x station time. A dish of four different things pays more than its parts; a dish made from dishes pays more again."
+    "note": "How made things are priced (tools/econ check): worth of the inputs x (inputsMult + perDifferentInput x (different inputs - 1)) + perEnergy x energy + perFuel x fuel + perWater x water + perQuestion x station time. A dish of four different things pays more than its parts; a dish made from dishes pays more again. (Informative only: the prices in items.json are the table in planning/price-table.md; the old formula over-priced dishes made from dishes: pizza 166, cheese board 204.)"
   },
   "flex": {
     "types": [
@@ -31,31 +31,31 @@
     "basePace": [
       [
         0,
-        7
+        105
       ],
       [
         45,
-        10
+        150
       ],
       [
         60,
-        38
+        570
       ],
       [
         100,
-        55
+        825
       ],
       [
         140,
-        75
+        1125
       ],
       [
         180,
-        120
+        1800
       ],
       [
         220,
-        140
+        2100
       ]
     ],
     "strength": 0.4,
@@ -70,7 +70,18 @@
     "tipBonus": 0.08,
     "warmup": 15,
     "paceQuestions": 20,
-    "minWorth": 0.25,
+    "minWorth": 3.75,
     "note": "Dynamic difficulty (settings dynamicDifficulty, or ⚙️ Settings → Prices fit my farm). pace = worth of what the player brings in per Time Quiz question (running average over paceQuestions; things bought don't count; things worth nothing count minWorth). basePace = the pace the test bot has after so many goals ([goals done, pace], a straight line in between; tests/bot.gd prints pace_sample lines). When a goal of these types first shows up while open, factor = (pace / basePace) ^ strength, × (1 + tipBonus) if an improvement not made yet would make it quicker, kept within range (rangeSide for favours); it is then fixed for that goal. Coins and material amounts of 2 or more are multiplied (never beyond what the store holds); energy and the kinds of things never change. No factor before warmup questions. The pace also grows when a player simply works more per question, so only part of it is followed (strength 0.4) and the range is narrow."
+  },
+  "currency": {
+    "rescaled": true,
+    "factor": 15,
+    "bronzePerGold": 100,
+    "goldFrom": 100,
+    "symbols": {
+      "bronze": "🟤",
+      "gold": "🟡"
+    },
+    "note": "Coins are counted in bronze: 100 bronze = 1 gold, like Rappen and Franken. The first rescale (13 Oct 2026) turned every old coin into 15 bronze, so the pace of the game stayed the same, and set familiar goods to realistic Swiss prices (planning/price-table.md). Amounts under goldFrom show as bronze only (35), from there as gold and bronze (2 gold 35 bronze)."
   }
 }

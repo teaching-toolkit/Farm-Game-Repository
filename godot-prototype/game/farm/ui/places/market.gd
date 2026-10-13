@@ -22,7 +22,7 @@ func part_market() -> void:
 	for cid in G.nodes:
 		var n: Dictionary = G.nodes[cid]
 		if n["type"] != "crop" or not G.done(cid) or n.has("seedItem"): continue
-		var v := M.widgets.tile(Art.tex("crops", cid), str(n.get("emoji", "")), "%s\n🪙%s · 🌰 %d" % [n["name"], str(n.get("seedCost", 0)), G.down(G.fields.seed_have(cid))])
+		var v := M.widgets.tile(Art.tex("crops", cid), str(n.get("emoji", "")), "%s\n%s · 🌰 %d" % [n["name"], G.money_up(float(n.get("seedCost", 0))), G.down(G.fields.seed_have(cid))])
 		var row := UI.hbox(6)
 		row.add_child(UI.soft_button("🛒 1", G.trade.buy_seeds.bind(cid, 1), G.S["coins"] + 0.001 >= float(n.get("seedCost", 0)), 18))
 		row.add_child(UI.soft_button("🛒 5", G.trade.buy_seeds.bind(cid, 5), G.S["coins"] + 0.001 >= 5.0 * float(n.get("seedCost", 0)), 18))
@@ -36,7 +36,7 @@ func part_market() -> void:
 		var mg := M.widgets.grid()
 		M.content.add_child(mg)
 		for k in mn.get("sells", {}):
-			var v2 := M.widgets.tile(Art.first("items", [k]), G.iemoji(k), "%s\n🪙%s" % [G.iname(k), str(mn["sells"][k])])
+			var v2 := M.widgets.tile(Art.first("items", [k]), G.iemoji(k), "%s\n%s" % [G.iname(k), G.money_up(float(mn["sells"][k]))])
 			var row2 := UI.hbox(6)
 			row2.add_child(UI.soft_button("🛒 1", G.trade.buy_item.bind(mid, k, 1), true, 18))
 			row2.add_child(UI.soft_button("🛒 5", G.trade.buy_item.bind(mid, k, 5), true, 18))

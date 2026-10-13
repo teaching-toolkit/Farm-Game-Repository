@@ -37,7 +37,8 @@ func roll(e: Dictionary) -> bool:
 	return G.rng.randf() < float(ch) * (1.0 + luck())
 
 func weed_luck() -> void:
-	if roll(luck_event("weed_coin")): G.S["coins"] += 2.0; G.say(tr("🪙 A lost coin in the weeds!"))
+	var lost := luck_event("weed_coin")
+	if roll(lost): G.S["coins"] += float(lost.get("gives", {}).get("coins", 30)); G.say(tr("🪙 A lost coin in the weeds!"))
 	if roll(luck_event("weed_seed")):
 		var cs := G.fields.crops_for("field")
 		if cs.size() > 0:
@@ -223,7 +224,7 @@ func job_progress(type: String, item: String, q: float) -> void:
 		G.S["coins"] += coins
 		var rl: Array = jm.get("rewardLuck", [0.1, 10])
 		add_luck(float(rl[0]), int(rl[1]))
-		G.say(tr("📋 Little job done: %s → 🪙%d and a bit of luck ☘️") % [j["text"], int(coins)])
+		G.say(tr("📋 Little job done: %s → %s and a bit of luck ☘️") % [j["text"], G.money(coins)])
 	if finished.size() > 0: refill_jobs()
 
 # ------------------------------------------------------------------ golden acorns

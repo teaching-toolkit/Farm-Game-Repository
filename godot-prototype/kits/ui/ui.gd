@@ -267,7 +267,9 @@ static func header(tex: Texture2D, emoji := "", h := 110.0, tint := Color.WHITE,
 
 ## A row of cube bars, one per key of a cost: [icon] ■■■□□ ▫▫  (filled = you have it, hollow = still missing,
 ## faint grey = what upgrades, practice and meals save compared with the first time). keys: energy, water, coins, items.
-static func cost_row(c: Dictionary, base: Dictionary, have: Callable, emoji: Callable, items := {}) -> HFlowContainer:
+## `money` (optional): writes an amount of coins as text (the game's bronze and gold); coin costs then show cubes of 10 bronze or of a gold,
+## with the sum as words ("2 🟡 35 🟤") instead of one cube per bronze.
+static func cost_row(c: Dictionary, base: Dictionary, have: Callable, emoji: Callable, items := {}, money := Callable()) -> HFlowContainer:
 	var row := HFlowContainer.new()
 	row.add_theme_constant_override("h_separation", 14)
 	row.add_theme_constant_override("v_separation", 4)
@@ -284,6 +286,9 @@ static func cost_row(c: Dictionary, base: Dictionary, have: Callable, emoji: Cal
 		cb.have = float(have.call(k))
 		cb.saved = maxf(0.0, float(base.get(k, need)) - need)
 		cb.color = item_color(k, items)
+		if k == "coins" and money.is_valid():
+			cb.unit_min = 100.0 if need >= 100.0 else (10.0 if need >= 30.0 else 1.0)
+			cb.num_text = str(money.call(ceilf(need - 0.0001)))
 		item.add_child(cb)
 		row.add_child(item)
 	return row
@@ -313,6 +318,7 @@ class CubeBar extends Control:
 	var num_text := ""        # instead of the automatic number
 	var num_size := 14
 	var unit := 1.0
+	var unit_min := 1.0       # one cube stands for at least this much (coins: 10 bronze or a gold)
 	var cube := 16.0
 	var per_row := 10
 	var rows := 1
@@ -337,6 +343,7 @@ class CubeBar extends Control:
 		if mode == "stock": total = maxf(total, ceilf(have))
 		unit = 1.0
 		for u in [1.0, 5.0, 10.0, 25.0, 50.0, 100.0, 250.0, 1000.0]:
+			if u < unit_min: continue
 			unit = u
 			if total / u <= 100.0: break
 		_cells = maxi(1, int(ceilf(total / unit - 0.001)))

@@ -56,7 +56,7 @@ func sell(k: String, q: float) -> bool:
 		market_sold()[k] = float(market_sold().get(k, 0.0)) + 1.0
 	G.S["coins"] += got
 	G.rewards.job_progress("sell", k, n)
-	var msg := tr("🪙 Sold %d %s for 🪙%d") % [int(n), G.iname(k), int(floorf(got + 0.0001))]
+	var msg := tr("🪙 Sold %d %s for %s") % [int(n), G.iname(k), G.money(got)]
 	if demand_factor(k) < 0.999: msg += tr(". The market has plenty of %s now — it pays less for a while. Different things sell best!") % G.iname(k)
 	G.say(msg)
 	G.rewards.perk_event("sell", {"item": k, "n": n, "coins": got})

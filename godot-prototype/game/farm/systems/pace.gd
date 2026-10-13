@@ -170,5 +170,5 @@ func pay(c: Dictionary) -> bool:
 func cost_text(c: Dictionary) -> String:
 	var parts := []
 	for k in c:
-		parts.append("%s%d" % [G.iemoji(k), G.up(float(c[k]))])
+		parts.append(G.money_up(float(c[k])) if k == "coins" else "%s%d" % [G.iemoji(k), G.up(float(c[k]))])
 	return " ".join(parts)

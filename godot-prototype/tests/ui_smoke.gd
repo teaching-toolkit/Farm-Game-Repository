@@ -207,7 +207,7 @@ func _ready() -> void:
 	var tot := 0.0
 	for _r in range(200): tot += float(G.fields.harvest_amounts(G.nodes["crop_wheat"], 1, 1.0, 1.0)["wheat"])
 	G.S["unlocked"]["stick_fence"] = true
-	G.inventory.add_item("stick", 20.0); G.inventory.add_item("straw", 20.0); G.inventory.add_item("rope", 5.0); G.S["coins"] = 100.0; G.S["energy"] = 20.0
+	G.inventory.add_item("stick", 20.0); G.inventory.add_item("straw", 20.0); G.inventory.add_item("rope", 5.0); G.S["coins"] = 1500.0; G.S["energy"] = 20.0
 	G.S["unlocked"]["workbench"] = true; G.S["unlocked"]["clear_stumps"] = true; G.S["unlocked"]["k_birds"] = true; G.invalidate_caps()
 	var st_ok: bool = G.progression.unlock("scarecrow_1")
 	var why: String = str(G.progression.can_unlock("scarecrow_1").get("why", ""))
