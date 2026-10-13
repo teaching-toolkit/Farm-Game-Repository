@@ -358,7 +358,7 @@ func patch_rect(f: int, k: int) -> Rect2:
 # ------------------------------------------------------------------ fields, scarecrow, add-ons
 ## Redraws the fields, the scarecrow and the pests (called by the main screen on every change).
 func refresh_fields(G) -> void:
-	usable_fields = maxi(1, int(ceilf(float(G.plots()) / 9.0)))
+	usable_fields = maxi(1, int(ceilf(float(G.progression.plots()) / 9.0)))
 	var sid := ""
 	var em := ""
 	var level := 0
@@ -390,7 +390,7 @@ func refresh_fields(G) -> void:
 		fv.scare_level = level
 		fv.scare_from = feet - Vector2(0, h * 0.75) - fv.position
 		fv.refresh()
-	var share: float = G.pest_eat_share()
+	var share: float = G.fields.pest_eat_share()
 	var any_growing := total > 0
 	pests_box.visible = any_growing and share >= 0.005
 	pest_lbl.text = "🐦 %d%%" % int(round(share * 100.0))

@@ -1015,7 +1015,7 @@ value checks) and keeps a copy of the current data.
 
 | Part | Does |
 |---|---|
-| `game/farm/game.gd` (autoload `Game`) | the rules engine: time, energy, water, fields, weeds, pests, animals, stations, fuel, knowledge, polish, gear, seasons, freshness, luck, gifts, jobs, dynamic difficulty, saves |
+| `game/farm/game.gd` (autoload `Game`) and `game/farm/systems/` | the rules engine: the front door (state, data, saves, effects, one step of time) and one script per system: seasons, inventory, needs (energy, Rest), pace (dynamic difficulty), progression, fields (weeds, pests, water), animals, crafting (fuel, polish), trade, knowledge (cards, Time Quiz), rewards (luck, gifts, jobs, acorns, perks); `kits/core/` holds the shared parts (modifiers, conditions, rng, clock) |
 | `game/farm/main.gd` | the interface: bars, sheets, inside windows, quizzes, album, settings |
 | `game/farm/map/` (`farm_map.gd`, `slot.gd`, `iso_field.gd`), `game/farm/spots.gd` with `data/farm/places.json`, `game/farm/ui/field_view.gd` | the one-screen map, a place, a field, which data node belongs where (the places, their insides, picture chains, ruins, pens and the workbench are data), the patch grid |
 | `game/farm/fx.gd`, `game/farm/dev/dev_flags.gd` | perk effects drawn over the farm; the test and screenshot flags |

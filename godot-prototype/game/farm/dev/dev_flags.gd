@@ -32,24 +32,24 @@ static func apply(main, G) -> void:
 		elif a.begins_with("--celebrate="): main.call_deferred("_celebrate", a.substr(12))     # screenshots of the big pop-up
 		elif a == "--postcard":                    # screenshots: a friend (Granny Maud) and her postcard
 			G.S["unlocked"]["sq_lost_goat"] = true
-			G._dirty()
+			G.invalidate_caps()
 			G.S["gift_pending"].clear()
 			G.S["postcards"] = []
-			G._offer_gift(main.tr("your new bunny"))
+			G.rewards.offer_gift(main.tr("your new bunny"))
 		elif a.begins_with("--perks="):            # screenshots: --perks=all or --perks=perk_rainbow,perk_breeze
 			for p in G.meta.get("perks", {}).get("list", []):
-				if a == "--perks=all" or a.substr(8).split(",").has(p["id"]): G.perks()[p["id"]] = true
+				if a == "--perks=all" or a.substr(8).split(",").has(p["id"]): G.rewards.perks()[p["id"]] = true
 		elif a == "--rainbow": main.call_deferred("_rainbow_now")
 		elif a.begins_with("--load="):             # screenshots: start from a saved farm (--load=res://tests/fixtures/ch3-seed1.json)
 			G.load_game(a.substr(7))
 			G.changed.emit()
 		elif a.begins_with("--unlock="):           # screenshots: pretend these are done (--unlock=workbench,stone_axe)
 			for id in a.substr(9).split(","): G.S["unlocked"][id] = true
-			G._dirty()
+			G.invalidate_caps()
 		elif a.begins_with("--give="):             # screenshots: --give=rope:2,stick:5
 			for kv in a.substr(7).split(","):
 				var parts: PackedStringArray = kv.split(":")
-				G.add_item(parts[0], float(parts[1]) if parts.size() > 1 else 1.0, true)
+				G.inventory.add_item(parts[0], float(parts[1]) if parts.size() > 1 else 1.0, true)
 		elif a == "--built":                       # screenshots: pretend house, barn and workshop stand
 			for b in ["cottage", "barn_1", "workshop_1"]: G.S["unlocked"][b] = true
-			G._dirty()
+			G.invalidate_caps()

@@ -67,7 +67,7 @@ func refresh() -> void:
 	for c in grid.get_children():
 		grid.remove_child(c)
 		c.queue_free()
-	var arr: Array = G.area(area_name)
+	var arr: Array = G.fields.area(area_name)
 	var start := field_index * 9 if area_name == "field" else 0
 	var n := 9 if area_name == "field" else arr.size()
 	grid.columns = 3
@@ -97,7 +97,7 @@ func refresh() -> void:
 		var txt := ""
 		var n_weeds := 0
 		var n_stones := 0
-		if i >= arr.size() or not G.patch_usable(area_name, i):
+		if i >= arr.size() or not G.fields.patch_usable(area_name, i):
 			col = Color("6b7f4b")
 			tex_key = "overgrown"
 			icon = "🌿🌳🌿"
@@ -135,14 +135,14 @@ func refresh() -> void:
 				else:
 					col = Color("9cc46a")
 					tint = Color(0.92, 1.0, 0.88)
-					var young: bool = float(p["growth"]) < G.grow_target(p) * 0.5
+					var young: bool = float(p["growth"]) < G.fields.grow_target(p) * 0.5
 					if young and Art.tex("tiles", "soil_sprouts") != null:
 						tex_key = "soil_sprouts"   # the sprouts are in the picture
 						icon = ""
 					else:
 						icon = "🌱" if young else em
 						icon = icon.repeat(mini(pl, 3)) if pl <= 3 else "%s×%d" % [icon, pl]
-					txt = "⏳ %d / %d" % [int(floor(float(p["growth"]))), int(ceil(G.grow_target(p)))]
+					txt = "⏳ %d / %d" % [int(floor(float(p["growth"]))), int(ceil(G.fields.grow_target(p)))]
 				var soil := float(p.get("soil", 1.0))
 				if soil < 0.99: txt += " 😴"
 				elif soil > 1.01: txt += " 💚"

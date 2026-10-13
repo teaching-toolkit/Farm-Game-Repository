@@ -34,7 +34,7 @@ func _ready() -> void:
 		_roundtrip(f)
 		for i in range(10):
 			for j in range(G.S["patches"].size()):
-				if G.patch_usable("field", j) and G.S["patches"][j]["ready"]: G.harvest("field", j)
+				if G.fields.patch_usable("field", j) and G.S["patches"][j]["ready"]: G.fields.harvest("field", j)
 			G.step_time()
 		_check(int(G.S["step"]) == st + 10, "%s plays on 10 steps (now %d)" % [f, G.S["step"]])
 		_check(G.chapter() >= ch, "%s keeps its chapter" % f)

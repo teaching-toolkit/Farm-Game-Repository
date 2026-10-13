@@ -130,17 +130,17 @@ func show_area(a: String, f: int) -> void:
 func _on_patch(k: int) -> void:
 	patch_pressed.emit(area_name, field_index * 9 + k)
 
-## What is in the way on locked patch i, and how much of the clearing is done (0..1) — see G.patch_wild.
+## What is in the way on locked patch i, and how much of the clearing is done (0..1) — see G.fields.patch_wild.
 func _wild_info(i: int) -> Array:
-	return G.patch_wild(field_index, i)
+	return G.fields.patch_wild(field_index, i)
 
 func refresh() -> void:
-	var arr: Array = G.area(area_name)
+	var arr: Array = G.fields.area(area_name)
 	usable.resize(9)
 	for k in range(9):
 		var i := field_index * 9 + k
 		var spec := {"crop": "", "plants": 0, "stage": "", "ready": false, "weeds": 0, "stones": 0, "wild": "", "seed": hash([field_index, k])}
-		usable[k] = i < arr.size() and G.patch_usable(area_name, i)
+		usable[k] = i < arr.size() and G.fields.patch_usable(area_name, i)
 		if not usable[k]:
 			var wi := _wild_info(i)
 			spec["wild"] = wi[0]
@@ -151,8 +151,8 @@ func refresh() -> void:
 			spec["stones"] = mini(6, int(floor(float(p["stones"]) + 0.001)))
 			if p["crop"] != "":
 				spec["crop"] = p["crop"]
-				spec["plants"] = clampi(G.shown_plants(float(p["plants"])), 1, 9)
-				var frac := float(p["growth"]) / maxf(0.01, G.grow_target(p))
+				spec["plants"] = clampi(G.fields.shown_plants(float(p["plants"])), 1, 9)
+				var frac := float(p["growth"]) / maxf(0.01, G.fields.grow_target(p))
 				spec["stage"] = "ready" if p["ready"] else ("sprout" if frac < 0.5 else "grown")
 				spec["ready"] = p["ready"]
 		patches[k].show_state(spec)
@@ -245,10 +245,10 @@ func _draw_borders() -> void:
 # ------------------------------------------------------------------ pests and the scarecrow's looks
 func _growing_points() -> Array:
 	var out := []
-	var arr: Array = G.area(area_name)
+	var arr: Array = G.fields.area(area_name)
 	for k in range(9):
 		var i := field_index * 9 + k
-		if i >= arr.size() or not G.patch_usable(area_name, i): continue
+		if i >= arr.size() or not G.fields.patch_usable(area_name, i): continue
 		var p = arr[i]
 		if p["crop"] == "" or p["ready"]: continue
 		out.append(patch_center(k))
@@ -353,8 +353,8 @@ func _on_step(info: Dictionary) -> void:
 	for i in eaten:
 		var k := int(i) - field_index * 9
 		if k < 0 or k > 8: continue
-		var p = G.area(area_name)[int(i)]
-		var after := clampi(G.shown_plants(float(p["plants"])), 1, 9)
+		var p = G.fields.area(area_name)[int(i)]
+		var after := clampi(G.fields.shown_plants(float(p["plants"])), 1, 9)
 		var lost := int(eaten[i])
 		var cells: Array = IsoPatch.FILL.slice(after, mini(9, after + lost))
 		pending_eats.append({"k": k, "cells": cells, "crop": str(p["crop"]), "stage": patches[k].spec.get("stage", "grown")})

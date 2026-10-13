@@ -53,7 +53,7 @@ func _ready() -> void:
 	# r9: a sum left unanswered (back to the farm) leaves no trace in the learning record
 	D.show_rest()
 	await _frames(1)
-	var mr: Dictionary = G.math.rec(G._learn())
+	var mr: Dictionary = G.math.rec(G.learn_record())
 	var before_left := [int(mr.get("n", 0)), int(mr.get("turn", 0)), int(mr.get("since_new", 0)), mr["items"].size()]
 	D.rest_go()
 	await get_tree().create_timer(2.0).timeout
@@ -65,7 +65,7 @@ func _ready() -> void:
 	# 4b) water: fetch from the pond with the bucket; a locked place is a mystery; the road has a sheet
 	var w0: float = G.S["water"]
 	G.S["water"] = 0.0
-	G.fetch_water()
+	G.fields.fetch_water()
 	print("fetch water: 0 -> ", G.S["water"], " (was ", w0, ")  mystery barn: ", D.mystery("barn"), "  road open: ", D.is_open("road"))
 	D.open_spot("road")
 	await _frames(2)
@@ -84,37 +84,37 @@ func _ready() -> void:
 	D.play_fx()
 	await _frames(5)
 	# 4d) clearing in steps, straw cannot be sold, gathering arrives at once, later fields are a mystery
-	var s0w: int = G.step_index("clear_weeds")
+	var s0w: int = G.progression.step_index("clear_weeds")
 	G.S["energy"] = 20.0
-	G.unlock("clear_weeds")
-	G.add_item("straw", 3.0)
-	var sold: bool = G.sell("straw", 1.0)
-	var sticks0: float = G.count("stick")
-	var gathered: bool = G.start_recipe("gather_sticks")
-	var again: bool = G.start_recipe("gather_sticks")
-	print("clear_weeds step ", s0w, " -> ", G.step_index("clear_weeds"), "/", G.steps_of("clear_weeds").size(), "  straw sold: ", sold,
-		"  sticks ", sticks0, " -> ", G.count("stick"), " (gathered ", gathered, ", again right away: ", again, ")")
+	G.progression.unlock("clear_weeds")
+	G.inventory.add_item("straw", 3.0)
+	var sold: bool = G.trade.sell("straw", 1.0)
+	var sticks0: float = G.inventory.count("stick")
+	var gathered: bool = G.crafting.start_recipe("gather_sticks")
+	var again: bool = G.crafting.start_recipe("gather_sticks")
+	print("clear_weeds step ", s0w, " -> ", G.progression.step_index("clear_weeds"), "/", G.progression.steps_of("clear_weeds").size(), "  straw sold: ", sold,
+		"  sticks ", sticks0, " -> ", G.inventory.count("stick"), " (gathered ", gathered, ", again right away: ", again, ")")
 	# 4e) round 6: patches open after the weeds, no seeds no planting, yields average, building steps wait, gift cards, water, players
-	var p0: int = G.plots()
+	var p0: int = G.progression.plots()
 	G.S["energy"] = 20.0
-	G.unlock("clear_weeds")                      # step 2 of 5: the two new patches can be planted now
-	var p1: int = G.plots()
+	G.progression.unlock("clear_weeds")                      # step 2 of 5: the two new patches can be planted now
+	var p1: int = G.progression.plots()
 	var q_new: float = float(G.S["patches"][p1 - 1].get("quality", 1.0))
 	G.S["seeds"]["crop_wheat"] = 0.0
-	var plan0: Dictionary = G.plant_plan("field", "crop_wheat")
+	var plan0: Dictionary = G.fields.plant_plan("field", "crop_wheat")
 	var tot := 0.0
-	for _r in range(200): tot += float(G.harvest_amounts(G.nodes["crop_wheat"], 1, 1.0, 1.0)["wheat"])
+	for _r in range(200): tot += float(G.fields.harvest_amounts(G.nodes["crop_wheat"], 1, 1.0, 1.0)["wheat"])
 	G.S["unlocked"]["stick_fence"] = true
-	G.add_item("stick", 20.0); G.add_item("straw", 20.0); G.add_item("rope", 5.0); G.S["coins"] = 100.0; G.S["energy"] = 20.0
-	G.S["unlocked"]["workbench"] = true; G.S["unlocked"]["clear_stumps"] = true; G.S["unlocked"]["k_birds"] = true; G._dirty()
-	var st_ok: bool = G.unlock("scarecrow_1")
-	var why: String = str(G.can_unlock("scarecrow_1").get("why", ""))
+	G.inventory.add_item("stick", 20.0); G.inventory.add_item("straw", 20.0); G.inventory.add_item("rope", 5.0); G.S["coins"] = 100.0; G.S["energy"] = 20.0
+	G.S["unlocked"]["workbench"] = true; G.S["unlocked"]["clear_stumps"] = true; G.S["unlocked"]["k_birds"] = true; G.invalidate_caps()
+	var st_ok: bool = G.progression.unlock("scarecrow_1")
+	var why: String = str(G.progression.can_unlock("scarecrow_1").get("why", ""))
 	var w_before: float = G.S["water"]
 	G.step_time()
 	var w_after: float = G.S["water"]
 	for gid in ["gc_deep_pockets", "gc_spring_water", "gc_early_bird"]:
 		G.S["gift_pending"].append({"from": "Test", "emoji": "💌", "text": "", "offer": [gid]})
-		G.pick_gift(gid)
+		G.rewards.pick_gift(gid)
 	print("r6: plots ", p0, " -> ", p1, " (new patch quality ", q_new, ")  no seeds -> plants ", plan0["plants"], "  wheat per plant ≈ ", snappedf(tot / 200.0, 0.01),
 		"  scarecrow step ", st_ok, " then '", why, "'  water ", w_before, " -> ", w_after, " after a question  gift cards active ", G.S["gift_active"].size(), "/", G.S["gift_owned"].size(),
 		"  celebrations queued ", D.celebrations().size(), "  slug ", G.slug("Mia Lou!"))
@@ -124,23 +124,23 @@ func _ready() -> void:
 	D.close_sheet()
 	# 4f) round 7: Rest levels and repetition, market demand, prices, postcards, perks, the farmer
 	G.L = {}
-	var r0: Dictionary = G.arith_info()
+	var r0: Dictionary = G.needs.arith_info()
 	for _i in range(5):
-		var q: Dictionary = G.rest_question()
-		G.rest_result(q, true, true)
-	var r1: Dictionary = G.arith_info(str(G.rest_question()["level"]))
-	var wrong_q: Dictionary = G.rest_question()
-	G.rest_result(wrong_q, false, false)
+		var q: Dictionary = G.needs.rest_question()
+		G.needs.rest_result(q, true, true)
+	var r1: Dictionary = G.needs.arith_info(str(G.needs.rest_question()["level"]))
+	var wrong_q: Dictionary = G.needs.rest_question()
+	G.needs.rest_result(wrong_q, false, false)
 	for _i in range(3):
-		var q2: Dictionary = G.rest_question()
-		G.rest_result(q2, false, false)
+		var q2: Dictionary = G.needs.rest_question()
+		G.needs.rest_result(q2, false, false)
 	var boosters := 0
 	var back_soon := false
 	for _i in range(6):
-		var q3: Dictionary = G.rest_question()
+		var q3: Dictionary = G.needs.rest_question()
 		if q3.get("booster", false): boosters += 1
 		if q3["key"] == wrong_q["key"]: back_soon = true
-		G.rest_result(q3, true, false)
+		G.needs.rest_result(q3, true, false)
 	var sizes := []
 	var bad := []
 	for id in G.math.levels:
@@ -153,27 +153,27 @@ func _ready() -> void:
 		"  boosters in 6: ", boosters, "  wrong one back soon: ", back_soon, "  hint 32-17: '", G.math.pm_hint(32, "-", 17), "'  hint 7x8: '", G.math.task("7 × 8", "md.f07")[2],
 		"'  medals ", G.math.medal_count(G.L), "  levels ", G.math.levels.size(), "  bad tasks ", bad.slice(0, 5))
 	print("r7 pools: ", " ".join(sizes))
-	G.add_item("carrot", 10.0, true)
+	G.inventory.add_item("carrot", 10.0, true)
 	var c0: float = G.S["coins"]
-	G.sell("carrot", 10.0)
+	G.trade.sell("carrot", 10.0)
 	var got10: float = G.S["coins"] - c0
-	var low: float = G.demand_factor("carrot")
+	var low: float = G.trade.demand_factor("carrot")
 	for _i in range(10): G.step_time()
-	print("r7 market: 10 carrots -> ", snappedf(got10, 0.1), " coins (full ", 10.0 * G.full_price("carrot"), ")  price now ", snappedf(low, 0.01),
-		" -> after 10 questions ", G.demand_factor("carrot"), "  porridge ", G.value_of("porridge"), " vs 2 wheat ", 2.0 * G.value_of("wheat"),
-		"  honey cake ", G.value_of("honey_cake"), "  worth porridge ", G.recipe_worth("porridge"))
-	var f0: int = G.friends().size()
+	print("r7 market: 10 carrots -> ", snappedf(got10, 0.1), " coins (full ", 10.0 * G.trade.full_price("carrot"), ")  price now ", snappedf(low, 0.01),
+		" -> after 10 questions ", G.trade.demand_factor("carrot"), "  porridge ", G.inventory.value_of("porridge"), " vs 2 wheat ", 2.0 * G.inventory.value_of("wheat"),
+		"  honey cake ", G.inventory.value_of("honey_cake"), "  worth porridge ", G.trade.recipe_worth("porridge"))
+	var f0: int = G.rewards.friends().size()
 	G.S["energy"] = 40.0
 	G.S["unlocked"]["clear_weeds"] = true
-	G.unlock("sq_lost_goat")
-	var f1: int = G.friends().size()
+	G.progression.unlock("sq_lost_goat")
+	var f1: int = G.rewards.friends().size()
 	G.S["postcards"] = []
 	var pend0: int = G.S["gift_pending"].size()
-	G._offer_gift("a test")
-	var pc: Dictionary = G.postcard_pending()
+	G.rewards.offer_gift("a test")
+	var pc: Dictionary = G.rewards.postcard_pending()
 	print("r7 postcards: friends ", f0, " -> ", f1, "  postcard from '", pc.get("from", ""), "' choices ", pc.get("offer", []).size(), " (pending ", pend0, " -> ", G.S["gift_pending"].size(), ")",
-		"  butterflies perk ", G.perk_on("perk_butterflies"), "  shop gone: ", not G.has_method("buy_gift"))
-	if not pc.is_empty(): G.pick_gift(pc["offer"][0])
+		"  butterflies perk ", G.rewards.perk_on("perk_butterflies"), "  shop gone: ", not G.has_method("buy_gift"))
+	if not pc.is_empty(): G.rewards.pick_gift(pc["offer"][0])
 	print("r7 album postcards ", G.S["postcards"].size(), "  celebrations queued ", D.celebrations())
 	D.close_modal()
 	D.celebrations().clear()
@@ -196,31 +196,31 @@ func _ready() -> void:
 	var opts := {}
 	var pics := 0
 	for i in range(60):
-		var tq: Dictionary = G.next_time_question()
+		var tq: Dictionary = G.knowledge.next_time_question()
 		opts[tq["answers"].size()] = int(opts.get(tq["answers"].size(), 0)) + 1
 		if tq.get("pictures", false): pics += 1
 		assert(_atext_ok(tq), "answer missing")
 	var picq: Dictionary = {}
 	for q in G.pack_questions:
 		if str(q.get("id", "")) == "PIC-004": picq = q
-	var shown: Dictionary = G._shuffled_q(picq, "", 0, false)
+	var shown: Dictionary = G.knowledge.shuffled_q(picq, "", 0, false)
 	var de: Dictionary = G.quiz.load_texts("res://data/i18n/quiz-de.json")
 	var shown_de: Dictionary = G.quiz.present(picq, G.rng, 4, de)
 	var con: Dictionary = {}
 	for q in G.pack_questions:
 		if str(q.get("id", "")) == "CON-001": con = q
-	var con_q: Dictionary = G._shuffled_q(con, "", 0, false)
-	G.time_result(shown, true)
+	var con_q: Dictionary = G.knowledge.shuffled_q(con, "", 0, false)
+	G.knowledge.time_result(shown, true)
 	# J10: a question answered wrong at the first try comes back right after the next one
-	var qa: Dictionary = G.next_time_question()
-	G.retry_after_next(qa)
-	var qb: Dictionary = G.next_time_question()
-	var qc: Dictionary = G.next_time_question()
+	var qa: Dictionary = G.knowledge.next_time_question()
+	G.knowledge.retry_after_next(qa)
+	var qb: Dictionary = G.knowledge.next_time_question()
+	var qc: Dictionary = G.knowledge.next_time_question()
 	print("r10 first-try rule: wrong one back after one other: ", qb.get("id", "") != qa.get("id", "") and qc.get("id", "") == qa.get("id", ""))
 	print("r8 quiz: ", ids.size(), " ids, doubles ", dup, "  options per question ", opts, "  picture questions ", pics, "/60",
 		"  PIC-004 pictures ", shown["pictures"], " img '", shown["img"], "' right '", shown["answers"][shown["correct"]]["text"], "'",
 		"  German: '", shown_de["q"], "' / '", shown_de["answers"][shown_de["correct"]]["text"], "'",
-		"  CON-001 filled to ", con_q["answers"].size(), "  record key PIC-004: ", G._learn()["quiz"]["items"].has("PIC-004"))
+		"  CON-001 filled to ", con_q["answers"].size(), "  record key PIC-004: ", G.learn_record()["quiz"]["items"].has("PIC-004"))
 	D.show_time_quiz()
 	await _frames(2)
 	D.close_modal()
@@ -229,51 +229,51 @@ func _ready() -> void:
 	print("r8 picture buttons: ", D.modal_box().get_child_count(), " rows in the quiz box")
 	D.close_modal()
 	G.S["woodpile"] = 0.0
-	G.add_item("stick", 10.0)
-	G.S["unlocked"]["campfire"] = true; G.S["unlocked"]["tin_pot"] = true; G._dirty()
+	G.inventory.add_item("stick", 10.0)
+	G.S["unlocked"]["campfire"] = true; G.S["unlocked"]["tin_pot"] = true; G.invalidate_caps()
 	var cook_rid := ""
 	for rid in G.recipes:
-		if G.recipe_fuel(rid) > 0.0 and G.recipe_open(rid) and cook_rid == "": cook_rid = rid
+		if G.crafting.recipe_fuel(rid) > 0.0 and G.crafting.recipe_open(rid) and cook_rid == "": cook_rid = rid
 	var cooked_cold := false
 	var stoked := 0.0
 	if cook_rid != "":
-		for k in G.recipes[cook_rid].get("inputs", {}): G.add_item(k, 5.0)
+		for k in G.recipes[cook_rid].get("inputs", {}): G.inventory.add_item(k, 5.0)
 		G.S["energy"] = 20.0
-		cooked_cold = G.start_recipe(cook_rid)
-		stoked = G.stoke(G.recipe_fuel(cook_rid))
+		cooked_cold = G.crafting.start_recipe(cook_rid)
+		stoked = G.crafting.stoke(G.crafting.recipe_fuel(cook_rid))
 	print("r8 woodpile: ", cook_rid, " cooks with an empty woodpile: ", cooked_cold, "  stoked +", stoked, " -> woodpile ", G.S["woodpile"])
-	var b0: int = G.recipe_batch("gather_sticks")
-	G.S["unlocked"]["gathering_basket"] = true; G._dirty()
-	var b1: int = G.recipe_batch("gather_sticks")
-	G.S["running"].erase(G.chain_root("wild_edge"))
+	var b0: int = G.crafting.recipe_batch("gather_sticks")
+	G.S["unlocked"]["gathering_basket"] = true; G.invalidate_caps()
+	var b1: int = G.crafting.recipe_batch("gather_sticks")
+	G.S["running"].erase(G.crafting.chain_root("wild_edge"))
 	G.S["energy"] = 20.0
-	var st0: float = G.count("stick")
+	var st0: float = G.inventory.count("stick")
 	var en0: float = G.S["energy"]
-	G.start_recipe("gather_sticks")
-	print("r8 carry: loads per tap ", b0, " -> ", b1, "  sticks +", G.count("stick") - st0, " for ", snappedf(en0 - float(G.S["energy"]), 0.01), " energy")
-	var fib0: float = G.count("fiber")
+	G.crafting.start_recipe("gather_sticks")
+	print("r8 carry: loads per tap ", b0, " -> ", b1, "  sticks +", G.inventory.count("stick") - st0, " for ", snappedf(en0 - float(G.S["energy"]), 0.01), " energy")
+	var fib0: float = G.inventory.count("fiber")
 	G.S["energy"] = 20.0
-	G.do_polish("polish_rootout")
-	print("r8 root out: fibre +", G.count("fiber") - fib0)
+	G.crafting.do_polish("polish_rootout")
+	print("r8 root out: fibre +", G.inventory.count("fiber") - fib0)
 	G.S["dynamic"] = true
 	G.S["pace"] = 20.0; G.S["pace_n"] = 30; G.S.erase("flex")
 	var flex_open := ""
 	for id in G.nodes:
-		if flex_open != "" or not G.is_open(id) or not (G.nodes[id]["type"] in G.flex_cfg().get("types", [])): continue
+		if flex_open != "" or not G.progression.is_open(id) or not (G.nodes[id]["type"] in G.pace.flex_cfg().get("types", [])): continue
 		for k in G.nodes[id].get("cost", {}):
 			if k != "energy" and float(G.nodes[id]["cost"][k]) >= 2.0: flex_open = id
 	if flex_open != "":
 		var base_c: Dictionary = G.nodes[flex_open]["cost"]
-		var flex_c: Dictionary = G.node_cost_base(flex_open)
-		print("r8 dynamic prices: pace ratio ", snappedf(G.pace_ratio(), 0.01), "  ", flex_open, " factor ", G.flex_factor(flex_open), "  ", base_c, " -> ", flex_c, "  tip: ", G.flex_tip(flex_open))
+		var flex_c: Dictionary = G.pace.node_cost_base(flex_open)
+		print("r8 dynamic prices: pace ratio ", snappedf(G.pace.pace_ratio(), 0.01), "  ", flex_open, " factor ", G.pace.flex_factor(flex_open), "  ", base_c, " -> ", flex_c, "  tip: ", G.pace.flex_tip(flex_open))
 	else: print("r8 dynamic prices: no open goal to test")
 	G.S["dynamic"] = false; G.S.erase("flex")
 	# r9: the share of book reviews in the Time Quiz, set in Settings (5% steps, 0..100%)
-	var rs0: float = G.review_share()
-	G.set_review_share(0.52); var rs1: float = G.review_share()
-	G.set_review_share(1.4); var rs2: float = G.review_share()
+	var rs0: float = G.pace.review_share()
+	G.pace.set_review_share(0.52); var rs1: float = G.pace.review_share()
+	G.pace.set_review_share(1.4); var rs2: float = G.pace.review_share()
 	G.S.erase("review_share")
-	print("r9 review share: start %.2f -> 0.52 gives %.2f, 1.4 gives %.2f, back to %.2f" % [rs0, rs1, rs2, G.review_share()])
+	print("r9 review share: start %.2f -> 0.52 gives %.2f, 1.4 gives %.2f, back to %.2f" % [rs0, rs1, rs2, G.pace.review_share()])
 	# r9: sounds — every name the game plays exists in data/sounds.json; buses; switching music and effects
 	var snd = get_node("/root/Sound")
 	var names_missing := []
@@ -312,7 +312,7 @@ func _ready() -> void:
 	D.close_sheet()
 	for b in ["cottage", "barn_1", "workshop_1"]:
 		G.S["unlocked"][b] = true
-	G._dirty()
+	G.invalidate_caps()
 	D.refresh()
 	await _frames(2)
 	var insides := []

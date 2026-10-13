@@ -72,9 +72,9 @@ func _snapshot() -> Dictionary:
 			if mask & (1 << i):
 				G.S["unlocked"][G.pet_ids[i]] = true; key += "1"
 			else: key += "0"
-		G._caps = null
+		G.invalidate_caps()
 		ch[key] = G.chapter()
-		lk[key] = snappedf(G.luck(), 0.000001)
+		lk[key] = snappedf(G.rewards.luck(), 0.000001)
 	out["chapter_by_pets"] = ch
 	out["luck_by_pets"] = lk
 	return out

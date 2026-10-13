@@ -118,7 +118,7 @@ Adapted from *systematic-debugging* in obra/superpowers (MIT).
 
 ## 6. Independent review of bigger changes
 
-For a new mechanic, a change to the save data, a change to the game rules in `game/farm/game.gd`, or more than about 150 changed
+For a new mechanic, a change to the save data, a change to the game rules in `game/farm/game.gd` or `game/farm/systems/`, or more than about 150 changed
 lines: start a fresh subagent that did not write the code and give it
 
 - the changed files or the diff, the task text and its plan from `TODO.md`, and the design document's section;

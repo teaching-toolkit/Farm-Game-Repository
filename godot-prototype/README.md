@@ -318,8 +318,9 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - The pixie chest mini-game is not in yet; the farmer is a first prototype (one look, no "make your farmer" screen yet).
 
 ## Files
-- `game/farm/game.gd` — rules engine (autoload `Game`): data, time, energy, fields, weeds, stones, pests, animals, stations,
-  firewood, knowledge, polish, gear, seasons, freshness, luck, gift cards, jobs, acorns, cheat.
+- `game/farm/game.gd` — the rules engine's front door (autoload `Game`): data, saves, the effects table, one step of time and the signals;
+  `game/farm/systems/*.gd` — the rules, one script per system (seasons, inventory, needs, pace, progression, fields, animals, crafting,
+  trade, knowledge, rewards), reached as `G.<system>.<function>` (see `game/farm/systems/README.md`); `kits/core/` — modifiers, conditions, rng, clock.
 - `game/farm/main.gd` — the interface (top bar, map, sheets, the inside windows, quizzes); `game/farm/map/farm_map.tscn` + `farm_map.gd` — the
   one-screen map, built from `data/map_layout.json` (ground, forest, road, house yard, fields with shadows and fence, pens, places,
   add-ons and decorations sorted by their feet; scaled to fit the screen); `game/farm/map/slot.gd` — one place (stands on its footprint,
