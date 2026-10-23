@@ -414,21 +414,21 @@ func _turn() -> void:
 	# water: carry some from the pond when it runs low (the bucket costs a little energy)
 	var trips := 0
 	while float(G.S["water"]) < G.needs.water_cap() - G.fields.fetch_amount() and G.S["energy"] > 6 and trips < 4:
-		if not G.fields.fetch_water(): break
+		if not G.actions.perform("fetch_water", G.actions.farmer)["done"]: break
 		trips += 1
 	# fields
 	for i in range(G.S["patches"].size()):
 		if not G.fields.patch_usable("field", i): continue
 		var p = G.S["patches"][i]
 		if p["ready"]: G.fields.harvest("field", i)
-		if float(p["weeds"]) >= 3.0: G.fields.weed(i)
-		if float(p["stones"]) >= 2.0: G.fields.pick_stones(i)
+		if float(p["weeds"]) >= 3.0: G.actions.perform("weed", G.actions.farmer, {"i": i})
+		if float(p["stones"]) >= 2.0: G.actions.perform("pick_stones", G.actions.farmer, {"i": i})
 		if p["crop"] == "":
 			var cs: Array = G.fields.crops_for("field").filter(func(c): return G.fields.sow_ok("field", c))      # what can be sown now
 			var sowable := false
 			for c in cs:
 				if G.fields.seed_have(c) >= 1.0: sowable = true
-			if p.get("snow", false) and sowable and not G.fields.clear_snow(i): continue      # winter: the snow goes first (only when there is something to sow)
+			if p.get("snow", false) and sowable and not G.actions.perform("clear_snow", G.actions.farmer, {"i": i})["done"]: continue      # winter: the snow goes first (only when there is something to sow)
 			if p.get("snow", false): continue
 			if cs.size() > 0:
 				var pick: String = cs[(i + G.S["step"]) % cs.size()]

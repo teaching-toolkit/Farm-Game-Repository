@@ -93,6 +93,7 @@ var needs: FarmNeeds
 var pace: FarmPace
 var progression: FarmProgression
 var fields: FarmFields
+var actions: FarmActions
 var animals: FarmAnimals
 var crafting: FarmCrafting
 var trade: FarmTrade
@@ -118,6 +119,7 @@ func _init() -> void:
 	pace = FarmPace.new(self)
 	progression = FarmProgression.new(self)
 	fields = FarmFields.new(self)
+	actions = FarmActions.new(self)
 	animals = FarmAnimals.new(self)
 	crafting = FarmCrafting.new(self)
 	trade = FarmTrade.new(self)
@@ -135,6 +137,7 @@ func _init() -> void:
 	nature = FarmNature.new(self)
 	forest = FarmForest.new(self)
 	trust = FarmTrust.new(self)
+	fields.register_chores()
 
 # ------------------------------------------------------------------ start, seed and clock
 

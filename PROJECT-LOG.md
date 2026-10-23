@@ -93,6 +93,128 @@ For what the game *is* now, read `farm-quiz-game-master-design-document.md`; for
 | **Issue tracker** (23 Oct 2026) | `TODO.md` reshaped so the skills `to-spec`, `to-tickets` and `tdd` can run on it: open work is one file per ticket in `issues/<feature>/`; `issues/README.md` holds the layout, the three statuses (`ready-for-agent`, `needs-parent`, `done`), the frontier and where specs go. 45 open tasks became tickets with their ids kept (original text moved unchanged); decided-and-built entries stayed in `TODO.md`; W7 closed (§2 has no open questions); the five review candidates and I17b were filed as new tickets. `TODO.md` is now the index (§1 and §18). `CLAUDE.md`, the session skill and `00-READ-ME-FIRST.md` point to it. No game, data or script changed. |
 | **Play-test notes of 23 Oct** (23 Oct 2026) | The parent's 44 notes (58 lines; lines 45–58 repeat 31–44) kept word for word in `planning/2026-10-23-parent-notes-playtest.md`, with a table of where each went. 43 new tickets in `issues/` (new folders `interface-feel`, `season-look`, `action-budget`; others extended; TODO §19) and a checkbox added to W8, U2, R1 and I14. Checked against the code first: rocks and weeds only slow growth (to half speed at worst) and lower the grade, not the number of crops; the carrot flowering option does not exist yet (U2); the cheat buttons start on in `data/settings.json`; the flatbread recipe already asks for flour. No game, data or script changed. |
 | **farm-actions grilled and specified** (23 Oct 2026) | Candidate 1 of the architecture review grilled with the parent in three rounds; words settled in the new `GLOSSARY.md` (chore, act, base cost, effective cost, requirement, check, perform, report, price, blessing, automated chore). `issues/farm-actions/spec.md` written; build tickets 02–16 (short golden runs, the module with water first, field chores, animals, party and visit, forest, village trip, recipes, one pay function, delete the duplicates, then three decisions for the parent). New: `issues/pets-automation/01` (needs-parent) and `issues/later/06` (pets' words become blessing). Decided: refactor changes no rule; Wren never asks for coins (later ticket); pets' blessings stay free, automated chores cost the farmer. No game, data or script changed. |
+| **Actions module** (23 Oct 2026) | `farm-actions/03` built. New system `actions` (`G.actions.check/perform/register`, doer as input) with its data `rules/46-chores.json`; fetch water is the first chore (button in the water place and the "No water left" window, bot, smoke test); `fields.fetch_water/fetch_cost` removed; new test `tests/actions_test.tscn` (price-match over 108 situations; in `check_all.sh`). No number, rule or roll changed; golden runs identical. Only visible difference: the "too tired" line for water is the generic one. |
+| **Short golden runs** (23 Oct 2026) | `farm-actions/02` built, no game change: `tests/golden.sh` takes `--short` (= `--chapter=3`, play to the end of chapter 2) and `--chapter=N`; new files `tests/golden/bot-seed1-ch3.txt` (332 steps) and `bot-seed2-ch3.txt` (344), identical on repeat, also with `--strict`; the full ch6 files are unchanged and still match. `check_all.sh --short` passes it on. Rule written into the README, `farm-game-check` and `farm-game-session`. |
+| **Weed, stones, snow as chores** (23 Oct 2026) | `farm-actions/04` built. `clear_snow`, `weed`, `pick_stones` run through `G.actions` (data in `rules/46-chores.json`, effects in `fields.gd`); new `perform_batch` for whole-field chores (stops at the first unpayable patch, one save, one redraw, one message); the old copies and their "Too tired" texts are deleted; bot and buttons call the module. `tests/actions_test.tscn` now covers the three chores (5,318 checks). Short and full golden runs (seeds 1, 2) identical. Found and kept: snow and weeds multiply by `energy:field` twice (see the ticket). |
+| **READ-ME rewritten** (23 Oct 2026) | `00-READ-ME-FIRST.md` brought in line with the tracker, `GLOSSARY.md` and the flow (grill-with-docs, to-spec, to-tickets, tdd): shorter header, §2 reads the glossary, `issues/README.md` and the feature's spec, §3 table has `GLOSSARY.md`, `planning/` and the architecture review, the three files in `claude-skills/` are called project guides, §4.6 has three new working rules (glossary words, no action before shared understanding, short golden runs), §5 holds only the current state (history moved to §1.1 here), §6 points to `issues/`. No game change. |
+
+### 1.1 Old "Where we left off" notes (7 Oct – 23 Oct 2026)
+
+Moved here on 23 Oct 2026 from `00-READ-ME-FIRST.md` §5, unchanged, so the READ-ME keeps only the current state. Some paragraphs repeat rows of the table above.
+
+Round 8 is finished and delivered (design 1.3.8, data v0.8; see `PROJECT-LOG.md`). After it, the folder was tidied and the
+documents reorganised into the design document 2.0, the log and this file. The web build in `web-build/` matches the current
+code. **Nothing is half-done in the code.**
+
+Waiting on the parent: picking the round 8 pictures (open task W1), and the GitHub access and the two double-click scripts
+on the Mac (W2).
+
+7 Oct 2026 (after 2.0): added `Build web version.command`, `Publish web version.command`, `CLAUDE.md`, the root `.gitignore`
+and `godot-prototype/tools/setup_godot.sh` for cloud sessions. No game changes; `web-build/` still matches the code.
+
+7 Oct 2026 (group A): the five small fixes A1–A5 are in the code (see the log); `web-build/` does **not** match the code now.
+
+7 Oct 2026 (sounds): sound files from `sound-inbox/` imported (see §F). `web-build/` does not match the code until it is
+re-exported with the sounds.
+
+7 Oct 2026 (cloud check): a fresh cloud session was set up and verified (smoke test, bot, screenshot); the cloud notes in
+this file and `CLAUDE.md` were corrected (see the log). No game changes; `web-build/` still matches the code.
+
+8 Oct 2026 (story, rounds 0–4 part 1): `story/` holds the premise, book file, world bible, character files, research notes and the story-delivery design. Nothing in the game or its data has changed; `web-build/` matches the code as before.
+
+9 Oct 2026 (planning): the to-do list moved out of this file into `TODO.md`; the finished groups A–G were already in the log, their leftovers became tasks (W4, W5, W8). The parent's new notes (16 game ideas, 8 story notes; raw in `planning/`) were sorted into `TODO.md` by area, with a proposed order, a queue of decisions (contradictions with existing rules flagged ⚠️) and a first batch of title ideas. No game, data or code changes; `web-build/` is unchanged.
+
+11 Oct 2026 (working instructions): how to work on the project moved into three skill files in `claude-skills/`
+(`farm-game-session`, `farm-game-check`, `farm-game-content`). `CLAUDE.md` and §2 and §4 of this file now point to them instead
+of repeating them, and a session no longer reads every document in full. No game, data or code changes; `web-build/` is unchanged.
+
+12 Oct 2026 (decisions): five rounds of questions and the parent's answers (10–12 Oct; word for word in `planning/`) settled the
+market trips, packing and the store, bronze and gold coins, realistic prices, the Lord's share, quality, skills, the energy model and
+wellbeing, skills, sustainability and seasons, the top bar, the Time Quiz's first-try rule, an architecture study before splitting the
+big scripts, and the story's open questions. Listed in
+`PROJECT-LOG.md` §2.8; `TODO.md` rebuilt around them (next: the open questions in its §2, then everything on paper, step 3). No game,
+data or code changes; `web-build/` is unchanged.
+
+12 Oct 2026 (architecture): round 6 answered; the code read and measured, and the restructuring planned in
+`planning/2026-10-12-architecture-plan.md` (core, kits, the farm; nine slices that don't change the game, checked by a seeded golden
+run). Read it before any code work. No game, data or code changes; `web-build/` is unchanged.
+
+12 Oct 2026 (implementation plan): the plan's decisions answered; `TODO.md` §0 is now the implementation plan in twelve phases.
+Phase 1 starts: the round 8 pictures (in `art-inbox/`, not yet named or imported), version numbers, "ss", the first-try rule, the
+rename to *Hazelwood Harvest*. No game, data or code changes yet; `web-build/` is unchanged.
+
+12 Oct 2026 (phase 1 built): round 8 pictures imported; version 0.9.0 *Hazelwood Harvest* (shown in ⚙️ Settings); German with
+"ss"; only a right first try moves time; design document 2.1. Smoke test and bot pass. **`web-build/` matches the code** (exported
+12 Oct 2026, 89 MB `index.pck`). Next: the parent tests 0.9.0 on the iPad (publish with `Publish web version.command`), then phase 2.
+
+12 Oct 2026 (phase 2, R0): the safety net for the restructuring: `--seed`, the golden run, save fixtures, the UI test driver,
+screenshot flags in `game/farm/dev/dev_flags.gd`, `tests/check_all.sh`. No change to the game; `web-build/` still matches it.
+R1 done too: the code now lives in `kits/` (reusable parts) and `game/farm/` (this game). Next: R2 (farm content out of code).
+
+13 Oct 2026 (phase 2, R2): farm content out of code: the places, their insides, picture chains, ruins, pens, the workbench and the
+rules that put a data node at a place are now `godot-prototype/data/farm/places.json`; the pets and animals come from the nodes and
+`chapters[].pet` instead of lists in four places. A new test (`tests/places_test.tscn`, in `check_all.sh`) pins it to what the old code
+gave; all checks pass, the golden runs are identical. No change to the game; `web-build/` still matches it (a web export would now also
+carry `data/farm/*.json`). 
+13 Oct 2026 (phase 2, R3): the core: `godot-prototype/kits/core/` (modifiers, conditions, rng, clock; own README and test). `Game.step_time()`
+is now a list of registered systems in today's order (`Game._setup_clock()`). No change to the game (golden runs identical, also strict);
+`web-build/` still matches it.
+
+13 Oct 2026 (phase 2, R4): `game.gd` (2,460 lines) is split: the autoload `Game` (now `class_name FarmGame`, about 500 lines) is the front door;
+the rules are 11 systems in `godot-prototype/game/farm/systems/` (own README), reached as `G.<system>.<function>` (e.g. `G.inventory.add_item`,
+`G.fields.plant`); `main.gd`, the tests and the dev flags were rewritten by a script to call them that way. No change to the game (golden
+runs identical, also strict; bot, smoke test, screenshots unchanged); `web-build/` still matches it.
+
+13 Oct 2026 (phase 2, R5): `main.gd` (3,108 lines) is split: it is now the 400-line composition root (`FarmMain`: builds the screen and
+refreshes it); the interface's jobs are 25 parts in `godot-prototype/game/farm/ui/` (and `ui/places/`; own README), reached as `M.<part>.<function>`
+(e.g. `M.modals.open_modal`, `M.patches.on_patch`). Same method as R4. No change to the game: all checks pass, the golden runs are identical, and 21
+screens (sheets, pop-ups, Rest, quiz, menu, album, cards, English and German) look the same as before. `web-build/` still matches the code.
+
+13 Oct 2026 (phase 2, R6): the map: `farm_map.gd` (1,042 lines) is split into the map node and `ground`, `critters`, `cat`, `walker` (`godot-prototype/game/farm/map/`, own README); the pest and scarecrow drawing that existed twice is now only in `iso_field.gd` (the copy in `field_view.gd` was dead code). No change to the game (all checks pass, golden runs identical, map screenshots in four seasons and a fully built winter farm look the same as before). `web-build/` still matches the code. 
+13 Oct 2026 (phase 2, R7): saves have a version: `kits/core/saves.gd`, `Game.SAVE_VERSION` = 1 (older saves are 0 and are upgraded when loaded), every
+system declares the save keys it owns (`save_defaults()`), a new key or a changed layout has a clear place to go (README, `farm-game-session` skill). The
+fixtures stay in the old layout and still load; a new test (`tests/saves_test.tscn`) checks the new-game state, key owners, upgrades and saves from a newer
+game. The golden runs' numbers are unchanged (only their state hash, since every save now has `version`; recorded anew). `web-build/` still matches the code.
+
+13 Oct 2026 (phase 2, R8 — end of phase 2): the data is in files (`godot-prototype/data/farm/`: items, recipes, chapters, start, `nodes/` in 14 themed slices that keep the
+exact node order, `rules/` by system; loader `kits/core/data.gd`, Python `tools/farmdata.py`); the old `farm-progression.json` is gone. New `tools/check_data.py` (every id, cost,
+effect and condition exists; part of `check_all.sh`; 0 errors, 7 warnings). The bot writes a pacing report (`--report=FILE`) that the explorer's Pacing tab shows; the new
+double-click **`Update explorer.command`** refreshes the explorer (checks the data, lets the bot play seeds 1 and 2, about 3 minutes). No change to the game: all checks pass,
+golden runs identical. `web-build/` still matches the code. **Phase 2 is finished.** Next: phase 3 (the interface in the new structure: J2–J6, J8, J9, N7; version 0.10).
+
+13 Oct 2026 (phase 3, version 0.10.0): the interface work is built: new top bar without a bottom bar (J8), cheat buttons and read aloud as device settings (J9, J6), phone-like notifications (J5), no field sign: *The whole field* in the patch window (J2), the farmer walks home before Rest (J3), the playback after the Time Quiz (J4), the season shader with snow caps and golden autumn (N7). All checks pass, golden runs identical. **Needs the iPad** (publish with `Publish web version.command`; `web-build/` does NOT match the code yet): the timing of the Rest walk and of the playback, swiping a notification, the shader on the real screen (snow caps look right on roofs, fences and trees?). Next: phase 4 (foundations, D-papers first).
+
+13 Oct 2026 (phase 4, version 0.11.0): the foundations are built, each slice checked and committed: **what is shown when** (`G.reveal`, `rules/60-reveal.json`; the purse and the album button wait for their first coin and picture; design document §13.2b, the D4 table), **item weights** (`rules/45-weight.json`, hidden), **quality** Lumpy / Proper / Fancy (`G.quality`, `rules/47-quality.json`; `SAVE_VERSION` 2), **skills and ranks** (`G.skills`, `rules/48-skills.json`; shown from the first rank-up in the album; `SAVE_VERSION` 3), **bronze and gold with realistic prices** (every old coin = 15 bronze, `planning/price-table.md`, `G.money`; `SAVE_VERSION` 4). Also the top bar now fits 744 and 834 px, the effect lines of upgrades and pets are readable (J12). New tests: quality (31), skills (31), money (17); golden runs re-recorded on purpose (the bot reaches chapter 5 in 603 / 741 steps); the explorer is refreshed. **Needs the iPad** and the parent's eye on the Swiss prices (TODO W9); `web-build/` does NOT match the code yet. Next: phase 5 (the story engine).
+
+13 Oct 2026 (phase 5, version 0.12.0): the story engine and chapter 1 are built. `G.story` (`game/farm/systems/story.gd`) decides which story piece is ready (data in `godot-prototype/data/farm/story/`, conditions in the kit's language plus the game's own terms); the part `game/farm/ui/storybox.gd` shows it (story box with pages and Skip from the second viewing, speech bubbles that stay until tapped, the 📜 scroll, only when the farm is quiet). Chapter 1 is 17 pieces in English and German (`story/texts/ch1.md` is the readable source; flagged inventions in `story/book-file.md`). A new game opens with the bedside frame, the nibbled stalk and the *How to play* hints. New test `tests/story_test.tscn` and a story section in the smoke test; the data checker knows every condition; the log sheet's 📜 is now 📋. Chapters 2–6 get their pieces when their chapters are built (phase 8). `web-build/` does not match the code. Next: phase 6 (the store and market: M11, M5–M9, M3, M8, M12, P1).
+
+13 Oct 2026 (phase 6, version 0.13.0): the store and the market trip are built. `G.trip` (`game/farm/systems/trip.gd`, `rules/49-trip.json`): the bag with a capacity from the carrying thing (packing leaves things in the store, marked 🎒), the trip (3 ⚡, one Time Quiz question on the way, the village square: sell from the bag, hand over orders from the bag, buy within the room left, back home); the market place on the map is the signpost; selling, buying, barter and deliveries work only on the square. The store is a grid of small tiles with filters and a tap panel; the 🎒 icon (with a thin bar) is the bag. `G.gate` (`rules/50-gate.json`): the travelling merchant at the gate (a cart for now) buys in bulk without a trip at 85 %. `G.trust` (`rules/51-trust.json`): reputation and each trader's trust lower prices a little; season prices with a news line (`rules/52-season-prices.json`); coins fly in bunches of 10. The bot makes trips (it needs about a quarter more questions to reach chapter 5: 765 / 820 instead of 603 / 741). New tests `trip_test`, `gate_test`, `market_test`. Open: the painted village square and a signpost picture, merchants as walking figures, trust-gated wares. `web-build/` does not match the code. Next: phase 7 (the new chapter 1: D2, U1–U5, M14).
+
+13 Oct 2026 (phase 7, version 0.14.0): the new chapter 1 is built. The grain is the seed (wheat has `seedItem`; start with 1 grain; the seller sells grain as a safety net). Crafts to sell: wicker basket, clay (dug at the field edge), clay pot; card *Saving seed*. The travelling merchant barters an axle (900 🟤 + 2 baskets) for the hand cart (bag 60). Hay (`crop_hay`) and winter wheat (`crop_winter_wheat`, `sowSeasons`, `G.fields.sow_season_ok`) with cards; the autumn news line hints at winter wheat. The chapter 1 plan is `planning/2026-10-13-chapter-1-draft.md`. Tools `tools/add_data.py` (add data entries, one per line) and `tools/set_de.py` (set German texts). Bot steps to chapter 5: 761 / 893. New test `crops_test`. Open: winter wheat's quarter-speed winter growth and the ❄️ tiles for other crops (phase 10), the iPad test (W9). Next: phase 8 (six chapters, pets, the Lord's share: S1, S2, M13, I6).
+
+13 Oct 2026 (phase 8, version 0.15.0): six chapters in the data (chapter 5 *Healing* with a placeholder badger, the old chapter 5 is chapter 6; S1), **the Lord's share** (`G.lord`, `rules/53-lord.json`: from chapter 3, due each season, Pieter at the gate, buying with coins blocked until it is paid, at most a quarter of the season's sales; story pieces in `story/texts/ch3.md`), **the pets' jobs** (`G.pets`, `rules/54-pets.json`: level 2 when the next pet is home, a job board in the pet corner, the pets walk to where they work). Tests `lord_test`, `pets_test`. Open: Quill and the story beat that eases the share in chapter 6; levels 3–4 of the pets (S5); the medicine chapter (S3, phase 12). Next: phase 9 (wellbeing and energy: L1–L8).
+
+13 Oct 2026 (phase 9, version 0.16.0): **wellbeing** (`G.well`, `rules/55-well.json`, design document §5.1b): six parameters (sleep, food, strength, friends, calm, play) from chapter 2, a dial on the energy maximum and the energy per Rest answer, a drain that grows with the farm's load and a boost after helping; the farmer's face at the end of the energy bar and a dashboard (tap the face or the farmer) whose rows open with the cards of the new book *Body and mind*; a party and visits to friends; four helpers (whistle, sketchbook, fiddle, bench); Berit's note. The library holds one book more (11 / 13). Tests `well_test`. Open: Wren's line, the chapter 5 collapse (phase 12), meditation and training. Next: phase 10 (nature and winter: N1–N6, N8, U5 rest).
+
+13 Oct 2026 (phase 10, version 0.17.0): **the forest edge** (`G.nature`, `rules/56-nature.json`: pools for sticks, loose stones and clay, the trees' cycle, a yield that falls with the pool but never below 1, advice, a card that shows the numbers) and **winter** (snow on the empty patches until cleared, only hardy crops outdoors, a quarter of the growing speed, winter kale, a text at the start of each season). Tests `nature_test`, `crops_test`. The bot needs about 10–25 % more questions for winter. Open: water as a pool, herbs, the Helper's pause, snow on the ground, bare trees. Next: phase 11 (medicine and the forest: S3, S4) and phase 12 (free play: I10, S5), then the leftovers (T3, R4, J7, H1).
+
+13 Oct 2026 (phase 11, version 0.18.0): **chapter 5 *Healing* is real**: Berit's still-room with five stations and eleven remedies, the book *The Healer's Herbal*, the Healer's Chest and the tea set, and **the forest** (`G.forest`, `rules/57-forest.json`: nine spots by season, find / pick / dig / look, an unchecked basket, Wren's check, the poisoning if you skip it). The badger comes home for the chest and the tea set. Story pieces `story/texts/ch5.md`. The bot plays it (about 105–135 questions). **The parent must read the new plant texts and the safety wording** (TODO W9). Open: the badger's check job card, a painted forest. Next: phase 12 (free play: I10, S5) and the leftovers (T3, R4, J7, H1).
+
+13 Oct 2026 (phase 12, version 0.19.0): **free play**: the pets' job boards go to levels 3 and 4 (WHEN cards, an OTHERWISE rule; all open once the alpaca is home), six loose-end goals after the story (`sq_free_*`, `story/texts/ch6.md`), two new perks (fireflies, shooting stars), `--end` for the bot. **All twelve phases of the plan are built (0.9.0 to 0.19.0); what is left is on the iPad and with the parent**: W9 (play-test and read the texts), the story rounds for chapters 2, 4 and 6, pictures (the forest, the village square, the signpost, snow on the ground), H1 (upgrades that do more than save energy), J7 (stale facts in the design document), the explorer's own simulation (T3), the leftovers of R4.
+
+14 Oct 2026 (story round 6b, no code changes): 166 new story pieces in English (`story/texts/more-ch1–6.md`), `story/outline/long-game.md`, `story/immersion-triggers.md`, `story/code-issues-story-timing.md`; generated JSON and converter in `story/staging/`. The bot, run on a work copy with the pieces added, shows the longest silence in any chapter at 10–15 steps (before: 231 in chapter 1). **Not in the game yet:** needs the parent's read-aloud, the German, and the build (TODO I15); the code and data causes of late story are TODO I14.
+
+14 Oct 2026 (story consistency pass): the editor applied the consistency report to the 166 new pieces (`story/texts/more-ch1–6.md`) and to the planning and canon documents it names; 80 of 109 findings are done, 12 are questions for the parent, 9 belong to the build step (built texts, game data, one line of code). Read `story/consistency-fixes.md` §4 for the questions and §5 for the build list (TODO I16, I17). Still English only and not in the game.
+
+22 Oct 2026 (architecture review, no code changes): `ARCHITECTURE-REVIEW-2026-10-22.md` explains how the game is built (Part A) and proposes five deepening candidates (Part B: farm actions, the question that moves time, one condition language, what takes the screen next, the farm's numbers behind their owners); the parent accepted all five. They are features in `issues/` (TODO §18).
+
+23 Oct 2026 (issue tracker, no game changes): the open tasks became tickets in `issues/` (rules: `issues/README.md`) and `TODO.md` is the index; `CLAUDE.md` and the session skill point to it. `web-build/` still does not match the code (W9, W2).
+
+23 Oct 2026 (play-test notes, no game changes): the parent's 44 notes are kept in `planning/2026-10-23-parent-notes-playtest.md` and are tickets in `issues/` (TODO §19).
+
+23 Oct 2026 (farm-actions grilled, no game changes): `issues/farm-actions/spec.md` and tickets 02–16 are ready; the glossary is `GLOSSARY.md` (read it before touching chores, costs or pets). Start with `farm-actions/02` (short golden runs). Next grilling candidates: `time-question`, then `condition-language`.
+
+23 Oct 2026 (farm-actions/02 built, no game changes): `bash tests/golden.sh --short` (or `check_all.sh --short`) plays seeds 1 and 2 to the end of chapter 2 in about 38 s; use it after every slice, the full run for late systems. `farm-actions/03` (module `G.actions` + fetch water, `tests/actions_test.tscn`) is built too; `farm-actions/04` (weed, stones, snow) is next, then 05 and so on in `TODO.md` §18. `web-build/` still matches the code.
 
 ---
 

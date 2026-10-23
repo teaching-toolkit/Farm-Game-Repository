@@ -57,7 +57,7 @@ func sheet_patch(a: String, i: int) -> void:
 		var cap: int = G.fields.plants_per_patch(a)
 		if a == "field" and G.fields.patch_snow(i):          # winter: the snow has to go before anything is sown (TODO N6)
 			M.content.add_child(UI.label(tr("❄️ Snow covers this patch. Clear it before you sow."), 18, UI.INK, true))
-			M.content.add_child(UI.action_button("field", G.fields.clear_snow.bind(i), float(G.S["energy"]) + 0.001 >= G.needs.ecost("field", 1.0) * G.m("energy:field"), UI.SOIL, "🧹", tr("Clear the snow")))
+			M.content.add_child(UI.action_button("field", _do_snow.bind(i), G.actions.check("clear_snow", G.actions.farmer, {"i": i})["ok"], UI.SOIL, "🧹", tr("Clear the snow")))
 			return
 		M.content.add_child(UI.label("🌱".repeat(cap) + tr("  fits here"), 17, UI.MUTED, true))
 		var cs: Array = G.fields.crops_for(a)
@@ -158,25 +158,29 @@ func show_no_water() -> void:
 	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(l)
 	var fr := UI.hbox(8)
+	var wq: Dictionary = G.actions.check("fetch_water", G.actions.farmer)
 	var fb := UI.button("🪣  %s" % "💧".repeat(clampi(int(round(G.fields.fetch_amount())), 1, 8)), _fetch_and_close, true, UI.BLUE, 24)
 	fb.custom_minimum_size = Vector2(0, 60)
 	fb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	fr.add_child(fb)
-	fr.add_child(M.widgets.costs({"energy": G.fields.fetch_cost()}, {"energy": float(G.meta.get("water", {}).get("fetchEnergy", 1.0))}))
+	fr.add_child(M.widgets.costs(wq["cost"], wq["base"]))
 	box.add_child(fr)
 	box.add_child(UI.soft_button(tr("⬅️ Back to the farm"), M.modals.close_modal, true, 17))
 
 func _fetch_and_close() -> void:
-	if G.fields.fetch_water() and float(G.S["water"]) + 0.5 >= G.needs.water_cap(): M.modals.close_modal()
+	if G.actions.perform("fetch_water", G.actions.farmer)["done"] and float(G.S["water"]) + 0.5 >= G.needs.water_cap(): M.modals.close_modal()
 
 func _do_harvest(a: String, i: int) -> void:
 	if G.fields.harvest(a, i): M.sheets.close_sheet()
 
 func _do_weed(i: int) -> void:
-	G.fields.weed(i)
+	G.actions.perform("weed", G.actions.farmer, {"i": i})
 
 func _do_stones(i: int) -> void:
-	G.fields.pick_stones(i)
+	G.actions.perform("pick_stones", G.actions.farmer, {"i": i})
+
+func _do_snow(i: int) -> void:
+	G.actions.perform("clear_snow", G.actions.farmer, {"i": i})
 
 ## What there is to do on the patches of field f: how many are ready, weedy and stony (overgrown patches do not count).
 func _field_jobs(f: int) -> Dictionary:
@@ -197,17 +201,15 @@ func harvest_field(f: int) -> void:
 			if not G.fields.harvest("field", i): break
 
 func weed_field(f: int) -> void:
-	G.fields.weed_field(f)
+	var jobs: Array = G.fields.field_jobs(f, "weed")
+	if jobs.is_empty(): G.say(tr("🌿 This field is already tidy.")); return
+	G.actions.perform_batch("weed", G.actions.farmer, jobs)
 
 func snow_field(f: int) -> void:
-	for i in range(f * 9, mini(f * 9 + 9, G.S["patches"].size())):
-		if G.fields.patch_usable("field", i) and G.S["patches"][i].get("snow", false):
-			if not G.fields.clear_snow(i): break
+	G.actions.perform_batch("clear_snow", G.actions.farmer, G.fields.field_jobs(f, "clear_snow"))
 
 func stones_field(f: int) -> void:
-	for i in range(f * 9, mini(f * 9 + 9, G.S["patches"].size())):
-		if G.fields.patch_usable("field", i) and float(G.S["patches"][i]["stones"]) >= 0.5:
-			if not G.fields.pick_stones(i): break
+	G.actions.perform_batch("pick_stones", G.actions.farmer, G.fields.field_jobs(f, "pick_stones"))
 
 ## Harvest everything that is ready in an area (all fields, the orchard or the greenhouse).
 func harvest_all(a := "field") -> void:

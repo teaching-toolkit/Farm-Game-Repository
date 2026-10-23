@@ -515,9 +515,6 @@ Quiz question each; the Wren check and the poisoning exception).
 Accepted by the parent on 22 Oct 2026 ("all of them look good"). Each is a feature folder in `issues/`; the first ticket is the grilling with the parent, which produces `spec.md` and the build tickets. The review recommends starting with **farm-actions**; **time-question** is the small warm-up; **condition-language** should follow soon because story timing issues C5 and C6 wait for it. Details: `ARCHITECTURE-REVIEW-2026-10-22.md` Part B.
 
 **farm-actions** (grilled and specified 23 Oct 2026: `issues/farm-actions/spec.md`; the grilling ticket 01 is `done`; words in `GLOSSARY.md`)
-- **Short golden runs to the end of chapter 2** · `ready-for-agent` · [issues/farm-actions/02-short-golden-runs.md](issues/farm-actions/02-short-golden-runs.md)
-- **The actions module, with one chore: fetch water** · `ready-for-agent` · blocked by farm-actions/02 · [issues/farm-actions/03-module-and-water.md](issues/farm-actions/03-module-and-water.md)
-- **Weed, pick stones and clear snow, including whole-field batches** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/04-weed-stones-snow.md](issues/farm-actions/04-weed-stones-snow.md)
 - **Plant, harvest and cut tree** · `ready-for-agent` · blocked by farm-actions/04 · [issues/farm-actions/05-plant-harvest-tree.md](issues/farm-actions/05-plant-harvest-tree.md)
 - **Animal chores: muck out and collect** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/06-animal-chores.md](issues/farm-actions/06-animal-chores.md)
 - **Party and visit** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/07-party-and-visit.md](issues/farm-actions/07-party-and-visit.md)

@@ -4,13 +4,13 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done (23 Oct 2026)
 
-- [ ] `golden.sh` takes a chapter limit (default stays chapter 6)
-- [ ] New short golden files for seeds 1 and 2 are saved and the short run is identical when repeated
-- [ ] The full golden files are unchanged and still identical
-- [ ] `check_all.sh` can run the short pair; the README of the tests folder and the session skill say when to use the short and when the full run
-- [ ] The note "golden runs do not need to run through all chapters every time" is written where sessions read it
+- [x] `golden.sh` takes a chapter limit (default stays chapter 6)
+- [x] New short golden files for seeds 1 and 2 are saved and the short run is identical when repeated
+- [x] The full golden files are unchanged and still identical
+- [x] `check_all.sh` can run the short pair; the README of the tests folder and the session skill say when to use the short and when the full run
+- [x] The note "golden runs do not need to run through all chapters every time" is written where sessions read it
 
 ---
 

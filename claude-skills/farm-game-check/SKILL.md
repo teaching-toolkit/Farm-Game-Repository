@@ -59,7 +59,10 @@ What a pass looks like:
 - **Golden run** (`tests/golden.sh`, part of `check_all.sh`): the bot plays seeds 1 and 2 to chapter 5 (741 and 639 steps,
   12 Oct 2026) and must match `tests/golden/` step by step. A restructuring that changes it changed the rules: find out why
   before going on. Only a change to rules or numbers made on purpose is recorded anew (`bash tests/golden.sh --record`), and
-  the log says so.
+  the log says so. **Short or full:** golden runs do not need to run through all chapters every time. `bash tests/golden.sh --short`
+  (or `check_all.sh --short`) plays seeds 1 and 2 only to the end of chapter 2 (332 and 344 steps, ~38 s); use it after every slice. Run the full
+  run when a slice touches a late system (the Lord's share from chapter 3, Wren's check and poisoning, forest trips, medicine and healing
+  ranks, pets' blessings in free play, wellbeing parties and visits) and once before a feature is done. `--record` records the files of the same limit.
 - **Save fixtures** (`tests/fixtures_test.tscn`): every save in `tests/fixtures/` loads, plays on and saves unchanged.
 - **Save versions** (`tests/saves_test.tscn`, part of `check_all.sh`): a new game has the keys and values of `tests/golden/newgame.json`, every save key has
   one owner, old saves are upgraded, a save from a newer game is kept. A new save key or a new `SAVE_VERSION` step on purpose: add it to the owner's

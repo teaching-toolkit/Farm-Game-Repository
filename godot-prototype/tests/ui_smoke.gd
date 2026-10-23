@@ -225,7 +225,7 @@ func _ready() -> void:
 	# 4b) water: fetch from the pond with the bucket; a locked place is a mystery; the road has a sheet
 	var w0: float = G.S["water"]
 	G.S["water"] = 0.0
-	G.fields.fetch_water()
+	G.actions.perform("fetch_water", G.actions.farmer)
 	print("fetch water: 0 -> ", G.S["water"], " (was ", w0, ")  mystery barn: ", D.mystery("barn"), "  road open: ", D.is_open("road"))
 	D.open_spot("road")
 	await _frames(2)

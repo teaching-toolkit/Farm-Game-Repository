@@ -131,15 +131,16 @@ func snowfall() -> void:
 func melt_snow() -> void:
 	for p in G.S["patches"]: p["snow"] = false
 
-func clear_snow(i: int) -> bool:
-	if not patch_snow(i): return false
-	var e := G.needs.ecost("field", 1.0) * G.m("energy:field")
-	if G.S["energy"] + 0.001 < e: G.say(tr("⚡ Too tired to clear the snow. Rest a little (tap ⚡).")); return false
-	G.S["energy"] -= e
+## Clear the snow off one patch, a chore of the actions system (see register_chores).
+func _clear_snow_requires(_who, args: Dictionary) -> Array:
+	if not patch_snow(int(args["i"])): return [{"key": "nothing_to_do", "text": ""}]
+	return []
+
+func _clear_snow_effect(_who, args: Dictionary, _cost: Dictionary) -> Dictionary:
+	var i := int(args["i"])
 	G.S["patches"][i]["snow"] = false
 	G.inventory.emit_gained("patch:field:%d" % i, {})
-	G.save_game(); G.changed.emit()
-	return true
+	return {"gained": {}}
 
 func snow_count() -> int:
 	var n := 0
@@ -312,17 +313,23 @@ func harvest_amounts(n: Dictionary, plants: int, quality: float, mult: float) ->
 		first = false
 	return out
 
-func weed(i: int) -> bool:
+## Pull the weeds of one patch (up to weedsPerPull), a chore of the actions system.
+func _weed_n(i: int) -> float:
+	return minf(float(G.S["patches"][i]["weeds"]), float(G.meta.get("weeds", {}).get("weedsPerPull", 3)))
+
+func _weed_requires(_who, args: Dictionary) -> Array:
+	if float(G.S["patches"][int(args["i"])]["weeds"]) < 0.5:
+		return [{"key": "nothing_to_do", "text": tr("🌿 No weeds to pull here. (Try 'Root out the weeds' in Polish — it keeps them away longer.)")}]
+	return []
+
+func _weed_amount(_who, args: Dictionary) -> float:
+	return _weed_n(int(args["i"]))
+
+func _weed_effect(_who, args: Dictionary, _cost: Dictionary) -> Dictionary:
+	var i := int(args["i"])
 	var p = G.S["patches"][i]
-	var w := float(p["weeds"])
-	if w < 0.5:
-		G.say(tr("🌿 No weeds to pull here. (Try 'Root out the weeds' in Polish — it keeps them away longer.)"))
-		return false
-	var n := minf(w, float(G.meta.get("weeds", {}).get("weedsPerPull", 3)))
-	var e := G.needs.ecost("weed", n) * G.m("energy:field")
-	if G.S["energy"] + 0.001 < e: G.say(tr("⚡ Too tired to weed. Rest a little (tap ⚡).")); return false
-	G.S["energy"] -= e
-	p["weeds"] = w - n
+	var n := _weed_n(i)
+	p["weeds"] = float(p["weeds"]) - n
 	var fib := n * (1.5 if G.seasons.season() == "spring" else 1.0)
 	var fib_got := G.inventory.add_item("fiber", fib, true)
 	G.inventory.emit_gained("patch:field:%d" % i, {"fiber": fib_got})
@@ -331,32 +338,40 @@ func weed(i: int) -> bool:
 	G.rewards.weed_luck()
 	G.crafting.wear_polish("use:weed")
 	G.rewards.check_acorns()
-	G.save_game(); G.changed.emit()
-	return true
+	return {"gained": {"fiber": fib_got}}
 
-func weed_field(f: int) -> void:
-	var any := false
-	for i in range(f * 9, f * 9 + 9):
-		if patch_usable("field", i) and float(G.S["patches"][i]["weeds"]) >= 0.5:
-			if not weed(i): break
-			any = true
-	if not any: G.say(tr("🌿 This field is already tidy."))
+## Pick the stones of one patch (up to stonesPerPick), a chore of the actions system.
+func _stones_n(i: int) -> float:
+	return minf(float(G.S["patches"][i]["stones"]), float(G.meta.get("stones", {}).get("stonesPerPick", 2)))
 
-func pick_stones(i: int) -> bool:
+func _stones_requires(_who, args: Dictionary) -> Array:
+	if float(G.S["patches"][int(args["i"])]["stones"]) < 0.5: return [{"key": "nothing_to_do", "text": ""}]
+	return []
+
+func _stones_amount(_who, args: Dictionary) -> float:
+	return _stones_n(int(args["i"]))
+
+func _stones_effect(_who, args: Dictionary, _cost: Dictionary) -> Dictionary:
+	var i := int(args["i"])
 	var p = G.S["patches"][i]
-	var s := float(p["stones"])
-	if s < 0.5: return false
-	var n := minf(s, float(G.meta.get("stones", {}).get("stonesPerPick", 2)))
-	var e := G.needs.ecost("field", n * float(G.meta.get("stones", {}).get("energyPerStone", 1)))
-	if G.S["energy"] + 0.001 < e: G.say(tr("⚡ Too tired. Rest a little (tap ⚡).")); return false
-	G.S["energy"] -= e
-	p["stones"] = s - n
-	G.inventory.emit_gained("patch:field:%d" % i, {"stone": G.inventory.add_item("stone", n)})
+	var n := _stones_n(i)
+	p["stones"] = float(p["stones"]) - n
+	var got := G.inventory.add_item("stone", n)
+	G.inventory.emit_gained("patch:field:%d" % i, {"stone": got})
 	G.S["stats"]["stones"] = float(G.S["stats"]["stones"]) + n
 	G.rewards.job_progress("stones", "", n)
 	if G.rewards.roll(G.rewards.luck_event("stone_quartz")): G.inventory.add_item("quartz", 1.0); G.say(tr("💎 A sparkling quartz crystal inside a stone!"))
-	G.save_game(); G.changed.emit()
-	return true
+	return {"gained": {"stone": got}}
+
+## The patches of field f that a chore has something to do on (overgrown patches do not count), in order: the args of a batch.
+func field_jobs(f: int, chore: String) -> Array:
+	var out := []
+	for i in range(f * 9, mini(f * 9 + 9, G.S["patches"].size())):
+		if not patch_usable("field", i): continue
+		var p: Dictionary = G.S["patches"][i]
+		if (chore == "weed" and float(p["weeds"]) >= 0.5) or (chore == "pick_stones" and float(p["stones"]) >= 0.5) or (chore == "clear_snow" and p.get("snow", false)):
+			out.append({"i": i})
+	return out
 
 # ------------------------------------------------------------------ water
 
@@ -364,21 +379,23 @@ func pick_stones(i: int) -> bool:
 func fetch_amount() -> float:
 	return G.g("fetchWater", float(G.meta.get("water", {}).get("fetchBase", 3.0)))
 
-func fetch_cost() -> float:
-	return G.needs.ecost("gather", float(G.meta.get("water", {}).get("fetchEnergy", 1.0)))
+## The field chores of the actions system (rules/46-chores.json): their cost and the check are there, the effect is here.
+func register_chores() -> void:
+	G.actions.register("fetch_water", _fetch_water_effect, _fetch_water_requires)
+	G.actions.register("clear_snow", _clear_snow_effect, _clear_snow_requires)
+	G.actions.register("weed", _weed_effect, _weed_requires, _weed_amount)
+	G.actions.register("pick_stones", _stones_effect, _stones_requires, _stones_amount)
 
-func fetch_water() -> bool:
-	var room := G.needs.water_cap() - float(G.S["water"])
-	if room < 0.5: G.say(tr("💧 Your water is full.")); return false
-	var e := fetch_cost()
-	if G.S["energy"] + 0.001 < e: G.say(tr("⚡ Too tired to carry water. Rest a little (tap ⚡).")); return false
-	G.S["energy"] -= e
-	var q := minf(room, fetch_amount())
+func _fetch_water_requires(_who, _args: Dictionary) -> Array:
+	if G.needs.water_cap() - float(G.S["water"]) < 0.5: return [{"key": "water_full", "text": tr("💧 Your water is full.")}]
+	return []
+
+func _fetch_water_effect(_who, _args: Dictionary, _cost: Dictionary) -> Dictionary:
+	var q := minf(G.needs.water_cap() - float(G.S["water"]), fetch_amount())
 	G.S["water"] = float(G.S["water"]) + q
 	G.S["stats"]["fetch"] = int(G.S["stats"].get("fetch", 0)) + 1
 	G.inventory.emit_gained("water", {"water": q})
-	G.save_game(); G.changed.emit()
-	return true
+	return {"gained": {"water": q}}
 
 # ------------------------------------------------------------------ one Time Quiz answer
 

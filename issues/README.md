@@ -65,8 +65,8 @@ an easy-to-undo 💡 may be taken: change the status to `ready-for-agent`, write
 
 - **Vertical slices.** A ticket cuts a narrow but complete path through everything it touches (data, rules, interface, bot, German,
   checks) and fits one fresh session. A prefactoring ticket comes first. A wide mechanical change goes expand → migrate → contract.
-- **Words.** Use the project's vocabulary (the architecture review and plan: module, seam, interface, system, kit). There is no
-  `GLOSSARY.md` or `docs/adr/` yet; `/grill-with-docs` may create them. New text avoids file paths and code (they go stale); the
+- **Words.** Use the project's vocabulary (the architecture review and plan: module, seam, interface, system, kit). The words
+  are in `GLOSSARY.md`; there is no `docs/adr/` yet (`/grill-with-docs` may create it). New text avoids file paths and code (they go stale); the
   notes moved from `TODO.md` keep theirs.
 - **Every game change still needs** what `claude-skills/farm-game-check/SKILL.md` and `farm-game-content/SKILL.md` ask for (German
   through `tools/i18n.py`, the smoke test, the bot, golden runs, the design document, old saves load). Put what applies as boxes.

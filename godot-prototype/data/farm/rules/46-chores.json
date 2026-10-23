@@ -1,0 +1,23 @@
+{
+  "chores": {
+    "note": "What each chore costs and trains, read by the actions system (game/farm/systems/actions.gd, farm-actions spec). base = the cost before skills, tools, the season and buffs (a number, or the path of a number written elsewhere); cat = the energy category (rules/10-farming.json gather, field, ...); mult = a second modifier that multiplies the energy after the rest (optional; the old snow and weed code did this, kept so no number moves), wear = the polish that wears, practice = the skill family that trains (both optional). A chore that works on a stretch of patch (weed, stones) names its amount in code: the base energy is per unit. The effect of a chore stays in the system that owns it. The progression explorer reads water.fetchEnergy, which is why fetch_water points to it.",
+    "fetch_water": {
+      "base": {"energy": "water.fetchEnergy"},
+      "cat": "gather"
+    },
+    "clear_snow": {
+      "base": {"energy": 1},
+      "cat": "field",
+      "mult": "energy:field"
+    },
+    "weed": {
+      "base": {"energy": 1},
+      "cat": "weed",
+      "mult": "energy:field"
+    },
+    "pick_stones": {
+      "base": {"energy": "stones.energyPerStone"},
+      "cat": "field"
+    }
+  }
+}

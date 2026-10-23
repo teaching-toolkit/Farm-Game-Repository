@@ -63,7 +63,7 @@ the data files in `data/farm/`. For those:
    feature use the flow in `issues/README.md` §4 (`/grill-with-docs`, `/to-spec`, `/to-tickets`, `/tdd`). If the parent is there, ask
    them (multiple choice if possible). If they are away, go ahead with the 💡 option only when it is easy to undo, and record
    it as an assumption in `PROJECT-LOG.md` §2.6. Anything that can't be undone waits for the parent.
-3. Build in small slices. Each slice passes the checks (`farm-game-check`) before the next one starts.
+3. Build in small slices. Each slice passes the checks (`farm-game-check`) before the next one starts. Golden runs do not need to run through all chapters every time: `check_all.sh --short` after every slice, the full run when a slice touches a late system.
 4. Prefer new systems in new scripts over making `main.gd` and `game.gd` even longer. **Where new code goes:** a rule goes into the system of
    `game/farm/systems/` that owns the thing (or a new system file there; it registers its per-step work in `Game.setup_clock()`); shared parts
    (modifiers, conditions, rng, clock) are in `kits/core/`; a screen or interface part goes into its own script in `game/farm/ui/` (see its README), not into `main.gd`; content
@@ -86,8 +86,8 @@ A chat can stop at any time, so update these when something happens, not at the 
   session doesn't repeat the mistake.
 
 **At the end of a session (or before a long pause):**
-- `00-READ-ME-FIRST.md` §5: add one dated paragraph saying what changed and whether `web-build/` still matches the code.
-  Update §7 "Key numbers" if the data changed. Set the "Last updated" date at the top of `00-READ-ME-FIRST.md` and `TODO.md`.
+- `00-READ-ME-FIRST.md` §5: rewrite it to the current state and the next step (no dated changelog; the history is the log's
+  table and §1.1) and say whether `web-build/` still matches the code. Update §7 "Key numbers" if the data changed. Set the "Last updated" date at the top of `00-READ-ME-FIRST.md` and `TODO.md`.
 - In your last message: what you changed in the log and the to-do list, what the parent should test on the iPad, and a
   ready-to-use commit message.
 

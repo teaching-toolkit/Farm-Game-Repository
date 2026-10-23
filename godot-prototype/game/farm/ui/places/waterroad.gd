@@ -27,19 +27,20 @@ func part_water(sid: String) -> void:
 	wv.add_child(UI.label(tr("🪣 Every trip brings %s 💧 · holds %s") % [M.widgets.num(G.fields.fetch_amount()), M.widgets.num(G.needs.water_cap())], 16, UI.INK, true))
 	if G.S.get("rain", false): wv.add_child(UI.label(tr("🌧️ It rained: planting costs no water until the next question."), 15, UI.GREEN_DARK, true))
 	var fr := UI.hbox(8)
+	var wq: Dictionary = G.actions.check("fetch_water", G.actions.farmer)
 	var room: float = G.needs.water_cap() - float(G.S["water"])
 	var fb := UI.button("🪣  %s" % "💧".repeat(clampi(int(round(minf(room, G.fields.fetch_amount()))), 1, 8)), _fetch_water, room >= 0.5, UI.BLUE, 22)
 	fb.custom_minimum_size = Vector2(0, 54)
 	fb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	fr.add_child(fb)
-	fr.add_child(M.widgets.costs({"energy": G.fields.fetch_cost()}, {"energy": float(G.meta.get("water", {}).get("fetchEnergy", 1.0))}))
+	fr.add_child(M.widgets.costs(wq["cost"], wq["base"]))
 	wv.add_child(fr)
 	M.content.add_child(wc)
 	if sid == "pond" and not G.done("pond"):
 		M.content.add_child(UI.label(tr("A wild pond, full of reeds. Someday it could be dug out again."), 15, UI.MUTED, true))
 
 func _fetch_water() -> void:
-	G.fields.fetch_water()
+	G.actions.perform("fetch_water", G.actions.farmer)
 
 ## The road: how good it is, and who can come along it to the market.
 func part_road() -> void:

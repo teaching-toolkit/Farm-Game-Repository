@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # All quick checks in one go (about 2 minutes): UI smoke test, save fixtures, save versions, core kit, data checks, places and pets, quality, skills, money, story, trip, gate, trust and season prices, golden run, translations.
 # Run after every restructuring step:  bash tests/check_all.sh   (Godot as in tests/golden.sh)
+#   bash tests/check_all.sh --short   the same, but the golden run only to the end of chapter 2 (saves about 40 s); the options go to golden.sh
 set -uo pipefail
 cd "$(dirname "$0")/.."
 G="${GODOT:-}"
@@ -64,6 +65,9 @@ grep -q "^FOREST OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/crops_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^CROPS|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^CROPS OK/✔ hay and winter wheat/; s/^CROPS FAILED/✘ hay and winter wheat/'
 grep -q "^CROPS OK" "$LOG" || FAIL=1
+"$G" --headless --path . res://tests/actions_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
+grep -E "^ACTIONS|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^ACTIONS OK/✔ chores: check and perform/; s/^ACTIONS FAILED/✘ chores: check and perform/'
+grep -q "^ACTIONS OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/market_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^MARKET|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^MARKET OK/✔ trust and season prices/; s/^MARKET FAILED/✘ trust and season prices/'
 grep -q "^MARKET OK" "$LOG" || FAIL=1

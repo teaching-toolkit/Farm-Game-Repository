@@ -307,6 +307,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - `bash tests/golden.sh` — the golden run: the bot plays seeds 1 and 2 to chapter 6 (through all five chapters) and every step of time is compared with
   `tests/golden/` (coins, energy, water, goals, what is unlocked, the store). A restructuring must leave it unchanged. `--strict`
   also compares a hash of the whole save (it changes when the save layout does: record anew then, and check that without the hash nothing differs); `--record` records new golden runs after a change to the rules or numbers on purpose.
+  `--short` plays only to the end of chapter 2 (`--chapter=3`; files `bot-seed1-ch3.txt`, `bot-seed2-ch3.txt`, 332 and 344 steps, about 38 s for both seeds instead of about 2 min); `--chapter=N` any other limit. `check_all.sh --short` passes it on. Use the short pair after every slice; the full run when a slice touches a late system (the Lord's share, Wren's check and poisoning, forest trips, medicine and healing ranks, pets' blessings in free play, wellbeing parties and visits) and once before a feature is done.
   Bot flags for it: `--seed=N`, `--golden=FILE`, `--save-at=CHAPTER:FILE` (writes a save fixture), `--report=FILE` (the pacing of the run as JSON).
 - `bash tools/update_explorer.sh` (the double-click `../Update explorer.command`) — checks the data, lets the bot play seeds 1 and 2 to chapter 5 with `--report`, and writes
   the data and the bot's pacing report into `../progression/progression-explorer.html` (about 3 minutes; needs Godot and python3).
