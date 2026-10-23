@@ -10,7 +10,7 @@
 - [ ] The 16 story pieces without a picture have one
 - [ ] Mill type, frame-6 conch, merchant pair and the style block are settled
 - [ ] The 13 older pictures are moved to `archive/art-rejected/`
-- [ ] An import path for full-bleed scenes exists (the `one` mode cuts out white backgrounds)
+- [x] An import path for full-bleed scenes exists (the `one` mode cuts out white backgrounds): built by `story/16`; the kept pictures went in with `story/17`; what was left out is `story/18`; the regenerated ones are added to its mapping here
 
 ---
 

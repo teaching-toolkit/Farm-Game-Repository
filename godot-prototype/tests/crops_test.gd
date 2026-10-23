@@ -47,7 +47,7 @@ func _ready() -> void:
 	G.S["energy"] = 30.0
 	G.fields.snowfall()
 	_check(G.fields.snow_count() >= 1 and G.fields.patch_snow(0), "snow covers the empty patches")
-	_check(not G.fields.plant("field", 0, "crop_onion"), "nothing is sown under snow")
+	_check(not G.actions.perform("plant", G.actions.farmer, {"a": "field", "i": 0, "cid": "crop_onion"})["done"], "nothing is sown under snow")
 	var e0: float = G.S["energy"]
 	_check(G.actions.perform("clear_snow", G.actions.farmer, {"i": 0})["done"] and not G.fields.patch_snow(0) and G.S["energy"] < e0, "clearing the snow costs energy")
 	G.S["step"] = G.seasons.season_len() * 4

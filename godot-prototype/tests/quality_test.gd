@@ -87,7 +87,7 @@ func _ready() -> void:
 	for i in range(20):
 		G.S["inv"].erase("wheat")
 		pt["crop"] = "crop_wheat"; pt["plants"] = 2.0; pt["growth"] = 99.0; pt["ready"] = true
-		G.fields.harvest("field", 0)
+		G.actions.perform("harvest", G.actions.farmer, {"a": "field", "i": 0})
 		for g in G.inventory.grades("wheat"): if int(g) == 0: low += 1
 	_check(low >= 14, "a neglected patch mostly gives Lumpy (%d of 20 harvests)" % low)
 	# a recipe: better inputs, better dish; a better station, better dish

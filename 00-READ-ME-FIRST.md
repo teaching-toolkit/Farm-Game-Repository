@@ -155,8 +155,13 @@ Version 0.19.0: all twelve phases of the implementation plan are built. **Nothin
 
 Now in progress: the **farm-actions** feature (`issues/farm-actions/`, spec in `spec.md`). Tickets 02 (short golden runs:
 `bash tests/golden.sh --short`), 03 (the module `G.actions` with fetch water) and 04 (weed, pick stones, clear snow, whole-field
-batches) are done. **Next: `farm-actions/05`** (plant, harvest, cut tree); then 06 onwards as in `TODO.md` §18. Next grilling candidates:
+batches), 05 (plant, harvest, cut tree) 06 (animal chores) and 07 (party and visit) are done. **Next: `farm-actions/08`** (forest trips); then 09 onwards as in `TODO.md` §18. Next grilling candidates:
 `time-question`, then `condition-language`.
+
+Story pictures (23 Oct 2026): the kept ones are in the game (`story/16`, `story/17`: lossy WebP in `assets/story/`, mapped in
+`tools/story_pictures.json`, imported with `tools/import_story_pictures.py`; the story box shows them 520 px high). Waiting on the parent:
+`story/18` (the left-out pictures) and I11 (regenerating the fixes). The parent commits the new `.webp.import` files after Godot has
+rewritten them on the Mac. Not yet seen on the iPad.
 
 The history of earlier sessions (7 Oct – 23 Oct 2026) is in `PROJECT-LOG.md` §1.1 and its table.
 

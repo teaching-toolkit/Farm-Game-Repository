@@ -138,6 +138,8 @@ func _init() -> void:
 	forest = FarmForest.new(self)
 	trust = FarmTrust.new(self)
 	fields.register_chores()
+	animals.register_chores()
+	well.register_chores()
 
 # ------------------------------------------------------------------ start, seed and clock
 

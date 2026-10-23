@@ -470,6 +470,7 @@ A **secondary** goal ✅: never at the cost of a fun, not overwhelming, still ch
   The night garden's unsaid thing stays unsaid. More side quests, add-ons and perks; the pets' job board levels 3–4 give "putting the
   Helpers to use" real play.
 - **I11: Story pictures follow the rules: fix, fill the gaps, import** · `needs-parent` · blocked by `story/03` (I16) · [issues/story/06-i11-story-pictures.md](issues/story/06-i11-story-pictures.md)
+- **I11b: Decide what happens to the story pictures left out of the first import** · `needs-parent` · [issues/story/18-left-out-story-pictures.md](issues/story/18-left-out-story-pictures.md)
 - **I12: Check the title Hazelwood Harvest against the app stores** · `ready-for-agent` · [issues/story/02-i12-title-app-store-check.md](issues/story/02-i12-title-app-store-check.md)
 - **I13. Plot details in the game are flexible** ✅ [#S4] as long as the pacing stays sensible.
 - **I14: Story shows up late: fix the timing issues C1–C9** · `needs-parent` · blocked by `condition-language/01` (for C5 and C6); `interruption-queue/01` (for C2, C7 and C8) · [issues/story/07-i14-story-timing-fixes.md](issues/story/07-i14-story-timing-fixes.md)
@@ -515,9 +516,6 @@ Quiz question each; the Wren check and the poisoning exception).
 Accepted by the parent on 22 Oct 2026 ("all of them look good"). Each is a feature folder in `issues/`; the first ticket is the grilling with the parent, which produces `spec.md` and the build tickets. The review recommends starting with **farm-actions**; **time-question** is the small warm-up; **condition-language** should follow soon because story timing issues C5 and C6 wait for it. Details: `ARCHITECTURE-REVIEW-2026-10-22.md` Part B.
 
 **farm-actions** (grilled and specified 23 Oct 2026: `issues/farm-actions/spec.md`; the grilling ticket 01 is `done`; words in `GLOSSARY.md`)
-- **Plant, harvest and cut tree** · `ready-for-agent` · blocked by farm-actions/04 · [issues/farm-actions/05-plant-harvest-tree.md](issues/farm-actions/05-plant-harvest-tree.md)
-- **Animal chores: muck out and collect** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/06-animal-chores.md](issues/farm-actions/06-animal-chores.md)
-- **Party and visit** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/07-party-and-visit.md](issues/farm-actions/07-party-and-visit.md)
 - **Forest trips** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/08-forest-trips.md](issues/farm-actions/08-forest-trips.md)
 - **The village trip** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/09-village-trip.md](issues/farm-actions/09-village-trip.md)
 - **Recipes at stations** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/10-recipes-at-stations.md](issues/farm-actions/10-recipes-at-stations.md)

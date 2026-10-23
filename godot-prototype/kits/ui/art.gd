@@ -9,6 +9,8 @@ extends RefCounted
 ##   assets/deco/<name>.png      trees, bushes, weeds, stones, fence pieces
 ##   assets/animals/<id>.png     animals and pets walking around (animal_chicken.png, pet_bunny.png …)
 ##   assets/crops/<crop id>.png  a crop on its patch (crop_wheat.png …) — optional
+##   assets/story/<piece id>.webp  a painted story scene (lossy; see tools/import_story_pictures.py). Any folder may hold a .webp
+##                               instead of a .png.
 ##
 ## Uses ResourceLoader so it also works in exported builds (web, iPad), where the original PNG files are not shipped.
 
@@ -19,8 +21,10 @@ static func tex(folder: String, key: String) -> Texture2D:
 	var path := ROOT + folder + "/" + key + ".png"
 	if _cache.has(path): return _cache[path]
 	var t: Texture2D = null
-	if ResourceLoader.exists(path):
-		t = load(path) as Texture2D
+	for p in [path, ROOT + folder + "/" + key + ".webp"]:   # a .webp (story scenes) is used when there is no .png
+		if ResourceLoader.exists(p):
+			t = load(p) as Texture2D
+			break
 	_cache[path] = t
 	return t
 

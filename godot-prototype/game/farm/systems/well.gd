@@ -118,53 +118,49 @@ func _party_dishes() -> Array:
 func party_cooldown_left() -> int:
 	return maxi(0, int(G.S["well"]["party_step"]) + int(data().get("party", {}).get("cooldown", 20)) - int(G.S["step"]))
 
-## Can a party be thrown now? {"ok", "why"}
-func party_check() -> Dictionary:
+## The chores of a party and a visit in the actions system (rules/46-chores.json): their cost and the check are there, the effects are here.
+func register_chores() -> void:
+	G.actions.register("throw_party", _party_effect, _party_requires, Callable(), _party_extra)
+	G.actions.register("visit_friend", _visit_effect, _visit_requires)
+
+## The dishes a party shares: the cheapest in the store, as many as the party needs.
+func _party_extra(_who, _args: Dictionary) -> Dictionary:
+	var need := int(data().get("party", {}).get("dishes", 3))
+	var cost := {}
+	for k in _party_dishes():
+		var c := G.inventory.count(k)
+		while need > 0 and c >= 1.0:
+			cost[k] = float(cost.get(k, 0.0)) + 1.0
+			c -= 1.0
+			need -= 1
+	return {"cost": cost, "base": cost}
+
+func _party_requires(_who, _args: Dictionary) -> Array:
 	var d: Dictionary = data().get("party", {})
-	if party_cooldown_left() > 0: return {"ok": false, "why": tr("The last party was not long ago.")}
+	if party_cooldown_left() > 0: return [{"key": "cooldown", "text": tr("The last party was not long ago.")}]
 	var have := 0
 	for k in _party_dishes(): have += int(G.inventory.count(k))
-	if have < int(d.get("dishes", 3)): return {"ok": false, "why": tr("A party needs %d dishes to share.") % int(d.get("dishes", 3))}
-	if float(G.S["energy"]) + 0.001 < float(d.get("energy", 6)): return {"ok": false, "why": tr("⚡ Too tired for a party. Rest a little (tap ⚡).")}
-	return {"ok": true, "why": ""}
+	if have < int(d.get("dishes", 3)): return [{"key": "dishes", "text": tr("A party needs %d dishes to share.") % int(d.get("dishes", 3))}]
+	return []
 
-func party() -> bool:
-	var ck := party_check()
-	if not ck["ok"]:
-		G.say(str(ck["why"]))
-		return false
-	var d: Dictionary = data().get("party", {})
-	var need := int(d.get("dishes", 3))
-	for k in _party_dishes():
-		while need > 0 and G.inventory.count(k) >= 1.0:
-			G.inventory.take(k, 1.0)
-			need -= 1
-	G.S["energy"] = float(G.S["energy"]) - float(d.get("energy", 6))
+func _party_effect(_who, _args: Dictionary, _cost: Dictionary) -> Dictionary:
 	G.S["well"]["party_step"] = int(G.S["step"])
-	_bump(d.get("bump", {}))
+	_bump(data().get("party", {}).get("bump", {}))
 	helped()
 	G.say(tr("🎉 A party at the farm! Everybody laughs, eats and dances. You feel lighter."))
-	G.save_game(); G.changed.emit()
-	return true
+	return {"gained": {}}
 
 ## The friend who has invited you ("" if nobody has).
 func invite() -> String:
 	return str(G.S["well"].get("invite", ""))
 
-func visit_check() -> Dictionary:
-	if invite() == "": return {"ok": false, "why": tr("Nobody has invited you.")}
-	if float(G.S["energy"]) + 0.001 < float(data().get("visit", {}).get("energy", 4)): return {"ok": false, "why": tr("⚡ Too tired for a visit. Rest a little (tap ⚡).")}
-	return {"ok": true, "why": ""}
+func _visit_requires(_who, _args: Dictionary) -> Array:
+	if invite() == "": return [{"key": "no_invite", "text": tr("Nobody has invited you.")}]
+	return []
 
-## The walk to the neighbour costs the energy; the one question on the way is asked by the interface (like the market trip).
-func visit_go() -> bool:
-	var ck := visit_check()
-	if not ck["ok"]:
-		G.say(str(ck["why"]))
-		return false
-	G.S["energy"] = float(G.S["energy"]) - float(data().get("visit", {}).get("energy", 4))
-	G.save_game(); G.changed.emit()
-	return true
+## The walk to the neighbour costs the energy (and nothing else); the one question on the way is asked by the interface (like the market trip).
+func _visit_effect(_who, _args: Dictionary, _cost: Dictionary) -> Dictionary:
+	return {"gained": {}}
 
 ## The question was answered: the visit happens. Returns the little scene to show.
 func visited() -> String:

@@ -40,10 +40,16 @@ func _ready() -> void:
 					var label := "step %d, %d tools, skills %d, buff %s" % [step, tool_set.size(), skills, buff]
 					_price_match(label)
 					for chore in ["clear_snow", "weed", "pick_stones"]: _price_match_patch(chore, label)
+					_price_match_crops(label)
+					_price_match_animals(label)
+					_price_match_well(label)
 	print("price-match situations: ", situations, ", distinct costs: ", costs_seen.keys())
 	_check(costs_seen.size() >= 3, "the situations really change the cost")
 	_requirements()
 	_batches()
+	_crop_requirements()
+	_animal_requirements()
+	_well_requirements()
 	print("ACTIONS %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])
 	get_tree().quit(1 if fails > 0 else 0)
 
@@ -98,6 +104,96 @@ func _price_match_patch(chore: String, label: String) -> void:
 		G.S["energy"] = cost - 0.01
 		var rep2: Dictionary = A.perform(chore, who, {"i": 0})
 		_check(not rep2["done"] and rep2["failed"] == "energy" and G.S["energy"] == cost - 0.01 and _left(chore) > 0.0, "a hair too little energy is refused and nothing moves (%s, %s)" % [chore, label])
+
+## Plant, harvest and cut a tree: the cost check returns is what perform takes (energy and, for planting, water); exactly the cost works.
+func _price_match_crops(label: String) -> void:
+	var A = G.actions
+	var who = A.farmer
+	var wheat := "crop_wheat" if G.fields.sow_ok("field", "crop_wheat") else "crop_winter_wheat"
+	G.S["orchard"] = [G.fields._blank_patch(), G.fields._blank_patch()]
+	for c in G.fields.CLEARING: G.S["unlocked"][c[0]] = true      # the first field's patches are open
+	G.invalidate_caps()
+	for spot in [["field", wheat], ["orchard", "crop_walnut"]]:
+		var a: String = spot[0]
+		var args := {"a": a, "i": 0, "cid": spot[1]}
+		var ctx := "plant %s (%s)" % [a, label]
+		G.fields.area(a)[0] = G.fields._blank_patch()
+		_stock(spot[1])
+		G.S["energy"] = G.needs.energy_max()
+		var snap := JSON.stringify(G.S)
+		var q: Dictionary = A.check("plant", who, args)
+		_check(JSON.stringify(G.S) == snap, "check changes nothing (%s)" % ctx)
+		_check(q["ok"] and q["cost"]["energy"] > 0.0 and q["cost"]["water"] > 0.0, "%s can be done" % ctx)
+		var cost: float = q["cost"]["energy"]
+		var water: float = q["cost"]["water"]
+		costs_seen[snappedf(cost, 0.001)] = true
+		var shown: Dictionary = G.fields.plant_plan(a, spot[1])
+		_check(is_equal_approx(water, float(shown["water"])), "the water on the button is the water check returns (%s)" % ctx)
+		var rep: Dictionary = A.perform("plant", who, args)
+		_check(rep["done"] and is_equal_approx(G.needs.energy_max() - float(G.S["energy"]), cost) and is_equal_approx(50.0 - float(G.S["water"]), water), "perform takes exactly the energy and water check says (%s)" % ctx)
+		_check(G.fields.area(a)[0]["crop"] == spot[1] and float(G.fields.area(a)[0]["plants"]) >= 1.0, "…and the crop is in the ground (%s)" % ctx)
+		G.fields.area(a)[0] = G.fields._blank_patch()
+		_stock(spot[1])
+		G.S["energy"] = cost
+		_check(A.perform("plant", who, args)["done"] and G.S["energy"] < 0.001, "planting works with exactly its cost in energy (%s)" % ctx)
+		G.fields.area(a)[0] = G.fields._blank_patch()
+		_stock(spot[1])
+		G.S["energy"] = cost - 0.01
+		_check(not A.perform("plant", who, args)["done"] and G.fields.area(a)[0]["crop"] == "" and G.S["energy"] == cost - 0.01, "a hair too little energy plants nothing (%s)" % ctx)
+		# harvest
+		var hargs := {"a": a, "i": 0}
+		for hair in [false, true]:
+			var pt: Dictionary = G.fields.area(a)[0]
+			pt["crop"] = spot[1]; pt["plants"] = 1.0; pt["growth"] = 99.0; pt["ready"] = true
+			var hq: Dictionary = A.check("harvest", who, hargs)
+			var hc: float = hq["cost"]["energy"]
+			costs_seen[snappedf(hc, 0.001)] = true
+			G.S["energy"] = hc - 0.01 if hair else hc
+			var hrep: Dictionary = A.perform("harvest", who, hargs)
+			if hair: _check(not hrep["done"] and hrep["failed"] == "energy" and pt["ready"], "a hair too little energy harvests nothing (harvest %s, %s)" % [a, label])
+			else: _check(hrep["done"] and G.S["energy"] < 0.001 and is_equal_approx(float(hrep["spent"]["energy"]), hc), "harvest takes exactly the cost (%s, %s)" % [a, label])
+	# cut a tree
+	G.S["orchard"][0] = G.fields._blank_patch()
+	for hair in [false, true]:
+		var pt2: Dictionary = G.S["orchard"][0]
+		pt2["crop"] = "crop_walnut"; pt2["plants"] = 1.0
+		var cargs := {"a": "orchard", "i": 0}
+		var cq: Dictionary = A.check("cut_tree", who, cargs)
+		var cc: float = cq["cost"]["energy"]
+		costs_seen[snappedf(cc, 0.001)] = true
+		G.S["energy"] = cc - 0.01 if hair else cc
+		var crep: Dictionary = A.perform("cut_tree", who, cargs)
+		if hair: _check(not crep["done"] and pt2["crop"] == "crop_walnut", "a hair too little energy cuts nothing (%s)" % label)
+		else: _check(crep["done"] and pt2["crop"] == "" and G.S["energy"] < 0.001 and is_equal_approx(float(crep["spent"]["energy"]), cc), "cutting a tree takes exactly the cost (%s)" % label)
+
+## Seeds (or the grain that is the seed) and water for a planting.
+func _stock(cid: String) -> void:
+	G.S["seeds"][cid] = 20.0
+	if G.nodes[cid].has("seedItem"): G.inventory.add_item(G.nodes[cid]["seedItem"], 20.0)
+	G.S["water"] = 50.0
+
+func _crop_requirements() -> void:
+	var A = G.actions
+	G.reset_game()
+	G.S["energy"] = 10.0
+	G.S["water"] = 10.0
+	G.S["seeds"]["crop_wheat"] = 5.0
+	for c in G.fields.CLEARING: G.S["unlocked"][c[0]] = true
+	G.invalidate_caps()
+	var args := {"a": "field", "i": 0, "cid": "crop_wheat"}
+	G.S["patches"][0]["snow"] = true
+	_check(A.check("plant", A.farmer, args)["unmet"][0]["key"] == "snow", "snow on the patch is an unmet requirement for planting")
+	G.S["patches"][0]["snow"] = false
+	G.S["patches"][0]["crop"] = "crop_wheat"
+	_check(A.check("plant", A.farmer, args)["unmet"][0]["key"] == "occupied", "a planted patch is an unmet requirement")
+	G.S["patches"][0]["crop"] = ""
+	G.S["seeds"]["crop_wheat"] = 0.0
+	G.S["inv"].erase("wheat")      # the grain is the seed
+	var rep: Dictionary = A.perform("plant", A.farmer, args)
+	_check(not rep["done"] and rep["failed"] == "supplies" and rep["message"] != "" and G.S["energy"] == 10.0, "no seeds: refused with a sentence, nothing taken")
+	var hrep: Dictionary = A.perform("harvest", A.farmer, {"a": "field", "i": 0})
+	_check(not hrep["done"] and hrep["failed"] == "nothing_to_do" and G.S["energy"] == 10.0, "harvesting an empty patch is refused, nothing taken")
+	_check(not A.perform("cut_tree", A.farmer, {"a": "field", "i": 0})["done"], "nothing to cut on an empty patch")
 
 func _patch_state(chore: String, amount: float) -> void:
 	var p: Dictionary = G.S["patches"][0]
@@ -156,6 +252,137 @@ func _requirements() -> void:
 	var rw: Dictionary = A.perform("weed", A.farmer, {"i": 0})
 	_check(not rw["done"] and rw["failed"] == "nothing_to_do" and rw["message"] != "" and G.S["energy"] == 10.0, "no weeds is an unmet requirement with a sentence")
 	_check(A.check("pick_stones", A.farmer, {"i": 0})["unmet"][0]["key"] == "nothing_to_do" and A.check("clear_snow", A.farmer, {"i": 0})["unmet"][0]["key"] == "nothing_to_do", "no stones and no snow are unmet requirements too")
+
+## Collect from the animals and muck out: the cost check returns (energy, water, feed) is what perform takes; exactly the cost works.
+func _price_match_animals(label: String) -> void:
+	var A = G.actions
+	var who = A.farmer
+	for aid in ["animal_chicken", "animal_cow", "animal_sheep"]:
+		var args := {"aid": aid}
+		var ctx := "%s (%s)" % [aid, label]
+		for hair in [false, true]:
+			_animal_state(aid, 5.0)
+			var snap := JSON.stringify(G.S)
+			var q: Dictionary = A.check("collect_animal", who, args)
+			_check(JSON.stringify(G.S) == snap, "check changes nothing (collect %s)" % ctx)
+			_check(q["ok"] and q["cost"]["energy"] > 0.0 and q["cost"]["water"] > 0.0 and q["cost"].size() >= 3, "collecting can be done (%s)" % ctx)
+			var cost: float = q["cost"]["energy"]
+			costs_seen[snappedf(cost, 0.001)] = true
+			var have0 := {}
+			for k in q["cost"]: have0[k] = G.inventory.have(k)
+			G.S["energy"] = cost - 0.01 if hair else cost
+			var snap2 := JSON.stringify([G.S["energy"], G.S["water"], G.S["inv"], G.S["animals"]])
+			var rep: Dictionary = A.perform("collect_animal", who, args)
+			if hair:
+				_check(not rep["done"] and rep["failed"] == "energy" and JSON.stringify([G.S["energy"], G.S["water"], G.S["inv"], G.S["animals"]]) == snap2, "a hair too little energy collects nothing and takes nothing (%s)" % ctx)
+				continue
+			var same := true
+			for k in q["cost"]:
+				if k != "energy" and not is_equal_approx(float(have0[k]) - G.inventory.have(k), float(q["cost"][k])): same = false
+			_check(rep["done"] and G.S["energy"] < 0.001 and is_equal_approx(float(rep["spent"]["energy"]), cost), "collecting takes exactly the energy check says, with exactly that in energy (%s)" % ctx)
+			_check(same, "…and exactly the water and the feed check says (%s)" % ctx)
+			_check(int(G.S["animals"][aid]["ready"]) > G.S["step"] and float(G.S["animals"][aid]["muck"]) > 5.0 and not rep["gained"].is_empty(), "…and the animals gave something and left muck (%s)" % ctx)
+		# muck out: the amount of muck scales the cost
+		for mk in [1.0, 5.0, 12.0]:
+			_animal_state(aid, mk)
+			var mq: Dictionary = A.check("muck_out", who, args)
+			var mc: float = mq["cost"]["energy"]
+			costs_seen[snappedf(mc, 0.001)] = true
+			_check(mq["ok"] and mc > 0.0 and mq["cost"].size() == 1, "mucking out can be done (%s, muck %s)" % [ctx, mk])
+			G.S["energy"] = mc
+			var m0: float = G.inventory.have("manure")
+			var mrep: Dictionary = A.perform("muck_out", who, args)
+			_check(mrep["done"] and G.S["energy"] < 0.001 and is_equal_approx(float(mrep["spent"]["energy"]), mc), "mucking out takes exactly the cost (%s, muck %s)" % [ctx, mk])
+			_check(float(G.S["animals"][aid]["muck"]) == 0.0 and G.inventory.have("manure") > m0, "…the pen is clean and there is manure (%s, muck %s)" % [ctx, mk])
+			_animal_state(aid, mk)
+			G.S["energy"] = mc - 0.01
+			var mrep2: Dictionary = A.perform("muck_out", who, args)
+			_check(not mrep2["done"] and mrep2["failed"] == "energy" and float(G.S["animals"][aid]["muck"]) == mk, "a hair too little energy mucks out nothing (%s, muck %s)" % [ctx, mk])
+
+## Two animals of this kind, ready, with muck, and everything to feed them.
+func _animal_state(aid: String, muck: float) -> void:
+	G.S["animals"][aid] = {"count": 2, "ready": 0, "muck": muck}
+	G.S["energy"] = G.needs.energy_max()
+	G.S["water"] = 50.0
+	G.S["inv"].erase("manure")
+	for k in ["clover", "wheat", "straw"]: G.inventory.add_item(k, 50.0, true)
+
+func _animal_requirements() -> void:
+	var A = G.actions
+	G.reset_game()
+	var aid := "animal_chicken"
+	var args := {"aid": aid}
+	G.S["animals"][aid] = {"count": 0, "ready": 0, "muck": 0.0}
+	G.S["energy"] = 10.0
+	_check(A.check("collect_animal", A.farmer, args)["unmet"][0]["key"] == "no_animals", "no animals is an unmet requirement")
+	_animal_state(aid, 0.0)
+	G.S["energy"] = 10.0
+	G.S["animals"][aid]["ready"] = G.S["step"] + 3
+	var rep: Dictionary = A.perform("collect_animal", A.farmer, args)
+	_check(not rep["done"] and rep["failed"] == "not_ready" and rep["message"] != "" and G.S["energy"] == 10.0, "animals that are not ready are refused with a sentence, nothing taken")
+	G.S["animals"][aid]["ready"] = 0
+	G.S["inv"].erase("straw")
+	var rep2: Dictionary = A.perform("collect_animal", A.farmer, args)
+	_check(not rep2["done"] and rep2["failed"] == "feed" and rep2["message"] != "" and G.S["energy"] == 10.0 and G.S["water"] == 50.0, "no feed is refused with a sentence, nothing taken")
+	_animal_state("animal_bees", 0.0)
+	G.S["energy"] = 10.0
+	var rep3: Dictionary = A.perform("collect_animal", A.farmer, {"aid": "animal_bees"})
+	_check(not rep3["done"] and rep3["failed"] == "flowers" and G.S["energy"] == 10.0, "bees without flowers are refused")
+	G.S["animals"][aid]["muck"] = 0.2
+	G.S["energy"] = 10.0
+	var rep4: Dictionary = A.perform("muck_out", A.farmer, args)
+	_check(not rep4["done"] and rep4["failed"] == "clean" and rep4["message"] != "" and G.S["energy"] == 10.0, "a clean pen is refused with a sentence")
+
+## A party and a visit cost a fixed energy (no skill, tool or season changes it, as before); the party also takes dishes.
+func _price_match_well(label: String) -> void:
+	var A = G.actions
+	var who = A.farmer
+	var d: Dictionary = G.meta["well"]
+	for hair in [false, true]:
+		_well_state()
+		var q: Dictionary = A.check("throw_party", who)
+		_check(q["ok"] and is_equal_approx(float(q["cost"]["energy"]), float(d["party"]["energy"])) and q["cost"].size() == 3, "a party costs the written energy and the dishes, whatever the skills and buffs (%s)" % label)
+		var dishes := 0.0
+		for k in q["cost"]:
+			if k != "energy": dishes += float(q["cost"][k])
+		_check(dishes == float(d["party"]["dishes"]), "…and exactly the written number of dishes (%s)" % label)
+		var have0: float = G.inventory.count("porridge") + G.inventory.count("bread") + G.inventory.count("flatbread")
+		G.S["energy"] = float(q["cost"]["energy"]) - 0.01 if hair else float(q["cost"]["energy"])
+		var rep: Dictionary = A.perform("throw_party", who)
+		var have1: float = G.inventory.count("porridge") + G.inventory.count("bread") + G.inventory.count("flatbread")
+		if hair: _check(not rep["done"] and rep["failed"] == "energy" and have1 == have0 and int(G.S["well"]["party_step"]) == -999, "a hair too little energy throws no party and takes no dishes (%s)" % label)
+		else: _check(rep["done"] and G.S["energy"] < 0.001 and have0 - have1 == dishes and int(G.S["well"]["party_step"]) == G.S["step"], "a party takes exactly the energy and dishes check says (%s)" % label)
+	for hair in [false, true]:
+		_well_state()
+		G.S["well"]["invite"] = "Ada"
+		var vq: Dictionary = A.check("visit_friend", who)
+		_check(vq["ok"] and is_equal_approx(float(vq["cost"]["energy"]), float(d["visit"]["energy"])) and vq["cost"].size() == 1, "a visit costs the written energy (%s)" % label)
+		G.S["energy"] = float(vq["cost"]["energy"]) - 0.01 if hair else float(vq["cost"]["energy"])
+		var vrep: Dictionary = A.perform("visit_friend", who)
+		if hair: _check(not vrep["done"] and vrep["failed"] == "energy", "a hair too little energy makes no visit (%s)" % label)
+		else: _check(vrep["done"] and G.S["energy"] < 0.001 and G.S["well"]["invite"] == "Ada", "a visit takes exactly the energy, and the invitation waits for the question (%s)" % label)
+
+func _well_state() -> void:
+	G.S["energy"] = G.needs.energy_max()
+	G.S["well"]["party_step"] = -999
+	G.S["well"]["invite"] = ""
+	G.S["inv"].clear()
+	for k in ["porridge", "bread", "flatbread"]: G.inventory.add_item(k, 2.0, true)
+
+func _well_requirements() -> void:
+	var A = G.actions
+	G.reset_game()
+	_well_state()
+	G.S["inv"].clear()
+	G.S["energy"] = 10.0
+	var rep: Dictionary = A.perform("throw_party", A.farmer)
+	_check(not rep["done"] and rep["failed"] == "dishes" and rep["message"] != "" and G.S["energy"] == 10.0, "a party without dishes is refused with a sentence, nothing taken")
+	_well_state()
+	G.S["step"] = 5
+	G.S["well"]["party_step"] = 3
+	var rep2: Dictionary = A.perform("throw_party", A.farmer)
+	_check(not rep2["done"] and rep2["failed"] == "cooldown" and rep2["message"] != "", "a party too soon after the last one is refused with a sentence")
+	_check(A.check("visit_friend", A.farmer)["unmet"][0]["key"] == "no_invite", "a visit without an invitation is an unmet requirement")
 
 func _check(ok: bool, what: String) -> void:
 	checks += 1

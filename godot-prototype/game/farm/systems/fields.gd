@@ -149,7 +149,7 @@ func snow_count() -> int:
 	return n
 
 ## How many plants of this crop could go into one patch right now, and why not more.
-func plant_plan(a: String, cid: String) -> Dictionary:
+func plant_plan(a: String, cid: String, water_have := -1.0) -> Dictionary:
 	var n = G.nodes[cid]
 	var want := plants_per_patch(a)
 	var reasons := []
@@ -174,29 +174,44 @@ func plant_plan(a: String, cid: String) -> Dictionary:
 			if not reasons.has(nk): reasons.append(nk)
 	var wm := field_water_mult() if a != "gh" else float(G.g("waterMult", 1.0)) * 0.5
 	var wper := float(n.get("water", 0)) * wm
-	while k > 0 and G.S["water"] + 0.001 < wper * k:
+	var water := float(G.S["water"]) if water_have < 0.0 else water_have
+	while k > 0 and water + 0.001 < wper * k:
 		k -= 1
 		if not reasons.has("water"): reasons.append("water")
-	var e := G.needs.ecost("plant", 1.0) * G.m("energy:field") if a != "orchard" or not n.has("regrow") else G.needs.ecost("plant", 1.0)
 	var buy := 0
-	return {"plants": k, "max": want, "reasons": reasons, "water": wper * k, "energy": e, "buy_seeds": buy, "coins": buy * seed_cost,
-		"water_base": float(n.get("water", 0)) * k, "energy_base": 1.0,
+	return {"plants": k, "max": want, "reasons": reasons, "water": wper * k, "buy_seeds": buy, "coins": buy * seed_cost,
+		"water_base": float(n.get("water", 0)) * k,
 		"water_full": wper * want, "water_full_base": float(n.get("water", 0)) * want}   # for a full patch: shows what is missing
 
-func plant(a: String, i: int, cid: String) -> bool:
-	if not patch_usable(a, i): return false
-	var p = area(a)[i]
-	if p["crop"] != "": G.say(tr("Something is already growing there.")); return false
-	if a == "field" and patch_snow(i): G.say(tr("❄️ Snow covers this patch: clear it first.")); return false
+## Sow one patch, a chore of the actions system (args: a, i, cid). The cost is the whole plan's: one energy, and the water of every plant.
+func _plant_requires(_who, args: Dictionary) -> Array:
+	var a: String = args["a"]
+	var i: int = args["i"]
+	var cid: String = args["cid"]
+	if not patch_usable(a, i): return [{"key": "nothing_to_do", "text": ""}]
+	if area(a)[i]["crop"] != "": return [{"key": "occupied", "text": tr("Something is already growing there.")}]
+	if a == "field" and patch_snow(i): return [{"key": "snow", "text": tr("❄️ Snow covers this patch: clear it first.")}]
 	var plan := plant_plan(a, cid)
+	if int(plan["plants"]) < 1:
+		if plan["reasons"].has("cold"): return [{"key": "cold", "text": tr("❄️ Too cold to sow %s outdoors now.") % G.nodes[cid]["name"]}]
+		if plan["reasons"].has("season"): return [{"key": "season", "text": tr("🌱 %s is sown in %s.") % [G.nodes[cid]["name"], " / ".join((G.nodes[cid]["sowSeasons"] as Array).map(func(x): return tr(x)))]}]
+		return [{"key": "supplies", "text": tr("🌱 Can't plant %s: not enough %s.") % [G.nodes[cid]["name"], ", ".join(plan["reasons"])]}]
+	return []
+
+func _plant_extra(_who, args: Dictionary) -> Dictionary:
+	var plan := plant_plan(args["a"], args["cid"])
+	return {"cost": {"water": float(plan["water"])}, "base": {"water": float(plan["water_base"])}}
+
+## Trees in the orchard are planted at the plain energy price; everything else also pays the field modifier.
+func _plant_no_mult(_who, args: Dictionary) -> bool:
+	return args["a"] == "orchard" and G.nodes[args["cid"]].has("regrow")
+
+func _plant_effect(who, args: Dictionary, cost: Dictionary) -> Dictionary:
+	var a: String = args["a"]
+	var cid: String = args["cid"]
+	var p = area(a)[int(args["i"])]
+	var plan := plant_plan(a, cid, float(G.S["water"]) + float(cost.get("water", 0.0)))   # the water is already paid
 	var k := int(plan["plants"])
-	if k < 1:
-		if plan["reasons"].has("cold"): G.say(tr("❄️ Too cold to sow %s outdoors now.") % G.nodes[cid]["name"]); return false
-		if plan["reasons"].has("season"): G.say(tr("🌱 %s is sown in %s.") % [G.nodes[cid]["name"], " / ".join((G.nodes[cid]["sowSeasons"] as Array).map(func(x): return tr(x)))]); return false
-		G.say(tr("🌱 Can't plant %s: not enough %s.") % [G.nodes[cid]["name"], ", ".join(plan["reasons"])])
-		return false
-	if G.S["energy"] + 0.001 < float(plan["energy"]):
-		G.say(tr("⚡ Too tired to plant. Rest a little (tap ⚡).")); return false
 	var n = G.nodes[cid]
 	if int(plan["buy_seeds"]) > 0:
 		G.S["coins"] -= float(plan["coins"])
@@ -208,8 +223,6 @@ func plant(a: String, i: int, cid: String) -> bool:
 		var extra := maxf(0.0, k - free_density())
 		if extra > 0.0: _take_fert(extra)
 	for nk in n.get("needs", {}): G.inventory.take(nk, float(n["needs"][nk]) * k)
-	G.S["water"] -= float(plan["water"])
-	G.S["energy"] -= float(plan["energy"])
 	var rot = G.meta.get("rotation", {})
 	var soil := 1.0
 	if a == "field" and p["last"] != "":
@@ -217,10 +230,7 @@ func plant(a: String, i: int, cid: String) -> bool:
 		elif (rot.get("legumes", []) as Array).has(p["last"]): soil = float(rot.get("afterLegumeGrow", 1.1)) + G.g("restedSoil", 0.0)
 	p["crop"] = cid; p["plants"] = float(k); p["growth"] = 0.0; p["ready"] = false; p["soil"] = soil; p["cycles"] = 0
 	if not p.has("quality"): p["quality"] = 1.0
-	G.crafting.wear_polish("use:plant")
-	G.skills.practice("field")
-	G.save_game(); G.changed.emit()
-	return true
+	return {"gained": {}}
 
 func grow_target(p: Dictionary) -> float:
 	var n = G.nodes[p["crop"]]
@@ -238,13 +248,17 @@ func grow_speed(a: String, p: Dictionary) -> float:
 	if G.seasons.season() == "winter": sg += G.g("winterGrow", 0.0)
 	return base * sg * float(p.get("soil", 1.0)) * slow_factor(p)
 
-func harvest(a: String, i: int) -> bool:
+## Harvest one patch, a chore of the actions system (args: a, i). The order of the rolls is luck, then the grade, then every item.
+func _harvest_requires(_who, args: Dictionary) -> Array:
+	var p = area(args["a"])[int(args["i"])]
+	if p["crop"] == "" or not p["ready"]: return [{"key": "nothing_to_do", "text": ""}]
+	return []
+
+func _harvest_effect(_who, args: Dictionary, _cost: Dictionary) -> Dictionary:
+	var a: String = args["a"]
+	var i := int(args["i"])
 	var p = area(a)[i]
-	if p["crop"] == "" or not p["ready"]: return false
 	var n = G.nodes[p["crop"]]
-	var e := G.needs.ecost("harvest", 1.0) * G.m("energy:field")
-	if G.S["energy"] + 0.001 < e: G.say(tr("⚡ Too tired to harvest. Rest a little (tap ⚡).")); return false
-	G.S["energy"] -= e
 	var mult := 1.0
 	if G.rewards.roll(G.rewards.luck_event("double_harvest")): mult = 2.0; G.say(tr("🎉 Bumper crop: double harvest!"))
 	if a == "orchard":
@@ -268,28 +282,27 @@ func harvest(a: String, i: int) -> bool:
 		p["growth"] = 0.0; p["ready"] = false; p["cycles"] = int(p.get("cycles", 0)) + 1
 	else:
 		p["last"] = p["crop"]; p["crop"] = ""; p["plants"] = 0.0; p["growth"] = 0.0; p["ready"] = false
-	G.crafting.wear_polish("use:harvest")
-	G.skills.practice("field")
-	G.save_game(); G.changed.emit()
-	return true
+	return {"gained": arrived}
 
 ## Cuts down a tree in the orchard so another kind can be planted there (three apple trees must not block the walnut tree
-## the pony's cake needs). Costs energy, gives the wood back.
-func cut_tree(a: String, i: int) -> bool:
+## the pony's cake needs). Costs energy, gives the wood back. A chore of the actions system (args: a, i).
+func _cut_tree_requires(_who, args: Dictionary) -> Array:
+	var p = area(args["a"])[int(args["i"])]
+	if p["crop"] == "" or not G.nodes[p["crop"]].has("regrow"): return [{"key": "nothing_to_do", "text": ""}]
+	return []
+
+func _cut_tree_effect(_who, args: Dictionary, _cost: Dictionary) -> Dictionary:
+	var a: String = args["a"]
+	var i := int(args["i"])
 	var p = area(a)[i]
-	if p["crop"] == "" or not G.nodes[p["crop"]].has("regrow"): return false
-	var e := G.needs.ecost("wood", float(G.meta.get("orchard", {}).get("cutEnergy", 3)))
-	if G.S["energy"] + 0.001 < e: G.say(tr("⚡ Too tired to cut a tree. Rest a little (tap ⚡).")); return false
-	G.S["energy"] -= e
 	var tree_name: String = G.nodes[p["crop"]]["name"]
 	p["last"] = p["crop"]; p["crop"] = ""; p["plants"] = 0.0; p["growth"] = 0.0; p["ready"] = false; p["cycles"] = 0
+	var gives: Dictionary = G.meta.get("orchard", {}).get("cutGives", {"log": 1, "stick": 2})
 	var got := {}
-	for k in G.meta.get("orchard", {}).get("cutGives", {"log": 1, "stick": 2}):
-		got[k] = G.inventory.add_item(k, float(G.meta.get("orchard", {}).get("cutGives", {"log": 1, "stick": 2})[k]), true)
+	for k in gives: got[k] = G.inventory.add_item(k, float(gives[k]), true)
 	G.inventory.emit_gained("patch:%s:%d" % [a, i], got)
 	G.say(tr("🪓 Cut down the %s: the spot is free for another tree.") % tree_name)
-	G.save_game(); G.changed.emit()
-	return true
+	return {"gained": got}
 
 ## What one harvest gives: for every plant the crop's average (data: yields) × luck × the patch's quality, with a random
 ## spread, rounded up or down at random so the average holds; whole numbers only. The first item is at least minMain per plant.
@@ -385,6 +398,9 @@ func register_chores() -> void:
 	G.actions.register("clear_snow", _clear_snow_effect, _clear_snow_requires)
 	G.actions.register("weed", _weed_effect, _weed_requires, _weed_amount)
 	G.actions.register("pick_stones", _stones_effect, _stones_requires, _stones_amount)
+	G.actions.register("plant", _plant_effect, _plant_requires, Callable(), _plant_extra, _plant_no_mult)
+	G.actions.register("harvest", _harvest_effect, _harvest_requires)
+	G.actions.register("cut_tree", _cut_tree_effect, _cut_tree_requires)
 
 func _fetch_water_requires(_who, _args: Dictionary) -> Array:
 	if G.needs.water_cap() - float(G.S["water"]) < 0.5: return [{"key": "water_full", "text": tr("💧 Your water is full.")}]

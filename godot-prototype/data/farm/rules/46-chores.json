@@ -1,6 +1,6 @@
 {
   "chores": {
-    "note": "What each chore costs and trains, read by the actions system (game/farm/systems/actions.gd, farm-actions spec). base = the cost before skills, tools, the season and buffs (a number, or the path of a number written elsewhere); cat = the energy category (rules/10-farming.json gather, field, ...); mult = a second modifier that multiplies the energy after the rest (optional; the old snow and weed code did this, kept so no number moves), wear = the polish that wears, practice = the skill family that trains (both optional). A chore that works on a stretch of patch (weed, stones) names its amount in code: the base energy is per unit. The effect of a chore stays in the system that owns it. The progression explorer reads water.fetchEnergy, which is why fetch_water points to it.",
+    "note": "What each chore costs and trains, read by the actions system (game/farm/systems/actions.gd, farm-actions spec). base = the cost before skills, tools, the season and buffs (a number, or the path of a number written elsewhere); cat = the energy category (rules/10-farming.json gather, field, ...); mult = a second modifier (a chore may switch it off for some calls in code: planting an orchard tree) that multiplies the energy after the rest (optional; the old snow and weed code did this, kept so no number moves), raw = the energy is the written number and nothing changes it (optional; the party and the visit), wear = the polish that wears, practice = the skill family that trains (both optional). A chore that works on a stretch of patch (weed, stones) or on a number of animals names its amount in code: the base energy is per unit. Other cost kinds that depend on the call (the water of a planting, the feed of the animals) come from code too. The effect of a chore stays in the system that owns it. The progression explorer reads water.fetchEnergy, which is why fetch_water points to it.",
     "fetch_water": {
       "base": {"energy": "water.fetchEnergy"},
       "cat": "gather"
@@ -18,6 +18,42 @@
     "pick_stones": {
       "base": {"energy": "stones.energyPerStone"},
       "cat": "field"
+    },
+    "plant": {
+      "base": {"energy": 1},
+      "cat": "plant",
+      "mult": "energy:field",
+      "wear": "use:plant",
+      "practice": "field"
+    },
+    "harvest": {
+      "base": {"energy": 1},
+      "cat": "harvest",
+      "mult": "energy:field",
+      "wear": "use:harvest",
+      "practice": "field"
+    },
+    "cut_tree": {
+      "base": {"energy": 3},
+      "cat": "wood"
+    },
+    "collect_animal": {
+      "base": {"energy": 1},
+      "cat": "animal",
+      "wear": "use:animal",
+      "practice": "animals"
+    },
+    "muck_out": {
+      "base": {"energy": "muck.energyPerMuck"},
+      "cat": "animal"
+    },
+    "throw_party": {
+      "base": {"energy": "well.party.energy"},
+      "raw": true
+    },
+    "visit_friend": {
+      "base": {"energy": "well.visit.energy"},
+      "raw": true
     }
   }
 }

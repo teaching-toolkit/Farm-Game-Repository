@@ -10,6 +10,7 @@ const Art = preload("res://kits/ui/art.gd")
 
 const KIND_EMOJI := {"frame": "📖", "beat": "✨", "discovery": "🔎", "letter": "✉️", "moment": "💬", "visit": "🚶", "scene": "🏘️", "bark": "💬"}
 const PICTURE_FOLDERS := ["story", "friends", "helpers", "ruins", "deco", "map"]
+const SCENE_H := 520.0         # height of a painted story scene (a square picture; the pop-up is up to 760 wide)
 
 var M: FarmMain   # the main screen: its widgets and the other parts
 var G: FarmGame   # the rules (G.<system>.<function>)
@@ -79,6 +80,19 @@ func _picture(id: String, pic: String) -> Texture2D:
 		if t: return t
 	return null
 
+## A painted scene for a page (assets/story/<id>_p<page>.png, else <id>.png), shown big; null if there is none.
+func _scene(id: String, page: int) -> Texture2D:
+	return Art.first("story", ["%s_p%d" % [id, page + 1], id])
+
+func _scene_view(tex: Texture2D) -> Control:
+	var r := TextureRect.new()
+	r.texture = tex
+	r.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	r.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	r.custom_minimum_size = Vector2(0, SCENE_H)
+	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return r
+
 func _page(id: String, i: int, again: bool) -> void:
 	var pages: Array = G.story.pages(id)
 	if pages.is_empty(): return
@@ -87,7 +101,9 @@ func _page(id: String, i: int, again: bool) -> void:
 	var p := G.story.piece(id)
 	var title := str(p.get("title", ""))
 	var box := M.modals.open_modal(title if title != "" else _emoji(id))
-	box.add_child(UI.header(_picture(id, str(pg.get("picture", ""))), _emoji(id), 140, Color.WHITE, true))
+	var scene := _scene(id, i)
+	if scene: box.add_child(_scene_view(scene))
+	else: box.add_child(UI.header(_picture(id, str(pg.get("picture", ""))), _emoji(id), 140, Color.WHITE, true))
 	var text := str(pg["text"])
 	var l := UI.label(text, 22, UI.INK, true)
 	box.add_child(l)

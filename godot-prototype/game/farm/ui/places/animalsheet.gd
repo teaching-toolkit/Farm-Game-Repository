@@ -31,8 +31,9 @@ func animal_card(aid: String) -> PanelContainer:
 	if int(a["count"]) > 0:
 		var ready: bool = G.S["step"] >= int(a["ready"])
 		var ct := M.widgets.tile(null, "🧺", tr("Collect · they need:"))
-		ct.add_child(M.widgets.costs(G.animals.feed_needs(aid), _feed_base(aid)))
-		if ready: M.widgets.tile_button(ct, UI.action_button("animal", G.animals.collect_animal.bind(aid), true))
+		var cq: Dictionary = G.actions.check("collect_animal", G.actions.farmer, {"aid": aid})
+		ct.add_child(M.widgets.costs(cq["cost"], cq["base"]))
+		if ready: M.widgets.tile_button(ct, UI.action_button("animal", _do_collect.bind(aid), true))
 		else: M.widgets.tile_button(ct, UI.wait_button(int(a["ready"]) - G.S["step"], M.timequiz.show_time_quiz))
 		ag.add_child(ct.get_meta("panel"))
 		if n.get("needsFlowers", false):
@@ -41,18 +42,15 @@ func animal_card(aid: String) -> PanelContainer:
 			var mf: float = G.animals.muck_factor(aid)
 			var mt := M.widgets.tile(null, "💩", tr("Muck %d") % G.down(a["muck"]))
 			if mf < 1.0: mt.add_child(UI.label(tr("Animals give %d%% less!") % int(round((1.0 - mf) * 100)), 15, UI.RED, true))
-			mt.add_child(M.widgets.costs({"energy": G.needs.ecost("animal", float(a["muck"]) * 0.5)}, {"energy": float(a["muck"]) * 0.5}))
-			M.widgets.tile_button(mt, UI.action_button("animal", G.animals.muck_out.bind(aid), float(a["muck"]) >= 0.5, UI.SOIL, "🧹", tr("Clean")))
+			var mq: Dictionary = G.actions.check("muck_out", G.actions.farmer, {"aid": aid})
+			mt.add_child(M.widgets.costs(mq["cost"], mq["base"]))
+			M.widgets.tile_button(mt, UI.action_button("animal", _do_muck_out.bind(aid), float(a["muck"]) >= 0.5, UI.SOIL, "🧹", tr("Clean")))
 			ag.add_child(mt.get_meta("panel"))
 	if ag.get_child_count() > 0: v.add_child(ag)
 	return pc
 
-## What a collection would need without any upgrade (to show the saving as grey cubes).
-func _feed_base(aid: String) -> Dictionary:
-	var n: Dictionary = G.nodes[aid]
-	var cnt := int(G.animals.animal(aid)["count"])
-	var out := {}
-	for k in n.get("feed", {}): out[k] = float(n["feed"][k]) * cnt
-	if float(n.get("feedWater", 0)) > 0.0: out["water"] = float(n["feedWater"]) * cnt
-	out["energy"] = float(n.get("collectEnergy", 1)) * cnt
-	return out
+func _do_collect(aid: String) -> void:
+	G.actions.perform("collect_animal", G.actions.farmer, {"aid": aid})
+
+func _do_muck_out(aid: String) -> void:
+	G.actions.perform("muck_out", G.actions.farmer, {"aid": aid})

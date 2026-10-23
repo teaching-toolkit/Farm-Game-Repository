@@ -72,8 +72,9 @@ func sheet_patch(a: String, i: int) -> void:
 			t.add_child(UI.label("%s   ⏳%d" % ["🌱".repeat(maxi(plants, 0)) if plants > 0 else "—", int(n.get("grow", 0))], 16, UI.INK, true))
 			# short of water: show the water a full patch needs, so the missing cubes show up hollow
 			var short: bool = plan["reasons"].has("water")
-			var c := {"water": float(plan["water_full" if short else "water"]), "energy": float(plan["energy"])}
-			var base := {"water": float(plan["water_full_base" if short else "water_base"]), "energy": float(plan["energy_base"])}
+			var q: Dictionary = G.actions.check("plant", G.actions.farmer, {"a": a, "i": i, "cid": cid})
+			var c := {"water": float(plan["water_full" if short else "water"]), "energy": float(q["cost"]["energy"])}
+			var base := {"water": float(plan["water_full_base" if short else "water_base"]), "energy": float(q["base"]["energy"])}
 			t.add_child(M.widgets.costs(c, base))
 			t.add_child(UI.label("🌰 %d" % G.down(G.fields.seed_have(cid)), 16, UI.INK if G.fields.seed_have(cid) >= 1.0 else UI.RED))
 			if plan["reasons"].has("cold"): t.add_child(UI.label(tr("❄️ Too cold to sow. Try the greenhouse.") if G.done("greenhouse") else tr("❄️ Too cold to sow"), 14, UI.MUTED, true))
@@ -144,7 +145,7 @@ func _do_plant(a: String, i: int, cid: String) -> void:
 	if int(plan["plants"]) < 1 and plan["reasons"].has("water"):
 		show_no_water()
 		return
-	if G.fields.plant(a, i, cid):
+	if G.actions.perform("plant", G.actions.farmer, {"a": a, "i": i, "cid": cid})["done"]:
 		M.feedback.sfx("plant")
 		M.feedback.play_act("plant", M.feedback.patch_place(a, i))
 		M.sheets.close_sheet()
@@ -171,7 +172,7 @@ func _fetch_and_close() -> void:
 	if G.actions.perform("fetch_water", G.actions.farmer)["done"] and float(G.S["water"]) + 0.5 >= G.needs.water_cap(): M.modals.close_modal()
 
 func _do_harvest(a: String, i: int) -> void:
-	if G.fields.harvest(a, i): M.sheets.close_sheet()
+	if G.actions.perform("harvest", G.actions.farmer, {"a": a, "i": i})["done"]: M.sheets.close_sheet()
 
 func _do_weed(i: int) -> void:
 	G.actions.perform("weed", G.actions.farmer, {"i": i})
@@ -196,9 +197,10 @@ func _field_jobs(f: int) -> Dictionary:
 
 ## Harvest, weed or pick the stones of every patch of field f. The farmer walks from patch to patch (each patch plays its own act).
 func harvest_field(f: int) -> void:
+	var jobs := []
 	for i in range(f * 9, mini(f * 9 + 9, G.S["patches"].size())):
-		if G.fields.patch_usable("field", i) and G.S["patches"][i]["ready"] and G.S["patches"][i]["crop"] != "":
-			if not G.fields.harvest("field", i): break
+		if G.fields.patch_usable("field", i) and G.S["patches"][i]["ready"] and G.S["patches"][i]["crop"] != "": jobs.append({"a": "field", "i": i})
+	G.actions.perform_batch("harvest", G.actions.farmer, jobs)
 
 func weed_field(f: int) -> void:
 	var jobs: Array = G.fields.field_jobs(f, "weed")
@@ -214,9 +216,10 @@ func stones_field(f: int) -> void:
 ## Harvest everything that is ready in an area (all fields, the orchard or the greenhouse).
 func harvest_all(a := "field") -> void:
 	var arr: Array = G.fields.area(a)
+	var jobs := []
 	for i in range(arr.size()):
-		if arr[i]["ready"]:
-			if not G.fields.harvest(a, i): break
+		if arr[i]["ready"] and arr[i]["crop"] != "": jobs.append({"a": a, "i": i})
+	G.actions.perform_batch("harvest", G.actions.farmer, jobs)
 
 func ready_count(a: String) -> int:
 	var n := 0

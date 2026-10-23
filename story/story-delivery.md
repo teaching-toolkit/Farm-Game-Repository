@@ -66,7 +66,7 @@ The first ten minutes of chapter 1 get a hook, a strange thing (the nibbled stal
 ```json
 { "id": "c1_stalk", "kind": "beat", "chapter": 1,
   "when": ["start"], "priority": 90, "once": true,
-  "speaker": "", "picture": "story/c1_stalk.png", "mumyo": false,
+  "speaker": "", "mumyo": false,
   "text": "On the one green patch stands one ripe wheat stalk. Every grain is nibbled off. All but one." }
 ```
 

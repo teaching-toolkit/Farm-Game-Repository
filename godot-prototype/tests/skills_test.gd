@@ -77,11 +77,11 @@ func _ready() -> void:
 	var pb: int = K.batches("field")
 	G.S["seeds"]["crop_wheat"] = 5.0
 	G.S["water"] = 20.0
-	var planted: bool = G.fields.plant("field", 0, "crop_wheat")
+	var planted: bool = G.actions.perform("plant", G.actions.farmer, {"a": "field", "i": 0, "cid": "crop_wheat"})["done"]
 	_check(planted and K.batches("field") == pb + 1, "planting counts for planting and harvesting")
 	G.S["patches"][0]["ready"] = true
 	G.S["patches"][0]["growth"] = 99.0
-	G.fields.harvest("field", 0)
+	G.actions.perform("harvest", G.actions.farmer, {"a": "field", "i": 0})
 	_check(K.batches("field") == pb + 2, "…and so does the harvest")
 	# old saves: the practice per station becomes batches per family
 	var old := {"practice": {"campfire": 12, "workbench": 5, "wild_edge": 3}, "skills": {}}

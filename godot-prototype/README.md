@@ -85,6 +85,13 @@ The game looks for a picture named after the data id and uses the emoji when the
   Leave upgrades out of the main pictures, so they can be added one at a time.
 - `assets/interiors/<house|barn|workshop>.png` — the empty inside of a building (an isometric cutaway room);
   `assets/interior/<id>.png` — what stands in its corners (beds, shelves, stoves, looms …; `map/<id>.png` is used until then).
+- `assets/story/<piece id>.webp` (or `<piece id>_p<N>.webp` for page N of a piece) — a painted full-bleed scene for the story box, shown 520 px
+  high above the text. It is found by the piece id, so the story data needs no `picture` value. Don't add files by hand: list the picture in
+  `tools/story_pictures.json` (piece id → file in `art-inbox/Story pictures/`) and run `python3 tools/import_story_pictures.py`
+  (shrinks to 768 px, lossy WebP of about 0.1 MB, and writes a small `.webp.import` that keeps Godot's import lossy: without it a WebP grows to
+  about 0.5 MB in the pack; `--check` lists what is mapped or missing; needs Pillow). The picture loader (`kits/ui/art.gd`) takes a `.webp` when
+  a folder has no `.png` of that name. Without a scene the box shows its emoji or the small picture of `picture` (friends, helpers, ruins, deco,
+  map). The old `import_art.py one` must not be used: it cuts out a white background.
 - `assets/tiles/` — `grass.png`, `path.png` (repeating ground; the forest edge is the grass, shaded darker).
 - `assets/fences/<kind>.png` — ONE side of a field fence or wall (`stick_broken`, `stick_fence`, `wattle_fence`, `picket_fence`,
   `stone_wall`, `stone_broken`, `hedge_row` …), running from lower left to upper right (1 up for every 2 across); the game repeats it

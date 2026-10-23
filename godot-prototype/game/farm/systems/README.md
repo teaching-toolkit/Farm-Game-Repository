@@ -14,8 +14,8 @@ emits the signals the interface listens to (`changed`, `toast`, `gained`, `sold`
 | `pace` | dynamic difficulty (off by default): the running pace and the factors on costs | progression, inventory, crafting, needs |
 | `progression` | costs, requirements, steps and waits, unlocking, helpers on stations, clearing jobs that open patches early, `plots()` | pace, rewards, fields, inventory, crafting |
 | `fields` | fields, orchard, greenhouse: patches, planting, growth, harvest, weeds, stones, pests, scarecrow, the bucket | inventory, rewards, seasons, needs, progression, crafting |
-| `actions` | every chore's check (cost now, what is missing; changes nothing) and perform (spends, runs the chore's effect and follow-ups, reports); base costs in `rules/46-chores.json`; the doer is an input (`G.actions.farmer`). So far: fetch water, weed, pick stones, clear snow; `perform_batch` for whole-field chores | needs, skills, crafting, the owner of each effect |
-| `animals` | buying, feeding, collecting, muck | rewards, progression, pace, inventory, needs |
+| `actions` | every chore's check (cost now, what is missing; changes nothing) and perform (spends, runs the chore's effect and follow-ups, reports); base costs in `rules/46-chores.json`; the doer is an input (`G.actions.farmer`). So far: fetch water, weed, pick stones, clear snow, plant, harvest, cut tree, collect from animals, muck out, throw a party, visit a friend; `perform_batch` for whole-field chores | needs, skills, crafting, the owner of each effect |
+| `animals` | buying, feeding, collecting, muck (collect and muck out are chores of `actions`; their effects are here) | rewards, progression, pace, inventory, needs |
 | `crafting` | stations, recipes, fuel and the woodpile, house firewood, polish (endless upgrades) | inventory, pace, needs, seasons, rewards |
 | `trade` | market demand and prices, selling, seeds, merchants, barter, eating | inventory, rewards, pace |
 | `reveal` | what is shown when: `shown(id)`, once shown always shown (rules in `data/farm/rules/60-reveal.json`) | the Game (conditions), the interface |

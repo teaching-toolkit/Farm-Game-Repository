@@ -1,6 +1,6 @@
 extends RefCounted
 class_name FarmAnimals
-## Animals: buying, feeding, collecting (eggs, milk, wool, honey) and muck.
+## Animals: buying, feeding, collecting (eggs, milk, wool, honey) and muck. Collecting and mucking out are chores of the actions system.
 
 var G: FarmGame   # the Game: the farm's state (G.S), its data and the other systems
 
@@ -58,31 +58,52 @@ func muck_factor(aid: String) -> float:
 	if mk > th: return float(mu.get("slowAbove", 0.75))
 	return 1.0
 
-func feed_needs(aid: String) -> Dictionary:
+## What the animals eat and drink for one collection, as written in the data (before the tools and upgrades that make it less) and after.
+func feed_cost(aid: String) -> Dictionary:
 	var n = G.nodes[aid]
-	var a := animal(aid)
-	var out := {}
+	var cnt := int(animal(aid)["count"])
+	var cost := {}
+	var base := {}
 	for k in n.get("feed", {}):
-		out[k] = float(n["feed"][k]) * int(a["count"]) * G.m("feed:" + aid)
-	var w := float(n.get("feedWater", 0)) * int(a["count"]) * G.m("water:animal")
-	if w > 0.0: out["water"] = w
-	out["energy"] = G.needs.ecost("animal", float(n.get("collectEnergy", 1)) * int(a["count"]))
-	return out
+		base[k] = float(n["feed"][k]) * cnt
+		cost[k] = float(n["feed"][k]) * cnt * G.m("feed:" + aid)
+	var w := float(n.get("feedWater", 0)) * cnt
+	if w > 0.0:
+		base["water"] = w
+		cost["water"] = w * G.m("water:animal")
+	return {"cost": cost, "base": base}
 
-func collect_animal(aid: String) -> bool:
+## The chores of the animals in the actions system (rules/46-chores.json): their cost and the check are there, the effects are here.
+## Both take the animal's id as args {"aid"}.
+func register_chores() -> void:
+	G.actions.register("collect_animal", _collect_effect, _collect_requires, _collect_amount, _collect_extra)
+	G.actions.register("muck_out", _muck_out_effect, _muck_out_requires, _muck_amount)
+
+func _collect_amount(_who, args: Dictionary) -> float:
+	return float(G.nodes[args["aid"]].get("collectEnergy", 1)) * int(animal(args["aid"])["count"])
+
+func _collect_extra(_who, args: Dictionary) -> Dictionary:
+	return feed_cost(args["aid"])
+
+func _collect_requires(_who, args: Dictionary) -> Array:
+	var aid: String = args["aid"]
 	var n = G.nodes[aid]
 	var a := animal(aid)
-	if int(a["count"]) < 1: return false
-	if G.S["step"] < int(a["ready"]): G.say(tr("%s needs a little time. Answer a Time Quiz question.") % n["name"]); return false
+	if int(a["count"]) < 1: return [{"key": "no_animals", "text": ""}]
+	if G.S["step"] < int(a["ready"]): return [{"key": "not_ready", "text": tr("%s needs a little time. Answer a Time Quiz question.") % n["name"]}]
 	if n.get("needsFlowers", false) and not has_flowers():
-		G.say(tr("🐝 The bees need flowers: grow clover, sunflowers, flax, berries, herbs or fruit trees.")); return false
-	var need := feed_needs(aid)
-	var miss := G.pace.missing_cost(need)
+		return [{"key": "flowers", "text": tr("🐝 The bees need flowers: grow clover, sunflowers, flax, berries, herbs or fruit trees.")}]
+	var miss := G.pace.missing_cost(feed_cost(aid)["cost"])
 	if not miss.is_empty():
 		var parts := []
-		for x in miss: parts.append("%s %s" % [G.iemoji(x["key"]), G.iname(x["key"]) if x["key"] != "energy" and x["key"] != "water" else x["key"]])
-		G.say(tr("%s need %s.") % [n["name"], ", ".join(parts)]); return false
-	G.pace.pay(need)
+		for x in miss: parts.append("%s %s" % [G.iemoji(x["key"]), G.iname(x["key"]) if x["key"] != "water" else x["key"]])
+		return [{"key": "feed", "text": tr("%s need %s.") % [n["name"], ", ".join(parts)]}]
+	return []
+
+func _collect_effect(_who, args: Dictionary, _cost: Dictionary) -> Dictionary:
+	var aid: String = args["aid"]
+	var n = G.nodes[aid]
+	var a := animal(aid)
 	var mf := muck_factor(aid)
 	var got := []
 	var arrived := {}
@@ -101,21 +122,20 @@ func collect_animal(aid: String) -> bool:
 	G.say(msg)
 	G.inventory.emit_gained("animal:" + aid, arrived)
 	G.rewards.job_progress("collect", aid, 1.0)
-	G.skills.practice("animals")
-	G.crafting.wear_polish("use:animal")
-	G.save_game(); G.changed.emit()
-	return true
+	return {"gained": arrived}
 
-func muck_out(aid: String) -> bool:
-	var a := animal(aid)
+func _muck_amount(_who, args: Dictionary) -> float:
+	return float(animal(args["aid"])["muck"])
+
+func _muck_out_requires(_who, args: Dictionary) -> Array:
+	if float(animal(args["aid"])["muck"]) < 0.5: return [{"key": "clean", "text": tr("Already clean.")}]
+	return []
+
+func _muck_out_effect(_who, args: Dictionary, _cost: Dictionary) -> Dictionary:
+	var a := animal(args["aid"])
 	var mk := float(a["muck"])
-	if mk < 0.5: G.say(tr("Already clean.")); return false
 	var mu = G.meta.get("muck", {})
-	var e := G.needs.ecost("animal", mk * float(mu.get("energyPerMuck", 0.5)))
-	if G.S["energy"] + 0.001 < e: G.say(tr("⚡ Too tired to muck out. Rest a little.")); return false
-	G.S["energy"] -= e
 	a["muck"] = 0.0
 	var got := G.inventory.add_item("manure", mk * float(mu.get("manurePerMuck", 1)))
 	G.say(tr("💩 Mucked out: +%d manure for the compost.") % G.down(got))
-	G.save_game(); G.changed.emit()
-	return true
+	return {"gained": {"manure": got}}

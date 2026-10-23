@@ -202,7 +202,7 @@ func _maybe_cut_tree(a: String) -> void:
 		for j in range(G.fields.area(a).size()):
 			var cj: String = G.fields.area(a)[j]["crop"]
 			if cj != "" and int(planted.get(cj, 0)) > 1:
-				G.fields.cut_tree(a, j)
+				G.actions.perform("cut_tree", G.actions.farmer, {"a": a, "i": j})
 				return
 		return
 
@@ -420,7 +420,7 @@ func _turn() -> void:
 	for i in range(G.S["patches"].size()):
 		if not G.fields.patch_usable("field", i): continue
 		var p = G.S["patches"][i]
-		if p["ready"]: G.fields.harvest("field", i)
+		if p["ready"]: G.actions.perform("harvest", G.actions.farmer, {"a": "field", "i": i})
 		if float(p["weeds"]) >= 3.0: G.actions.perform("weed", G.actions.farmer, {"i": i})
 		if float(p["stones"]) >= 2.0: G.actions.perform("pick_stones", G.actions.farmer, {"i": i})
 		if p["crop"] == "":
@@ -452,11 +452,11 @@ func _turn() -> void:
 				if G.fields.plant_plan("field", pick)["plants"] < 1:          # no seed (or season) for the first choice: anything that can go in is better than an empty patch
 					for c in cs:
 						if G.fields.plant_plan("field", c)["plants"] >= 1: pick = c; break
-				if G.fields.plant_plan("field", pick)["plants"] >= 1: G.fields.plant("field", i, pick)
+				if G.fields.plant_plan("field", pick)["plants"] >= 1: G.actions.perform("plant", G.actions.farmer, {"a": "field", "i": i, "cid": pick})
 	for a in ["orchard", "gh"]:
 		for i in range(G.fields.area(a).size()):
 			var p = G.fields.area(a)[i]
-			if p["ready"]: G.fields.harvest(a, i)
+			if p["ready"]: G.actions.perform("harvest", G.actions.farmer, {"a": a, "i": i})
 			if p["crop"] == "":
 				var cs: Array = G.fields.crops_for(a).filter(func(c): return G.fields.sow_ok(a, c))
 				if cs.is_empty(): continue
@@ -467,7 +467,7 @@ func _turn() -> void:
 					for y in G.nodes[c].get("yields", {}):
 						if _deep_need(y, need_o) and G.inventory.count(y) < 3.0: pick = c
 				if G.fields.seed_have(pick) < 1.0 and not G.nodes[pick].has("seedItem"): want_seeds[pick] = maxi(int(want_seeds.get(pick, 0)), 1)
-				if G.fields.plant_plan(a, pick)["plants"] >= 1: G.fields.plant(a, i, pick)
+				if G.fields.plant_plan(a, pick)["plants"] >= 1: G.actions.perform("plant", G.actions.farmer, {"a": a, "i": i, "cid": pick})
 			elif a == "orchard" and i == G.fields.area(a).size() - 1:
 				_maybe_cut_tree(a)
 	# animals
@@ -477,8 +477,8 @@ func _turn() -> void:
 		var an = G.animals.animal(aid)
 		if int(an["count"]) < G.animals.animal_cap(aid) and G.S["coins"] > 2.0 * float(G.nodes[aid].get("price", {}).get("coins", 0)): G.animals.buy_animal(aid)
 		if int(an["count"]) > 0:
-			if G.animals.muck_factor(aid) < 1.0: G.animals.muck_out(aid)
-			if G.S["step"] >= int(an["ready"]): G.animals.collect_animal(aid)
+			if G.animals.muck_factor(aid) < 1.0: G.actions.perform("muck_out", G.actions.farmer, {"aid": aid})
+			if G.S["step"] >= int(an["ready"]): G.actions.perform("collect_animal", G.actions.farmer, {"aid": aid})
 	if int(G.S["lord"]["shares"]) != _last_shares and "--lord" in OS.get_cmdline_user_args():
 		_last_shares = int(G.S["lord"]["shares"])
 		var sold: float = float(G.S["stats"].get("sold_coins", 0.0))

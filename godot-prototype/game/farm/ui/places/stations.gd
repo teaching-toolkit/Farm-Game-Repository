@@ -165,7 +165,7 @@ func _nature_rows(v: VBoxContainer) -> void:
 		v.add_child(row)
 
 func do_cut_tree(a: String, i: int) -> void:
-	if G.fields.cut_tree(a, i): M.sheets.open_sheet("patch:%s:%d" % [a, i])
+	if G.actions.perform("cut_tree", G.actions.farmer, {"a": a, "i": i})["done"]: M.sheets.open_sheet("patch:%s:%d" % [a, i])
 
 func toggle_flex() -> void:
 	G.pace.toggle_flex()
