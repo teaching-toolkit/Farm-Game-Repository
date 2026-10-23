@@ -1,4 +1,4 @@
-# 01: R1: Straw, flour and hay get their own pictures
+# 01: R1: Straw, flour, hay and winter wheat get their own pictures
 
 **What to build:** Straw, flour and hay stop sharing the 🌾 emoji: each shows its own picture (or at least its own stand-in emoji). The straw picture is generated and waiting for the parent to pick it.
 
@@ -7,6 +7,7 @@
 **Status:** needs-parent
 
 - [ ] The parent has picked the straw picture (`items/straw.png`, sheet 45)
+- [ ] Hay and winter wheat have their own pictures too ([#23.23], from the parent's notes of 23 Oct)
 - [ ] Straw, flour and hay each have their own picture or stand-in emoji
 - [ ] Imported and checked in the store and on the map
 

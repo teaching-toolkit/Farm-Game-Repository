@@ -6,6 +6,7 @@
 
 **Status:** ready-for-agent
 
+- [ ] The parent looked for the flowering option on carrots and found none ([#23.16]): that is right, it is not built yet; the first visible sign is the "let it flower" choice on a two-year crop's patch
 - [ ] A short plan is written into this ticket first (goal, files, saves, what the bot must learn, how it is checked; session skill §3)
 - [ ] A planted two-year crop can be marked to go to seed, stays through one winter, and gives seed in spring; the patch is blocked meanwhile
 - [ ] It needs the *Saving seed* card to be read first

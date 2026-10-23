@@ -220,7 +220,7 @@ them up, each with a 💡 recommendation.
 
 ## 5. Pictures (R)
 
-- **R1: Straw, flour and hay get their own pictures** · `needs-parent` · [issues/pictures/01-r1-straw-flour-hay-pictures.md](issues/pictures/01-r1-straw-flour-hay-pictures.md)
+- **R1: Straw, flour, hay and winter wheat get their own pictures** · `needs-parent` · [issues/pictures/01-r1-straw-flour-hay-pictures.md](issues/pictures/01-r1-straw-flour-hay-pictures.md)
 - **R2: One seed-bag picture for crops whose seed is bought** · `needs-parent` · [issues/pictures/02-r2-seed-bag-picture.md](issues/pictures/02-r2-seed-bag-picture.md)
 - **R3. Rules for story pictures** ✅ [#S5], [#S6], (R1): the farmer is **never** in a painted picture. Pictures are seen through the
   farmer's eyes (a few panels may show **a hand reaching out from the camera**), or show the **silhouette of a farmer with a hat, from
@@ -506,6 +506,7 @@ Quiz question each; the Wren check and the poisoning exception).
 - **Z5: Pixie chest mini-game (an old idea for random rewards)** · `needs-parent` · [issues/later/03-z5-pixie-chest.md](issues/later/03-z5-pixie-chest.md)
 - **Z6: Still-open design questions from the old documents** · `needs-parent` · [issues/later/04-z6-open-design-questions.md](issues/later/04-z6-open-design-questions.md)
 - **Z7: Keep an eye on the public web build** · `needs-parent` · [issues/later/05-z7-public-web-build.md](issues/later/05-z7-public-web-build.md)
+- **The pets' "job" and "duty" words become "blessing"** · `ready-for-agent` · [issues/later/06-pets-job-words-become-blessing.md](issues/later/06-pets-job-words-become-blessing.md)
 
 ---
 
@@ -513,8 +514,93 @@ Quiz question each; the Wren check and the poisoning exception).
 
 Accepted by the parent on 22 Oct 2026 ("all of them look good"). Each is a feature folder in `issues/`; the first ticket is the grilling with the parent, which produces `spec.md` and the build tickets. The review recommends starting with **farm-actions**; **time-question** is the small warm-up; **condition-language** should follow soon because story timing issues C5 and C6 wait for it. Details: `ARCHITECTURE-REVIEW-2026-10-22.md` Part B.
 
-- **Grill and spec: farm actions, one module that prices, checks and pays** · `needs-parent` · [issues/farm-actions/01-grill-and-spec.md](issues/farm-actions/01-grill-and-spec.md)
+**farm-actions** (grilled and specified 23 Oct 2026: `issues/farm-actions/spec.md`; the grilling ticket 01 is `done`; words in `GLOSSARY.md`)
+- **Short golden runs to the end of chapter 2** · `ready-for-agent` · [issues/farm-actions/02-short-golden-runs.md](issues/farm-actions/02-short-golden-runs.md)
+- **The actions module, with one chore: fetch water** · `ready-for-agent` · blocked by farm-actions/02 · [issues/farm-actions/03-module-and-water.md](issues/farm-actions/03-module-and-water.md)
+- **Weed, pick stones and clear snow, including whole-field batches** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/04-weed-stones-snow.md](issues/farm-actions/04-weed-stones-snow.md)
+- **Plant, harvest and cut tree** · `ready-for-agent` · blocked by farm-actions/04 · [issues/farm-actions/05-plant-harvest-tree.md](issues/farm-actions/05-plant-harvest-tree.md)
+- **Animal chores: muck out and collect** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/06-animal-chores.md](issues/farm-actions/06-animal-chores.md)
+- **Party and visit** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/07-party-and-visit.md](issues/farm-actions/07-party-and-visit.md)
+- **Forest trips** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/08-forest-trips.md](issues/farm-actions/08-forest-trips.md)
+- **The village trip** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/09-village-trip.md](issues/farm-actions/09-village-trip.md)
+- **Recipes at stations** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/10-recipes-at-stations.md](issues/farm-actions/10-recipes-at-stations.md)
+- **One pay function: shop purchases** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/11-pay-function-shop.md](issues/farm-actions/11-pay-function-shop.md)
+- **Goal and building payments use the pay function** · `ready-for-agent` · blocked by farm-actions/11 · [issues/farm-actions/12-pay-function-goals.md](issues/farm-actions/12-pay-function-goals.md)
+- **Delete the old duplicated checks** · `ready-for-agent` · blocked by farm-actions/04, farm-actions/05, farm-actions/06, farm-actions/07, farm-actions/08, farm-actions/09, farm-actions/10, farm-actions/12 · [issues/farm-actions/13-contract-delete-duplicates.md](issues/farm-actions/13-contract-delete-duplicates.md)
+- **Wren stops asking for coins** · `needs-parent` · blocked by farm-actions/13 · [issues/farm-actions/14-wren-no-coins.md](issues/farm-actions/14-wren-no-coins.md)
+- **Decide: the unused seed-buying path in planting** · `needs-parent` · blocked by farm-actions/13 · [issues/farm-actions/15-decide-seed-buying-path.md](issues/farm-actions/15-decide-seed-buying-path.md)
+- **Decide: the orchard tree energy multiplier** · `needs-parent` · blocked by farm-actions/13 · [issues/farm-actions/16-decide-orchard-multiplier.md](issues/farm-actions/16-decide-orchard-multiplier.md)
 - **Grill and spec: the question that moves time** · `needs-parent` · [issues/time-question/01-grill-and-spec.md](issues/time-question/01-grill-and-spec.md)
 - **Grill and spec: one condition language** · `needs-parent` · [issues/condition-language/01-grill-and-spec.md](issues/condition-language/01-grill-and-spec.md)
 - **Grill and spec: what takes the screen next** · `needs-parent` · [issues/interruption-queue/01-grill-and-spec.md](issues/interruption-queue/01-grill-and-spec.md)
 - **Grill and spec: the farm's numbers behind their owners** · `needs-parent` · blocked by the whole `farm-actions` feature · [issues/farm-numbers/01-grill-and-spec.md](issues/farm-numbers/01-grill-and-spec.md)
+- **Grill and spec: pets do the farmer's chores (automated chores)** · `needs-parent` · blocked by `farm-actions/13` · [issues/pets-automation/01-grill-and-spec.md](issues/pets-automation/01-grill-and-spec.md)
+
+---
+
+## 19. The parent's play-test notes of 23 October 2026
+
+44 notes, kept word for word in `planning/2026-10-23-parent-notes-playtest.md` (the table at its end says which ticket took each one). New tickets are below, grouped by feature folder; four existing tickets got a checkbox each: **W8** (success sound), **U2** (the missing flowering option), **R1** (winter wheat picture), **I14** (story windows too late).
+
+**interface-feel**
+- **Tapping an item or a bar tells more about it** · `ready-for-agent` · [issues/interface-feel/01-info-on-tap-items-and-bars.md](issues/interface-feel/01-info-on-tap-items-and-bars.md)
+- **Tapping a greyed-out button says why it is grey and what it needs** · `ready-for-agent` · blocked by the whole `farm-actions` feature · [issues/interface-feel/02-grey-button-reasons.md](issues/interface-feel/02-grey-button-reasons.md)
+- **Remove the "how much money you get" hints from conversions, chopping and similar buttons** · `ready-for-agent` · [issues/interface-feel/03-remove-sale-value-hints.md](issues/interface-feel/03-remove-sale-value-hints.md)
+- **Icons next to items (hand axe, sticks and so on) are small versions of their pictures, not emojis** · `ready-for-agent` · [issues/interface-feel/04-item-icons-are-small-pictures.md](issues/interface-feel/04-item-icons-are-small-pictures.md)
+- **Bars stop showing "x 100" or "x 5"; they grow in rows and columns instead** · `ready-for-agent` · [issues/interface-feel/05-bars-grow-instead-of-multiply.md](issues/interface-feel/05-bars-grow-instead-of-multiply.md)
+- **Top bar: the next goal shows only its symbol and text, and the season row moves under the bars** · `ready-for-agent` · [issues/interface-feel/06-top-bar-layout.md](issues/interface-feel/06-top-bar-layout.md)
+- **Money display: a recoloured gold coin for bronze, gold stacked over bronze, diamonds above 1000 gold** · `ready-for-agent` · [issues/interface-feel/07-money-display.md](issues/interface-feel/07-money-display.md)
+- **The workshop shows no ghost symbols that give away what will come** · `ready-for-agent` · [issues/interface-feel/08-workshop-no-ghost-symbols.md](issues/interface-feel/08-workshop-no-ghost-symbols.md)
+- **Bug: the book box shows the "something to read" sign when there are no new cards** · `ready-for-agent` · [issues/interface-feel/09-book-box-reading-sign-bug.md](issues/interface-feel/09-book-box-reading-sign-bug.md)
+- **Rest: the farmer walks to the tent or house, disappears for a moment, and comes back** · `ready-for-agent` · [issues/interface-feel/10-rest-animation-walks-away.md](issues/interface-feel/10-rest-animation-walks-away.md)
+- **Bug: the testing (cheat) buttons are on by default; they must be off** · `ready-for-agent` · [issues/interface-feel/11-cheat-buttons-off-by-default.md](issues/interface-feel/11-cheat-buttons-off-by-default.md)
+- **Things overlap each other in the wrong way** · `needs-parent` · [issues/interface-feel/12-overlap-order-bug.md](issues/interface-feel/12-overlap-order-bug.md)
+
+**season-look**
+- **Autumn: real leaf pictures drift down and flip from side to side as they fall** · `ready-for-agent` · [issues/season-look/01-falling-leaves.md](issues/season-look/01-falling-leaves.md)
+- **Spring has far more flowers, so it looks different from summer** · `ready-for-agent` · [issues/season-look/02-spring-flowers.md](issues/season-look/02-spring-flowers.md)
+- **No butterflies, slugs or other creatures that would not be out in winter** · `ready-for-agent` · [issues/season-look/03-winter-wildlife-rules.md](issues/season-look/03-winter-wildlife-rules.md)
+- **Frost also sits on the top edge of the field patches and on the road** · `ready-for-agent` · [issues/season-look/04-frost-on-tiles-and-road.md](issues/season-look/04-frost-on-tiles-and-road.md)
+
+**story**
+- **Chapter 2: the farmer no longer wonders what caused the fire; he notices a clue and looks troubled** · `ready-for-agent` · [issues/story/10-fire-cause-reword.md](issues/story/10-fire-cause-reword.md)
+- **The grandchildren's frame between chapters is a full-screen scene with its own music** · `ready-for-agent` · [issues/story/11-chapter-frames-fullscreen.md](issues/story/11-chapter-frames-fullscreen.md)
+- **More random funny in-between messages, each with clear conditions** · `ready-for-agent` · [issues/story/12-funny-messages-with-conditions.md](issues/story/12-funny-messages-with-conditions.md)
+- **Promote the notifications that deserve it (a golden acorn and the like) to a text-and-picture box** · `needs-parent` · [issues/story/13-notifications-to-boxes.md](issues/story/13-notifications-to-boxes.md)
+- **Each change of season gets a text-and-picture box** · `ready-for-agent` · [issues/story/14-season-change-box.md](issues/story/14-season-change-box.md)
+- **Feeding the travelling merchant the first time gets a story box with a picture, right after the hand-over** · `ready-for-agent` · [issues/story/15-merchant-first-feed-story.md](issues/story/15-merchant-first-feed-story.md)
+
+**pictures**
+- **Buildings need intermediate stages; the carpenter shed needs several** · `needs-parent` · [issues/pictures/05-buildings-stages.md](issues/pictures/05-buildings-stages.md)
+- **Every merchant gets a character, a picture, and a close-up of the face for the market-square window** · `needs-parent` · [issues/pictures/06-merchant-characters.md](issues/pictures/06-merchant-characters.md)
+- **A better picture or symbol for things going stale** · `needs-parent` · [issues/pictures/07-stale-symbol.md](issues/pictures/07-stale-symbol.md)
+- **List every window and write the prompt for its picture** · `ready-for-agent` · [issues/pictures/08-window-pictures-list.md](issues/pictures/08-window-pictures-list.md)
+- **Generate, pick and import the window pictures** · `needs-parent` · blocked by `pictures/08` · [issues/pictures/09-window-pictures-generate.md](issues/pictures/09-window-pictures-generate.md)
+- **Every story text gets a picture: list the characters, places and objects each picture must show** · `ready-for-agent` · [issues/pictures/10-story-picture-list.md](issues/pictures/10-story-picture-list.md)
+- **Replace the seed market picture with a sign pointing towards the village** · `ready-for-agent` · [issues/pictures/11-village-sign-with-arrow.md](issues/pictures/11-village-sign-with-arrow.md)
+- **Season pictures: autumn leaves, spring flowers, and one picture per season-change box** · `needs-parent` · [issues/pictures/12-season-pictures.md](issues/pictures/12-season-pictures.md)
+
+**money-market**
+- **Going back to the farm also takes one time unit** · `ready-for-agent` · [issues/money-market/04-going-back-takes-a-question.md](issues/money-market/04-going-back-takes-a-question.md)
+- **Closing the market window in the square does not send the player back to the farm** · `ready-for-agent` · [issues/money-market/05-square-window-dismiss.md](issues/money-market/05-square-window-dismiss.md)
+- **Bug: the bag bar works in the village square, not only on the farm** · `ready-for-agent` · [issues/money-market/06-bag-bar-in-the-square.md](issues/money-market/06-bag-bar-in-the-square.md)
+- **The village square is its own screen: a mockup made from the assets the game already has** · `ready-for-agent` · [issues/money-market/07-square-own-screen-mockup.md](issues/money-market/07-square-own-screen-mockup.md)
+- **Store capacity depends on how bulky things are, like the bag, instead of 10 of everything** · `ready-for-agent` · [issues/money-market/08-store-capacity-by-bulk.md](issues/money-market/08-store-capacity-by-bulk.md)
+
+**nature**
+- **Small rocks and big rocks are different things** · `ready-for-agent` · [issues/nature/04-small-and-big-rocks.md](issues/nature/04-small-and-big-rocks.md)
+- **Digging for clay happens at the pond, not at the forest edge** · `ready-for-agent` · [issues/nature/05-clay-at-the-pond.md](issues/nature/05-clay-at-the-pond.md)
+
+**crops-and-items**
+- **What do rocks and weeds really do to a field? Decide if they should cost crops** · `needs-parent` · [issues/crops-and-items/02-rocks-and-weeds-effect.md](issues/crops-and-items/02-rocks-and-weeds-effect.md)
+- **Audit the recipes: ingredients must make sense (flatbread needs flour, not wheat)** · `ready-for-agent` · [issues/crops-and-items/03-recipe-audit.md](issues/crops-and-items/03-recipe-audit.md)
+- **Remove designer notes from text the player sees** · `ready-for-agent` · [issues/crops-and-items/04-player-text-designer-notes.md](issues/crops-and-items/04-player-text-designer-notes.md)
+
+**skills-quality**
+- **By default a beginner's first item is Lumpy, not Proper** · `needs-parent` · [issues/skills-quality/03-first-item-is-lumpy.md](issues/skills-quality/03-first-item-is-lumpy.md)
+
+**action-budget**
+- **Grill and spec: a limit on how much you can do before time must move** · `needs-parent` · blocked by `farm-actions/01` (the spec) · [issues/action-budget/01-grill-and-spec.md](issues/action-budget/01-grill-and-spec.md)
+
+**upgrades**
+- **Animal pen fences start run down; upgrades bring nicer fences** · `needs-parent` · [issues/upgrades/02-animal-pen-fences.md](issues/upgrades/02-animal-pen-fences.md)

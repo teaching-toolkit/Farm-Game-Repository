@@ -7,6 +7,7 @@
 **Status:** needs-parent
 
 - [ ] The parent has said yes or no to each data-only retime in `story/code-issues-story-timing.md`
+- [ ] Story windows in general no longer show up too late ([#23.9]): measured with the bot's longest silence per chapter and checked on the iPad
 - [ ] C1, C3, C4 and C9 are fixed
 - [ ] C5 and C6 are fixed through the condition language
 - [ ] C2, C7 and C8 are fixed (numbers or queue)

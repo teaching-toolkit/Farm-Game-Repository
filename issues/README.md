@@ -18,8 +18,9 @@ issues/
 
 - The tracker is **local files**. A ticket is **always its own file**, never a combined file.
 - Features so far: `waiting-on-parent` (what only the parent can do), `design-paper`, `pictures`, `crops-and-items`, `money-market`,
-  `skills-quality`, `wellbeing`, `nature`, `people`, `curriculum`, `upgrades`, `story`, `later`, and the five features from the
-  architecture review: `farm-actions`, `time-question`, `condition-language`, `interruption-queue`, `farm-numbers`.
+  `skills-quality`, `wellbeing`, `nature`, `people`, `curriculum`, `upgrades`, `story`, `later`, the play-test features
+  `interface-feel`, `season-look` and `action-budget`, and the five features from the architecture review: `farm-actions`,
+  `time-question`, `condition-language`, `interruption-queue`, `farm-numbers` (`farm-actions` is specified: `farm-actions/spec.md`), and `pets-automation` (from the farm-actions grilling).
 - **Numbering** is per folder, blockers first. A feature that starts with a `01-grill-and-spec.md` ticket keeps it as `01`; the
   build tickets that `/to-tickets` writes after the spec continue from `02`.
 - **A blocker is written** `folder/NN` (and the old id in brackets), for example `waiting-on-parent/02` (W2): the file

@@ -242,6 +242,10 @@ golden runs identical. `web-build/` still matches the code. **Phase 2 is finishe
 
 23 Oct 2026 (issue tracker, no game changes): the open tasks became tickets in `issues/` (rules: `issues/README.md`) and `TODO.md` is the index; `CLAUDE.md` and the session skill point to it. `web-build/` still does not match the code (W9, W2).
 
+23 Oct 2026 (play-test notes, no game changes): the parent's 44 notes are kept in `planning/2026-10-23-parent-notes-playtest.md` and are tickets in `issues/` (TODO §19).
+
+23 Oct 2026 (farm-actions grilled, no game changes): `issues/farm-actions/spec.md` and tickets 02–16 are ready; the glossary is `GLOSSARY.md` (read it before touching chores, costs or pets). Start with `farm-actions/02` (short golden runs). Next grilling candidates: `time-question`, then `condition-language`.
+
 ---
 
 ## 6. Open tasks → `TODO.md`

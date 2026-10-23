@@ -10,6 +10,8 @@
 - [ ] The licence question is answered: the CC-BY-SA Mudchute cow and sheep, or the CC0 ones
 - [ ] `python3 tools/import_sounds.py` and the Godot import have run
 - [ ] The parent has listened and the volumes in `data/sounds.json` are adjusted
+- [ ] The success sound is more jubilant (parent's note [#23.39]): pick or make a livelier one
+- [ ] A different music track for the chapter frames (`story/11`) if the parent wants one beyond a stand-in
 - [ ] Track titles of the two music tracks added to `sound-inbox/SOURCES.json` if known
 
 ---
