@@ -36,8 +36,8 @@ The grandchildren crowd round your bed: "Tell us about the farm that burned down
 
 ### Chapter 1: Ashes · G, W, A
 
-*Built 13 Oct 2026 (`../texts/ch1.md`). Adapted to the decided rules: 1.6 is the seller stopping on the track by your land (no campfire visit; the merchant first passes
-by on the road, ✅ 12 Oct); 1.3 comes after two Time Quiz questions; 1.4 and 1.5 fire when their jobs are done; 1.7 on the first tap of the notice board; 1.8 barks are six
+*Built 13 Oct 2026 (`../texts/ch1.md`). Adapted to the decided rules: 1.6 is the seller stopping on the track by your land (no campfire visit; the seed seller (she) first passes
+by on the road, ✅ 12 Oct; she is not the travelling merchant of the gate system, who is a he); 1.3 comes after two Time Quiz questions; 1.4 and 1.5 fire when their jobs are done; 1.7 on the first tap of the notice board; 1.8 barks are six
 small lines with a chance of showing; 1.10 comes one question after the bunny. Frame 0 and 1 are in the game.*
 
 | # | Kind | Trigger | Critical? | What happens |
@@ -59,13 +59,13 @@ small lines with a chance of showing; 1.10 comes one question after the bunny. F
 
 | # | Kind | Trigger | Critical? | What happens |
 |---|---|---|---|---|
-| 2.1 | Letter | chapter start | yes | Your mother: *Come home before the frost.* (A clock, and a reason to build fast.) |
+| 2.1 | Letter | chapter start | yes | Your mother: *Come home before the frost.* (A clock, and a reason to build fast.) She adds: *Your cousin asks after you.* (An early plant, said again in the chapter 3 letter.) |
 | 2.2 | Beat | `cottage_walls` | yes | Walls. You built them alone, and it shows: they are crooked. You are proud of them anyway. |
 | 2.3 | Visit | `d_stone_soup` | yes | **Young Greenstem** at the gate: "You're the Moonedge one. You used to carry a bucket bigger than you." He asks too many questions. |
 | 2.4 | Discovery | `ruins_lumber` | no | Too many stumps for such a small farm. Someone cut the forest back. |
 | 2.5 | Beat | `road_3` (gravel road) | yes | **Lark** walks up the new road as if he had always been on it. Sits on your fence while you work. "Probably fine." First meeting. |
 | 2.6 | Beat (turn) | `ruins_barn` | yes | The scorch began **low, in the hay corner**, not on the roof. It was not lightning. **T.** |
-| 2.7 | Moment | `ruins_compost` | no | A clean, dry compost pit. Berit's note: *Rest the field. Rest yourself.* |
+| 2.7 | Moment | `ruins_compost` | no | A clean, dry compost pit. The lid is scratched: *Feed the ground and it feeds you. — B.* (built `c2_compost`). The Rest note, *Rest the field. Rest yourself.*, is its own discovery, `c2_berit_note` (in the game JSON, `seen:face`). |
 | 2.8 | Moment | `cottage` | yes | A real roof, before the frost. You write home: *I'm staying a bit longer.* |
 | 2.9 | Beat | `pet_tortoise` | yes | **The tortoise comes home**, slowly, to the pond (💡 data: make `pond` a requirement). She sits on the spot where the spring rose. You sit with her and **wait** while it fills. **W.** Second line of the rhyme. |
 | 2.10 | Beat (out) | after `pet_tortoise` | yes | In the barn's new frame you find a lantern hook, blackened. *If not lightning, then what?* |
@@ -129,7 +129,7 @@ small lines with a chance of showing; 1.10 comes one question after the bunny. F
 | 6.4 | Moment | Fair deliveries | no | The tables fill; the village works with you. |
 | 6.5 | Letter | before the Fair | yes | *We're coming to the Fair.* All of them. The cousin too. |
 | 6.6 | Beat (crisis) | `d_fair_cloth` | yes | At the Fair your cousin says, in front of everyone, that you were in the barn that night. Silence. |
-| 6.7 | Beat (**the bend**) | right after 6.6 | yes | You stop. You sit down. You tell what happened: the lights, the lantern, the running. ❓ text or a tap (*Sit down* / *Tell*). The cousin: "I saw the lights too. Nobody believed me either." |
+| 6.7 | Beat (**the bend**) | right after 6.6 | yes | You stop. You sit down. You tell what happened: the lights, the lantern, the running. The cousin: "I saw the lights too. Nobody believed me either." |
 | 6.8 | Beat | `farmhouse_sunroom` | yes | Quill brings the Lord's answer: with his numbers in hand, the Lord sets the share at *a tenth, as in the old days*. 💡 |
 | 6.9 | Beat | `pet_alpaca` | yes | **The alpaca comes home.** Her alarm call woke everyone that night; nobody was hurt because of her. The rhyme is whole. **W.** |
 | 6.10 | Beat (last) | after `pet_alpaca` | yes | The Fair supper. You **sit down** at the long table (the chapter 1 situation, met differently). You set a place for Lark; he has to sit very still for a moment. Lark names the squirrel: "Nutmeg. Obviously." The goat eats the blue ribbon. **G.** |
@@ -164,7 +164,7 @@ small lines with a chance of showing; 1.10 comes one question after the bunny. F
 
 All five kept: the low point, the Lord's letter (his climb-down comes **through Quill's numbers**), the cousin's accusation (the cousin
 is **a girl**, default for now), the unsaid thing, the awe on the first night. Also decided: the chapter 6 bend triggers **automatically**,
-like every chapter end (no tap); **no epilogue chapter** (free play after chapter 6, outside the frame); the travelling merchant first
+like every chapter end (no tap); **no epilogue chapter** (free play after chapter 6, outside the frame); the seed seller (she; not the gate system's travelling merchant, who is a he) first
 **passes by on the road** (changes 1.6); the **Lord's share is a real payment from chapter 2 or 3** (changes 4.1 and 6.1); see
 `../../TODO.md` I5, I6. To be worked into this ladder in Round 6.
 

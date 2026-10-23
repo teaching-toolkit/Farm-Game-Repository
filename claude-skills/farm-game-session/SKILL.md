@@ -1,6 +1,6 @@
 ---
 name: farm-game-session
-description: Use at the start of, during and at the end of any work on the Farm Quiz Game (this project). Says what to read for which task, how to plan bigger steps, how to keep TODO.md and PROJECT-LOG.md current, and how to handle git.
+description: Use at the start of, during and at the end of any work on the Farm Quiz Game (this project). Says what to read for which task, how to plan bigger steps, how to work from the tickets in issues/, how to keep TODO.md and PROJECT-LOG.md current, and how to handle git.
 ---
 
 # Farm Quiz Game: working session
@@ -29,8 +29,11 @@ before any work starts.
 
 **Always, at the start:**
 - `00-READ-ME-FIRST.md`: the standing rule at the top, §1, §4.6 (the parent's rules) and §5 (where we left off).
-- `TODO.md`: §0 (the plan at a glance) and §1 (waiting on the parent). Then only the section of your task: find it with
-  `grep -n "<task id>" TODO.md` (for example `J3`, `M2`, `Q-L1`).
+- `TODO.md`: §0 (the plan at a glance) and §1 (waiting on the parent). Then only your task: find it with
+  `grep -rn "<task id>" TODO.md issues` (for example `M5`, `I14`). The line in `TODO.md` links the ticket; the ticket holds the old
+  task's text and what blocks it. Entries that are decided and built stay in `TODO.md` in full.
+- `issues/README.md`: the tracker rules (layout, the three statuses, the frontier, specs, what to do when a ticket is done).
+  Take work from the **frontier**: `ready-for-agent` tickets whose blockers are all `done`. Never build a `needs-parent` ticket.
 
 **Then, by task:**
 
@@ -47,16 +50,17 @@ For any long file: list its headings with `grep -n '^#'`, then read only the sec
 (the rules are in `game/farm/systems/*.gd` and the interface in `game/farm/ui/*.gd`, 50–400 lines each, see their READMEs; `main.gd` is the 400-line composition root), find functions with
 `grep -n '^func'` and read those. Never edit anything in `archive/`.
 
-Then say in one line which task(s) from `TODO.md` you are working on.
+Then say in one line which ticket(s) you are working on.
 
 ## 3. Plan bigger steps before building
 
 A step is "bigger" if it adds a mechanic, touches more than two scripts, or changes the save data or the structure of
 the data files in `data/farm/`. For those:
 
-1. Write a short plan into `TODO.md` under the task, at most about 15 lines: the goal, the files, what happens to existing
+1. Write a short plan into the ticket (`issues/…`), under its checkboxes, at most about 15 lines: the goal, the files, what happens to existing
    saves (old saves must keep loading: a new key goes into its system's `save_defaults()`, a changed layout needs a `SAVE_VERSION` step in `Game.save_steps()`), what the bot must learn to play it, and how it will be checked.
-2. Put open design questions into the decision queue (`TODO.md` §2) with a 💡 recommendation. If the parent is there, ask
+2. Make each open design question a `needs-parent` ticket (with a line in `TODO.md`) with a 💡 recommendation. For a new
+   feature use the flow in `issues/README.md` §4 (`/grill-with-docs`, `/to-spec`, `/to-tickets`, `/tdd`). If the parent is there, ask
    them (multiple choice if possible). If they are away, go ahead with the 💡 option only when it is easy to undo, and record
    it as an assumption in `PROJECT-LOG.md` §2.6. Anything that can't be undone waits for the parent.
 3. Build in small slices. Each slice passes the checks (`farm-game-check`) before the next one starts.
@@ -71,8 +75,9 @@ Small fixes (one script, no new rules) need no written plan.
 
 A chat can stop at any time, so update these when something happens, not at the end:
 
-- `TODO.md`: remove finished tasks (they go to the log), add new ones, reword changed ones. A task that is not written down
-  does not exist for the next chat.
+- `issues/` and `TODO.md`: tick the boxes of the ticket you work on; a finished ticket gets `Status: done`, its line leaves
+  `TODO.md` and a row goes into the log (the file stays); a new job becomes a new ticket with a line in `TODO.md`; reword changed
+  ones. A task that is not written down in both does not exist for the next chat. Details: `issues/README.md` §6.
 - `PROJECT-LOG.md`: one row in §1 for every change to the game, the data, the tools or a decision; new unconfirmed
   assumptions in §2.6.
 - The design document: describe the game as it now is, not the change. Mark *(planned)* and *(idea)*.

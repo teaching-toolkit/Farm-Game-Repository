@@ -1,11 +1,14 @@
 # To-do list — Farm Quiz Game
 
 The project's to-do list and plan. Moved out of `00-READ-ME-FIRST.md` §6 on **9 October 2026**; finished tasks live in
-`PROJECT-LOG.md`, not here. **Last updated: 13 October 2026** (phase 1 built and checked, version 0.9.0; phase 2, the restructuring, done (R0–R8); phase 3, the interface, built: version 0.10.0, waiting for the iPad (W9); phase 4, the foundations, built too: version 0.11.0; phase 5, the story engine and chapter 1, built: version 0.12.0; phase 6, the store and market, built: version 0.13.0; seven rounds of the
+`PROJECT-LOG.md`, not here. **Last updated: 23 October 2026** (phase 1 built and checked, version 0.9.0; phase 2, the restructuring, done (R0–R8); phase 3, the interface, built: version 0.10.0, waiting for the iPad (W9); phase 4, the foundations, built too: version 0.11.0; phase 5, the story engine and chapter 1, built: version 0.12.0; phase 6, the store and market, built: version 0.13.0; seven rounds of the
 parent's decisions, 10–12 Oct, worked in; §0 is the implementation plan).
 
-**Standing rule** (from `00-READ-ME-FIRST.md`): keep this file current *as you work*. Tick off or remove done tasks (and add a
-row to `PROJECT-LOG.md`), add new ones, reword changed ones. A task that is not written here does not exist for the next chat.
+**Issue tracker (since 23 October 2026).** Open work lives in **`issues/`**, one file per ticket with a status (`ready-for-agent`, `needs-parent`, `done`) and what blocks it. **This file is the index and the plan:** every open ticket has one line below, with its old id, its status and a link; entries that are decided and built stay here as the record. The rules for tickets, specs and statuses are in **`issues/README.md`** (read it before touching a ticket). Ids are unchanged: `grep -n "M5" TODO.md` finds the line, the line links the ticket.
+
+**Not converted, still in full below** (decided and built, or mixed; they hold the record other files point to): §0 with the phase plans and T2/T3, and the entries D2, D3, D4, J2, J3, J4, J5, J6, J12, J7, J8, J9, R3, U1, U3, U5, U4, M2, M3, M12, M13, M4, M6, M7, M8, M10, M11, L1, L2, L4, L5, L6, L7, L8, N1, N3, N4, N6, N8, O1, O2, O3, I5, I6, I7, I8, I9, I10, I13, S1, S2, S4, S5, Z2, Z4. If one of them still has a gap, make it a ticket.
+
+**Standing rule** (from `00-READ-ME-FIRST.md`): keep this file current *as you work*. A finished ticket gets `Status: done`, its line leaves this file, and a row goes into `PROJECT-LOG.md`; new work becomes a ticket with a line here; reword changed ones. A task that is not written down (here and in `issues/`) does not exist for the next chat.
 
 **Labels** (as in `story/`): ✅ decided by the parent · 💡 proposed by Claude · ❓ open question · ⚠️ a clash with an existing rule,
 decision or file · 🔗 depends on / ties in with.
@@ -121,37 +124,14 @@ question must match):
 
 ## 1. Waiting on the parent
 
-- **W1. Round 8 pictures:** ✅ imported 12 Oct 2026 (log). Left for the parent: look at them in the game; the second version of the
-  add-ons sheet is kept as `art-inbox/sheet30-addons-alt.png` (rename it to `sheet30-addons.png` and re-import to swap).
-- **W2. GitHub repos and the double-click scripts.** ⚠️ With the round 8 pictures `web-build/index.pck` is 89 MB; GitHub refuses
-  files over 100 MB, so the next big batch of pictures needs a plan (compressing the pictures for the web, or Git LFS). The private repo exists. Still to do: the public web repo
-  (`00-READ-ME-FIRST.md` §4.7), GitHub Pages, the first run of `Build web version.command` and `Publish web version.command` on the
-  Mac, the iPad Home Screen link. Cloud sessions can push to the private repo (a 403 on 7 Oct 2026 went away once the Claude GitHub
-  App had write access).
-- **W3. Play-test round 8 on the iPad** and collect the findings (pace, picture questions, stoking, loads, the bar explanations).
-  Several notes of 9–12 Oct came from this (J2–J5, J8–J10); keep adding.
-- **W4. Check what was built on 7 Oct 2026** (details in `PROJECT-LOG.md`):
-  - A1–A5 small fixes (planting water bar, overgrown patch note, why a perk came, no dark forest floor, the question share) and the
-    grown-up lock (password "farm", hint shows it for now; later a real password and a reminder as the hint).
-  - B1 the opening: one cleared patch, one wheat seed, the new *Clear the thistles* job (the opening changes again with D2).
-  - C1 the Rest start page, C2 a sum left on screen leaves no trace.
-  - D every window as a grid. Not converted: the woodpile's "+ Stick" chips, "Weed all / Pick stones" (Weed all / Pick stones moved with J2 ✅), the quest
-    book. The store becomes a compact grid anyway (M11).
-  - G the farmer's acts: watch them on the iPad and say which look wrong or too fast (each is a few numbers in `data/acts.json`).
-- **W5. German proofreading** (easiest in the game with the language on Deutsch, or in `data/i18n/*-de.json`). ✅ "ss", never "ß":
-  switched everywhere on 12 Oct 2026.
-- **W6. The curriculum** [#S1]: find out what the curriculum is and which broad frameworks of knowledge to prioritise; the parent
-  provides these frameworks and the critical knowledge ("I will let you know when I've made some progress", R1). Unblocks K2–K5.
-- **W7. Answer the open questions in §2.**
-- **W8. Sounds still missing** (system done 7 Oct; 83 files in `assets/sounds/`, 31 of 40 effects and all 6 music tracks): cow,
-  sheep, goat, pony, bees, cat, birds, `extras/party`, `extras/wind` (stand-ins play until then). The Mudchute cow and sheep in
-  `sound-inbox/unused/` are CC-BY-SA (share-alike): use only if the parent accepts that licence; the BigSoundBank/OpenGameArt CC0
-  cow and sheep are better. The two "for now" music tracks are credited by artist and site only (farm: Zane Little, OpenGameArt, CC0;
-  quiz/Rest: Kevin MacLeod, incompetech, CC BY 4.0); add the track titles to `sound-inbox/SOURCES.json` if known. **Nobody has
-  listened yet** (volumes in `data/sounds.json`). The cloud machine cannot reach kenney.nl, opengameart.org, bigsoundbank.com or
-  incompetech.com (7 Oct 2026): the parent downloads what `sound-inbox/README.md` lists, or allows those domains; then
-  `python3 tools/import_sounds.py` and `$G --headless --path . --import`, listen, adjust volumes.
-- **W9. Play-test versions 0.10.0 to 0.13.0 on the iPad** (publish with `Publish web version.command`; `web-build/` does not match the code yet). Look at: the new top bar and no bottom bar (J8, does anything feel cramped?); notifications (J5: swipe one away, are they too small or gone too fast?); the *The whole field* section in a patch's window and the 🔨 above the first field (J2); the Rest walk, is the pause before the window right (J3, `rest.go_rest`); the playback after the Time Quiz, are the pause, the rain and the flicking plants right, does a tap skip (J4, constants at the top of `playback.gd`); read aloud *by itself* (J6, does the iPad voice work?); the new money (bronze 🟤 and gold 🟡) and whether the prices in `planning/price-table.md` are right for Swiss shops (M1, D3); snow caps, muted winter and golden autumn on the real screen (N7, `kits/ui/season.gdshader`: how deep the snow caps reach, how strong the colours). The 0.11.0 additions: a Fancy / Proper / Lumpy line on recipe tiles and ripe patches and ⭐ in the store (Y1), the album's *Skills* list after the first rank-up (Y2), what the child makes of 🟤 and 🟡 and of prices like "1 🟡 50 🟤" (M2), and the purse that appears only with the first coin. Also: the cheat buttons are off by default now; switch them on in the grown-up settings. Also (0.12.0): the story: the bedside frame and the first box at the start (are 3 pages too long, does Skip show from the second viewing), the speech bubbles (do they get in the way, is "tap to dismiss" clear), the 📜 scroll, and whether the chapter 1 texts read well aloud (`story/texts/ch1.md`). Also (0.13.0): the market trip: the store's tiles and filters, packing and the bag with its thin bar, the signpost window and *Go to the village* (does the trip feel like an adventure or a chore? how often would you go? is 3 ⚡ right?), the village square (sell, orders, seeds, back home), the travelling merchant's cart at the gate (is it noticed?), the hearts for trust, the news line at each season, coins flying; the bot now needs about 27 % / 11 % more questions to chapter 5 (765 / 820 instead of 603 / 741) because of the walks and the store cap of 10 of each: capacities, trip energy and the store cap are in `rules/49-trip.json` and the store upgrades. Also (0.19.0): the pets' WHEN cards and second rule (only after the later pets have come: tap *always* to choose a WHEN, − and + for the number; is the board understandable? do you want it at all, S5?), free play after the alpaca (the six goals in the village, the two new perks), and a pet's effect line in the pet corner. Also (0.18.0) **and a task for the parent: read the new texts** (`story/texts/ch5.md`, the nine cards of *The Healer's Herbal*, the remedy descriptions): are the plant facts and the safety wording right for an 8-year-old? Then: chapter 5 on the iPad: clearing the still-room, the forest (picking, the look-alikes: is the clue text fair?), Wren's check and the unchecked risk (does the poisoning feel fair, not scary?), the tea set and the Healer's Chest, the badger. Also (0.17.0): the forest edge (do the pools run low too fast or never? does the advice come at the right moment? the bars and 🌲🪵🌱 after the card), winter (snow on the patches, clearing it, hardy crops only, the ❄️ tiles, a quarter of the growing speed: is winter too hard? do the kale and the greenhouse help?) and the text at the start of each season. Also (0.16.0): wellbeing from chapter 2: the face at the end of the energy bar and tapping the farmer (does the dashboard make sense to an 8-year-old? are the six rows too many? do the bars feel like the Sims?), the book *Body and mind* and its six cards (texts, questions), the drain (does it feel unfair? is the ⚡ −n line clear?), the party and the visits (do invitations come often enough?), the play helpers (whistle, sketchbook, fiddle) and the bench; the numbers are all in `rules/55-well.json`. Also (0.15.0): the pets' job boards (open the pet corner: from the second pet on, each earlier pet has two jobs; do the pets walking to the patches look right, do the jobs help too much or too little, is *the next pet comes home* the right moment for level 2?), the Lord's share from chapter 3 (Pieter at the gate with his lantern, the Road window with *Pay*, is it too hard or too soft? does blocked buying feel fair or like being stuck?), the shares and the cap in `rules/53-lord.json`. Also (0.14.0): the new start of chapter 1: one grain, the first stalk (does it feel like a story?), *Saving seed*, crafts to sell (basket, clay pot), the first trip for carrot seeds, the merchant at the gate and the axle by barter (900 🟤 + 2 baskets: is that too hard or too easy? does the child notice the merchant?), the hand cart (capacity 60), hay and winter wheat (the autumn hint, the 🍂 tile in winter), and how long chapter 1 takes now (bot: 160–240 questions). **Added 13 Oct 2026 (Phase 12):** the fireflies and the shooting star at night (only checked that they run, not how they look), the pets' WHEN cards and second rule on the job board, the six free-play side quests, and whether the four upgrades' second benefits (Iron Hoe, Stone Fire Ring, Whetstone, Master Tool Chest) are noticeable.
+- **W1: Look at the round 8 pictures in the game** · `needs-parent` · [issues/waiting-on-parent/01-w1-round-8-pictures.md](issues/waiting-on-parent/01-w1-round-8-pictures.md)
+- **W2: Get the web build published: GitHub repos, the double-click scripts, big pictures** · `needs-parent` · [issues/waiting-on-parent/02-w2-web-build-and-github.md](issues/waiting-on-parent/02-w2-web-build-and-github.md)
+- **W3: Play-test round 8 on the iPad and collect the findings** · `needs-parent` · [issues/waiting-on-parent/03-w3-play-test-round-8.md](issues/waiting-on-parent/03-w3-play-test-round-8.md)
+- **W4: Check what was built on 7 October 2026** · `needs-parent` · [issues/waiting-on-parent/04-w4-check-7-oct-build.md](issues/waiting-on-parent/04-w4-check-7-oct-build.md)
+- **W5: Proofread the German texts** · `needs-parent` · [issues/waiting-on-parent/05-w5-german-proofreading.md](issues/waiting-on-parent/05-w5-german-proofreading.md)
+- **W6: Tell the curriculum and the frameworks of knowledge** · `needs-parent` · [issues/waiting-on-parent/06-w6-curriculum-frameworks.md](issues/waiting-on-parent/06-w6-curriculum-frameworks.md)
+- **W8: Get the missing sounds and listen to all of them** · `needs-parent` · [issues/waiting-on-parent/07-w8-sounds.md](issues/waiting-on-parent/07-w8-sounds.md)
+- **W9: Play-test versions 0.10.0 to 0.19.0 on the iPad and read the new texts** · `needs-parent` · blocked by `waiting-on-parent/02` (W2) · [issues/waiting-on-parent/08-w9-play-test-0-10-to-0-19.md](issues/waiting-on-parent/08-w9-play-test-0-10-to-0-19.md)
 
 ---
 
@@ -164,11 +144,7 @@ them up, each with a 💡 recommendation.
 
 ## 3. Paper first (D) — before the big systems are built
 
-- **D1. The design document's *(planned)* chapters**, one per new system, describing the game as it will be (not the change):
-  the energy model and wellbeing (L), trips, packing and the store (M), quality and skills (Y), seeds (U), money, prices and the
-  Lord's share (M), sustainability and seasons (N), what is shown when (O). Including the rule changes decided in R1–R4 (§2.8 of the
-  log): the Time Quiz can give and drain energy; natural consequences instead of "nothing punishes"; quality stars are back; deliveries
-  ride in the bag; a right *first* try moves time.
+- **D1: Bring the design document up to date for the systems that are built** · `ready-for-agent` · [issues/design-paper/01-d1-design-doc-up-to-date.md](issues/design-paper/01-d1-design-doc-up-to-date.md)
 - **D2. The new chapter 1 as a sequence on paper** ✅ (R3): one stalk grows into one plant → a card about saving seed (the grain is
   the seed) → a few patches of wheat, porridge (clearing more patches before the village is fine) → crafts from what is at hand: fibre
   rope, reed or wicker baskets, the first clay → the farmer avoids the village until something forces a trip: **carrot seeds** (there
@@ -244,17 +220,13 @@ them up, each with a 💡 recommendation.
 
 ## 5. Pictures (R)
 
-- **R1. Straw needs its own picture** [#15]. Generated, waiting to be picked (`items/straw.png`, sheet 45; part of W1). Straw, wheat
-  and flour all use the emoji 🌾: give straw and flour their own stand-in emoji. Hay (U1) needs a picture too.
-- **R2. Seeds** [#16]. For grains, beans and peas the harvest *is* the seed (U2), so no seed picture is needed there. For the others
-  (carrot, onion, beet …): 💡 one "seed bag" picture with the crop's small picture on it, rather than one picture per crop.
+- **R1: Straw, flour and hay get their own pictures** · `needs-parent` · [issues/pictures/01-r1-straw-flour-hay-pictures.md](issues/pictures/01-r1-straw-flour-hay-pictures.md)
+- **R2: One seed-bag picture for crops whose seed is bought** · `needs-parent` · [issues/pictures/02-r2-seed-bag-picture.md](issues/pictures/02-r2-seed-bag-picture.md)
 - **R3. Rules for story pictures** ✅ [#S5], [#S6], (R1): the farmer is **never** in a painted picture. Pictures are seen through the
   farmer's eyes (a few panels may show **a hand reaching out from the camera**), or show the **silhouette of a farmer with a hat, from
   behind, backlit**. Avatars drawn by the game in the player's own look (village-square scenes, visits) are fine. Add to
   `story/story-delivery.md` and the prompt rules for `ART_LIST.csv`.
-- **R4. New map pictures:** the **signpost with a village symbol** by the road (M6); the **carrying device standing beside it**: backpack,
-  basket, later cart, each in a few fill levels (filled with generic sacks, so one set works for any load); the travelling merchant's
-  **cart** in fill levels; **trees, stumps and saplings** at the forest edge (N3); **bare trees** for winter (N7).
+- **R4: New map pictures: signpost, carrying devices, merchant cart, trees, bare trees** · `needs-parent` · [issues/pictures/03-r4-new-map-pictures.md](issues/pictures/03-r4-new-map-pictures.md)
 - Art for the 67 card pages, gear and pests: see Z6.
 
 ---
@@ -273,15 +245,7 @@ them up, each with a 💡 recommendation.
   | Mulch | no (its seeds bring weeds) | yes |
 
   Straw is unsellable today (`noSell`); ❓ can hay be sold? (💡 yes, to the village's animal keepers.)
-- **U2. Seeds from your own harvest** ✅ (R2, R3, R4):
-  - The harvested **grain is the seed** (wheat, oats, beans, peas …): one item you can plant, mill or cook. No conversion step. Medieval
-    fields gave about 3–5 grains back per grain sown, so about 5 is honest (an ear has 30–50 grains).
-  - **Every crop can make its own seed.** Carrots, onions, beets and other biennials only flower in their second year: a plant left to
-    seed must **stay in the ground through one winter**, then gives a lot of seed in spring. Meanwhile the patch grows nothing else.
-  - Each way of making seed is **learned from a knowledge card** first (K4).
-  - **Seeds of every unlocked crop can always be bought**; buying is mostly for starting a new crop.
-  - The **Seed Library** (chapter 5) keeps only its heirloom role. Data: seeds are a separate count today (`S["seeds"]`); grains become
-    plantable items; the others get seed items.
+- **U2: Seed saving for carrots, onions and beets (plants that flower in their second year)** · `ready-for-agent` · [issues/crops-and-items/01-u2-seed-saving-two-year-plants.md](issues/crops-and-items/01-u2-seed-saving-two-year-plants.md)
 - **U3. Quality on items** (Y1): crops, dishes, crafts and medicine exist in three qualities; raw materials (sticks, stones, clay …)
   don't. The store shows them on one tile (M11).
 - **U5. Winter crops** ✅ (R5, R6): **winter wheat**, a new crop, sown in autumn or winter, slow through the winter (a quarter speed),
@@ -300,15 +264,7 @@ them up, each with a 💡 recommendation.
 
 ### Money and prices
 
-- **M1. The economy, rebuilt on realistic prices** [#6] ✅ (R1, R2). Today pizza costs 166 coins because the pricing rule
-  (`meta.pricing`) multiplies the mark-up again at every stage (porridge 4, omelette 16, honey cake 49, apple pie 72, pizza 166,
-  cheese board 212). New: prices from D3 (Swiss prices for familiar goods, old-world ratios for the rest), then adjusted so the game
-  works; the formula's mark-up for dishes made from dishes made smaller, or added instead of multiplied. Include the explorer's
-  value-check notes for `rope_straw`, `compost`, `steel` and `jam` (was "Later 4"). 💡 The rule from Y2: for a made thing, the market's
-  price lies between what it costs a beginner to make (inputs + energy + time) and what it costs a master, so buying beats making for a
-  beginner and making pays for a master. Re-run the explorer and the bot; re-check dynamic difficulty (`meta.flex`).
-- **M1/M2/D3 plan (13 Oct 2026, phase 4.5):** **1 coin today = 15 bronze** (egg 4 → 60, carrot 2 → 30, porridge 4 → 60: the same ratios, so the pace holds; a few familiar goods are set to the real Swiss price, D3). `tools/rescale_prices.py` multiplies every coin number in the data once (items' `value`, `cost.coins` incl. steps, `price.coins`, `seedCost`, merchants' `sells` and `barter` coins, start coins, the luck coin, the job reward, `meta.flex` pace and `minWorth`), guarded by `meta.currency.rescaled`; the table before/after is `planning/price-table.md`. Saves: `SAVE_VERSION` 4 turns old coins into bronze (×15). Code: `G.money(bronze)` writes `35 🟤` or `2 🟡 35 🟤` (gold from 100 up; the purse shows both once the child has had 100); coin costs in the cost rows are cubes of a gold (or of 10 bronze) with the sum as text; the 18 places that wrote 🪙 amounts use it; `meta.pricing` stops multiplying the mark-up for dishes made from dishes (tools/econ check only). The bot's coin thresholds scale with it. Checks: golden runs must reach chapter 5 in about the same number of steps as before the rescale (a pure rescale changes no ratios); smoke test; a new money test; the data checker warns when a merchant sells below 1.3 × an item's value. Not done here: the explorer's own simulation (T3).
-- **M1/M2/D3 built 13 Oct 2026 (phase 4.5):** `tools/rescale_prices.py` ran once (guard: `meta.currency.rescaled` in `rules/40-economy.json`): every coin amount ×15 (items' value, 120 cost amounts, 18 seed prices, 11 merchant prices, the lost coin, the job reward, `meta.flex.basePace`/`minWorth`, start coins), 22 familiar goods set to Swiss prices (egg 65, carrot 30, bread 200, honey portion 150, pizza 1500, cheese board 2500 …): the table is `planning/price-table.md` (D3 ✅). `G.money / money_up / purse_text`, `meta.currency` (symbols 🟤 🟡, gold from 100), coin costs as cubes of 10 bronze or a gold with the sum in words (`UI.cost_row(…, money)`, `CubeBar.unit_min`), `SAVE_VERSION` 4 (`upgrade_save_v3`: coins ×15), the luck coin and the job reward read from the data, the bot's coin thresholds ×15, a data check (merchants sell above 1.3 × worth, whole-bronze values). `tests/money_test.tscn` (17 checks). Pace (4 seeds, steps to chapter 5): 603 / 741 / 612 / 684 = 660 on average, against 640 / 620 / 1076 / 598 = 733 before, and about 700–2200 bronze left over at the end (before ≈ 50 coins): money is no longer the bottleneck at the planned pace. Not done: the explorer's own simulation (T3), the *novice/master* price rule (a made thing between what a beginner and a master pay to make it; buying beats making for a beginner), prices that change by season (M12), **verifying the Swiss prices** (my best knowledge: W9 asks the parent to look at `planning/price-table.md`).
+- **M1: Prices follow what a beginner and a master pay to make a thing** · `ready-for-agent` · [issues/money-market/01-m1-novice-master-price-rule.md](issues/money-market/01-m1-novice-master-price-rule.md)
 - **M2. Bronze and gold coins** ✅ (R1): **100 bronze = 1 gold**, like Rappen and Franken (a real-world skill). The game starts in bronze
   only; gold appears once numbers get big; from then on both are shown (2 🟡 35 🟤). Whole numbers on screen stay. Needs: the top bar,
   prices on tiles, the rounding rule (§5.8: stocks down, costs up) for two coins; the +50 bronze cheat (J9).
@@ -327,22 +283,14 @@ them up, each with a 💡 recommendation.
   animals), each by its level; not the home, storage, pens or the pet corner. **A person from the village comes to the gate at the end of
   each season** to collect (✅ R7: **Pieter the night watchman**). While unpaid, anything bought with coins is blocked; selling, making, farming, trips and
   barter go on. Never more than about a quarter of a typical season's sales at the planned pace. 🔗 N (the pressure to over-use the land).
-- **M14. What coins are spent on, again and again** ✅ (R4): books, animals, materials the farm can't make (iron ore, salt, glass,
-  sand), parts (axle, wheels, nails), the coin part of buildings, first seeds of a new crop, the Lord's share (M13), and **made things
-  bought instead of made** (a beginner buys a hammer; a master smith makes and sells them; Y2). 💡 Small services too: borrowing a donkey
-  for a trip, a helper, repairs (R1 mentions the donkey as a favour from someone you helped).
+- **M14: Coins also buy small services (a borrowed donkey, a helper, repairs)** · `needs-parent` · [issues/money-market/03-m14-small-services.md](issues/money-market/03-m14-small-services.md)
 
 ### The market trip
 
 - **M4. Every thing gets a weight (bulk)** [#1]: how hard it is to carry. Works hidden from the start (D4). 💡 A few classes (feather,
   light, normal, bulky, heavy) rather than exact numbers; straw is light but bulky; logs, stones and iron ore are heavy. Seed items too.
   **Built 13 Oct 2026 (phase 4.2):** `data/farm/rules/45-weight.json` (classes in load units: feather 0.1 · light 0.5 · normal 1 · bulky 2 · heavy 4; a class per category and per-item overrides; seeds are feathers); `G.inventory.weight_class/weight_of/load_of/seed_weight/total_load`; the data checker requires a class for every item. Nothing is shown or limited yet: the carrying limit and the bag come with the first market trip (M5, M11).
-- **M5. Carrying and the trip's energy** [#1], [#2]: how much the farmer can carry depends on the carrying device (backpack → basket →
-  cart; the existing carrying gear for gathering can count too), and on **strength** (L2). The trip's energy is a farmer number too: a
-  flat cost that gets cheaper with a better road, a better cart, boots, strength, or a borrowed donkey (a favour). Later: the wheelbarrow,
-  the hand cart, the **pony** (job card "carry surplus to market and sell it", S2).
-  💡 The room counts **each way separately** (a full load there, a full load back), the same size both ways (proposed in R1; the
-  answer reshaped the trip and didn't say; confirm when D1 is written).
+- **M5: Carrying grows with strength; boots and a borrowed donkey make trips cheaper** · `ready-for-agent` · [issues/money-market/02-m5-carrying-strength-boots.md](issues/money-market/02-m5-carrying-strength-boots.md)
 - **M6. The village signpost and the trip** ✅ (R1–R4) [#1]. No merchant at the farm at the start, and no market needed at first (D2).
   A **signpost** by the road at the top right, pointing to the village, with a village symbol. Beside it stands the current carrying
   device (R4), filling up as you pack. The trip:
@@ -367,8 +315,7 @@ them up, each with a 💡 recommendation.
   on offer** and **the price**. Granny Maud and young Greenstem are kind from the start. Favour rewards come as **surprises**, not promised on
   the button. The existing gates stay: dishes and goods delivered = trust; the road = who can bring goods to your gate; cards = what you
   can use.
-- **M9. The market square picture** [#1]: one painted village square, used for trips and for the delivery scenes
-  (`story/story-delivery.md` §7); a first look at it can be shown before the first trip.
+- **M9: One painted village square for trips and delivery scenes** · `needs-parent` · [issues/pictures/04-m9-village-square-picture.md](issues/pictures/04-m9-village-square-picture.md)
 - **M10. Notice board and Import Broker** ✅ 💡 (13 Oct 2026): the seven small reward nodes with the slot `board` (`lucky_horseshoe`, `brass_bell`, `wind_chime`, `bird_feeder`, `lavender_bunch`, `sq_stray_kitten`, `barn_cat`) stand at the **field** place, as they did by default; now written down in `places.json` (`nodeSpots.slots.board`), so the data checker no longer warns. The broker came with the pony (chapter 4) and the paved road and trades in the village square. Move the seven to a notice board spot if the parent wants one.
 - **M11. The store and packing** ✅ (R2–R4):
   - **The store** is a compact grid of small tiles: picture, a **short text in a smaller font**, count, a stale badge, small dots for the
@@ -386,42 +333,8 @@ them up, each with a 💡 recommendation.
 
 ## 8. Skills and quality (Y)
 
-- **Y1 plan (13 Oct 2026, phase 4.3):** *Grade* (not "quality": a patch already has a `quality` that scales its yield) 0 Lumpy · 1 Proper · 2 Fancy; German Naja / Tiptop / Picobello!, shown as ⭐ ⭐⭐ ⭐⭐⭐. Only crops, ingredients, dishes, crafts and textiles have a grade (`quality.categories`); raw materials, animal products, seeds don't. Inventory batches become `[season, qty, grade]` for graded items; `SAVE_VERSION` 2 gives every old batch of such an item grade Proper. A new system `game/farm/systems/quality.gd` (data `data/farm/rules/47-quality.json`): an expected grade *E* (Proper = 1.0) from **crops:** soil (rested +0.25, tired −0.3), weeds over 2 (−0.1 each, to −0.4), stones, unfinished clearing, field upgrades (a table by node id); **recipes:** the station in use (a table by station id), the grades of the inputs it will use (lowest first, ×0.6 of their distance from Proper), and later the skill rank (4.4). The result is floor(E) plus a coin flip on the fraction, then 7 % one level up and 7 % one down (so mean price stays about 1 at E = 1). Selling pays 60 % / 100 % / 150 %, best grade first. The recipe tile shows what to expect (⭐⭐ Proper, maybe ⭐⭐⭐). Not yet: "at least Proper" for deliveries (needs `inventory.count_min`, comes with the badger's medicine). Bot: unchanged (it sells through `G.trade.sell`). The golden runs change on purpose (one more random number per harvest and batch): re-recorded. New test `tests/quality_test.tscn`.
-- **Y1. Quality** ✅ (R2, R3, R5): three levels, **Lumpy / Proper / Fancy**; German **Naja / Tiptop / Picobello!**. Mostly predictable from the tools, the
-  ingredients' quality and practice (Y2), with a small chance of one level up or down; the recipe tile shows what to expect before you
-  make it; every skill rank raises the chances a bit (Y2). Crops (from soil, weeds, patch level), dishes, crafts and medicine have it; raw materials don't. Lumpy sells for about 60 %,
-  Fancy for about 150 %. Some key deliveries ask for at least Proper; the badger's "really good medicine" (`story/game-design-round4.md`
-  §C) is simply **Fancy**. ⚠️ Reverses the old decision "Quality stars: no" (log §2.4). Upgrade idea 12 in
-  `progression/upgrade-benefits-ideas.md` becomes real.
-  **Built 13 Oct 2026 (phase 4.3):** as in the plan above: `game/farm/systems/quality.gd`, `data/farm/rules/47-quality.json`; inventory batches `[season, qty, grade]` (`add_item(k, q, quiet, grade)`, `grades`, `best_first`, `take_best`, `peek_grades`, `count_min`); `SAVE_VERSION` 2 (`upgrade_save_v1`); harvests, batches and selling by grade; *Expect: ⭐⭐ Proper* on recipe tiles and ripe patches, the grades in the store tiles; German Naja / Tiptop / Picobello!. The station card's old practice stars (⭐⭐) now read *practice 2* until Y2 replaces them with ranks. `tests/quality_test.tscn` (31 checks, in `check_all.sh`); golden runs re-recorded on purpose (the bot reaches chapter 5 in 729 / 647 steps instead of 741 / 639). Not yet: *at least Proper* for deliveries.
-- **Y2. Skills and mastery** ✅ (R4, R5). **Built 13 Oct 2026 (phase 4.4):** `game/farm/systems/skills.gd` + `data/farm/rules/48-skills.json` (families, ranks, gates, effects, which station trains which family); save keys `skills` (batches per family) and `skill_rank` (announced ranks), `SAVE_VERSION` 3 turns the old station practice into batches; recipes cost fewer inputs / less energy / less time by rank, grades get the bonus, planting, harvesting and collecting count; the album lists the skills from the first rank-up (`reveal` element `skills`); the old practice stars are gone. `tests/skills_test.tscn` (31 checks). Pace: the bot now reaches chapter 5 in 640 / 620 steps (729 / 647 before, 741 / 639 at the start of phase 4): ranks make things cheaper, to be re-balanced with the prices (4.5). Not yet: construction jobs and building costs (woodwork), the healing family's recipes, the "buy what you do not master" prices. The parent: honing a skill (and better tools and buildings) lowers energy and raises
-  carrying, as decided, but some learning also means **less waste of inputs** (fewer reeds for the same basket), and less time and
-  energy. Becoming good at everything is possible in theory, but it should pay to **specialise**, master some areas first and **buy the
-  rest** (making steel from bought iron ore is possible, but needs much knowledge, training and upgraded tools, so it only pays on the
-  metal path). Practice is **tracked even when not visible**, "in a way that doesn't get out of hand", usable without losing detail.
-  - **Eight families** ✅: planting and harvesting · animal tending · cooking and baking · fibre and weaving · woodwork and construction
-    · pottery and glass · smithing · healing and preserving. Every batch (or job) counts for its family, so similar work trains it too.
-  - **Five ranks** (💡, accepted by silence in R5): Beginner → Handy → Skilled → Expert → Master. A rank needs a number of batches (e.g.
-    10 / 30 / 80 / 200) and, from Skilled on, a gate the game already has: a card (Skilled), a tool tier (Expert), a station or building
-    (Master), so grinding cheap recipes can't make a master early.
-  - **What every rank brings** ✅ (R5):
-    - **fewer inputs at every rank**, with diminishing returns, and **more for construction and crafting** than for cooking or healing;
-    - **a bit better quality chances at every rank**, Master included;
-    - plus Handy: less energy; Master: faster.
-    - Field and animal work gain **less** from training (buildings, tools and books already cover much), mostly through **fewer
-      beginner's mistakes** (dropped eggs, a seedling pulled with the weeds) and better quality.
-  - **How savings show:** amounts stay exact underneath (the game already works that way); a saving that hasn't reached a whole piece yet
-    shows as the faint grey cubes the cost bars already use for upgrade savings, so no decimals appear.
-  - **Every saving says why** ✅ (R6): when training, an upgrade or new knowledge reduces the inputs, time or energy, a line explains it in
-    the world's terms ("You drop the eggs less often now", "Your hands know baskets: 5 reeds instead of 6").
-  - **No beginner's mishaps when making things** ✅ (R6): there, a beginner's "mistake" is a Lumpy result; materials are not lost.
-  - **Shown when it first matters:** the first rank-up comes with a small celebration ("Your hands know baskets now"); then the rank
-    shows on recipe tiles and a skills page appears (in the farmer's dashboard or the album).
-  - **No fading, no hard limit** on how many families reach Master; time and energy limit it naturally.
-  - **The price rule** (M1): a made thing's market price lies between a beginner's cost to make it and a master's, so buying pays for a
-    beginner and making pays for a master.
-  - **Replaces the per-station practice stars** that exist today (`meta.practice`: −5 % energy per star at 10/40/120 uses).
-  - First numbers go into D1 and are tuned in the explorer.
+- **Y1: Key deliveries ask for at least Proper (and the badger's medicine for Fancy)** · `ready-for-agent` · [issues/skills-quality/01-y1-deliveries-need-proper.md](issues/skills-quality/01-y1-deliveries-need-proper.md)
+- **Y2: Skill ranks reach construction jobs and building costs** · `ready-for-agent` · [issues/skills-quality/02-y2-skills-reach-construction.md](issues/skills-quality/02-y2-skills-reach-construction.md)
 
 ---
 
@@ -440,9 +353,7 @@ with the farm). ✅ Natural consequences instead of "nothing punishes" (R1; L7).
   overall mood. **Play** gives reasons to build or buy a musical instrument, something for making art, to throw a party at the farm now
   and then, or to say yes to an invitation to visit another farm (costs time and energy, gives nothing back at once). ✅ A visit works
   like a market trip: a scene that costs a question and energy.
-- **L3. Opened by reading** [#2]: at first the player sees none of the parameters and has no idea why, for example, helping someone makes
-  the farmer feel better. Books and their quizzes open the **dashboard** and, step by step, more numbers and more ways to improve them
-  (meditation, endurance training …). 🔗 K4.
+- **L3: More ways to improve the six parameters: meditation, endurance training, the rest and calm levers** · `needs-parent` · [issues/wellbeing/01-l3-more-levers-meditation-training.md](issues/wellbeing/01-l3-more-levers-meditation-training.md)
 - **L4. Where it opens** ✅ (R1, R4): tapping **the farmer**, and an icon in the top bar (fitted in when it appears, J8).
 - **L5. The drain** ✅ (R2, R3): starts in **chapter 2**, together with the face; grows mostly with **how much runs on the farm and how
   much you carry** (other candidates kept open: buildings, animals, patches, chapter); its **maximum is about 1.5 right sums' worth per
@@ -465,25 +376,18 @@ with the farm). ✅ Natural consequences instead of "nothing punishes" (R1; L7).
 - **N1. The aim** ✅: the game and the story address farming's impact on the environment. The slow reveal of what made the land dry
   stays (`story/world/lease-and-collapse.md`); on top, numbers about sustainability, **frozen until a note in the grandmother's book in
   chapter 2–3** (D4).
-- **N2. Which resources** ✅ (R1): the forest edge (sticks, stones), **water**, **clay**; later forest herbs ("take only a third") and the
-  woodlot (hazel coppicing). Metal and big stones come from the market, so sustainability doesn't apply there.
+- **N2: Water becomes a resource that can run low, and forest herbs regrow slowly** · `ready-for-agent` · [issues/nature/01-n2-water-pool-and-herbs.md](issues/nature/01-n2-water-pool-and-herbs.md)
 - **N3. Trees, stumps, saplings** ✅ (R1, R2): felling trees at the forest edge is the early source of logs. Trees become stumps, stumps
   saplings, saplings trees again over a number of questions, fairly quickly; cut too many in a short time and the corner shows mostly
   stumps, almost no full trees and too few saplings, and the wood yield drops. Needs the pictures (R4).
 - **N4. Stones and clay** ✅ (R2): loose stones at the forest edge slowly run out and don't come back; frost stones in the fields stay;
   big amounts come from the quarry merchant. The clay pit refills slowly.
-- **N5. Advice, then consequences** ✅: over-use gets a recommendation first (the book, a Helper's look); ignoring it lowers yields to a
-  **floor that always covers the basics** (the campfire is never impossible), and a Helper **pauses one job and gives you a look** until
-  the balance is back. Helpers never leave. 🔗 L7, M13 (the Lord's share pushes towards over-use, as it did for the family).
+- **N5: A Helper pauses one job when over-use is ignored** · `ready-for-agent` · [issues/nature/02-n5-helper-pauses-a-job.md](issues/nature/02-n5-helper-pauses-a-job.md)
 - **N6. Winter** ✅ (R4): **snow falls like rain and then stays**; patches must be **cleared of snow** before planting (a whole-field
   action, J2); fewer crops in winter ✅ (R5): outdoors only a few hardy crops can be sown (✅ winter wheat, onions, beans as broad beans,
   winter kale; U5); every other crop's tile shows ❄️ "too cold to sow", with "try the greenhouse" only once a greenhouse exists; crops already in the ground grow at **a
   quarter** of their speed. The greenhouse and the cloches get a real job. **Winter wheat** becomes a new crop (U5).
-- **N7. Seasons you can see** ✅ (R4): trees and grass look visibly different each season; winter is not just snow but **muted colours**;
-  a cheap way to put **snow on every roof** without a new picture for each building. ✅ (R5) **One shader over all map pictures**:
-  snow caps on every top edge (roofs, trees, fences), muted colours in winter, green turned golden in autumn; new pictures only where a
-  shader can't fake it (bare deciduous trees in winter, R4).
-  **Built 13 Oct 2026 (0.10.0):** `kits/ui/season.gdshader` (generic: `winter`, `autumn`, `snow`, `snow_depth` as a part of the picture's height; snow where the picture is see-through just above, muted and cooler colours, greens turn golden by hue) and `game/farm/map/season.gd` (`FarmSeasonLook`: two shared materials; `apply_tree` puts them on every picture of the map except words, panels, buttons and the farmer; `ground.set_season` sets the season). Soil and plants (`meta "flat"`) get the muted winter but no caps and no golden shift. Not yet: smooth change from one season to the next (it jumps), the ground itself stays as it was (snow on the ground comes with N6), bare trees (needs pictures), the farmer and animals are unchanged. Check the strength on the iPad (W9).
+- **N7: The season look changes smoothly instead of jumping** · `ready-for-agent` · [issues/nature/03-n7-seasons-change-smoothly.md](issues/nature/03-n7-seasons-change-smoothly.md)
 - **N8. A text at the start of each season** ✅ (R4): what changes now (growth, weeds, pests, rain, what can be sown), together with the
   market news (M12).
 
@@ -506,12 +410,9 @@ Things that don't exist yet (the forest screen before chapter 5) aren't visible 
 
 ## 12. People on the farm (P)
 
-- **P1. Other characters as avatars** [#11]: the travelling merchant first (M7: walks or drives in, his cart, coins fly to him); the
-  story's **Visits** (Greenstem, Granny Maud, the miller, Wren, Master Quill, Lark, Captain Mei; `story/story-delivery.md` §7). Same
-  system as the farmer (`kits/avatar/avatar.gd`, `data/avatar.json`, `data/acts.json`). No words on the map: they are known by their look.
-- **P2. "Make your farmer" screen** at the start (the look is already data, `data/avatar.json`; kept per player). Needed for the
-  gender-open farmer. (Was "Later 2".)
-- **P3. Gear visible on the farmer** (fits the acts' props; upgrade idea 15). (Was "Later 2".)
+- **P1: Characters walk in as figures: the travelling merchant and the story's visitors** · `ready-for-agent` · [issues/people/01-p1-characters-as-figures.md](issues/people/01-p1-characters-as-figures.md)
+- **P2: "Make your farmer" screen at the start** · `needs-parent` · [issues/people/02-p2-make-your-farmer.md](issues/people/02-p2-make-your-farmer.md)
+- **P3: Gear is visible on the farmer** · `needs-parent` · [issues/people/03-p3-gear-visible-on-farmer.md](issues/people/03-p3-gear-visible-on-farmer.md)
 
 ---
 
@@ -520,37 +421,23 @@ Things that don't exist yet (the forest screen before chapter 5) aren't visible 
 A **secondary** goal ✅: never at the cost of a fun, not overwhelming, still challenging game and a story that makes you care.
 ✅ (R1) No in-world framing is needed for modern knowledge: the Time Quiz questions can be shown without any context.
 
-- **K1. The frameworks** ✅ come from the parent (W6). The parent's examples: what the world is made of (molecules, crystalline structures,
-  metals); nested scales (atoms → electrons, protons, neutrons; planet → solar system → galaxy → galaxy cluster → universe); history of
-  our world in broad strokes; fundamental facts about the body. Ways for an eight-year-old to understand chemistry, physics and any
-  framework that makes learning easier.
-- **K2. Map hooks in the existing 67 cards and 201 card questions** (can start before K1): photosynthesis (the parent's example; check
-  whether it is in already); compost and soil life; bread rising (yeast is alive); smelting and steel (metals, melting); quartz and salt
-  (crystals); glass from sand; dyes and colour mixing (light); rain and evaporation; the moonstones "fallen from the sky" (meteorites,
-  the solar system); the first night under the stars; the medicine chapter (the body); the wellbeing books.
-- **K3. Augment the cards:** add a question to a card or add to a card. New ids through `tools/quiz_ids.py`; never change or reuse an id;
-  German through `tools/i18n.py`.
-- **K4. New books and cards:** body and mind (opens the wellbeing dashboard, L3); land and water (sustainability, N); *The Healer's Herbal*
-  (chapter 5); **saving seed** (grain is seed; letting biennials flower through a winter; U2); 💡 crafts books for the skill families (Y2).
-- **K5. The external pool:** what can't be fitted into cards goes into Time Quiz packs (one per framework or school topic). The more lives
-  in the game, the stronger the motivation, because the relevance is obvious.
+- **K1: Turn the parent's frameworks into a plan for the questions** · `ready-for-agent` · blocked by `waiting-on-parent/06` (W6) · [issues/curriculum/01-k1-frameworks-into-a-plan.md](issues/curriculum/01-k1-frameworks-into-a-plan.md)
+- **K2: Find where the 67 existing cards and 201 questions hook into the frameworks** · `ready-for-agent` · [issues/curriculum/02-k2-map-hooks-in-existing-cards.md](issues/curriculum/02-k2-map-hooks-in-existing-cards.md)
+- **K3: Add questions to cards and text to cards** · `ready-for-agent` · blocked by `curriculum/02` (K2) · [issues/curriculum/03-k3-augment-the-cards.md](issues/curriculum/03-k3-augment-the-cards.md)
+- **K4: New books and cards still missing** · `ready-for-agent` · [issues/curriculum/04-k4-new-books-and-cards.md](issues/curriculum/04-k4-new-books-and-cards.md)
+- **K5: The external pool: Time Quiz packs per framework or school topic** · `ready-for-agent` · blocked by `curriculum/01` (K1) · [issues/curriculum/05-k5-external-question-packs.md](issues/curriculum/05-k5-external-question-packs.md)
 
 ---
 
 ## 14. Upgrades (H)
 
-- **H1. Upgrades that do more than save energy.** `progression/upgrade-benefits-ideas.md` (119 of ~240 effects only save energy; 15
-  other kinds; one idea per upgrade). ✅ (R2) As a **rule of thumb, not a hard rule**: the first tier often saves energy, but sometimes
-  does something else (a better basket carries more); later tiers do something visible. Next: go through the 48 energy-only upgrades
-  together, now with quality (Y1), carrying (M5), skills (Y2) and the sleep parameter (L2) available as benefits.
-  **Started 13 Oct 2026 (💡 until the parent has gone through the list):** four upgrades got a second benefit with effect keys that already exist, keeping their energy saving: Iron Hoe (weeds come back 20 % slower), Stone Fire Ring (the campfire burns 20 % less wood), Whetstone and Master Tool Chest (polish wears off slower). **Left for the parent** (a choice, and each moves the pace): the other 44 upgrades in `progression/upgrade-benefits-ideas.md`, above all the 🆕 kinds (lucky finds, season help, helpers that work by themselves).
+- **H1: Upgrades that do more than save energy** · `needs-parent` · [issues/upgrades/01-h1-upgrades-that-do-more.md](issues/upgrades/01-h1-upgrades-that-do-more.md)
 
 ---
 
 ## 15. Story (I) — files in `story/`, worked in rounds (see `story/README.md`)
 
-- **I4 (leftovers of Round 4).** Plant facts still to be fully checked and reviewed by the parent before anything ships. Rename
-  `sq_chapel_roof` to the village hall (texts, German, picture prompt "waving from the dry chapel").
+- **I4: The parent reviews the plant facts before anything ships** · `needs-parent` · [issues/story/01-i4-plant-facts-review.md](issues/story/01-i4-plant-facts-review.md)
 - **I5. Round 5: outline** — the five questions are answered ✅ (R1): the low point in chapter 5 stays; the Lord's letter stays, and his
   climb-down comes **through Quill's numbers**; the cousin's accusation at the Fair stays, and **the cousin is a girl** (the default for
   now); the thing left unsaid at the night garden stays; awe on the first night stays. ✅ The chapter 6 bend triggers **automatically**,
@@ -567,7 +454,7 @@ A **secondary** goal ✅: never at the cost of a fun, not overwhelming, still ch
   - crafts as a strand next to food (U4); the sustainability note in Berit's book (N1); wellbeing as the farmer's flaw made playable (L8);
   - **no epilogue chapter** (I10);
   - where Lark first appears (J7).
-- **I7. Round 7: texts** (chapter 1 first, read aloud, then German through `tools/i18n.py`; "ss"). ✅ chapters 2–6 and the frames 2–6 written and built 13 Oct 2026 (42 pieces; 💡 flagged in `story/book-file.md`): **for the parent: read them aloud, and the German rhyme lines.**
+- **I7. Round 7: texts** (chapter 1 first, read aloud, then German through `tools/i18n.py`; "ss"). ✅ chapters 2–6 and the frames 2–6 written and built 13 Oct 2026 (61 pieces in the texts, 63 in the game; 💡 flagged in `story/book-file.md`): **for the parent: read them aloud, and the German rhyme lines.**
 - **I8. Round 8: build.** (a) `data/story.json`, the story box, the 📜 scroll, first-tap problem stories, frame scenes; (b) then pets'
   jobs, the medicine chapter, favour-giver renames, pictures (`ART_LIST.csv`); tests and web build.
 - **I9. The opening: story panels and the frame** [#S3] ✅. The current opening text (the farm burnt down, only a tent is left;
@@ -582,11 +469,14 @@ A **secondary** goal ✅: never at the cost of a fun, not overwhelming, still ch
   family, the Lord and Quill, Greenstem and Wren, the letters home, the miller, Lark naming the squirrel), without the grandchildren.
   The night garden's unsaid thing stays unsaid. More side quests, add-ons and perks; the pets' job board levels 3–4 give "putting the
   Helpers to use" real play.
-- **I11. Story pictures follow R3.**
-- **I12. The title** ✅ (R1, R2): **Hazelwood Harvest**, the same name in German. A quick web search found no game of that name (only a
-  town festival in Missouri, "Hazelwood Harvestfest"); still to check: the app stores. Then rename the game (`project.godot`, the web
-  page title, the documents).
+- **I11: Story pictures follow the rules: fix, fill the gaps, import** · `needs-parent` · blocked by `story/03` (I16) · [issues/story/06-i11-story-pictures.md](issues/story/06-i11-story-pictures.md)
+- **I12: Check the title Hazelwood Harvest against the app stores** · `ready-for-agent` · [issues/story/02-i12-title-app-store-check.md](issues/story/02-i12-title-app-store-check.md)
 - **I13. Plot details in the game are flexible** ✅ [#S4] as long as the pacing stays sensible.
+- **I14: Story shows up late: fix the timing issues C1–C9** · `needs-parent` · blocked by `condition-language/01` (for C5 and C6); `interruption-queue/01` (for C2, C7 and C8) · [issues/story/07-i14-story-timing-fixes.md](issues/story/07-i14-story-timing-fixes.md)
+- **I15: Build the 166 new story pieces into the game** · `needs-parent` · blocked by `story/03` (I16) and `story/04` (I17) · [issues/story/08-i15-build-the-166-story-pieces.md](issues/story/08-i15-build-the-166-story-pieces.md)
+- **I16: The parent answers the eleven questions from the consistency pass** · `needs-parent` · [issues/story/03-i16-parent-answers-after-consistency-pass.md](issues/story/03-i16-parent-answers-after-consistency-pass.md)
+- **I17: Apply the build-step fixes the consistency pass could not make** · `ready-for-agent` · [issues/story/04-i17-build-step-fixes.md](issues/story/04-i17-build-step-fixes.md)
+- **I17b: Make the data edits that follow the parent's answers Q5–Q10** · `ready-for-agent` · blocked by `story/03` (I16) · [issues/story/05-i17b-data-edits-after-answers.md](issues/story/05-i17b-data-edits-after-answers.md)
 
 ---
 
@@ -600,8 +490,7 @@ Quiz question each; the Wren check and the poisoning exception).
   explorer re-run. 💡 From the outline: `pet_tortoise` to require `pond`, `pet_alpaca` to require `river_meadow_drain` (decide in I6).
 - **S2. Pets visible and their job board level 1–2** ✅ built 13 Oct 2026 (phase 8.3: `G.pets`, `rules/54-pets.json`; level 2 when the next pet is home; the pets walk to where they work after the Time Quiz) (they walk and act; today's bonuses become level 1). 🔗 J4 (the playback shows their
   work), M5 (the pony carries to market).
-- **S3. The medicine chapter** ✅ built (phase 11; open: the badger's check job, Wren's line in chapter 2, an arnica look-alike): the still-room (`ruins_stillroom`), stations, remedies, *The Healer's Herbal* (K4), the Wren check and
-  the poisoning; the badger needs **Fancy** medicine (Y1). 🔗 L (energy), N2 (herbs: take only a third), Y2 (the Healing family).
+- **S3: Medicine chapter leftovers: the badger's check job, Wren's line, an arnica look-alike** · `ready-for-agent` · [issues/story/09-s3-medicine-chapter-leftovers.md](issues/story/09-s3-medicine-chapter-leftovers.md)
 - **S4. The forest screen** ✅ built (phase 11; the spots are tiles, a painted forest needs art) (doesn't exist and isn't visible before chapter 5). 🔗 M5 (the basket's room), N (over-picking), L (energy).
 - **S5. Pets' job board levels 3–4** ✅ built (phase 12) (WHEN cards, a second rule), if play-testing says the child wants them; a parent setting could
   switch the WHEN cards off. 🔗 I10 (free play uses them).
@@ -610,20 +499,22 @@ Quiz question each; the Wren check and the poisoning exception).
 
 ## 17. Later (Z) — parked, older tasks
 
-- **Z1. Dynamic difficulty** (design §10.6) is built but **off by default**. Tune it with play-testing; ideas noted: look at the time
-  per goal rather than only the pace; vary *which* dish an order wants rather than how much; a parent's slider for strength. `meta.flex`
-  in the data holds every number. 🔗 M1, M12 (prices may follow it). (Was Later 1.)
+- **Z1: Tune dynamic difficulty (built, off by default)** · `needs-parent` · blocked by `waiting-on-parent/08` (W9) · [issues/later/01-z1-dynamic-difficulty.md](issues/later/01-z1-dynamic-difficulty.md)
 - **Z2.** Was Later 2: now P2 (make your farmer), P3 (gear visible) and P1 (merchants walking about).
-- **Z3. Orchard and greenhouse** still use a square patch grid inside their sheets; give them diamond rows like the fields. (Was Later 3.)
+- **Z3: Orchard and greenhouse sheets use diamond rows like the fields** · `ready-for-agent` · [issues/later/02-z3-orchard-greenhouse-diamond-rows.md](issues/later/02-z3-orchard-greenhouse-diamond-rows.md)
 - **Z4.** Was Later 4 (explorer value-check notes): now part of M1.
-- **Z5. Pixie chest** mini-game (an old idea for random rewards), not built. (Was Later 5.)
-- **Z6. Still-open design questions** (from the old documents; was Later 6):
-  - village projects (bundles with substitutes): still a maybe;
-  - cider is alcoholic; rename it "apple must" for young players?
-  - art for the 67 card pages, gear and pests (album pictures for favours came in round 8);
-  - play-test with real 8-year-olds: how many review questions they tolerate, whether 30 questions per season feels right, whether pest
-    pressure is noticeable but not annoying;
-  - the assumptions listed in `PROJECT-LOG.md` §2.6.
-- **Z7. Keep an eye on the public web build.** Everything in it (game data, quiz packs, pictures) can be downloaded by anyone with the
-  link. Fine for now (parent's decision, 7 Oct 2026); revisit if content becomes personal (e.g. the child's name, photos, the learning
-  record) or if the art should not be shared. Options then: a private host or a password-protected one. (Was Later 7.)
+- **Z5: Pixie chest mini-game (an old idea for random rewards)** · `needs-parent` · [issues/later/03-z5-pixie-chest.md](issues/later/03-z5-pixie-chest.md)
+- **Z6: Still-open design questions from the old documents** · `needs-parent` · [issues/later/04-z6-open-design-questions.md](issues/later/04-z6-open-design-questions.md)
+- **Z7: Keep an eye on the public web build** · `needs-parent` · [issues/later/05-z7-public-web-build.md](issues/later/05-z7-public-web-build.md)
+
+---
+
+## 18. Architecture candidates (from the review of 22 October 2026)
+
+Accepted by the parent on 22 Oct 2026 ("all of them look good"). Each is a feature folder in `issues/`; the first ticket is the grilling with the parent, which produces `spec.md` and the build tickets. The review recommends starting with **farm-actions**; **time-question** is the small warm-up; **condition-language** should follow soon because story timing issues C5 and C6 wait for it. Details: `ARCHITECTURE-REVIEW-2026-10-22.md` Part B.
+
+- **Grill and spec: farm actions, one module that prices, checks and pays** · `needs-parent` · [issues/farm-actions/01-grill-and-spec.md](issues/farm-actions/01-grill-and-spec.md)
+- **Grill and spec: the question that moves time** · `needs-parent` · [issues/time-question/01-grill-and-spec.md](issues/time-question/01-grill-and-spec.md)
+- **Grill and spec: one condition language** · `needs-parent` · [issues/condition-language/01-grill-and-spec.md](issues/condition-language/01-grill-and-spec.md)
+- **Grill and spec: what takes the screen next** · `needs-parent` · [issues/interruption-queue/01-grill-and-spec.md](issues/interruption-queue/01-grill-and-spec.md)
+- **Grill and spec: the farm's numbers behind their owners** · `needs-parent` · blocked by the whole `farm-actions` feature · [issues/farm-numbers/01-grill-and-spec.md](issues/farm-numbers/01-grill-and-spec.md)

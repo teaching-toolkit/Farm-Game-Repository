@@ -35,7 +35,7 @@ Round 1, tidied in the critical pass of 7 Oct 2026 (before Round 3). Labels: ✅
   for a while and goes back to the ruins "to gain perspective". She finds **one seed and one patch of workable ground** at the farm: ✅ a single ripe wheat stalk with only one grain left on it, the rest nibbled off.
   That is where the game begins. The melody draws her to the forest edge; she cannot say why she wants to camp there. Her
   grandmother's death, and the box she leaves, is what makes her take the break.
-- **Game time is never counted** (D11). The game covers many seasons (about twelve game years if counted); no text gives a year or
+- **Game time is never counted** (D11). The game covers many seasons (nine to twelve game years if counted, depending on the run); no text gives a year or
   her age after the opening. Nobody will be counting.
 - **The pets** helped the original farmer run the farm. They return one by one, and each gives a **real function** (automation,
   simple loops and if-then tasks, in the spirit of Factorio), not just a perk.
@@ -174,7 +174,7 @@ requests from neighbours, the notice board carries small jobs, and the last chap
 |---|---|---|
 | 1 | Strangers. A travelling merchant and a seed seller come first. The village sniffs the smoke from the ruin. | Porridge for the merchant; vegetable soup: "the village notices you" |
 | 2 | One person remembers her: **young Greenstem**, a boy her age at his family's herb stall 💡. First favours. The quarry folk, the miners, the stall. | Stone soup, bread, pancakes, stew |
-| 3 | Someone who was kind to her family (Granny Maud, Berit's old friend 💡); someone who still blames them (the miller, whose wheel nearly stopped when the stream silted 💡; he thaws when he sees the stream run again). The harvest dance. | Cakes, cider |
+| 3 | Someone who was kind to her family (Granny Maud, Berit's old friend, from chapter 1 💡); someone who still blames them (the miller, whose wheel nearly stopped when the stream silted 💡; he thaws when he sees the stream run again). The harvest dance. | Cakes, cider |
 | 4 | The steward arrives. Does the village stand with her or with the Lord? | Pizza night |
 | 5 | Illness in the village: they need her medicine. She is needed, not just tolerated. | Medicine (a new kind of "dish") |
 | 6 | The Harvest Fair. Hazelwood is her home again. | Pies, cheese, preserves, cloth |

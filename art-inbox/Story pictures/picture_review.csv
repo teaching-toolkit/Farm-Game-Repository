@@ -1,0 +1,111 @@
+﻿file,story_piece,verdict,note
+2026-10-12_135132_grandchildren-bedside-eager_6d1a8056.png,"Frame 0: opening (""Tell us about the farm"") (c1_frame0)",KEEP,Four grandchildren crowd the bed; lamp and stone walls. Nobody in the bed. Right tone.
+2026-10-12_135139_grandchildren-bedside-listening-window_524c811a.png,Frame between chapters (bells at the window) (c1_frame1),KEEP,Minena listens at the window. The tail and bell on the sill is the Mumyo hint the premise asks for.
+2026-10-12_135228_grandchildren-hush-boy-blurting_3e996ddf.png,"Frame 0, page 2 (""don't forget the bells"" / Shh!) (c1_frame0)",KEEP,Good.
+2026-10-12_135243_grandchildren-tea-cup-carrying_532fae31.png,"Frame 0, page 1 (Minena brings the tea) (c1_frame0)",KEEP,Good.
+2026-10-12_135221_grandchildren-giggling-bunny-ears_e45067b8.png,"Frame 1 (""Was there really a bunny?"") (c1_frame1)",KEEP + FIX,"Good content, carrot included. Cream margins on the left and right edges; the brief says full-bleed, no white border."
+2026-10-12_135236_grandchildren-thoughtful-row-quilt_0e3215c1.png,"Frame 4 (""Was the Lord a villain?"") (c4_frame4)",KEEP,Thoughtful mood fits the line about the Lord being afraid.
+2026-10-12_135251_grandchildren-asleep-minena-awake_d9adcd02.png,"Frame 6, end (""Tell me the imp was real"") (c6_frame6)",KEEP + DECIDE,Right scene. Minena holds a white spiral shell (looks like the conch). No text puts it there; the premise keeps the conch for Minena's own story. Keep as foreshadowing or remove.
+2026-10-12_135302_child-window-night-shell-feather_31a525d7.png,No piece yet; only fits the end of the frame (the farm lives on),HOLD,"Night view of the finished farm through a window, with a conch and a feather on the sill. Same conch question as above."
+2026-10-12_135213_farm-book-wheat-page-bed_28a07dcf.png,"Book (grandchildren are in it, so it reads as a frame)",KEEP (as frame),"Wheat sketch, scribble handwriting, nothing legible. For the in-game book beat, use the rabbit-sketch picture (no children)."
+2026-10-12_135108_wheat-stalk-nibbled-closeup_cea49a38.png,Ch1: the last grain (c1_stalk),KEEP,"One green patch, one stalk. The nibbling is hard to see at this size."
+2026-10-12_135120_thistle-grab-first-person_85c8ee2a.png,Ch1: clear the thistles (first-person hands),KEEP + FIX,"Hands in mitts, good. But it shows several dug beds, a fence and a sign; chapter 1 is one patch. Use the thistle-pile picture for the bell beat, or accept a more worked farm here."
+2026-10-12_140303_thistle-pile-tower-low-view_78a54339.png,Ch1: the silly stick pile and the bell (c1_bells),KEEP,"The clue, exactly: stick tower, thistle hat, tiny bell, and Mumyo's tail in the heap, not looking at the viewer."
+2026-10-12_135125_forest-edge-campfire-glowing-stones_349ad72b.png,Ch1: the first night (c1_night),KEEP,"Wonder, no people. The melody as silver swirls is fine."
+2026-10-12_140244_burnt-farm-morning-eye-level_377b17f7.png,"Ch1: the arrival, ""the farm is gone"" (c1_stalk, page 1)",KEEP + FIX,Backlit silhouette from behind with a hat: matches the farmer rule. But it is sunny and green; the text says grey ash and mud.
+2026-10-12_140250_tent-ruins-sunset-eye-level_e4550547.png,Ch1: camp at the ruins (no piece yet),KEEP,"Establishing shot: tent, ruin, road, village roofs."
+2026-10-12_140258_bunny-wheat-patch-eye-level_e81ca052.png,Ch1: the bunny comes home (c1_bunny),KEEP,"Strong: she sits on the patch as if she always has, the ruin behind."
+2026-10-12_135319_farm-book-rabbit-sketch-clover_ba713278.png,Ch1: the book in the box (c1_book),KEEP + FIX,"Sketch of the rabbit in clover, no children, no legible text. Cream vignette border at the edges; the brief says full-bleed, no white border."
+2026-10-12_135322_scorched-ledger-page-workshop_18c0a8fb.png,"Ch1: the burnt page, ""The Lord's share"" (c1_ledger)",KEEP + FIX,"Page is not burnt at the edges. The red line is a wax seal, not readable text. Numbers look random (12345, 3320000). Make a column that clearly rises, with scorched edges and the red line."
+2026-10-12_135332_village-notice-board-hazelwood_e3f0d4e2.png,Ch1: the notice board (c1_board),KEEP,Sheep and goat notices fit the lost-goat favour. The village looks neat and prosperous; the text says small and tired.
+2026-10-12_135340_tent-night-bell-bunny_950566af.png,Ch1: two soft rings at night (c1_bell_out),KEEP,"Strong: bunny asleep, bell hung on a stick, tail glimpsed behind a tree, an owl (an ordinary bird)."
+2026-10-12_135328_merchant-campfire-porridge_ce3f861c.png,"Ch1: the seller (text: a woman, on the village square)",DROP,"Male merchant with a cart at a campfire on a track. Contradicts the ch1 text (she, square) and the decision that ch1 has no merchant at the campfire. Replace with the campfire-porridge picture."
+2026-10-12_140933_campfire-porridge-tent-dusk_b25bde1e.png,Ch1: the seller's porridge at camp (no people),KEEP,"Quiet, no people. Use this in place of the merchant. Treated as the restart of the merchant picture (same subject)."
+2026-10-12_140325_letter-autumn-frost-eye-level_08f94fe7.png,"Ch2: the letter, ""come home before the frost"" (c2_letter)",FIX,"The letter reads ""Dear Clara, Lorem ipsum..."": placeholder text, and Clara is not a name in the story files. Make it scribble only."
+2026-10-12_140332_log-cottage-walls-eye-level_5f99b069.png,Ch2: the crooked walls (c2_walls),FIX,"Text: one wall leans to the left. Here the walls are square and neat. Add the lean, or change the text. The bunny on the log is a nice extra."
+2026-10-12_135408_greenstem-gate-herbs-stone-soup_4224d19c.png,Ch2: Greenstem at the gate (c2_greenstem),FIX (major),"Greenstem is drawn as a child of about ten. Canon: he is the farmer's age (""a boy her age""). Regenerate him older. Pose and stone-soup pot are right."
+2026-10-12_140316_tree-stump-slope-eye-level_e6c28211.png,Ch2: too many stumps (c2_stumps),KEEP,"Strong: clean stumps, the burnt wall, village roofs in the distance."
+2026-10-12_140309_lark-fence-apple-eye-level_0ae30f16.png,Ch2: a visitor on the new road (c2_lark),KEEP,"Lark sits on the fence with an apple and a basket, coat in rust-brown, no bells. Matches 'sits on your fence and watches you work'. Replaces the superseded gravel-road original."
+2026-10-12_135412_burnt-barn-scorch-marks-corner_f695d392.png,Ch2: where the fire began (c2_barn),KEEP,Strong: the scorch starts low in the hay corner and the light falls on it. Exactly the clue.
+2026-10-12_135417_compost-corner-empty-note_9167c655.png,"Ch2: the clean, dry compost pit (c2_compost)",KEEP + FIX,"Text: edges squared with flat stones, note scratched on the lid. Picture: wooden frame, paper pinned to a post. Pick one and match."
+2026-10-12_140337_log-cottage-thatch-eye-level_7dc992bd.png,Ch2: a real roof before the frost (c2_cottage),KEEP + FIX,Text says rain taps on the tiles; the picture is thatch with light snow. Change the text to thatch.
+2026-10-12_140344_pond-spring-tortoise-eye-level_edaeaf0a.png,Ch2: the tortoise comes home (c2_tortoise),KEEP,"Moss on the shell, a ripple where the spring rises. Good."
+2026-10-12_140349_barn-frame-lantern-hook-ruin_deb2d0d6.png,Ch2: the soot-black hook in the new barn frame (c2_hook),KEEP,"Good: new timber frame, black lantern hook. The file name says ruin; the picture is a new frame, which matches the text."
+2026-10-12_135500_windmill-ruin-brass-bell_6f6b5072.png,Ch3: the bell in the old mill (c3_bell),KEEP,"Strong: bell on a beam, tail glimpsed behind the flour sacks, the ruin."
+2026-10-12_140447_miller-bridge-clear-stream-nod_573588b2.png,"Ch3: the stream runs again, the miller's nod (c3_stream)",KEEP + FIX,"Good. A water wheel, which fits the lease doc. The stone bridge is a later road tier. See the mill note on the windmill picture."
+2026-10-12_140355_smithy-forge-eye-level_4d271d79.png,"Ch3: the forge, ""Good hands"" (c3_forge)",KEEP + FIX,"Hands in mitts, tongs, Odinson at the forge. Bo looks about ten; the pick list calls him a teenager."
+2026-10-12_140453_harvest-dance-lanterns-cider_d7ecd74c.png,Ch3: the harvest dance (c3_dance),KEEP,"Strong: mugs floating, the hands catch one. A bell and a tail hidden among the dancers."
+2026-10-12_140459_goat-chewing-list-closeup_a0c1f884.png,Ch3: the goat eats the plan (c3_goat_out side),KEEP,"Good: shaggy, burrs, the list in her mouth."
+2026-10-12_140506_goat-thistle-field-path_591cf7c5.png,Ch3: the goat and the thistles (c3_goat),KEEP + FIX,The goat wears a bell on her collar. The bells are Mumyo's clue; take the collar bell off (also on the alpaca and supper goats).
+2026-10-12_140511_scarecrow-straw-hat-tail-bell_23a0c249.png,Ch3: the scarecrow wears your hat (c3_goat_out),KEEP,"Mumyo's tail and bell in the hat, half hidden. The crows are ordinary birds."
+2026-10-12_140517_quill-gate-foundation-ledger_3063f47f.png,Ch4: Master Quill at the gate (c4_quill),KEEP,"Thin, ledger, horse, stone foundation. Small detail: he has a feather pen; the text says a very sharp pencil."
+2026-10-12_140530_quill-pond-paper-boat_ec5455ae.png,Ch4: the ledger pages in a paper boat (c4_count),KEEP,"Strong: Quill not amused, the boat on the pond, a tail and a bell in the reeds."
+2026-10-12_140536_glasshouse-ruin-tin-box-fraction_d2bd9474.png,Ch4: the old lease in a tin (c4_lease),KEEP,Strong: the scroll marked 1/2 in the tin. The text says the tin is under the stones; here it is on a bench (minor).
+2026-10-12_140543_north-field-clover-quill-lark_ae291147.png,"Ch4: ""No."" Lark on the fence (c4_no)",KEEP,"Strong: Quill with the ledger, Lark on the fence, the clover field, the new house."
+2026-10-12_140549_library-lark-books-by-size_1a0a3b21.png,Ch4: the books sorted by weight (c4_library),KEEP + FIX,"Text: Lark sits on the heaviest book, reading the lightest. Picture: he stands holding a heavy book. Minor."
+2026-10-12_140557_pony-cart-village-square_7a121ad6.png,Ch4: the pony comes home (c4_pony),KEEP,Good: pony and laden cart; villagers turn to look.
+2026-10-12_140604_quill-rides-away-manor_3f44bc6c.png,Ch4: Quill rides home (c4_quill_out),KEEP,"Good: the manor on the hill, the farm behind."
+2026-10-12_140621_village-street-autumn-sick-child_acb408cf.png,Ch5: the cough in Hazelwood (c5_cough),KEEP,"Good: a sick child with his mother, Wren with a basket of herbs."
+2026-10-12_140624_herb-house-ruin-torn-page_c4441b38.png,Ch5: the still-room and the torn page (c5_stillroom),KEEP + FIX,Text: a torn page lies on the floor under the last shelf. Picture: an open book on a stone bench. Change to the torn page on the floor.
+2026-10-12_140628_moonstone-forest-conch-shell_6f951c9f.png,"Ch5: ""something white and spiral... far off"" (c5_conch)",FIX (major),"The conch is huge, close and glowing. Text: far off between the trees, and it does not move. Redo it small and distant. Also has a white border."
+2026-10-12_140633_torn-page-fitted-book-sketches_761694b7.png,Ch5: the other half of the torn page (c5_page),KEEP,"Strong: badger sketch with spectacles, three children asleep under the moon. Says it without words."
+2026-10-12_140641_still-room-floor-wren-kneeling_082f4d20.png,"Ch5: Wren, spilled herbs (near c5_poison)",KEEP,"Wren angry, spilled herbs and jars. Fits the poisoning beat. Harsh, but inside the parent's one exception."
+2026-10-12_140646_letter-red-seal-stag-cold-tea_169b263b.png,Ch5: the letter with a red seal (c5_letter),KEEP,"Good: wax seal, cold tea. The stag on the seal is new and not in canon."
+2026-10-12_140710_kitchen-table-half-letter-animals_6ebbfb3f.png,No piece,DROP,"The Helpers sit round a table with a half-sheet, reacting like people. No text supports it, and it breaks 'the Helpers do not talk' and their animal nature."
+2026-10-12_135157_badger-tea-kitchen-hearth_8bd6622d.png,"Ch5: ""Tea first"" (c5_badger)",KEEP + FIX,"Good: round spectacles, the empty chair, the pouring. Setting is a kitchen by a hearth; the text has him at the still-room door."
+2026-10-12_140718_lark-market-stand-exotic-goods_dd0ea4ee.png,"Ch6: the Import Broker, Lark (c6_broker)",FIX,"Text: ""He has a hat."" Picture: no hat. Add the hat (the wink). The parrot and telescope are not in canon: cut or keep."
+2026-10-12_140723_marsh-night-flowers-fireflies_bc9b458d.png,Ch6: white flowers where the marsh was (c6_garden),KEEP,"Strong: no Mumyo, bells on the reeds, fireflies."
+2026-10-12_140731_harvest-fair-tables-greenstem_db28fba1.png,Ch6: the Fair tables (c6_fair_tables),FIX,Greenstem drawn as a child again. Regenerate him older. The rest of the Fair scene is good.
+2026-10-12_140736_cottage-window-letter-five-figures_af9e2e1f.png,"Ch6: ""We're coming to the Fair... even your cousin"" (c6_fair_letter)",KEEP,"Good: family drawing on the letter, the farm through the window. The knife and glasses on the sill are unexplained props."
+2026-10-12_140748_fair-cousin-pointing-crowd_83d991ab.png,Ch6: the cousin accuses you (c6_crisis),KEEP,"Strong: the cousin is a girl, pointing, the crowd turns."
+2026-10-12_140759_fair-cousin-softening-bench_d02edc0b.png,"Ch6: ""Sit down"" (c6_bend)",FIX,"Text: the cousin sits down beside you. Picture: she stands with two adults, and the bench is bare. Redo with her sitting."
+2026-10-12_140806_sunroom-quill-fraction-one-tenth_6f0c1f90.png,"Ch6: the Lord's answer, 1/10 (c6_quill_answer)",KEEP + FIX,"Text: for the first time, a small smile. Picture: Quill is serious. Minor."
+2026-10-12_140816_alpaca-farm-gate-sunset_22fe29d2.png,Ch6: the alpaca comes home (c6_alpaca),KEEP,"Good: all the Helpers together, alpaca tall and polite. Goat collar bell (see above)."
+2026-10-12_140826_fair-supper-table-lark-moved_c48c0602.png,"Ch6: the Fair supper, a place for Lark (c6_supper)",FIX,"Greenstem drawn as a child again: regenerate him at the farmer's age. The goat's bell (the collar bell) should go, as on the other animals. The squirrel on Lark's shoulder is allowed (parent, 14 Oct 2026): keep it."
+2026-10-12_140832_flower-garden-milk-bowl-bells_8330d0a7.png,Ch6: the edge of the night garden (c6_free_garden / c6_ajar),KEEP,"Strong: the milk bowl, two small bells, glowing flowers, no Mumyo."
+2026-10-12_141034_windmill-new-white-sails_389c3679.png,Ch6: the sails turn (c6_free_miller),KEEP + DECIDE (mill),The ch6 text has sails. The ch3 bridge picture and the lease doc have a water wheel. Pick one mill type and make every picture match.
+2026-10-12_135257_hay-barn-dusk-golden-lights_f4398d93.png,No piece yet; fits the bend (c6_bend memory: the lantern on the hook),HOLD,"Barn at dusk: a lantern on a post by the hay, dancing lights, a white tail with bells in the rafters. Strong for the truth, but it shows the cause before the bend. Use at the bend or later. Cream vignette border."
+2026-10-12_140901_field-stone-pile-lizard_eb1b37fc.png,World (no piece),KEEP,"Ordinary farm work, hands in mitts, no people."
+2026-10-12_140905_tree-stump-roots-robin_99748187.png,World (no piece),KEEP,Stump with axe and spade; a robin. Ordinary.
+2026-10-12_140911_wheat-sprout-closeup-water-drop_b25f2b7c.png,World (no piece),KEEP,Quiet first sprout. Could mark a turning point.
+2026-10-12_140917_wheat-bundle-evening-bunny_a9914d07.png,World (no piece),KEEP,Hands hold wheat; the bunny (a Helper) waits. Fits the bunny.
+2026-10-12_140922_stone-well-looking-down_5f621d76.png,World (no piece),KEEP,Ordinary.
+2026-10-12_140927_forest-track-brushwood-frog_eebaed7f.png,World (no piece),KEEP + FIX,Cream/white border at the edges; the brief says none.
+2026-10-12_140941_workbench-knife-basket_78e41d4b.png,World (no piece),KEEP,Ordinary crafting.
+2026-10-12_140948_hens-new-coop_cdf75ffa.png,World (no piece),KEEP,Ordinary.
+2026-10-12_140952_scarecrow-crows-wheat-field_854168ec.png,World (no piece),KEEP,Crows are ordinary birds.
+2026-10-12_140957_compost-bin-steaming_d35f2209.png,World (no piece),KEEP,Ordinary.
+2026-10-12_141002_new-red-barn-dirt-road_37559a0a.png,World (no piece),KEEP,Ordinary; matches the red-barn look.
+2026-10-12_141007_cows-pasture-gate_7e6bfd81.png,World (no piece),KEEP,Ordinary.
+2026-10-12_141011_bee-skeps-wildflowers_c42bb2d2.png,World (no piece),KEEP,Ordinary.
+2026-10-12_141016_market-stall-hazelwood-carrots_7222be3f.png,World (no piece),KEEP,Village market texture.
+2026-10-12_141023_pond-hollow-digging-tortoise_6366d176.png,World (no piece),KEEP,The tortoise by the dug spring: matches 'sits on the exact spot where the spring rose'.
+2026-10-12_141039_sheep-pen-wool-tuft_67043606.png,World (no piece),KEEP,Ordinary.
+2026-10-12_141044_hand-loom-striped-cloth_6db9c28d.png,World (no piece),KEEP,Ordinary.
+2026-10-12_141049_orchard-clearing-ladder-basket_a2351019.png,World (no piece),KEEP,Ordinary.
+2026-10-12_141053_greenhouse-seedlings-sunlight_54b18104.png,World (no piece),KEEP,Ordinary.
+2026-10-12_141059_clover-field-bee-low-view_54fd0b72.png,World (no piece),KEEP,Ordinary; the tent and shed at the edge fit.
+2026-10-12_141105_river-meadow-animals-noon_57952782.png,World (no piece),KEEP,"Horse, cow, goat by the river. The white flowers should not be read as the night garden."
+2026-10-12_141109_farm-first-snow-eye-level_8c1ebb9f.png,World (no piece; winter),KEEP,Good winter state.
+2026-10-12_140856_weed-pulling-first-person_3c022297.png,World (no piece),KEEP,"Hands, worm, weeds. Ordinary."
+2026-10-12_135719_burnt-farm-dirt-road-view_4c83302b.png,Layout: the burnt farm from the road (establishing),KEEP (establishing),Not tied to a beat. The basket and dented bucket match the box in the story.
+2026-10-12_135726_burnt-farm-hill-view-framed_7f955b97.png,Layout: the burnt farm from the hill (establishing),KEEP (establishing),Not tied to a beat.
+2026-10-12_135733_burnt-farm-clearing-eye-level_96984551.png,Layout: the burnt clearing (establishing),KEEP (establishing),The woven basket and dented bucket match the box in the story.
+2026-10-12_135739_flourishing-farm-cobbled-road-view_327d29e3.png,Layout: the farm at the end,KEEP (end state),For the end of the story or free play. Windmill with sails: see mill note.
+2026-10-12_135746_flourishing-farm-hill-view-framed_bb42bd96.png,Layout: the farm at the end,KEEP (end state),As above.
+2026-10-12_135751_flourishing-farm-garden-path-view_03c20f09.png,Layout: the farm at the end,KEEP (end state),As above.
+(no picture),"Frame 2 (someone asleep on the floor; ""Did you find out who started it?"") (c2_frame2)",GAP,Needed.
+(no picture),"Ch3: Pieter the night watchman with his lantern (c3_pieter, c3_pieter_paid)",GAP,Needed. Pieter is a man with a lantern and a book.
+(no picture),"Ch3: the letter from the river barge, ""Stay if you must"" (c3_letter)",GAP,Needed.
+(no picture),"Frame 3 (""Were you scared of the cousin?"") (c3_frame3)",GAP,Needed.
+(no picture),Ch4: pizza night on the square (c4_pizza),GAP,Needed. Builders eating at long tables under paper lanterns.
+(no picture),Ch5: Wren at the forest edge with the basket (c5_wren_check),GAP,Needed.
+(no picture),Ch5: Greenstem in the still-room doorway (c5_first_tea),GAP,Needed.
+(no picture),Ch5: Wren finds you on the stone floor (c5_collapse),GAP,Needed.
+(no picture),"Frame 5 (""Did you get better?"" / slow tea) (c5_frame5)",GAP,"The badger-tea picture could serve, but it is the in-game piece."
+(no picture),"Ch1: the seller (c1_seller), a woman on the square",GAP,No picture with a person. The porridge picture has no one in it.
+(no picture),Ch6 free play: the long table with the family (c6_free_family),GAP,Needed.
+(no picture),Ch6 free play: Greenstem with the chest (c6_free_greenstem),GAP,Needed.
+(no picture),"Ch6 free play: Lark and the squirrel with the cake, ""Nutmeg"" (c6_free_lark)",GAP,Needed. Squirrel allowed; magpie not.
+(no picture),Ch6: the Lord's letter with a red seal (c6_lord),GAP,"The letter-red-seal picture could serve, but it is used for c5_letter."
+(no picture),Ch6 free play: Quill counts (c6_free_quill),GAP,"Needed. Quill with the ledger, not amused: the steward again."

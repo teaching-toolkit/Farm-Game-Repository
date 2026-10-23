@@ -14,7 +14,7 @@ Replaces the loose interface notes in `game-hooks.md` §4 (they still hold and a
 | **Letter** | From your mother, by the river barge | conditions, roughly one a chapter | no (it waits in the scroll) | yes | Stardew mail |
 | **Bark** | One line from a villager or Lark reacting to what you just did. ✅ A **speech bubble you tap away** when read | a pool, least recently seen first | yes | no | Hades |
 | **Visit** 💡 (parent's idea, 8 Oct 2026) | A villager **walks onto the farm as a little figure** and meets you at the right moment: Greenstem at the gate, Quill with his ledger, Granny Maud chasing her goat. Their words come as speech bubbles or a short box | the same conditions as a Moment | depends | yes | Stardew visits |
-| **Scene** 💡 (parent's idea) | A **pop-up window showing you on the village square**, handing over a delivery, with the people who receive it | a delivery done (`done:d_…`) | no for key deliveries | yes | – |
+| **Scene** 💡 (parent's idea) | A **pop-up window showing you on the village square**, handing over a delivery, with the people who receive it | a delivery (`done:d_…`) or a favour (`done:sq_…`) done | no for key deliveries | yes | – |
 | **Trace** | Mumyo's prank on the map, a bell sound, flowers on the step. No text | conditions | yes | no (but a Discovery can follow) | embedded narrative |
 
 ## 2. When a piece may show 💡
@@ -56,6 +56,7 @@ The first ten minutes of chapter 1 get a hook, a strange thing (the nibbled stal
 - ✅ **The Helpers do not talk.** Write what they do and what you take it to mean: *The goat looks at your list. Then at you. Then she eats it.*
 - 💡 Tell the player as little as possible about what *you* feel; let the world react.
 - Short: 2–4 sentences, words a six-year-old knows; one picture per box. Read aloud before it counts as done.
+- ✅ **Picture rules (R3, [#S5], [#S6]):** the farmer is never painted (a hand from the camera, or a backlit silhouette from behind in a farmer's hat). Canon for the pictures: `art-inbox/Story pictures/canon-for-pictures.md`. The squirrel may sit at the Fair supper (parent, 14 Oct 2026).
 - Optional pieces may be missed; **critical ones never**.
 
 ## 6. The data, roughly 💡 (for Round 8)

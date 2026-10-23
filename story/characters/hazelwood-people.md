@@ -18,8 +18,9 @@ The farmer's contemporaries are old in Minena's time.
 | **The Solemate cobbler's** | – | Fixes the farmer's boots, more than once (a family tradition, it turns out). |
 | **Master Quill**, the Lord's steward | Get the numbers right | Arrives in chapter 4 ✅. Stiff, fair, a ledger under his arm. Counts everything. Is surprised by what he finds: a farm that gives back more than it takes. 🔒 Writes the true numbers to the Lord. |
 | **The Lord** (❓ name) | More | Offstage. A name on a seal. 🔒 Afraid of the Count downriver. |
+| **Pieter the night watchman** (ch 3 on) | Carry the Lord's book | Collects the share; kind, tired, sure he is the villain of everyone's day. Lantern in daylight, the flask 💡, the receipt that says "Thank you" 💡. Sees the tiny light (ch 4). |
 | **Captain Mei** (favour) | Keep moving | Runs a river barge between Hazelwood and the town. **Carries the mother's letters** (💡). |
-| **Otto the ferryman** (favour, ch 2) | – | Ferried the family away the night they left. Remembers the little girl who did not cry. |
+| **Otto the ferryman** (favour, ch 2) | – | Ferried the family away the night they left. Remembers the child who did not cry. |
 | **Old Jan** (favour, ch 2) | – | Was a farmhand at Moonedge long ago. "That goat could count, you know." Nobody believes him. |
 
 ## The 28 favour-givers, re-cast 💡
@@ -33,7 +34,7 @@ requirements; only the people and their memories change. **Round 8 album picture
 | sq_lost_goat | Granny Maud | 1 | **Berit's oldest friend** |
 | sq_twins_porridge | Lotte and Linus | 1 | children who have heard "the burnt farm is haunted" |
 | sq_miller_basket | Ella | 1 | the miller's daughter (her father still blames Moonedge) |
-| sq_washing_line | Hilde the washerwoman | 2 | knows all the gossip; first to say "she's working hard, that one" |
+| sq_washing_line | Hilde the washerwoman | 2 | knows all the gossip; first to say to your face that the village is talking about you, kindly |
 | sq_sick_neighbour | Old Jan | 2 | **a farmhand at Moonedge long ago** |
 | sq_bridge | Otto the ferryman | 2 | **ferried the family away** |
 | sq_healer_honey | Wren the healer | 2 | sees Berit's handwriting in the book |

@@ -2,14 +2,14 @@
 
 This file is the starting point for a new chat or another AI: what the project is, how the folder is laid out, the parent's
 rules and where we left off. **How to work on the project** (what to read, the checks, changing content) lives in three skill
-files in `claude-skills/`; see §2. Last updated: **13 October 2026** (phase 1 built: version 0.9.0; phase 2, the restructuring, is done: R0–R8; phase 3, the interface, is built: version 0.10.0; phase 4, the foundations, is built: version 0.11.0; phase 5, the story engine and chapter 1, is built: version 0.12.0; phase 6, the store and market, is built: version 0.13.0; phase 7, the new chapter 1, is built: version 0.14.0; phase 8, six chapters, the Lord's share and the pets' jobs, is built: version 0.15.0; phase 9, wellbeing and energy, is built: version 0.16.0; phase 10, nature and winter, is built: version 0.17.0; phase 11, the medicine chapter and the forest, is built: version 0.18.0; phase 12, free play, is built: version 0.19.0).
+files in `claude-skills/`; see §2. Last updated: **14 October 2026** (story round 6b: 166 new English story pieces and three planning documents, not yet in the game; see `story/README.md`, TODO I14 and I15). Before that: **13 October 2026** (phase 1 built: version 0.9.0; phase 2, the restructuring, is done: R0–R8; phase 3, the interface, is built: version 0.10.0; phase 4, the foundations, is built: version 0.11.0; phase 5, the story engine and chapter 1, is built: version 0.12.0; phase 6, the store and market, is built: version 0.13.0; phase 7, the new chapter 1, is built: version 0.14.0; phase 8, six chapters, the Lord's share and the pets' jobs, is built: version 0.15.0; phase 9, wellbeing and energy, is built: version 0.16.0; phase 10, nature and winter, is built: version 0.17.0; phase 11, the medicine chapter and the forest, is built: version 0.18.0; phase 12, free play, is built: version 0.19.0).
 
 ---
 
 ## ⚠️ Standing rule for every conversation: keep the log and the to-do list up to date
 
-**`TODO.md`** is the project's to-do list, and `PROJECT-LOG.md` is its history. Keep both current **as you go, not just at the
-end**: a chat can stop at any time, and a task that is not written down in `TODO.md` does not exist for the next chat. What to
+**`TODO.md`** is the project's to-do list (the index; the tickets are in **`issues/`**, rules in `issues/README.md`), and `PROJECT-LOG.md` is its history. Keep all of them current **as you go, not just at the
+end**: a chat can stop at any time, and a task that is not written down in `TODO.md` and `issues/` does not exist for the next chat. What to
 update when, and what to do at the end of a session: `claude-skills/farm-game-session/SKILL.md` §4.
 
 ---
@@ -36,7 +36,7 @@ and keep the game's own texts simple enough for a young reader.
 Don't read every document in full: together they are over 180 KB. Start with:
 
 1. **This file:** the standing rule above, §1, §4.6 (the parent's rules) and §5 (where we left off).
-2. **`TODO.md`:** §0 (the plan at a glance) and §1 (waiting on the parent), then only the section of your task.
+2. **`TODO.md`:** §0 (the plan at a glance) and §1 (waiting on the parent), then only your task (`grep -rn "<id>" TODO.md issues`; the tickets are in `issues/`, their rules in `issues/README.md`).
 3. **`claude-skills/farm-game-session/SKILL.md`:** what else to read for which kind of task, how to plan bigger steps, how to
    keep the record, git.
 
@@ -58,7 +58,8 @@ The numbers are in the files of `godot-prototype/data/farm/` (browse them in `pr
 | Folder / file | What it is |
 |---|---|
 | `00-READ-ME-FIRST.md` | this file |
-| `TODO.md` | **the to-do list and plan** (open tasks only; done ones go to the log) |
+| `TODO.md` | **the to-do list and plan**: the index of the open tickets (done ones go to the log) |
+| `issues/` | **the tracker**: one file per open ticket in `<feature>/`, statuses `ready-for-agent` / `needs-parent` / `done`; `README.md` has the rules |
 | `PROJECT-LOG.md` | history and decisions |
 | `planning/` | the parent's raw notes and the decision rounds, kept word for word; **the architecture plan** (`2026-10-12-architecture-plan.md`); `TODO.md` points into them |
 | `farm-quiz-game-master-design-document.md` | the design (v2.0) |
@@ -233,6 +234,14 @@ golden runs identical. `web-build/` still matches the code. **Phase 2 is finishe
 
 13 Oct 2026 (phase 12, version 0.19.0): **free play**: the pets' job boards go to levels 3 and 4 (WHEN cards, an OTHERWISE rule; all open once the alpaca is home), six loose-end goals after the story (`sq_free_*`, `story/texts/ch6.md`), two new perks (fireflies, shooting stars), `--end` for the bot. **All twelve phases of the plan are built (0.9.0 to 0.19.0); what is left is on the iPad and with the parent**: W9 (play-test and read the texts), the story rounds for chapters 2, 4 and 6, pictures (the forest, the village square, the signpost, snow on the ground), H1 (upgrades that do more than save energy), J7 (stale facts in the design document), the explorer's own simulation (T3), the leftovers of R4.
 
+14 Oct 2026 (story round 6b, no code changes): 166 new story pieces in English (`story/texts/more-ch1–6.md`), `story/outline/long-game.md`, `story/immersion-triggers.md`, `story/code-issues-story-timing.md`; generated JSON and converter in `story/staging/`. The bot, run on a work copy with the pieces added, shows the longest silence in any chapter at 10–15 steps (before: 231 in chapter 1). **Not in the game yet:** needs the parent's read-aloud, the German, and the build (TODO I15); the code and data causes of late story are TODO I14.
+
+14 Oct 2026 (story consistency pass): the editor applied the consistency report to the 166 new pieces (`story/texts/more-ch1–6.md`) and to the planning and canon documents it names; 80 of 109 findings are done, 12 are questions for the parent, 9 belong to the build step (built texts, game data, one line of code). Read `story/consistency-fixes.md` §4 for the questions and §5 for the build list (TODO I16, I17). Still English only and not in the game.
+
+22 Oct 2026 (architecture review, no code changes): `ARCHITECTURE-REVIEW-2026-10-22.md` explains how the game is built (Part A) and proposes five deepening candidates (Part B: farm actions, the question that moves time, one condition language, what takes the screen next, the farm's numbers behind their owners); the parent accepted all five. They are features in `issues/` (TODO §18).
+
+23 Oct 2026 (issue tracker, no game changes): the open tasks became tickets in `issues/` (rules: `issues/README.md`) and `TODO.md` is the index; `CLAUDE.md` and the session skill point to it. `web-build/` still does not match the code (W9, W2).
+
 ---
 
 ## 6. Open tasks → `TODO.md`
@@ -240,6 +249,8 @@ golden runs identical. `web-build/` still matches the code. **Phase 2 is finishe
 The to-do list has its own file since 9 October 2026: **`TODO.md`** (in this folder). It holds the plan at a glance (the
 proposed order), what is waiting on the parent, the queue of decisions with Claude's recommendations, and every open task by
 area. Finished tasks are recorded in `PROJECT-LOG.md` and removed from `TODO.md`.
+
+Since 23 October 2026 every open task is a **ticket** in `issues/<feature>/` (one file each, with a status and what blocks it), and `TODO.md` is the index with one line per ticket. The rules, including where specs go and how a ticket is finished, are in **`issues/README.md`**.
 
 ---
 

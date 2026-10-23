@@ -28,7 +28,13 @@ texture; read aloud is the final test).
 | `world/` | world bible: `00-timeline.md`, `hazelwood.md`, `lease-and-collapse.md`, `shell-and-magic.md`, `helpers-and-rhyme.md` | Round 2 draft 1 |
 | `characters/` | `fenna.md`, `mumyo.md`, `lark.md`, `berit-and-family.md`, `helpers.md`, `hazelwood-people.md`, `minena.md` | Round 3 draft 1 |
 | `outline/` | `ladder.md`: the six-chapter ladder, beats mapped onto the game's goal nodes, running snags | Round 5 draft 1 |
-| `texts/` | the short in-game story texts and the bedside frame scenes (English, then German): `ch1.md` is the source of `godot-prototype/data/farm/story/10-chapter-1.json` and the German in `data/i18n/data-de.json` | Round 7, chapter 1 done |
+| `texts/` | the short in-game story texts and the bedside frame scenes (English, then German): `ch1.md` … `ch6.md` are the sources of `godot-prototype/data/farm/story/*.json` and the German in `data/i18n/data-de.json` | Round 7, chapters 1–6 built |
+| `outline/long-game.md` | the long game: dials, charge per chapter, the Keeper's moves, running snags, motif ladder | Round 6b draft 1 |
+| `immersion-triggers.md` | the trigger kinds, the 166 new pieces by kind, measured gaps | Round 6b draft 1 |
+| `code-issues-story-timing.md` | why story still shows late: code and data issues C1–C9 and the retimes (not applied) | Round 6b draft 1 |
+| `texts/more-ch1.md … more-ch6.md` | 166 new pieces, English only (51 / 29 / 29 / 19 / 14 / 24 by chapter); `staging/` holds the generated JSON and `md_to_story_json.py` | Round 6b, consistency pass 14 Oct 2026 |
+| `consistency-report.md` | the audit: 109 findings F-001 … F-109 and the fix list for the editor | 14 Oct 2026 |
+| `consistency-fixes.md` | what the editor did with each finding (applied, skipped, parent's question, build step), the questions for the parent, the build-step list, the new inventions, the checks | Round 6b, consistency pass 14 Oct 2026 |
 | `archive/` | earlier drafts, kept for reference | – |
 
 ## The rounds (see also `TODO.md`, group I)

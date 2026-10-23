@@ -30,11 +30,11 @@ Round 3, draft 1 (7 Oct 2026). Labels as elsewhere. Names marked 💡 are propos
 
 ## The older cousin ❓ (flexible, leaning yes)
 
-- **Who:** the daughter or son of Fenna's father's sister, who also lived at Moonedge. Twelve at the fire, about nineteen now; lives in the
+- **Who:** the daughter of Fenna's father's sister, who also lived at Moonedge. Twelve at the fire, about nineteen now; lives in the
   town with Fenna's parents. ❓ name.
 - **Spine:** somebody must be to blame. **Want:** for the fire not to have been nobody's fault. **Wrong belief:** if I find who did it,
   it will stop hurting.
-- 🔒 **What the cousin saw:** Fenna running out of the barn, sooty, crying "the lights!". It was true. The cousin is not lying; they are
+- 🔒 **What the cousin saw:** Fenna running out of the barn, sooty, crying "the lights!". It was true. The cousin is not lying; she is
   only wrong about what it meant.
 - **In the story:** mostly offstage, in Fenna's head and in the mother's letters ("your cousin asks after you" , which Fenna reads as a
   threat). 💡 Comes with the family to the Fair in chapter 6. Fenna's bend (saying aloud what happened) could be **said to the cousin**.

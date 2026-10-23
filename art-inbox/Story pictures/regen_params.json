@@ -1,0 +1,1002 @@
+[
+{
+"order": 1,
+"piece": "c2_greenstem",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Scene: Young Greenstem: a lanky young man of about 19, an adult, tall and slim, mop of curly hair, herb-green apron. Leans over the rickety stick gate pointing at the viewer with herbs, stone-soup pot steaming on a stone.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "uMge1bSr6OXOR008GuYa",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806063703_4224d19c_1791806063881_bdac0ac6.png",
+"label": "old-greenstem-gate-herbs-stone-soup"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+}
+]
+}
+},
+{
+"order": 2,
+"piece": "c5_conch",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Scene: Deep in the Moonstone Forest, mossy trunks, a few faintly glowing white stones. Far off between the trees, small in the distance, a single white spiral conch shell, completely still, only a little brighter than the moss; it must be tiny in the frame and not the centre. Quiet, awe, no people.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "6TBW60a4BXmfxhWa0Kyg",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806800393_6f951c9f_1791806800465_d2581dc7.png",
+"label": "old-moonstone-forest-conch-shell"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+}
+]
+}
+},
+{
+"order": 3,
+"piece": "c6_fair_tables",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows the village cast style. Scene: Keep the composition. Young Greenstem: a lanky young man of about 19, an adult, tall and slim, mop of curly hair, herb-green apron. He and Wren (sturdy middle-aged woman, grey hair in a bun, shawl) arrange a herb table. All other villagers are adults or ordinary children in the background.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "NJ15F1iY1OqDNAF0UWVr",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806866636_db28fba1_1791806866696_d191b75d.png",
+"label": "old-harvest-fair-tables-greenstem"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 4,
+"piece": "c6_supper",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows the village cast style. Reference image 4 shows the look of the animal Helpers. Scene: Keep the composition. Young Greenstem: a lanky young man of about 19, an adult, tall and slim, mop of curly hair, herb-green apron. The goat eats a blue ribbon with NO collar bell. A squirrel sits on Lark's shoulder (keep it). Lark sits very still, looking moved.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "byvTYVP9bL2rHlTiwYcS",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806918057_c48c0602_1791806918305_d73ed71e.png",
+"label": "old-fair-supper-table-lark-moved"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+},
+{
+"type": "image",
+"id": "4TO5AaE2KV44RChfvGSj",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_helpers_animals_1791805239754_07df4caf.png",
+"label": "HELPERS"
+}
+]
+}
+},
+{
+"order": 5,
+"piece": "c2_letter",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Scene: Hands in brown woven work mitts hold an unfolded letter; the writing is only wavy pencil scribble lines, no real letters, no names. Falling autumn leaves and first frost on a half-cleared farm behind.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "iCi4J1ATuc9Box0KL2W2",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806615731_08f94fe7_1791806615894_6404a993.png",
+"label": "old-letter-autumn-frost-eye-level"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+}
+]
+}
+},
+{
+"order": 6,
+"piece": "c6_broker",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows the village cast style. Scene: Keep the composition. Lark (tall, thin, rust-brown coat with mismatched buttons) now wears a hat, a soft travelling hat; arms wide in welcome. Market stand with spice jars and rolled carpets; remove the parrot and the telescope.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "VizNZmXwOpAgsoBvw1dZ",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806850860_dd0ea4ee_1791806850942_55fbe78f.png",
+"label": "old-lark-market-stand-exotic-goods"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 7,
+"piece": "c6_bend",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows the village cast style. Scene: Low view as if the viewer has just sat down on a wooden bench at the Fair. The cousin (girl in neat town dress, as in the reference) SITS on the same bench right beside the viewer, face softening, eyes wet. Villagers lean in listening; someone hands over cups. Late golden light.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "LYzVbrvo00ppXURGjiFA",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806887738_d02edc0b_1791806887802_945b705e.png",
+"label": "old-fair-cousin-softening-bench"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 8,
+"piece": "c2_walls",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows the look of the animal Helpers. Scene: Small log cottage walls built by one beginner: one wall clearly leans to the left, logs uneven, moss in a gap. Bunny sits on a log looking doubtful. Sunny; charming and funny.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "JUVSxf5eALZZpTNod08b",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806624096_5f99b069_1791806624206_23cca0ad.png",
+"label": "old-log-cottage-walls-eye-level"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "4TO5AaE2KV44RChfvGSj",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_helpers_animals_1791805239754_07df4caf.png",
+"label": "HELPERS"
+}
+]
+}
+},
+{
+"order": 9,
+"piece": "c1_stalk_p1",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Scene: Overcast grey dawn: everything is grey ash, mud and black posts where a house stood. Small backlit silhouette of a farmer seen from behind in a wide straw hat with a bundle, at the far edge, no features. Bleak but gentle, not scary; no green except one tiny green patch in the middle distance.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "WBxfInW2LL9auGUDcuVE",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806579796_377b17f7_1791806580055_6dcad6fb.png",
+"label": "old-burnt-farm-morning-eye-level"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+}
+]
+}
+},
+{
+"order": 10,
+"piece": "c1_ledger",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Scene: Close-up of a half-burnt ledger page on ash and charred planks: the edges clearly scorched and brown. Columns of tally marks and scribble figures grow longer and longer down the page (no legible words or numbers), the last line drawn in red ink. Sunlight through broken roof beams.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "7Meq4BuEL8iJbbxPukgZ",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806015182_18c0a8fb_1791806015281_71ae7a47.png",
+"label": "old-scorched-ledger-page-workshop"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+}
+]
+}
+},
+{
+"order": 11,
+"piece": "c5_stillroom",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Scene: Ruin of a small herb house: hanging dried herbs, dusty bottles, cracked mortar. NO open book. A single page torn in two lies on the floor under the last shelf, torn edge clearly visible, tidy scribble handwriting (unreadable). Golden light through a broken window.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "H0XP1uErRJmpyxyHPpXp",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806795849_c4441b38_1791806796881_444dc273.png",
+"label": "old-herb-house-ruin-torn-page"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+}
+]
+}
+},
+{
+"order": 12,
+"piece": "c3_goat",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows the look of the animal Helpers. Scene: Keep the composition. The goat has NO collar and NO bell. She munches through the thistles leaving a cleared path, mouth full, smug.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "sKvTbOrpSgOsFPgnAW6k",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806718411_591cf7c5_1791806718504_04a1588e.png",
+"label": "old-goat-thistle-field-path"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "4TO5AaE2KV44RChfvGSj",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_helpers_animals_1791805239754_07df4caf.png",
+"label": "HELPERS"
+}
+]
+}
+},
+{
+"order": 13,
+"piece": "c2_cottage",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Scene: The finished cottage with a roof of clay tiles, first rain falling and tapping on the tiles, smoke from the chimney, warm glowing window, dusk. No snow.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "EEC2pV6jBn1Mk6faS4wo",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806629177_7dc992bd_1791806629342_499a13c6.png",
+"label": "old-log-cottage-thatch-eye-level"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+}
+]
+}
+},
+{
+"order": 14,
+"piece": "c2_compost",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Scene: Behind a barn: a clean dry compost pit with its edges squared by flat stones, a wooden lid leaning beside it with scratched marks on it (not readable). Cracked dry earth, one weed.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "P6GH1QqKZH3XbwozRyEg",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806068641_9167c655_1791806068689_4d30c854.png",
+"label": "old-compost-corner-empty-note"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+}
+]
+}
+},
+{
+"order": 15,
+"piece": "c4_library",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows the village cast style. Scene: Cosy new library room. Lark (tall, thin, rust-brown coat, mismatched buttons) SITS on the heaviest, biggest book at the bottom of a stack arranged from heaviest to lightest, reading the lightest, tiniest booklet. Warm window light.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "XV4n3VAsWR16I1ARPCbJ",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806762824_1a0a3b21_1791806763029_308e54b6.png",
+"label": "old-library-lark-books-by-size"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 16,
+"piece": "c6_quill_answer",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows the village cast style. Scene: Keep the composition. Master Quill, stiff as ever, now has a small smile, the tiniest, holding up a new paper with a big hand-drawn 1/10 symbol only.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "Cz4TnviqKrMMNsF96tIC",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806905385_6f0c1f90_1791806905589_51c7fafa.png",
+"label": "old-sunroom-quill-fraction-one-tenth"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 17,
+"piece": "c5_badger",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows the look of the animal Helpers. Scene: The old grey badger with round spectacles sits very straight at the open door of a herb still-room, two cups and a large teapot set out on a small table, an empty chair pulled out for the viewer. Steam, warm light.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "80xy1c0j1qfvgYVk2U9u",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791805928867_8bd6622d_1791805928962_bfb9c965.png",
+"label": "old-badger-tea-kitchen-hearth"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "4TO5AaE2KV44RChfvGSj",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_helpers_animals_1791805239754_07df4caf.png",
+"label": "HELPERS"
+}
+]
+}
+},
+{
+"order": 18,
+"piece": "c3_forge",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows the village cast style. Scene: Keep the composition. Bo is a teenager of about 15, taller, sooty face, working the bellows; old white-bearded Odinson nods at the viewer. Hands in leather gloves hold tongs at the bottom edge.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "39EdNnzgGegEEo1cODqa",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806647965_4d271d79_1791806648391_89e7de23.png",
+"label": "old-smithy-forge-eye-level"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 19,
+"piece": "c6_alpaca",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows the look of the animal Helpers. Scene: Keep the composition. The alpaca and all the animals wear NO collars and NO bells.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "rkXWjEOtApYbyB5g6oUD",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806917317_22fe29d2_1791806917354_65ea5bbe.png",
+"label": "old-alpaca-farm-gate-sunset"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "4TO5AaE2KV44RChfvGSj",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_helpers_animals_1791805239754_07df4caf.png",
+"label": "HELPERS"
+}
+]
+}
+},
+{
+"order": 20,
+"piece": "c6_frame6",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows Minena (girl, wild brown hair, moss-green hood): keep her looks but draw her in the cartoon style, not realistic. Reference image 4 shows Manjiva (little sister, brown hood with animal ears): keep her looks but draw her in the cartoon style, not realistic. Scene: Keep the composition. Minena kneels close, awake, hands empty and folded on the quilt: NO shell, no conch, nothing in her hands. The other grandchildren asleep in a heap.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "AHQcP69IL6OKSaZY55uR",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791805984123_d9adcd02_1791805984177_bdc589d0.png",
+"label": "old-grandchildren-asleep-minena-awake"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "0aayz79ZlNKjWGQf2gkP",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_minena_realistic_1791805248948_a2487db8.jpg",
+"label": "MINENA"
+},
+{
+"type": "image",
+"id": "ToBFhNphoam5ZOtUuoB6",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_manjiva_realistic_1791805244859_6b26f01b.jpg",
+"label": "MANJIVA"
+}
+]
+}
+},
+{
+"order": 21,
+"piece": "c1_thistle_grab",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Scene: Hands in woven work mitts grab one huge thistle at the edge of a single weedy patch; one freshly cleared square of earth beside it. No fences, no signs, no beds, no other plots. Ash and burnt ground beyond.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "0up9J60vl0UJeKnKe9JT",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791805895212_85c8ee2a_1791805895472_14d6d479.png",
+"label": "old-thistle-grab-first-person"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+}
+]
+}
+},
+{
+"order": 22,
+"piece": "c1_seller",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 1. Reference image 2 shows the village cast style. Scene: On the Hazelwood village square a woman seller (middle-aged, brown shawl, market basket) eats porridge standing up, very fast, from a wooden bowl, eyes closed in delight. Seen through the farmer's eyes. Morning.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 23,
+"piece": "c2_frame2",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows Minena (girl, wild brown hair, moss-green hood): keep her looks but draw her in the cartoon style, not realistic. Reference image 4 shows Manjiva (little sister, brown hood with animal ears): keep her looks but draw her in the cartoon style, not realistic. Scene: Same bedroom as the reference, view from the bed at night. One child is fast asleep on the floor on a rug; Minena leans on the quilt asking a question, serious; the others sit round. Lamp, starry window, dented tin bucket with flowers. Nobody in the bed.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "N8E9tsha0q5jvCzcWPFK",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791805905189_6d1a8056_1791805905300_7c4d8f6a.png",
+"label": "old-grandchildren-bedside-eager"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "0aayz79ZlNKjWGQf2gkP",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_minena_realistic_1791805248948_a2487db8.jpg",
+"label": "MINENA"
+},
+{
+"type": "image",
+"id": "ToBFhNphoam5ZOtUuoB6",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_manjiva_realistic_1791805244859_6b26f01b.jpg",
+"label": "MANJIVA"
+}
+]
+}
+},
+{
+"order": 24,
+"piece": "c3_pieter",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 1. Reference image 2 shows the village cast style. Scene: Pieter, the night watchman, middle-aged, tired, walks up the road in daylight swinging a lantern, a thick book under his arm, an unhappy apologetic face, looking at the viewer. Farm gate behind.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 25,
+"piece": "c3_pieter_paid",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 1. Reference image 2 shows the village cast style. Scene: Pieter taps his book shut, an almost-smile, then walks away down the road whistling, lantern swinging. Evening, farm gate behind.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 26,
+"piece": "c3_letter",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 1. Scene: Hands in woven work mitts hold a letter (unreadable scribble) on a riverbank; a small river barge with a rower pulls away behind. The mood is slightly uneasy. Autumn light.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+}
+]
+}
+},
+{
+"order": 27,
+"piece": "c3_frame3",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows Minena (girl, wild brown hair, moss-green hood): keep her looks but draw her in the cartoon style, not realistic. Reference image 4 shows Manjiva (little sister, brown hood with animal ears): keep her looks but draw her in the cartoon style, not realistic. Scene: Same bedroom, view from the bed at night. A voice from under a blanket heap on the floor; Minena and the others look up, three children raise a finger to hush. Lamp, quilt. Nobody in the bed.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "N8E9tsha0q5jvCzcWPFK",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791805905189_6d1a8056_1791805905300_7c4d8f6a.png",
+"label": "old-grandchildren-bedside-eager"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "0aayz79ZlNKjWGQf2gkP",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_minena_realistic_1791805248948_a2487db8.jpg",
+"label": "MINENA"
+},
+{
+"type": "image",
+"id": "ToBFhNphoam5ZOtUuoB6",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_manjiva_realistic_1791805244859_6b26f01b.jpg",
+"label": "MANJIVA"
+}
+]
+}
+},
+{
+"order": 28,
+"piece": "c4_pizza",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 1. Reference image 2 shows the village cast style. Scene: Village square at dusk: builders eat flat pizzas at long wooden tables under paper lanterns. Through the farmer's eyes, seated between Bo (a teenager) and Greenstem (young man of about 19); someone passes the biggest slice. Warm, happy.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 29,
+"piece": "c5_wren_check",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 1. Reference image 2 shows the village cast style. Scene: Wren the healer (sturdy middle-aged woman, grey hair in a bun, shawl) waits at the forest edge with folded arms, a stern-kind face, looking at the viewer, her own basket at her feet. Tall trees behind.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 30,
+"piece": "c5_first_tea",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 1. Reference image 2 shows the village cast style. Scene: Greenstem (young man of about 19, herb-green apron) stands in the doorway of the still-room sniffing the air, eager; Wren behind a table grumbles, arms crossed. Herbs hanging, tea pot steaming.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 31,
+"piece": "c5_collapse",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows the village cast style. Scene: Low view from the stone floor: a tipped teapot and cup, spilled herbs, a burned-down candle. Wren kneels and lifts the viewer, grumpy and tender. Dim, quiet, not scary.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "Rw2GiqOORRDFNBCrk7jO",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806813036_082f4d20_1791806813231_2cef96a1.png",
+"label": "old-still-room-floor-wren-kneeling"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 32,
+"piece": "c5_frame5",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows Minena (girl, wild brown hair, moss-green hood): keep her looks but draw her in the cartoon style, not realistic. Reference image 4 shows Manjiva (little sister, brown hood with animal ears): keep her looks but draw her in the cartoon style, not realistic. Scene: Same bedroom, view from the bed at night. Children laughing sleepily, one yawns, Manjiva holds a toy teapot and asks a question. Lamp, quilt, starry window. Nobody in the bed.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "N8E9tsha0q5jvCzcWPFK",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791805905189_6d1a8056_1791805905300_7c4d8f6a.png",
+"label": "old-grandchildren-bedside-eager"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "0aayz79ZlNKjWGQf2gkP",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_minena_realistic_1791805248948_a2487db8.jpg",
+"label": "MINENA"
+},
+{
+"type": "image",
+"id": "ToBFhNphoam5ZOtUuoB6",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_manjiva_realistic_1791805244859_6b26f01b.jpg",
+"label": "MANJIVA"
+}
+]
+}
+},
+{
+"order": 33,
+"piece": "c6_free_family",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 1. Reference image 2 shows the village cast style. Scene: A long table: the cousin (girl in neat town dress) pushes a pie across to the viewer and looks down at her plate, ashamed; bread on the table. Warm lamplight, family around.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 34,
+"piece": "c6_free_quill",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Reference image 3 shows the village cast style. Scene: Master Quill counts baskets twice, ledger open, with a small flourish of the pencil, looking over fields as if they were a poem. Harvest baskets in rows.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "LAvjbeAQl9ipI7sk95hY",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806741184_ec5455ae_1791806741794_359cc4d7.png",
+"label": "old-quill-pond-paper-boat"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 35,
+"piece": "c6_free_greenstem",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 1. Reference image 2 shows the village cast style. Scene: Greenstem (young man of about 19, herb-green apron) takes a big wooden healer's chest in both arms; Wren behind him folds her arms, eyes saying a lot. Farm gate, morning.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+}
+]
+}
+},
+{
+"order": 36,
+"piece": "c6_free_lark",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 1. Reference image 2 shows the village cast style. Reference image 3 shows the look of the animal Helpers. Scene: Lark (tall, thin, rust-brown coat with mismatched buttons) holds out a cake; a squirrel takes it with both hands, no collar. Lark looks smug and amused. Fence behind.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+},
+{
+"type": "image",
+"id": "D1BvwVB6hRq1ONkL25YE",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_people_1791805260961_7713e5f4.png",
+"label": "PEOPLE"
+},
+{
+"type": "image",
+"id": "4TO5AaE2KV44RChfvGSj",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_helpers_animals_1791805239754_07df4caf.png",
+"label": "HELPERS"
+}
+]
+}
+},
+{
+"order": 37,
+"piece": "c6_lord",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 1. Scene: A rider on a horse at the farm gate hands over a letter; close in the foreground, hands in mitts hold the letter with a big red wax seal with a plain round ring impression only, no animal, no stag. Rider's face half hidden by his hat. Offstage Lord not shown.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+}
+]
+}
+},
+{
+"order": 38,
+"piece": "c5_letter",
+"params": {
+"prompt": "Warm hand-drawn storybook cartoon illustration for a cosy children's farming game. Soft dark-brown ink outlines (not black), flat colours with gentle cel shading and a light paper texture, a cosy earthy palette of honey yellow, moss green, warm browns, brick red and soft sky blue. Friendly rounded characters with rosy cheeks, simple bright eyes and chunky cute proportions. Old-world countryside setting, no modern objects. Eye-level storybook view, full-bleed square illustration that fills the whole frame edge to edge, no border, no frame, no vignette, no text, no letters, no logos. No collar bells or bells on any animal. Do not show the farmer; no main character in the foreground. Match the drawing style of reference image 2. Reference image 1 shows the scene to redraw; keep its composition and setting except for the changes described. Scene: Keep the composition: a folded letter on a kitchen table, a cup of cold tea beside it. The big red wax seal shows only a plain round ring impression, NO animal and NO stag. Feeling of escalation.",
+"imageCount": 2,
+"aspectRatio": "1:1",
+"visualReferences": [
+{
+"type": "image",
+"id": "TQmTHpZ8W7GuhAFaxHVq",
+"url": "https://cdn.openart.ai/openart-ai/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/image_1791806819315_169b263b_1791806819377_787f1264.png",
+"label": "old-letter-red-seal-stag-cold-tea"
+},
+{
+"type": "image",
+"id": "T6ZpRAmTLrMQLCv775n5",
+"url": "https://cdn.openart.ai/openart-uploads/production/2026-10/create-image/user_2tVDMhrvIgTGkYR5YWpNVuOSq4k/ref_style_album_1791805257206_f8d258e8.png",
+"label": "STYLE"
+}
+]
+}
+}
+]

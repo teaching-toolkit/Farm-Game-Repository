@@ -5,7 +5,7 @@ Ages: Fenna is born in Y−8, so she is **8 at the fire** and **15 when the game
 
 ## Game time ✅ (D11)
 
-The game's clock is the Time Quiz (a season is 30 questions), so a full playthrough is about twelve game years if anyone counted.
+The game's clock is the Time Quiz (a season is 30 questions), so a full playthrough is nine to twelve game years if anyone counted (one bot run: 8.9; the project log's full playthrough of about 1,417 answers: about 12).
 **Nobody counts.** No in-game text gives a year or Fenna's age after the opening; winters simply come round. The timeline below
 dates only the backstory and the frame.
 
@@ -24,8 +24,8 @@ dates only the backstory and the frame.
 | When | What | Helper effect |
 |---|---|---|
 | Y−20 | The old Lord dies. His son (the Lord) inherits debts to a Count downriver. | – |
-| Y−14 | The Lord raises the farm's share from a tenth to a fifth. The family agrees. Berit does not, but is overruled by her son. | – |
-| Y−12 | No more fallow. The straw is sold, not composted. | – |
+| Y−14 | The Lord raises the farm's share from a tenth to a fifth. The family agrees. Berit does not, but is overruled by her son. The best field skips its fallow year. | – |
+| Y−12 | The straw is sold, not composted. | – |
 | Y−10 | The share becomes a third. The forest edge is cut for a new field. | – |
 | Y−8 | **Fenna is born.** | – |
 | Y−6 | The spring pond is drained to water the new field. | – |
