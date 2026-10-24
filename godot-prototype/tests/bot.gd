@@ -243,7 +243,7 @@ func _trip() -> void:
 	var selling: bool = sell_value >= 150.0 and (sell_load >= 0.6 * G.trip.capacity() or near_cap or G.S["step"] - last_trip >= 12)
 	if not errands and not selling: return
 	if orders.is_empty() and G.S["step"] - last_trip < 3: return
-	if G.S["energy"] < float(G.trip.energy_cost()) + 6.0: return
+	if G.S["energy"] < float(G.actions.check("village_trip", G.actions.farmer)["cost"]["energy"]) + 6.0: return
 	G.trip.unpack_all()
 	for id in orders:
 		var c: Dictionary = G.pace.node_cost(id)
@@ -251,7 +251,7 @@ func _trip() -> void:
 	var ks: Array = want_sell.keys()
 	ks.sort_custom(func(a, b): return G.inventory.value_of(a) / maxf(0.05, G.inventory.weight_of(a)) > G.inventory.value_of(b) / maxf(0.05, G.inventory.weight_of(b)))
 	for k in ks: G.trip.pack(k, int(want_sell[k]))
-	if not G.trip.go(): return
+	if not G.actions.perform("village_trip", G.actions.farmer)["done"]: return
 	trips_done += 1
 	if trips_done % 25 == 0 or trips_done < 6: print("trip %d at q%d ch%d: orders %d seeds %s buy %d barter %d sell %d coins %d" % [trips_done, G.S["step"], G.chapter(), orders.size(), str(want_seeds), want_buy.size(), want_barter.size(), int(sell_value), int(G.S["coins"])])
 	last_trip = G.S["step"]
@@ -305,16 +305,16 @@ func _forest() -> void:
 		if todo.is_empty(): return
 		asked += 1
 		G.step_time()
-		G.forest.enter()
+		G.actions.perform("forest_enter", G.actions.farmer)
 	for e in todo:
 		if G.forest.basket().size() >= G.forest.capacity(): break
 		var t: Dictionary = e[1]
-		if t["kind"] == "find": G.forest.do_find(e[0], str(t["id"]), str(t["plant"]))
-		else: G.forest.do_pick(e[0], str(t["id"]), str(t["part"]))
+		if t["kind"] == "find": G.actions.perform("forest_find", G.actions.farmer, {"spot": e[0], "tid": str(t["id"]), "option": str(t["plant"])})
+		else: G.actions.perform("forest_pick", G.actions.farmer, {"spot": e[0], "tid": str(t["id"]), "part": str(t["part"])})
 	if G.forest.inside():
 		asked += 1
 		G.step_time()
-		G.forest.leave()
+		G.actions.perform("forest_leave", G.actions.farmer)
 		G.forest.check()
 
 func _gate_cost(k: String) -> Dictionary:

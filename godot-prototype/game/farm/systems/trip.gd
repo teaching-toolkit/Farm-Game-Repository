@@ -105,28 +105,25 @@ func at_square() -> bool:
 func walking() -> bool:
 	return phase() == "walk"
 
-## What a trip costs in energy: the base × the errand factor (rucksacks, boots …) × what a better road saves; at least `min`.
-func energy_cost() -> int:
+## The trip as a chore of the actions system (rules/46-chores.json): the base energy, the errand multiplier (rucksacks, boots …), the rounding up and the
+## minimum are in the data; what a better road saves is the amount (a factor on the base) and the requirements and the effect are here. The walk starts
+## when the packed bag is confirmed (the interface asks exactly one Time Quiz question; arrive() follows).
+func register_chores() -> void:
+	G.actions.register("village_trip", _go_effect, _go_requires, _road_factor)
+
+## What a better road saves: `roadSaving` per road level above 1, never below `roadFloor`.
+func _road_factor(_who, _args: Dictionary) -> float:
 	var e: Dictionary = data().get("energy", {})
 	var road := int(round(G.g("roadLevel", 1.0)))
-	var f := maxf(float(e.get("roadFloor", 0.4)), 1.0 - float(e.get("roadSaving", 0.15)) * float(road - 1))
-	return maxi(int(e.get("min", 1)), int(ceilf(float(e.get("base", 3)) * G.m("energy:errand") * f - 0.0001)))
+	return maxf(float(e.get("roadFloor", 0.4)), 1.0 - float(e.get("roadSaving", 0.15)) * float(road - 1))
 
-func can_go() -> Dictionary:
-	if phase() != "": return {"ok": false, "why": tr("You are on the way already.")}
-	if G.S["energy"] + 0.0001 < float(energy_cost()): return {"ok": false, "why": tr("⚡ Too tired for the walk. Rest first.")}
-	return {"ok": true, "why": ""}
+func _go_requires(_who, _args: Dictionary) -> Array:
+	if phase() != "": return [{"key": "on_the_way", "text": tr("You are on the way already.")}]
+	return []
 
-## Confirms the packed bag: the energy is taken and the walk begins (the interface asks exactly one Time Quiz question; arrive() follows).
-func go() -> bool:
-	var ck := can_go()
-	if not ck["ok"]:
-		G.say(str(ck["why"]))
-		return false
-	G.S["energy"] = float(G.S["energy"]) - float(energy_cost())
+func _go_effect(_who, _args: Dictionary, _cost: Dictionary) -> Dictionary:
 	G.S["trip"] = {"phase": "walk", "bought": 0.0}
-	G.save_game(); G.changed.emit()
-	return true
+	return {"gained": {}}
 
 ## The question was answered right at the first try: the village square opens.
 func arrive() -> void:

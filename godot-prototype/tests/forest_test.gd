@@ -9,35 +9,35 @@ func _ready() -> void:
 	G = get_node("/root/Game")
 	G.reset_game()
 	var F = G.forest
-	_check(not F.open() and not F.enter(), "the forest is closed until the still-room is cleared")
+	_check(not F.open() and not _go("forest_enter"), "the forest is closed until the still-room is cleared")
 	G.S["unlocked"]["ruins_stillroom"] = true
 	G.invalidate_caps()
-	_check(F.open() and F.enter() and F.inside() and F.leave() and not F.inside(), "…and then it can be entered and left")
-	F.enter()
+	_check(F.open() and _go("forest_enter") and F.inside() and _go("forest_leave") and not F.inside(), "…and then it can be entered and left")
+	_go("forest_enter")
 	G.S["energy"] = 30.0
 	G.S["step"] = 40       # summer
 	_check(G.seasons.season() == "summer", "it is summer")
-	_check(F.can_do("glade", "chamomile")["ok"] and F.can_do("clearing", "marigold")["ok"], "summer plants can be picked")
-	_check(not F.can_do("willow", "willow_bark")["ok"], "willow bark is a spring job")
-	_check(not F.can_do("stream", "clay")["ok"], "digging clay needs the shovel")
+	_check(_can("glade", "chamomile") and _can("clearing", "marigold"), "summer plants can be picked")
+	_check(not _can("willow", "willow_bark"), "willow bark is a spring job")
+	_check(not _can("stream", "clay"), "digging clay needs the shovel")
 	G.S["unlocked"]["wooden_shovel"] = true
-	_check(F.can_do("stream", "clay")["ok"], "…and with the shovel it is possible")
+	_check(_can("stream", "clay"), "…and with the shovel it is possible")
 	# pick: the right part, and a wrong one
 	var e0: float = G.S["energy"]
-	var r: Dictionary = F.do_pick("clearing", "marigold", "flower")
-	_check(r["good"] and F.basket().size() == 1 and G.S["energy"] < e0, "the right part goes into the basket and costs energy")
-	_check(F.rest_left("clearing", "marigold") > 0 and not F.can_do("clearing", "marigold")["ok"], "the spot rests for a few questions")
-	r = F.do_pick("clearing", "lavender", "leaf")
-	_check(not r["good"] and F.basket().size() == 1, "a wrong part brings nothing home")
+	var r: Dictionary = _do("forest_pick", "clearing", "marigold", {"part": "flower"})
+	_check(r["result"]["good"] and F.basket().size() == 1 and G.S["energy"] < e0, "the right part goes into the basket and costs energy")
+	_check(F.rest_left("clearing", "marigold") > 0 and not _can("clearing", "marigold"), "the spot rests for a few questions")
+	r = _do("forest_pick", "clearing", "lavender", {"part": "leaf"})
+	_check(not r["result"]["good"] and F.basket().size() == 1, "a wrong part brings nothing home")
 	# find: the wrong look-alike is in the basket but looks like the plant
-	r = F.do_find("meadow", "yarrow", "hemlock")
-	_check(r["ok"] and not r["good"] and F.claimed().get("yarrow", 0) == 1 and F.has_bad(), "the wrong choice brings a look-alike that looks like yarrow in the basket")
-	r = F.do_find("glade", "chamomile", "chamomile")
-	_check(r["good"] and F.claimed().get("chamomile", 0) == 1, "the right choice brings chamomile")
+	r = _do("forest_find", "meadow", "yarrow", {"option": "hemlock"})
+	_check(r["done"] and not r["result"]["good"] and F.claimed().get("yarrow", 0) == 1 and F.has_bad(), "the wrong choice brings a look-alike that looks like yarrow in the basket")
+	r = _do("forest_find", "glade", "chamomile", {"option": "chamomile"})
+	_check(r["result"]["good"] and F.claimed().get("chamomile", 0) == 1, "the right choice brings chamomile")
 	# the basket has a size
 	G.S["step"] += 10
-	for _i in range(6): F.do_pick("clearing", "thyme", "leaf"); G.S["step"] += 5
-	_check(F.basket().size() == F.capacity() and not F.can_do("clearing", "sage")["ok"], "the basket holds %d" % F.capacity())
+	for _i in range(6): _do("forest_pick", "clearing", "thyme", {"part": "leaf"}); G.S["step"] += 5
+	_check(F.basket().size() == F.capacity() and not _can("clearing", "sage"), "the basket holds %d" % F.capacity())
 	# Wren's check: the right plants go into the store, the wrong ones are thrown out, a small favour is asked
 	G.inventory.add_item("porridge", 1.0, true)
 	G.inventory.add_item("bread", 1.0, true)
@@ -47,12 +47,12 @@ func _ready() -> void:
 	# without a dish or coins she checks anyway
 	G.S["inv"].clear(); G.S["coins"] = 0.0
 	G.S["energy"] = 30.0; G.S["step"] = 45; G.S["forest"]["rest"] = {}
-	F.do_find("glade", "chamomile", "mayweed")
+	_do("forest_find", "glade", "chamomile", {"option": "mayweed"})
 	_check(F.favour().is_empty() and F.check()["bad"] == ["mayweed"], "with nothing to give she still checks")
 	# unchecked: a bad unit is remembered; using it poisons (sooner or later)
 	G.S["step"] = 50; G.S["forest"]["rest"] = {}
 	G.S["energy"] = 30.0
-	F.do_find("meadow", "yarrow", "hemlock")
+	_do("forest_find", "meadow", "yarrow", {"option": "hemlock"})
 	F.use_unchecked()
 	_check(G.inventory.count("yarrow") == 1.0 and int(G.S["forest"]["tainted"].get("yarrow", 0)) == 1, "unchecked, it goes into the store and the bad unit is remembered")
 	G.S["energy"] = 20.0; G.S["coins"] = 500.0
@@ -66,7 +66,7 @@ func _ready() -> void:
 	# a harmless look-alike does not poison
 	G.S["step"] = 55; G.S["forest"]["rest"] = {}
 	G.S["energy"] = 30.0
-	F.do_find("glade", "chamomile", "mayweed")
+	_do("forest_find", "glade", "chamomile", {"option": "mayweed"})
 	F.use_unchecked()
 	G.S["energy"] = 10.0
 	_check(not F.poisons({"chamomile": 1.0}) and G.S["energy"] == 10.0, "scentless mayweed is harmless")
@@ -90,6 +90,22 @@ func _ready() -> void:
 	_check(G.nodes["pet_badger"]["cost"].has("healers_chest") and G.nodes["pet_badger"]["cost"].has("tea_set"), "the badger comes for the chest and the tea set")
 	print("FOREST %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])
 	get_tree().quit(1 if fails > 0 else 0)
+
+## The forest's chores go through the actions system: a task is "forest_<kind>" with the spot and the task as args.
+func _args(spot: String, tid: String, extra := {}) -> Dictionary:
+	var a := extra.duplicate()
+	a["spot"] = spot
+	a["tid"] = tid
+	return a
+
+func _can(spot: String, tid: String) -> bool:
+	return G.actions.check("forest_" + str(G.forest.task(spot, tid).get("kind", "")), G.actions.farmer, _args(spot, tid))["ok"]
+
+func _do(chore: String, spot: String, tid: String, extra := {}) -> Dictionary:
+	return G.actions.perform(chore, G.actions.farmer, _args(spot, tid, extra))
+
+func _go(chore: String) -> bool:
+	return G.actions.perform(chore, G.actions.farmer)["done"]
 
 func _check(ok: bool, what: String) -> void:
 	checks += 1

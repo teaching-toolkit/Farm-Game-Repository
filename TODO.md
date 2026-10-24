@@ -516,8 +516,6 @@ Quiz question each; the Wren check and the poisoning exception).
 Accepted by the parent on 22 Oct 2026 ("all of them look good"). Each is a feature folder in `issues/`; the first ticket is the grilling with the parent, which produces `spec.md` and the build tickets. The review recommends starting with **farm-actions**; **time-question** is the small warm-up; **condition-language** should follow soon because story timing issues C5 and C6 wait for it. Details: `ARCHITECTURE-REVIEW-2026-10-22.md` Part B.
 
 **farm-actions** (grilled and specified 23 Oct 2026: `issues/farm-actions/spec.md`; the grilling ticket 01 is `done`; words in `GLOSSARY.md`)
-- **Forest trips** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/08-forest-trips.md](issues/farm-actions/08-forest-trips.md)
-- **The village trip** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/09-village-trip.md](issues/farm-actions/09-village-trip.md)
 - **Recipes at stations** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/10-recipes-at-stations.md](issues/farm-actions/10-recipes-at-stations.md)
 - **One pay function: shop purchases** · `ready-for-agent` · blocked by farm-actions/03 · [issues/farm-actions/11-pay-function-shop.md](issues/farm-actions/11-pay-function-shop.md)
 - **Goal and building payments use the pay function** · `ready-for-agent` · blocked by farm-actions/11 · [issues/farm-actions/12-pay-function-goals.md](issues/farm-actions/12-pay-function-goals.md)

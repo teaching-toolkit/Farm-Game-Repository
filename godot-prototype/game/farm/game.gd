@@ -140,6 +140,8 @@ func _init() -> void:
 	fields.register_chores()
 	animals.register_chores()
 	well.register_chores()
+	forest.register_chores()
+	trip.register_chores()
 
 # ------------------------------------------------------------------ start, seed and clock
 

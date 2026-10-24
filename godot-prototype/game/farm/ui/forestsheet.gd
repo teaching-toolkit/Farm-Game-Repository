@@ -40,13 +40,13 @@ func _spot_card(sid: String) -> void:
 	card.add_child(v)
 	v.add_child(UI.label("%s %s" % [sp["emoji"], tr(str(sp["name"]))], 19, UI.INK, true))
 	for t in tasks:
-		var ck: Dictionary = G.forest.can_do(sid, str(t["id"]))
+		var ck: Dictionary = G.actions.check("forest_" + str(t["kind"]), G.actions.farmer, {"spot": sid, "tid": str(t["id"])})
 		var left: int = G.forest.rest_left(sid, str(t["id"]))
 		var txt := tr(str(t["heading"]))
 		var b := UI.button(txt + ("   ⏳%d" % left if left > 0 else ""), _task.bind(sid, str(t["id"])), ck["ok"], UI.GREEN if t["kind"] != "look" else UI.AMBER, 16)
 		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		v.add_child(b)
-		if not ck["ok"] and ck["why"] != "" and left == 0: v.add_child(UI.label(str(ck["why"]), 13, UI.MUTED, true))
+		if not ck["ok"] and ck["unmet"][0]["text"] != "" and left == 0: v.add_child(UI.label(str(ck["unmet"][0]["text"]), 13, UI.MUTED, true))
 	M.content.add_child(card)
 
 func _task(sid: String, tid: String) -> void:
@@ -55,8 +55,8 @@ func _task(sid: String, tid: String) -> void:
 		"find": _choose_plant(sid, t)
 		"pick": _choose_part(sid, t)
 		_:
-			var r: Dictionary = G.forest.do_gives(sid, tid)
-			if r["ok"] and t.has("text"): G.say("🌲 " + tr(str(t["text"])))
+			var r: Dictionary = G.actions.perform("forest_" + str(t["kind"]), G.actions.farmer, {"spot": sid, "tid": tid})
+			if r["done"] and t.has("text"): G.say("🌲 " + tr(str(t["text"])))
 			_reopen()
 
 ## find: the options are described, never named.
@@ -71,9 +71,9 @@ func _choose_plant(sid: String, t: Dictionary) -> void:
 	M.modals.fit_modal.call_deferred()
 
 func _picked_plant(sid: String, tid: String, option: String) -> void:
-	G.forest.do_find(sid, tid, option)
+	var r: Dictionary = G.actions.perform("forest_find", G.actions.farmer, {"spot": sid, "tid": tid, "option": option})
 	M.modals.close_modal()
-	G.say(tr("🧺 In the basket. Have it checked before you use it."))
+	if r["done"]: G.say(tr("🧺 In the basket. Have it checked before you use it."))
 	_reopen()
 
 ## pick: which part of the plant?
@@ -87,9 +87,9 @@ func _choose_part(sid: String, t: Dictionary) -> void:
 	M.modals.fit_modal.call_deferred()
 
 func _picked_part(sid: String, tid: String, part: String) -> void:
-	var r: Dictionary = G.forest.do_pick(sid, tid, part)
+	var r: Dictionary = G.actions.perform("forest_pick", G.actions.farmer, {"spot": sid, "tid": tid, "part": part})
 	M.modals.close_modal()
-	if r.get("ok", false): G.say(tr("🧺 In the basket. Have it checked before you use it.") if r["good"] else tr("🍂 That is not the part you need. Nothing is useful in your hands."))
+	if r["done"]: G.say(tr("🧺 In the basket. Have it checked before you use it.") if r["result"]["good"] else tr("🍂 That is not the part you need. Nothing is useful in your hands."))
 	_reopen()
 
 # ------------------------------------------------------------------ the basket and Wren
@@ -139,12 +139,12 @@ func _unchecked() -> void:
 # ------------------------------------------------------------------ the way in and out
 
 func _go_in() -> void:
-	if not G.forest.open() or float(G.S["energy"]) + 0.001 < 0.0: return
+	if not G.actions.check("forest_enter", G.actions.farmer)["ok"]: return
 	M.sheets.close_sheet()
 	M.timequiz.show_walk_question({"title": tr("🚶 Into the forest"), "emoji": "🌲", "button": tr("🌲 Look around"), "done": _entered})
 
 func _entered() -> String:
-	G.forest.enter()
+	G.actions.perform("forest_enter", G.actions.farmer)
 	return tr("🌲 You are in the forest.")
 
 func _go_out() -> void:
@@ -152,5 +152,5 @@ func _go_out() -> void:
 	M.timequiz.show_walk_question({"title": tr("🚶 Back to the farm"), "emoji": "🏡", "button": tr("🧺 Look at the basket"), "done": _left})
 
 func _left() -> String:
-	G.forest.leave()
+	G.actions.perform("forest_leave", G.actions.farmer)
 	return tr("🏡 You are home again. Your basket is not checked yet.")

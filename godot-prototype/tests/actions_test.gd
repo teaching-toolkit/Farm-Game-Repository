@@ -6,6 +6,7 @@ var G
 var fails := 0
 var checks := 0
 var costs_seen := {}
+const FREE_CHORES := ["forest_look", "forest_enter", "forest_leave"]   # these cost no energy: the question each way is asked by the interface
 
 func _ready() -> void:
 	G = get_node("/root/Game")
@@ -16,7 +17,7 @@ func _ready() -> void:
 		if chore == "note": continue
 		_check(A._chores.has(chore), "%s has a registered effect" % chore)
 	for chore in A._chores:
-		_check(G.meta["chores"].has(chore) and not A.base_cost(chore).is_empty(), "%s has a base cost in the data" % chore)
+		_check(G.meta["chores"].has(chore) and (not A.base_cost(chore).is_empty() or chore in FREE_CHORES), "%s has a base cost in the data" % chore)
 	for chore in ["clear_snow", "weed", "pick_stones"]:
 		_check(A._chores.has(chore) and not A.base_cost(chore).is_empty(), "%s is a chore with a base cost" % chore)
 	_check(A.base_cost("fetch_water")["energy"] == float(G.meta["water"]["fetchEnergy"]), "fetch water's base cost is the one number in the data")
@@ -43,6 +44,8 @@ func _ready() -> void:
 					_price_match_crops(label)
 					_price_match_animals(label)
 					_price_match_well(label)
+					_price_match_trip(label)
+					_price_match_forest(label)      # last: it unlocks the still-room and the shovel
 	print("price-match situations: ", situations, ", distinct costs: ", costs_seen.keys())
 	_check(costs_seen.size() >= 3, "the situations really change the cost")
 	_requirements()
@@ -50,6 +53,8 @@ func _ready() -> void:
 	_crop_requirements()
 	_animal_requirements()
 	_well_requirements()
+	_forest_requirements()
+	_trip_requirements()
 	print("ACTIONS %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])
 	get_tree().quit(1 if fails > 0 else 0)
 
@@ -383,6 +388,119 @@ func _well_requirements() -> void:
 	var rep2: Dictionary = A.perform("throw_party", A.farmer)
 	_check(not rep2["done"] and rep2["failed"] == "cooldown" and rep2["message"] != "", "a party too soon after the last one is refused with a sentence")
 	_check(A.check("visit_friend", A.farmer)["unmet"][0]["key"] == "no_invite", "a visit without an invitation is an unmet requirement")
+
+## The forest: every task of a spot costs the gathering energy (a look costs none), going in and out costs no energy. What perform takes is what check says.
+func _price_match_forest(label: String) -> void:
+	var A = G.actions
+	var who = A.farmer
+	var tasks := {"forest_find": ["glade", "chamomile", {"option": "chamomile"}], "forest_pick": ["clearing", "marigold", {"part": "flower"}],
+		"forest_dig": ["stream", "clay", {}], "forest_look": ["moonstone", "hum", {}]}
+	for hair in [false, true]:
+		for chore in tasks:
+			_forest_state()
+			var args: Dictionary = (tasks[chore][2] as Dictionary).duplicate()
+			args["spot"] = tasks[chore][0]
+			args["tid"] = tasks[chore][1]
+			var q: Dictionary = A.check(chore, who, args)
+			var free: bool = chore == "forest_look"
+			var want: float = 0.0 if free else G.needs.ecost("gather", float(G.meta["forest"]["pickEnergy"]))
+			_check(q["ok"] and is_equal_approx(float(q["cost"].get("energy", 0.0)), want), "%s costs what the gathering energy says (%s)" % [chore, label])
+			if not free: costs_seen[snappedf(want, 0.001)] = true
+			G.S["energy"] = want - 0.01 if hair and not free else want
+			var e0: float = G.S["energy"]
+			var rep: Dictionary = A.perform(chore, who, args)
+			if hair and not free:
+				_check(not rep["done"] and rep["failed"] == "energy" and G.S["energy"] == e0 and G.forest.basket().is_empty() and G.S["forest"]["rest"].is_empty(), "a hair too little energy does nothing (%s, %s)" % [chore, label])
+			else:
+				_check(rep["done"] and is_equal_approx(e0 - float(G.S["energy"]), want) and G.S["energy"] < 0.001, "%s takes exactly the energy check says (%s)" % [chore, label])
+				_check(G.forest.rest_left(args["spot"], args["tid"]) > 0, "…and the spot rests (%s, %s)" % [chore, label])
+				if chore == "forest_find" or chore == "forest_pick": _check(G.forest.basket().size() == 1 and rep["result"]["good"], "…and the right plant is in the basket (%s)" % label)
+	_forest_state()
+	var wrong: Dictionary = A.perform("forest_pick", who, {"spot": "clearing", "tid": "marigold", "part": "leaf"})
+	_check(wrong["done"] and not wrong["result"]["good"] and G.forest.basket().is_empty() and G.S["energy"] < G.needs.energy_max(), "a wrong part costs the energy and brings nothing (%s)" % label)
+	var wrong2: Dictionary = A.perform("forest_find", who, {"spot": "meadow", "tid": "yarrow", "option": "hemlock"})
+	_check(wrong2["done"] and not wrong2["result"]["good"] and G.forest.has_bad(), "a look-alike brings the bad plant home (%s)" % label)
+
+func _forest_state() -> void:
+	G.S["step"] = 40       # summer
+	G.S["unlocked"]["ruins_stillroom"] = true
+	G.S["unlocked"]["wooden_shovel"] = true
+	G.invalidate_caps()
+	G.S["forest"] = G.forest.save_defaults()["forest"]
+	G.S["forest"]["in"] = true
+	G.S["inv"].clear()
+	G.S["energy"] = G.needs.energy_max()
+
+func _forest_requirements() -> void:
+	var A = G.actions
+	G.reset_game()
+	var task := {"spot": "clearing", "tid": "marigold", "part": "flower"}
+	_check(A.check("forest_enter", A.farmer)["unmet"][0]["key"] == "closed", "the forest is closed until the still-room is cleared")
+	G.S["unlocked"]["ruins_stillroom"] = true
+	G.invalidate_caps()
+	G.S["step"] = 40
+	G.S["energy"] = 30.0
+	_check(A.check("forest_leave", A.farmer)["unmet"][0]["key"] == "outside" and A.check("forest_pick", A.farmer, task)["unmet"][0]["key"] == "outside", "nothing can be done out of the forest")
+	var steps0: int = G.S["step"]
+	_check(A.perform("forest_enter", A.farmer)["done"] and G.forest.inside() and int(G.S["forest"]["trips"]) == 1 and G.S["step"] == steps0 and G.S["energy"] == 30.0, "going in takes no energy of its own and counts a trip")
+	_check(A.check("forest_enter", A.farmer)["unmet"][0]["key"] == "inside", "you cannot walk in twice")
+	G.S["step"] = 0       # spring: marigold is a summer plant
+	var q: Dictionary = A.check("forest_pick", A.farmer, task)
+	_check(q["unmet"][0]["key"] == "season" and q["unmet"][0]["text"] != "", "a plant out of season is an unmet requirement with a sentence")
+	G.S["step"] = 40
+	_check(A.perform("forest_pick", A.farmer, task)["done"], "…in season it works")
+	var rep: Dictionary = A.perform("forest_pick", A.farmer, task)
+	_check(not rep["done"] and rep["failed"] == "rest" and rep["message"] != "" and G.forest.basket().size() == 1, "the spot rests for a few questions: refused with a sentence")
+	var dig := {"spot": "stream", "tid": "clay"}
+	_check(A.check("forest_dig", A.farmer, dig)["unmet"][0]["key"] == "tool", "digging needs the shovel")
+	G.S["unlocked"]["wooden_shovel"] = true
+	G.invalidate_caps()
+	_check(A.check("forest_dig", A.farmer, dig)["ok"], "…and with the shovel it works")
+	# the basket's room is a requirement with its own key; energy comes after it
+	G.S["forest"]["basket"] = []
+	for i in range(G.forest.capacity()): G.S["forest"]["basket"].append({"claim": "thyme", "real": "thyme"})
+	G.S["energy"] = 0.0
+	var full: Dictionary = A.perform("forest_find", A.farmer, {"spot": "glade", "tid": "chamomile", "option": "chamomile"})
+	_check(not full["done"] and full["failed"] == "basket_full" and full["message"] != "", "a full basket is refused with its own reason, before the energy")
+	_check(A.check("forest_dig", A.farmer, dig)["unmet"][0]["key"] == "energy", "digging does not need room in the basket, only energy")
+	G.S["energy"] = 0.0
+	var look: Dictionary = A.perform("forest_look", A.farmer, {"spot": "moonstone", "tid": "hum"})
+	_check(look["done"] and G.inventory.count("quartz") == 1.0 and look["gained"].get("quartz", 0.0) == 1.0, "a look costs no energy and what it gives goes into the store")
+	_check(A.perform("forest_leave", A.farmer)["done"] and not G.forest.inside(), "going out works")
+
+## The village trip: the written base energy times the errand multiplier times what the road saves, rounded up, at least the minimum; no skill, tool-of-the-trade or buff changes it.
+func _price_match_trip(label: String) -> void:
+	var A = G.actions
+	var who = A.farmer
+	var d: Dictionary = G.meta["trip"]["energy"]
+	for road in [false, true]:
+		G.S["unlocked"]["road_5"] = road
+		G.invalidate_caps()
+		G.S["trip"] = {"phase": "", "bought": 0.0}
+		var lvl := int(round(G.g("roadLevel", 1.0)))
+		var f := maxf(float(d["roadFloor"]), 1.0 - float(d["roadSaving"]) * float(lvl - 1))
+		var want := maxi(int(d["min"]), int(ceilf(float(d["base"]) * G.m("energy:errand") * f - 0.0001)))
+		G.S["energy"] = G.needs.energy_max()
+		var q: Dictionary = A.check("village_trip", who)
+		_check(q["ok"] and is_equal_approx(float(q["cost"]["energy"]), float(want)) and q["cost"].size() == 1, "the trip costs the errand energy: %d (%s, road %s)" % [want, label, road])
+		costs_seen[snappedf(float(want), 0.001)] = true
+		for hair in [false, true]:
+			G.S["trip"] = {"phase": "", "bought": 0.0}
+			G.S["energy"] = float(want) - 0.01 if hair else float(want)
+			var rep: Dictionary = A.perform("village_trip", who)
+			if hair: _check(not rep["done"] and rep["failed"] == "energy" and G.trip.phase() == "" and is_equal_approx(float(G.S["energy"]), float(want) - 0.01), "a hair too little energy starts no walk (%s)" % label)
+			else: _check(rep["done"] and G.S["energy"] < 0.001 and G.trip.walking() and is_equal_approx(float(rep["spent"]["energy"]), float(want)), "the trip takes exactly the energy check says and the walk begins (%s)" % label)
+
+func _trip_requirements() -> void:
+	var A = G.actions
+	G.reset_game()
+	G.S["energy"] = 20.0
+	_check(A.perform("village_trip", A.farmer)["done"] and G.trip.walking(), "a trip can start at home")
+	var e1: float = G.S["energy"]
+	var rep: Dictionary = A.perform("village_trip", A.farmer)
+	_check(not rep["done"] and rep["failed"] == "on_the_way" and rep["message"] != "" and G.S["energy"] == e1, "you cannot start a second trip: refused with a sentence, nothing taken")
+	G.trip.arrive()
+	_check(A.check("village_trip", A.farmer)["unmet"][0]["key"] == "on_the_way", "…not on the square either")
 
 func _check(ok: bool, what: String) -> void:
 	checks += 1

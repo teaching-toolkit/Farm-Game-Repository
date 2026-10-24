@@ -12,7 +12,7 @@ func _ready() -> void:
 	G.meta["trip"]["base"] = 10.0                         # the test's own numbers, whatever the data says
 	G.meta["trip"]["devices"] = {"fiber_bag": 18, "wicker_pack": 28, "wheelbarrow": 70}
 	_check(T.capacity() == 10.0 and T.device() == "", "in the arms the farmer carries 10 (%s)" % T.capacity())
-	_check(float(G.trip.data().get("base", 0)) > 0.0 and G.trip.energy_cost() >= 1, "the real trip data has a base and a cost (%d ⚡)" % G.trip.energy_cost())
+	_check(float(G.trip.data().get("base", 0)) > 0.0 and _cost() >= 1, "the real trip data has a base and a cost (%d ⚡)" % _cost())
 	_check(T.is_empty() and T.load_now() == 0.0 and T.room() == 10.0, "a new bag is empty")
 	G.S["inv"].clear()
 	G.inventory.add_item("stone", 5.0, true)      # heavy: 4 load each
@@ -46,11 +46,12 @@ func _ready() -> void:
 	G.S["coins"] = 100.0
 	_check(not T.at_square() and not G.trade.sell("egg", 1.0), "at home nothing is sold")
 	_check(not G.trade.buy_seeds("crop_wheat", 1) and G.S["coins"] == 100.0, "…or bought")
-	_check(T.energy_cost() >= 1 and T.can_go()["ok"], "a trip costs energy and can be started")
+	_check(_cost() >= 1 and G.actions.check("village_trip", G.actions.farmer)["ok"], "a trip costs energy and can be started")
 	T.pack("egg", 2)
 	var e0: float = G.S["energy"]
-	_check(T.go() and T.walking() and is_equal_approx(G.S["energy"], e0 - T.energy_cost()), "going takes the energy and starts the walk")
-	_check(not T.go(), "not twice")
+	var cost0: int = _cost()
+	_check(_go() and T.walking() and is_equal_approx(G.S["energy"], e0 - cost0), "going takes the energy and starts the walk")
+	_check(not _go(), "not twice")
 	_check(not G.trade.sell("egg", 1.0), "on the way nothing is sold either")
 	T.arrive()
 	_check(T.at_square() and int(G.S["trips"]) == 1, "then the village square")
@@ -75,10 +76,10 @@ func _ready() -> void:
 	G.S["trip"] = {"phase": "", "bought": 0.0}
 	_check(not G.progression.can_unlock("d_veg_soup")["ok"], "at home no order can be handed over")
 	# the energy of a trip: a better road makes it cheaper, never below the minimum
-	var c1: int = T.energy_cost()
+	var c1: int = _cost()
 	G.S["unlocked"]["road_5"] = true
 	G.invalidate_caps()
-	_check(T.energy_cost() <= c1 and T.energy_cost() >= int(T.data()["energy"]["min"]), "a better road does not make the trip dearer (%d → %d ⚡)" % [c1, T.energy_cost()])
+	_check(_cost() <= c1 and _cost() >= int(T.data()["energy"]["min"]), "a better road does not make the trip dearer (%d → %d ⚡)" % [c1, _cost()])
 	T.unpack_all()
 	# counters for the reveal
 	T.pack("egg", 1)
@@ -90,6 +91,13 @@ func _ready() -> void:
 	_check(bad.is_empty(), "every item weighs something %s" % str(bad))
 	print("TRIP %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])
 	get_tree().quit(1 if fails > 0 else 0)
+
+## The trip's energy and start go through the actions system (chore "village_trip").
+func _cost() -> int:
+	return int(G.actions.check("village_trip", G.actions.farmer)["cost"]["energy"])
+
+func _go() -> bool:
+	return G.actions.perform("village_trip", G.actions.farmer)["done"]
 
 func _check(ok: bool, what: String) -> void:
 	checks += 1

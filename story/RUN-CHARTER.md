@@ -46,6 +46,7 @@ story/
 
 - A **slice** is a *vertical* tracer bullet: one thread or one stretch of play taken from the idea down to concrete events, people, places and facts, touching character, world, outline and bible only as far as that thread needs. Not "all characters, then all world".
 - **Parallel safety:** an author writes only inside its own `slices/<id>-<slug>/` folder (and may append to `QUESTIONS.md`, one block, at the end). It reads other slices' dossiers but never edits them. The integration tickets later merge dossiers into canon.
+- **Binding rulings:** `slices/DECISIONS.md` (read it right after this charter; it settles the contradictions of ticket 00).
 - **Fresh eye:** each author and reviewer starts cold. No agent gets the previous agent's reasoning, only files.
 
 ## 5. The shape of an event seed

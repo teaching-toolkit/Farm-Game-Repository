@@ -31,11 +31,11 @@ func _part_signpost() -> void:
 	if not ords.is_empty():
 		M.widgets.section(tr("📦 Orders to deliver"), tr("Hand them over in the village. What they need must be in your bag."))
 		for id in ords: M.content.add_child(_order_card(id, false))
-	var ck: Dictionary = G.trip.can_go()
-	var go := UI.button(tr("🚶 Go to the village  (−%d ⚡)") % G.trip.energy_cost(), _go, ck["ok"], UI.GREEN, 22)
+	var ck: Dictionary = G.actions.check("village_trip", G.actions.farmer)
+	var go := UI.button(tr("🚶 Go to the village  (−%d ⚡)") % int(ck["cost"]["energy"]), _go, ck["ok"], UI.GREEN, 22)
 	go.custom_minimum_size = Vector2(0, 62)
 	M.content.add_child(go)
-	if not ck["ok"]: M.content.add_child(UI.label(str(ck["why"]), 15, UI.RED, true))
+	if not ck["ok"]: M.content.add_child(UI.label(str(ck["unmet"][0]["text"]), 15, UI.RED, true))
 	M.content.add_child(UI.label(tr("You can go with an empty bag too, just to buy things."), 14, UI.MUTED, true))
 
 func _bag_summary() -> void:
@@ -135,7 +135,7 @@ func _back_home() -> void:
 
 ## Confirms the packed bag: the energy is taken and the one Time Quiz question on the way opens.
 func _go() -> void:
-	if G.trip.go(): M.timequiz.show_trip_question()
+	if G.actions.perform("village_trip", G.actions.farmer)["done"]: M.timequiz.show_trip_question()
 
 ## The seed merchant and the other traders on the square: buying within the room left for the way home.
 func _part_shops() -> void:

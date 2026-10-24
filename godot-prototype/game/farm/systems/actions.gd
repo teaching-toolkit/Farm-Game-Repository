@@ -30,7 +30,7 @@ func _init(game: FarmGame) -> void:
 	farmer = Doer.new(game)
 
 ## A chore's effect and, if it has any of its own, its requirements.
-##   effect:   func(who: Doer, args: Dictionary, cost: Dictionary) -> Dictionary   (returns {"gained": {...}}; does its own statistics and floating text)
+##   effect:   func(who: Doer, args: Dictionary, cost: Dictionary) -> Dictionary   (returns {"gained": {...}, "result": {...} (optional: what the caller needs to know, e.g. whether a pick was right)}; does its own statistics and floating text)
 ##   requires: func(who: Doer, args: Dictionary) -> Array of {"key": reason key, "text": a sentence for the child}   (read-only)
 ##   amount:   func(who: Doer, args: Dictionary) -> float   (optional; how many units of work this call is: the base energy is per unit; read-only)
 ##   extra:    func(who: Doer, args: Dictionary) -> {"cost": {...}, "base": {...}}   (optional; costs of other kinds that depend on the call, e.g. the water of a planting or the feed of animals; spent as written; read-only)
@@ -41,17 +41,19 @@ func register(chore: String, effect: Callable, requires := Callable(), amount :=
 func data(chore: String) -> Dictionary:
 	return G.meta.get("chores", {}).get(chore, {})
 
+## A number written in the data: a number, or the path of a number written elsewhere ("water.fetchEnergy").
+func _number(v: Variant) -> float:
+	if typeof(v) == TYPE_STRING:
+		var node: Variant = G.meta
+		for key in String(v).split("."): node = node.get(key, {}) if typeof(node) == TYPE_DICTIONARY else {}
+		v = node if typeof(node) in [TYPE_INT, TYPE_FLOAT] else 0.0
+	return float(v)
+
 ## The base cost of a chore, kind by kind. A number may be the path of a number written elsewhere ("water.fetchEnergy").
 func base_cost(chore: String) -> Dictionary:
 	var out := {}
 	var base: Dictionary = data(chore).get("base", {})
-	for kind in base:
-		var v = base[kind]
-		if typeof(v) == TYPE_STRING:
-			var node: Variant = G.meta
-			for key in String(v).split("."): node = node.get(key, {}) if typeof(node) == TYPE_DICTIONARY else {}
-			v = node if typeof(node) in [TYPE_INT, TYPE_FLOAT] else 0.0
-		out[kind] = float(v)
+	for kind in base: out[kind] = _number(base[kind])
 	return out
 
 ## The base cost for this call: the written base, times the units of work if the chore counts them (weeds pulled, stones picked).
@@ -66,11 +68,14 @@ func call_base(chore: String, who: Doer, args := {}) -> Dictionary:
 func effective_cost(chore: String, who: Doer, args := {}) -> Dictionary:
 	var cost := call_base(chore, who, args)
 	var d := data(chore)
-	if cost.has("energy") and not bool(d.get("raw", false)):       # raw: a fixed energy that no skill, tool, season or buff changes (a party)
-		cost["energy"] = G.needs.ecost(str(d.get("cat", "")), float(cost["energy"]), str(d.get("station", "")))
+	if cost.has("energy"):
+		if not bool(d.get("raw", false)):       # raw: no skill, tool, season or buff changes the energy (a party)
+			cost["energy"] = G.needs.ecost(str(d.get("cat", "")), float(cost["energy"]), str(d.get("station", "")))
 		var c: Dictionary = _chores.get(chore, {})
 		var skip: bool = c.has("no_mult") and c["no_mult"].is_valid() and bool(c["no_mult"].call(who, args))
 		if str(d.get("mult", "")) != "" and not skip: cost["energy"] = float(cost["energy"]) * G.m(str(d["mult"]))
+		if str(d.get("round", "")) == "up": cost["energy"] = ceilf(float(cost["energy"]) - 0.0001)
+		if d.has("min"): cost["energy"] = maxf(float(cost["energy"]), _number(d["min"]))
 	if _chores.has(chore) and _chores[chore]["extra"].is_valid(): cost.merge(_chores[chore]["extra"].call(who, args)["cost"], true)
 	return cost
 
@@ -88,7 +93,7 @@ func check(chore: String, who: Doer, args := {}) -> Dictionary:
 	return {"ok": unmet.is_empty(), "cost": cost, "base": call_base(chore, who, args), "unmet": unmet}
 
 ## Does the chore: refuses (and says why, once) if a requirement is unmet; otherwise spends the cost, runs the effect and the follow-ups.
-## Returns {"done", "failed" (the key of the first unmet requirement), "spent", "gained", "message"}.
+## Returns {"done", "failed" (the key of the first unmet requirement), "spent", "gained", "result", "message"}.
 func perform(chore: String, who: Doer, args := {}) -> Dictionary:
 	var rep := _run(chore, who, args)
 	if not rep["done"]:
@@ -116,7 +121,7 @@ func _run(chore: String, who: Doer, args: Dictionary) -> Dictionary:
 	var q := check(chore, who, args)
 	if not q["ok"]:
 		var first: Dictionary = q["unmet"][0]
-		return {"done": false, "failed": first["key"], "spent": {}, "gained": {}, "message": str(first["text"])}
+		return {"done": false, "failed": first["key"], "spent": {}, "gained": {}, "result": {}, "message": str(first["text"])}
 	var cost: Dictionary = q["cost"]
 	if cost.has("energy"): who.take_energy(float(cost["energy"]))
 	if cost.has("water"): who.take_water(float(cost["water"]))
@@ -126,4 +131,4 @@ func _run(chore: String, who: Doer, args: Dictionary) -> Dictionary:
 	var d := data(chore)
 	if str(d.get("wear", "")) != "": G.crafting.wear_polish(str(d["wear"]))
 	if str(d.get("practice", "")) != "": G.skills.practice(str(d["practice"]))
-	return {"done": true, "failed": "", "spent": cost, "gained": result.get("gained", {}), "message": ""}
+	return {"done": true, "failed": "", "spent": cost, "gained": result.get("gained", {}), "result": result.get("result", {}), "message": ""}

@@ -11,10 +11,10 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Dossier written in the slice folder; every new thing labelled 💡; inventions listed in an **Inventions** section; ❓ and ✅-touching proposals appended (one block) to `QUESTIONS.md`.
-- [ ] Nothing in the frozen zone or in live canon files was edited.
-- [ ] Event seeds use the charter §5 shape and name a trigger the game can read (see `slices/00-digest/node-map.md`).
-- [ ] Self-check against live-wire-style: every event is a want meeting an obstacle; registers vary; the farmer's spine drives at least some of the jokes; nothing explains itself.
-- [ ] Ticket status set to `done` and one line added to `RUN-LOG.md`.
+- [x] Dossier written in the slice folder; every new thing labelled 💡; inventions listed in an **Inventions** section; ❓ and ✅-touching proposals appended (one block) to `QUESTIONS.md`.
+- [x] Nothing in the frozen zone or in live canon files was edited.
+- [x] Event seeds use the charter §5 shape and name a trigger the game can read (see `slices/00-digest/node-map.md`).
+- [x] Self-check against live-wire-style: every event is a want meeting an obstacle; registers vary; the farmer's spine drives at least some of the jokes; nothing explains itself.
+- [x] Ticket status set to `done` and one line added to `RUN-LOG.md`.

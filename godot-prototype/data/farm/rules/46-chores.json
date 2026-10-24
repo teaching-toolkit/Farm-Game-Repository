@@ -1,6 +1,6 @@
 {
   "chores": {
-    "note": "What each chore costs and trains, read by the actions system (game/farm/systems/actions.gd, farm-actions spec). base = the cost before skills, tools, the season and buffs (a number, or the path of a number written elsewhere); cat = the energy category (rules/10-farming.json gather, field, ...); mult = a second modifier (a chore may switch it off for some calls in code: planting an orchard tree) that multiplies the energy after the rest (optional; the old snow and weed code did this, kept so no number moves), raw = the energy is the written number and nothing changes it (optional; the party and the visit), wear = the polish that wears, practice = the skill family that trains (both optional). A chore that works on a stretch of patch (weed, stones) or on a number of animals names its amount in code: the base energy is per unit. Other cost kinds that depend on the call (the water of a planting, the feed of the animals) come from code too. The effect of a chore stays in the system that owns it. The progression explorer reads water.fetchEnergy, which is why fetch_water points to it.",
+    "note": "What each chore costs and trains, read by the actions system (game/farm/systems/actions.gd, farm-actions spec). base = the cost before skills, tools, the season and buffs (a number, or the path of a number written elsewhere); cat = the energy category (rules/10-farming.json gather, field, ...); mult = a second modifier (a chore may switch it off for some calls in code: planting an orchard tree) that multiplies the energy after the rest (optional; the old snow and weed code did this, kept so no number moves), raw = no skill, tool of the trade, season or buff changes the energy (optional; the party and the visit; a `mult` still applies), round = up rounds the energy up to a whole number and min is the least it can be (optional; the village trip), wear = the polish that wears, practice = the skill family that trains (both optional). The forest's trips cost no energy of their own (the question each way is asked by the interface), a look at a spot costs none, and the other tasks of a spot cost the gathering energy. A chore that works on a stretch of patch (weed, stones) or on a number of animals names its amount in code: the base energy is per unit. Other cost kinds that depend on the call (the water of a planting, the feed of the animals) come from code too. The effect of a chore stays in the system that owns it. The progression explorer reads water.fetchEnergy, which is why fetch_water points to it.",
     "fetch_water": {
       "base": {"energy": "water.fetchEnergy"},
       "cat": "gather"
@@ -46,6 +46,38 @@
     "muck_out": {
       "base": {"energy": "muck.energyPerMuck"},
       "cat": "animal"
+    },
+    "forest_find": {
+      "base": {"energy": "forest.pickEnergy"},
+      "cat": "gather",
+      "practice": "healing"
+    },
+    "forest_pick": {
+      "base": {"energy": "forest.pickEnergy"},
+      "cat": "gather",
+      "practice": "healing"
+    },
+    "forest_dig": {
+      "base": {"energy": "forest.pickEnergy"},
+      "cat": "gather",
+      "practice": "healing"
+    },
+    "forest_look": {
+      "base": {},
+      "practice": "healing"
+    },
+    "forest_enter": {
+      "base": {}
+    },
+    "forest_leave": {
+      "base": {}
+    },
+    "village_trip": {
+      "base": {"energy": "trip.energy.base"},
+      "raw": true,
+      "mult": "energy:errand",
+      "round": "up",
+      "min": "trip.energy.min"
     },
     "throw_party": {
       "base": {"energy": "well.party.energy"},

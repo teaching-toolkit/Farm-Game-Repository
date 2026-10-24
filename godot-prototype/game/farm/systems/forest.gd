@@ -30,18 +30,34 @@ func open() -> bool:
 func inside() -> bool:
 	return bool(_s()["in"])
 
-func enter() -> bool:
-	if not open() or inside(): return false
+# ------------------------------------------------------------------ the chores
+
+## The forest's chores in the actions system (rules/46-chores.json): the cost and the check are there, the effects and the requirements are here.
+## Going in and out: no args. A task of a spot is "forest_<kind>" (find, pick, dig, look) with args {"spot", "tid"} and, for a find, {"option"} (the
+## plant chosen), for a pick {"part"}. The Time Quiz question each way is asked by the interface (like the market trip).
+func register_chores() -> void:
+	G.actions.register("forest_enter", _enter_effect, _enter_requires)
+	G.actions.register("forest_leave", _leave_effect, _leave_requires)
+	for kind in ["find", "pick", "dig", "look"]:
+		G.actions.register("forest_" + kind, _task_effect, _task_requires)
+
+func _enter_requires(_who, _args: Dictionary) -> Array:
+	if not open(): return [{"key": "closed", "text": ""}]
+	if inside(): return [{"key": "inside", "text": ""}]
+	return []
+
+func _enter_effect(_who, _args: Dictionary, _cost: Dictionary) -> Dictionary:
 	_s()["in"] = true
 	_s()["trips"] = int(_s()["trips"]) + 1
-	G.save_game(); G.changed.emit()
-	return true
+	return {"gained": {}}
 
-func leave() -> bool:
-	if not inside(): return false
+func _leave_requires(_who, _args: Dictionary) -> Array:
+	if not inside(): return [{"key": "outside", "text": ""}]
+	return []
+
+func _leave_effect(_who, _args: Dictionary, _cost: Dictionary) -> Dictionary:
 	_s()["in"] = false
-	G.save_game(); G.changed.emit()
-	return true
+	return {"gained": {}}
 
 # ------------------------------------------------------------------ the tasks
 
@@ -56,55 +72,38 @@ func in_season(t: Dictionary) -> bool:
 func rest_left(spot: String, tid: String) -> int:
 	return maxi(0, int(_s()["rest"].get(spot + ":" + tid, 0)) - int(G.S["step"]))
 
-func pick_energy() -> float:
-	return G.needs.ecost("gather", float(data().get("pickEnergy", 2)))
-
-## Can this task be done now? {"ok", "why"}
-func can_do(spot: String, tid: String) -> Dictionary:
+## What stops this task now (read-only): the first unmet requirement. The energy is the module's.
+func _task_requires(_who, args: Dictionary) -> Array:
+	var spot: String = args["spot"]
+	var tid: String = args["tid"]
 	var t := task(spot, tid)
-	if t.is_empty() or not inside(): return {"ok": false, "why": ""}
-	if not in_season(t): return {"ok": false, "why": tr("Not in this season.")}
-	if rest_left(spot, tid) > 0: return {"ok": false, "why": tr("It needs a few questions to grow back.")}
-	if t["kind"] == "dig" and not G.done(str(t.get("tool", ""))): return {"ok": false, "why": tr("You need a shovel.")}
-	if (t["kind"] == "find" or t["kind"] == "pick") and basket().size() >= capacity(): return {"ok": false, "why": tr("Your basket is full.")}
-	if float(G.S["energy"]) + 0.001 < pick_energy() and t["kind"] != "look": return {"ok": false, "why": tr("⚡ Too tired. Rest a little (tap ⚡).")}
-	return {"ok": true, "why": ""}
+	if t.is_empty() or not inside(): return [{"key": "outside", "text": ""}]
+	if not in_season(t): return [{"key": "season", "text": tr("Not in this season.")}]
+	if rest_left(spot, tid) > 0: return [{"key": "rest", "text": tr("It needs a few questions to grow back.")}]
+	if t["kind"] == "dig" and not G.done(str(t.get("tool", ""))): return [{"key": "tool", "text": tr("You need a shovel.")}]
+	if (t["kind"] == "find" or t["kind"] == "pick") and basket().size() >= capacity(): return [{"key": "basket_full", "text": tr("Your basket is full.")}]
+	return []
 
-func _spend(spot: String, tid: String) -> void:
+## The task is done: the spot rests; a find brings home the option chosen (the child thinks it is the plant of the task), a pick the right
+## part of the plant (a wrong part is no use and nothing is picked), a dig or a look gives straight into the store (clay, sticks, a crystal).
+## The result says whether the choice was right.
+func _task_effect(_who, args: Dictionary, _cost: Dictionary) -> Dictionary:
+	var spot: String = args["spot"]
+	var tid: String = args["tid"]
 	var t := task(spot, tid)
-	if t["kind"] != "look": G.S["energy"] = float(G.S["energy"]) - pick_energy()
 	_s()["rest"][spot + ":" + tid] = int(G.S["step"]) + int(data().get("refill", 4))
-	G.skills.practice("healing")
-
-## find: the option chosen is what lands in the basket; the child thinks it is the plant of the task.
-func do_find(spot: String, tid: String, option_id: String) -> Dictionary:
-	if not can_do(spot, tid)["ok"]: return {"ok": false}
-	var t := task(spot, tid)
-	_spend(spot, tid)
-	basket().append({"claim": str(t["plant"]), "real": option_id})
-	G.save_game(); G.changed.emit()
-	return {"ok": true, "good": option_id == t["plant"]}
-
-## pick: the right part of the plant lands in the basket; a wrong part is no use (and nothing is picked).
-func do_pick(spot: String, tid: String, part: String) -> Dictionary:
-	if not can_do(spot, tid)["ok"]: return {"ok": false}
-	var t := task(spot, tid)
-	_spend(spot, tid)
-	var good: bool = part == str(t["part"])
-	if good: basket().append({"claim": str(t["plant"]), "real": str(t["plant"])})
-	G.save_game(); G.changed.emit()
-	return {"ok": true, "good": good}
-
-## dig and look: what they give goes straight into the store (clay, sticks, a crystal).
-func do_gives(spot: String, tid: String) -> Dictionary:
-	if not can_do(spot, tid)["ok"]: return {"ok": false}
-	var t := task(spot, tid)
-	_spend(spot, tid)
+	match str(t["kind"]):
+		"find":
+			basket().append({"claim": str(t["plant"]), "real": str(args["option"])})
+			return {"gained": {}, "result": {"good": str(args["option"]) == str(t["plant"])}}
+		"pick":
+			var good: bool = str(args["part"]) == str(t["part"])
+			if good: basket().append({"claim": str(t["plant"]), "real": str(t["plant"])})
+			return {"gained": {}, "result": {"good": good}}
 	var got := {}
 	for k in t.get("gives", {}): got[k] = G.inventory.add_item(k, float(t["gives"][k]), true)
 	G.inventory.emit_gained("forest:" + spot, got)
-	G.save_game(); G.changed.emit()
-	return {"ok": true, "got": got}
+	return {"gained": got}
 
 # ------------------------------------------------------------------ the basket
 
