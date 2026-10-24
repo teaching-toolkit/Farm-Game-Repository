@@ -162,17 +162,21 @@ func seed_price(cid: String) -> float:
 func buy_price(merchant: String, k: String) -> float:
 	return float(G.nodes[merchant].get("sells", {}).get(k, 0)) * G.trust.price_factor(merchant)
 
+## Pay a trader through the one pay function and word a refusal.
+func _pay(price: float) -> bool:
+	match G.lord.pay_coins(price):
+		"lord": G.say(tr("🏮 The Lord's share first: pay Pieter at the gate."))
+		"coins": G.say(tr("🪙 Not enough coins."))
+		_: return true
+	return false
+
 func buy_seeds(cid: String, q: int) -> bool:
 	if not _at_square(): return false
 	var room := G.trip.can_buy(G.inventory.seed_weight())
 	if room < q:
 		if room < 1: G.say(tr("🎒 No room to carry that home.")); return false
 		q = room
-	if G.lord.blocks_coins(): G.say(tr("🏮 The Lord's share first: pay Pieter at the gate.")); return false
-	var c := seed_price(cid) * q
-	if G.S["coins"] + 0.0001 < c: G.say(tr("🪙 Not enough coins.")); return false
-	G.S["coins"] -= c
-	G.paid.emit(c)
+	if not _pay(seed_price(cid) * q): return false
 	G.S["seeds"][cid] = float(G.S["seeds"].get(cid, 0.0)) + q
 	G.trip.note_bought(G.inventory.seed_weight() * q)
 	if G.rewards.roll(G.rewards.luck_event("seed_bargain")): G.S["seeds"][cid] = float(G.S["seeds"][cid]) + 1.0; G.say(tr("🎁 The seed merchant adds one for free."))
@@ -189,11 +193,7 @@ func buy_item(merchant: String, k: String, q: int) -> bool:
 	if room < q:
 		if room < 1: G.say(tr("🎒 No room to carry that home.")); return false
 		q = room
-	if G.lord.blocks_coins(): G.say(tr("🏮 The Lord's share first: pay Pieter at the gate.")); return false
-	var price := buy_price(merchant, k) * q
-	if G.S["coins"] + 0.0001 < price: G.say(tr("🪙 Not enough coins.")); return false
-	G.S["coins"] -= price
-	G.paid.emit(price)
+	if not _pay(buy_price(merchant, k) * q): return false
 	G.buying = true
 	G.inventory.add_item(k, q)
 	G.buying = false

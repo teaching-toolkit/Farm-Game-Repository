@@ -78,29 +78,6 @@ func recipe_batch(rid: String) -> int:
 	if not (recipe_cat(rid) in G.CARRY_CATS): return 1
 	return 1 + maxi(0, int(round(G.g("carry", 0.0))))
 
-## A recipe's cost for n loads at once (n < 0: the batch one tap makes, recipe_batch).
-func recipe_cost(rid: String, n := -1) -> Dictionary:
-	var r = G.recipes[rid]
-	var b := float(recipe_batch(rid) if n < 0 else n)
-	var c := {}
-	var fam: String = G.skills.family_of_station(r["station"])
-	for k in r.get("inputs", {}):
-		c[k] = float(r["inputs"][k]) * G.m("in:" + r["station"] + ":" + k) * G.skills.input_mult(fam) * b
-	var e := G.needs.ecost(recipe_cat(rid), float(r.get("energy", 0)), chain_root(r["station"])) * b
-	if e > 0.0: c["energy"] = e
-	if float(r.get("water", 0)) > 0.0: c["water"] = float(r["water"]) * b
-	return c
-
-## A recipe's cost before upgrades (see node_cost_base), for the same batch.
-func recipe_cost_base(rid: String) -> Dictionary:
-	var r = G.recipes[rid]
-	var b := float(recipe_batch(rid))
-	var c := {}
-	for k in r.get("inputs", {}): c[k] = float(r["inputs"][k]) * b
-	if float(r.get("energy", 0)) > 0.0: c["energy"] = float(r["energy"]) * b
-	if float(r.get("water", 0)) > 0.0: c["water"] = float(r["water"]) * b
-	return c
-
 func recipe_fuel(rid: String) -> float:
 	var r = G.recipes[rid]
 	return float(r.get("fuel", 0)) * G.m("fuel") * G.m("fuel:" + r["station"])
@@ -158,36 +135,94 @@ func stoke(need: float) -> float:
 		G.say(tr("🪵 No wood to stoke with: gather sticks at the Field Edge, or bring straw or logs."))
 	return added
 
-func start_recipe(rid: String) -> bool:
+# ------------------------------------------------------------------ the recipe as a chore
+
+## Making a recipe at its station is the chore "recipe" of the actions system, with args {"rid"} (and {"n"}: how many loads, when the caller fixes it;
+## without it a tap makes the biggest load the farmer can pay for, at most recipe_batch). What it costs is read from the recipe (recipes.json) here
+## and nowhere else: the energy through the chore's profile (the recipe's own category and station), the inputs and the water as extra costs.
+## The fuel is the woodpile's, not an item: it is checked here and taken in `before`.
+func register_chores() -> void:
+	G.actions.register("recipe", _recipe_effect, _recipe_requires, _recipe_amount, _recipe_extra, Callable(), _recipe_profile, _recipe_before)
+
+func _recipe_profile(_who, args: Dictionary) -> Dictionary:
+	var r = G.recipes[args["rid"]]
+	return {"base": {"energy": float(r["energy"])} if float(r.get("energy", 0)) > 0.0 else {}, "cat": recipe_cat(args["rid"]), "station": chain_root(r["station"]),
+		"slack": 0.0001}       # the old recipe check let a hair less energy through than the other chores did (0.0001, not 0.001); kept so the golden runs stay identical
+
+## How many loads this call makes (carrying gear: a bigger load when there is enough for it, else as much as there is).
+func _recipe_amount(who, args: Dictionary) -> float:
+	if args.has("n"): return float(args["n"])
+	var n := recipe_batch(args["rid"])
+	while n > 1 and not G.pace.missing_cost(G.actions.effective_cost("recipe", who, _with_n(args, n))).is_empty(): n -= 1
+	return float(n)
+
+func _with_n(args: Dictionary, n: int) -> Dictionary:
+	var a := args.duplicate()
+	a["n"] = n
+	return a
+
+## The inputs (the skill family saves some) and the water, for the loads of this call; the base is what they cost before skills and upgrades.
+func _recipe_extra(who, args: Dictionary) -> Dictionary:
+	var r = G.recipes[args["rid"]]
+	var b := _recipe_amount(who, args)
+	var cost := {}
+	var base := {}
+	var fam: String = G.skills.family_of_station(r["station"])
+	for k in r.get("inputs", {}):
+		cost[k] = float(r["inputs"][k]) * G.m("in:" + r["station"] + ":" + k) * G.skills.input_mult(fam) * b
+		base[k] = float(r["inputs"][k]) * b
+	if float(r.get("water", 0)) > 0.0:
+		cost["water"] = float(r["water"]) * b
+		base["water"] = float(r["water"]) * b
+	return {"cost": cost, "base": base}
+
+## In the order the old code asked: not open, the spot still refilling, the station busy, what is kept, what is missing, the fuel. (The energy comes last, from the module.)
+func _recipe_requires(who, args: Dictionary) -> Array:
+	var rid: String = args["rid"]
 	var r = G.recipes[rid]
-	if not recipe_open(rid): G.say(tr("🔒 Not yet.")); return false
+	if not recipe_open(rid): return [{"key": "locked", "text": tr("🔒 Not yet.")}]
 	var root := chain_root(r["station"])
-	var running: Array = G.S["running"].get(root, [])
 	var now := output_now(root)
-	if now and recipe_left(rid) > 0.0: G.say(tr("⏳ That spot needs a question to refill.")); return false
-	if running.size() >= station_slots(root):
-		if now: G.say(tr("⏳ You have gathered all you can for now. Answer a Time Quiz question."))
-		else: G.say(tr("⏳ %s is busy. Answer Time Quiz questions to finish the batch.") % G.nodes[active_of(root)]["name"])
-		return false
+	if now and recipe_left(rid) > 0.0: return [{"key": "refill", "text": tr("⏳ That spot needs a question to refill.")}]
+	if (G.S["running"].get(root, []) as Array).size() >= station_slots(root):
+		if now: return [{"key": "busy", "text": tr("⏳ You have gathered all you can for now. Answer a Time Quiz question.")}]
+		return [{"key": "busy", "text": tr("⏳ %s is busy. Answer Time Quiz questions to finish the batch.") % G.nodes[active_of(root)]["name"]}]
+	var out := []
 	for k in r.get("keeps", []):
-		if G.inventory.count(k) < 1.0: G.say(tr("Needs %s %s (kept, not used up).") % [G.iemoji(k), G.iname(k)]); return false
-	# a bigger load (carrying gear) when there is enough for it, else as much as there is
-	var n := recipe_batch(rid)
-	while n > 1 and not G.pace.missing_cost(recipe_cost(rid, n)).is_empty(): n -= 1
-	var c := recipe_cost(rid, n)
-	var miss := G.pace.missing_cost(c)
+		if G.inventory.count(k) < 1.0:
+			out.append({"key": "keeps", "text": tr("Needs %s %s (kept, not used up).") % [G.iemoji(k), G.iname(k)]})
+			break
+	var cost := G.actions.effective_cost("recipe", who, args)
+	cost.erase("energy")        # being too tired is the module's to say
+	var miss := G.pace.missing_cost(cost)
 	if not miss.is_empty():
 		var parts := []
 		for x in miss: parts.append("%s %d more" % [G.iemoji(x["key"]), G.up(float(x["need"]) - float(x["have"]))])
-		G.say(tr("Missing: ") + ", ".join(parts)); return false
+		out.append({"key": "missing", "text": tr("Missing: ") + ", ".join(parts)})
 	var fuel := recipe_fuel(rid)
-	if fuel > 0.0:
-		if float(G.S["woodpile"]) + 0.0001 < fuel:
-			G.say(tr("🪵 Stoke the woodpile first: this needs %d fuel, the woodpile has %d.") % [G.up(fuel), G.down(G.S["woodpile"])]); return false
-		G.S["woodpile"] = float(G.S["woodpile"]) - fuel
-	if G.forest.poisons(c): return false          # a bad plant from the forest: the farmer collapses (TODO S3)
+	if fuel > 0.0 and float(G.S["woodpile"]) + 0.0001 < fuel:
+		out.append({"key": "fuel", "text": tr("🪵 Stoke the woodpile first: this needs %d fuel, the woodpile has %d.") % [G.up(fuel), G.down(G.S["woodpile"])]})
+	return out
+
+## Everything is there. Fix the loads now (what is taken changes what could be paid), take the fuel, let a bad plant from the forest strike
+## (the farmer collapses and nothing else is spent: TODO S3), and start counting the grades of the inputs that are used up.
+func _recipe_before(who, args: Dictionary, cost: Dictionary) -> Dictionary:
+	if not args.has("n"): args["n"] = int(_recipe_amount(who, args))
+	var fuel := recipe_fuel(args["rid"])
+	if fuel > 0.0: G.S["woodpile"] = float(G.S["woodpile"]) - fuel
+	if G.forest.poisons(cost): return {"key": "poisoned", "message": ""}
 	G.inventory.start_track()
-	G.pace.pay(c)
+	return {}
+
+## The grade is rolled from the inputs used up; the skill practises and the polish wears before the batch's time is worked out (a rank gained
+## now makes this batch quicker, as before), so those two are done here and not by the module's follow-ups.
+func _recipe_effect(_who, args: Dictionary, _cost: Dictionary) -> Dictionary:
+	var rid: String = args["rid"]
+	var r = G.recipes[rid]
+	var n := int(args["n"])
+	var root := chain_root(r["station"])
+	var running: Array = G.S["running"].get(root, [])
+	var now := output_now(root)
 	var input_avg := G.inventory.stop_track()          # the grades of the inputs that were used up (-1: none had a grade)
 	var grade := G.quality.roll_recipe(rid, input_avg) if makes_graded(rid) else -1
 	G.skills.practice(G.skills.family_of_station(r["station"]))
@@ -204,8 +239,7 @@ func start_recipe(rid: String) -> bool:
 		G.S["running"][root] = running
 		G.say((tr("⏳ %s: ready in %d question.") if G.up(t) == 1 else tr("⏳ %s: ready in %d questions.")) % [r.get("name", G.iname(r["outputs"].keys()[0])), G.up(t)])
 	G.rewards.job_progress("make", rid, 1.0)
-	G.save_game(); G.changed.emit()
-	return true
+	return {"gained": {}}
 
 ## Does a recipe make something that has a grade (a dish, an ingredient, a craft, cloth)?
 func makes_graded(rid: String) -> bool:

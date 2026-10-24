@@ -252,8 +252,8 @@ func _ready() -> void:
 	var sold: bool = G.trade.sell("straw", 1.0)
 	G.trip.leave()
 	var sticks0: float = G.inventory.count("stick")
-	var gathered: bool = G.crafting.start_recipe("gather_sticks")
-	var again: bool = G.crafting.start_recipe("gather_sticks")
+	var gathered: bool = G.actions.perform("recipe", G.actions.farmer, {"rid": "gather_sticks"})["done"]
+	var again: bool = G.actions.perform("recipe", G.actions.farmer, {"rid": "gather_sticks"})["done"]
 	print("clear_weeds step ", s0w, " -> ", G.progression.step_index("clear_weeds"), "/", G.progression.steps_of("clear_weeds").size(), "  straw sold: ", sold,
 		"  sticks ", sticks0, " -> ", G.inventory.count("stick"), " (gathered ", gathered, ", again right away: ", again, ")")
 	# 4e) round 6: patches open after the weeds, no seeds no planting, yields average, building steps wait, gift cards, water, players
@@ -403,7 +403,7 @@ func _ready() -> void:
 	if cook_rid != "":
 		for k in G.recipes[cook_rid].get("inputs", {}): G.inventory.add_item(k, 5.0)
 		G.S["energy"] = 20.0
-		cooked_cold = G.crafting.start_recipe(cook_rid)
+		cooked_cold = G.actions.perform("recipe", G.actions.farmer, {"rid": cook_rid})["done"]
 		stoked = G.crafting.stoke(G.crafting.recipe_fuel(cook_rid))
 	print("r8 woodpile: ", cook_rid, " cooks with an empty woodpile: ", cooked_cold, "  stoked +", stoked, " -> woodpile ", G.S["woodpile"])
 	var b0: int = G.crafting.recipe_batch("gather_sticks")
@@ -413,7 +413,7 @@ func _ready() -> void:
 	G.S["energy"] = 20.0
 	var st0: float = G.inventory.count("stick")
 	var en0: float = G.S["energy"]
-	G.crafting.start_recipe("gather_sticks")
+	G.actions.perform("recipe", G.actions.farmer, {"rid": "gather_sticks"})
 	print("r8 carry: loads per tap ", b0, " -> ", b1, "  sticks +", G.inventory.count("stick") - st0, " for ", snappedf(en0 - float(G.S["energy"]), 0.01), " energy")
 	var fib0: float = G.inventory.count("fiber")
 	G.S["energy"] = 20.0

@@ -55,10 +55,10 @@ func _ready() -> void:
 	# a recipe really costs less for a Handy cook
 	G.reset_game()
 	var rid := "porridge"
-	var base_cost: Dictionary = G.crafting.recipe_cost(rid)
+	var base_cost: Dictionary = G.actions.check("recipe", G.actions.farmer, {"rid": rid})["cost"]
 	var e0 := float(base_cost.get("energy", 0.0))
 	G.S["skills"]["cooking"] = 10
-	var cost2: Dictionary = G.crafting.recipe_cost(rid)
+	var cost2: Dictionary = G.actions.check("recipe", G.actions.farmer, {"rid": rid})["cost"]
 	var first: String = G.recipes[rid]["inputs"].keys()[0]
 	_check(float(cost2[first]) < float(base_cost[first]) and is_equal_approx(float(cost2["energy"]), e0 * 0.92), "a Handy cook pays less for porridge (%s %.2f -> %.2f, energy %.2f -> %.2f)" % [first, float(base_cost[first]), float(cost2[first]), e0, float(cost2["energy"])])
 	var e_plain: float = G.quality.recipe_expect(rid)
@@ -72,7 +72,7 @@ func _ready() -> void:
 	G.S["unlocked"]["k_rope"] = true
 	G.invalidate_caps()
 	var before: int = K.batches("fibre")
-	var ok: bool = G.crafting.start_recipe("rope")
+	var ok: bool = G.actions.perform("recipe", G.actions.farmer, {"rid": "rope"})["done"]
 	_check(ok and K.batches("fibre") == before + 1, "making rope counts a batch of fibre work")
 	var pb: int = K.batches("field")
 	G.S["seeds"]["crop_wheat"] = 5.0

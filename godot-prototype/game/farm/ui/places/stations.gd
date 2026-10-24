@@ -111,9 +111,9 @@ func station_card(root: String) -> PanelContainer:
 		var outs := []
 		var batch: int = G.crafting.recipe_batch(rid)     # carrying gear: a bigger load per tap (and more energy)
 		for k in r["outputs"]: outs.append("%s%s" % [G.iemoji(k), M.widgets.num(G.nature.scaled(rid, float(r["outputs"][k]) * G.m("out:" + r["station"]) * batch))])
-		var pay: Dictionary = G.crafting.recipe_cost(rid)
-		var c: Dictionary = pay.duplicate()
-		var base: Dictionary = G.crafting.recipe_cost_base(rid)
+		var shown: Dictionary = G.actions.check("recipe", G.actions.farmer, {"rid": rid, "n": batch})      # the price of the whole load
+		var c: Dictionary = (shown["cost"] as Dictionary).duplicate()
+		var base: Dictionary = shown["base"]
 		var fuel: float = G.crafting.recipe_fuel(rid)
 		if fuel > 0.0:
 			c["fuel"] = fuel
@@ -129,9 +129,13 @@ func station_card(root: String) -> PanelContainer:
 			("\n[color=#3c8a3c]%s → %s[/color]" % [G.money(wv.x), G.money(wv.y)]) if wv.y > 0.0 else ""], 15))
 		if G.crafting.makes_graded(rid): t.add_child(UI.label(tr("Expect: %s") % G.quality.expect_text(G.quality.recipe_expect(rid)), 14, UI.MUTED, true))
 		t.add_child(M.widgets.costs(c, base))
-		var have_all: bool = G.pace.missing_cost(G.crafting.recipe_cost(rid, 1)).is_empty() and M.widgets.have_any("fuel") + 0.001 >= fuel   # a smaller load still works
+		var cq: Dictionary = G.actions.check("recipe", G.actions.farmer, {"rid": rid})      # without a load: a smaller load still works
+		var lacking := []       # what stops it (a missing thing that is only kept is told on the tap, as before)
+		for u in cq["unmet"]:
+			if u["key"] != "keeps": lacking.append(u["key"])
+		var have_all: bool = lacking.is_empty()
 		# everything else is there, only the woodpile needs wood first: then the button stokes it
-		var stoke_now: bool = fuel > 0.0 and M.widgets.have_any("fuel") + 0.001 < fuel and G.pace.missing_cost(G.crafting.recipe_cost(rid, 1)).is_empty()
+		var stoke_now: bool = fuel > 0.0 and lacking == ["fuel"]
 		var left: float = G.crafting.recipe_left(rid)
 		var btn: Button
 		if left > 0.0:
@@ -143,7 +147,7 @@ func station_card(root: String) -> PanelContainer:
 			btn = UI.action_button("cook", _stoke.bind(fuel), can, UI.AMBER, "🪵", tr("Stoke") if can else tr("Need wood"))
 			btn.tooltip_text = tr("Put wood on the woodpile first: %d fuel.") % G.up(fuel)
 		else:
-			btn = UI.action_button(G.crafting.recipe_cat(rid), G.crafting.start_recipe.bind(rid), have_all, UI.GREEN, "", str(r.get("verb", "")))
+			btn = UI.action_button(G.crafting.recipe_cat(rid), _make.bind(rid), have_all, UI.GREEN, "", str(r.get("verb", "")))
 		M.widgets.tile_button(t, btn)
 		grid.add_child(t.get_meta("panel"))
 	if grid.get_child_count() > 0: v.add_child(grid)
@@ -163,6 +167,9 @@ func _nature_rows(v: VBoxContainer) -> void:
 		row.add_child(bv)
 		if p == "trees": row.add_child(UI.label("🌲%d  🪵%d  🌱%d" % [G.down(G.nature.trees()), G.down(G.nature.stumps() + 0.5), G.down(G.nature.saplings() + 0.5)], 16, UI.INK))
 		v.add_child(row)
+
+func _make(rid: String) -> void:
+	G.actions.perform("recipe", G.actions.farmer, {"rid": rid})
 
 func do_cut_tree(a: String, i: int) -> void:
 	if G.actions.perform("cut_tree", G.actions.farmer, {"a": a, "i": i})["done"]: M.sheets.open_sheet("patch:%s:%d" % [a, i])

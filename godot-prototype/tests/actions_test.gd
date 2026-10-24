@@ -6,7 +6,7 @@ var G
 var fails := 0
 var checks := 0
 var costs_seen := {}
-const FREE_CHORES := ["forest_look", "forest_enter", "forest_leave"]   # these cost no energy: the question each way is asked by the interface
+const FREE_CHORES := ["forest_look", "forest_enter", "forest_leave", "recipe"]   # no written cost: the forest walks cost no energy (the question each way is asked by the interface), a recipe is priced by recipes.json
 
 func _ready() -> void:
 	G = get_node("/root/Game")
@@ -45,6 +45,7 @@ func _ready() -> void:
 					_price_match_animals(label)
 					_price_match_well(label)
 					_price_match_trip(label)
+					if step == 30 and buff != 0.5: _price_match_recipes(label)
 					_price_match_forest(label)      # last: it unlocks the still-room and the shovel
 	print("price-match situations: ", situations, ", distinct costs: ", costs_seen.keys())
 	_check(costs_seen.size() >= 3, "the situations really change the cost")
@@ -55,6 +56,8 @@ func _ready() -> void:
 	_well_requirements()
 	_forest_requirements()
 	_trip_requirements()
+	_recipe_requirements()
+	_pay_function()
 	print("ACTIONS %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])
 	get_tree().quit(1 if fails > 0 else 0)
 
@@ -501,6 +504,135 @@ func _trip_requirements() -> void:
 	_check(not rep["done"] and rep["failed"] == "on_the_way" and rep["message"] != "" and G.S["energy"] == e1, "you cannot start a second trip: refused with a sentence, nothing taken")
 	G.trip.arrive()
 	_check(A.check("village_trip", A.farmer)["unmet"][0]["key"] == "on_the_way", "…not on the square either")
+
+## Every recipe at its station: what perform takes (energy, water, inputs, the woodpile's fuel) is what check says, and with a hair too little energy nothing is taken.
+## The costs come from recipes.json and the skills; the test never copies the formula.
+func _price_match_recipes(label: String) -> void:
+	var A = G.actions
+	var who = A.farmer
+	var unlocked0: Dictionary = G.S["unlocked"].duplicate()
+	var tried := 0
+	for rid in G.recipes:
+		var r: Dictionary = G.recipes[rid]
+		var clash := false
+		for o in r["outputs"]:
+			if r["inputs"].has(o) or (r.get("keeps", []) as Array).has(o): clash = true
+		if clash: continue
+		for hair in [false, true]:
+			G.S["unlocked"] = unlocked0.duplicate()
+			G.S["unlocked"][r["station"]] = true
+			for q in r.get("requires", []): G.S["unlocked"][q] = true
+			G.invalidate_caps()
+			G.S["running"] = {}
+			G.S["inv"].clear()
+			G.S["water"] = 500.0
+			G.S["woodpile"] = G.crafting.woodpile_cap()
+			G.S["energy"] = 1000.0
+			for k in r["inputs"]:
+				var item: String = G.inventory.tag_choices(k.substr(4))[0] if k.begins_with("tag:") else k
+				G.inventory.add_item(item, 60.0, true)
+			for k in r.get("keeps", []): G.inventory.add_item(k, 1.0, true)
+			var args := {"rid": rid, "n": G.crafting.recipe_batch(rid)}      # the whole load: a smaller load is the test below
+			var snap := JSON.stringify(G.S)
+			var q: Dictionary = A.check("recipe", who, args)
+			_check(JSON.stringify(G.S) == snap, "check changes nothing (%s, %s)" % [rid, label])
+			if not q["ok"]:
+				_check(false, "%s can be made with everything at hand (%s): %s" % [rid, label, str(q["unmet"])])
+				continue
+			tried += 1
+			var cost: Dictionary = q["cost"]
+			var want_e: float = float(cost.get("energy", 0.0))
+			var had := {}
+			for k in cost:
+				if k != "energy" and k != "water": had[k] = G.inventory.have(k)
+			var w0: float = G.S["water"]
+			var wood0: float = G.S["woodpile"]
+			var fuel: float = G.crafting.recipe_fuel(rid)
+			if hair and want_e <= 0.0: continue
+			G.S["energy"] = want_e - 0.01 if hair else want_e
+			var rep: Dictionary = A.perform("recipe", who, args)
+			if hair:
+				var same := is_equal_approx(float(G.S["energy"]), want_e - 0.01) and is_equal_approx(float(G.S["water"]), w0) and is_equal_approx(float(G.S["woodpile"]), wood0)
+				for k in had: same = same and is_equal_approx(G.inventory.have(k), float(had[k]))
+				_check(not rep["done"] and rep["failed"] == "energy" and same, "a hair too little energy makes no %s and takes nothing (%s)" % [rid, label])
+			else:
+				var ok: bool = rep["done"] and G.S["energy"] < 0.001 and is_equal_approx(w0 - float(G.S["water"]), float(cost.get("water", 0.0))) and is_equal_approx(wood0 - float(G.S["woodpile"]), fuel)
+				for k in had: ok = ok and is_equal_approx(float(had[k]) - G.inventory.have(k), float(cost[k]))
+				_check(ok, "%s takes exactly what check says (%s)" % [rid, label])
+				costs_seen[snappedf(want_e, 0.001)] = true
+	G.S["unlocked"] = unlocked0
+	G.invalidate_caps()
+	_check(tried > 50, "most recipes were tried (%d, %s)" % [tried, label])
+
+func _recipe_requirements() -> void:
+	var A = G.actions
+	G.reset_game()
+	var args := {"rid": "porridge"}
+	G.S["unlocked"].erase("campfire")
+	G.invalidate_caps()
+	_check(A.check("recipe", A.farmer, args)["unmet"][0]["key"] == "locked", "a recipe whose station is not built is locked")
+	G.S["unlocked"]["campfire"] = true
+	G.invalidate_caps()
+	G.S["energy"] = 20.0
+	G.S["water"] = 0.0
+	G.S["inv"].clear()
+	var u: Array = A.check("recipe", A.farmer, args)["unmet"]
+	_check(u[0]["key"] == "keeps" and u[0]["text"] != "", "the kept pot is missing: told first")
+	G.inventory.add_item("tin_pot", 1.0, true)
+	u = A.check("recipe", A.farmer, args)["unmet"]
+	_check(u[0]["key"] == "missing" and u[0]["text"] != "", "no grain and no water: Missing, with a sentence")
+	G.S["water"] = 10.0
+	G.inventory.add_item("wheat", 5.0, true)
+	G.S["woodpile"] = 0.0
+	var rep: Dictionary = A.perform("recipe", A.farmer, args)
+	_check(not rep["done"] and rep["failed"] == "fuel" and rep["message"] != "" and G.inventory.count("wheat") == 5.0 and G.S["energy"] == 20.0, "no fuel on the woodpile: refused with a sentence, nothing taken")
+	G.S["woodpile"] = 10.0
+	G.S["energy"] = 0.0
+	_check(A.check("recipe", A.farmer, args)["unmet"][0]["key"] == "energy", "all there but no energy: the module's too-tired")
+	G.S["energy"] = 20.0
+	_check(A.perform("recipe", A.farmer, args)["done"] and G.inventory.count("wheat") < 5.0 and G.S["woodpile"] < 10.0, "…and with everything it is made")
+	var root: String = G.crafting.chain_root("campfire")
+	var jobs := []
+	for i in range(G.crafting.station_slots(root)): jobs.append({"recipe": "porridge", "left": 5.0, "n": 1, "grade": -1})
+	G.S["running"][root] = jobs
+	_check(A.check("recipe", A.farmer, args)["unmet"][0]["key"] == "busy", "a station with every slot taken is busy")
+	G.S["running"] = {}
+	G.reset_game()
+	G.S["energy"] = 20.0
+	G.S["unlocked"]["gathering_basket"] = true
+	G.invalidate_caps()
+	var full: Dictionary = A.check("recipe", A.farmer, {"rid": "gather_sticks"})
+	var loads: int = G.crafting.recipe_batch("gather_sticks")
+	_check(loads > 1 and int(full["cost"]["energy"] * 1000.0) > 0, "the gathering basket makes a bigger load (%d)" % loads)
+	G.S["energy"] = float(full["cost"]["energy"]) - 0.01
+	var e_small: float = G.S["energy"]
+	var small: Dictionary = A.perform("recipe", A.farmer, {"rid": "gather_sticks"})
+	_check(small["done"] and e_small - float(G.S["energy"]) < float(full["cost"]["energy"]) - 0.001, "with a hair too little energy for the big load a smaller load is gathered")
+	G.reset_game()
+	G.S["energy"] = 20.0
+	var first: Dictionary = A.perform("recipe", A.farmer, {"rid": "gather_sticks"})
+	var again: Dictionary = A.perform("recipe", A.farmer, {"rid": "gather_sticks"})
+	_check(first["done"] and not again["done"] and again["failed"] == "refill" and again["message"] != "", "a gathering spot refills first: the second tap is refused with a sentence")
+
+## Every coin payment goes through G.lord.pay_coins: blocked while the share is owed (reason "lord"), refused when short ("coins"),
+## the `paid` signal fires once per payment, and the share itself is exempt.
+func _pay_function() -> void:
+	var L = G.lord
+	G.reset_game()
+	var seen := []
+	var on_paid := func(c: float) -> void: seen.append(c)
+	G.paid.connect(on_paid)
+	G.S["coins"] = 100.0
+	_check(L.pay_coins(30.0) == "" and is_equal_approx(float(G.S["coins"]), 70.0) and seen == [30.0], "a free payment takes the coins and fires paid once")
+	_check(L.pay_coins(500.0) == "coins" and is_equal_approx(float(G.S["coins"]), 70.0) and seen.size() == 1, "too few coins: reason 'coins', nothing taken, no signal")
+	L._s()["owed"] = 50.0
+	_check(L.pay_coins(10.0) == "lord" and is_equal_approx(float(G.S["coins"]), 70.0) and seen.size() == 1, "an owed share blocks a payment: reason 'lord', nothing taken, no signal")
+	_check(L.pay_coins(10.0, true) == "" and seen.size() == 2, "the share's own payment is exempt from the block")
+	G.S["coins"] = 100.0
+	var before: int = seen.size()
+	_check(not G.trade.buy_item("seed_1", "wheat", 1) and is_equal_approx(float(G.S["coins"]), 100.0) and seen.size() == before, "a shop purchase is refused while the share is owed")
+	_check(L.pay() and not L.here() and seen.size() == before + 1, "paying the share fires paid once and sends Pieter home")
+	G.paid.disconnect(on_paid)
 
 func _check(ok: bool, what: String) -> void:
 	checks += 1

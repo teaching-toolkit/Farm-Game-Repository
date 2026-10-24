@@ -58,7 +58,7 @@ func _ready() -> void:
 	G.S["energy"] = 50.0
 	G.S["nature"]["pool"]["sticks"] = 4.0
 	var s0: float = G.inventory.count("stick")
-	_check(G.crafting.start_recipe("gather_sticks"), "gathering sticks works")
+	_check(G.actions.perform("recipe", G.actions.farmer, {"rid": "gather_sticks"})["done"], "gathering sticks works")
 	_check(is_equal_approx(G.inventory.count("stick") - s0, 1.0) and is_equal_approx(G.nature.level("sticks"), 2.0), "a thin pool: 1 stick instead of 2, and the pool falls by 2")
 	_check(G.nature.save_defaults().has("nature"), "the save key has defaults")
 	print("NATURE %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])

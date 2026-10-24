@@ -79,12 +79,12 @@ func _ready() -> void:
 	G.S["inv"]["yarrow"] = []
 	G.inventory.add_item("yarrow", 3.0, true)
 	G.S["forest"]["tainted"] = {"yarrow": 3}
-	var made: bool = G.crafting.start_recipe("yarrow_paste")
+	var made: bool = _make("yarrow_paste")
 	_check(not made and int(G.S["forest"]["poisoned"]) == 1 and G.inventory.count("yarrow_paste") == 0.0, "a recipe with a bad plant does not happen: the farmer collapses")
 	G.S["inv"]["yarrow"] = []
 	G.inventory.add_item("yarrow", 3.0, true)
 	G.S["energy"] = 30.0
-	_check(G.crafting.start_recipe("yarrow_paste") and G.inventory.count("yarrow_paste") >= 2.0, "a clean batch is made as usual")
+	_check(_make("yarrow_paste") and G.inventory.count("yarrow_paste") >= 2.0, "a clean batch is made as usual")
 	# the remedies need the stations and the cards
 	_check(G.recipes["healers_chest"]["inputs"].size() == 6, "the Healer's Chest holds six different remedies")
 	_check(G.nodes["pet_badger"]["cost"].has("healers_chest") and G.nodes["pet_badger"]["cost"].has("tea_set"), "the badger comes for the chest and the tea set")
@@ -103,6 +103,9 @@ func _can(spot: String, tid: String) -> bool:
 
 func _do(chore: String, spot: String, tid: String, extra := {}) -> Dictionary:
 	return G.actions.perform(chore, G.actions.farmer, _args(spot, tid, extra))
+
+func _make(rid: String) -> bool:
+	return G.actions.perform("recipe", G.actions.farmer, {"rid": rid})["done"]
 
 func _go(chore: String) -> bool:
 	return G.actions.perform(chore, G.actions.farmer)["done"]

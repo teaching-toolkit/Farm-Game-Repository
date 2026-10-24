@@ -120,7 +120,7 @@ func _ready() -> void:
 			for rid in G.recipes:
 				if not G.recipes[rid]["outputs"].has(k): continue
 				var lack := []
-				for y in G.pace.missing_cost(G.crafting.recipe_cost(rid, 1)): lack.append("%s %.0f/%.0f" % [y["key"], float(y["have"]), float(y["need"])])
+				for y in G.pace.missing_cost(G.actions.check("recipe", G.actions.farmer, {"rid": rid, "n": 1})["cost"]): lack.append("%s %.0f/%.0f" % [y["key"], float(y["have"]), float(y["need"])])
 				how.append("%s(open %s, station %s built %s, lacks %s)" % [rid, G.crafting.recipe_open(rid), G.recipes[rid]["station"], G.satisfied(G.recipes[rid]["station"]), lack])
 			for cid in G.nodes:
 				if G.nodes[cid]["type"] == "crop" and G.nodes[cid].get("yields", {}).has(k): how.append("crop %s done %s" % [cid, G.done(cid)])
@@ -507,7 +507,7 @@ func _turn() -> void:
 					if G.items[o].get("category", "") == "craft" and G.inventory.count(o) < 4.0 and G.inventory.value_of(o) >= 100.0: useful = true
 			if useful:
 				if G.crafting.recipe_fuel(rid) > float(G.S["woodpile"]) + 0.0001: G.crafting.stoke(G.crafting.recipe_fuel(rid))   # stoke the woodpile first
-				G.crafting.start_recipe(rid)
+				G.actions.perform("recipe", G.actions.farmer, {"rid": rid})
 	# money: sell surplus when coins are short for an open goal
 	var coins_need := 0.0
 	for id in G.nodes:

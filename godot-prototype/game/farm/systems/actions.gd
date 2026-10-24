@@ -7,7 +7,7 @@ class_name FarmActions
 
 var G: FarmGame   # the Game: the farm's state (G.S), its data and the other systems
 var farmer: Doer
-var _chores := {}   # chore -> {"effect": Callable, "requires": Callable, "amount": Callable, "extra": Callable, "no_mult": Callable}
+var _chores := {}   # chore -> {"effect": Callable, "requires": Callable, "amount": Callable, "extra": Callable, "no_mult": Callable, "profile": Callable, "before": Callable}
 
 ## Who does a chore. The farmer's energy lives in the farm's state; a pet doing a chore for the farmer would pay from it too.
 class Doer extends RefCounted:
@@ -35,11 +35,19 @@ func _init(game: FarmGame) -> void:
 ##   amount:   func(who: Doer, args: Dictionary) -> float   (optional; how many units of work this call is: the base energy is per unit; read-only)
 ##   extra:    func(who: Doer, args: Dictionary) -> {"cost": {...}, "base": {...}}   (optional; costs of other kinds that depend on the call, e.g. the water of a planting or the feed of animals; spent as written; read-only)
 ##   no_mult:  func(who: Doer, args: Dictionary) -> bool   (optional; true = the data's second energy modifier (mult) does not apply to this call; read-only)
-func register(chore: String, effect: Callable, requires := Callable(), amount := Callable(), extra := Callable(), no_mult := Callable()) -> void:
-	_chores[chore] = {"effect": effect, "requires": requires, "amount": amount, "extra": extra, "no_mult": no_mult}
+##   profile:  func(who: Doer, args: Dictionary) -> Dictionary   (optional; the chore's data for this call, for a chore whose numbers are written elsewhere (a recipe): base, cat, station … replace the written ones; read-only)
+##   before:   func(who: Doer, args: Dictionary, cost: Dictionary) -> Dictionary   (optional; runs once perform has found nothing in the way, before anything is spent. It may fix details of the call in args (how many loads) and take what the chore uses besides the cost (the woodpile's fuel). Returns {} to go on, or {"key", "message"} to stop with nothing spent)
+func register(chore: String, effect: Callable, requires := Callable(), amount := Callable(), extra := Callable(), no_mult := Callable(), profile := Callable(), before := Callable()) -> void:
+	_chores[chore] = {"effect": effect, "requires": requires, "amount": amount, "extra": extra, "no_mult": no_mult, "profile": profile, "before": before}
 
-func data(chore: String) -> Dictionary:
-	return G.meta.get("chores", {}).get(chore, {})
+## The chore's data: the written entry of rules/46-chores.json, with what its profile says for this call (when asked with a doer and args).
+func data(chore: String, who: Doer = null, args := {}) -> Dictionary:
+	var d: Dictionary = G.meta.get("chores", {}).get(chore, {})
+	var c: Dictionary = _chores.get(chore, {})
+	if who != null and c.has("profile") and c["profile"].is_valid():
+		d = d.duplicate()
+		d.merge(c["profile"].call(who, args), true)
+	return d
 
 ## A number written in the data: a number, or the path of a number written elsewhere ("water.fetchEnergy").
 func _number(v: Variant) -> float:
@@ -50,15 +58,15 @@ func _number(v: Variant) -> float:
 	return float(v)
 
 ## The base cost of a chore, kind by kind. A number may be the path of a number written elsewhere ("water.fetchEnergy").
-func base_cost(chore: String) -> Dictionary:
+func base_cost(chore: String, who: Doer = null, args := {}) -> Dictionary:
 	var out := {}
-	var base: Dictionary = data(chore).get("base", {})
+	var base: Dictionary = data(chore, who, args).get("base", {})
 	for kind in base: out[kind] = _number(base[kind])
 	return out
 
 ## The base cost for this call: the written base, times the units of work if the chore counts them (weeds pulled, stones picked).
 func call_base(chore: String, who: Doer, args := {}) -> Dictionary:
-	var cost := base_cost(chore)
+	var cost := base_cost(chore, who, args)
 	var c: Dictionary = _chores.get(chore, {})
 	if cost.has("energy") and c.has("amount") and c["amount"].is_valid(): cost["energy"] = float(cost["energy"]) * float(c["amount"].call(who, args))
 	if c.has("extra") and c["extra"].is_valid(): cost.merge(c["extra"].call(who, args)["base"], true)
@@ -67,7 +75,7 @@ func call_base(chore: String, who: Doer, args := {}) -> Dictionary:
 ## What the chore costs now, after skills, tools, the season and buffs. Only energy changes on the way; the other kinds are read as written.
 func effective_cost(chore: String, who: Doer, args := {}) -> Dictionary:
 	var cost := call_base(chore, who, args)
-	var d := data(chore)
+	var d := data(chore, who, args)
 	if cost.has("energy"):
 		if not bool(d.get("raw", false)):       # raw: no skill, tool, season or buff changes the energy (a party)
 			cost["energy"] = G.needs.ecost(str(d.get("cat", "")), float(cost["energy"]), str(d.get("station", "")))
@@ -88,7 +96,7 @@ func check(chore: String, who: Doer, args := {}) -> Dictionary:
 		unmet.append({"key": "unknown", "text": ""})
 	else:
 		if c["requires"].is_valid(): unmet.append_array(c["requires"].call(who, args))
-		if cost.has("energy") and who.energy() + 0.001 < float(cost["energy"]):
+		if cost.has("energy") and who.energy() + float(data(chore, who, args).get("slack", 0.001)) < float(cost["energy"]):
 			unmet.append({"key": "energy", "text": tr("⚡ Too tired. Rest a little (tap ⚡).")})
 	return {"ok": unmet.is_empty(), "cost": cost, "base": call_base(chore, who, args), "unmet": unmet}
 
@@ -123,12 +131,15 @@ func _run(chore: String, who: Doer, args: Dictionary) -> Dictionary:
 		var first: Dictionary = q["unmet"][0]
 		return {"done": false, "failed": first["key"], "spent": {}, "gained": {}, "result": {}, "message": str(first["text"])}
 	var cost: Dictionary = q["cost"]
+	if _chores[chore]["before"].is_valid():
+		var stop: Dictionary = _chores[chore]["before"].call(who, args, cost)
+		if not stop.is_empty(): return {"done": false, "failed": str(stop["key"]), "spent": {}, "gained": {}, "result": {}, "message": str(stop.get("message", ""))}
 	if cost.has("energy"): who.take_energy(float(cost["energy"]))
 	if cost.has("water"): who.take_water(float(cost["water"]))
 	for k in cost:       # any other kind is an item (or a kind of item: "tag:fodder"); coins are not a chore's cost yet
 		if k != "energy" and k != "water" and k != "coins": who.take_item(k, float(cost[k]))
 	var result: Dictionary = _chores[chore]["effect"].call(who, args, cost)
-	var d := data(chore)
+	var d := data(chore, who, args)
 	if str(d.get("wear", "")) != "": G.crafting.wear_polish(str(d["wear"]))
 	if str(d.get("practice", "")) != "": G.skills.practice(str(d["practice"]))
 	return {"done": true, "failed": "", "spent": cost, "gained": result.get("gained", {}), "result": result.get("result", {}), "message": ""}

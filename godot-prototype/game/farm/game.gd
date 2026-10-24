@@ -142,6 +142,7 @@ func _init() -> void:
 	well.register_chores()
 	forest.register_chores()
 	trip.register_chores()
+	crafting.register_chores()
 
 # ------------------------------------------------------------------ start, seed and clock
 

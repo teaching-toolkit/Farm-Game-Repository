@@ -155,7 +155,7 @@ Version 0.19.0: all twelve phases of the implementation plan are built. **Nothin
 
 Now in progress: the **farm-actions** feature (`issues/farm-actions/`, spec in `spec.md`). Tickets 02 (short golden runs:
 `bash tests/golden.sh --short`), 03 (the module `G.actions` with fetch water) and 04 (weed, pick stones, clear snow, whole-field
-batches), 05 (plant, harvest, cut tree) 06 (animal chores), 07 (party and visit), 08 (forest trips) and 09 (the village trip) are done. **Next: `farm-actions/10`** (recipes at stations); then 11 onwards as in `TODO.md` §18. Next grilling candidates:
+batches), 05 (plant, harvest, cut tree) 06 (animal chores), 07 (party and visit), 08 (forest trips), 09 (the village trip) and 10 (recipes at stations) and 11 (the pay function, shop purchases) are done. **Next: `farm-actions/12`** (goal and building payments); then 13 onwards as in `TODO.md` §18. Next grilling candidates:
 `time-question`, then `condition-language`.
 
 Story pictures (23 Oct 2026): the kept ones are in the game (`story/16`, `story/17`: lossy WebP in `assets/story/`, mapped in
