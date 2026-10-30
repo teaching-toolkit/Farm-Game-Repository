@@ -8,10 +8,16 @@
 
 **Milestone:** prototype
 
+**Size:** sitting
+
 - [ ] The parent has said how many stages each building needs
 - [ ] Pictures for every stage are generated and picked
 - [ ] The game shows the stage that matches the progress
 - [ ] The carpenter shed has its stages first
+
+## 💡 Recommendation (30 Oct 2026)
+
+Three stages per building (frame, walls, finished) as a rule, more only for the carpenter shed; an agent writes the prompts per building first, you generate and pick.
 
 ---
 

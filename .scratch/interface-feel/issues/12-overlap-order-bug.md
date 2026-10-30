@@ -8,9 +8,15 @@
 
 **Milestone:** prototype
 
+**Size:** short (look at the agent's screenshots, add what is missing)
+
 - [ ] The parent has named the screens or situations (screenshots)
 - [ ] Each is fixed or ticketed on its own
 - [ ] The draw order rule is written into the interface README
+
+## ✅ Parent's answer (30 Oct 2026)
+
+Still wrong in places; come back to it later. 💡 Before asking the parent again, an agent takes screenshots of every screen and lists the wrong overlaps it finds; the parent adds the ones it missed.
 
 ---
 

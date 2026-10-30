@@ -8,6 +8,8 @@
 
 **Milestone:** later
 
+**Size:** sitting
+
 - [ ] The parent has said what can be chosen
 - [ ] A start screen sets the look; it is kept per player on the device
 - [ ] The *(planned)* mark in the design document is removed

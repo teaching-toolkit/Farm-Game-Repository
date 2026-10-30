@@ -8,10 +8,16 @@
 
 **Milestone:** prototype
 
+**Size:** sitting
+
 - [ ] Autumn leaf pictures exist (several kinds, for the flip animation)
 - [ ] More spring flower pictures exist
 - [ ] Four season-change pictures exist
 - [ ] They are imported and used by `season-look/01`, `season-look/02` and `story/14`
+
+## 💡 Recommendation (30 Oct 2026)
+
+One sheet of autumn leaves (four kinds) and spring flowers, then one sheet for the four season-change boxes; an agent writes the prompts first.
 
 ---
 

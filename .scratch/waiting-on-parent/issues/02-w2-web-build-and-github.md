@@ -8,6 +8,8 @@
 
 **Milestone:** later
 
+**Size:** short
+
 **Note (23 Oct 2026):** the story pictures turned out small: lossy WebP, about 84 KB each in the pack, about 3 MB now and about 5 MB with all of them (`story/17`). The 100 MB question remains for other future pictures (a plan is still needed, but not because of the story pictures).
 
 - [ ] A plan for files over 100 MB is chosen (compress the pictures for the web, or Git LFS)

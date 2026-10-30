@@ -8,6 +8,8 @@
 
 **Milestone:** later
 
+**Size:** sitting
+
 - [ ] The parent has chosen which services exist (💡: borrowing a donkey for a trip, a helper, repairs)
 - [ ] Each chosen service works through existing mechanics and data
 - [ ] Prices fit the price table and the pace is re-checked

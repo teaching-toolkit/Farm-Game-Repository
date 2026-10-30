@@ -8,6 +8,8 @@
 
 **Milestone:** later
 
+**Size:** short
+
 - [ ] The parent has played with it and said what to change
 - [ ] Chosen ideas built; every number stays in `meta.flex`
 

@@ -8,6 +8,8 @@
 
 **Milestone:** later
 
+**Size:** sitting
+
 - [ ] The curriculum is named
 - [ ] The frameworks and the critical knowledge are written down in the project folder (for example in `docs/sources/`)
 

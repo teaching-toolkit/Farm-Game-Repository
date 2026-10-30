@@ -8,10 +8,16 @@
 
 **Milestone:** refactor
 
+**Size:** sitting
+
 - [ ] `/grill-with-docs` run with the parent on this candidate; the seams for testing agreed (the highest seam possible, ideally one)
 - [ ] `spec.md` written in this folder from the `/to-spec` template
 - [ ] Build tickets filed in this folder with `/to-tickets`, blockers set
 - [ ] The plan keeps the golden runs identical: this changes no game rule
+
+## 💡 Recommendation (30 Oct 2026)
+
+After `condition-language`. It unblocks `story/07` (C2, C7, C8) and decides where the notification and story timings in `tuning/01` live.
 
 ---
 

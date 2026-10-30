@@ -8,6 +8,8 @@
 
 **Milestone:** story
 
+**Size:** short
+
 What the parent has to decide (each with a 💡 recommendation):
 
 - [ ] **The Lord's letter, the red seal with a stag (`c5_letter`).** The stag is not in canon. 💡 Regenerate without the stag (the `c6_lord` picture is already made without one); until then the piece shows no picture.

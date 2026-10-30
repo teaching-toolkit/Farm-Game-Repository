@@ -8,6 +8,8 @@
 
 **Milestone:** later
 
+**Size:** sitting
+
 - [ ] Signpost with a village symbol by the road
 - [ ] Carrying devices beside it (backpack, basket, later cart), each in a few fill levels with generic sacks
 - [ ] The travelling merchant's cart in fill levels

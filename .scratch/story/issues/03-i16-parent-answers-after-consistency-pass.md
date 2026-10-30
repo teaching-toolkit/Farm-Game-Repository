@@ -8,6 +8,8 @@
 
 **Milestone:** story
 
+**Size:** short
+
 - [ ] Each of Q1–Q11 has an answer recorded in `story/archive/consistency-fixes.md` §4
 
 ---

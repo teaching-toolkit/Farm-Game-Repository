@@ -8,9 +8,15 @@
 
 **Milestone:** prototype
 
-- [ ] The parent has read the German texts and listed corrections
+**Size:** sitting (during a play-test in German)
+
+- [ ] The parent has read the German interface, cards and questions and listed corrections (story texts excluded)
 - [ ] Corrections are applied through `tools/i18n.py`
 - [ ] No "ß" anywhere in the German
+
+## ✅ Parent's answer (30 Oct 2026)
+
+The child plays in German sometimes. Proofread **the interface, the cards and the quiz questions** now, during a play-test with the language on Deutsch. **The story texts stay as they are** (stand-ins until the novella is compressed; story milestone).
 
 ---
 

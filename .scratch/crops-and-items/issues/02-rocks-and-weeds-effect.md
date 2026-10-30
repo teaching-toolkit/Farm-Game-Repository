@@ -4,13 +4,17 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** needs-parent
+**Status:** ready-for-agent
 
 **Milestone:** prototype
 
-- [ ] The parent has decided: keep as is, or also reduce the number of plants (and by how much)
+- [x] The parent has decided: keep as is, or also reduce the number of plants (and by how much)
 - [ ] Whatever is decided is shown to the child (the patch's note says what the weeds and stones cost)
 - [ ] If the rules change: numbers in data, bot and golden runs re-checked, German
+
+## ✅ Parent's answer (30 Oct 2026)
+
+Swap: weeds and stones no longer slow growth; each one takes **4 % of the harvest, at most 75 %**. The effect on the grade stays. **Don't rely on reading:** the loss must be *seen*, not written: for example fewer plants drawn on a crowded patch, and at harvest the lost crops shown leaving or greyed out next to the weeds and stones. Text may follow, but the picture carries it.
 
 ---
 

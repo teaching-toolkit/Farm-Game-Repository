@@ -8,8 +8,14 @@
 
 **Milestone:** story
 
+**Size:** short
+
 - [ ] The parent has answered or accepted the default for questions 1–10
 - [ ] The answers are written into `story/canon/story-bible.md` §10 and `story/outline/QUESTIONS.md` is marked answered
+
+## 💡 Recommendation (30 Oct 2026)
+
+Answer them when the story milestone starts, before `story/24`; each has a default you can accept with yes.
 
 ---
 

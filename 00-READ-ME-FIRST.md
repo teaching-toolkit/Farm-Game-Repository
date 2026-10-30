@@ -52,6 +52,8 @@ the parent play-tests with the child on the laptop. The person you work with is 
 - **Natural consequences, never stuck:** setbacks are allowed, last a while and can always be corrected; nothing is lost for good,
   Helpers never leave. One deliberate exception: the poisoning in the medicine chapter
   ([ADR-0004](docs/adr/0004-natural-consequences.md); details in `story/game/game-design-round4.md` §C).
+- **Don't rely on the child reading** (parent, 30 Oct 2026): an effect the child should notice is *shown* (a picture, an animation, a
+  number changing), and text only backs it up.
 - **Use the glossary's words:** say *chore*, not *action*, in tickets, code and messages.
 - **Never act on a design until the parent confirms the shared understanding** (the grilling's summary); an easy-to-undo 💡 may be
   taken only as `.scratch/README.md` allows.

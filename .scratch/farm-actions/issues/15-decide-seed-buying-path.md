@@ -4,13 +4,25 @@
 
 **Blocked by:** farm-actions/13
 
-**Status:** needs-parent
+**Status:** ready-for-agent
 
 **Milestone:** refactor
 
-- [ ] A 💡 recommendation is written in this ticket
-- [ ] The parent decided; the code and the ticket match
+- [x] A 💡 recommendation is written in this ticket
+- [ ] The parent decided (✅ 30 Oct); the code and the ticket match
 - [ ] If removed: golden runs identical
+
+## 💡 Recommendation (30 Oct 2026)
+
+**Remove it.** Seeds are bought at the market or from the merchant (trade system, which works), and a second hidden way to buy seeds
+in the planting window would go round the trip and the Lord's share. Golden runs stay identical, because the path never runs.
+
+Other option: make it a feature ("buy the missing seeds while planting"). It saves the child a trip, but it undoes the reason for the
+first trip to the village (ADR-0006 and the trip rules) and needs its own design.
+
+## ✅ Parent's answer (30 Oct 2026)
+
+Yes: remove the path. Golden runs must stay identical.
 
 ---
 

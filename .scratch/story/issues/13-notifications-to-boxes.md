@@ -4,14 +4,18 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** needs-parent
+**Status:** ready-for-agent
 
 **Milestone:** prototype
 
 - [ ] An audit lists every notification with a 💡 recommendation (stay a toast, or become a box)
-- [ ] The parent has chosen which become boxes
+- [ ] Claude has chosen which become boxes (delegated by the parent)
 - [ ] Each chosen one has text and a picture (listed in `pictures/10`)
 - [ ] The boxes use the same quiet-moment rule as the story box and do not pile up
+
+## ✅ Parent's answer (30 Oct 2026)
+
+The parent delegates the choice: **Claude makes good recommendations and builds them without asking.** The audit and the choice are recorded in this ticket; pictures for the chosen boxes go to the pictures list for the parent to generate.
 
 ---
 

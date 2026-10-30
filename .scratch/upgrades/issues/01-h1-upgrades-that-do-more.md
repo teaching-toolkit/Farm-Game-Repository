@@ -8,6 +8,8 @@
 
 **Milestone:** later
 
+**Size:** sitting
+
 - [ ] The parent has chosen a benefit for each of the 44 (or decided which to skip)
 - [ ] The new kinds (lucky finds, season help, helpers that work by themselves) are decided
 - [ ] The benefits are built as data with existing effect keys where possible

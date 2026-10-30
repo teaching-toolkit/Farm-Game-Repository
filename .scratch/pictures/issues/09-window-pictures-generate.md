@@ -8,9 +8,15 @@
 
 **Milestone:** prototype
 
+**Size:** sitting
+
 - [ ] Each window has a picture picked by the parent
 - [ ] They are imported and shown in their windows
 - [ ] The web build size is checked against W2's plan for large files
+
+## 💡 Recommendation (30 Oct 2026)
+
+Generate in sheets of several windows at once, after `pictures/08` has written the prompts; start with the windows the child sees most (store, market, workshop).
 
 ---
 

@@ -8,10 +8,16 @@
 
 **Milestone:** prototype
 
+**Size:** sitting
+
 - [ ] Each merchant has a short character note (who, how they talk) agreed with the parent
 - [ ] A picture and a face close-up exist for each
 - [ ] The square window shows the face of the person you trade with
 - [ ] The picture rules (the farmer never in a painted picture) hold
+
+## 💡 Recommendation (30 Oct 2026)
+
+Start with the three you meet in the prototype (the travelling merchant, the seed seller, the broker): an agent drafts a two-line character note and the prompts; you accept or change them, then generate.
 
 ---
 

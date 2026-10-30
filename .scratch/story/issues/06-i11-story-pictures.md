@@ -8,6 +8,8 @@
 
 **Milestone:** story
 
+**Size:** sitting
+
 - [ ] The must-fix list from `art-inbox/Story pictures/` is done
 - [ ] The 16 story pieces without a picture have one
 - [ ] Mill type, frame-6 conch, merchant pair and the style block are settled

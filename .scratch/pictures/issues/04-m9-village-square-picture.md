@@ -8,6 +8,8 @@
 
 **Milestone:** prototype
 
+**Size:** sitting
+
 - [ ] The picture is generated and picked by the parent
 - [ ] The trip's square window uses it
 - [ ] The delivery scenes in `story/game/story-delivery.md` §7 use it

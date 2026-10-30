@@ -8,10 +8,16 @@
 
 **Milestone:** later
 
+**Size:** sitting
+
 - [ ] `/grill-with-docs` run with the parent on this candidate; the seams for testing agreed (the highest seam possible, ideally one)
 - [ ] `spec.md` written in this folder from the `/to-spec` template
 - [ ] Build tickets filed in this folder with `/to-tickets`, blockers set
 - [ ] The plan keeps the golden runs identical: this changes no game rule
+
+## 💡 Recommendation (30 Oct 2026)
+
+Parked (`later`): grill it only when the prototype stands.
 
 ---
 

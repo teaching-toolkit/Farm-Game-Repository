@@ -4,13 +4,22 @@
 
 **Blocked by:** `story/19` and a play-test of the game with the child
 
-**Status:** needs-parent
+**Status:** done
 
 **Milestone:** story
+
 
 - [ ] The parent has marked each row accept, strike or later
 - [ ] Accepted rows are applied to the texts and the staged JSON; German written; `tools/i18n.py` coverage passes
 - [ ] Smoke test and bot pass
+
+## 💡 Recommendation (30 Oct 2026)
+
+Close it: the novella replaces every current piece (story ADR-0001), so editing the stand-in texts row by row is wasted work. Keep the file for reference when compressing the novella.
+
+## ✅ Parent's answer (30 Oct 2026)
+
+Closed without building: the novella replaces every current piece (story ADR-0001). `story/game/text-change-requests.md` stays as reference for the compression.
 
 ---
 

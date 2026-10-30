@@ -8,6 +8,8 @@
 
 **Milestone:** later
 
+**Size:** sitting
+
 - [ ] The parent has said yes or no
 - [ ] If yes: a design is written first
 

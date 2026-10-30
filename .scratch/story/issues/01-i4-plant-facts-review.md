@@ -8,6 +8,8 @@
 
 **Milestone:** story
 
+**Size:** sitting
+
 - [ ] The parent has reviewed the plant facts (`story/game/texts/ch5.md`, the Healer's Herbal cards) and named corrections
 - [ ] Corrections are applied, EN and DE
 

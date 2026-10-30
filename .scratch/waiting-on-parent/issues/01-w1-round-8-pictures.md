@@ -4,13 +4,17 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** needs-parent
+**Status:** done
 
 **Milestone:** prototype
 
-- [ ] The parent has looked at the round 8 pictures in the game
-- [ ] The parent has chosen the add-ons sheet: the current one, or the alternative kept as `art-inbox/sheet30-addons-alt.png`
-- [ ] If the alternative is chosen: it is renamed to `sheet30-addons.png`, re-imported, and the checks pass
+- [x] The parent has looked at the round 8 pictures in the game
+- [x] The parent has chosen the add-ons sheet: the current one, or the alternative kept as `art-inbox/sheet30-addons-alt.png`
+- [x] If the alternative is chosen: it is renamed to `sheet30-addons.png`, re-imported, and the checks pass
+
+## ✅ Parent's answer (30 Oct 2026)
+
+Taken care of by the parent.
 
 ---
 

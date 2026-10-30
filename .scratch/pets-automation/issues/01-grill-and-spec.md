@@ -8,10 +8,16 @@
 
 **Milestone:** prototype
 
+**Size:** sitting
+
 - [ ] `/grill-with-docs` run with the parent
 - [ ] `spec.md` written in this folder from the `/to-spec` template
 - [ ] Build tickets filed in this folder with `/to-tickets`
 - [ ] `GLOSSARY.md` has the final word for an automated chore (the name is not final)
+
+## 💡 Recommendation (30 Oct 2026)
+
+Grill it after `condition-language`: a pet's automated chore is a farm-actions chore plus a condition (when to do it), so both modules should exist first.
 
 ---
 

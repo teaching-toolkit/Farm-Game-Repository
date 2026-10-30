@@ -8,10 +8,16 @@
 
 **Milestone:** prototype
 
+**Size:** sitting
+
 - [ ] `/grill-with-docs` run with the parent: what the limit is, how it is shown, and how it fits energy (does it replace or add to energy?)
 - [ ] `spec.md` written in this folder with the seams for testing
 - [ ] Build tickets filed in this folder with blockers
 - [ ] The effect on the pace and on the bot is estimated in the spec
+
+## 💡 Recommendation (30 Oct 2026)
+
+Grill it after the three refactor modules: the limit belongs in the time-question module's rules, which will exist by then.
 
 ---
 

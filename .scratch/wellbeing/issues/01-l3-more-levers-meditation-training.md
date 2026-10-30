@@ -8,6 +8,8 @@
 
 **Milestone:** later
 
+**Size:** sitting
+
 - [ ] The parent has said which levers exist and what they do
 - [ ] The cards of *Body and mind* (or a new book) teach them; the dashboard shows them
 - [ ] The chapter 5 collapse beat opens the rest and calm levers

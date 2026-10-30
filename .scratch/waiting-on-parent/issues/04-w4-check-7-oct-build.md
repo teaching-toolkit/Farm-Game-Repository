@@ -4,15 +4,19 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** needs-parent
+**Status:** done
 
 **Milestone:** prototype
 
-- [ ] A1–A5 small fixes checked (planting water bar, overgrown patch note, why a perk came, no dark forest floor, the question share)
-- [ ] The grown-up lock works (password "farm" for now; a real password and a reminder as the hint is a later step)
-- [ ] B1 the opening, C1 the Rest start page and C2 (a sum left on screen leaves no trace) checked
-- [ ] D: every window as a grid checked
-- [ ] G: the farmer's acts watched; the ones that look wrong or too fast are named (each is a few numbers in `data/acts.json`)
+- [x] A1–A5 small fixes checked (planting water bar, overgrown patch note, why a perk came, no dark forest floor, the question share)
+- [x] The grown-up lock works (password "farm" for now; a real password and a reminder as the hint is a later step)
+- [x] B1 the opening, C1 the Rest start page and C2 (a sum left on screen leaves no trace) checked
+- [x] D: every window as a grid checked
+- [x] G: the farmer's acts watched; the ones that look wrong or too fast are named (each is a few numbers in `data/acts.json`)
+
+## ✅ Parent's answer (30 Oct 2026)
+
+Taken care of by the parent.
 
 ---
 

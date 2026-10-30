@@ -8,6 +8,8 @@
 
 **Milestone:** later
 
+**Size:** sitting
+
 - [ ] The parent has played round 8 on the iPad
 - [ ] Each finding is written into its ticket, a new ticket, or the log
 

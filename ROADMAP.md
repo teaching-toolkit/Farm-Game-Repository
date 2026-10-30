@@ -9,9 +9,12 @@ prototype stands.
 
 ## Game
 
-- **Now (refactor):** the parent's review pass of every `needs-parent` ticket and the milestone sorting, farm-actions 14–16 near the
-  top; then the module `time-question` through the flow (`/grill-with-docs` → `/to-spec` → `/to-tickets` → `/tdd`), starting with
-  `time-question/01`.
+- **Now (refactor):** the parent's review pass is finished (30 Oct 2026). Two things run side by side:
+  - **With the parent there:** the design interview for `time-question` (`time-question/01`, `/grill-with-docs`), then
+    `/to-spec` and `/to-tickets`.
+  - **Without the parent, or between rounds:** build the ready refactor tickets: `farm-actions/15` (remove the seed-buying path),
+    `farm-actions/16` (orchard trees use the field multiplier), `farm-actions/14` (Wren never takes coins), `tuning/01` (timing
+    numbers into one data file). `python3 tools/tracker.py` lists them first.
 - **Next (refactor):** `condition-language`, then `interruption-queue`, each through the same flow
   (`docs/architecture-review-2026-10-22.md` Part B §3–4).
 - **Then (prototype):** a laptop game the child can play alone without major kinks: the 23 Oct play-test tickets
@@ -24,7 +27,7 @@ prototype stands.
 - **Now:** nothing; the story waits for the prototype. The 63 shipped pieces stay as stand-ins.
 - **Next (story milestone):** the parent reads the novella and answers `story/19`, `story/23` and `story/24`; then the novella is
   compressed into new pieces that replace every current one ([story ADR-0001](story/docs/adr/0001-novella-is-the-source.md)).
-- **Prototype work touching the story:** `story/07` (timing), `story/10–15` (frames, season boxes, funny messages).
+- **Prototype work touching the story:** `story/07` (timing), `story/10–15` (frames, season boxes, funny messages; `story/13` is delegated to Claude).
 
 ## Pictures
 

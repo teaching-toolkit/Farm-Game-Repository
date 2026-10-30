@@ -8,6 +8,8 @@
 
 **Milestone:** later
 
+**Size:** sitting
+
 - [ ] The parent has said yes and which gear
 - [ ] Gear shows on the farmer without breaking the acts
 - [ ] The look stays data

@@ -8,6 +8,8 @@
 
 **Milestone:** prototype
 
+**Size:** sitting
+
 - [ ] Sounds exist for cow, sheep, goat, pony, bees, cat, birds, `extras/party` and `extras/wind` (stand-ins play until then)
 - [ ] The licence question is answered: the CC-BY-SA Mudchute cow and sheep, or the CC0 ones
 - [ ] `python3 tools/import_sounds.py` and the Godot import have run

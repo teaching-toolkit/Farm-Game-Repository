@@ -8,6 +8,8 @@
 
 **Milestone:** later
 
+**Size:** sitting
+
 - [ ] Each question in the notes is answered or dropped by the parent
 - [ ] Answers go to the log §2.8 and to the right tickets
 

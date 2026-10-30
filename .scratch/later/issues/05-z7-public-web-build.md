@@ -8,6 +8,8 @@
 
 **Milestone:** later
 
+**Size:** quick
+
 - [ ] Revisited when the trigger in the notes happens
 - [ ] If it does: a private or password-protected host is chosen
 

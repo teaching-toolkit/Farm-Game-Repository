@@ -8,6 +8,8 @@
 
 **Milestone:** later
 
+**Size:** quick
+
 - [ ] The parent has said yes to the seed-bag idea, or chosen another
 - [ ] One seed-bag picture exists
 - [ ] The game draws the crop's picture on it

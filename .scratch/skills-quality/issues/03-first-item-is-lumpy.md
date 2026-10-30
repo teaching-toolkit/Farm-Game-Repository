@@ -4,14 +4,18 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** needs-parent
+**Status:** ready-for-agent
 
 **Milestone:** prototype
 
-- [ ] The parent has confirmed the scope (all made things, or crafts only; crops too?)
+- [x] The parent has confirmed the scope (all made things, or crafts only; crops too?)
 - [ ] The baseline in the quality rules is lowered; ranks, tools and good inputs lift the grade as before
 - [ ] The recipe tile still shows what to expect
 - [ ] Pace re-checked with the bot (goldens re-recorded on purpose); `quality_test` updated; German
+
+## ✅ Parent's answer (30 Oct 2026)
+
+Yes: everything made at a station (crafts, tools, cooking, baking) starts Lumpy for a beginner; ranks, tools and good inputs lift it as now. Crops and animal products stay Proper.
 
 ---
 

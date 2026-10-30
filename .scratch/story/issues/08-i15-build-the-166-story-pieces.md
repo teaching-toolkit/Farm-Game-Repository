@@ -8,6 +8,8 @@
 
 **Milestone:** story
 
+**Size:** sitting
+
 - [ ] The parent has read `story/game/texts/more-ch1.md` to `more-ch6.md` aloud and marked changes
 - [ ] German translations exist ("ss"); the i18n coverage check passes
 - [ ] `story/game/staging/more-ch*.json` is copied into `data/farm/story/`; smoke test and bot pass
