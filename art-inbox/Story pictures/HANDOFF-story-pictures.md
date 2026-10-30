@@ -28,16 +28,16 @@ Current job, as the parent asked it: (1) move the superseded pictures into an ar
 
 1. Check that `art-inbox/Story pictures/` on the Mac holds `HANDOFF-story-pictures.md`, `picture_review.csv`, `story-picture-briefs.md` and
    `canon-for-pictures.md`. If not, copy the four attached files there.
-2. Apply the PENDING LOG ENTRIES (below): `TODO.md` (§15 I11 and §5 R3), `PROJECT-LOG.md` §1, `story/book-file.md`, `story/story-delivery.md`.
+2. Apply the PENDING LOG ENTRIES (below): `archive/todo-2026-10.md` (§15 I11 and §5 R3), `archive/log-2026-10.md` §1, `story/canon/book-file.md`, `story/game/story-delivery.md`.
 3. Move the 13 superseded originals (list below) into an archive folder. **Move, do not delete**: the folder has no delete permission on the
    Mac, and the parent asked to be asked before anything is deleted.
 4. Send the parent the open questions (OPEN THREADS, numbered 1–8) as one short message, then continue with the work the answers allow.
 
 ## METHOD / WORKING STYLE
 
-- Start with `claude-skills/farm-game-session/SKILL.md` (what to read, the log rule). For pictures and the content side read
-  `claude-skills/farm-game-content/SKILL.md`, section "Pictures". For story work read `story/README.md` first.
-- **Standing rule:** update `TODO.md`, `PROJECT-LOG.md` and the story files as you work, not at the end.
+- Start with `.claude/skills/farm-game-session/SKILL.md` (what to read, the log rule). For pictures and the content side read
+  `.claude/skills/farm-game-content/SKILL.md`, section "Pictures". For story work read `story/README.md` first.
+- **Standing rule:** update `archive/todo-2026-10.md`, `PROJECT-LOG.md` and the story files as you work, not at the end.
 - Labels in the story files: ✅ decided by the parent (do not change without asking) · 💡 proposed · ❓ open · 🔒 hidden from the player.
 - Talk to the parent in plain, friendly English; no flattery; be direct when something is weak; suggest the fix.
 - German: use "ss", never "ß". Story texts are short (2–4 sentences) and in second person (`{player}`).
@@ -51,14 +51,14 @@ Current job, as the parent asked it: (1) move the superseded pictures into an ar
 - **The farmer is never painted.** Only a hand reaching from the camera, a backlit silhouette from behind in a farmer's hat, or the view through
   the farmer's eyes. (R3, [#S5], [#S6])
 - **Mumyo is traces only** in the main story. At most half-hidden in a picture, never looking at the viewer; Fenna never sees him after the fire.
-  (`characters/mumyo.md`)
-- **The Helpers do not talk.** (`story/story-delivery.md` §5)
-- **No church, chapel or religion.** The bell belongs to the village hall. (`world/hazelwood.md`)
-- **Greenstem is the farmer's age.** (`characters/hazelwood-people.md`)
+  (`../../story/canon/characters/mumyo.md`)
+- **The Helpers do not talk.** (`story/game/story-delivery.md` §5)
+- **No church, chapel or religion.** The bell belongs to the village hall. (`../../story/canon/world/hazelwood.md`)
+- **Greenstem is the farmer's age.** (`../../story/canon/characters/hazelwood-people.md`)
 - **The cousin is a girl. Wren is a woman.** The Lord is offstage ("a name on a seal").
-- **The Import Broker is Lark in a hat**, a wink that is never said. (`book-file.md`, 6.2)
+- **The Import Broker is Lark in a hat**, a wink that is never said. (`../../story/canon/book-file.md`, 6.2)
 - **The squirrel may sit on Lark's shoulder at the Fair supper** (14 Oct 2026). Its naming ("Nutmeg, obviously") stays in the free-play piece
-  `sq_free_lark`. The magpie may not cross into the shell. (`book-file.md` line 62)
+  `sq_free_lark`. The magpie may not cross into the shell. (`../../story/canon/book-file.md` line 62)
 - **Take the newer version** of each picture that was remade after the restart: the 13 pairs below. The older versions are superseded.
 
 ## PROPOSED BY THE REVIEW, NOT YET CONFIRMED 💡
@@ -122,7 +122,7 @@ c6_free_lark, c6_lord (a letter with a red seal; the seal must not carry the sta
 ## MILL: THE OPEN CONTRADICTION
 
 - Windmill with sails: the ch3 bell ruin (`windmill-ruin-brass-bell`), the ch6 sails (`windmill-new-white-sails`), the three end-of-story views.
-- Water wheel: the ch3 stream picture (`miller-bridge-clear-stream-nod`) and the lease document (`world/lease-and-collapse.md`).
+- Water wheel: the ch3 stream picture (`miller-bridge-clear-stream-nod`) and the lease document (`../../story/canon/world/lease-and-collapse.md`).
 - The review recommends the **windmill** (five pictures already show it). Then: redo the miller-bridge picture and change the water-wheel
   wording in the lease document. ❓ Parent decides.
 
@@ -159,8 +159,8 @@ Move the files; keep their names.
 
 | Artifact | State | What it is / what to know |
 |---|---|---|
-| `art-inbox/Story pictures/openart outputs/` | on the Mac; 108 PNGs; 95 current | Originals total **179 MB** (about 1.5–1.7 MB per PNG). Too large for the web build (see W2 in `TODO.md`: GitHub refuses files over 100 MB). Pictures for the game need compressing (size and format are for the new agent to propose). |
-| same folder, `README.md` | on the Mac | Every picture with its creation time, model, references and full prompt. Long (about 1,500 lines). |
+| `art-inbox/Story pictures/openart outputs/` | on the Mac; 108 PNGs; 95 current | Originals total **179 MB** (about 1.5–1.7 MB per PNG). Too large for the web build (see W2 in `archive/todo-2026-10.md`: GitHub refuses files over 100 MB). Pictures for the game need compressing (size and format are for the new agent to propose). |
+| same folder, `../../story/README.md` | on the Mac | Every picture with its creation time, model, references and full prompt. Long (about 1,500 lines). |
 | same folder, `openart_metadata.csv` | on the Mac | One row per picture: `new_filename`, `created_local`, `prompt`, `reference_labels`. Use it to rebuild prompts. |
 | same folder, `rename_map.csv` | on the Mac | Earlier renames. |
 | `art-inbox/Story pictures/story-picture-prompts.md` | on the Mac; parent-side plan, **Draft 1, 12 Oct 2026** (33 KB) | Style block (§2), rules (§3), cast (§4), the frame and the seven chapters of beats (§5, §7), everyday moments (§8, the `ev_` ids), order of work (§9): 90 pictures planned, three versions each. Written before the ch2–6 texts (13 Oct), so its ids do not all match the story ids. Its character rules agree with `canon-for-pictures.md` (farmer never in the picture, Mumyo hidden, the badger's spectacles real). |
@@ -168,9 +168,9 @@ Move the files; keep their names.
 | `picture_review.csv` | written in the workspace; attached | 110 rows: 95 pictures and 15 gap rows. Columns as above. |
 | `story-picture-briefs.md` | written in the workspace; attached | Per piece (54 with a picture, 16 without): the English text, the pictures now and their verdicts. Plus a list of pictures not tied to a piece (layout, world). |
 | `canon-for-pictures.md` | written in the workspace; attached | The picture canon with sources and a 7-point checklist for any new or changed picture. |
-| `story/texts/ch1.md` … `ch6.md` | on the Mac; the source | Every story piece, English and German. The briefs file copies the English. |
-| `story/book-file.md`, `story/characters/*.md`, `story/world/*.md` | on the Mac; the canon | Read these for any doubt about a character or a place. |
-| `godot-prototype/data/farm/story/*.json` | on the Mac | One entry per piece. **No `picture` field exists yet.** The format is `"picture": "story/<piece-id>.png"` (`story/story-delivery.md` §6). |
+| `story/game/texts/ch1.md` … `ch6.md` | on the Mac; the source | Every story piece, English and German. The briefs file copies the English. |
+| `story/canon/book-file.md`, `story/characters/*.md`, `story/world/*.md` | on the Mac; the canon | Read these for any doubt about a character or a place. |
+| `godot-prototype/data/farm/story/*.json` | on the Mac | One entry per piece. **No `picture` field exists yet.** The format is `"picture": "story/<piece-id>.png"` (`story/game/story-delivery.md` §6). |
 | `art-inbox/ART_LIST.csv` | on the Mac | **Has no story-picture rows** (checked 14 Oct). The review asks for story prompt rules here (R3). |
 | `godot-prototype/tools/import_art.py`, `tools/art_sheets.json`, `tools/art_list.py` | on the Mac; not read this session | The import path (content skill, "Pictures"): `python3 tools/import_art.py` with `sheet`, `one` or `tile`. Story pictures are single scenes, not sheets, so check whether `one` covers them. |
 
@@ -194,10 +194,10 @@ Move the files; keep their names.
    tea setting. Recommendation: change the text where the picture is good.
 5. **Full-bleed as a rule:** confirm, so the new art and the crops follow it.
 6. **Collar bells:** confirm that animals have no visible bells in story pictures.
-7. **OpenArt model:** the picture README says "Nano Banana 2, 1K, 1:1"; the parent's rule (`00-READ-ME-FIRST.md` §4.6) says "Nano Banana 2 Lite at 1K". Which one for story pictures?
+7. **OpenArt model:** the picture README says "Nano Banana 2, 1K, 1:1"; the parent's rule (`00-READ-ME-FIRST.md` §3) says "Nano Banana 2 Lite at 1K". Which one for story pictures?
 8. **Holds and the archive:** the two holds (night window with shell; hay-barn dusk). The archive home is `archive/art-rejected/` (it exists); confirm it.
 9. **Style block:** the picture README's painterly block (used for the 108) or the parent's newer block in `story-picture-prompts.md` §2 ("Warm hand-drawn storybook cartoon … soft dark-brown ink outlines … flat colours with gentle cel shading")? The two differ in look. The parent's plan is newer; the review was done against the painterly ones. Recommendation: the parent's block, and regenerate the must-fix pictures in it, so the set matches.
-10. **Ids:** `story-picture-prompts.md` (12 Oct) plans its own ids (`c2_roof`, `c2_scorch`, `c3_millbell`, `c3_hat`, `c6_share`, `c6_family`, …). The story texts of 13 Oct (`story/texts/ch*.md`) use other ids. Map them piece by piece before generating; the briefs file uses the text ids.
+10. **Ids:** `story-picture-prompts.md` (12 Oct) plans its own ids (`c2_roof`, `c2_scorch`, `c3_millbell`, `c3_hat`, `c6_share`, `c6_family`, …). The story texts of 13 Oct (`story/game/texts/ch*.md`) use other ids. Map them piece by piece before generating; the briefs file uses the text ids.
 
 ## WHAT THE NEW AGENT SHOULD WORK OUT (goals, not steps)
 
@@ -217,17 +217,17 @@ Move the files; keep their names.
 
 ## LOG ENTRIES (applied on 14 Oct 2026; kept here for reference)
 
-**`PROJECT-LOG.md` §1, new row at the bottom of the table:**
+**`archive/log-2026-10.md` §1, new row at the bottom of the table:**
 
 > | **Story pictures review** (14 Oct 2026) | Review of the 95 current story pictures (after the restart: the newer version of 13 pairs taken, 13 older versions set aside, not moved). Per-picture verdicts in `art-inbox/Story pictures/picture_review.csv`; piece briefs and the picture canon beside it; handoff in the same folder. Parent's squirrel decision: the squirrel may sit at the Fair supper. Nothing moved, deleted or generated yet. |
 
-**`story/book-file.md`, session log (after the 13 Oct 2026 entry):**
+**`story/canon/book-file.md`, session log (after the 13 Oct 2026 entry):**
 
 > - **14 Oct 2026, pictures (parent):** ✅ the squirrel may sit on Lark's shoulder at the Fair supper (picture); its naming stays in `sq_free_lark`. This lifts the "not part of the supper (6.10)" note for the picture only. Story pictures reviewed: see `art-inbox/Story pictures/picture_review.csv` and `canon-for-pictures.md`. Open: mill type, the frame-6 conch, the merchant pair.
 
-**`TODO.md` §15, I11:** change to "I11. Story pictures follow R3. ⏳ Reviewed 14 Oct 2026; see the handoff in `art-inbox/Story pictures/`. Open: the must-fix list, 16 pieces without a picture, the mill type, the archive move, the new art." Add the date in "Last updated" at the top.
+**`archive/todo-2026-10.md` §15, I11:** change to "I11. Story pictures follow R3. ⏳ Reviewed 14 Oct 2026; see the handoff in `art-inbox/Story pictures/`. Open: the must-fix list, 16 pieces without a picture, the mill type, the archive move, the new art." Add the date in "Last updated" at the top.
 
-**`story/story-delivery.md` §5 (writing rules), add:**
+**`story/game/story-delivery.md` §5 (writing rules), add:**
 
 > - ✅ **Picture rules (R3, [#S5], [#S6]):** the farmer is never painted (a hand from the camera, or a backlit silhouette from behind in a farmer's hat). Canon for the pictures: `art-inbox/Story pictures/canon-for-pictures.md`.
 

@@ -6,7 +6,7 @@ Swiss price (ANCHORS, in bronze). Run once from the godot-prototype folder:
     python3 tools/rescale_prices.py            (changes the files; refuses to run twice: data/farm/rules/40-economy.json "currency")
     python3 tools/rescale_prices.py --dry      (only prints the table)
 
-Writes planning/price-table.md (every item: before, after, and the anchor if there is one).
+Writes docs/sources/price-table.md (every item: before, after, and the anchor if there is one).
 """
 import json, os, sys, glob
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -108,9 +108,9 @@ def main():
     start = load(start_path)
     start["coins"] = round(start.get("coins", 0) * FACTOR)
     econ["currency"] = {"rescaled": True, "factor": FACTOR, "bronzePerGold": 100, "goldFrom": 100, "symbols": {"bronze": "🟤", "gold": "🟡"},
-        "note": "Coins are counted in bronze: 100 bronze = 1 gold, like Rappen and Franken. The first rescale (13 Oct 2026) turned every old coin into 15 bronze, so the pace of the game stayed the same, and set familiar goods to realistic Swiss prices (planning/price-table.md). Amounts under goldFrom show as bronze only (35), from there as gold and bronze (2 gold 35 bronze)."}
+        "note": "Coins are counted in bronze: 100 bronze = 1 gold, like Rappen and Franken. The first rescale (13 Oct 2026) turned every old coin into 15 bronze, so the pace of the game stayed the same, and set familiar goods to realistic Swiss prices (docs/sources/price-table.md). Amounts under goldFrom show as bronze only (35), from there as gold and bronze (2 gold 35 bronze)."}
     # the mark-up rule of made things: dishes made from dishes grow too fast; the table above is what the game uses now
-    if "pricing" in econ: econ["pricing"]["note"] = econ["pricing"]["note"] + " (Informative only: the prices in items.json are the table in planning/price-table.md; the old formula over-priced dishes made from dishes: pizza 166, cheese board 204.)"
+    if "pricing" in econ: econ["pricing"]["note"] = econ["pricing"]["note"] + " (Informative only: the prices in items.json are the table in docs/sources/price-table.md; the old formula over-priced dishes made from dishes: pizza 166, cheese board 204.)"
     # table
     rows.sort(key=lambda r: (r[0], r[4]))
     lines = ["# Price table (D3, 13 Oct 2026)", "", "Every item's value in **bronze** (100 bronze = 1 gold; like Rappen and Franken). *Before* = the old coins ×1; *After* = what the game uses now. "

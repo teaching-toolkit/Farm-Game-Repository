@@ -3,8 +3,8 @@
 Context file for the Farm Quiz Game (Hazelwood Harvest). Written 14 Oct 2026 with the picture review. Use it as the checklist for every
 story picture, old or new. Labels: ✅ decided by the parent · 💡 proposed (Claude or the review), not yet confirmed · ❓ open.
 
-Sources (in the project folder): `story/book-file.md`, `story/characters/*.md`, `story/world/*.md`, `story/story-delivery.md` §5,
-`planning/2026-10-09-parent-notes.md` ([#S5], [#S6]), `TODO.md` §5 (R3), `00-READ-ME-FIRST.md` §4.6, `story/texts/ch1.md` … `ch6.md`.
+Sources (in the project folder): `story/canon/book-file.md`, `story/characters/*.md`, `story/world/*.md`, `story/game/story-delivery.md` §5,
+`docs/sources/2026-10-09-parent-notes.md` ([#S5], [#S6]), `archive/todo-2026-10.md` §5 (R3), `00-READ-ME-FIRST.md` §3, `story/game/texts/ch1.md` … `ch6.md`.
 
 ## 1. The farmer (the player's character)
 
@@ -20,7 +20,7 @@ Sources (in the project folder): `story/book-file.md`, `story/characters/*.md`, 
 
 - ✅ **Traces only** in the main story. He is no bigger than a hand, appears and disappears, and is seen by the player only as traces: bells,
   a moved thing, a flower left on a step, a tail.
-- His look (from `characters/mumyo.md`): white skin, wild white hair, a long tail, tiny insect wings, a black belly, a tiny grey vest with bells.
+- His look (from `../../story/canon/characters/mumyo.md`): white skin, wild white hair, a long tail, tiny insect wings, a black belly, a tiny grey vest with bells.
 - ✅ **Fenna never sees him again after the fire.** So in any picture where he is, he must not look at the viewer and the farmer must not look at him.
 - 💡 The player may see him **half-hidden** in a story picture (behind a bucket, in the scarecrow's hat), never looking at the viewer. The farmer
   in the same picture looks the other way.
@@ -36,23 +36,23 @@ Sources (in the project folder): `story/book-file.md`, `story/characters/*.md`, 
   the text puts him at the still-room door, the picture shows a kitchen (see the review, `c5_badger`).
 - The squirrel is an ordinary squirrel. ✅ (14 Oct 2026, parent) **It may sit on Lark's shoulder at the Fair supper.** Its naming ("Nutmeg, obviously")
   stays in the free-play piece `sq_free_lark`; the supper picture does not need to show a name.
-- The magpie stays out of the shell (✅ `book-file.md`, the forest rule). Do not draw a magpie in any story picture.
+- The magpie stays out of the shell (✅ `../../story/canon/book-file.md`, the forest rule). Do not draw a magpie in any story picture.
 - Crows, owls, robins and other birds are ordinary birds (review, 14 Oct 2026).
 
 ## 4. People
 
 | Person | Look and rules | Source |
 |---|---|---|
-| **Lark** | Tall, thin, ageless. **Rust-brown coat with mismatched buttons.** Always one more pocket than you counted. 💡 No bells in this game. Sorts books by weight. | `characters/lark.md` |
-| **Import Broker** | **Is Lark, in a hat.** The hat is a wink; it is never said. | `book-file.md` (6.2) |
-| **Greenstem** (young Greenstem) | ✅ **The farmer's age** ("Mr. Greenstem is Fenna's age"). Not a child. Minds his gran's herb stall. Later Wren's apprentice. | `characters/hazelwood-people.md`, `book-file.md` |
-| **Wren** | ✅ **A woman**: the herb woman from the next valley, Greenstem's mentor. | `characters/hazelwood-people.md` |
-| **The cousin** | ✅ **A girl** (default, ✅ in the outline). Pointing at the farmer in the crisis; sits down beside the farmer in the "sit down" beat. | `book-file.md`, `outline/ladder.md` |
-| **Master Quill** | The Lord's steward. Stiff, fair, a ledger under his arm. Counts everything. Not amused by the paper boat. | `characters/hazelwood-people.md` |
-| **The Lord** | ✅ **Offstage.** Never drawn. He is "a name on a seal". Afraid of the Count downriver. | `characters/hazelwood-people.md` |
-| **Pieter** | The night watchman, with a lantern and a book (the Lord's share is his to collect). | `texts/ch3.md` |
-| **Minena** and the grandchildren | Appear in frame pictures only (the bedside). Nobody is in the bed. Minena is the one who holds the thing at the end. | `texts/ch1.md`, `ch6.md` |
-| **Granny Maud** | Chases her goat in the village (visit). | `story-delivery.md` §7 |
+| **Lark** | Tall, thin, ageless. **Rust-brown coat with mismatched buttons.** Always one more pocket than you counted. 💡 No bells in this game. Sorts books by weight. | `../../story/canon/characters/lark.md` |
+| **Import Broker** | **Is Lark, in a hat.** The hat is a wink; it is never said. | `../../story/canon/book-file.md` (6.2) |
+| **Greenstem** (young Greenstem) | ✅ **The farmer's age** ("Mr. Greenstem is Fenna's age"). Not a child. Minds his gran's herb stall. Later Wren's apprentice. | `../../story/canon/characters/hazelwood-people.md`, `../../story/canon/book-file.md` |
+| **Wren** | ✅ **A woman**: the herb woman from the next valley, Greenstem's mentor. | `../../story/canon/characters/hazelwood-people.md` |
+| **The cousin** | ✅ **A girl** (default, ✅ in the outline). Pointing at the farmer in the crisis; sits down beside the farmer in the "sit down" beat. | `../../story/canon/book-file.md`, `../../story/archive/outline-old/ladder.md` |
+| **Master Quill** | The Lord's steward. Stiff, fair, a ledger under his arm. Counts everything. Not amused by the paper boat. | `../../story/canon/characters/hazelwood-people.md` |
+| **The Lord** | ✅ **Offstage.** Never drawn. He is "a name on a seal". Afraid of the Count downriver. | `../../story/canon/characters/hazelwood-people.md` |
+| **Pieter** | The night watchman, with a lantern and a book (the Lord's share is his to collect). | `../../story/game/texts/ch3.md` |
+| **Minena** and the grandchildren | Appear in frame pictures only (the bedside). Nobody is in the bed. Minena is the one who holds the thing at the end. | `../../story/game/texts/ch1.md`, `ch6.md` |
+| **Granny Maud** | Chases her goat in the village (visit). | `../../story/game/story-delivery.md` §7 |
 
 Rule of thumb for any person in a picture: adult shapes, no faces that could be the farmer's, no one looking straight out at the viewer except the
 grandchildren at the bedside.
@@ -78,7 +78,7 @@ grandchildren at the bedside.
 
 ## 7. Words, letters and frames
 
-- ✅ **No words on the map and no legible text in a picture** (`00-READ-ME-FIRST.md` §4.6, applied to story pictures). Letters, books and notices show
+- ✅ **No words on the map and no legible text in a picture** (`00-READ-ME-FIRST.md` §3, applied to story pictures). Letters, books and notices show
   handwriting as scribble or as shapes. Never a real word, never a name, never "Lorem ipsum".
 - Letters in pictures: the letter from home says nothing that could be read. In particular **no "Clara"** (no such name in the story files).
 - Frame pictures (the grandchildren at the bedside): the lamp, the stone walls, the quilt, the tea. Nobody is in the bed.
@@ -100,5 +100,5 @@ grandchildren at the bedside.
 4. Are Lark, Greenstem (adult), Wren (a woman), the cousin (a girl), Quill (a steward) drawn as in §4?
 5. No church or religious object, no Lord on the page, no legible words, no "Clara"? (§5, §7)
 6. Full-bleed, no border? (§8)
-7. Does the picture show what the piece's text says and nothing the text contradicts? (`story/texts/ch*.md`; the piece's id is in
+7. Does the picture show what the piece's text says and nothing the text contradicts? (`story/game/texts/ch*.md`; the piece's id is in
    `story-picture-briefs.md`)

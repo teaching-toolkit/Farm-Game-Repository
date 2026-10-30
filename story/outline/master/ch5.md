@@ -65,6 +65,6 @@ Wren (grumpy, exact, won last), Greenstem, Lotte's mother, the Nest (Matron Elsi
 
 ## Notes and rulings
 
-- **Quill is absent from chapter 5 after #2** (07's "absent on purpose"). His B15 scene sits at the very start of the chapter as his last appearance before the Fair; after it the seal comes by a boy, and the pressure is that he did not bring it. 04 and 07 both stand; this is the join (ruling R-M1, `../../slices/DECISIONS.md`).
+- **Quill is absent from chapter 5 after #2** (07's "absent on purpose"). His B15 scene sits at the very start of the chapter as his last appearance before the Fair; after it the seal comes by a boy, and the pressure is that he did not bring it. 04 and 07 both stand; this is the join (ruling R-M1, `../../archive/slices/DECISIONS.md`).
 - Pieter's mercy lives here because the 25 % cap binds from this chapter.
 - "Better." is out of the text (06 revision 2).

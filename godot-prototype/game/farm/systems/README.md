@@ -26,13 +26,13 @@ emits the signals the interface listens to (`changed`, `toast`, `gained`, `sold`
 | `knowledge` | knowledge cards, the library, reading, card quizzes, the Time Quiz (next question, retries, results) | rewards, progression, pace |
 | `rewards` | luck, gift cards, little jobs, golden acorns, perks | crafting, fields, inventory, seasons |
 
-**Rules of the house** (also in `claude-skills/farm-game-session/SKILL.md`):
+**Rules of the house** (also in `.claude/skills/farm-game-session/SKILL.md`):
 - A new mechanic is a new system file here (or a new function in the system that owns the thing), not new lines in `game.gd` or `main.gd`.
 - A system that has to run every step of time registers a function in `Game.setup_clock()`, right after the one it must follow (order is part of
   the rules), and puts what the interface should show into the step's report.
 - Functions another system or the interface uses have public names (no leading `_`); the state shared between systems still lives in `G.S`
   (versioned slices per system come with R7).
 - The interface (`main.gd`, the tests, the dev flags) calls `G.<system>.<function>`; it should not write into `G.S` (R5 removes the last cases).
-- A system is promoted to a kit (`kits/`) when a second game needs it and it no longer names anything of the farm (`planning/2026-10-12-architecture-plan.md` §4.2).
+- A system is promoted to a kit (`kits/`) when a second game needs it and it no longer names anything of the farm (`docs/sources/2026-10-12-architecture-plan.md` §4.2).
 
 The lists of node types (`goal_types`, `main_types`, `not_auto`, `default_cat`) are data: `rules/05-node-types.json`, filled into `Game` by `load_data()`.

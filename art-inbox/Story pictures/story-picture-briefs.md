@@ -1,6 +1,6 @@
 # Story pictures: brief per piece
 
-Generated 14 Oct 2026 from `story/texts/ch1.md` … `ch6.md` (English text only; the German is in the same files) and `picture_review.csv` (same folder). Barks are left out: they are speech bubbles and have no picture.
+Generated 14 Oct 2026 from `story/game/texts/ch1.md` … `ch6.md` (English text only; the German is in the same files) and `picture_review.csv` (same folder). Barks are left out: they are speech bubbles and have no picture.
 
 How to read a line: **Now:** the picture(s) in the folder and the review verdict. **GAP:** the piece has no picture yet.
 

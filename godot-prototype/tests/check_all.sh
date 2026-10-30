@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# All quick checks in one go (about 2 minutes): UI smoke test, save fixtures, save versions, core kit, data checks, places and pets, quality, skills, money, story, trip, gate, trust and season prices, golden run, translations.
+# All quick checks in one go (about 2 minutes): UI smoke test, save fixtures, save versions, core kit, data checks, places and pets, quality, skills, money, story, trip, gate, trust and season prices, golden run, translations, project documents (../tools/check_docs.py).
 # Run after every restructuring step:  bash tests/check_all.sh   (Godot as in tests/golden.sh)
 #   bash tests/check_all.sh --short   the same, but the golden run only to the end of chapter 2 (saves about 40 s); the options go to golden.sh
 set -uo pipefail
@@ -16,7 +16,7 @@ FAIL=0
 LOG="$(mktemp)"
 "$G" --headless --path . res://tests/ui_smoke.tscn -- --seed=1 > "$LOG" 2>&1
 if grep -q "SCRIPT ERROR" "$LOG" || grep -q "^FAIL" "$LOG" || ! grep -q "^insides: " "$LOG"; then echo "✘ UI smoke test"; grep -m3 -A3 "SCRIPT ERROR" "$LOG"; grep "^FAIL" "$LOG"; FAIL=1
-else echo "✔ UI smoke test ($(grep -c . "$LOG") lines; read them against claude-skills/farm-game-check)"; fi
+else echo "✔ UI smoke test ($(grep -c . "$LOG") lines; read them against .claude/skills/farm-game-check)"; fi
 "$G" --headless --path . res://tests/fixtures_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^FIXTURES|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^FIXTURES OK/✔ save fixtures/; s/^FIXTURES FAILED/✘ save fixtures/'
 grep -q "^FIXTURES OK" "$LOG" || FAIL=1
@@ -74,6 +74,7 @@ grep -q "^MARKET OK" "$LOG" || FAIL=1
 bash tests/golden.sh "$@" || { echo "✘ golden run"; FAIL=1; }
 python3 tools/check_data.py > "$LOG" 2>&1 && echo "✔ data checks ($(tail -1 "$LOG"))" || { echo "✘ data checks"; grep ERROR "$LOG" | head -5; FAIL=1; }
 python3 tools/i18n.py --check > /dev/null || { echo "✘ translations (python3 tools/i18n.py)"; FAIL=1; }
+python3 ../tools/check_docs.py || FAIL=1
 rm -f "$LOG"
 [ $FAIL = 0 ] && echo "ALL CHECKS PASSED" || echo "SOME CHECKS FAILED"
 exit $FAIL

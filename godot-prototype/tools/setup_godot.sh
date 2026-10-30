@@ -4,7 +4,7 @@
 #   --web      also install the Web export templates (big download, ~1 GB; only needed to export web-build/)
 #   --art      also install the Python packages for tools/import_art.py (Pillow, numpy, scipy)
 #   --screens  also install Xvfb so screenshots can be taken
-# Prints the path of the Godot binary at the end; use it as $G (see 00-READ-ME-FIRST.md §4.2).
+# Prints the path of the Godot binary at the end; use it as $G (see .claude/skills/farm-game-check/SKILL.md §1).
 set -euo pipefail
 
 VER="4.7.2"

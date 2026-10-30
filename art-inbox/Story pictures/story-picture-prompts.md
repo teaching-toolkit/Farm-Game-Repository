@@ -1,7 +1,7 @@
 # Hazelwood Harvest: story picture prompts
 
-Draft 1, 12 Oct 2026. Based on `story/outline/ladder.md`, `story/story-delivery.md`, the character files and TODO R3. Model: **Nano Banana 2, 1K**.
-IDs follow the ladder (`c1_stalk` = chapter 1, beat 1.1). The suggested file name is `story/<id>.png`, which matches the `picture` field in `story-delivery.md` §6.
+Draft 1, 12 Oct 2026. Based on `story/archive/outline-old/ladder.md`, `story/game/story-delivery.md`, the character files and TODO R3. Model: **Nano Banana 2, 1K**.
+IDs follow the ladder (`c1_stalk` = chapter 1, beat 1.1). The suggested file name is `story/<id>.png`, which matches the `picture` field in `../../story/game/story-delivery.md` §6.
 
 ---
 

@@ -4,7 +4,7 @@ Written 24 Oct 2026 by the story manager from the slice dossiers (`slices/01`, `
 
 **Chapter question (what the player wants to know):** *Who else is still here?* (who rings the bells, who kept the green patch).
 **Farmer's want / obstacle / ending:** keep the one seed alive, alone, and so busy that nobody asks about the fire; ash, mud, a road no cart can use, and someone small moving her things; the bunny comes home and the patch turns out to have been kept alive *for her*.
-**Pet:** bunny. **Rung (village):** 1, polite and watching. **Lord's rung:** none (a notch, a passing lantern). **Length:** about 244 engine steps (the bot's count; the opening hour). **Estimated order below is by node dependency, not measured**; the check is one bot run (see `../../QUESTIONS.md` item on the test-bot).
+**Pet:** bunny. **Rung (village):** 1, polite and watching. **Lord's rung:** none (a notch, a passing lantern). **Length:** about 244 engine steps (the bot's count; the opening hour). **Estimated order below is by node dependency, not measured**; the check is one bot run (see `../QUESTIONS.md` item on the test-bot).
 
 ## Acts
 
@@ -74,7 +74,7 @@ The silence after the tidied tower (until the hour's end and then the bunny's an
 
 ## Village strand (stance rung 1)
 
-Maud (warm, alone), Rue (a stranger), Old Jan (one old man), Tom, the twins, Ella, Old Cole. Only Maud, Rue and Jan carry anything. Nobody comes up the road. See `../../characters/village-arcs.md`.
+Maud (warm, alone), Rue (a stranger), Old Jan (one old man), Tom, the twins, Ella, Old Cole. Only Maud, Rue and Jan carry anything. Nobody comes up the road. See `../../canon/characters/village-arcs.md`.
 
 ## Chapter-end open question
 
@@ -83,6 +83,6 @@ Maud (warm, alone), Rue (a stranger), Old Jan (one old man), Tom, the twins, Ell
 ## Notes and rulings
 
 - "Fifteen" is said once, early, by Berit's box and again by Rue; never in the frame.
-- No `{player}` in Minena's mouth in frame 0 was ruled by the manager; the parent's later answer (01-5) **accepts** one use of {player} in frame 0 ("Please, {player}"). Slice 01 revision 2 removed it; re-adding it is a text-change request (see `../../text-change-requests.md` row 2).
+- No `{player}` in Minena's mouth in frame 0 was ruled by the manager; the parent's later answer (01-5) **accepts** one use of {player} in frame 0 ("Please, {player}"). Slice 01 revision 2 removed it; re-adding it is a text-change request (see `../../game/text-change-requests.md` row 2).
 - The hum is a frame object (the old you hums; the grandchild half-hears it: parent's answer 01-7 "yes").
-- A "Where were we?" recap button (Option B) is a UI wish (see `../../data-wishes.md`).
+- A "Where were we?" recap button (Option B) is a UI wish (see `../../game/data-wishes.md`).

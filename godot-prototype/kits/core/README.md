@@ -12,7 +12,7 @@ Tested by `tests/core_test.gd` (part of `bash tests/check_all.sh`).
 | `saves.gd` | Save files with a version: read, write, run the upgrade steps a save has not had yet, fill keys a newer game added; a save from a newer game is left alone. | `Game.load_game()`, `save_steps()`, every system's `save_defaults()` |
 | `clock.gd` | One step of time: systems register a function under a name (at the end, or after/before another); `run(report)` calls them in order, each filling the report. | `Game.step_time()`, with the systems registered in `Game._setup_clock()` |
 
-**Still to come** (the architecture plan, `planning/2026-10-12-architecture-plan.md` §4.1): `data.gd` (loading and merging data files, R8).
+**Still to come** (the architecture plan, `docs/sources/2026-10-12-architecture-plan.md` §4.1): `data.gd` (loading and merging data files, R8).
 `events.gd` was not needed: the signals stay on the Game.
 
 **To add a system to the clock:** write its function (it gets the step's report dictionary), register it in `_setup_clock()` right after

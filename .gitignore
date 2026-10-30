@@ -10,10 +10,6 @@ godot-prototype/.godot/
 # The web build is its own public repo (nested git repo inside web-build/)
 web-build/
 
-# Temporary transfer folder: keep only its README
-Claude outputs/*
-!Claude outputs/README.md
-
 # Archive: keep the old documents and prototypes, skip the big screenshots and the old zip
 archive/screenshots/
 archive/*.zip

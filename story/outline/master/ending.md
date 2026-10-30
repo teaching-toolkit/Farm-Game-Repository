@@ -11,8 +11,8 @@ Beats, in order (the frame is the old you at the bedside; the grown-up farmer is
 3. Halfway through the old you stops. "Are you tired?" "I am not." She is asleep mid-sentence; Minena counts to ten; she wakes: "Where was I?" "The fire." "Ah." (the Mirror Crack of chapter 1 returns, and this time a child is allowed to wait; parent's answer 04-36: the last frame ends funny.)
 4. ✅ The request, unchanged: *"If you meet a little fellow with bells, tell him I was never angry."* The farmer cannot honestly say it herself (her last words to him were harsh: parent's answer 04-27: "This is all your fault! Go away! I never want to see you again!"), so it goes through Minena.
 5. The picture: a bucket on the sill holding Minena's stones, a feather and a few flat grey stones that do not match; a white flower on the sill (the glowing-stones picture is **awe #5**, picture only).
-6. 💡 Minena may hum "the last bit" of the melody (the true last phrase; nothing about what it means; queued as ❓ for the parent, `../../QUESTIONS.md`). The old you has hummed the first phrases in every frame since frame 0 (parent's answer 01-7: yes), so the grandchild half-hears it all her life.
-7. That night Minena dreams a melody: the next story, *Minena 01 / The Forest Within* (outside this outline; `characters/minena.md`).
+6. 💡 Minena may hum "the last bit" of the melody (the true last phrase; nothing about what it means; queued as ❓ for the parent, `../QUESTIONS.md`). The old you has hummed the first phrases in every frame since frame 0 (parent's answer 01-7: yes), so the grandchild half-hears it all her life.
+7. That night Minena dreams a melody: the next story, *Minena 01 / The Forest Within* (outside this outline; `../../canon/characters/minena.md`).
 
 After the frame the player stays in free play; there is **no epilogue chapter** (✅). The free-play set at the end is listed at the foot of `ch6.md`.
 
@@ -46,7 +46,7 @@ Chapter spread 1 ×2, 2 ×1, 3 ×2, 4 ×1, 5 ×1, 6 ×2. Cheapest tier (3 glimps
 
 ## Mumyo's name: one reaches the player in the telling
 
-Before chapter 6 the player meets "the little one with bells", "the imp" (frames only), "Mr. Mumble" (Lark's one joke, ch5, a nonsense name). The name **Mumyo** appears first in the garden telling (ch6 #22; the page with the name alone), then in frame 6. This is the parent's ruling (00-3: no naming before frame 6) read as *at or after the garden telling, which is the scene that ends chapter 6 and leads straight into frame 6*. **Flag for the parent:** the garden telling falls inside chapter 6, before frame 6; if "before frame 6" must be literal, the name moves to frame 6 and the garden page says "you" instead (see `../../QUESTIONS.md`).
+Before chapter 6 the player meets "the little one with bells", "the imp" (frames only), "Mr. Mumble" (Lark's one joke, ch5, a nonsense name). The name **Mumyo** appears first in the garden telling (ch6 #22; the page with the name alone), then in frame 6. This is the parent's ruling (00-3: no naming before frame 6) read as *at or after the garden telling, which is the scene that ends chapter 6 and leads straight into frame 6*. **Flag for the parent:** the garden telling falls inside chapter 6, before frame 6; if "before frame 6" must be literal, the name moves to frame 6 and the garden page says "you" instead (see `../QUESTIONS.md`).
 
 ## Quill: eleven beats over chapters 4–6 (with Helper gags)
 
@@ -83,6 +83,6 @@ The Lord is **never seen** (parent's answer 07-40): a crooked seal, a second she
 
 Frame 0 (hum, three objects, "Please, {player}" per answer 01-5, "I never start with the fire") · 1 "She was rude about carrots" · 2 "I didn't want to" · 3 "More than of any imp" · 4 "He was afraid. That's worse, sometimes." · 5 "By the time it was ready, I was." · 6 (above). The hum waits in the old you's mouth from frame 0 to 6 (E-F.M01); the stones and the flower in the bedroom (E-F.M02). A "Where were we?" recap button is the parent's choice B (a UI wish).
 
-## Data wishes the outline now depends on (full list: `../../data-wishes.md`)
+## Data wishes the outline now depends on (full list: `../../game/data-wishes.md`)
 
 `pet_tortoise` requires `pond` (✅ 00-4c); `pet_alpaca` requires `river_meadow_drain` (✅ 00-4d); the engine traps from slice 07 (retime `c6_lord`, `c6_quill_answer`, `lord_paid` is a sum, `eased` unwired); the tenth should lower the cap or the relief is only a felt halving.

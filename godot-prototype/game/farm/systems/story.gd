@@ -1,6 +1,6 @@
 extends RefCounted
 class_name FarmStory
-## The story pieces (story/story-delivery.md; data in data/farm/story/): which are ready, in which order, how often, what has been seen.
+## The story pieces (story/game/story-delivery.md; data in data/farm/story/): which are ready, in which order, how often, what has been seen.
 ## A piece: {"kind", "chapter", "when": [conditions, all must hold], "priority", "once", "speaker", "picture", "text" or "pages": [{"text", "picture"}]}.
 ## Kinds: frame · beat · discovery · letter · moment · visit · scene · bark · trace. This script only decides WHAT may be shown and WHEN;
 ## showing it (the story box, the speech bubble, the 📜 scroll) is the interface's job (game/farm/ui/storybox.gd).
