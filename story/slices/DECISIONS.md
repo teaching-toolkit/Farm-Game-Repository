@@ -96,3 +96,19 @@ Basis: `slices/00-digest/dossier.md` Part 2 (C1–C20). All 💡.
 - **Minena may hum the true last phrase** of the melody in frame 6 (text: she hums "the last bit", nothing about what it means). 💡, easy to undo; queued as a ❓ for the parent. The melody's deepest layer stays 🔒🔒.
 - "Better." stays out of the text (option B for the parent only). Lark stops sorting the spoons at the supper instead.
 - 06 owns four awe moments (first night, the Wall, the conch, the night garden), within the game-wide cap of 8. The master outline fixes the final count.
+
+## 24 Oct 2026, master outline written (manager; `outline/master/`, `outline/registry.md`)
+
+Basis: the slice dossiers after their revisions, the parent's answers of 24 Oct 2026 (`QUESTIONS.md`). All 💡 except where an answer is cited. The rulings below are binding for the outline; they override the older lines above only where they say so.
+
+- **R-M1 Quill and chapter 5.** E-5.B15 (his report on the fire) plays at the very start of chapter 5 as his *last* scene before the Fair; after it Quill is absent on purpose (07), and the seal comes by a boy. Both slices stand.
+- **R-M2 Awe: five in the game** (cap 8, 2 per chapter): the first night (ch1), the Wall (ch4), the white spiral (ch5), the night garden's first sight (ch6), the glowing stones on frame 6's sill (picture). Everything else tagged awe is re-tagged W or G (`master/ending.md`).
+- **R-M3 The chapter 6 supper:** four main beats (the shipped supper's Lark-and-squirrel gags; the lantern on its hook with the father's hand, Liv's snuffer and the village's bucket; Tilda's hand; the song, the spoons and the roll call as one closing beat); four to free play (the bowl, the `tap:pets` roll call, Lightning kindly, the line that closes folds into the song).
+- **R-M4 Fair order:** Players' Ballad (before the crisis) → Liv stands → the bend → the village wipes the chalk → Quill's ink, "Corrected." and the tenth → the alpaca → supper (lantern, Tilda, song and roll call) → garden telling → frame 6. The roll call follows the bend, in the supper stretch (parent 04-32 pending explanation; the order stands unless refused).
+- **R-M5 Chapter 4 tension:** the Pot divides becomes a two-bark series; E-4.R17 (grey letter on the quay) is cut; the counted hen moves behind the gardener's sticks so no run of three G.
+- **R-M6 Chapter 5 is short (about 60 steps):** the cough map moves behind the still-room; Bowls and the second water merge into one morning; free play: the pony's page, the forest barks, the Wait, the floating lights, the procession, Leave two. E-5.M18 (the Line glows more) is cut. E-6.H45 (Tea first, in an emergency) is placed in chapter 5.
+- **R-M7 Merges** (21 in all): see `outline/registry.md`; the notable ones are the four seeds of chapter 3's first Share Day into one occasion, the two board papers of chapter 2, the Players and the Ballad, the lantern and snuffer, the three closing supper beats.
+- **R-M8 Name Mumyo:** the first place the player meets it is the garden telling (chapter 6), which falls before frame 6. The parent's 00-3 ("not before frame 6") is read as "not before the telling that leads into frame 6"; flagged in `QUESTIONS.md` with the cheap alternative (the garden page says "you", the name moves to frame 6).
+- **R-M9 `{player}`:** the parent accepted one use in frame 0 and a few in the frames (01-5). This replaces the earlier ruling "No {player} in Minena's mouth" (slice 01 review).
+- **R-M10 Slice 05 (village arcs)** was never written; `characters/village-arcs.md` stands in (core 20, stance ladder, cold faces, Quill). The remaining owed items (voices, "what they do if you do nothing") are listed at the foot of that file.
+- **R-M11 Tidy:** the top-level story files are referenced from the frozen root documents, the skills and the issues, so none was moved or renamed; the README classifies them instead.

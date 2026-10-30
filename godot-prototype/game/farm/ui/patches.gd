@@ -105,8 +105,9 @@ func sheet_patch(a: String, i: int) -> void:
 			# a tree stays for good, so one can be cut down to plant another kind
 			var cr2 := UI.hbox(8)
 			cr2.add_child(UI.label(tr("Want another tree here?"), 15, UI.MUTED, true))
-			cr2.add_child(M.widgets.costs({"energy": G.needs.ecost("wood", 3.0)}, {"energy": 3.0}))
-			cr2.add_child(UI.action_button("wood", M.stations.do_cut_tree.bind(a, i), float(G.S["energy"]) + 0.001 >= G.needs.ecost("wood", 3.0), UI.SOIL, "🪓", tr("Cut down")))
+			var ct: Dictionary = G.actions.check("cut_tree", G.actions.farmer, {"a": a, "i": i})
+			cr2.add_child(M.widgets.costs(ct["cost"], ct["base"]))
+			cr2.add_child(UI.action_button("wood", M.stations.do_cut_tree.bind(a, i), ct["ok"], UI.SOIL, "🪓", tr("Cut down")))
 			M.content.add_child(cr2)
 		if float(p.get("soil", 1.0)) < 0.99: M.content.add_child(UI.label(tr("😴 Tired soil: the same crop as last time grows slower. Swap crops next time (beans and clover rest the soil)."), 15, UI.MUTED, true))
 		elif float(p.get("soil", 1.0)) > 1.01: M.content.add_child(UI.label(tr("💚 Rested soil after beans or clover: grows faster."), 15, UI.GREEN_DARK, true))
@@ -119,8 +120,8 @@ func sheet_patch(a: String, i: int) -> void:
 			hb.custom_minimum_size = Vector2(0, 56)
 			hb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			hr.add_child(hb)
-			var e1: float = G.needs.ecost("harvest", 1.0) * G.m("energy:field")
-			hr.add_child(M.widgets.costs({"energy": e1}, {"energy": 1.0}))
+			var hq: Dictionary = G.actions.check("harvest", G.actions.farmer, {"a": a, "i": i})
+			hr.add_child(M.widgets.costs(hq["cost"], hq["base"]))
 			M.content.add_child(hr)
 	if a == "field":
 		# weeds and stones on the patch: a tile each, with how many there are and the button to clear them
@@ -128,8 +129,8 @@ func sheet_patch(a: String, i: int) -> void:
 		if float(p["weeds"]) >= 0.5:
 			var wt := M.widgets.tile(Art.tex("deco", "weeds"), "🌿", tr("Weeds"))
 			wt.add_child(UI.explain(UI.stock_bar(float(p["weeds"]), maxf(6.0, ceilf(float(p["weeds"]))), UI.item_color("fiber"), 150), tr("🌿 Weeds here: they make the harvest smaller. Pull them!")))
-			var pull := minf(3.0, float(p["weeds"]))
-			wt.add_child(M.widgets.costs({"energy": G.needs.ecost("weed", pull) * G.m("energy:field")}, {"energy": pull}))
+			var wq: Dictionary = G.actions.check("weed", G.actions.farmer, {"i": i})
+			wt.add_child(M.widgets.costs(wq["cost"], wq["base"]))
 			M.widgets.tile_button(wt, UI.action_button("weed", _do_weed.bind(i), true, UI.GREEN_DARK, "💪", tr("Pull")))
 			wg.add_child(wt.get_meta("panel"))
 		if float(p["stones"]) >= 0.5:

@@ -8,7 +8,7 @@
 
 **Blocked by:** 00 (digest and gap survey), 02 (lived-in Hazelwood)
 
-**Status:** ready-for-agent
+**Status:** done as a stand-in (24 Oct 2026): ../characters/village-arcs.md; voices and "if you do nothing" still owed
 
 - [ ] Dossier written in the slice folder; every new thing labelled 💡; inventions listed in an **Inventions** section; ❓ and ✅-touching proposals appended (one block) to `QUESTIONS.md`.
 - [ ] Nothing in the frozen zone or in live canon files was edited.

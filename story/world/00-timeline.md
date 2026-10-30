@@ -1,5 +1,8 @@
 # Timeline
 
+> **24 Oct 2026:** partly superseded by the outline run. Read `../outline/story-bible.md` first. Changes since this file: the lantern hung outside by the barn door (no Lord's order); the Moonedge Mark is a fixed grievance; claim versus collection of the Lord's share; the River Alder and the Landing; "a while" instead of "a few weeks". Original saved in `../archive/run-2026-10-23/pre-merge/world/`.
+
+
 Round 2, draft 1 (7 Oct 2026). **Y0 is the year of the fire.** Labels: ✅ decided · 💡 proposed · ❓ open · 🔒 hidden from the player.
 Ages: Fenna is born in Y−8, so she is **8 at the fire** and **15 when the game starts (Y+7)**.
 

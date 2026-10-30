@@ -1,0 +1,19 @@
+# Liv, Tilda and Berit's second voice (short profile)
+
+
+24 Oct 2026. Accepted by the parent (answers 04-25, 04-26, 04-28; Tilda as the second hand 00-4f). Detail: `slices/04-barn-truth-thread/liv-family-berit.md` and `night-account.md`. 💡 for anything not named in an answer.
+
+**Liv** (the cousin, ✅ a girl; 19 at the start, 12 at the fire). Berit's granddaughter through Tilda (Berit's daughter, Fenna's father's sister, gone in the fever winter). Lamplighter in Weir (a snuffing pole on her back; she snuffs any flame she is near). Grey coat too short at the wrists. Voice: dry, specific, short, her grandmother's voice in a younger throat; counts when afraid; "I'm only asking" means she is accusing.
+- **Spine:** somebody must be to blame. **Wrong belief:** if I find the one who did it, it will stop hurting. **Origin 🔒:** the fever winter left nobody to blame; then the barn burned and there was a child with a bucket.
+- **What she saw:** many summer evenings, small lights in the barn gaps from the loft window (she took them for her mother, who was gone; folk belief says the dead may come as lights); then a flare, and Fenna running out with the bucket, sooty, crying "the lights!". She carried the two-year-old down the ladder and dragged the five-year-old after (nobody thanked her).
+- **What she told, what she kept:** she told the Reeve the second (Fenna ran out with the bucket); she kept the first (the lights). Her answer at the Fair: "I saw the lights too. I never told anyone." (accepted 04-31).
+- **Stones:** she leaves a flat grey river stone on the burnt gatepost each Bucket Night; a row fixed per chapter, never counted (D11); ends as a few stones in the bucket in the last frame (accepted 04-35).
+- **Arc by chapter (names):** "your cousin" until chapter 4 ("-L."); "Liv" in chapter 5 (the letter, the syrup); chapter 6: the barge, the stone in her fist, "It wasn't lightning", the supper (Tilda's hand, the snuffer and the bucket).
+
+**Tilda.** Berit's daughter, Liv's mother. The "second hand" in Berit's margins ("Yes, Mother. Yes, Mother. Yes, Mother. -T."). Named early (Old Jan in chapter 2: "never past the sill"); never held back to one supper page. Her hand is confirmed to Liv at the supper (E-6.B27): "I used to think the lights were her." "They weren't." "They were somebody's, though."
+
+**Berit's second voice.** Berit's margins carry the family's talk: rules (hook outside, never past the sill; an empty bucket is a hat), then the six Helper pages in "you" on `page:` triggers. Her guilt is written only in the alpaca page ("I moved her to the far paddock": accepted 03-12, never said aloud). She believed the child. Her absolution is never written; the one plain sentence "You were a child." comes from the **mother** at the Fair (accepted 04-28; the farmer does not answer).
+
+**The father and the siblings.** The father speaks through objects (the horse Cobble, the folded tent: "You patched it.", a hand on the lantern at the supper). The mother's letters carry her real sentences in brackets, signed "-M." (accepted 04-34). The parent's open question: what exactly the father's objects (Cobble, a tent, a lantern) mean in the letters; see `../QUESTIONS.md`.
+
+**The barn night (🔒, architects only; the telling is the only place the player is told it).** Causes: the share (every hand at the far field, the dry well), a moved warning (the alpaca; "I was busy"), a lonely child playing with Mumyo, a lonely maker of lights, and a lantern that came in. The lantern hung outside by the barn door; it came in during the play; Fenna does not know whose hands (hers, his lights, both). There is **no Lord's order**. Her last words to Mumyo: "This is all your fault! Go away! I never want to see you again!" (accepted 04-27, harsher version), and she told the grown-ups it was him. That is why she never sees him again and why the closing request goes through Minena.

@@ -294,6 +294,13 @@ building, crafting, cooking, smithing, milking, errands. Every recipe and goal h
 `animal`, `errand`), and tools, gear, helpers, polish, skill ranks and meals lower the cost per category. Raw effort per
 goal grows about twelvefold from chapter 1 to 5; upgrades cut the late costs almost in half — tinkering pays.
 
+*(built, farm-actions)* **One price everywhere.** Every farm chore (fetching water, planting, harvesting, weeding, stones, snow,
+cutting a tree, collecting and mucking out, the forest tasks and trips, the village trip, parties and visits, every recipe at a
+station) has one written base cost and is priced and done by one module, `G.actions`: *check* says what it costs now and what
+is missing, *perform* takes exactly that. The price on a button is the price taken, and a chore works with exactly the
+energy it costs. Every coin payment (shops, goals, buildings, animals) goes through one pay function that is blocked while
+the Lord's share is owed.
+
 **Getting energy back** is Rest (§4.3). The home sets the energy bar and how much each right sum gives:
 
 | Home | Energy max | Energy per Rest answer |

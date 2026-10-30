@@ -1,5 +1,8 @@
 # Minena (the frame)
 
+> **24 Oct 2026:** partly superseded by the outline run. Read `../outline/story-bible.md` first; the newest character files are `village-arcs.md` and `liv-tilda-berit.md`. Where this file disagrees (the cousin is **Liv**, 19, Berit's granddaughter through Tilda; Mumyo's last words; the lantern hung outside; "a while"), the bible wins. Original saved in `../archive/run-2026-10-23/pre-merge/characters/`.
+
+
 Round 3, draft 1 (7 Oct 2026). ✅ from the parent's profile and *Minena 01*: 7 years old, wild brown hair, bright hazel eyes, a green
 hooded cloak. Dreamy, curious, helpful, sharp, fiercely loyal; also forgetful, emotionally volatile, self-critical, worried about what
 others think. Chews her hair or fingers when nervous. Loves singing, drawing, collecting stones and feathers, and stories. Turns beetles

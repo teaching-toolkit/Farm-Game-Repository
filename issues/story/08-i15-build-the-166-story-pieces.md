@@ -19,3 +19,7 @@
 ## Original notes
 
 - **I15. Build the 166 new story pieces into the game** 💡 (Round 6b): read `story/texts/more-ch1–6.md` aloud and strike or fix; then German translations (`data-de.json`, „ss“), copy `story/staging/more-ch*.json` into `data/farm/story/`, run the i18n check, smoke test and bot, and add pictures for the pieces that need one. Until the German exists the coverage check fails, so nothing was put into the game data. Hand-test the 41 pieces the bot cannot fire (taps, margin notes, optional favours; list in `story/consistency-fixes.md` §7). 💡 The consistency pass of 14 Oct 2026 is applied to the texts (`story/consistency-fixes.md`; still 166 pieces: 51 / 29 / 29 / 19 / 14 / 24).
+
+## Progress
+
+24 Oct 2026: the story outline run is closed (`story/README.md`). The master outline keeps these 166 pieces as the base and lists changes to them in `story/text-change-requests.md` (ticket `story/20`). Decide which of those rows to take before or while reading the pieces aloud; status unchanged.

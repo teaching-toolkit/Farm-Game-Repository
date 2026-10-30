@@ -39,6 +39,9 @@ The read-only question "what would this chore cost now, and can I do it?". Its a
 **Perform**:
 Doing the chore, by the farmer or, later, for the farmer by a pet. It spends the effective cost, applies the effect and the follow-ups, and returns a report.
 
+**Pay function**:
+The one way coins leave the purse (`G.lord.pay_coins`). It is refused while the Lord's share is owed (reason `lord`) or when the purse is short (reason `coins`), makes the coins fly to the payee, and is not applied to the payment of the share itself. Shops, goals, buildings and animals all use it.
+
 **Report**:
 What perform returns: whether the chore was done, which requirement failed if not, what was spent and what was gained.
 

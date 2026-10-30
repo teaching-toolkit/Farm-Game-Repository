@@ -8,6 +8,9 @@ var checks := 0
 var costs_seen := {}
 const FREE_CHORES := ["forest_look", "forest_enter", "forest_leave", "recipe"]   # no written cost: the forest walks cost no energy (the question each way is asked by the interface), a recipe is priced by recipes.json
 
+## Every chore has a price-match (or, for the free ones, a requirements) test in this file; a new chore fails here until it is added.
+const COVERED := ["fetch_water", "clear_snow", "weed", "pick_stones", "plant", "harvest", "cut_tree", "collect_animal", "muck_out", "forest_find", "forest_pick", "forest_dig", "forest_look", "forest_enter", "forest_leave", "village_trip", "recipe", "throw_party", "visit_friend"]
+
 func _ready() -> void:
 	G = get_node("/root/Game")
 	var A = G.actions
@@ -16,6 +19,8 @@ func _ready() -> void:
 	for chore in G.meta["chores"]:
 		if chore == "note": continue
 		_check(A._chores.has(chore), "%s has a registered effect" % chore)
+	for chore in G.meta["chores"]:
+		if chore != "note": _check(chore in COVERED, "%s is covered by the price-match test" % chore)
 	for chore in A._chores:
 		_check(G.meta["chores"].has(chore) and (not A.base_cost(chore).is_empty() or chore in FREE_CHORES), "%s has a base cost in the data" % chore)
 	for chore in ["clear_snow", "weed", "pick_stones"]:
@@ -632,6 +637,15 @@ func _pay_function() -> void:
 	var before: int = seen.size()
 	_check(not G.trade.buy_item("seed_1", "wheat", 1) and is_equal_approx(float(G.S["coins"]), 100.0) and seen.size() == before, "a shop purchase is refused while the share is owed")
 	_check(L.pay() and not L.here() and seen.size() == before + 1, "paying the share fires paid once and sends Pieter home")
+	# goals, buildings and the other cost payers (pace) use it too: blocked while owed, one signal when paid
+	G.S["coins"] = 100.0
+	L._s()["owed"] = 50.0
+	var n0: int = seen.size()
+	_check(G.pace.missing_cost({"coins": 20.0})[0]["key"] == "lord" and not G.pace.pay({"coins": 20.0}) and is_equal_approx(float(G.S["coins"]), 100.0) and seen.size() == n0, "a cost with coins is refused while the share is owed")
+	_check(G.pace.pay({"energy": 0.0, "stick": 0.0}) and seen.size() == n0, "a cost without coins is not blocked and fires no signal")
+	L._s()["owed"] = 0.0
+	_check(G.pace.pay({"coins": 20.0}) and is_equal_approx(float(G.S["coins"]), 80.0) and seen.size() == n0 + 1 and is_equal_approx(float(seen[-1]), 20.0), "a cost with coins is paid through the pay function: coins taken, paid fires once")
+	_check(not G.pace.pay({"coins": 500.0}) and is_equal_approx(float(G.S["coins"]), 80.0), "too few coins: nothing taken")
 	G.paid.disconnect(on_paid)
 
 func _check(ok: bool, what: String) -> void:

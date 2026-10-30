@@ -1,5 +1,8 @@
 # The six Helpers (and the squirrel)
 
+> **24 Oct 2026:** partly superseded by the outline run. Read `../outline/story-bible.md` first; the newest character files are `village-arcs.md` and `liv-tilda-berit.md`. Where this file disagrees (the cousin is **Liv**, 19, Berit's granddaughter through Tilda; Mumyo's last words; the lantern hung outside; "a while"), the bible wins. Original saved in `../archive/run-2026-10-23/pre-merge/characters/`.
+
+
 Round 3, draft 1 (7 Oct 2026). Background (why each left, when each returns, the rhyme): `../world/helpers-and-rhyme.md`. This file is
 about **how they are on the page**. ✅ **The Helpers do not talk** (rule 10, parent, 8 Oct 2026): they bleat, snort, squeak, nod,
 stare. The farmer (and so the player) gets the idea from a look, a nod, or *how* the sound sounds, and the text says what you take it to

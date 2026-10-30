@@ -1,0 +1,316 @@
+# Before the first page
+
+@@ F0.1 | E-1.01; c1_frame0 p1 | S-rev | no
+%% [changes.md #1]
+%% Pot, book, bucket and "grandchildren" added per the seed (slice 01 §2.2, §8a row c1_frame0 p1).
+Evening. The room smells of tea. Minena has brought it in a small tin pot with a bent handle, and spilled half of it. The others sit on the floor, on the bed, on the old woman's feet. Her name is Fenna. She is very old now, and these are her grandchildren, all of them. A thin brown book lies on the blanket. By the bed stands a dented bucket full of Minena's stones and feathers.
+
+@@ F0.2 | E-1.01; c1_frame0 p2 | S-rev | no
+%% Farm name and the "in order" rule added per slice 01 §8a row c1_frame0 p2.
+“Tell us about the farm that burned down!” “Again?” she says. “Yes!” “Moonedge,” she says. “That one.” “And don't forget the bells,” whispers someone very small. “Shh! That comes later! In order!”
+
+@@ F0.3 | E-1.01; c1_frame0 p3 | S-rev | no
+%% Sketch p3 used verbatim; the hum and "You're humming." "Am I?" per slice 01 §8a.
+She closes her eyes. She is not sure she remembers it right. “I never start with the fire,” she says. “I start with the ash. I had borrowed a tent. It smelled of horse.” Then she hums, a few slow notes, without noticing. “You're humming,” says Minena. “Am I?”
+
+# Chapter 1: Ashes
+
+@@ 1.01 | E-1.02; c1_stalk | S-rev | no
+%% First line is the seed's sketch p1; the rest is the shipped text.
+Moonedge. Early spring. The tent smells of horse. Outside it, everything is grey. Ash, mud, black posts where a house once stood. The farm of Fenna's family is gone.
+
+But look. One green patch in the ash. On it stands one ripe wheat stalk. Every grain has been nibbled off. All but one.
+
+Fenna picks up the last grain. Somebody was here. And somebody left it for her.
+
+@@ 1.02 | E-1.03; new piece c1_box | N | no
+%% [changes.md #2]
+%% Sketch note verbatim. "The box your grandmother left" from the welcome-hint direction (slice 01 §8a, welcome.gd). Hat on its peg from the c1_box picture brief (slice 01 §9).
+In the tent is the box her grandmother left her when she died this winter. In it are a book, a tin pot and a dented bucket, smaller than she remembers. Her grandmother's old hat hangs on the tent peg. On top of the book lies a note in thin brown ink: “You are fifteen. That is old enough to go. If you are reading this, you went. Good. Do not apologise to the bucket. —B.”
+
+@@ 1.03 | E-1.04; c1_book | S-rev | no
+%% [changes.md #3]
+%% "an old tune" -> "Berit's kitchen song" per slice 01 §2.3 and §8a.
+The book in the box is old. On the first page, in thin brown ink: “Start small. Small is plenty.”
+
+Fenna reads it twice. Then her grandmother Berit's kitchen song comes back, and a line of words: “Long ears sow the clover green.”
+
+@@ 1.04 | E-1.05; c1_night | S-rev | no
+%% "a tune you do not know" -> the tune that has followed her all week (slice 01 §2.3, §8a); the stones' answer from the seed.
+The first night. The sky is huge. At the edge of the dark forest, white stones glow, very faintly.
+
+The tune that has followed her all week is coming from those stones. She finds she is humming it. The stones grow a little brighter, for exactly as long as she stands still. She does not go in.
+
+@@ 1.05 | c1_k_stars | W-bark | no
+So many stars. Nobody told her there would be so many. Nobody was here to tell her.
+
+@@ 1.06 | E-1.06; new piece c1_bread | N | no
+%% [changes.md #5]
+%% [changes.md #4]
+%% Mother's note is the seed's sketch, verbatim.
+The last of the bread is wrapped in a corner cut from the tent canvas, with a wheel burnt into it and the letters WEIR. Weir is the town down the river where her family lives now. Fenna eats it standing up, in four bites. Her mother's note is folded inside: “The house is small. The table is long. Come when you're ready. Everyone sends love. (Everyone means everyone. —M.)” There is a drawing too, of the farm, with a very large chicken. Fenna pins it up inside the tent flap. She told them she would stay a while. That evening she patches the hole in the tent, which she borrowed from her father.
+
+@@ 1.07 | c1_k_tent | W-bark | no
+The tent breathes in and out with the wind. Fenna is getting used to living inside something that breathes.
+
+@@ 1.08 | c1_forest_tap | W | yes
+%% Optional: a tap on the forest.
+The forest starts where the field gives up. The trees stand close and very still, like people who stopped talking when she walked in. A path goes in between them. She does not. Not today.
+
+@@ 1.09 | c1_n_fire | W | yes
+%% Margin note on the fire page of the book; optional (fires only if the page is opened).
+In the margin of the page about fire, in thin brown ink: “A fire is a guest. Never leave it alone in the house, and never blame the house. — B.”
+
+@@ 1.10 | E-1.07; E-1.H01; c1_fire | W-rev | no
+%% Ending revised per E-1.07 (the bucket); last page added per E-1.H01 (the thump).
+The first spark sulks. The second one dies of embarrassment. The third one catches, and Fenna leans over it until her eyebrows complain. A fire, in this place. The ash around it glows a little, as if it remembers something.
+
+Then she fills the bucket, sets it beside the fire, and sits as far off as the warmth allows.
+
+Somewhere in the dark: THUMP. THUMP. THUMP. A short roll, which stops when she banks the fire. She makes the porridge anyway.
+
+@@ 1.11 | c1_weeds | W | yes
+%% Optional: a tap on the weeds.
+Weeds. Of course. They came back to a burnt field before anything else did, which tells you something about weeds. Fenna pulls one. Its root is longer than her arm, and very proud of it.
+
+@@ 1.12 | c1_n_weeds | W | yes
+Next to the weeds in the book, small and slanted: “Weeds are only plants nobody invited. Some of my best friends were weeds. — B.”
+
+@@ 1.13 | E-1.08; c1_bells | S-rev | no
+%% Thistle -> weed; "She does not look up" and the kindling from the seed.
+When the last weed is out, she hears it: a tiny bell, high in the air. She does not look up. Then nothing. Behind her, three sticks lie in a very silly pile. Nothing is missing. She uses them as kindling.
+
+@@ 1.14 | E-1.B03 | N | yes
+%% Margin note on the water page (page:k_water).
+In the margin of the page about water: “An empty bucket is a hat. A full one is a promise. Fill it at dusk, not at dawn. —B.” Fenna looks at her bucket. She fills it at once, and sets it where she can see it.
+
+@@ 1.15 | c1_k_bucket | S-bark | no
+The old bucket clanks against the stones. It sounds almost proud.
+
+@@ 1.16 | E-1.11 (ask); new piece c1_maud_ask | N | no
+An old woman comes up the track after a goat that is faster than she is and very fond of Fenna's weeds. Granny Maud. She sees the hat before she sees the face. “I'd know that hat on a scarecrow,” she says.
+
+@@ 1.17 | E-1.09; c1_seller | S-rev | no
+%% [changes.md #53]
+%% Moved from the square to the track; "all of Hazelwood"; "hardly more than a child"; "when the road is dry" (seed). {player} dropped: the seller has not been told the name. Rue's name waits for her second visit.
+A seller comes along the track by the field and sniffs the air. “Is that porridge?” Fenna hands her a bowl. She eats it standing up, very fast, the way Fenna does.
+
+“You're from Moonedge, aren't you?” she says. “Good porridge. I'll tell all of Hazelwood somebody is cooking up here.” Hazelwood is the village below the hill. She looks Fenna up and down. “You're hardly more than a child.” She will come by again, she says, when the road is dry.
+
+@@ 1.18 | c1_k_seller | S-bark | no
+“Do you ever stop?” calls a cart driver from the track. Fenna waves. She does not stop.
+
+@@ 1.19 | E-1.10 (ask); new piece c1_tom_ask | N | no
+A boy stands at the fence with his sheep, shivering. Tom. He wants to sit by a fire, but he will not step inside the field. “The sheep don't like it,” he says, “and neither do I.” Fenna hands a log over the fence.
+
+@@ 1.20 | E-1.B02 | N | yes
+%% Tap on the barn ruin.
+What is left of the barn is a black rectangle in the ash, with one doorframe still standing. On its post hangs an empty iron hook. Fenna walks round it. She does not walk through it. The bucket in her hand clanks, and she has a great deal to do about the woodpile. She re-stacks it. She re-stacks the re-stacked pile, faster.
+
+@@ 1.21 | E-1.L01 | N | no
+Fenna needs more things to carry water in. By the burnt post of the old gate stands a row of old buckets. Each has a small tin leaf nailed under the rim, too tidy to be rubbish. The oldest are rusted, the newest bright. She takes them, and uses them.
+
+@@ 1.22 | E-1.B01 | N | no
+On the flat top of the gatepost lies a short row of small, flat, grey river stones. Not the white stones of the forest. Not from here. The oldest are mossy, the newest bright. Fenna picks one up. It is smooth and cool. She puts it back exactly where it was.
+
+@@ 1.23 | E-1.L06 | N | no
+A very quiet man comes out of the forest edge for the stumps. Old Cole. He wants them for charcoal, and says four words about it. Fenna wants to cook for him, and keeps trying. He leaves a sack of charcoal at the fence and escapes before the soup.
+
+@@ 1.24 | E-1.13; c1_ledger | S-rev | no
+%% [changes.md #6]
+%% Heading MOONEDGE and the row of sacks per the seed (sacks, never percentages); the burnt column per text-change-requests row 11.
+Under the black boards of the old workshop Fenna finds a page, burnt at the edges, headed MOONEDGE. Down the side runs a row of sacks. At the bottom, in red: “The Lord's share.” That was the part of every harvest that went to the Lord, whose land Moonedge was. One sack in ten. Then one in five. Then one in three. Then one in two, circled twice. One edge is burnt away, where another column had been. Every time, the Lord's share is bigger. She folds the page small and keeps it.
+
+@@ 1.25 | c1_bench | W | no
+The workbench is three logs, one plank and a great deal of confidence. Fenna sets a stone on it. The stone stays. This, she decides, is a very good bench.
+
+@@ 1.25b | c1_road_tap | W | yes
+The road to Hazelwood is mostly mud, with a few rumours of gravel. In the nearest rut lies one boot. Not Fenna's. It looks as if it gave up and sat down.
+
+@@ 1.26 | c1_first_trip | W | no
+The walk to Hazelwood takes a while, and her boots have opinions about it. A dog barks. A child stares until somebody pulls her away by the sleeve. Fenna buys what she came for, and she says nothing else at all.
+
+@@ 1.27 | c1_market_tap | W | yes
+The market is small and loud and smells of onions. The woman at the next stall looks at Fenna's hat, and then, carefully, at something else. Nobody says the word Moonedge. Everybody is thinking it.
+
+@@ 1.28 | c1_n_market | W | yes
+In the book, squeezed in beside the prices: “A fair price is one both sides complain about equally. — B.”
+
+@@ 1.29 | E-1.12; c1_coin | W-rev | no
+%% WEXLEY on the rim and the person's line per the seed.
+A coin. A real one, small and dented, with a face on it that looks as if it has had a long day. Around the rim: WEXLEY. “That's the Lord,” says the woman who hands it over. “He likes to be on things.” Fenna puts it in her pocket. She takes it out to check. She puts it back.
+
+@@ 1.30 | c1_board | S | yes
+A notice board, full of little papers. Somebody needs a basket. Somebody has lost a goat. Fenna reads every one twice, and keeps her hat low.
+
+@@ 1.30b | c1_bookcart_tap | W | yes
+The book cart smells of dust and the inside of a hat. The bookseller looks up. “Reading is the one thing you cannot do wrong,” he says, “unless it is upside down.” Fenna checks her own book. The right way up. Good.
+
+@@ 1.31 | c1_tom | W | no
+Tom the shepherd boy has stopped shivering. He presses a bent horseshoe into Fenna's hand. “Lucky,” he says. “It never worked for me.” She hangs it by the tent flap anyway.
+
+@@ 1.32 | E-1.14; c1_ella | W-rev | yes
+%% The ask added per the seed.
+Ella from the mill wants a basket, and her father must not know it comes from Moonedge. Fenna makes it. Ella gives her a brass bell, bright as a button. “For luck,” she whispers, with one eye on the mill. Fenna shakes it. Bong. She listens for the other bell, the small high one. This is not that bell.
+
+@@ 1.33 | E-1.11 (thanks); c1_maud | W-rev | no
+%% Maud's second speech is the seed's line, verbatim.
+The goat is not Fenna's goat, which disappoints everyone, the goat included. Granny Maud takes Fenna's face in both hands. “Oh, Fenna,” she says. “Berit all over. Berit's stubborn self.” Her eyes are wet. She blames the goat.
+
+“She raised you on that hill,” says Maud, “and she told me she was sending you back. I said, Berit, you cannot send a person. She said, watch me.”
+
+@@ 1.34 | c1_summer | W | no
+Summer. The ash has gone green at the edges, a thin soft green, like the fur on something asleep. Fenna walks the field slowly, in case it is a mistake.
+
+@@ 1.35 | c1_k_summer | W-bark | no
+The air above the field wobbles in the heat like jelly. Somewhere a cricket is making a complaint.
+
+@@ 1.36 | c1_axe | W | no
+Chip, chip, chip. The flake that comes off is sharp enough to split a hair. Her first axe. It fits her hand as if it had been waiting for one.
+
+@@ 1.37 | c1_first_harvest | W | no
+She cuts the stalks and tips the grains into her hand. Count them. One grain went into the ground. Look at them now. She closes her fingers round them, carefully, the way you would hold a baby bird.
+
+@@ 1.38 | c1_n_ash | W | yes
+At the bottom of the ash page, in the same brown ink: “Ash feeds the soil. The soil does not hold a grudge. Take notes. — B.”
+
+@@ 1.39 | c1_rocks_tap | W | yes
+Rocks. Fenna lifts one. Under it is a smaller rock, looking surprised. Under that, another. Whatever lives down there has been collecting rocks for a very long time.
+
+@@ 1.40 | E-1.17; E-1.M05; c1_tower; new piece c1_tidy | W-rev | no
+%% The tidying and the plain line from the seed. The picture's tail (glimpse 1) has no text; slice 06 §6.3 names c1_k_grass as its text fallback (1.41).
+Fenna heaps the rocks at the edge of the field. By morning the heap is a tower, each stone balanced on the one below, the smallest on top like a hat. Nothing is missing. She looks around. Nobody. Only a very small sound, high and bright, like a bell.
+
+She takes the tower down, rock by rock, for the hearth. High up, a small sound that was there before goes out, like a candle. The quiet stays.
+
+@@ 1.41 | c1_k_grass | S-bark | no
+Something rustles in the long grass. It stops when she looks.
+
+@@ 1.42 | c1_quern | W | no
+The quern grinds with a noise like a cart on a bad road. What comes out is flour. Fenna tastes a pinch off her thumb. It tastes of work and, a bit, of somewhere she has been before.
+
+@@ 1.43 | E-1.18; new piece c1_rue2 | N | no
+%% Rue's lines are the seed's, verbatim.
+The seller comes back, and gives her name this time: Rue. She wants a sack of flour for her stall. The miller tasted a pinch, she says, and said “adequate”, like a man swallowing a bee. Then, lightly: “A carter in Weir asked if I'd seen you. ‘Look for the bucket,’ he said. I said you were busy.”
+
+@@ 1.44 | E-1.L05 | N | no
+At the end of summer Granny Maud comes up with a goat on a rope and a bucket with a tin leaf under its rim. She sets it on the gatepost. It stays there till morning, she says, as it does every late summer. Fenna wants the water for the wheat, right now. She leaves it alone. For her, that is very hard. In the morning the bucket is empty. Nobody says who drank it. Maud says one thing: “We came with buckets, that night. Too late.”
+
+@@ 1.45 | c1_autumn | W | no
+Autumn. Smoke from the village chimneys drifts over the hill, and for a moment the wind smells like other people's suppers. Fenna stops what she is doing. Then she starts again, a little faster.
+
+@@ 1.46 | c1_scarecrow | W | no
+The scarecrow is two sticks and a sack. By noon the crows are holding a meeting on its shoulder. Minutes are taken. Nothing is decided.
+
+@@ 1.46b | c1_k_crow | W-bark | no
+A crow lands on the fence and looks over Fenna's work. It makes a small dry sound. She decides it was a review.
+
+@@ 1.47 | E-1.19; c1_well2 | W-rev | no
+%% [changes.md #7]
+%% The old stones, the notch and the crate per the seed; the shipped water lines kept.
+The spade rings on old stones, a curve of them: the old well, dry since before the fire. Fenna's hand goes to a worn notch in the rim before she knows why: the notch where she stood on a crate to reach. Then the hole goes dark and wet. Water. She lowers the bucket and drinks from her hands. It tastes of stone and cold and, faintly, of morning.
+
+@@ 1.48 | E-1.15; new piece c1_ghosts | N | yes
+%% [changes.md #8]
+Two children come up the track, very hungry, daring each other to touch the burnt gatepost. Lotte and Linus, the twins. Linus is sure there is a ghost. Lotte is sure it is a cat. Everybody knows, they say, that the farm used to ring by itself when it was empty. Fenna feeds them porridge.
+
+@@ 1.49 | c1_cleared | W | no
+No thistles. No rocks. No stumps. Where the weeds stood there is only soil, brown and soft and a good deal bigger than she expected. It is a field. Fenna says the word out loud, to see how it fits.
+
+@@ 1.50 | E-1.16; E-1.L07; c1_soup | W-rev | no
+%% Opening (the two pots, the hill) per E-1.16; the Pot, Maribel Kettle and Marta Hewitt per E-1.L07 (merged by the master). Shipped pages kept.
+The village wants soup. Fenna will not borrow a cart, so she carries two pots down the hill. The hill wins.
+
+On the square stands the Pot, a big iron pot on a tripod. Maribel Kettle keeps it on market days. She wants Fenna to sit and eat before anything is asked. “Taste before you talk.” Fenna wants to hand over the soup and go back to work. At her family's name the Pot goes quiet for a breath. Then Maribel passes the salt, and Fenna sits on an upturned bucket for one minute. From the far side, Marta Hewitt hands over a smooth river stone, the Soup Stone, “so nobody's pot is the only pot.”
+
+The soup goes round in bowls. People take it without a word, and come back for more without a word. A woman tastes it. “Needs salt,” she says, and takes a second bowl.
+
+Behind her, a child whispers, “Is it the burnt farm soup?” The woman does not turn round. “It's soup,” she says. The child has a second bowl too.
+
+@@ 1.51 | E-1.20; c1_winter | W | no
+Snow came in the night, without a sound. The green patch is the last green thing for miles. Round it, in the snow: long prints, short prints, three times round. The prints stop at the edge of the forest.
+
+@@ 1.52 | c1_hunger | W | no
+It is cold enough for the water bucket to grow a lid. Fenna chips it off and drinks the chips. Today's porridge is mostly an excuse to stand near the fire. It is a very good excuse.
+
+@@ 1.53 | c1_k_winter | S-bark | no
+The tent flaps in the wind. Fenna pulls the blanket up to her nose.
+
+@@ 1.54 | E-1.L08 | N | yes
+%% [changes.md #9]
+On Longnight, the longest night of the year, far below, the village's lights go out one by one, all but the lights of the Hall. A hum comes up the valley. Nobody has asked her. The tent flaps. Fenna gets back to work, louder.
+
+@@ 1.55 | c1_fence | W | no
+The stick fence wobbles when Fenna looks at it. It will not stop anything bigger than an argument. But now there is an inside and an outside, and she is standing on the inside.
+
+@@ 1.56 | c1_trips10 | W | no
+Down to Hazelwood again. The dog by the first house has stopped barking and only looks at her now. In dog, this is a welcome.
+
+@@ 1.57 | c1_coop | W | no
+The coop is finished. Nobody lives in it. Fenna leaves the little door open anyway, in case somebody is looking.
+
+@@ 1.58 | E-1.21; new piece c1_lantern | N | no
+One night a lantern comes along the road below, slowly, as if it wants to know whether her smoke is a fire. Fenna freezes until it has passed. A tired voice says, “Dry night,” and does not stop. Afterwards her hands shake.
+
+@@ 1.59 | c1_spring2 | W | no
+Spring again. The ash has a green skin now, and the ground is soft under her boots. The patch is not the only green thing any more. She treads softly, in case it minds.
+
+@@ 1.60 | c1_hens | W | no
+The hens come out of their basket one at a time, inspect the coop, find three faults, and take over the yard. By evening Fenna is the one being supervised.
+
+@@ 1.61 | c1_n_chickens | W | yes
+Across the top of the hen page, written in a hurry: “Do not name the hens. You will name the hens. — B.”
+
+@@ 1.62 | E-1.M04 (bark 1 of 3) | N-bark | no
+Fenna hums while she works. At the same place every time, the hens go quiet and look at each other. She hums on past it.
+
+@@ 1.63 | c1_egg | W | no
+The first egg is still warm. The hen watches Fenna take it with the face of someone who has views about pricing.
+
+@@ 1.64 | E-1.23; new piece c1_rue3 | N | no
+%% [changes.md #10]
+Rue wants Fenna to see something: a new, clean notch cut in the gatepost. “A man from the manor, the Lord's house up the hill, does that when he starts a book,” she says. “I said it was a kid with a bucket.” The manor is called the Hurst. Fenna cannot un-cut it.
+
+@@ 1.65 | E-1.22a; c1_trips20 | W | no
+Somebody has left a stool beside the track, just before the first houses, exactly where Fenna would stop to rest. She does not sit on it. She puts her hand on it as she passes.
+
+@@ 1.66 | E-1.L09 | N-bark | yes
+%% [changes.md #11]
+Two carts meet on the narrow bit of road by the Hop, the stepping stones across the river. Each driver wants the other to back up. Tom's sheep settle it by walking through.
+
+@@ 1.67 | E-1.H76 (bark 1 of 3) | N-bark | yes
+In the village, children skip to a song. One line has gone missing, so they sing that line all “la”.
+
+@@ 1.68 | c1_winch | W | no
+The winch squeals like a pig being asked a hard question. But the bucket comes up full, and Fenna no longer has to climb down for it. She winds it up and down twice, for the pleasure of the noise.
+
+@@ 1.69 | c1_k_hands | W-bark | no
+Her hands have started to look like someone else's hands. Someone who works.
+
+@@ 1.70 | E-1.22b; c1_hutch | W | no
+She has built a hutch of straw and sticks, round and soft, big enough for something small. She does not know who it is for. She puts it beside the green patch, with the door facing the forest.
+
+@@ 1.71 | c1_k_nibbled | W-bark | no
+Somebody has nibbled the tops off the carrots. Neatly, all in a row, and the roots left alone. A thoughtful thief.
+
+@@ 1.72 | E-1.22c; c1_bowl | W | no
+A bowl of greens and sliced carrot, set at the edge of the green patch. Fenna walks away, so as not to look like someone who is waiting. She looks back four times.
+
+@@ 1.73 | E-1.24; c1_bunny | S-rev | no
+%% [changes.md #12]
+%% "There are more lines ..." per the seed.
+A bunny sits on the one green patch. She sits like someone who has always sat there.
+
+Now Fenna understands. The patch stayed green because somebody looked after it. The stalk was nibbled because somebody was hungry. And one grain was left for her. The bunny was Moonedge's once. She has come home.
+
+Now the first line of the old rhyme makes sense: “Long ears sow the clover green.” She says it out loud. The bunny's ear twitches. There are more lines. Fenna says it over, and waits for the next one. Nothing comes.
+
+@@ 1.74 | E-1.25; E-1.M05; c1_bell_out | S | no
+%% Glimpse 2 (a glint at the field edge) is picture-only; dropped in text per slice 06 §6.3.
+That night, from far away: two soft rings of a very small bell. Fenna sits up in the dark. The bunny is asleep in the clover. So who else is still here?
+
+@@ F1 | E-1.25; c1_frame1 | S-rev | no
+%% The hum and Minena's hand added per the seed.
+Back in the room, the tea has gone cold. “Was there really a bunny?” asks Minena. “There was,” says the old woman. “She was very rude about carrots.”
+
+“And the bell? Who rang the bell?” “Shh!” says everybody at once. “That's next time!” The old woman smiles, and hums. Minena puts a hand on her arm. They know this story almost as well as she does. Almost.

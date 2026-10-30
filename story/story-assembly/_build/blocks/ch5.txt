@@ -1,0 +1,176 @@
+# Chapter 5: Healing
+
+@@ 5.01 | c5_cough | S | no
+%% {player} -> Fenna.
+Down in Hazelwood somebody is coughing. Then somebody else. The children first, as always, and nobody knows what to do.
+
+Wren the healer comes up the road with a full basket. “I cannot do this alone, Fenna,” she says. “Berit's old still-room is behind your kitchen. Would you look?”
+
+@@ 5.02 | E-5.B15 | N | no
+%% Quill's last scene before the Fair (master ch5 ruling R-M1). The Reeve's name appears here only.
+Quill is counting Fenna's shelves. He stops. “While looking for the lease's twin I found a report, made the day after the fire by the Reeve, Rudge. I have decided not to read it aloud.” “Why?” “It names a girl, eight, seen running from the barn. And a witness, twelve. I count things. I do not like what this counts.” He closes the ledger. Fenna makes another pot of something.
+
+@@ 5.03 | c5_k_still | W-bark | no
+The still-room door sticks, as it always has. Fenna pushes it with her shoulder, and the smell of old herbs rolls out and says hello.
+
+@@ 5.04 | E-5.H46; c5_stillroom | S-rev | no
+%% The swept floor (E-5.H46) before the shipped page.
+Fenna wants to make the still-room hers. It has been swept, in small circles, never to the end. The footprints are wide, flat and patient. The kettle on the hearth is cold, lid off, set where a cup would go.
+
+Under the last shelf lies a page, torn in two. The top half is in a tidy hand: “Tea first. Always tea first.” The bottom half is missing. Somebody was here before her, and cared.
+
+@@ 5.05 | E-5.L01 | N | no
+Wren wants every house marked on a paper pinned to the board. The cough moves along it like a rumour. In Wren's own hand one name is circled: Lotte. Half the school is closed. Fenna wants to help, and she has only a still-room.
+
+@@ 5.06 | c5_board | W | no
+The notices on the board have changed. Fewer ladders, more spoons. “HONEY FOR A COUGH, ASK AT NUMBER 4.” “IF YOUR CHILD HAS A FEVER, SEND FOR WREN.” Someone has also written, smaller: “and please stop eating things you find.” It seems like good advice, and Fenna takes it.
+
+@@ 5.07 | E-5.B16 | N | no
+%% The letter is the seed's sketch, verbatim.
+A letter comes by Mei, signed this time: “I heard there is a cough. My mother's recipe: honey, thyme, and the water from the second boiling. It works. I am not asking anything. —Liv.” Fenna looks at the writing a long time. It is the hand from the hay margin. She folds the letter very small and puts it in her apron pocket. She will do this herself.
+
+@@ 5.08 | c5_wren_check | S | no
+Wren is waiting at the edge of the forest with her arms folded. “One rule,” she says. “Bring me your basket. Every time. Before you use anything in it.”
+
+“Plants have twins, and some twins are poison. I do not care how clever you are. I care that you wake up tomorrow.” She almost smiles. “It costs a little favour. A biscuit will do.”
+
+@@ 5.09 | c5_lookalike | W | yes
+Fenna lays two leaves side by side on the table. Same shape, same size, nearly the same green. One makes a good tea. The other would make a very bad day. She tastes neither. She wraps them in a cloth and takes them to someone who knows.
+
+@@ 5.10 | c5_n_foxglove | W | yes
+Beside the foxglove, in thick capitals, pressed hard: “LOOK, DON'T TOUCH. I MEAN IT. — B.” Underneath, in another hand, smaller and rounder: “She does.”
+
+@@ 5.11 | c5_k_wren | W-bark | no
+Fenna stops to look at a plant, as Wren taught her. She does not pick it. It will keep until Wren has seen it. It looks almost disappointed.
+
+@@ 5.12 | E-5.H43 | N | yes
+%% Berit's page, the seed's sketch, verbatim (page:k_rope).
+Berit's page about the pony: “Will carry anything. That is not the same as being able to. She went lame in the spring. You brought her an apple a day and told anyone who stood still. Ponies do not fake lameness. Remember that.”
+
+@@ 5.13 | E-5.M19 (forest barks F1, F2, F6, F7) | N-bark | yes
+%% Four of the ten beats in slice 06 §4.3, written as one line each.
+In the forest, a ribbon on the oak turns by itself and settles. One end is fresher than the rest.
+
+The moonstone is warm on its shaded side.
+
+On a stump in the meadow lies a crust, eaten.
+
+On the forest floor are Fenna's own boot prints, and small ones beside them that go off on their own.
+
+@@ 5.14 | E-5.L03 | N | yes
+Greenstem wants her to stop whistling in the forest. She is not whistling. She is humming. He stops dead, because he knows the tune and does not know why. He hums it back, wrong. Fenna says nothing. She is not afraid of the tune. Only of what it wants.
+
+@@ 5.15 | E-5.H39 | N | no
+Fenna wants everything taken to the still-room in one trip. The pony wants to be magnificent about it. She poses, but her tail is clamped. Fenna sees it. She takes a bundle off her. The tail loosens a notch. Fenna takes another. The pony looks at her over a lifted shoulder.
+
+@@ 5.16 | c5_dry | W | no
+Fenna hangs the first bunch of herbs to dry. In a week the still-room smells like a meadow that has gone indoors. Dried leaves crumble in her fingers, soft as old paper. A thing that was green and loud is now brown and quiet and exactly as useful as before. Perhaps more.
+
+@@ 5.17 | c5_salve | W | no
+The salve is thick, yellow-green and smells of the inside of a hedge. Fenna dabs a tiny bit on a scratch she has had for days. It stings for one breath, and then it just feels cool. Greenstem, who has been watching from the door, writes something down. Probably it says: “Works.”
+
+@@ 5.18 | c5_conch | S | no
+Far off between the trees, something white and spiral shines in the green. It does not move. Fenna holds her breath. Then she goes back to her basket. Some things are for later.
+
+@@ 5.19 | E-5.M21 | N | no
+%% Two pages in the seed; Lark's lines are the seed's.
+Fenna wants to finish sorting the thyme. She is humming. Lark is talking to the third oak. “Mr. Mumble? Mumbo? The Honourable Mumbles?” A very small silence. “He's very good at it,” says Lark. “Who?” “Nobody.”
+
+Later he asks, “What's it called?” Fenna does not know what he means. “It has lots of names,” says Lark. “The Hedgehog Waltz. Sir Turnip's Lament.” He looks at the sky. “Yours. Badly hummed, mind. And it only plays when somebody stands still. Terrible for people with jobs.” Fenna stops humming for the rest of the day.
+
+@@ 5.20 | c5_first_tea | S | no
+Greenstem, the boy from the market, stands in the doorway of the still-room and sniffs. “Can I learn this?” Wren grumbles something about boys and mud. Then she says yes.
+
+@@ 5.21 | c5_k_tea | W-bark | no
+The kettle clears its throat and begins to sing. Nothing could be more normal.
+
+@@ 5.22 | E-5.H07 | N | no
+Fenna wants one more pot of tea. The bunny wants her to look up: a third kind of thump, flat and cross, the one for bad manners. Fenna tells a rabbit that she is not tired, and pours. The bunny turns her back and sits that way for the rest of the day.
+
+@@ 5.23 | c5_poison | S | yes
+%% Fires only if a poisonous plant is used (forest_poisoned); in the game it costs all coins.
+The ceiling. A blanket. A cup of something bitter. Wren sits by Fenna's bed, and she is not smiling. “What were you thinking?” she says. Fenna's purse is gone. Her legs shake.
+
+“You are well,” says Wren. “That is all that matters. Next time, the basket comes to me first.” She puts a hand on Fenna's head, very briefly, and goes to stir her pot.
+
+@@ 5.24 | c5_n_grownup | W | yes
+In the margin of the page about asking: “Ask. It is not a failure to ask. The best healer I know asks first.”
+
+@@ 5.25 | E-5.R19 | N | no
+%% The chapter's Share Day; Pieter's lines are the seed's.
+At the end of the season Pieter comes up through a yard of coughing children. Wren, in the dim lean-to, needs light to see a throat. “Hold that.” He holds the lantern where she points, for a long time.
+
+Then, low, to Fenna: “The Book says a third. I'll write what the till can bear, a quarter and no more. The lease has a line at the bottom: never so much that the table is bare. Nobody reads the bottom of the page. Don't tell the Hurst.” Fenna pushes her coins at him. He pushes them back. In the end she accepts. It is the first gift she has taken. “If the grey line comes up short somebody will ask,” says Pieter. “It will be me.”
+
+@@ 5.26 | c5_page; E-5.B17 (part 1) | S-rev | no
+%% The finger-count from E-5.B17 follows the shipped page.
+The healer's chest is full. In its lid, rolled up, Fenna finds the other half of the torn page: “The badger left after the fever, when nobody let the children rest.” She reads it twice. She was one of those children.
+
+She counts the children of that winter on her fingers. Herself. The two small ones. The aunt who laughed: not everyone got up. She stops at the fourth finger, at someone older, who was not allowed to stop either.
+
+@@ 5.27 | c5_collapse; E-5.B17 (part 2) | S-rev | no
+%% "The bucket's empty." and Wren's answer from E-5.B17.
+Fenna makes one more tea, and one more, day and night. Then the pot tilts and the floor comes up. Wren finds her on the stone. “You never stop, do you?” she says, and carries her to the bench.
+
+Later, half awake, Fenna says one thing. “The bucket's empty.” “What bucket?” says Wren. “Hers,” says Greenstem. “By the door.” Wren fills it from the rain barrel and sets it by the bench. She asks nothing.
+
+@@ 5.28 | E-5.L02; E-5.B18 | N | no
+%% One morning, as the master merges them.
+The village wants to feed her. Fenna, in bed, wants to send every bowl back filled. Wren forbids it for three days. Fourteen bowls pile up in the yard. The goat eats a doily. Fenna cannot return them. She has to be fed.
+
+That same morning she wakes to the smell of thyme. Wren has found the folded letter in her apron pocket, read it, and made the syrup exactly as written. The children's coughs ease. In Wren's book, in the margin, it says: “(from L. of Weir)”. “Who is L.?” asks Wren. “My cousin,” says Fenna. It is the first time she has said it aloud.
+
+@@ 5.29 | E-5.M22 (morning 1) | N | no
+Fenna wants to get up. Wren forbids it. On the doorstep lie a few white flowers, tied once with a thread. Wren looks at them a long time. “They are not in my book. Do not eat them. Put them in water.”
+
+@@ 5.30 | c5_tea_set | W | no
+The tea set came with two cups. Of course it did: it is a set. Fenna pours one, and then, without deciding to, she puts the other on the table too. Nobody comes. Nobody needs to. It feels better with two.
+
+@@ 5.31 | c5_badger | S | no
+%% E-5.M23 (the Wait held by the music during the pour) is a sound cue with no text.
+At the door of the still-room sits a badger, with his back very straight. He looks at the chest. He looks at the tea set. Then he looks at Fenna, and at her hands.
+
+He sets out two cups. “Tea first,” he seems to say. Fenna sits down. For the first time in a long time, she does nothing at all. The badger pours.
+
+@@ 5.32 | E-6.H45 | N | no
+%% Moved from chapter 6 to here by the master. Two pages in the seed.
+A child with a cough is carried in. Everyone rushes. The badger does not. Spectacles. Sniff. Kettle. Cups. Wait. Pour. Sit. Hm. Sip.
+
+The panic runs out of energy before the tea does. By the end the child has stopped coughing, and everyone is sitting down, Fenna too, without noticing.
+
+@@ 5.33 | E-5.B19 | N | no
+The badger, with the tea set on his knees, lies down on the spare bed, the only bed in the house with its corners still square. “Tea first,” he seems to say. Then Fenna is in it. She sleeps until the tea is cold.
+
+@@ 5.34 | E-5.M22 (morning 2) | N | no
+The next morning there are more white flowers on the step. As Fenna puts them in the cup, two soft rings. The flowers stay open in the cup all night.
+
+@@ 5.35 | E-3.H10 (badger instance); c5_badger_job | W | no
+Pinned to Fenna's door, held on by a thorn, is a card. On it, in careful claw-scratch: a basket, a bunch of leaves, and a cup. Underneath, a very small moon. Fenna looks into the dark yard. Two eyes look back, level, patient. She pins the card back up. It seems rude not to.
+
+@@ 5.36 | E-5.R20 | N | yes
+Greenstem wants every plantain leaf off the plant, because he has been told it is good for a cough. Fenna hears a voice in her mouth that is Wren's: “Leave two.” He looks at her as if the herb had spoken. Fenna walks on, a little taller, and a little frightened of how it sounded.
+
+@@ 5.37 | c5_lamp | W | yes
+The lamp-maker pours Fenna's oil into a lamp and lights it. The light is round and yellow and steady.
+
+“It's for the marsh road,” he says. “There is a very small light out there some nights, and it is no help at all. People shouldn't have to feel their way.” He says it lightly. He has clearly thought about it a great deal.
+
+@@ 5.38 | E-5.L05 | N | yes
+Ferdinand wants her to float a light on the river, for someone. Fenna is afraid of flame. But paper boats on water do not spread. She sets one afloat and watches it all the way to the bend. Ferdinand cannot see it, but he says it is lovely.
+
+@@ 5.39 | c5_petals | W | yes
+Beside the forest path a small stream goes by with petals on it. White ones. They are not from any tree Fenna knows. She follows them with her eyes until they turn behind a bend, and then she does not follow them any further. There will be time.
+
+On her way home, the swing in the orchard is moving, though there is no wind.
+
+@@ 5.40 | E-5.H38 | N-bark | yes
+The pony takes the long way home from the square, so as to be seen. One child follows her. Later, a drum. She counts them with her ears and makes the route longer.
+
+@@ 5.41 | c5_k_rain | W-bark | no
+Rain on the roof, steady, in no hurry. The kind that means stay in and make something warm.
+
+@@ 5.42 | c5_letter | S | no
+A boy runs up the road with a letter. The seal is red wax, pressed with a heavy ring. “From the Lord,” he pants. Fenna does not open it yet. The badger looks at it, and then at her, and says nothing.
+
+@@ F5 | c5_frame5 | S | no
+“Did you get better?” asks Minena. “Badgers make very slow tea,” says the old woman. “By the time it was ready, I was.” Somebody laughs. Somebody yawns. Somebody asks if badgers have teapots.

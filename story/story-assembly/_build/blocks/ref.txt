@@ -1,0 +1,55 @@
+# Reference (not part of the chapters)
+
+## What the book never says
+
+@@ R.1 | outline/story-bible.md §6; outline/master/ending.md "The five silences" | canon | no
+%% The bible lists five silences; the brief's "four permanent unknowns" are 1, 2, 4 and 5.
+Five things stay unsaid, on purpose.
+
+- **Whose hands carried the lantern in.** Hers, his lights, or both. The book never decides.
+- **What Berit felt.** Her guilt is written in one place only, her page about the alpaca: “She hummed at the hay barn seven nights. I moved her to the far paddock. She hummed there too. I was busy.”
+- **What Fenna's father does about it,** beyond a hand on a lantern and a folded tent.
+- **What the Count is.** The barges are grey, the salt is grey, the Lord owes someone above him. That is as far as it goes.
+- **Whether Mumyo forgives her.** There is a sound, and there is a thimble, and the last request goes through Minena.
+
+## The truth under the story
+
+@@ R.2 | outline/story-bible.md §3, §4; characters/liv-tilda-berit.md; world/00-timeline.md (older, where the bible is silent) | canon | no
+Fenna grew up at Moonedge, a farm on a hill at the forest edge above the village of Hazelwood, on land leased from the Lord, Wexley of Hurst Manor. The lease claims half of all the land gives. For years the Lord took more each year (a tenth, a fifth, a third, a half), because he owes more to someone above him, the Count downriver. To pay it, the family drained the pond, ploughed the clover, cut the scrub and worked the children. One by one the six Helpers left: the pony, the bunny, the tortoise, the goat, and, after the fever winter in which the children were not let rest and Fenna's aunt Tilda died, the badger.
+
+In the dry late summer when Fenna was eight, every grown-up was at the far field. The well was dry. The alpaca had hummed a warning at the hay barn for seven nights, and Berit, busy, had moved her to the far paddock. Fenna's only playmate was Mumyo, a hand-sized imp with white hair and a grey vest of tiny bells, who cannot speak and makes small lights. They were playing in the hay barn. The lantern hung on its hook outside the door, by Berit's rule. During the play it came in. Nobody knows whose hands. The hay caught. Fenna ran out with her own bucket, which was empty. Her last words to Mumyo were “This is all your fault! Go away! I never want to see you again!”, and she told the grown-ups it was him. The alpaca's alarm woke the house; nobody was hurt. The farm burned.
+
+Liv, Fenna's cousin, then twelve, saw both things from the loft: the lights, which she took for her dead mother, and Fenna running out with the empty bucket. She told the Reeve the second and kept the first. Nobody believed Fenna about the lights, so she stopped saying it. The village said “lightning”. There was no order from the Lord. The fire came from many ordinary things at once: the share, a warning animal moved away, a child left alone, a lonely maker of lights, a lantern that came in.
+
+The Lord ended the lease. Fenna's parents, her younger brother and sister, and Liv went to the river town of Weir; Fenna went with Berit to a cottage on a hill, where Berit raised her from memory and the book. Seven years later Berit died and left Fenna the box.
+
+## Who is who
+
+@@ R.3 | characters/*.md; outline/story-bible.md §1, §7, §9; characters/village-arcs.md | canon | no
+| | |
+|---|---|
+| **Fenna** | The farmer. Fifteen at the start. Works so she will not have to talk. Eats standing up. In the game she is “you”; in the frame she is the old woman. |
+| **Minena** | Her granddaughter, the smallest listener. Notices everything and says about a third of it. |
+| **Berit** | Fenna's grandmother, already dead. Speaks only through the farm book's margins, her box and other people's memories. |
+| **Mumyo** | A hand-sized imp with white hair and a grey vest of tiny bells. Never speaks, never shows his face. His bells say what he feels: a quick jingle for a prank, one *tink* for sorry, two soft rings for “I'm here”, silence for shame. |
+| **Lark** | A wanderer in a rust-coloured coat with odd buttons. Practically immortal. Says “Probably fine.” Tells true things as jokes and never pushes. |
+| **Liv** | The cousin, nineteen, Tilda's daughter. Lamplighter in Weir, with a snuffing pole. Dry, exact and afraid. |
+| **Tilda** | Berit's daughter, Fenna's aunt, Liv's mother. Died in the fever winter before the fire. The second, rounder hand in Berit's margins. |
+| **Master Quill** | The Lord's steward. Counts everything. Honest, which is the problem. |
+| **Pieter** | The night watchman who carries the Lord's book and collects the share, with a lantern lit in daylight. |
+| **The Lord (Wexley)** | Never seen. A face on a coin, a crooked seal, a drawer full of letters. |
+| **The village** | Granny Maud (Berit's oldest friend), Old Jan, Rue the seller, Appleby the baker and Anna, Greenstem, Wren the healer, Mei of the barge, the miller and Ella, Tom, Lotte and Linus, and others. One rung warmer each chapter. |
+
+The six Helpers, in the order they come home: **bunny**, **tortoise**, **goat**, **pony**, **badger**, **alpaca**.
+
+## The rhyme
+
+@@ R.4 | world/helpers-and-rhyme.md "The farm rhyme"; slices/03-helpers-and-rhyme/dossier.md §4.1 | canon | no
+Berit sang it to Fenna to the tune of her kitchen song. It comes back to Fenna one line at a time, as each Helper comes home.
+
+> Long ears sow the clover green,
+> Slow shell keeps the water clean.
+> Brave goat clears the bramble bed,
+> Strong pony brings the world its bread.
+> Wise badger heals what aches and stings,
+> Soft alpaca guards all things.

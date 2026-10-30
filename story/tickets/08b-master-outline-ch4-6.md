@@ -8,7 +8,7 @@
 
 **Blocked by:** 01, 02, 03, 04, 05, 06, 07
 
-**Status:** ready-for-agent
+**Status:** done (24 Oct 2026, written by the manager in the main session, no agent; see ../outline/master/)
 
 - [ ] Dossier written in the slice folder; every new thing labelled 💡; inventions listed in an **Inventions** section; ❓ and ✅-touching proposals appended (one block) to `QUESTIONS.md`.
 - [ ] Nothing in the frozen zone or in live canon files was edited.

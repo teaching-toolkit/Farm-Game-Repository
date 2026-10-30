@@ -34,11 +34,17 @@ func here() -> bool:
 func blocks_coins() -> bool:
 	return here()
 
+## What pay_coins would answer, without paying (for grey buttons and cost checks).
+func coin_refusal(amount: float, exempt := false) -> String:
+	if not exempt and blocks_coins(): return "lord"
+	if float(G.S["coins"]) + 0.0001 < amount: return "coins"
+	return ""
+
 ## The one way coins leave the purse. Returns "" when paid, else the reason key: "lord" (the share is owed first) or "coins"
 ## (not enough). The coins fly to the payee (`paid`). The Lord's own share is exempt from the block (`exempt`). Says nothing: the caller words it.
 func pay_coins(amount: float, exempt := false) -> String:
-	if not exempt and blocks_coins(): return "lord"
-	if float(G.S["coins"]) + 0.0001 < amount: return "coins"
+	var why := coin_refusal(amount, exempt)
+	if why != "": return why
 	G.S["coins"] -= amount
 	G.paid.emit(amount)
 	return ""

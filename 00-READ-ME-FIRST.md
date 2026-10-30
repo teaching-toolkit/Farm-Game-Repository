@@ -2,7 +2,7 @@
 
 This file is the starting point for a new chat or another AI: what the project is, how the folder is laid out, the parent's
 rules and where we left off. **How to work on the project** (what to read, the checks, changing content) lives in three
-project guides in `claude-skills/`; see §2. Last updated: **23 October 2026**. The game is at version 0.19.0 (all twelve plan
+project guides in `claude-skills/`; see §2. Last updated: **24 October 2026**. The game is at version 0.19.0 (all twelve plan
 phases built); the open work is in `issues/`, the history in `PROJECT-LOG.md`.
 
 ---
@@ -155,8 +155,10 @@ Version 0.19.0: all twelve phases of the implementation plan are built. **Nothin
 
 Now in progress: the **farm-actions** feature (`issues/farm-actions/`, spec in `spec.md`). Tickets 02 (short golden runs:
 `bash tests/golden.sh --short`), 03 (the module `G.actions` with fetch water) and 04 (weed, pick stones, clear snow, whole-field
-batches), 05 (plant, harvest, cut tree) 06 (animal chores), 07 (party and visit), 08 (forest trips), 09 (the village trip) and 10 (recipes at stations) and 11 (the pay function, shop purchases) are done. **Next: `farm-actions/12`** (goal and building payments); then 13 onwards as in `TODO.md` §18. Next grilling candidates:
+batches), 05 (plant, harvest, cut tree) 06 (animal chores), 07 (party and visit), 08 (forest trips), 09 (the village trip) and 10 (recipes at stations) 11 (the pay function, shop purchases) and 12 (goal and building payments) and 13 (delete the old duplicates) are done: **the farm-actions refactor is finished**. Open: the needs-parent tickets 14–16 (Wren's coins, the seed-buying path, the orchard multiplier), which wait for the parent (`TODO.md` §18). Next grilling candidates:
 `time-question`, then `condition-language`.
+
+Story outline (24 Oct 2026): **the outline run is closed.** The story now has a master outline of all six chapters (`story/outline/master/`), a story bible (`story/outline/story-bible.md`), a seed registry, and lists of what the game and the texts should change (`story/data-wishes.md`, `story/text-change-requests.md`). Start at `story/README.md`. No game code, data or story text was changed. Next, in order: the parent answers the ten questions in `story/QUESTIONS.md` (`story/19`); build the approved data wishes (`story/21`, ready); check the play order with one bot run (`story/22`, ready); build the 166 staged pieces (`story/08`, I15); play with the child; then decide the text changes (`story/20`).
 
 Story pictures (23 Oct 2026): the kept ones are in the game (`story/16`, `story/17`: lossy WebP in `assets/story/`, mapped in
 `tools/story_pictures.json`, imported with `tools/import_story_pictures.py`; the story box shows them 520 px high). Waiting on the parent:

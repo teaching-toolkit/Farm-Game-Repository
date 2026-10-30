@@ -1,0 +1,211 @@
+# Chapter 4: Village Trade
+
+@@ 4.01 | c4_quill | S | no
+A thin man stands at Fenna's gate with a ledger under his arm. He does not smile, and he does not look unkind either. He looks like someone who counts. “Master Quill,” he says. “The Lord's steward.”
+
+“The old farm smokes again,” he says, and looks at her chimney. “The Lord wishes to know why.” Fenna tells him: because somebody lives here. He writes that down.
+
+@@ 4.02 | E-3.H51 (2 of 3) | N-bark | no
+Quill's hat has a round dark spot on the brim. He does not mention it. Neither does Fenna.
+
+@@ 4.03 | c4_count | S | no
+Quill counts everything. Cows, sacks, windows, nails. He counts the hens twice, because one moved. Every number goes into his ledger, written with a very sharp pencil.
+
+Later Fenna finds two ledger pages folded into a paper boat on the pond. Somewhere, a very small bell tinkles. Quill is not amused. Fenna is, a little.
+
+@@ 4.04 | E-4.R22 | N | no
+%% [changes.md #35]
+Quill wants his folded pages back. He fishes the paper boat out of the pond with a rake and spreads the pages on Fenna's fence to dry. The red and grey inks of the Lord's accounts have run to smears. The faint pencil down the margin, a third column in Quill's own hand, is perfectly clear. He looks at the pencil longer than at the ruin. Fenna looks at it too. “Notes,” says Quill.
+
+@@ 4.05 | E-4.L01 | N | no
+Quill wants an exact number of hens. Granny Maud, passing with her goat, wants him to stop, because counting hens aloud is bad luck. He catches the look and finishes the count in a whisper. Nobody loses a hen. The village decides he is brave, or doomed.
+
+@@ 4.06 | E-4.H35 (1 of 2) | N | no
+In the soft verge of the new road there are two hoofprints side by side, neat as a pair of shoes. They are at every spot with a good view.
+
+@@ 4.07 | E-4.L07; E-4.B13 (a) | N | no
+%% The road is cobbled now, so the letter bag no longer comes up the hill (E-4.L07); the grey coat on the plank is E-4.B13 (a).
+The road is cobbled now, so the letter bag no longer comes up the hill. On Landing Day Fenna goes down to the river for her letters, like everyone else. She wants not to be seen waiting. She has asked Mei to call her name like everyone's. “Moonedge!” calls Mei. The crowd waits. Fenna has to say it. “Here!” Old Jan beams. The Landing claps, as it claps at everyone's Here.
+
+On the plank of the barge a coat in grey stops, hears her voice, and goes below deck. Mei says nothing, with great skill.
+
+@@ 4.08 | E-4.H35 (2 of 2) | N | no
+Fenna folds the finished blanket over the fence. In the morning it is draped in artful folds, one corner tucked as if by a painter.
+
+@@ 4.09 | c4_n_masonry | W | yes
+In the margin of the masonry page: “A wall is only many small decisions in the same direction.”
+
+@@ 4.10 | E-4.L03 | N | no
+Thorne, the Lord's gardener, comes up the road with a bundle of sticks: apple grafts he saved from the Moonedge orchard, and wants to give back. Quill is forty paces behind, counting, and must not see. He sees. He writes it down. The orchard gets its old apples back.
+
+@@ 4.11 | E-4.H25 | N | no
+%% [changes.md #61]
+%% Two pages in the seed; the counting lines are the seed's.
+Another day, Quill counts the hens again. The goat follows him, stamping. “Seven,” says Quill. Stamp, stamp, stamp, stamp, stamp, stamp, stamp, stamp. Eight. He counts again, his jaw set. There is a hen behind the barrel. Eight.
+
+Quill writes “8” and does not write why. He reaches for his pencil. The goat is chewing.
+
+@@ 4.12 | c4_library | S | no
+Fenna steps into the new library room and stops. Somebody has sorted all her books by weight. The heaviest lies at the bottom, the lightest on top. Lark sits on the heaviest, reading the lightest. “Probably fine,” he says.
+
+@@ 4.13 | E-4.H82 | N | no
+Fenna wants one more plank in by lantern light. The bunny wants her to look up: a quick triple thump, the hawk-and-fox kind. Fenna waves a hand and hammers on.
+
+In the morning there are feathers by the coop and one hen fewer, the speckled one. The bunny sits by the empty nest box and does not thump when Fenna comes. She only looks. The coop door gets a bolt. The goat sleeps on the coop roof that night, and every night after.
+
+@@ 4.14 | c4_glass | W | no
+Sand goes in. Fenna waits. Something comes out that she can see through, and it is the same sand, only now it lets the light walk straight in and out.
+
+She holds the first bottle up. The yard turns upside down inside it, small and green and tipped, and for a moment it is the whole world.
+
+@@ 4.15 | c4_n_glass | W | yes
+In the margin of the glass page: “I once held a bottle up to the sun and cried for no reason. Do not be surprised.”
+
+@@ 4.16 | c4_lease | S | no
+%% [changes.md #36]
+In a rusty tin under the glasshouse stones lies the old lease: “… a half of all that the land gives.” A half! Fenna takes out the burnt page from the workshop and holds it beside it. The red number is the same. Pieter has never asked for half. Not yet.
+
+@@ 4.17 | c4_k_lease | W-bark | no
+The lease is in the drawer. Fenna does not open the drawer. She knows it is there, which is nearly as bad.
+
+@@ 4.18 | E-4.R42 | N | no
+%% [changes.md #37]
+%% Baseline and the upgrade (Fenna holds the tin) both written; the upgrade leads into E-4.R11.
+Share Day. Quill wants the lease read before witnesses, because the Book, the Lord's great ledger, requires it. The fence fills up: Maud, Appleby, Anna, Hilde, Jan, Ella, the twins. Fenna wants it over. Quill reads the Hurst's short copy aloud: “… a half of all that the land gives.” The fence goes still. Then he reads the lines the Book has found: “One glass kiln. One cheese vat. One press. The orchard.” Each is a small thud, and the number Pieter will carry rises. The goat eats a corner of the notice.
+
+Fenna puts the tin on the rail. Quill stops. “There is a line at the bottom of this one,” he says.
+
+@@ 4.20 | E-4.R11 | N | no
+Quill looks at the tin for an official minute. In the corner of the old page there is a small flourish, “Q.”, in a young hand. He sits down on a nail keg without being asked. He asks to copy one line from the bottom: “never so much that the table is bare.” He takes four minutes over eleven words.
+
+@@ 4.19 | E-4.L11 (as two barks) | N-bark | no
+%% [changes.md J14] Placed after the tin scene (4.20) so the reading and the tin stay together.
+%% The master cut this seed to a two-bark series; the seed's lines are used.
+Greenstem tells her what is being said in the Square. Quill's counting has made people afraid the Lord will count them next. “She's one of ours,” says Maud. “She's got a farmhouse,” says Appleby. “We have a chalk board.”
+
+Maud and Appleby stop speaking for a week. On market day the Pot is cold.
+
+@@ 4.21 | c4_no | S | no
+Quill is at the gate again. “The Lord's share,” he says, “as before.” Fenna looks at the North Field, resting under clover. “No,” she says. Her voice is smaller than she hoped, but it does not shake.
+
+Quill's pencil stops. On the fence, Lark swings his legs. “You've counted the cows,” he tells Quill. “Have you counted the clover? It counts you.” Quill writes that down too, by mistake.
+
+@@ 4.22 | E-4.H28 | N | no
+The field is clear. In the middle stands one bramble the size of a table. The goat walks round it. Fenna reaches for the shears. The goat steps between. Fenna puts the shears down. Something in the bramble rustles. Nobody looks.
+
+@@ 4.23 | c4_greenhouse | W | no
+Fenna steps in and shuts the door, and the weather stays outside like a dog that has been told. Warm air. Wet air. Green air. Rows of leaves reach for the glass. The first tomato has chosen to be here, whatever the season outside, and she takes her hat off to it.
+
+@@ 4.24 | c4_n_mulch | W | yes
+Mulch. Written beside it: “A blanket for dirt. Yes, dirt gets cold. Do not argue.”
+
+@@ 4.24b | c3_pieter3 | W | no
+%% Trigger lord_shares>=6: by the engine's count this falls in chapter 4, though the file is more-ch3.
+“It's a long road,” says Pieter, and sits on Fenna's fence without being asked. He sets his lantern down beside him, still lit in broad daylight. Then he takes a flask from his coat and offers it to her, which is not in his book either.
+
+It is cold tea, very sweet. They each take a sip. Then he stands, straightens his coat, and becomes a watchman again. “Same time next season.”
+
+@@ 4.25 | c4_pieter4 | W | no
+Pieter comes up the road with his lantern swinging and his book under his arm, and for the first time he does not open it at the gate. He just stands there.
+
+“I wanted to say, Fenna,” he says, and stops. “It's heavy. I know. I'm the one who carries it.” Fenna nods. It is the nicest thing anyone has said all week.
+
+@@ 4.26 | c4_receipt | W | no
+Pieter gives Fenna a receipt. She has never had one. It says what she paid and what it was for, and in one corner, in tiny letters: “Thank you.” Somebody took the trouble. She hopes it was Pieter. She folds it small and keeps it with the burnt page.
+
+@@ 4.27 | c4_mei | W | yes
+Captain Mei holds the jar of pickles up to the light and nods, as if it had passed an exam. “For the long voyage,” she says.
+
+Then she sets a letter on Fenna's table. “Your mother. She asked me to hand it over myself.” She does not stay for tea. She does stay for a very long look at the letter.
+
+@@ 4.28 | E-4.B13 (b) | N | no
+%% Second trigger of E-4.B13; the note is the seed's sketch, verbatim; the hook-and-dent picture is carried by the one line the seed allows.
+The pickle jar comes home from the long voyage with a pressed leaf in it, a brass button and a folded paper in a small, round hand: “Have you still got the bucket? —L.” Fenna looks at the bucket. It is in her hand. It is always in her hand. She holds it a little tighter. Later she hangs the old hook by the new door, and the bucket under it. She does not look at how they fit.
+
+@@ 4.29 | E-4.B14 | N | yes
+Fenna wants not to be seen holding the bucket, and nobody is looking. She puts it behind the rain barrel. It is a very large bucket and a small barrel. The bunny sits on it. Lark stands beside it with great politeness. “Probably fine,” he tells the barrel. Then Fenna fetches it, because her hand is empty and that will not do.
+
+@@ 4.30 | c4_window | W | yes
+The new window goes into the school wall, and the children press their noses to it at once. “You can see everything,” says one. “You can see the pig,” says another.
+
+They do not seem to mind that the pig is the only thing to see. Later, the teacher stays behind and cleans the pane with her sleeve, though it is already clean.
+
+@@ 4.31 | c4_k_school | W-bark | no
+Children's voices, down the lane. Someone is singing the wrong words to a right tune, very loudly.
+
+@@ 4.32 | c4_wedding | W | yes
+The cake leans a little, in the middle, where the berry cake meets the apple pie. Nobody mentions it. The couple cut it together, and the knife goes in with a small, soft sound.
+
+Everyone cheers as if they had been waiting all day. Fenna stands at the back with a plate and a crumb on her nose. It is her cake they are cheering. Nobody tells her about the crumb.
+
+@@ 4.33 | c4_pizza | S | no
+On the village square the builders eat pizza at long tables under paper lanterns. Fenna sits between Bo and Greenstem. Someone passes her the biggest slice. Tonight, nobody asks whose family she is.
+
+@@ 4.34 | E-4.R19 | N | yes
+%% [changes.md #38]
+%% May fall in chapter 4 or 5, whichever the road allows (seed).
+Fenna's paved road reaches the Hurst Gate. The village is standing round a puddle on the Lord's Mile, the road that never had one, as round a visitor. Children name it. Tally the tollman measures it. Mayor Juno wants it filled. Nobody dares fetch gravel from the Hurst's pile, because the pile is gone. The village laughs, and then goes quiet together.
+
+@@ 4.35 | c4_board | W | no
+The board is so full now that notices have started to climb on each other. One of them, near the top, simply says “WHOEVER IS DOING ALL THIS, PLEASE DON'T STOP.” Near the bottom, the lost glove is still pinned there. Fenna straightens the notice. She leaves the glove.
+
+@@ 4.36 | c4_scarecrow3 | W | no
+The third scarecrow has a flower. Just one. Where it came from, no one will say. It is not a scarecrow flower. It is a real one, a little yellow, put there on purpose, by someone who thought the scarecrow looked lonely.
+
+@@ 4.37 | E-4.H15 | N | yes
+%% Two pages in the seed.
+The goat wants the pond reeds. The tortoise is sitting on them. The goat tries three ways, and abandons each with great dignity: lean, butt, and lie down with a whistling face. By evening the goat is asleep, and the tortoise has moved four inches.
+
+The goat wakes, finds the reeds free, and is too embarrassed to eat them. She eats the daisy off the tortoise's back instead. It grows back by morning.
+
+@@ 4.38 | E-4.H23 | N | yes
+%% Berit's page, the seed's sketch, verbatim (page:k_compost).
+A page with a corner bitten off. Berit has written: “Goats lie. Count them anyway. She can count; she will not count what she has eaten. You hid her in the cellar. She ate the door. I was busy; I only noticed the draught.”
+
+@@ 4.39 | c4_n_steel | W | yes
+In the margin of the steel page: “Steel is iron that has been through something.” A little drawing of a hammer. It looks pleased.
+
+@@ 4.40 | c4_k_winter | W-bark | no
+Frost on the glass in the greenhouse, ferns drawn in white. Fenna could swear they are better than the ones on the plants.
+
+@@ 4.41 | E-4.L09 | N | yes
+On Longnight Greenstem hands her the ladle and says, “I'll do it.” The village waits for nothing. Fenna would rather do anything. She sits. She says one tiny true thing: “My feet hurt.” A cup is passed to her. She drinks it. It costs her more than the soup did.
+
+@@ 4.42 | E-4.L05; c4_watch | W-rev | yes
+%% The shipped/staged c4_watch carries the scene; E-4.L05 adds the invitation, the view of Moonedge from outside (awe #2) and the unasked question.
+Pieter wants to show her the new lantern in use. Fenna wants to be home before dark. He asks her up onto the town wall, to the Watch Walk, and to look up the valley. For the first time she sees Moonedge from outside: a window, lit.
+
+Pieter holds the lantern up and looks out over the marsh. “There's a light out there,” he says. “Some nights. Very small. It doesn't move like a lantern.”
+
+He rubs his eyes. “I'm paid to notice, you see. I'm not paid to say.” He says it anyway, and then walks off whistling, so she will not ask. She does not ask.
+
+@@ 4.43 | c4_birthday | W | no
+It was spring when Fenna came here with a bucket and a plan and no idea. She looks around. The plan has changed.
+
+The bucket is still by the door. She gives its rim a pat, the way you would pat a horse that has done a good day's work, and goes out to see what the day wants.
+
+@@ 4.44 | c4_pony | S | no
+A pony stands at Fenna's gate and poses, one hoof forward. Then she lets Fenna load a sack, a crate and a big order for the village. She walks down the road as if she owns it.
+
+On the square, people stop. They look at the pony, then the order, then Fenna. Somebody says her name. Her own name, not her family's. The fourth line comes back: “Strong pony brings the world its bread.”
+
+@@ 4.45 | E-4.L12 | N | no
+%% Merged by the master into the pony beat (row 19).
+Appleby, with chalk and board, has to mark every sack of the big order in front of the Square. The village watches, unsure whether to cheer. The pony poses through the whole chalking. Someone laughs. Appleby's chalk breaks. She chalks the last sack very small.
+
+@@ 4.46 | c4_k_pony | W-bark | no
+The pony puts her whole head over the fence and breathes on Fenna, once, as if checking she is still warm.
+
+@@ 4.47 | E-4.R13 | N | no
+Quill asks, because the Book says he must, to borrow the pony and the cart for six days on the Lord's road. The old lease says “carriage on request”. The pony shows him her other profile. He withdraws the request, writes “declined (pony)” and underlines it twice. For a moment he looks as if something has gone right.
+
+@@ 4.48 | E-4.H27 (barks 1 and 2) | N-bark | yes
+The goat is on the coop roof. Later, she is on top of the woodpile, as if on a stage.
+
+@@ 4.49 | c4_quill_out | S | no
+Quill rides back to the manor with his ledger full. At the gate he stops. “The farm gives back more than it takes,” he says, as if it were a question. “The Lord will want to know.” Then he goes, and Fenna cannot tell what he meant.
+
+@@ F4 | c4_frame4 | S | no
+“Was the Lord a villain?” asks Minena. The old woman thinks about it for a long time. “He was afraid,” she says. “That's worse, sometimes.”
+
+Nobody says anything. Then the smallest one whispers, “Afraid of what?” “Of a number,” she says. “Now go to sleep.” They do not. Not yet.

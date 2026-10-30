@@ -1,5 +1,8 @@
 # Premise
 
+> **24 Oct 2026:** the premise stands, but the settled form is in `outline/story-bible.md` (hidden truth, clue ladder Q1–Q19, rulings). Original saved in `archive/run-2026-10-23/pre-merge/00-premise.md`.
+
+
 Round 1, tidied in the critical pass of 7 Oct 2026 (before Round 3). Labels: ✅ decided by the parent · 💡 proposed by Claude · ❓ open · 🔒 hidden from the player.
 
 ---

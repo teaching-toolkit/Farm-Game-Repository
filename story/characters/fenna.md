@@ -1,5 +1,8 @@
 # Fenna
 
+> **24 Oct 2026:** partly superseded by the outline run. Read `../outline/story-bible.md` first; the newest character files are `village-arcs.md` and `liv-tilda-berit.md`. Where this file disagrees (the cousin is **Liv**, 19, Berit's granddaughter through Tilda; Mumyo's last words; the lantern hung outside; "a while"), the bible wins. Original saved in `../archive/run-2026-10-23/pre-merge/characters/`.
+
+
 Round 3, draft 1 (7 Oct 2026). Labels: ✅ decided · 💡 proposed · ❓ open · 🔒 hidden. The player renames her; "Fenna" is the default.
 
 ## The rule above everything else ✅ (parent, 8 Oct 2026)

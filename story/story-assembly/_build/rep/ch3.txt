@@ -1,0 +1,249 @@
+# Chapter 3: Smallholding
+
+@@ 3.01 | c3_letter | S | no
+Another letter comes from the river barge. Her mother writes: “Stay if you must. Your cousin asks after you.” Fenna reads the last line again. To her it sounds like a warning.
+
+@@ 3.02 | c3_dread1 | W | no
+All day there is a hush in the yard that Fenna cannot explain. The hens go in early. The wind drops. A dog barks once, far off, and nothing answers. It is only an ordinary afternoon, wearing the face of a not-ordinary one.
+
+@@ 3.03 | E-3.H21 (bark 1); c3_k_nibbled | W-bark | no
+%% E-3.H21's first omen is the staged c3_k_nibbled, kept verbatim.
+Fenna's list has been nibbled at one corner. She has no goat. She frowns at the list. The list does not explain itself.
+
+@@ 3.04 | c3_dread2 | W | no
+Fenna finds herself counting. Things she has. Things she owes. Things in the barn. The numbers do not add up to anything alarming. She counts again anyway. Then a hen walks across the paper, and she has to start over, and it somehow feels better.
+
+@@ 3.05 | E-3.H21 (bark 2) | N-bark | no
+The next time, the list is gone entirely, and a hoofprint sits in the ink. Fenna has no goat. She writes the list again, in her head.
+
+@@ 3.06 | E-3.H14 (bark 1 of 3) | N-bark | yes
+A sparrow sits on the tortoise for a whole song. She is the only still place in the yard.
+
+@@ 3.07 | E-3.H10 (bunny instance) | N | no
+%% "Job card" rendered without the game's job board: the bunny asks for work in her own idiom.
+On the step lies a clover leaf with one bite out of it, and a pebble beside it, nudged a hair straight. Then one polite thump. The bunny is asking for a job. Fenna gives her one.
+
+@@ 3.08 | E-3.H22 | N | yes
+%% Tap on the scrub.
+Fenna wants to know what is behind the fence. A wall of bramble, taller than she is, with thorns like a great many small opinions. Deep in the middle is a hollow lined with moss, the size of a small thing curled up, and a scrap of white thread caught on a thorn. She does not reach for it.
+
+@@ 3.09 | E-3.R41 | N | no
+%% [changes.md #25]
+%% Both margin lines are the seed's sketch, verbatim (page:k_salt).
+On the salt page, in thin brown ink, Berit writes about the Keepers, who farmed Moonedge first and made its lease: “Salt on the table first. Then the bread. Then the rent. The Keepers wrote it into the lease so: never so much that the table is bare. The Hurst copied the rest.” And, smaller: “(Goats lick it. Count your salt. —B.)”
+
+@@ 3.10 | E-3.H13 | N | yes
+%% Berit's page, the seed's sketch, verbatim.
+Fenna wants to know why the tortoise sat on that stone. Berit's page says: “Do not argue with a tortoise. You will lose, slowly. You took her water at dawn in a bucket as big as you. She never thanked you. That is how you know.”
+
+@@ 3.11 | E-3.H16 (bark 1 of 3) | N-bark | yes
+Fenna puts a stone where the tortoise is, to check. By evening the tortoise is two paces past it.
+
+@@ 3.12 | c3_pieter | S | no
+%% {player} -> Fenna.
+A lantern swings up the road in the daylight. Under it walks Pieter, the night watchman. He does not look happy.
+
+“I am sorry, Fenna. The Lord wants his share. It is not my idea. I only carry the book.” He shows her a number. “Pay when you can. I will wait at the gate.”
+
+@@ 3.13 | E-3.R04 | N | no
+%% Rue's lines are the seed's.
+Fenna wants seed. Rue's cart will not sell to a house with a lantern at its gate. “The Lord's share first, love. Pay Pieter at the gate.” She turns the cart round and sits on the tail with an apple. “I'm good at waiting. I once waited for a goat.” Pieter has plainly walked the long way round to avoid her eyes. A hen walks out of the brush by the fence and lays an egg in front of everybody. “I could see an egg,” says Rue, “if you had one to sell me.” Fenna sells it. That always works.
+
+@@ 3.14 | E-3.R40; E-3.L02 | N | no
+%% [changes.md #26]
+%% The first Share Day: one occasion in two boxes (master ch3 row 8). The grey line "carried down" from E-3.R40. R40's upgrade seat ("the goat's trough") is not used, because the goat has not come home yet; L02's stool standoff carries the upgrade (logged, open-questions C7).
+Share Day comes at the end of every season, when Pieter collects the Lord's share from every house. On Share Day the Hall feeds everyone before Pieter writes, so that nobody pays on an empty stomach. The Pot is poor, and the soup is thin. Pieter is given the first bowl, as always. Every house sets out a stool for him, so that the man who comes to take can sit while he does it. Nobody says why. Moonedge has no stool yet. So Pieter eats standing, and looks into the bowl as if it were a window. On his page, at the foot, there is one line in grey: “carried down.” “Down where?” asks Fenna. “Down,” says Pieter.
+
+The next time, Fenna brings a pot of her own. The soup goes thick, and the village goes quiet. At the gate there is one stool now. Pieter will not sit while Fenna stands. Fenna will not sit while Pieter stands. The bunny takes the stool. They eat on the ground, and his tiredness shows.
+
+@@ 3.15 | c3_pieter_paid | S | no
+Pieter taps his book shut. “Thank you. Most people hide when they see me.” He almost smiles. Then he walks home, whistling a tune he does not know he is whistling.
+
+@@ 3.16 | E-3.H51 (1 of 3) | N | no
+Pieter comes back to apologise, and his book has a small, round, wet mark on it. “A bush spat on the book,” he says. “Only on the book. Not on me. I checked.”
+
+@@ 3.17 | c3_k_pieter | S-bark | no
+Far down the road, a lantern waves at Fenna. Pieter. She waves back.
+
+@@ 3.17b | E-2.B05 (bark 2 of 2) | N-bark | no
+%% [changes.md #27]
+%% Restored from the kept seed E-2.B05 (its chapter-3 bark) for B3: the village's word is "lightning", said to her face.
+A child at the gate says, “My mum says it was lightning.” “Did she?” says Fenna.
+
+@@ 3.18 | c3_forge | S | no
+Old Odinson lights the forge and young Bo works the bellows. They show Fenna how to hold the tongs. “Good hands,” says Odinson, which is the most he has said all day. Bo grins at the fire.
+
+@@ 3.19 | c3_k_forge | W-bark | no
+Somewhere down the road, a hammer rings, and stops, and rings again. Somebody is making something. It is a good sound to live next to.
+
+@@ 3.20 | c3_iron | W | no
+The shovel goes in like a hand into water. No catch, no clunk. Fenna digs a whole row before she notices she has forgotten to be tired. She looks at the shovel. The shovel does not look at her. It is only a shovel, and very happy.
+
+@@ 3.21 | c3_n_wind | W | yes
+Beside the wind page: “Stand in it for a minute before you build. It will tell you which way it likes.”
+
+@@ 3.22 | c3_tower | W | no
+The mill tower stands, taller than anything Fenna has made yet, with nothing at the top. A round, empty room full of wind. She climbs to the last step. Hazelwood lies small and clear below her, like a map drawn with great care. Behind her, the forest, and beyond that, more.
+
+@@ 3.23 | c3_bell | S | no
+%% [changes.md #58]
+In the ruin of the old mill, on a rusty nail, hangs a bell. It is far too small for a cow. It is far too small for anything. It sways, just a little, though there is no wind.
+
+In the dust beneath it Fenna thinks she sees tiny footprints. She looks the other way. She is quite sure that she looked the other way.
+
+@@ 3.24 | E-3.B09 | N | no
+Fenna wants to clear the wall. Below the nail, on the old plaster, is a charcoal drawing: a girl with a bucket nearly as big as she is, holding hands with something the size of a thumb with dots round its middle. Beside it are two sooty prints, a hand and a thumb. Fenna does not remember drawing it. She stands there exactly as long as it takes to stop. Then she finds she is humming, and goes out.
+
+@@ 3.25 | c3_sails | W | no
+Fenna fixes the last sail and steps back. For a moment, nothing. Then the whole thing groans, like an old person getting up, and begins to turn. Slowly. Then not slowly.
+
+The grinding fills the yard, and the flour begins to fall in a quiet white rope. The wind is working for her. It has never done that before, as far as she knows. It was waiting to be asked.
+
+@@ 3.26 | E-3.L07 | N | no
+Ella wants her great-grandfather to see the new sails. The miller wants him home before he catches cold. The old man wants his hat. He gets it, and salutes the sails. “Put that on, you'll catch cold,” says the miller, and stands where he can see them. Ella smiles.
+
+@@ 3.27 | c3_k_wind | W-bark | no
+The sails slow, creak, and stop, like someone who has forgotten the next word. Then the wind comes back, and they carry on.
+
+@@ 3.28 | c3_miller | S-bark | no
+On the bridge, the miller glares down at the stream. It is still very low. He glares at Fenna, too, just in case.
+
+@@ 3.29 | c3_stream | S | no
+The stream runs clear again. On the bridge the miller looks down at the water. Then at Fenna. He nods once, a very small nod. That is his whole apology, and she takes it.
+
+@@ 3.30 | E-3.R08 | N | no
+Then he says thank you, fast, glaring at the water. “Now I owe the Hurst a penny a sack again. Thank you.” And he walks off. Fenna laughs. Then she looks at the stream differently.
+
+@@ 3.31 | E-3.M10 | N | no
+%% Lark's one visit in chapter 3; his lines are the seed's.
+Lark wants nothing. Fenna wants her list back. He is holding the bitten page. “Item four, ‘rest’: eaten. Item nine, ‘rest’: eaten. She's a very good editor.” Fenna writes a new list.
+
+@@ 3.32 | c3_pieter2 | W | no
+Pieter arrives with his lantern, in daylight, as usual. This time he stops at the gate and checks his book twice, with the face of a man looking for a reason to turn round. There isn't one.
+
+“It's the same as last time, Fenna,” he says, “only more.” He accepts a cup of water and drinks it as though it might be evidence.
+
+@@ 3.33 | E-3.L03 | N | no
+Pieter wants to tell her one true thing he is allowed to. Fenna wants to see the book. He shows her nothing. But he says that the chalk on the widows' sacks at the Landing is very small, because the Lord never said how small a mark must be. Fenna cannot thank him aloud.
+
+@@ 3.34 | c3_k_pieter2 | W-bark | no
+A lantern swings, far down the road, in the daylight. Fenna stands up very straight, as if it were someone she knew.
+
+@@ 3.35 | E-3.L10 | N | no
+%% [changes.md #28]
+On market day the village will buy eight loaves, and the ninth sits. Appleby's loaf is the ninth. Nobody blames Fenna, but Anna says it, quietly. Fenna has to decide what a good neighbour does. She gives up her market corner every second week and sells to the Nest, the orphanage, instead, for less. Appleby does not say thank you. She cannot. She puts an extra bun in the basket.
+
+@@ 3.36 | c3_sheep | W | no
+The sheep comes off the cart and stands in the yard looking like a cloud that has lost its way. She is round, and white, and cannot see her own feet. She regards Fenna gravely, as if she were a rather puzzling hat.
+
+@@ 3.37 | c3_loom | W | no
+The loom clacks. Over, under. Over, under. At first the cloth looks like a lie, a few crooked threads pretending. After an hour it is a hand wide. After two, it is a hand and a thumb. Cloth, Fenna realises, is just patience that learned to hold its shape.
+
+@@ 3.38 | c3_n_weaving | W | yes
+In the margin of the weaving page: “A mistake in the first row is still in the last one. That is fine. It is how you can tell it is yours.”
+
+@@ 3.39 | c3_blanket | W | no
+Somebody has folded the blanket on the end of Fenna's bed with the corners just so. It was not her. She is fairly sure it was not her.
+
+There is a faint smell of lavender. She gets into bed without thinking about it, which is the best sort of thing to do with a mystery.
+
+@@ 3.40 | c3_cellar | W | no
+Fenna goes down seven steps into the cellar, and the air changes. It is cool and still and smells of earth that has been thinking. Her voice comes back to her a moment late.
+
+This is a place for keeping things safe, and it knows it, and it does not mind keeping her safe too.
+
+@@ 3.41 | c3_n_ferment | W | yes
+Fermenting. In the margin: “If it smells like a goat, it is wrong. If it smells like the Goat, it is perfect.” Fenna is not sure which goat is meant.
+
+@@ 3.42 | E-3.H16 (bark 2 of 3) | N-bark | yes
+Fenna puts another stone where the tortoise is.
+
+@@ 3.43 | c3_scarecrow2 | W | no
+The new scarecrow has a bow in its hat. Fenna did not put it there. She checks the knot. It is her knot. She decides not to ask any questions that might get answered.
+
+@@ 3.44 | c3_swing | W | no
+Among the old trees Fenna finds a rope hanging from the thickest branch. A plank, worn smooth. Somebody once sat here. The knot at the top has been retied, and not well, and not long ago.
+
+She tests the swing with one hand. It holds. She does not know who retied it. She does not sit down. Not yet.
+
+@@ 3.45 | c3_n_pests | W | yes
+Next to the pests: “Everything eats something. Do not take it personally. Do take the slugs somewhere else.”
+
+@@ 3.46 | c3_maud_goat | W | yes
+Granny Maud's goat sits in the yard looking pleased with itself. “She keeps coming here,” says Maud, with the air of someone solving a crime. “Do you suppose it's a clue?” Fenna does not, and says so.
+
+Maud nods sadly. “It is, though.” She pats Fenna's arm, takes the rope, and leads the goat home. The goat looks back twice.
+
+@@ 3.47 | c3_baby | W | yes
+The blanket is very small. Fenna had not thought how small. The baby grips a corner of it in one fist, and does not let go, and goes to sleep in the middle of what it was doing. Fenna would not mind being that sure about something.
+
+@@ 3.48 | c3_board | W | no
+The board in the square has a new notice, in a very firm hand: “WELCOME BACK. WE HAD OUR DOUBTS.” It is not signed. Under it someone has drawn a small goat. Fenna is not sure what it means. She takes it as a compliment.
+
+@@ 3.49 | E-3.L05; c3_dance | W-rev | no
+%% Rosa, the Late Mug and the humming per E-3.L05; the shipped page is the middle.
+At the harvest dance, Rosa the fiddler wants the Late Mug filled for whoever comes last, and she wants the missing end of her tune.
+
+Fenna works the cider while the village dances. Mugs float above the heads. One falls, she catches it, and she laughs out loud. Somewhere close by, something goes tink, like a very small bell. She does not look.
+
+Fenna has worked through the whole dance, so she is the last, and the Late Mug is hers. She hums while she stacks the mugs, and does not know she is doing it. Rosa freezes. “Hum that again.” “I'm not humming,” says Fenna. She leaves in a hurry. Rosa plays the tune badly all night.
+
+@@ 3.50 | c3_k_summer | W-bark | no
+The air is thick and gold. Everything is humming, even the stones.
+
+@@ 3.51 | c3_pond_sun | W | no
+The sun is on the pond, and the pond is giving it back. Dragonflies write quick, blue letters on the air. Fenna sits with her feet in the water and thinks about nothing. Nothing is very good for her.
+
+@@ 3.52 | E-3.L06 | N | no
+%% [changes.md #30]
+%% [changes.md #29]
+One autumn day Fenna is on the Landing Steps by accident, and the whole village is there, silent, looking down the river. She wants to know what everyone is looking at. The grey barge comes round the bend. Even the Lord's share goes onto it, down the river. The children are told to hold their breath until it has passed. They fail, one after another, comically. One small hand, a child's, takes hers. Now she knows where the money goes.
+
+@@ 3.53 | c3_n_irrigation | W | yes
+In the margin of the water page: “Water goes where you show it, and then where it likes. Both are fine.”
+
+@@ 3.54 | E-3.L11; E-3.B08 | N | no
+%% [changes.md #59]
+%% [changes.md #33]
+%% [changes.md #32]
+%% [changes.md #31]
+%% B08's two barks follow the Chain, as merged by the master.
+The next summer the village children want to run the Chain, the line of buckets the village made from the stream to the barn the night Moonedge burned, for the first time in a long time, now that the farm is smoking again. Maud wants the bucket put on the post. Fenna wants to carry water to the wheat. This time more than Maud turns up. A Chain of buckets runs from the Deep, the well in the Square, to the Hall and back, and the fastest team gets a bun. Ansel the bell-ringer rings the Hall bell five fast, one slow: fire, then all's well. Fenna is handed the last bucket, and for once she passes it on.
+
+Afterwards, Tom says: “Someone got off Mei's boat at dusk. Didn't say a word. Left before the buckets.” The twins say: “The Moonedge ghost has a sister. She's grey. She leaves rocks.” Fenna goes and looks. On top of the row of grey stones on the gatepost there is one fresh stone. She decides not to wait at the post.
+
+@@ 3.55 | c3_goat_shed | W | no
+%% [changes.md #60]
+%% Trigger done:barn_2; the master's E-3.B12 hangs on the same node, so the two sit together.
+The bigger barn is finished. Maud's goat walks in, walks out, climbs on the roof, and looks down at Fenna, very pleased with itself. She has built a barn. She has been given a goat roof. It is not the same thing.
+
+@@ 3.56 | E-3.B12 | N-bark | no
+%% [changes.md #34]
+Fenna sets four buckets, full, at the corners of the barn. Then eight at the farmhouse. The goat drinks from one. The tortoise sits in one. A hen lays in one.
+
+@@ 3.57 | E-3.H65 (bark 1 of 5) | N-bark | yes
+Everyone wants to go in for the night, and the tortoise is at the gate. The bunny presses against her shell. Inside a circle exactly one tortoise wide, nothing at all happens. Outside it: THUMP.
+
+@@ 3.58 | E-3.H16 (bark 3 of 3) | N-bark | yes
+The tortoise is at the cottage step, looking in, and the stones are a path from the pond to the house that Fenna did not mean to make.
+
+@@ 3.59 | c3_north | W | no
+Beyond the old fence the land goes on. Fenna had not looked. Long grass, a leaning post, a bird she does not know, doing something with a twig. There is room here for more than she thought, and it has been standing here the whole time, waiting for someone to notice.
+
+@@ 3.60 | c3_goat | S | no
+A goat trots up the path and straight into the brambles nobody could clear. Crunch. Munch. She eats thistles as if they were sweets. Fenna opens her mouth to stop her. Then she lets her.
+
+The third line of the old rhyme comes back, and Fenna says it with her mouth still open: “Brave goat clears the bramble bed.” The goat looks at Fenna's hat. Her eyes are thoughtful.
+
+@@ 3.61 | E-3.B10; c3_goat_out | S-rev | no
+%% The letter under the hat is Mei's (E-3.B10 sketch, verbatim) instead of the shipped "Your cousin may come to visit."
+In the morning the scarecrow is wearing Fenna's hat. Nobody saw who put it there. Under the hat there is a letter, from Mei: “Your cousin asked me three times if she might come through the gate. Twice at the dock and once at the plank. I told her to ask you herself. She said she was asking.” Fenna takes her hat back. It is still warm.
+
+@@ 3.62 | E-1.H76 (bark 2 of 3) | N-bark | yes
+Granny Maud sees the goat on the path and says the third line aloud, crossly, from memory. The children in the road pick it up.
+
+@@ 3.63 | E-3.B11 | N | no
+Fenna wants everything perfect for someone who has not come. She makes the spare bed with square corners. She makes it again with hospital corners. She plumps the pillow, and the goat's opinion of it. A candle, a jug, a pie. For nobody.
+
+@@ F3 | c3_frame3 | S | no
+“Were you scared of the cousin?” asks somebody from under a blanket. “More than of any imp,” says the old woman. “What's an imp?” “Shh!” say three children at once. “That comes later!”

@@ -1,5 +1,8 @@
 # The ladder: six chapters
 
+> **24 Oct 2026:** the six-chapter ladder below is the *8 Oct* plan. The master outline is `master/ch1.md … ch6.md` and `master/ending.md` (the Players before the crisis; the telling in two halves; 6.11 is the garden telling; Quill's report moves to chapter 5). Original saved in `../archive/run-2026-10-23/pre-merge/outline/ladder.md`.
+
+
 Round 5, draft 1 (8 Oct 2026). Written with *live-wire-style* (ladder pass: structure, not wording). Labels: ✅ decided · 💡 proposed ·
 ❓ open · 🔒 hidden. Beats name the game node that triggers them (checked against `farm-progression.json`, 8 Oct 2026).
 **Critical** = the node is required for that chapter's pet, so the beat cannot be missed. Kinds: see `../story-delivery.md`.

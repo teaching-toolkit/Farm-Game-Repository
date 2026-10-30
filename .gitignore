@@ -21,3 +21,6 @@ archive/*.zip
 # Python caches
 __pycache__/
 *.pyc
+
+# Claude Code: machine-local permissions
+.claude/settings.local.json

@@ -8,7 +8,7 @@
 
 **Blocked by:** 08a, 08b, 08c
 
-**Status:** ready-for-agent
+**Status:** skipped on purpose (24 Oct 2026): the charge audit is inside each master chapter file; run only if the parent asks
 
 - [ ] Dossier written in the slice folder; every new thing labelled 💡; inventions listed in an **Inventions** section; ❓ and ✅-touching proposals appended (one block) to `QUESTIONS.md`.
 - [ ] Nothing in the frozen zone or in live canon files was edited.

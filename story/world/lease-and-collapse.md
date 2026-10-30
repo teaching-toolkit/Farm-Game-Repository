@@ -1,5 +1,8 @@
 # The lease and the collapse
 
+> **24 Oct 2026:** partly superseded by the outline run. Read `../outline/story-bible.md` first. Changes since this file: the lantern hung outside by the barn door (no Lord's order); the Moonedge Mark is a fixed grievance; claim versus collection of the Lord's share; the River Alder and the Landing; "a while" instead of "a few weeks". Original saved in `../archive/run-2026-10-23/pre-merge/world/`.
+
+
 Round 2, draft 1 (7 Oct 2026). Labels: ✅ decided · 💡 proposed · ❓ open · 🔒 hidden. This is the ecology the game teaches. Each link of the
 chain is a system the game already has, so **playing the game is the repair**.
 

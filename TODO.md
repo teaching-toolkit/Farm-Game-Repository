@@ -1,7 +1,7 @@
 # To-do list — Farm Quiz Game
 
 The project's to-do list and plan. Moved out of `00-READ-ME-FIRST.md` §6 on **9 October 2026**; finished tasks live in
-`PROJECT-LOG.md`, not here. **Last updated: 23 October 2026** (phase 1 built and checked, version 0.9.0; phase 2, the restructuring, done (R0–R8); phase 3, the interface, built: version 0.10.0, waiting for the iPad (W9); phase 4, the foundations, built too: version 0.11.0; phase 5, the story engine and chapter 1, built: version 0.12.0; phase 6, the store and market, built: version 0.13.0; seven rounds of the
+`PROJECT-LOG.md`, not here. **Last updated: 24 October 2026** (phase 1 built and checked, version 0.9.0; phase 2, the restructuring, done (R0–R8); phase 3, the interface, built: version 0.10.0, waiting for the iPad (W9); phase 4, the foundations, built too: version 0.11.0; phase 5, the story engine and chapter 1, built: version 0.12.0; phase 6, the store and market, built: version 0.13.0; seven rounds of the
 parent's decisions, 10–12 Oct, worked in; §0 is the implementation plan).
 
 **Issue tracker (since 23 October 2026).** Open work lives in **`issues/`**, one file per ticket with a status (`ready-for-agent`, `needs-parent`, `done`) and what blocks it. **This file is the index and the plan:** every open ticket has one line below, with its old id, its status and a link; entries that are decided and built stay here as the record. The rules for tickets, specs and statuses are in **`issues/README.md`** (read it before touching a ticket). Ids are unchanged: `grep -n "M5" TODO.md` finds the line, the line links the ticket.
@@ -478,6 +478,10 @@ A **secondary** goal ✅: never at the cost of a fun, not overwhelming, still ch
 - **I16: The parent answers the eleven questions from the consistency pass** · `needs-parent` · [issues/story/03-i16-parent-answers-after-consistency-pass.md](issues/story/03-i16-parent-answers-after-consistency-pass.md)
 - **I17: Apply the build-step fixes the consistency pass could not make** · `ready-for-agent` · [issues/story/04-i17-build-step-fixes.md](issues/story/04-i17-build-step-fixes.md)
 - **I17b: Make the data edits that follow the parent's answers Q5–Q10** · `ready-for-agent` · blocked by `story/03` (I16) · [issues/story/05-i17b-data-edits-after-answers.md](issues/story/05-i17b-data-edits-after-answers.md)
+- **Outline: the parent answers the ten questions** · `needs-parent` · [issues/story/19-outline-ten-questions.md](issues/story/19-outline-ten-questions.md)
+- **Outline: decide and apply the 55 text-change requests** · `needs-parent` · blocked by `story/19` and a play-test · [issues/story/20-apply-outline-text-changes.md](issues/story/20-apply-outline-text-changes.md)
+- **Outline: build the data wishes the parent approved (pond, night garden, names, mill, Fair)** · `ready-for-agent` · [issues/story/21-settled-story-data-wishes.md](issues/story/21-settled-story-data-wishes.md)
+- **Outline: check the story's play order with one bot run** · `ready-for-agent` · [issues/story/22-bot-run-opening-hour.md](issues/story/22-bot-run-opening-hour.md)
 
 ---
 
@@ -516,8 +520,6 @@ Quiz question each; the Wren check and the poisoning exception).
 Accepted by the parent on 22 Oct 2026 ("all of them look good"). Each is a feature folder in `issues/`; the first ticket is the grilling with the parent, which produces `spec.md` and the build tickets. The review recommends starting with **farm-actions**; **time-question** is the small warm-up; **condition-language** should follow soon because story timing issues C5 and C6 wait for it. Details: `ARCHITECTURE-REVIEW-2026-10-22.md` Part B.
 
 **farm-actions** (grilled and specified 23 Oct 2026: `issues/farm-actions/spec.md`; the grilling ticket 01 is `done`; words in `GLOSSARY.md`)
-- **Goal and building payments use the pay function** · `ready-for-agent` · blocked by farm-actions/11 · [issues/farm-actions/12-pay-function-goals.md](issues/farm-actions/12-pay-function-goals.md)
-- **Delete the old duplicated checks** · `ready-for-agent` · blocked by farm-actions/04, farm-actions/05, farm-actions/06, farm-actions/07, farm-actions/08, farm-actions/09, farm-actions/10, farm-actions/12 · [issues/farm-actions/13-contract-delete-duplicates.md](issues/farm-actions/13-contract-delete-duplicates.md)
 - **Wren stops asking for coins** · `needs-parent` · blocked by farm-actions/13 · [issues/farm-actions/14-wren-no-coins.md](issues/farm-actions/14-wren-no-coins.md)
 - **Decide: the unused seed-buying path in planting** · `needs-parent` · blocked by farm-actions/13 · [issues/farm-actions/15-decide-seed-buying-path.md](issues/farm-actions/15-decide-seed-buying-path.md)
 - **Decide: the orchard tree energy multiplier** · `needs-parent` · blocked by farm-actions/13 · [issues/farm-actions/16-decide-orchard-multiplier.md](issues/farm-actions/16-decide-orchard-multiplier.md)

@@ -1,0 +1,225 @@
+# Chapter 6: Master Farm
+
+@@ 6.01 | c6_lord | S | no
+%% Engine note: c6_lord can fire before c5_letter (data wish); here it is read as the letter with the seal from 5.42.
+A rider brings a letter with a red seal. Fenna's farm prospers, it says, so the share goes back to a half, “as before.” She reads it twice. Inside her, an old pattern sits up and stretches.
+
+@@ 6.02 | E-6.R24 | N | no
+Fenna wants to fold the new letter smaller than the last. The badger wants the whole drawer. He takes the folded letters out one by one and presses each flat under a cup. Tea first. Fenna reads them in order. The asks get smaller and smaller. She folds the last one small again.
+
+@@ 6.03 | E-6.L11; E-6.R25 | N | no
+%% The master merges R25 (the goat, Quill's "I did not write it") into the Pot scene.
+Fenna wants to read the Lord's letter a third time. The goat has it. Quill arrives to explain it and finds a seal on the step and a goat chewing something red. “I regret that I cannot read what the Lord has written,” he says. A pause. “I did not write it.” He looks at the goat for a long moment and does not take the seal.
+
+At the Pot the village argues about the half. “We know that number,” says Maud. Some say the farm should hide its books. Juno wants the tables set for the Fair. Appleby, who stopped speaking to Maud, speaks to her. The village chooses the tables over keeping quiet. Appleby gives her whole flour store for the Pie Table. Maud puts a spoon in the Pot. Nobody knows what the Lord will do.
+
+@@ 6.04 | E-6.M24; c6_broker | S-rev | no
+%% Page 2 added per E-6.M24.
+A new trader unpacks his cart on the square. He has a hat, a tune and a very familiar face. “Barter?” he says. “Yes!” He winks. Fenna decides to stop wondering who he looks like.
+
+Fenna wants a fair price for her cheese. The Broker wraps it and whistles her tune, exactly. At the place where the tune rests he stops, and studies a cheese with great attention. Fenna waits. He goes on studying.
+
+@@ 6.05 | E-6.B25 | N-bark | no
+A tall shape stands on the ridge above the marsh, facing the reeds. It hums one long, low note, and does not come down. The next time, the goat tries to talk her down, and eats her ribbon.
+
+@@ 6.06 | c6_garden | S | no
+Where the marsh was, white flowers open at dusk. Hundreds of them, glowing softly. Somewhere in the dark, very quietly, bells. Nobody comes out to meet her. Fenna stands there a long time and does not say a word.
+
+@@ 6.07 | c6_k_garden | W-bark | no
+Dusk. White flowers open, one by one, as though somebody were turning the lights up on a small, private party.
+
+@@ 6.08 | c6_terraces | W | no
+The second orchard goes in, row on row, a green stair up the hill. Down in the first orchard, the old swing is still moving, just a little, as if somebody has only just got off.
+
+On the plank lies an apple core, eaten down to the pips. Fenna does not need to know who. The knot holds.
+
+@@ 6.09 | c6_seed_library | W | no
+Rows of tiny envelopes, each with a name in a different hand. Carrot. Bean. “Maud's good pumpkin.” “Do not lose.” They rustle faintly when Fenna walks past. A shelf full of next summer, put in order. She finds herself walking quietly, the way you would in front of sleeping people.
+
+@@ 6.10 | c6_n_seed | W | yes
+In the margin of the seed page: “Always save the best one for next year. And the second best, for a neighbour.”
+
+@@ 6.11 | c6_oven | W | no
+The big oven takes six loaves at once and rises to the occasion. The whole lane smells of it. A queue forms that nobody organised. Hilde is in it, pretending to be in the way. Old Jan is behind her, very much not pretending.
+
+@@ 6.12 | c6_whirligig | W | no
+The wind pump spins. The pole sings a small, silly song, and the water comes up out of the ground as though it had been waiting for its turn. Fenna stands there with her hands on her hips, listening. From the coop, the hens give an opinion about the noise. It is not kind.
+
+@@ 6.13 | c6_dye | W | no
+Fenna lifts the cloth out of the vat, and it is green, an ugly, wet, mud-sort-of green. Then the air touches it, and it turns blue. Slowly. Like a thought arriving. She holds it, dripping, and watches it become the colour of a sky that has been waiting its turn.
+
+@@ 6.14 | c6_n_worms | W | yes
+Next to the worms: “They do the real work. Call them by name.” A list follows. They are all called Gerald.
+
+@@ 6.15 | c6_n_soil | W | yes
+“A handful of living soil has more creatures in it than there are people. Remember that when you feel small.”
+
+@@ 6.16 | c6_quilt | W | no
+Spread across the linen on Fenna's bed, a patchwork cover, every square a different cloth. She can pick out a few: Maud's checked apron, a scrap of blue, something that smells faintly of lavender. All of Hazelwood, sewn together by people she has not quite caught doing it.
+
+@@ 6.17 | c6_agnes | W | yes
+Elder Agnes sprinkles the thyme over Fenna's tapenade as though dealing cards. “Your grandmother put this in everything,” she says. “She had a saying. ‘If in doubt, thyme.’” Fenna waits for the rest. There is no rest. That was the whole saying. Somehow it is enough to keep.
+
+@@ 6.18 | c6_orphanage | W | yes
+At the long table by the orphanage window, the jam goes round on thick slices of Fenna's bread. Nobody speaks, because everyone's mouth is full. One small child puts the empty jar to her ear, as though a little of the summer might still be in there. Matron Elsie pretends not to see.
+
+@@ 6.19 | c6_well | W | yes
+The well stands finished, a ring of grey stone, and the first bucket comes up on its rope. The water is so clear Fenna can see her own face in it. Behind her face, a row of other faces, leaning in. All of Hazelwood is trying to look into the same hole at once.
+
+@@ 6.20 | c6_telescope | W | yes
+The astronomer at the telescope waves Fenna over. “Look,” Vega says, and steps back. At first, black. Then a smear of silver, and then it is not a smear. It is hundreds. Fenna says nothing. After a long time Vega says, quietly, “Yes. That is what I say, too.”
+
+@@ 6.21 | c6_poet | W | yes
+Kit wraps the rainbow scarf three times round and declares it “every colour of every thought I almost had.”
+
+Then Kit writes it down. Then Kit reads it aloud, to Fenna, to the cow, and to a passing man who was only asking the way. He says it is very good, and that the way is left.
+
+@@ 6.22 | c6_painter | W | yes
+The painter mixes the saffron into a little pot, and the pot goes gold. She paints one stroke across the paper, and a field is suddenly there, in the afternoon, with the light on it. “Thank you,” she says. She looks as if she means it for the whole season.
+
+@@ 6.23 | c6_theatre | W | yes
+The travelling theatre's play is about a cheese. It is a great cheese. It gets lost, and found, and mistaken for the moon. The lead actor holds Fenna's cheese wheel very still for the whole second act. Fenna has never seen anyone so serious about a cheese.
+
+@@ 6.24 | c6_board | W | no
+The board in the square is crowded now with notices in a dozen hands. Near the bottom is the old one, the lost glove. It is still there. Nobody ever claimed it. Fenna finds this very funny.
+
+@@ 6.25 | c6_k_summer | W-bark | no
+The long evening light lies across the fields like a cat that owns them.
+
+@@ 6.26 | c6_fair_letter | S | no
+A last letter from the river barge: “We're coming to the Fair. All of us. Even your cousin.” Fenna puts it in her pocket and keeps touching it all day.
+
+@@ 6.27 | c6_k_fair | W-bark | no
+Somewhere in the square a drum is being tested, and then, firmly, forbidden.
+
+@@ 6.28 | c6_flags | W | yes
+The flags go up between the houses, a hundred small triangles, red and yellow and blue and one that is nobody's colour. The wind finds them and they all lean the same way at once. It makes the whole square look as if it were about to say something good.
+
+@@ 6.29 | c6_fair_tables | S | no
+The tables at the Fair fill up. Everybody brought something: Pieter a lantern cake, Greenstem a basket of mint, the miller, with a face like thunder, a sack of flour. The whole village works with Fenna.
+
+@@ 6.30 | E-6.R12 | N | no
+Quill wants to count the North Field before the Fair, and the Book still has no word for a field that rests. He tries “idle”, “waiting”, “asleep”. Lark, from the fence, offers worse. Berit's book lies open on the fence post at “Rest the field.” Quill reads it, writes “fallow”, and in the margin, small, “per B.” He stands between the rows with the sharp pencil and counts twice, because he does not believe what the pencil says.
+
+@@ 6.31 | E-6.R27 | N | no
+Quill wants to count plates at the pie table. He cannot count what he has not been told, so he asks each person's name before he writes down the plate, and the queue gets long. The goat eats the pencil. He has a second. He has more than anyone knew. Pieter comes through with his book open and stops at the Hall door: no collector crosses a laid table. It is a custom older than the lease. He sets his lantern down in the doorway, still lit. Children guard it. He is given a plate.
+
+@@ 6.32 | E-6.L08; E-6.B20 | N | no
+%% The master merges L08 (the late barge) into B20.
+The whole village waits on the Landing Steps for the barge with the family. It is late. A squall comes over. The tables go cold. Fenna wants to bake something, to have something to do, and Maud forbids it.
+
+Then the barge comes in, and the family climbs the steps. Fenna's sister counts ninety-one. Her brother counts ninety-two. Maud puts a bowl in Fenna's father's hands with both of hers, and he cannot refuse it. He hands Fenna the tent, folded. “You patched it.” That is the whole of his speech. He stands by the pony with his hand on her neck, as he stood by Cobble's, and she, who poses for everyone, stands still. Fenna's mother takes her face in both hands. Liv is last off the barge, a snuffing pole on her back and a stone in her fist. Maud puts a bowl in her hands too.
+
+@@ 6.33 | E-6.L01 | N | no
+Mayor Juno wants the Cloth Table cleared. Elder Agnes will not let the folded Moonedge cloth on it be moved. The table has been laid at every Fair since the fire, and the stool at its head is for no one. Fenna sets her cloth over the old one. When the tables are full Ansel rings three, and small bells answer from nowhere. Two people hear them. Neither says so.
+
+@@ 6.34 | E-6.L03 | N | no
+Fenna wants to set the tables in silence. The whole village hums while it sets its own. The tune is hers. She stops humming. Everyone looks. She starts again. She knows where they got it.
+
+@@ 6.35 | E-6.H54 | N | no
+That night Fenna wants to sleep. From the forest edge, once, comes a long, low note she has not heard and has heard before. Her shoulders are up before she knows why. It does not come again.
+
+@@ 6.36 | E-6.B21; E-6.L05 | N | no
+%% The Ballad before the crisis (master ch6 row 12; QUESTIONS item 5, proposed).
+The Wagon Players want to give the Ballad of Moonedge. Lil Thunder shakes a tin sheet for lightning, and the children shout BOOM. Linus shouts it first. In the Ballad, the child hero runs out of the burning barn shouting, “The lights! The lights!” to wake the house, and the village sings along. Fenna cannot leave. Leaving would look like guilt. She watches to the end. At the back, a grey coat has gone very still.
+
+@@ 6.37 | E-6.B22; c6_crisis | S-rev | no
+%% "It wasn't lightning." and the stone from E-6.B22; the shipped lines kept.
+The Fair is bright and loud. Then Fenna's cousin stands up in front of everyone. Liv wants the lie to stop. “It wasn't lightning,” she says. The tin sheet stops. “You were in the barn that night. I saw you run out, crying about lights.” The whole square goes quiet. Her hands shake. One of them holds a stone.
+
+@@ 6.38 | E-6.B23; c6_bend | S-rev | no
+%% The seven pages of telling.md §4.2, sketch lines verbatim; the shipped opening ("You want to run ... Your hands are cold.") and the cup kept. The shipped "Nobody believed me either" is replaced by Liv's line "I never told anyone" (parent ruling 04-25 to 04-36).
+Fenna wants to run. The bucket is in her hand, the only thing she has ever run with. Instead she puts it down in the dust. It is the first time she has set it down in front of anyone. She sits on the nearest bench with nothing in her hands. Her hands are cold. Liv stands over her. “Where were you?” “In the barn.”
+
+“Doing what?” “Playing. I took the bucket in with me. Nobody asks a child with a bucket where she's going.”
+
+“Who with?” “I'm not going to say. Not here.” Linus, under his breath: “I told you.” Lotte kicks him.
+
+“And the lantern?” “It was on the hook, outside. Then it was in the hay. I think I carried it. Maybe it was the lights. I don't know.”
+
+“It went up as if it had been waiting. The bucket was empty. I hit it anyway. Then I ran. I shouted about the lights. Nobody believed me, so I stopped.”
+
+Liv sits down. “I saw the lights too,” she says. “I never told anyone.” Then: “You had the bucket. I thought you were running away with it.” “It was empty.”
+
+Somebody passes Fenna a cup. Maud's is the first. Fenna's father gets up, walks the length of the long table and sits down on her other side, his hands on his knees. At the back, Lark stands very still and makes no joke. Fenna's mother says, plainly: “You were a child.” Fenna does not answer.
+
+@@ 6.39 | E-6.L04 | N | no
+Appleby wants to wipe her chalk board before anyone has seen the Lord's new paper. Mayor Juno wants it read out in the Hall first. The children want to know what to chant instead. Appleby wipes the first board on the village's word, and every other board follows. Quill, arriving, says he wrote the paper last night and they are two hours early. The skipping rhyme is dropped. Nobody thanks Fenna. A cup is passed. They had risked it.
+
+@@ 6.40 | E-6.R29; E-6.B24; c6_quill_answer | S-rev | no
+%% One scene at the Cloth Table (R29), with B24's "Corrected." and the shipped answer's tenth. The shipped c6_quill_answer arrives by sunroom trigger; the master folds it here.
+Quill wants to write his count, and he cannot do it in pencil in front of the people it is about. He takes out a bottle of ink, which he carries for the Lord's letters, and cannot get the cork out. Pieter does it with his teeth. Quill writes the third column in ink, in front of everyone, on the Cloth Table, and signs it. Beside his old flourish on the lease he sets a second, steadier “Q.” “I have never written a number in front of the people it was about,” he says. With his numbers in hand, the share is set at a tenth, as in the old days.
+
+Then, dry, to nobody: “He had them all in a drawer. The last line he read. Never the middle.” Then: “It took him a night.”
+
+He also has the report. He lays it on Fenna's table, takes a ruler from his coat and rules a neat line through “the girl”. He initials it. “Corrected.” “Of what?” “An error in the Lord's records. It happens.” He looks, for a moment, almost pleased with himself.
+
+@@ 6.41 | c6_alpaca; E-6.H55 | S-rev | no
+%% Page 3 added per E-6.H55 (the line closes).
+An alpaca stands at the gate, very tall and very polite. She lifts her head and hums one long, strange note, the note that woke the whole farm that night. Nobody was hurt because of her.
+
+She spits, politely, on principle. The last line of the rhyme comes back, whole: “Soft alpaca guards all things.” Fenna says all of it, from the very first line. Her voice does not wobble.
+
+The row of five animals has a space at the end, and has not known how to stop leaving it. The alpaca walks to the end of the row. The goat, on the nearest roof, looks down.
+
+@@ 6.42 | c6_k_alpaca | W-bark | no
+The alpaca looks at Fenna with enormous patience. She has seen more than she lets on. She is not telling.
+
+@@ 6.43 | c6_supper (pages 1 and 2) | S | no
+The long table, the lanterns, the whole village. Fenna sits down at last, and nobody needs her to stand. She sets a place for Lark without a word. He has to sit very still for a moment.
+
+The goat eats the blue ribbon.
+
+@@ 6.44 | E-6.B26; E-6.H08 | N | no
+%% One beat on the main path (master: "the supper, settled").
+The village wants a bright supper. Pieter, mortified, has set his own lantern down by the straw bales. THUMPTHUMPTHUMP: the bunny's full roll, at last. The alpaca hums the long note. Fenna reaches for the lantern. A hand is already on it: her father's. Together they hang it on the hook outside. Pieter nods once. Then Liv, with her pole, snuffs it out, and Fenna puts a bucket under the hook. They both look at the pole and the bucket. “Straw bales,” says Liv. “Really?” The next night every lantern in the square hangs outside, with a bucket under it.
+
+@@ 6.45 | E-6.B27 | N | no
+Liv wants to see the book. Fenna does not know how to give it. Liv finds the hay margin and reads: “Yes, Mother. Yes, Mother. Yes, Mother.” She laughs, and does not stop quite when she should. Somebody passes the bread. “I used to think the lights were her,” she says to the bread. “They weren't,” says Fenna. “No.” Liv tears the bread. “They were somebody's, though.”
+
+@@ 6.46 | E-6.M29; E-6.H55; E-6.L10; c6_supper (page 2, end) | S-rev | no
+%% The shipped "Somebody starts to sing. You know the tune. You sing it, too." is the opening; M29 (the rhyme to Berit's kitchen song, Lark's spoons) and L10 (the roll call) merged as the master directs.
+Somebody starts to sing. The village is singing the rhyme to Berit's kitchen song. Fenna knows the tune. She wants to be useful, and has nothing to carry. Her old hum slips in under the song and finds the same notes. She sings it, too. Lark, who has been sorting the spoons by weight all through the supper, stops and lets them lie.
+
+At the end of the Fair, Mei calls the roll, as on Landing Day. “Moonedge!” Old Jan, as always, is first with “Here!” Fenna wants to answer, and her voice will not. Then it does. “Here!” Then her mother and father, her sister and brother, her cousin. Jan sits down. Six animals stand in a row in the dusk, and nobody remarks on it.
+
+@@ 6.47 | c6_n_last | W | yes
+Fenna turns to the last page in the book. It is empty. Only, in the margin, in a hand she knows so well by now: “Well. Look at that. You read all of it. Go and put the kettle on, my love.”
+
+@@ 6.48 | E-6.B28; E-6.H58 | N | no
+%% Replaces the shipped c6_ajar ("It is not time yet."). Eight pages per telling.md §5.3; sketch lines verbatim; H58's line (the alpaca's back, the bramble) on page 1.
+Night. In the garden where the marsh was, the white flowers are open. The alpaca walks behind Fenna and stops with her back to the flowers, facing the dark. She will spit at anything that comes up the path. The goat's one bramble rustles. Fenna turns the bucket over and sits on it, and does not look at the flowers. The bells are quiet.
+
+“Mumyo.”
+
+“At the Fair I said I wasn't alone. It was you. You laughed at the bucket. You rode on the handle. One of your bells was cracked, and I never told you.”
+
+“You made lights. I laughed. The lantern came in. I don't know whose hands. I'd rather it was mine.”
+
+“You tried to blow it out. It got bigger. I said go away. I said I never wanted to see you again.” A single tink.
+
+“I told them it was you. That wasn't fair. I'm sorry. I looked the other way so I wouldn't find you.”
+
+“I never … I wasn't …” The sentence will not finish. She does not ask him to come out. A tink. Then two soft rings. She does not know what they mean.
+
+She stands, takes the bucket, and goes. Behind her the flowers close. The alpaca's ear turns, once.
+
+@@ 6.49 | E-6.M27; c6_eve | W-rev | no
+%% M27 uses the staged c6_eve slot after the garden; the thimble from M27.
+Evening. Fenna lights the fire in the yard, the first thing she ever lit here. The spark takes on the first try. The ash around it glows a little, as if it remembers something.
+
+She sets her bucket beside the fire, as always. Beside the bucket, someone has set a thimble of water. She sits with her back against the fence she built. None of this was here when she came. Now she is sitting in the middle of it.
+
+# The last evening
+
+@@ F6 | E-6.B29; c6_frame6 | S-rev | no
+%% Beats from master ending.md (frame 6) and E-6.B29; shipped lines kept where they fit. The stones and the flower are the text fallback for the frame picture (slice 06 §6.3, E-F.M02). Minena humming "the last bit" (QUESTIONS 9, proposed) is not used.
+The grandchildren are asleep, all but Minena. “Tell me the imp was real,” she whispers.
+
+“Tonight,” says the old woman, “I'll start with the fire.” She says his name, Mumyo, to a living person for the first time. Then she tells Minena the truth, all of it, quietly, the way it happened.
+
+Halfway through, she stops. “Are you tired?” asks Minena. “I am not,” says the old woman. She is asleep. Minena counts to ten. The old woman wakes. “Where was I?” “The fire.” “Ah.”
+
+On the sill stands the dented bucket. In it are Minena's stones, a feather, and a few flat grey stones that do not match. The stones are a little warm. On the sill outside the window there is a white flower.
+
+“If you ever meet a little fellow with bells,” says the old woman, “tell him I was never angry.” Minena nods, very seriously. That night she dreams of a melody, and in the morning she hums it.

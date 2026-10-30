@@ -1,5 +1,8 @@
 # The long game: structure, charge and the Keeper's moves
 
+> **24 Oct 2026:** notes on the staged layer only; the master outline is `master/` and the registry is `registry.md`.
+
+
 Round 6b, draft 1 (14 Oct 2026). 💡 until the parent has read it. Method: the live-wire-style craft rules (three dials, charge map, withhold vs escalate, plants and payoffs, running snags, awe at most 2–4 times and never adjacent, comedy as the carrier wave, the last chapter rhymes). Read `ladder.md` first; this file adds to it and does not replace it. Consistency pass of 14 Oct 2026 applied (`../consistency-fixes.md`): the awe, snag and invention lists below match the texts as they now stand.
 
 ## 1. The three dials, for this game

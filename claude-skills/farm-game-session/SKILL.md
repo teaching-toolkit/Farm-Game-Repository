@@ -68,6 +68,7 @@ the data files in `data/farm/`. For those:
    `game/farm/systems/` that owns the thing (or a new system file there; it registers its per-step work in `Game.setup_clock()`); shared parts
    (modifiers, conditions, rng, clock) are in `kits/core/`; a screen or interface part goes into its own script in `game/farm/ui/` (see its README), not into `main.gd`; content
    (places, pets, numbers, texts) is data, not code. Call other systems as `G.<system>.<function>`.
+   **Chores and prices:** anything the farmer does that costs energy, water or items is a *chore* of `G.actions`: write its base cost in `data/farm/rules/46-chores.json`, register its effect and requirements in the owning system's `register_chores`, and let buttons, the bot and tests call `G.actions.check` / `perform`. Never multiply a cost by hand or write a second "too tired" check. Coins leave the purse only through `G.lord.pay_coins`. Add the new chore to `COVERED` and a price-match test in `tests/actions_test.gd`.
 
 Small fixes (one script, no new rules) need no written plan.
 
@@ -96,7 +97,7 @@ A chat can stop at any time, so update these when something happens, not at the 
 - **Cloud session:** commit after each finished slice with a clear message; push or open a pull request as the session is set up to.
 - **Linked computer (Cowork):** don't run git commands that write (`commit`, `add`, `stash`, `checkout`, `pull`, `reset`).
   File deletion is blocked there, so git leaves lock files behind that break the parent's git on the Mac. Read-only commands
-  are fine; use `git --no-optional-locks status` and `git --no-optional-locks diff` so even those write nothing. The parent
+  are fine; use `GIT_OPTIONAL_LOCKS=0 git status` and `GIT_OPTIONAL_LOCKS=0 git diff` so even those write nothing. The parent
   commits; give them the commit message.
 
 ## 6. Rules

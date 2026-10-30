@@ -1,0 +1,221 @@
+# Chapter 2: Homestead
+
+@@ 2.01 | E-2.L01; E-2.B06; c2_letter | S-rev | no
+%% [changes.md #14]
+%% [changes.md #13]
+%% "before the frost" and "The frost is far away. Isn't it?" dropped (text-change T-1, parent 07-45); Landing Day, Jan and Mei walking up per E-2.L01; the bracketed sentences and the hazel leaf are E-2.B06's sketch, verbatim; "Come when you are ready" from E-1.06/E-2.B06.
+It is Landing Day, when the river barge ties up at the Landing below the village and brings the post, every second week. Mei from the barge walks the letters up the hill herself. Behind her, puffing, comes Old Jan. Every Landing Day, when Mei calls out the names, Jan has shouted “Here!” for Moonedge, alone, for as long as anyone remembers. He wants to be there the first time it counts.
+
+The writing is round and quick: her mother's. “Come home when you are ready, my love. The house is small, but the table is long. Your cousin asks after you.” Then, in brackets: “(Your father says Cobble is well and asks if you are warm. He means he saw you at the hill. —M.)” And: “(Somebody thought you might miss hazel. —M.)” A pressed hazel leaf falls out. Cobble is the family's old horse. Fenna folds the letter very small.
+
+@@ 2.02 | E-2.R01 | N | no
+%% Placed here, not at the master's row 15: its trigger is seen:c2_letter + after 2, and its payoff is that c2_cottage's "I'm staying a bit longer" (2.37) reads as the reply. Order logged in open-questions.md.
+Mei has to be back on the river by the tide, and waits for a reply. Fenna wants to answer without answering. She writes three drafts, each one shorter. The first has the whole farm in it. The second has the hens. The third has one word. Mei reads upside down, from habit. “Is that all?” Nothing is sent. Mei goes back down to her boat with her hands empty.
+
+@@ 2.03 | c2_berit_note | S | no
+Between two pages of the old book there is a note in thin brown ink: “Rest the field. Rest yourself. — B.” Fenna reads it twice. Then she looks at her hands.
+
+@@ 2.04 | c2_walls | S | no
+The walls of the cottage stand. Fenna built them alone, and it shows. One leans a little to the left. She steps back, looks at them for a long time, and decides that they are perfect.
+
+@@ 2.05 | c2_cow | W | no
+%% [changes.md #54]
+The cow comes down the plank, looks at the burnt barn, looks at the yard, looks at Fenna. She does not seem impressed by any of it. Then she lowers her head and eats a mouthful of Fenna's best hay, slowly, while holding her eye. That is how Fenna finds out who is in charge.
+
+@@ 2.06 | E-2.H04 | N | no
+The bunny wants to know whether the cow is a hawk. The cow wants nothing, which is no help. THUMP at the cow. THUMP at the cow's tail. THUMP at the shine on the milk pail. Then a small *pad*: a very sorry bunny. The cow chews through all of it.
+
+@@ 2.07 | c2_k_cow | W-bark | no
+Somewhere behind the barn the cow sighs, a long, deep sigh like a door being shut on a bad day.
+
+@@ 2.08 | E-2.M08 | N | yes
+%% Tap on the forest in chapter 2.
+Fenna wants to know what the white stones are. By day they are only a row of white stones inside the first trees, and an oak with faded ribbons. She puts a hand on one. It is warm, and her hand stops shaking.
+
+@@ 2.09 | c2_greenstem | S | no
+A boy waits at the gate with a basket of herbs bigger than his arms. “You're the Moonedge one,” he says. “You used to carry a bucket bigger than you.” She did.
+
+“Why is that wall crooked? Does it hurt when you hammer? Did you know sage is good for a cough?” He asks too many questions. Fenna finds, to her surprise, that she does not mind.
+
+@@ 2.10 | c2_stumps | S | no
+So many stumps, for such a small farm. Their tops are clean and flat. Someone cut the forest back, long ago, and nobody planted anything in its place.
+
+@@ 2.11 | c2_compost | W | no
+Behind the barn is a compost pit, clean and dry, its edges squared with flat stones. Someone cared about this. Scratched on the lid: “Feed the ground and it feeds you. — B.”
+
+@@ 2.12 | E-2.L02 | N | no
+%% [changes.md #16]
+%% [changes.md #15]
+%% Greenstem's explanation is the seed's quoted line.
+Greenstem, the boy with the herbs, wants to know why bread is so dear, and explains it himself, the way a child would. “Since the fire, every loaf in Hazelwood gets a chalk mark for the farm that burnt. Nobody likes it.” Fenna wants to pay it. There is nobody to pay. The Lord still wants the share the farm stopped paying when it burned, so the village pays it, one thin chalk moon at a time. After that, she sees chalk everywhere.
+
+@@ 2.13 | c2_board | W | no
+New notices have appeared on the board in the square. One is a recipe. One is a lost glove. One says, in large letters, “WHOEVER TOOK MY LADDER, THANK YOU, KEEP IT.” Fenna decides that Hazelwood is a place that runs on notices.
+
+@@ 2.14 | E-2.R03 | N | no
+Between the lost glove and the recipe is a small paper, pinned square, with a grey edge: THE MARK STANDS UNTIL THE FARM GIVES AGAIN. Fenna gives. She has given since she came. She looks for someone to tell.
+
+@@ 2.15 | E-2.L11 | N | no
+%% The master merges E-2.B05 here, including "It started low"; that line needs c2_barn first (B05's own trigger is seen:c2_barn), so it is placed after 2.44. Logged in open-questions.md.
+Children are skipping on the road. Fenna wants to pass. One child sings the chalk rhyme to her face: “Chalk, chalk, chalk on the sack, who's to pay it? Moonedge back!” Her mother hushes her. The next rhyme is a different one: “Lightning in the night, the little one ran out.” Fenna goes still.
+
+@@ 2.16 | E-2.H05 | N | yes
+%% Berit's page on page:k_roots, written to "you" (slice 03 §1.3); wording built from the seed's beats.
+On the page about roots, Berit has written about the rabbit, and about Fenna. “She thumps for a hawk, for a lantern, and for bad manners. You kept her in a basket when you were small. She allowed it. She still has views. —B.”
+
+@@ 2.17 | E-2.M07 | N-bark | yes
+%% Sketch line, third person.
+The weeds Fenna pulled have been laid out on the path. They are smiling. It is a very bad smile, gone wrong on one side. She walks round it all day.
+
+@@ 2.18 | c2_kiln | W | no
+Fenna lights the kiln and shuts the little door. For a long while nothing happens. Then the cracks in the door glow orange, like the edge of a sunrise.
+
+In the morning she opens it, and the soft, sulky clay has become something that rings when she flicks it. Clay can change its mind, it seems. It only needs a lot of fire.
+
+@@ 2.19 | c2_bench | W | no
+A proper bench, at last, with a vice, a dozen hooks and a groove for the pencil. Fenna puts a plank in the vice and it stays there. Nothing rolls away. Nothing needs a foot on it. She stands there for a moment feeling like a person who owns a vice.
+
+@@ 2.20 | c2_n_bread | W | yes
+Beside the bread page, in a hand she has only just got to know: “Not so much yeast. Patience does the rest.”
+
+@@ 2.21 | E-2.L10 | N | no
+%% [changes.md #18]
+%% [changes.md #17]
+%% Appleby's line is the seed's.
+Fenna wants to sell her first loaves, and to be liked. Mistress Appleby, the baker, has a chalk board that must balance when the Lord's tollman checks it at the end of the week. The rule is one mark for the loaf and one for the name. So Moonedge pays double, and Fenna is paid less than the loaf is worth. Appleby is miserable about it. “Not mine to forgive,” she says. On the way out, Anna, who shapes the loaves at the bakery, slips a bun into Fenna's basket without a word.
+
+@@ 2.22 | c2_greenstem_hands | W | yes
+The boy with the herbs turns up as the loaf comes out, which is luck or a very good nose. Fenna breaks it. He holds his half in both hands and breathes it in with his eyes shut. “Rosemary does that,” he says seriously, about nothing much.
+
+He eats the whole half in four bites. “It is a good loaf,” he says, “for a person who built that wall.”
+
+@@ 2.23 | c2_stall | W | no
+Fenna sets up the stall and stands behind it. It is very odd. Yesterday she was a person who walked up to the market. Today she is a person people walk up to. Somebody asks the price of a carrot, and she tells them, and her voice comes out a little higher than planned.
+
+@@ 2.24 | E-2.M09; c2_lark | S-rev | no
+%% Page 2 added per E-2.M09 (Lark reads her list); shipped pages 1 and 3 kept.
+A man walks up the new gravel road as if he had always walked it. He sits on Fenna's fence and watches her work. “Lark,” he says. Then he says nothing at all for a while.
+
+Then he is sitting on her crate. She wants him off it. He finds her own list pinned to the fence instead, and reads it aloud like a stern letter from an aunt. “‘Roof. Before frost.’ Who sent this?” He turns it over. “It's signed: you.”
+
+She stacks a crate. He stacks one too, a little crooked. “Probably fine,” he says. It is. Mostly. When she looks again, the fence is empty and both crates are still standing.
+
+@@ 2.25 | c2_hilde | W | yes
+%% [changes.md #19]
+Hilde the washerwoman hangs the last sheet, and it flaps like a flag from a very small country. “I hear things about you in the lane, Fenna,” she says, not looking at her. “Good things. Nobody has one bad word. It is ruining the lane.”
+
+@@ 2.26 | E-2.B04 | N | yes
+%% Both margin hands are the seed's sketch, verbatim (page:k_hay).
+On the page about hay there are two hands in one margin. Berit's, firm: “Hay: dry it, turn it. Lantern on the hook OUTSIDE, and never past the sill. —B.” Under it, small and round: “Yes, Mother. Yes, Mother. Yes, Mother. —T.”
+
+@@ 2.27 | c2_bees | W | no
+Fenna carries the hive to the sunny corner of the yard and sets it down. A hum comes out of it, low and enormous, as if the box were holding a thought too big for itself. She steps back.
+
+Several thousand tiny creatures have just agreed to live here. They did not ask her. She did not ask them. It seems best to be polite.
+
+@@ 2.28 | c2_n_bees | W | yes
+Next to the bees, in the margin: “Talk to them. It doesn't matter what about.” Under it, in a different pen: “I mean it, B.” Fenna wonders who had to be told.
+
+@@ 2.29 | c2_honey | W | no
+Fenna holds the first honey up to the window. It is gold, and slow, and the light goes into it and stays. A spoon of summer, whatever the weather outside. Somewhere in it is every flower the bees visited, and she can almost taste the list.
+
+@@ 2.30 | c2_jan | W | yes
+Old Jan eats the tomato soup in small, serious spoonfuls, and by the third spoon his cheeks go pink. “This is the sort of soup,” he says, “that Berit made.” He taps the bowl. “And that goat could count, you know. Moonedge goat. Count to five, I swear.” Nobody believes him. Fenna rather does.
+
+@@ 2.31 | c2_kitten | W | yes
+%% [changes.md #55]
+The stray kitten sniffs the saucer. She sniffs the straw. She walks round the bed three times, sits in the middle, turns her back to Fenna and begins to wash. This means yes. Nobody has said a word, and Fenna stands very still so as not to spoil it.
+
+@@ 2.32 | c2_n_play | W | yes
+On the page about play, a drawing in the margin: a goat balancing on a barrel. Under it: “Ten out of ten.”
+
+@@ 2.33 | E-2.L08; c2_otto | W-rev | yes
+%% [changes.md #56]
+%% Otto's hesitation and his silent leaving per E-2.L08; the shipped sentences kept.
+Otto, the old ferryman, crosses the footbridge Fenna has mended, slowly, and stops in the middle, looking down at the water. “I used to ferry people over this,” he says. “With a pole.” He stops. He starts again. He stops.
+
+“The night your family left, I took you across. You were so small. You did not cry.” He looks at her, then at the water. “I never forgot.” Fenna says nothing. Neither does he. The river says a good deal. Then he goes, without another word.
+
+@@ 2.34 | E-2.M06 | N | no
+%% Sketch line, third person; the bump from the seed. Glimpse 3 (a hand at the thatch edge) is picture-only.
+Fenna wants the ridge done before dark. On the corner, exactly where the last bundle of thatch goes, lies a hammer the size of her thumb. It has been used. It is in exactly the wrong place. She puts the last bundle on the other side. The roof has a bump now. She decides it is a feature.
+
+@@ 2.35 | c2_stove | W | no
+The stove ticks as it warms up, the way a cat ticks when it is thinking. The smell of the cottage changes. Wood, and iron, and a pot that is nearly ready to be a soup. Fenna does not have to eat standing up any more.
+
+@@ 2.36 | c2_k_roof | W-bark | no
+The first leaves tap on the roof, one by one, as if asking to be let in.
+
+@@ 2.37 | c2_cottage | S | no
+%% [changes.md #20]
+%% The master reads "I'm staying a bit longer" as the reply E-2.R01 could not write.
+A real roof, before the frost. Fenna sits under it while the first rain taps on the thatch. Then she takes a sheet of paper and writes home: “I'm staying a bit longer.” Her hand shakes only a little.
+
+@@ 2.38 | E-2.R02 | N | no
+%% [changes.md #21]
+A lantern stops at the gate, in daylight. Pieter, the night watchman who carries the Lord's book, looks at the roof for a long time, adds one line to his book, says “Good thatch,” and goes. Fenna looks at her roof as if it might be counted.
+
+@@ 2.39 | c2_reply | W | no
+The barge comes round the bend, and Mei nods as before, and hands over a letter. The writing is round and quick, and there is a lot more of it than last time.
+
+“I am not going to say ‘I told you so’, because I never told you anything. Eat properly. The table is still long.” Under that, in smaller letters: “Ask Maud about the goat.” Fenna does not know what that means. She puts the letter with the other one.
+
+@@ 2.40 | c2_n_frost | W | yes
+Frost. Written beside it in the book, small: “Cover the beans. Cover everything. Then cover Maud's.”
+
+@@ 2.41 | c2_snug | W | no
+Fenna wakes in the cottage and the light is wrong. Too white, too quiet. At the window, the yard has gone soft. The roof she built is holding up a whole cold sky and not complaining. She stays under the blanket a little longer than is strictly necessary.
+
+@@ 2.42 | E-2.L05 | N | yes
+%% [changes.md #57]
+On Longnight, Greenstem wants her to come down to the Hall. The village wants nothing from her. On that night anyone who wants to says one true thing, and the nearest person passes them a cup. Fenna takes the ladle, so that she will not have to. No one has asked her to. She serves a great many bowls and says nothing. Mrs. Wiggins the pig is the only one who notices. Somebody puts a cup in her hand anyway, and she does not know why.
+
+@@ 2.43 | c2_n_sleep | W | yes
+Beside the page about sleep, underlined twice: “You, too.”
+
+@@ 2.44 | c2_barn | S | no
+%% [changes.md #22]
+Fenna clears the last black beam from the barn. Then she stops. The burn does not start at the roof, where lightning would strike. It starts low, in the corner where the hay was kept.
+
+She sits back on her heels. Lightning does not start low. Something else began this. And she finds that she does not want to know. Not yet.
+
+@@ 2.45 | E-2.B05 (bark 1 of 2) | N-bark | no
+In the village the children skip to a rhyme about lightning and the quiet one who ran out. Fenna stops mid-step and says, under her breath, “It started low.” The rope slaps. They swap to the Mark rhyme very fast.
+
+@@ 2.46 | c2_barn_frame | W | no
+The frame of the new barn goes up, beam by beam. Against the evening it looks like the ribs of something very large, sleeping on its side. The old barn burned from the corner. Fenna walks all the way round the new one anyway, just to check that every corner is only a corner.
+
+@@ 2.47 | c2_hook | S | no
+%% [changes.md #24]
+%% [changes.md #23]
+%% Shipped trigger is seen:c2_tortoise; the master places it before the tortoise (its row 16).
+In the new barn frame Fenna finds the old iron hook from the doorframe. It is black with soot, and it was made to hold a lantern. She holds it for a long time. Then she hangs the hook back up. Carefully.
+
+@@ 2.48 | E-2.L06; E-2.B07 | N | no
+%% Jan's lines are E-2.B07's, verbatim.
+Old Jan comes up to grumble at the new frame, kindly. “That hook hung outside by the door every night of my life. Never past the sill. Berit's girl, Tilda, said it in her sleep. Laughed like a bucket of marbles.” Fenna asks how the fire got in, then. Jan coughs. “Ask me when I'm not coughing.” He coughs on a schedule.
+
+@@ 2.49 | c2_barn_done | W | no
+The barn is finished. It smells of new pine and fresh straw. Fenna hangs a lantern on a post outside, not on a hook inside, and stands back and nods. Hay and flame should live far apart. That is as far as she lets herself think.
+
+@@ 2.50 | E-2.H11 | N | yes
+%% Tap on the dry pond.
+Fenna wants to know whether the pond is worth digging. In the dry silt is a round, cracked dent. At the edge, a flat stone has been worn into a seat, and in front of it is a hollow the shape of someone who sat a long time looking up. The cracks close in a ring, tighter every year. There is moss only on the stone.
+
+@@ 2.51 | c2_pond | W | no
+The last spadeful comes out, and the water arrives. It is slow about it. First a dark patch, then a shine, then a sky lying on the ground with clouds in it.
+
+A frog appears at once and says nothing at all. It has the manner of someone who has been waiting for this for years.
+
+@@ 2.52 | c2_tortoise_omen | W | no
+Fenna sets the little shell house down in the sunniest corner of the yard. It is exactly big enough for someone who carries their own roof. She steps back and looks at it. It looks back, empty and patient.
+
+@@ 2.53 | c2_tortoise | S | no
+Something very slow is crossing the yard. A tortoise, moving like a stone that has decided to travel. She goes straight to the pond and sits down where the spring first rose.
+
+Fenna sits down beside her and waits. The pond fills a little, then a little more. Nothing is hurried. And the second line of the old rhyme comes back to her: “Slow shell keeps the water clean.”
+
+@@ F2 | c2_frame2 | S | no
+Back in the room, somebody has fallen asleep on the floor. “Did you find out who started it?” asks Minena. “Not then,” says the old woman. “I didn't want to.”
+
+“And the man on the fence? Was he funny?” “Very.” “Was that good?” “It made him hard to talk to,” she says, and nobody understands. That is all right.
