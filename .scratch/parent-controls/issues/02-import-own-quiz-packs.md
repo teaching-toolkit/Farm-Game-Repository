@@ -24,3 +24,9 @@ Questions for the grilling: table or JSON; one language or both; can imported qu
 
 ---
 Parent's question, 30 Oct 2026 (review pass, round 2).
+
+## Note from time-question/03 (2 Nov 2026)
+
+Imported packs come in through `G.timeq.add_pack()` (the one door). Two things the import must settle: every question needs an id
+that is unique across all packs (retry and recent questions are remembered by id; questions without one would be mixed up), and a pack
+counts as switched on only when its id is in `activePacks`, so importing must also switch it on.

@@ -6,6 +6,7 @@
       "rain": {"value": 1.2, "unit": "seconds", "note": "How long the rain shows, if it rained during the questions."},
       "flick": {"value": 0.9, "unit": "seconds", "note": "How long the playback waits while plants flick through their stages and the bars pulse (three stages of stageSecs)."},
       "last": {"value": 0.4, "unit": "seconds", "note": "A last moment before the notes appear."},
+      "walkRight": {"value": 1.2, "unit": "seconds", "note": "A right answer on a walk (to the village, into or out of the forest): how long the green answer shows before the pop-up closes into the place."},
       "stageSecs": {"value": 0.3, "unit": "seconds", "note": "How long each in-between stage of a plant shows on the map when it grew by more than one stage."}
     },
     "notes": {

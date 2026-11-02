@@ -105,7 +105,15 @@ func question(box: VBoxContainer, q: Dictionary, on_done: Callable) -> void:
 	box.add_child(feedback)
 	for i in range(buttons.size()):
 		buttons[i].pressed.connect(_answer_pressed.bind(i, q, buttons, feedback, state, on_done))
+	_shown = [q, buttons, feedback, state, on_done]
 	M.modals.fit_modal.call_deferred()
+
+var _shown := []      # the question on screen now (screenshots: --answer)
+
+## Screenshots: the question on screen is answered right at the first try (--answer).
+func answer_right() -> void:
+	if _shown.is_empty(): return
+	_answer_pressed(int(_shown[0]["correct"]), _shown[0], _shown[1], _shown[2], _shown[3], _shown[4])
 
 func _answer_pressed(i: int, q: Dictionary, buttons: Array, feedback: Label, state: Dictionary, on_done: Callable) -> void:
 	if state["done"]: return
@@ -137,51 +145,86 @@ func _answer_pressed(i: int, q: Dictionary, buttons: Array, feedback: Label, sta
 		M.feedback.sfx("wrong")
 		feedback.add_theme_color_override("font_color", UI.RED)
 
-# ------------------------------------------------------------------ Time Quiz
+# ------------------------------------------------------------------ the question pop-up: farm time and the walks
 
+## A pack question by its id (testing: --qid=PIC-004), shown as a Time Quiz question.
 func show_quiz_id(id: String) -> void:
-	for i in range(G.pack_questions.size()):
-		if str(G.pack_questions[i].get("id", "")) == id:
-			var q: Dictionary = G.knowledge.shuffled_q(G.pack_questions[i], "", i, false)
-			q["wrong_text"] = q["wrong"]
-			q["source"] = tr("⏳ Time Quiz")
-			show_time_quiz(q)
+	var q: Dictionary = G.timeq.question_by_id(id)
+	if not q.is_empty(): show_time_quiz(q)
 
+## The Time Quiz on the farm (purpose farm).
 func show_time_quiz(forced: Dictionary = {}) -> void:
-	var q: Dictionary = forced if not forced.is_empty() else G.knowledge.next_time_question()
+	ask("farm", {"title": tr("❓ Time Quiz"), "emoji": "⏳", "line": tr("   ·   every right answer moves farm time one step")}, forced)
+
+## The one question on the way to the village (the trip's energy is already paid; a market trip waits until one is answered right first time).
+func show_trip_question() -> void:
+	ask("to_village", {"title": tr("🚶 On the way to the village"), "emoji": "🏘️",
+		"wrong": tr("⏸️ Not quite: only a right first answer gets you to the village. Try the next one."), "go": _to_square})
+
+## The one question on the way to a neighbour's farm: after a right first try the visit happens and shows its scene.
+func show_visit_question() -> void:
+	ask("visit", {"title": tr("🚶 On the way to %s") % G.well.invite(), "emoji": "💌", "text_size": 18,
+		"button": tr("🏡 Back to the farm"), "go": M.modals.close_modal})
+
+## A walk into the forest or out of it (purpose into_forest / out_of_forest). cfg = {"purpose", "title", "emoji"}.
+func show_walk_question(cfg: Dictionary) -> void:
+	var c := cfg.duplicate()
+	c["go"] = _walk_done
+	ask(str(cfg["purpose"]), c)
+
+## The question pop-up, the same for every purpose: the question, then right or wrong and time moving. Only a right first try moves
+## time and lets the purpose happen (G.timeq.answered holds the rule; this only draws the report). After a wrong first pick the child
+## keeps trying until the right answer (and its "why") shows; time stays and the question comes back after the next one. What happened
+## on the farm (rain, pests …) is not told here: the playback shows it on the farm (ui/playback.gd).
+## A right answer on a walk shows the green answer for a moment, then the pop-up closes into the place ("go"), with no arrival line
+## (the background will show where the farmer is); a visit keeps its scene and its "Back to the farm" button.
+## cfg = {"title", "emoji", "line" (after the source), "wrong" (after a wrong first try), "go": Callable (walks), "text_size",
+## "button" (the visit)}.
+func ask(purpose: String, cfg: Dictionary, forced: Dictionary = {}) -> void:
+	var q: Dictionary = forced if not forced.is_empty() else G.timeq.next()
 	M.playback.begin()          # the farm keeps its old look until the pop-up closes (J4)
-	var box := M.modals.open_modal(tr("❓ Time Quiz"))
+	var box := M.modals.open_modal(str(cfg["title"]))
 	Sound.music("quiz")
-	box.add_child(UI.header(null, "⏳", 64))
-	box.add_child(UI.label(str(q.get("source", "")) + tr("   ·   every right answer moves farm time one step"), 15, UI.MUTED, true))
+	box.add_child(UI.header(null, str(cfg["emoji"]), 64))
+	box.add_child(UI.label(str(q.get("source", "")) + str(cfg.get("line", tr("   ·   one question, then you are there"))), 15, UI.MUTED, true))
 	var qbox := UI.vbox(8)
 	box.add_child(qbox)
 	var after := UI.vbox(8)
 	box.add_child(after)
-	question(qbox, q, _time_answered.bind(q, after))
+	question(qbox, q, _answered.bind(q, after, purpose, cfg))
 
-## Only a right FIRST try moves farm time one step. After a wrong first pick the child keeps trying until the right answer
-## (and its "why") shows, but time stays where it was, and the question comes back right after the next one.
-func _time_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> void:
-	if q.get("review", false): G.knowledge.record_card_answer(q, first_try)
-	else: G.knowledge.time_result(q, first_try)
-	if not first_try:
-		G.knowledge.retry_after_next(q)
+func _answered(first_try: bool, q: Dictionary, after: VBoxContainer, purpose: String, cfg: Dictionary) -> void:
+	var rep: Dictionary = G.timeq.answered(q, first_try, purpose)
+	if purpose == "farm":
+		_farm_report(rep, after)
+		return
+	if not rep["moved"]:
+		after.add_child(UI.label(str(cfg.get("wrong", tr("⏸️ Not quite: only a right first answer gets you there. Try the next one."))), 17, UI.MUTED, true))
+		var nb := UI.button(tr("Next question ▶"), ask.bind(purpose, cfg), true, UI.GREEN, 21)
+		nb.custom_minimum_size = Vector2(0, 56)
+		after.add_child(nb)
+		M.modals.fit_modal.call_deferred()
+		return
+	if purpose != "visit":
+		await M.get_tree().create_timer(G.feel("playback.walkRight")).timeout
+		if not is_instance_valid(after) or not after.is_inside_tree(): return      # the pop-up was closed meanwhile: the farm plays it
+		M.playback.postpone()
+		(cfg["go"] as Callable).call()
+		return
+	var text := str(rep["follow"])
+	if text != "": after.add_child(UI.label(text, int(cfg.get("text_size", 17)), UI.INK, true))
+	var go := UI.button(str(cfg["button"]), cfg["go"], true, UI.GREEN, 22)
+	go.custom_minimum_size = Vector2(0, 56)
+	after.add_child(go)
+	M.modals.fit_modal.call_deferred()
+
+## The farm's report: time stays (wrong first try) or moves on (⏳ and the question number). The news is the playback's.
+func _farm_report(rep: Dictionary, after: VBoxContainer) -> void:
+	if not rep["moved"]:
 		after.add_child(UI.label(tr("⏸️ Time stays where it is: only a right first answer moves the farm on. This question comes back soon."), 17, UI.MUTED, true))
 		_time_quiz_buttons(after)
 		return
-	var info: Dictionary = G.step_time()
-	var msg := tr("⏳ Time moves on: question %d.") % G.S["step"]
-	if info.get("rain_stopped", false) and G.rewards.perk_on("perk_rainbow"):
-		M.map.rainbow()
-		M.feedback.sfx("rainbow")
-		M.after_close.append(tr("🌈 The rain has stopped — look, a rainbow!"))
-	if info.get("rain", false):
-		msg += tr(" 🌧️ It rained.")
-		M.after_close.append(tr("🌧️ Rain! The fields are watered — planting costs no water until the next question."))
-	if int(info.get("removed", 0)) > 0: msg += (tr(" 🧍 The scarecrow chased off %d pest.") if int(info["removed"]) == 1 else tr(" 🧍 The scarecrow chased off %d pests.")) % int(info["removed"])
-	if float(info.get("eat_share", 0.0)) >= 0.005: msg += tr(" 🐦 Pests ate %d%% of what is growing.") % int(round(float(info["eat_share"]) * 100.0))
-	after.add_child(UI.label(msg, 17, UI.MUTED, true))
+	after.add_child(UI.label(tr("⏳ Time moves on: question %d.") % int(rep["step"]), 17, UI.MUTED, true))
 	_time_quiz_buttons(after)
 
 func _time_quiz_buttons(after: VBoxContainer) -> void:
@@ -194,112 +237,6 @@ func _time_quiz_buttons(after: VBoxContainer) -> void:
 	back.custom_minimum_size = Vector2(0, 56)
 	row.add_child(back)
 	after.add_child(row)
-	M.modals.fit_modal.call_deferred()
-
-# ------------------------------------------------------------------ the walk to the village
-
-## The one question on the way to the village (the trip's walk): only a right first try gets you there; a wrong one leads to the next
-## question (a market trip waits until one is answered right first time).
-func show_trip_question() -> void:
-	var q: Dictionary = G.knowledge.next_time_question()
-	M.playback.begin()
-	var box := M.modals.open_modal(tr("🚶 On the way to the village"))
-	Sound.music("quiz")
-	box.add_child(UI.header(null, "🏘️", 64))
-	box.add_child(UI.label(str(q.get("source", "")) + tr("   ·   one question, then you are there"), 15, UI.MUTED, true))
-	var qbox := UI.vbox(8)
-	box.add_child(qbox)
-	var after := UI.vbox(8)
-	box.add_child(after)
-	question(qbox, q, _trip_answered.bind(q, after))
-
-func _trip_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> void:
-	if q.get("review", false): G.knowledge.record_card_answer(q, first_try)
-	else: G.knowledge.time_result(q, first_try)
-	if not first_try:
-		G.knowledge.retry_after_next(q)
-		after.add_child(UI.label(tr("⏸️ Not quite: only a right first answer gets you to the village. Try the next one."), 17, UI.MUTED, true))
-		var nb := UI.button(tr("Next question ▶"), show_trip_question, true, UI.GREEN, 21)
-		nb.custom_minimum_size = Vector2(0, 56)
-		after.add_child(nb)
-		M.modals.fit_modal.call_deferred()
-		return
-	var info: Dictionary = G.step_time()
-	G.trip.arrive()
-	if info.get("rain", false): M.after_close.append(tr("🌧️ Rain! The fields are watered — planting costs no water until the next question."))
-	after.add_child(UI.label(tr("🏘️ You are in the village."), 17, UI.MUTED, true))
-	var go := UI.button(tr("🏘️ To the square"), _to_square, true, UI.GREEN, 22)
-	go.custom_minimum_size = Vector2(0, 56)
-	after.add_child(go)
-	M.modals.fit_modal.call_deferred()
-
-## The one question on the way to a neighbour's farm (a visit works like the walk to the village): only a right first try gets you there.
-func show_visit_question() -> void:
-	var q: Dictionary = G.knowledge.next_time_question()
-	M.playback.begin()
-	var box := M.modals.open_modal(tr("🚶 On the way to %s") % G.well.invite())
-	Sound.music("quiz")
-	box.add_child(UI.header(null, "💌", 64))
-	box.add_child(UI.label(str(q.get("source", "")) + tr("   ·   one question, then you are there"), 15, UI.MUTED, true))
-	var qbox := UI.vbox(8)
-	box.add_child(qbox)
-	var after := UI.vbox(8)
-	box.add_child(after)
-	question(qbox, q, _visit_answered.bind(q, after))
-
-func _visit_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> void:
-	if q.get("review", false): G.knowledge.record_card_answer(q, first_try)
-	else: G.knowledge.time_result(q, first_try)
-	if not first_try:
-		G.knowledge.retry_after_next(q)
-		after.add_child(UI.label(tr("⏸️ Not quite: only a right first answer gets you there. Try the next one."), 17, UI.MUTED, true))
-		var nb := UI.button(tr("Next question ▶"), show_visit_question, true, UI.GREEN, 21)
-		nb.custom_minimum_size = Vector2(0, 56)
-		after.add_child(nb)
-		M.modals.fit_modal.call_deferred()
-		return
-	var info: Dictionary = G.step_time()
-	var scene: String = G.well.visited()
-	if info.get("rain", false): M.after_close.append(tr("🌧️ Rain! The fields are watered — planting costs no water until the next question."))
-	after.add_child(UI.label(scene, 18, UI.INK, true))
-	var back := UI.button(tr("🏡 Back to the farm"), M.modals.close_modal, true, UI.GREEN, 22)
-	back.custom_minimum_size = Vector2(0, 56)
-	after.add_child(back)
-	M.modals.fit_modal.call_deferred()
-
-## A walk that costs one question (into the forest and out of it): only a right first try gets you there; then `on_done` runs (it returns the text to show).
-## cfg = {"title", "emoji", "button", "done": Callable -> String}
-func show_walk_question(cfg: Dictionary) -> void:
-	var q: Dictionary = G.knowledge.next_time_question()
-	M.playback.begin()
-	var box := M.modals.open_modal(str(cfg["title"]))
-	Sound.music("quiz")
-	box.add_child(UI.header(null, str(cfg["emoji"]), 64))
-	box.add_child(UI.label(str(q.get("source", "")) + tr("   ·   one question, then you are there"), 15, UI.MUTED, true))
-	var qbox := UI.vbox(8)
-	box.add_child(qbox)
-	var after := UI.vbox(8)
-	box.add_child(after)
-	question(qbox, q, _walk_answered.bind(q, after, cfg))
-
-func _walk_answered(first_try: bool, q: Dictionary, after: VBoxContainer, cfg: Dictionary) -> void:
-	if q.get("review", false): G.knowledge.record_card_answer(q, first_try)
-	else: G.knowledge.time_result(q, first_try)
-	if not first_try:
-		G.knowledge.retry_after_next(q)
-		after.add_child(UI.label(tr("⏸️ Not quite: only a right first answer gets you there. Try the next one."), 17, UI.MUTED, true))
-		var nb := UI.button(tr("Next question ▶"), show_walk_question.bind(cfg), true, UI.GREEN, 21)
-		nb.custom_minimum_size = Vector2(0, 56)
-		after.add_child(nb)
-		M.modals.fit_modal.call_deferred()
-		return
-	var info: Dictionary = G.step_time()
-	var text: String = (cfg["done"] as Callable).call()
-	if info.get("rain", false): M.after_close.append(tr("🌧️ Rain! The fields are watered — planting costs no water until the next question."))
-	if text != "": after.add_child(UI.label(text, 17, UI.INK, true))
-	var go := UI.button(str(cfg["button"]), _walk_done, true, UI.GREEN, 22)
-	go.custom_minimum_size = Vector2(0, 56)
-	after.add_child(go)
 	M.modals.fit_modal.call_deferred()
 
 func _walk_done() -> void:

@@ -9,9 +9,7 @@ prototype stands.
 
 ## Game
 
-- **Now (refactor):** the `time-question` module is grilled and specified (2 Nov 2026, `.scratch/time-question/spec.md`).
-  - **Without the parent:** build `time-question/02` → `03` and `04` (refactor, golden runs identical; if they change, stop and find
-    the cause). Then `05` and `06` (prototype, visible changes for a play-test).
+- **Now (refactor):** the `time-question` feature is built (2 Nov 2026); its last ticket waits for the parent's play-test.
   - **With the parent there:** the next grilling, `condition-language/01`.
 - **Next (refactor):** build `condition-language` after its grilling, then `interruption-queue` through the same flow
   (`docs/architecture-review-2026-10-22.md` Part B §3–4).

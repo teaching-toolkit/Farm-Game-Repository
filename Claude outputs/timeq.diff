@@ -1,0 +1,889 @@
+diff --git a/godot-prototype/game/farm/game.gd b/godot-prototype/game/farm/game.gd
+index 913b85a..331e1f2 100644
+--- a/godot-prototype/game/farm/game.gd
++++ b/godot-prototype/game/farm/game.gd
+@@ -5,7 +5,7 @@ class_name FarmGame
+ ## effects of everything done into one table (caps, g, m), and runs one step of time (one right Time Quiz answer, via the clock).
+ ## The rules themselves live in the systems under game/farm/systems/ and are reached as G.<system>.<function>:
+ ## seasons, inventory, needs (energy, Rest), pace (dynamic difficulty), progression (costs, requirements, unlocking), fields,
+-## animals, crafting (stations, recipes, polish), trade, knowledge (cards, Time Quiz) and rewards (luck, gifts, jobs, acorns, perks).
++## animals, crafting (stations, recipes, polish), trade, knowledge (cards), timeq (the Time Quiz question) and rewards (luck, gifts, jobs, acorns, perks).
+ ## Every amount is a float in the background; the UI rounds (stocks down, costs up).
+ 
+ signal changed
+@@ -83,7 +83,7 @@ var buying := false      # bought things are not "produced"
+ var test_seed := -1
+ ## The version of the save layout (kits/core/saves.gd). A save without a "version" is version 0. Every change to the layout of a save
+ ## adds an upgrade step in save_steps() and raises this number; tests/fixtures/ keeps old saves that must still load.
+-const SAVE_VERSION := 4
++const SAVE_VERSION := 5
+ const TEST_CLOCK_START := 1800000000.0   # a fixed moment in 2027; one step of time counts as 10 minutes
+ 
+ ## The systems: each owns one part of the rules and works on the farm's state G.S (see game/farm/systems/).
+@@ -98,6 +98,7 @@ var animals: FarmAnimals
+ var crafting: FarmCrafting
+ var trade: FarmTrade
+ var knowledge: FarmKnowledge
++var timeq: FarmTimeQuestion
+ var rewards: FarmRewards
+ var reveal: FarmReveal
+ var quality: FarmQuality
+@@ -124,6 +125,7 @@ func _init() -> void:
+ 	crafting = FarmCrafting.new(self)
+ 	trade = FarmTrade.new(self)
+ 	knowledge = FarmKnowledge.new(self)
++	timeq = FarmTimeQuestion.new(self)
+ 	rewards = FarmRewards.new(self)
+ 	reveal = FarmReveal.new(self)
+ 	quality = FarmQuality.new(self)
+@@ -166,9 +168,11 @@ func _ready() -> void:
+ 	if test_seed >= 0:
+ 		rng.seed = test_seed
+ 		seed(test_seed)
++		timeq.seed_from(test_seed)
+ 		math.now_func = now
+ 	else:
+ 		rng.randomize()
++		timeq.seed_from(-1)
+ 	load_data()
+ 	if test_seed >= 0:
+ 		new_game()
+@@ -286,22 +290,7 @@ func load_data() -> void:
+ 		for f in dir.get_files():
+ 			if not f.ends_with(".json"): continue
+ 			var p = JSON.parse_string(FileAccess.get_file_as_string("res://data/quiz_packs/" + f))
+-			if typeof(p) != TYPE_DICTIONARY: continue
+-			packs.append(p)
+-			var code := str(p.get("code", p.get("id", "")))
+-			if p.has("pool"):
+-				var tp = quiz_tr.get(code + "-POOL", {})
+-				var tpool: Array = tp.get("answers", []) if typeof(tp) == TYPE_DICTIONARY else []
+-				var pool: Array = p["pool"].duplicate()
+-				for i in range(mini(pool.size(), tpool.size())):
+-					if str(tpool[i]) != "": pool[i] = tpool[i]
+-				pack_pools[code] = pool
+-			var active: Array = settings.get("activePacks", [])
+-			for q in p.get("questions", []):
+-				q["pack"] = code
+-				quiz_keys[str(q.get("q", ""))] = quiz.key(q)
+-				if active.is_empty() or active.has(p.get("id", "")):
+-					pack_questions.append(q)
++			if typeof(p) == TYPE_DICTIONARY: timeq.add_pack(p)      # the one door for packs (built in now, pasted later)
+ 	if pack_questions.is_empty():
+ 		pack_questions.append({"id": "X-001", "q": "Which planet do we live on?", "answers": ["Earth", "Mars", "the Moon"], "correct": 0})
+ 	for cid in card_ids:
+@@ -324,7 +313,7 @@ func save_defaults() -> Dictionary:
+ ## Everything a save holds in a new game: the Game's keys and every system's.
+ func all_save_defaults() -> Dictionary:
+ 	var d := save_defaults()
+-	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story, trip, gate, lord, pets, well, nature, forest]:
++	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, timeq, rewards, trade, reveal, skills, story, trip, gate, lord, pets, well, nature, forest]:
+ 		d.merge(sys.save_defaults())
+ 	return d
+ 
+@@ -366,7 +355,8 @@ func save_steps() -> Array:
+ 	return [{"to": 1, "name": "saves from before the version number: gift offers become postcards, the gift shop is gone, the first cards owned are the active ones", "fn": upgrade_save_v0},
+ 		{"to": 2, "name": "quality: every batch of a thing that has a grade now says which (what was in the store is Proper)", "fn": upgrade_save_v1},
+ 		{"to": 3, "name": "skills: the uses counted per station become batches per skill family", "fn": upgrade_save_v2},
+-		{"to": 4, "name": "money: coins are counted in bronze (one old coin = 15 bronze)", "fn": upgrade_save_v3}]
++		{"to": 4, "name": "money: coins are counted in bronze (one old coin = 15 bronze)", "fn": upgrade_save_v3},
++		{"to": 5, "name": "Time Quiz: recent questions and the retry are remembered by permanent id, not by position", "fn": timeq.upgrade_save_v4}]
+ 
+ func upgrade_save_v3(save: Dictionary) -> void:
+ 	save["coins"] = float(save.get("coins", 0.0)) * float(meta.get("currency", {}).get("factor", 15))
+diff --git a/godot-prototype/game/farm/systems/README.md b/godot-prototype/game/farm/systems/README.md
+index c8d6df8..aa2bafa 100644
+--- a/godot-prototype/game/farm/systems/README.md
++++ b/godot-prototype/game/farm/systems/README.md
+@@ -23,7 +23,8 @@ emits the signals the interface listens to (`changed`, `toast`, `gained`, `sold`
+ | `skills` | eight skill families, ranks from batches and gates, what a rank changes (`rules/48-skills.json`) | crafting, fields, animals, needs, quality |
+ | `story` | which story piece is ready and in what order (kinds, rationing, seen, taps; data in `data/farm/story/`) | the Game (conditions), the interface (`ui/storybox.gd`) |
+ | `trip` | the bag (packing, capacity from the carrying thing, load) and the market trip (energy, the walk, the village square, what is bought on the way home; `rules/49-trip.json`) | inventory, trade, progression, the interface |
+-| `knowledge` | knowledge cards, the library, reading, card quizzes, the Time Quiz (next question, retries, results) | rewards, progression, pace |
++| `knowledge` | knowledge cards, the library, reading, card quizzes, which cards are due and how a review went | rewards, progression, pace |
++| `timeq` | the Time Quiz question, the one rule that moves time: `next()` (a retry, a due review, or a pack question; its own random source) and `answered(q, first_try, purpose)` (records it; a right first answer steps time and runs the purpose's follow-up: `farm`, `to_village`, `home_from_village`, `visit`, `into_forest`, `out_of_forest`); the one door for packs (`add_pack`); retry and recent questions by id | knowledge, trip, well, actions, the Game (`step_time`) |
+ | `rewards` | luck, gift cards, little jobs, golden acorns, perks | crafting, fields, inventory, seasons |
+ 
+ **Rules of the house** (also in `.claude/skills/farm-game-session/SKILL.md`):
+diff --git a/godot-prototype/game/farm/systems/knowledge.gd b/godot-prototype/game/farm/systems/knowledge.gd
+index f54ddd4..4486670 100644
+--- a/godot-prototype/game/farm/systems/knowledge.gd
++++ b/godot-prototype/game/farm/systems/knowledge.gd
+@@ -1,7 +1,8 @@
+ extends RefCounted
+ class_name FarmKnowledge
+-## Knowledge cards and the library (reading, card quizzes, reviews) and the Time Quiz: the next question, retries and results.
+-## Uses the learning kit (kits/learn/).
++## Knowledge cards and the library (reading, card quizzes, reviews: which cards are due and how a review went).
++## The Time Quiz itself (next question, retries, the first-try rule) is the time question (time_question.gd); it asks this system
++## for a due review. Uses the learning kit (kits/learn/).
+ 
+ var G: FarmGame   # the Game: the farm's state (G.S), its data and the other systems
+ 
+@@ -10,7 +11,7 @@ func _init(game: FarmGame) -> void:
+ 
+ ## The save keys this system owns, with their values in a new game (kits/core/saves.gd fills missing ones into older saves).
+ func save_defaults() -> Dictionary:
+-	return {"reading": "", "read_progress": 0.0, "read_done": {}, "cards": {}, "card_qseen": {}, "recent_q": []}
++	return {"reading": "", "read_progress": 0.0, "read_done": {}, "cards": {}, "card_qseen": {}}
+ 
+ # ------------------------------------------------------------------ knowledge cards & the library
+ 
+@@ -83,8 +84,9 @@ func card_ancestors(cid: String) -> Array:
+ 
+ ## A question laid out for showing (kits/learn/quiz_engine.gd present): settings quizOptions answers (3–4; the right one and
+ ## wrong ones, filled up from the pack's pool), pictures, the texts in settings language. answers = [{"text", "img", "emoji"}].
+-func shuffled_q(src: Dictionary, cid: String, qi: int, review: bool) -> Dictionary:
+-	var q: Dictionary = G.quiz.present(src, G.rng, clampi(int(G.settings.get("quizOptions", 4)), 2, 6), G.quiz_tr, G.pack_pools.get(str(src.get("pack", "")), []))
++## rng: the random source for the order of the answers (the farm's own by default; the Time Quiz passes its own).
++func shuffled_q(src: Dictionary, cid: String, qi: int, review: bool, rng: RandomNumberGenerator = null) -> Dictionary:
++	var q: Dictionary = G.quiz.present(src, rng if rng != null else G.rng, clampi(int(G.settings.get("quizOptions", 4)), 2, 6), G.quiz_tr, G.pack_pools.get(str(src.get("pack", "")), []))
+ 	q["card"] = cid; q["qi"] = qi; q["review"] = review
+ 	if q["why"] == "": q["why"] = q["right"]
+ 	return q
+@@ -157,71 +159,3 @@ func due_cards() -> Array:
+ 		if G.S["step"] - int(c.get("last", 0)) >= G.STEP_GAPS[b - 1] or t_now - float(c.get("time", t_now)) >= G.DAY_GAPS[b - 1] * 86400.0:
+ 			out.append(cid)
+ 	return out
+-
+-## The next Time Quiz question: mostly the parent's packs, sometimes a due knowledge review.
+-func next_time_question() -> Dictionary:
+-	# a question answered wrong at the first try comes back right after the next one (retry_after_next)
+-	var rq: Dictionary = G.S.get("retry_q", {})
+-	if not rq.is_empty():
+-		if int(rq.get("wait", 0)) <= 0:
+-			G.S["retry_q"] = {}
+-			var again := _retry_question(rq)
+-			if not again.is_empty(): return again
+-		else:
+-			rq["wait"] = int(rq["wait"]) - 1
+-	var share := G.pace.review_share()
+-	if share > 0.0 and G.rng.randf() < share:
+-		var due := due_cards()
+-		if due.size() > 0:
+-			var cid: String = due[G.rng.randi_range(0, due.size() - 1)]
+-			var qs: Array = G.nodes[cid].get("questions", [])
+-			if qs.size() > 0:
+-				var qi := G.rng.randi_range(0, qs.size() - 1)
+-				var q := shuffled_q(qs[qi], cid, qi, true)
+-				q["source"] = tr("📚 Review: ") + G.nodes[cid]["name"]
+-				return q
+-	var recent: Array = G.S["recent_q"]
+-	var pool := []
+-	for i in range(G.pack_questions.size()):
+-		if not recent.has(i): pool.append(i)
+-	if pool.is_empty(): pool = range(G.pack_questions.size())
+-	var pick: int = pool[G.rng.randi_range(0, pool.size() - 1)]
+-	# the player's own record (kits/learn/quiz_engine.gd): a question answered wrong comes back after a few others;
+-	# new ones come before known ones
+-	var cands := []
+-	for i in pool: cands.append(G.pack_questions[i])
+-	var ci: int = G.quiz.pick(G.learn_record(), cands, G.rng)
+-	if ci >= 0: pick = pool[ci]
+-	recent.append(pick)
+-	while recent.size() > int(G.settings.get("avoidRepeatWithin", 3)): recent.pop_front()
+-	var src: Dictionary = G.pack_questions[pick]
+-	var q2 := shuffled_q(src, "", pick, false)
+-	q2["wrong_text"] = q2["wrong"]
+-	q2["source"] = tr("⏳ Time Quiz")
+-	return q2
+-
+-## A Time Quiz question answered wrong at the first try: ask it again right after the next question.
+-func retry_after_next(q: Dictionary) -> void:
+-	G.S["retry_q"] = {"review": q.get("review", false), "card": str(q.get("card", "")), "qi": int(q.get("qi", 0)), "wait": 1}
+-
+-func _retry_question(rq: Dictionary) -> Dictionary:
+-	var qi := int(rq.get("qi", 0))
+-	if rq.get("review", false):
+-		var cid := str(rq.get("card", ""))
+-		if not G.nodes.has(cid): return {}
+-		var qs: Array = G.nodes[cid].get("questions", [])
+-		if qi < 0 or qi >= qs.size(): return {}
+-		var q := shuffled_q(qs[qi], cid, qi, true)
+-		q["source"] = tr("📚 Review: ") + G.nodes[cid]["name"]
+-		return q
+-	if qi < 0 or qi >= G.pack_questions.size(): return {}
+-	var q2 := shuffled_q(G.pack_questions[qi], "", qi, false)
+-	q2["wrong_text"] = q2["wrong"]
+-	q2["source"] = tr("⏳ Time Quiz")
+-	return q2
+-
+-## Remembers how a Time Quiz question went for this player, under its id (wrong: back after 3 others; right: 12, 32, 80 … later).
+-func time_result(q: Dictionary, first_try: bool) -> void:
+-	if q.get("review", false) or str(q.get("id", "")) == "": return
+-	G.quiz.record(G.learn_record(), str(q["id"]), first_try)
+-	G.save_learning()
+diff --git a/godot-prototype/game/farm/ui/forestsheet.gd b/godot-prototype/game/farm/ui/forestsheet.gd
+index a044cb3..906516b 100644
+--- a/godot-prototype/game/farm/ui/forestsheet.gd
++++ b/godot-prototype/game/farm/ui/forestsheet.gd
+@@ -147,16 +147,8 @@ func _unchecked() -> void:
+ func _go_in() -> void:
+ 	if not G.actions.check("forest_enter", G.actions.farmer)["ok"]: return
+ 	M.sheets.close_sheet()
+-	M.timequiz.show_walk_question({"title": tr("🚶 Into the forest"), "emoji": "🌲", "button": tr("🌲 Look around"), "done": _entered})
+-
+-func _entered() -> String:
+-	G.actions.perform("forest_enter", G.actions.farmer)
+-	return tr("🌲 You are in the forest.")
++	M.timequiz.show_walk_question({"purpose": "into_forest", "title": tr("🚶 Into the forest"), "emoji": "🌲", "text": tr("🌲 You are in the forest."), "button": tr("🌲 Look around")})
+ 
+ func _go_out() -> void:
+ 	M.sheets.close_sheet()
+-	M.timequiz.show_walk_question({"title": tr("🚶 Back to the farm"), "emoji": "🏡", "button": tr("🧺 Look at the basket"), "done": _left})
+-
+-func _left() -> String:
+-	G.actions.perform("forest_leave", G.actions.farmer)
+-	return tr("🏡 You are home again. Your basket is not checked yet.")
++	M.timequiz.show_walk_question({"purpose": "out_of_forest", "title": tr("🚶 Back to the farm"), "emoji": "🏡", "text": tr("🏡 You are home again. Your basket is not checked yet."), "button": tr("🧺 Look at the basket")})
+diff --git a/godot-prototype/game/farm/ui/timequiz.gd b/godot-prototype/game/farm/ui/timequiz.gd
+index 8789e54..8400756 100644
+--- a/godot-prototype/game/farm/ui/timequiz.gd
++++ b/godot-prototype/game/farm/ui/timequiz.gd
+@@ -137,41 +137,80 @@ func _answer_pressed(i: int, q: Dictionary, buttons: Array, feedback: Label, sta
+ 		M.feedback.sfx("wrong")
+ 		feedback.add_theme_color_override("font_color", UI.RED)
+ 
+-# ------------------------------------------------------------------ Time Quiz
++# ------------------------------------------------------------------ the question pop-up: farm time and the walks
+ 
++## A pack question by its id (testing: --qid=PIC-004), shown as a Time Quiz question.
+ func show_quiz_id(id: String) -> void:
+-	for i in range(G.pack_questions.size()):
+-		if str(G.pack_questions[i].get("id", "")) == id:
+-			var q: Dictionary = G.knowledge.shuffled_q(G.pack_questions[i], "", i, false)
+-			q["wrong_text"] = q["wrong"]
+-			q["source"] = tr("⏳ Time Quiz")
+-			show_time_quiz(q)
++	var q: Dictionary = G.timeq.question_by_id(id)
++	if not q.is_empty(): show_time_quiz(q)
+ 
++## The Time Quiz on the farm (purpose farm).
+ func show_time_quiz(forced: Dictionary = {}) -> void:
+-	var q: Dictionary = forced if not forced.is_empty() else G.knowledge.next_time_question()
++	ask("farm", {"title": tr("❓ Time Quiz"), "emoji": "⏳", "line": tr("   ·   every right answer moves farm time one step")}, forced)
++
++## The one question on the way to the village (the trip's energy is already paid; a market trip waits until one is answered right first time).
++func show_trip_question() -> void:
++	ask("to_village", {"title": tr("🚶 On the way to the village"), "emoji": "🏘️",
++		"wrong": tr("⏸️ Not quite: only a right first answer gets you to the village. Try the next one."),
++		"text": tr("🏘️ You are in the village."), "text_color": UI.MUTED, "button": tr("🏘️ To the square"), "go": _to_square})
++
++## The one question on the way to a neighbour's farm: after a right first try the visit happens and shows its scene.
++func show_visit_question() -> void:
++	ask("visit", {"title": tr("🚶 On the way to %s") % G.well.invite(), "emoji": "💌", "text_size": 18,
++		"button": tr("🏡 Back to the farm"), "go": M.modals.close_modal})
++
++## A walk into the forest or out of it (purpose into_forest / out_of_forest). cfg = {"purpose", "title", "emoji", "text", "button"}.
++func show_walk_question(cfg: Dictionary) -> void:
++	var c := cfg.duplicate()
++	c["go"] = _walk_done
++	ask(str(cfg["purpose"]), c)
++
++## The question pop-up, the same for every purpose: the question, then what the time question's report says. Only a right first try
++## moves time and lets the purpose happen (G.timeq.answered holds the rule; this only draws the report). After a wrong first pick the
++## child keeps trying until the right answer (and its "why") shows; time stays and the question comes back after the next one.
++## cfg = {"title", "emoji", "line" (after the source), "wrong" (after a wrong first try), "text", "text_size", "text_color",
++## "button", "go": Callable} (the last five for walks; a visit's text is its scene).
++func ask(purpose: String, cfg: Dictionary, forced: Dictionary = {}) -> void:
++	var q: Dictionary = forced if not forced.is_empty() else G.timeq.next()
+ 	M.playback.begin()          # the farm keeps its old look until the pop-up closes (J4)
+-	var box := M.modals.open_modal(tr("❓ Time Quiz"))
++	var box := M.modals.open_modal(str(cfg["title"]))
+ 	Sound.music("quiz")
+-	box.add_child(UI.header(null, "⏳", 64))
+-	box.add_child(UI.label(str(q.get("source", "")) + tr("   ·   every right answer moves farm time one step"), 15, UI.MUTED, true))
++	box.add_child(UI.header(null, str(cfg["emoji"]), 64))
++	box.add_child(UI.label(str(q.get("source", "")) + str(cfg.get("line", tr("   ·   one question, then you are there"))), 15, UI.MUTED, true))
+ 	var qbox := UI.vbox(8)
+ 	box.add_child(qbox)
+ 	var after := UI.vbox(8)
+ 	box.add_child(after)
+-	question(qbox, q, _time_answered.bind(q, after))
++	question(qbox, q, _answered.bind(q, after, purpose, cfg))
++
++func _answered(first_try: bool, q: Dictionary, after: VBoxContainer, purpose: String, cfg: Dictionary) -> void:
++	var rep: Dictionary = G.timeq.answered(q, first_try, purpose)
++	if purpose == "farm":
++		_farm_report(rep, after)
++		return
++	if not rep["moved"]:
++		after.add_child(UI.label(str(cfg.get("wrong", tr("⏸️ Not quite: only a right first answer gets you there. Try the next one."))), 17, UI.MUTED, true))
++		var nb := UI.button(tr("Next question ▶"), ask.bind(purpose, cfg), true, UI.GREEN, 21)
++		nb.custom_minimum_size = Vector2(0, 56)
++		after.add_child(nb)
++		M.modals.fit_modal.call_deferred()
++		return
++	if rep["info"].get("rain", false): M.after_close.append(tr("🌧️ Rain! The fields are watered — planting costs no water until the next question."))
++	var text := str(rep["follow"]) if purpose == "visit" else str(cfg.get("text", ""))
++	if text != "": after.add_child(UI.label(text, int(cfg.get("text_size", 17)), cfg.get("text_color", UI.INK), true))
++	var go := UI.button(str(cfg["button"]), cfg["go"], true, UI.GREEN, 22)
++	go.custom_minimum_size = Vector2(0, 56)
++	after.add_child(go)
++	M.modals.fit_modal.call_deferred()
+ 
+-## Only a right FIRST try moves farm time one step. After a wrong first pick the child keeps trying until the right answer
+-## (and its "why") shows, but time stays where it was, and the question comes back right after the next one.
+-func _time_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> void:
+-	if q.get("review", false): G.knowledge.record_card_answer(q, first_try)
+-	else: G.knowledge.time_result(q, first_try)
+-	if not first_try:
+-		G.knowledge.retry_after_next(q)
++## The farm's report: time stays (wrong first try) or moves, with what happened in the step.
++func _farm_report(rep: Dictionary, after: VBoxContainer) -> void:
++	if not rep["moved"]:
+ 		after.add_child(UI.label(tr("⏸️ Time stays where it is: only a right first answer moves the farm on. This question comes back soon."), 17, UI.MUTED, true))
+ 		_time_quiz_buttons(after)
+ 		return
+-	var info: Dictionary = G.step_time()
+-	var msg := tr("⏳ Time moves on: question %d.") % G.S["step"]
++	var info: Dictionary = rep["info"]
++	var msg := tr("⏳ Time moves on: question %d.") % int(rep["step"])
+ 	if info.get("rain_stopped", false) and G.rewards.perk_on("perk_rainbow"):
+ 		M.map.rainbow()
+ 		M.feedback.sfx("rainbow")
+@@ -196,112 +235,6 @@ func _time_quiz_buttons(after: VBoxContainer) -> void:
+ 	after.add_child(row)
+ 	M.modals.fit_modal.call_deferred()
+ 
+-# ------------------------------------------------------------------ the walk to the village
+-
+-## The one question on the way to the village (the trip's walk): only a right first try gets you there; a wrong one leads to the next
+-## question (a market trip waits until one is answered right first time).
+-func show_trip_question() -> void:
+-	var q: Dictionary = G.knowledge.next_time_question()
+-	M.playback.begin()
+-	var box := M.modals.open_modal(tr("🚶 On the way to the village"))
+-	Sound.music("quiz")
+-	box.add_child(UI.header(null, "🏘️", 64))
+-	box.add_child(UI.label(str(q.get("source", "")) + tr("   ·   one question, then you are there"), 15, UI.MUTED, true))
+-	var qbox := UI.vbox(8)
+-	box.add_child(qbox)
+-	var after := UI.vbox(8)
+-	box.add_child(after)
+-	question(qbox, q, _trip_answered.bind(q, after))
+-
+-func _trip_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> void:
+-	if q.get("review", false): G.knowledge.record_card_answer(q, first_try)
+-	else: G.knowledge.time_result(q, first_try)
+-	if not first_try:
+-		G.knowledge.retry_after_next(q)
+-		after.add_child(UI.label(tr("⏸️ Not quite: only a right first answer gets you to the village. Try the next one."), 17, UI.MUTED, true))
+-		var nb := UI.button(tr("Next question ▶"), show_trip_question, true, UI.GREEN, 21)
+-		nb.custom_minimum_size = Vector2(0, 56)
+-		after.add_child(nb)
+-		M.modals.fit_modal.call_deferred()
+-		return
+-	var info: Dictionary = G.step_time()
+-	G.trip.arrive()
+-	if info.get("rain", false): M.after_close.append(tr("🌧️ Rain! The fields are watered — planting costs no water until the next question."))
+-	after.add_child(UI.label(tr("🏘️ You are in the village."), 17, UI.MUTED, true))
+-	var go := UI.button(tr("🏘️ To the square"), _to_square, true, UI.GREEN, 22)
+-	go.custom_minimum_size = Vector2(0, 56)
+-	after.add_child(go)
+-	M.modals.fit_modal.call_deferred()
+-
+-## The one question on the way to a neighbour's farm (a visit works like the walk to the village): only a right first try gets you there.
+-func show_visit_question() -> void:
+-	var q: Dictionary = G.knowledge.next_time_question()
+-	M.playback.begin()
+-	var box := M.modals.open_modal(tr("🚶 On the way to %s") % G.well.invite())
+-	Sound.music("quiz")
+-	box.add_child(UI.header(null, "💌", 64))
+-	box.add_child(UI.label(str(q.get("source", "")) + tr("   ·   one question, then you are there"), 15, UI.MUTED, true))
+-	var qbox := UI.vbox(8)
+-	box.add_child(qbox)
+-	var after := UI.vbox(8)
+-	box.add_child(after)
+-	question(qbox, q, _visit_answered.bind(q, after))
+-
+-func _visit_answered(first_try: bool, q: Dictionary, after: VBoxContainer) -> void:
+-	if q.get("review", false): G.knowledge.record_card_answer(q, first_try)
+-	else: G.knowledge.time_result(q, first_try)
+-	if not first_try:
+-		G.knowledge.retry_after_next(q)
+-		after.add_child(UI.label(tr("⏸️ Not quite: only a right first answer gets you there. Try the next one."), 17, UI.MUTED, true))
+-		var nb := UI.button(tr("Next question ▶"), show_visit_question, true, UI.GREEN, 21)
+-		nb.custom_minimum_size = Vector2(0, 56)
+-		after.add_child(nb)
+-		M.modals.fit_modal.call_deferred()
+-		return
+-	var info: Dictionary = G.step_time()
+-	var scene: String = G.well.visited()
+-	if info.get("rain", false): M.after_close.append(tr("🌧️ Rain! The fields are watered — planting costs no water until the next question."))
+-	after.add_child(UI.label(scene, 18, UI.INK, true))
+-	var back := UI.button(tr("🏡 Back to the farm"), M.modals.close_modal, true, UI.GREEN, 22)
+-	back.custom_minimum_size = Vector2(0, 56)
+-	after.add_child(back)
+-	M.modals.fit_modal.call_deferred()
+-
+-## A walk that costs one question (into the forest and out of it): only a right first try gets you there; then `on_done` runs (it returns the text to show).
+-## cfg = {"title", "emoji", "button", "done": Callable -> String}
+-func show_walk_question(cfg: Dictionary) -> void:
+-	var q: Dictionary = G.knowledge.next_time_question()
+-	M.playback.begin()
+-	var box := M.modals.open_modal(str(cfg["title"]))
+-	Sound.music("quiz")
+-	box.add_child(UI.header(null, str(cfg["emoji"]), 64))
+-	box.add_child(UI.label(str(q.get("source", "")) + tr("   ·   one question, then you are there"), 15, UI.MUTED, true))
+-	var qbox := UI.vbox(8)
+-	box.add_child(qbox)
+-	var after := UI.vbox(8)
+-	box.add_child(after)
+-	question(qbox, q, _walk_answered.bind(q, after, cfg))
+-
+-func _walk_answered(first_try: bool, q: Dictionary, after: VBoxContainer, cfg: Dictionary) -> void:
+-	if q.get("review", false): G.knowledge.record_card_answer(q, first_try)
+-	else: G.knowledge.time_result(q, first_try)
+-	if not first_try:
+-		G.knowledge.retry_after_next(q)
+-		after.add_child(UI.label(tr("⏸️ Not quite: only a right first answer gets you there. Try the next one."), 17, UI.MUTED, true))
+-		var nb := UI.button(tr("Next question ▶"), show_walk_question.bind(cfg), true, UI.GREEN, 21)
+-		nb.custom_minimum_size = Vector2(0, 56)
+-		after.add_child(nb)
+-		M.modals.fit_modal.call_deferred()
+-		return
+-	var info: Dictionary = G.step_time()
+-	var text: String = (cfg["done"] as Callable).call()
+-	if info.get("rain", false): M.after_close.append(tr("🌧️ Rain! The fields are watered — planting costs no water until the next question."))
+-	if text != "": after.add_child(UI.label(text, 17, UI.INK, true))
+-	var go := UI.button(str(cfg["button"]), _walk_done, true, UI.GREEN, 22)
+-	go.custom_minimum_size = Vector2(0, 56)
+-	after.add_child(go)
+-	M.modals.fit_modal.call_deferred()
+-
+ func _walk_done() -> void:
+ 	M.modals.close_modal()
+ 	M.sheets.open_sheet.call_deferred("forest")
+diff --git a/godot-prototype/tests/bot.gd b/godot-prototype/tests/bot.gd
+index e4e6136..ccb6cc0 100644
+--- a/godot-prototype/tests/bot.gd
++++ b/godot-prototype/tests/bot.gd
+@@ -255,10 +255,7 @@ func _trip() -> void:
+ 	trips_done += 1
+ 	if trips_done % 25 == 0 or trips_done < 6: print("trip %d at q%d ch%d: orders %d seeds %s buy %d barter %d sell %d coins %d" % [trips_done, G.S["step"], G.chapter(), orders.size(), str(want_seeds), want_buy.size(), want_barter.size(), int(sell_value), int(G.S["coins"])])
+ 	last_trip = G.S["step"]
+-	asked += 1
+-	while accuracy < 1.0 and quiz_rng.randf() >= accuracy: asked += 1
+-	G.step_time()                       # the walk: one question answered right at the first try
+-	G.trip.arrive()
++	_answer_until_moved("to_village")     # the walk: a question answered right at the first try, then the trip arrives
+ 	for id in orders:
+ 		if G.progression.can_unlock(id)["ok"]: G.progression.unlock(id)
+ 	if "--trips" in OS.get_cmdline_user_args(): print("   q%d coins before %d, packed %s load %.1f/%d, want_sell %s" % [G.S["step"], int(G.S["coins"]), str(G.trip.contents()), G.trip.load_now(), int(G.trip.capacity()), str(want_sell)])
+@@ -303,18 +300,14 @@ func _forest() -> void:
+ 			if (t["kind"] == "find" or t["kind"] == "pick") and wanted.has(str(t["plant"])) and G.forest.in_season(t) and G.forest.rest_left(sid, str(t["id"])) == 0: todo.append([sid, t])
+ 	if not G.forest.inside():
+ 		if todo.is_empty(): return
+-		asked += 1
+-		G.step_time()
+-		G.actions.perform("forest_enter", G.actions.farmer)
++		_answer_until_moved("into_forest")
+ 	for e in todo:
+ 		if G.forest.basket().size() >= G.forest.capacity(): break
+ 		var t: Dictionary = e[1]
+ 		if t["kind"] == "find": G.actions.perform("forest_find", G.actions.farmer, {"spot": e[0], "tid": str(t["id"]), "option": str(t["plant"])})
+ 		else: G.actions.perform("forest_pick", G.actions.farmer, {"spot": e[0], "tid": str(t["id"]), "part": str(t["part"])})
+ 	if G.forest.inside():
+-		asked += 1
+-		G.step_time()
+-		G.actions.perform("forest_leave", G.actions.farmer)
++		_answer_until_moved("out_of_forest")
+ 		G.forest.check()
+ 
+ func _gate_cost(k: String) -> Dictionary:
+@@ -547,7 +540,16 @@ func _turn() -> void:
+ 	# eat a dish now and then
+ 	for k in G.S["inv"].keys():
+ 		if G.items[k].has("buff") and G.inventory.count(k) > 3 and G.S["buff"].is_empty(): G.trade.eat(k)
+-	# only a right first try moves time: with --accuracy below 1 some questions are asked without moving it
+-	asked += 1
+-	while accuracy < 1.0 and quiz_rng.randf() >= accuracy: asked += 1
+-	G.step_time()
++	_answer_until_moved("farm")
++
++## Real Time Quiz questions through the real rule (G.timeq), one after another until one is answered right at the first try (only
++## that moves time and runs the purpose's follow-up): right, or wrong at the share --accuracy sets (a wrong one comes back after the next).
++func _answer_until_moved(purpose: String) -> Dictionary:
++	while true:
++		var q: Dictionary = G.timeq.next()
++		asked += 1
++		var right := accuracy >= 1.0 or quiz_rng.randf() < accuracy
++		if int(G.S["step"]) < trace: print("  q%d  question %s%s: %s" % [G.S["step"], str(q.get("id", "")), " (review)" if q.get("review", false) else "", "right" if right else "wrong"])
++		var rep: Dictionary = G.timeq.answered(q, right, purpose)
++		if rep["moved"]: return rep
++	return {}
+diff --git a/godot-prototype/tests/saves_test.gd b/godot-prototype/tests/saves_test.gd
+index 0aa97fc..7c4cc7f 100644
+--- a/godot-prototype/tests/saves_test.gd
++++ b/godot-prototype/tests/saves_test.gd
+@@ -28,7 +28,7 @@ func _ready() -> void:
+ 	_check(int(G.S["version"]) == G.SAVE_VERSION, "a new game has the current version (%d)" % G.SAVE_VERSION)
+ 	# every system's defaults are in a new game, and no two systems own the same key
+ 	var seen := {}
+-	for sys in [G, G.seasons, G.inventory, G.needs, G.progression, G.fields, G.animals, G.crafting, G.knowledge, G.rewards, G.trade, G.reveal, G.story, G.trip, G.gate]:
++	for sys in [G, G.seasons, G.inventory, G.needs, G.progression, G.fields, G.animals, G.crafting, G.knowledge, G.timeq, G.rewards, G.trade, G.reveal, G.story, G.trip, G.gate]:
+ 		for k in sys.save_defaults():
+ 			_check(not seen.has(k), "save key %s has one owner" % k)
+ 			seen[k] = true
+@@ -73,6 +73,27 @@ func _ready() -> void:
+ 	var before2 := JSON.stringify(G.S["inv"], "", true)
+ 	G.upgrade_save_v1(G.S)
+ 	_check(JSON.stringify(G.S["inv"], "", true) == before2, "the version 1 step is harmless when run again")
++	# version 4 -> 5: the Time Quiz's recent questions and retry were positions in the list of pack questions; now permanent ids
++	var v4: Dictionary = G.S.duplicate(true)
++	v4["version"] = 4
++	v4["recent_q"] = [0.0, 2.0]
++	v4["retry_q"] = {"review": false, "card": "", "qi": 1.0, "wait": 1.0}
++	G.Saves.write("user://saves_test.json", v4)
++	_check(G.load_game("user://saves_test.json"), "a version 4 save loads")
++	var id0 := str(G.pack_questions[0]["id"]); var id1 := str(G.pack_questions[1]["id"]); var id2 := str(G.pack_questions[2]["id"])
++	_check(G.S["recent_q"] == [id0, id2], "…its recent questions are ids now: %s" % str(G.S["recent_q"]))
++	_check(G.S["retry_q"] == {"id": id1, "wait": 1}, "…its retry is an id now: %s" % str(G.S["retry_q"]))
++	var b4 := JSON.stringify([G.S["recent_q"], G.S["retry_q"]])
++	G.timeq.upgrade_save_v4(G.S)
++	_check(JSON.stringify([G.S["recent_q"], G.S["retry_q"]]) == b4, "the version 4 step is harmless when run again")
++	G.timeq.next()                     # the retry waits one question…
++	_check(G.timeq.next().get("id", "") == id1, "…and the old save's retry comes back after the next question")
++	var v4r: Dictionary = G.S.duplicate(true)
++	v4r["version"] = 4
++	var cid0: String = G.card_ids[0]
++	v4r["retry_q"] = {"review": true, "card": cid0, "qi": 0.0, "wait": 0.0}
++	G.Saves.write("user://saves_test.json", v4r)
++	_check(G.load_game("user://saves_test.json") and G.S["retry_q"] == {"card": cid0, "qi": 0, "wait": 0}, "…a review retry keeps its card and question: %s" % str(G.S["retry_q"]))
+ 	# a save from a newer game is kept as it is
+ 	var future: Dictionary = G.S.duplicate(true)
+ 	future["version"] = G.SAVE_VERSION + 5
+diff --git a/godot-prototype/tests/ui_smoke.gd b/godot-prototype/tests/ui_smoke.gd
+index cdba9fb..de9a2f1 100644
+--- a/godot-prototype/tests/ui_smoke.gd
++++ b/godot-prototype/tests/ui_smoke.gd
+@@ -360,7 +360,7 @@ func _ready() -> void:
+ 	var opts := {}
+ 	var pics := 0
+ 	for i in range(60):
+-		var tq: Dictionary = G.knowledge.next_time_question()
++		var tq: Dictionary = G.timeq.next()
+ 		opts[tq["answers"].size()] = int(opts.get(tq["answers"].size(), 0)) + 1
+ 		if tq.get("pictures", false): pics += 1
+ 		assert(_atext_ok(tq), "answer missing")
+@@ -374,12 +374,12 @@ func _ready() -> void:
+ 	for q in G.pack_questions:
+ 		if str(q.get("id", "")) == "CON-001": con = q
+ 	var con_q: Dictionary = G.knowledge.shuffled_q(con, "", 0, false)
+-	G.knowledge.time_result(shown, true)
++	G.timeq.record(shown, true)
+ 	# J10: a question answered wrong at the first try comes back right after the next one
+-	var qa: Dictionary = G.knowledge.next_time_question()
+-	G.knowledge.retry_after_next(qa)
+-	var qb: Dictionary = G.knowledge.next_time_question()
+-	var qc: Dictionary = G.knowledge.next_time_question()
++	var qa: Dictionary = G.timeq.next()
++	G.timeq.record(qa, false)
++	var qb: Dictionary = G.timeq.next()
++	var qc: Dictionary = G.timeq.next()
+ 	print("r10 first-try rule: wrong one back after one other: ", qb.get("id", "") != qa.get("id", "") and qc.get("id", "") == qa.get("id", ""))
+ 	print("r8 quiz: ", ids.size(), " ids, doubles ", dup, "  options per question ", opts, "  picture questions ", pics, "/60",
+ 		"  PIC-004 pictures ", shown["pictures"], " img '", shown["img"], "' right '", shown["answers"][shown["correct"]]["text"], "'",
+=== NEW FILE godot-prototype/game/farm/systems/time_question.gd
+extends RefCounted
+class_name FarmTimeQuestion
+## The Time Quiz question: the one rule that moves farm time. Two jobs:
+##   next()                            the next question: a retry, a due knowledge-card review, or a question from the packs
+##   answered(q, first_try, purpose)   records the answer and applies the first-try rule; returns one report
+## Only a right FIRST answer moves farm time one step (and then the purpose's follow-up happens). After a wrong first answer time
+## stays, nothing of the purpose happens, and the question comes back right after the next one.
+## Questions are remembered by their permanent id (pack questions) or by card and question index (reviews), never by their
+## position in a list. Picking uses this part's own random source, so the farm's rolls never depend on which question came up.
+## Card reviews belong to the knowledge cards (G.knowledge); this part only asks it for a due review.
+
+var G: FarmGame   # the Game: the farm's state (G.S), its data and the other systems
+var rng = preload("res://kits/core/rng.gd").new()   # picks questions and the order of their answers (not the farm's rolls)
+
+## The purposes a question can be answered for. Each names what happens after a right first answer, besides time moving
+## (follow_up below). A walk's cost is paid before its question (the chores village_trip, visit_friend); the forest chores are the
+## follow-ups themselves. home_from_village is reserved for the walk home (money-market/04) and has no follow-up yet.
+const PURPOSES := ["farm", "to_village", "home_from_village", "visit", "into_forest", "out_of_forest"]
+
+func _init(game: FarmGame) -> void:
+	G = game
+
+## The save keys this system owns, with their values in a new game.
+func save_defaults() -> Dictionary:
+	return {"recent_q": [], "retry_q": {}}
+
+## Seeds the own random source: from the test seed in tests and the bot (the same questions every run), else at random.
+func seed_from(test_seed: int) -> void:
+	if test_seed >= 0: rng.seed = hash("time-question %d" % test_seed)
+	else: rng.randomize()
+
+# ------------------------------------------------------------------ the one door for packs
+
+## Adds a question pack: its questions (each under its permanent id) join the Time Quiz when the pack is active (settings
+## activePacks; an empty list means every pack), its pool of extra wrong answers fills short questions up. The built-in packs come
+## in here, and the parent's own pasted packs will too (parent-controls/02): nothing after this door asks where a pack came from.
+## pack = {"id", "code", "questions": [{"id", "q", "answers", "correct" …}], "pool": [answers]}
+func add_pack(pack: Dictionary) -> void:
+	G.packs.append(pack)
+	var code := str(pack.get("code", pack.get("id", "")))
+	if pack.has("pool"):
+		var tp = G.quiz_tr.get(code + "-POOL", {})
+		var tpool: Array = tp.get("answers", []) if typeof(tp) == TYPE_DICTIONARY else []
+		var pool: Array = pack["pool"].duplicate()
+		for i in range(mini(pool.size(), tpool.size())):
+			if str(tpool[i]) != "": pool[i] = tpool[i]
+		G.pack_pools[code] = pool
+	var active: Array = G.settings.get("activePacks", [])
+	for q in pack.get("questions", []):
+		q["pack"] = code
+		G.quiz_keys[str(q.get("q", ""))] = G.quiz.key(q)
+		if active.is_empty() or active.has(pack.get("id", "")):
+			G.pack_questions.append(q)
+
+# ------------------------------------------------------------------ job 1: the next question
+
+## The next Time Quiz question: a question answered wrong comes back after the next one; otherwise, at the review share, a due
+## knowledge card is reviewed; otherwise a question from the packs (not one of the last few, the player's record decides which).
+func next() -> Dictionary:
+	var rq: Dictionary = G.S.get("retry_q", {})
+	if not rq.is_empty():
+		if int(rq.get("wait", 0)) <= 0:
+			G.S["retry_q"] = {}
+			var again := _by_ref(rq)
+			if not again.is_empty(): return again
+		else:
+			rq["wait"] = int(rq["wait"]) - 1
+	var share: float = G.pace.review_share()
+	if share > 0.0 and rng.randf() < share:
+		var due: Array = G.knowledge.due_cards()
+		if due.size() > 0:
+			var cid: String = due[rng.randi_range(0, due.size() - 1)]
+			var qs: Array = G.nodes[cid].get("questions", [])
+			if qs.size() > 0:
+				return review_question(cid, rng.randi_range(0, qs.size() - 1))
+	var recent: Array = G.S["recent_q"]
+	var pool := []
+	for src in G.pack_questions:
+		if not recent.has(str(src.get("id", ""))): pool.append(src)
+	if pool.is_empty(): pool = G.pack_questions.duplicate()
+	var pick: Dictionary = pool[rng.randi_range(0, pool.size() - 1)]
+	# the player's own record (kits/learn/quiz_engine.gd): a question answered wrong comes back after a few others; new ones before known ones
+	var ci: int = G.quiz.pick(G.learn_record(), pool, rng)
+	if ci >= 0: pick = pool[ci]
+	recent.append(str(pick.get("id", "")))
+	while recent.size() > int(G.settings.get("avoidRepeatWithin", 3)): recent.pop_front()
+	return pack_question(pick)
+
+## A question from the packs, laid out for showing.
+func pack_question(src: Dictionary) -> Dictionary:
+	var q: Dictionary = G.knowledge.shuffled_q(src, "", -1, false, rng)
+	q["wrong_text"] = q["wrong"]
+	q["source"] = tr("⏳ Time Quiz")
+	return q
+
+## A review of a knowledge card the player already knows (question qi of card cid), laid out for showing.
+func review_question(cid: String, qi: int) -> Dictionary:
+	var q: Dictionary = G.knowledge.shuffled_q(G.nodes[cid]["questions"][qi], cid, qi, true, rng)
+	q["source"] = tr("📚 Review: ") + G.nodes[cid]["name"]
+	return q
+
+## The pack question with this permanent id, laid out for showing ({} if no active pack has it).
+func question_by_id(id: String) -> Dictionary:
+	var src := _pack_source(id)
+	return {} if src.is_empty() else pack_question(src)
+
+func _pack_source(id: String) -> Dictionary:
+	for src in G.pack_questions:
+		if str(src.get("id", "")) == id: return src
+	return {}
+
+## A remembered question (a retry) laid out again: a review by card and question index, a pack question by id.
+func _by_ref(rq: Dictionary) -> Dictionary:
+	var cid := str(rq.get("card", ""))
+	if cid != "":
+		var qi := int(rq.get("qi", -1))
+		if not G.nodes.has(cid) or qi < 0 or qi >= (G.nodes[cid].get("questions", []) as Array).size(): return {}
+		return review_question(cid, qi)
+	return question_by_id(str(rq.get("id", "")))
+
+# ------------------------------------------------------------------ job 2: a question was answered
+
+## A question was answered (first_try = right on the first pick) for a purpose. Records it, applies the first-try rule and returns
+## the report the interface draws from: {"moved": time moved one step, "info": the step's report (rain, pests …), "step": the
+## question number now, "purpose": the purpose, "follow": what the purpose's follow-up returned (a visit's scene; a forest chore's
+## report; null for the others)}. After a wrong first answer nothing of the purpose happens: the walk waits for the next question.
+func answered(q: Dictionary, first_try: bool, purpose := "farm") -> Dictionary:
+	assert(PURPOSES.has(purpose), "unknown purpose " + purpose)
+	record(q, first_try)
+	var rep := {"moved": false, "info": {}, "step": int(G.S["step"]), "purpose": purpose, "follow": null}
+	if not first_try: return rep
+	rep["moved"] = true
+	rep["info"] = G.step_time()
+	rep["step"] = int(G.S["step"])
+	rep["follow"] = follow_up(purpose)
+	return rep
+
+## What a purpose does after a right first answer (time has already moved one step).
+func follow_up(purpose: String) -> Variant:
+	match purpose:
+		"to_village": G.trip.arrive()
+		"visit": return G.well.visited()
+		"into_forest": return G.actions.perform("forest_enter", G.actions.farmer)
+		"out_of_forest": return G.actions.perform("forest_leave", G.actions.farmer)
+	return null
+
+## Records an answer: a review in its card (and the learning record), a pack question in the learning record. A wrong first answer
+## sets the question to come back right after the next one.
+func record(q: Dictionary, first_try: bool) -> void:
+	if q.get("review", false): G.knowledge.record_card_answer(q, first_try)
+	elif str(q.get("id", "")) != "":
+		G.quiz.record(G.learn_record(), str(q["id"]), first_try)
+		G.save_learning()
+	if not first_try: _retry_after_next(q)
+
+func _retry_after_next(q: Dictionary) -> void:
+	if q.get("review", false): G.S["retry_q"] = {"card": str(q.get("card", "")), "qi": int(q.get("qi", 0)), "wait": 1}
+	else: G.S["retry_q"] = {"id": str(q.get("id", "")), "wait": 1}
+
+# ------------------------------------------------------------------ old saves
+
+## Save version 4 -> 5: the recent questions and the retry were remembered by their position in the list of pack questions; now by
+## permanent id (positions read against the packs as they load now). Running it twice changes nothing.
+func upgrade_save_v4(save: Dictionary) -> void:
+	var ids := []
+	for x in save.get("recent_q", []):
+		if typeof(x) == TYPE_STRING: ids.append(x)
+		elif int(x) >= 0 and int(x) < G.pack_questions.size(): ids.append(str(G.pack_questions[int(x)].get("id", "")))
+	save["recent_q"] = ids
+	var rq = save.get("retry_q", {})
+	if typeof(rq) != TYPE_DICTIONARY or rq.is_empty() or rq.has("id"): save["retry_q"] = rq if typeof(rq) == TYPE_DICTIONARY else {}; return
+	if str(rq.get("card", "")) != "" and (rq.get("review", false) or not rq.has("review")):
+		save["retry_q"] = {"card": str(rq["card"]), "qi": int(rq.get("qi", 0)), "wait": int(rq.get("wait", 0))}
+		return
+	var i := int(rq.get("qi", -1))
+	save["retry_q"] = {"id": str(G.pack_questions[i].get("id", "")), "wait": int(rq.get("wait", 0))} if i >= 0 and i < G.pack_questions.size() else {}
+=== NEW FILE godot-prototype/tests/timeq_test.gd
+extends Node
+## The time question (game/farm/systems/time_question.gd): the Time Quiz's one rule, through its two jobs next() and answered().
+## A right first answer moves time, a wrong one doesn't and comes back after the next question, a card review is recorded as a
+## review, questions are remembered by id, picking never touches the farm's random numbers. Rules only, no screen.
+## Run:  godot --headless --path . res://tests/timeq_test.tscn -- --seed=1
+var G
+var fails := 0
+var checks := 0
+
+func _ready() -> void:
+	G = get_node("/root/Game")
+	G.reset_game()
+	var T = G.timeq
+	# a right first answer on the farm moves time one step
+	var st: int = G.S["step"]
+	var q: Dictionary = T.next()
+	_check(not q.is_empty() and str(q.get("id", "")) != "" and q["answers"].size() >= 2, "next() gives a pack question with answers (%s)" % q.get("id", ""))
+	var rep: Dictionary = T.answered(q, true, "farm")
+	_check(rep["moved"] and int(G.S["step"]) == st + 1 and int(rep["step"]) == st + 1, "a right first answer moves time one step (%d -> %d)" % [st, G.S["step"]])
+	_check(rep["info"].has("rain") and rep["purpose"] == "farm", "…and the report carries the step's info and the purpose")
+	_check(G.learn_record()["quiz"]["items"].has(str(q["id"])), "…and the answer is in the learning record")
+	# a wrong first answer: time stays, the question comes back right after the next one
+	G.pace.set_review_share(0.0)
+	st = G.S["step"]
+	var qa: Dictionary = T.next()
+	rep = T.answered(qa, false, "farm")
+	_check(not rep["moved"] and int(G.S["step"]) == st and rep["info"].is_empty(), "a wrong first answer does not move time")
+	_check(G.S["retry_q"].get("id", "") == qa["id"], "…and remembers the question by its id (%s)" % str(G.S["retry_q"]))
+	var qb: Dictionary = T.next()
+	var qc: Dictionary = T.next()
+	_check(qb["id"] != qa["id"] and qc["id"] == qa["id"], "…it comes back after one other question (%s, %s, %s)" % [qa["id"], qb["id"], qc["id"]])
+	_check(G.S["retry_q"].is_empty(), "…and is then forgotten")
+	# the retry finds its question by id, wherever the question now stands in the packs
+	T.answered(qc, false, "farm")
+	G.pack_questions.reverse()
+	T.next()
+	_check(T.next().get("id", "") == qa["id"], "a retry finds its question by id after the packs changed order")
+	G.pack_questions.reverse()
+	# recent questions are ids too, and do not repeat within avoidRepeatWithin
+	var seen := []
+	for i in range(int(G.settings.get("avoidRepeatWithin", 3)) + 1): seen.append(str(T.next()["id"]))
+	var dup := false
+	for i in range(seen.size()): if seen.find(seen[i]) != i: dup = true
+	_check(not dup and typeof(G.S["recent_q"][0]) == TYPE_STRING, "recent questions are ids and don't repeat right away (%s)" % str(seen))
+	# picking questions never touches the farm's random numbers
+	var before = G.rng.state
+	for i in range(30): T.next()
+	_check(G.rng.state == before, "picking questions leaves the farm's random numbers alone")
+	# a card review is recorded as a review
+	var cid := ""
+	for c in G.card_ids:
+		if (G.nodes[c].get("questions", []) as Array).size() > 0 and not G.done(c): cid = c; break
+	G.knowledge.finish_card(cid, false)
+	for c in G.card_ids:
+		if G.S["cards"].has(c): G.S["cards"][c]["last"] = -1000
+	G.pace.set_review_share(1.0)
+	G.S["retry_q"] = {}
+	var rq: Dictionary = T.next()
+	_check(rq.get("review", false) and G.done(str(rq["card"])), "with the review share at 1 a due card is reviewed (%s)" % str(rq.get("card", "")))
+	var rc := str(rq["card"])
+	var box0 := int(G.S["cards"][rc].get("box", 1))
+	st = G.S["step"]
+	rep = T.answered(rq, true, "farm")
+	_check(rep["moved"] and int(G.S["cards"][rc]["box"]) == mini(4, box0 + 1) and int(G.S["cards"][rc]["last"]) == st, "a right review moves time and moves the card up a box (%d -> %d)" % [box0, G.S["cards"][rc]["box"]])
+	G.S["cards"][rc]["last"] = -1000
+	var rq2: Dictionary = T.next()
+	T.answered(rq2, false, "farm")
+	_check(int(G.S["cards"][str(rq2["card"])]["box"]) == 1 and G.S["retry_q"].get("card", "") == str(rq2["card"]) and int(G.S["retry_q"]["qi"]) == int(rq2["qi"]), "a wrong review puts the card back in box 1 and comes back by card and question")
+	T.next()
+	var back: Dictionary = T.next()
+	_check(back.get("review", false) and back["card"] == rq2["card"] and back["qi"] == rq2["qi"], "…after the next question")
+	# a question shown by id (the testing flag --qid)
+	_check(T.question_by_id(str(G.pack_questions[0]["id"])).get("id", "") == G.pack_questions[0]["id"] and T.question_by_id("NOPE-1").is_empty(), "question_by_id finds a pack question, and nothing for an unknown id")
+	# a pack added through the one door (as the parent's pasted packs will be) is drawn and answered like a built-in one
+	G.pace.set_review_share(0.0)
+	G.S["retry_q"] = {}
+	(G.settings["activePacks"] as Array).append("own-test")
+	var n0: int = G.pack_questions.size()
+	T.add_pack({"id": "own-test", "code": "OWN", "pool": ["Spoon", "Cloud", "Shoe"], "questions": [
+		{"id": "OWN-001", "q": "What does a hen lay?", "answers": ["Eggs", "Milk"], "correct": 0}]})
+	_check(G.pack_questions.size() == n0 + 1 and G.pack_pools.has("OWN"), "the new pack's question and pool are in")
+	var own: Dictionary = {}
+	for i in range(400):
+		var x: Dictionary = T.next()
+		if x.get("id", "") == "OWN-001": own = x; break
+	_check(not own.is_empty() and own["answers"].size() == clampi(int(G.settings.get("quizOptions", 4)), 2, 6), "…its question is drawn, filled up from its pool (%d answers)" % (own.get("answers", []) as Array).size())
+	st = G.S["step"]
+	rep = T.answered(own, false, "farm")
+	T.next()
+	var own2: Dictionary = T.next()
+	_check(not rep["moved"] and own2.get("id", "") == "OWN-001", "…a wrong answer keeps time and brings it back after the next one")
+	rep = T.answered(own2, true, "farm")
+	_check(rep["moved"] and int(G.S["step"]) == st + 1 and G.learn_record()["quiz"]["items"].has("OWN-001"), "…a right one moves time and is in the learning record")
+	# the walks are named purposes: a right first answer moves time and runs the follow-up; a wrong one doesn't, and the walk waits
+	G.S["retry_q"] = {}
+	G.S["energy"] = 30.0
+	G.S["trip"]["phase"] = "walk"
+	_walk("to_village", func(): return G.trip.phase() == "square", "the trip arrives at the square")
+	G.S["well"]["invite"] = "Tom"
+	var vr: Dictionary = _walk("visit", func(): return G.well.invite() == "", "the visit happens")
+	_check(typeof(vr.get("follow")) == TYPE_STRING and str(vr["follow"]) != "", "…and returns its scene")
+	G.S["unlocked"]["ruins_stillroom"] = true
+	G.invalidate_caps()
+	_walk("into_forest", func(): return G.forest.inside(), "the farmer walks into the forest")
+	_walk("out_of_forest", func(): return not G.forest.inside(), "the farmer walks out of the forest")
+	st = G.S["step"]
+	_check(T.answered(T.next(), true, "home_from_village")["moved"] and int(G.S["step"]) == st + 1, "home_from_village is a purpose already (it only moves time for now)")
+	print("TIMEQ %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])
+	get_tree().quit(1 if fails > 0 else 0)
+
+## A walk: a wrong first answer leaves time and the walk as they were; a right one moves time and runs the purpose's follow-up.
+func _walk(purpose: String, happened: Callable, what: String) -> Dictionary:
+	var st: int = G.S["step"]
+	var r: Dictionary = G.timeq.answered(G.timeq.next(), false, purpose)
+	_check(not r["moved"] and int(G.S["step"]) == st and not happened.call(), "%s: a wrong first answer: time stays, the walk waits" % purpose)
+	r = G.timeq.answered(G.timeq.next(), true, purpose)
+	_check(r["moved"] and int(G.S["step"]) == st + 1 and happened.call(), "%s: a right first answer moves time and %s" % [purpose, what])
+	return r
+
+func _check(ok: bool, what: String) -> void:
+	checks += 1
+	if not ok:
+		fails += 1
+		print("FAIL ", what)

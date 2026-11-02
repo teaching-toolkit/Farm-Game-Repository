@@ -1,7 +1,8 @@
 extends RefCounted
 class_name FarmKnowledge
-## Knowledge cards and the library (reading, card quizzes, reviews) and the Time Quiz: the next question, retries and results.
-## Uses the learning kit (kits/learn/).
+## Knowledge cards and the library (reading, card quizzes, reviews: which cards are due and how a review went).
+## The Time Quiz itself (next question, retries, the first-try rule) is the time question (time_question.gd); it asks this system
+## for a due review. Uses the learning kit (kits/learn/).
 
 var G: FarmGame   # the Game: the farm's state (G.S), its data and the other systems
 
@@ -10,7 +11,7 @@ func _init(game: FarmGame) -> void:
 
 ## The save keys this system owns, with their values in a new game (kits/core/saves.gd fills missing ones into older saves).
 func save_defaults() -> Dictionary:
-	return {"reading": "", "read_progress": 0.0, "read_done": {}, "cards": {}, "card_qseen": {}, "recent_q": []}
+	return {"reading": "", "read_progress": 0.0, "read_done": {}, "cards": {}, "card_qseen": {}}
 
 # ------------------------------------------------------------------ knowledge cards & the library
 
@@ -83,8 +84,9 @@ func card_ancestors(cid: String) -> Array:
 
 ## A question laid out for showing (kits/learn/quiz_engine.gd present): settings quizOptions answers (3–4; the right one and
 ## wrong ones, filled up from the pack's pool), pictures, the texts in settings language. answers = [{"text", "img", "emoji"}].
-func shuffled_q(src: Dictionary, cid: String, qi: int, review: bool) -> Dictionary:
-	var q: Dictionary = G.quiz.present(src, G.rng, clampi(int(G.settings.get("quizOptions", 4)), 2, 6), G.quiz_tr, G.pack_pools.get(str(src.get("pack", "")), []))
+## rng: the random source for the order of the answers (the farm's own by default; the Time Quiz passes its own).
+func shuffled_q(src: Dictionary, cid: String, qi: int, review: bool, rng: RandomNumberGenerator = null) -> Dictionary:
+	var q: Dictionary = G.quiz.present(src, rng if rng != null else G.rng, clampi(int(G.settings.get("quizOptions", 4)), 2, 6), G.quiz_tr, G.pack_pools.get(str(src.get("pack", "")), []))
 	q["card"] = cid; q["qi"] = qi; q["review"] = review
 	if q["why"] == "": q["why"] = q["right"]
 	return q
@@ -157,71 +159,3 @@ func due_cards() -> Array:
 		if G.S["step"] - int(c.get("last", 0)) >= G.STEP_GAPS[b - 1] or t_now - float(c.get("time", t_now)) >= G.DAY_GAPS[b - 1] * 86400.0:
 			out.append(cid)
 	return out
-
-## The next Time Quiz question: mostly the parent's packs, sometimes a due knowledge review.
-func next_time_question() -> Dictionary:
-	# a question answered wrong at the first try comes back right after the next one (retry_after_next)
-	var rq: Dictionary = G.S.get("retry_q", {})
-	if not rq.is_empty():
-		if int(rq.get("wait", 0)) <= 0:
-			G.S["retry_q"] = {}
-			var again := _retry_question(rq)
-			if not again.is_empty(): return again
-		else:
-			rq["wait"] = int(rq["wait"]) - 1
-	var share := G.pace.review_share()
-	if share > 0.0 and G.rng.randf() < share:
-		var due := due_cards()
-		if due.size() > 0:
-			var cid: String = due[G.rng.randi_range(0, due.size() - 1)]
-			var qs: Array = G.nodes[cid].get("questions", [])
-			if qs.size() > 0:
-				var qi := G.rng.randi_range(0, qs.size() - 1)
-				var q := shuffled_q(qs[qi], cid, qi, true)
-				q["source"] = tr("📚 Review: ") + G.nodes[cid]["name"]
-				return q
-	var recent: Array = G.S["recent_q"]
-	var pool := []
-	for i in range(G.pack_questions.size()):
-		if not recent.has(i): pool.append(i)
-	if pool.is_empty(): pool = range(G.pack_questions.size())
-	var pick: int = pool[G.rng.randi_range(0, pool.size() - 1)]
-	# the player's own record (kits/learn/quiz_engine.gd): a question answered wrong comes back after a few others;
-	# new ones come before known ones
-	var cands := []
-	for i in pool: cands.append(G.pack_questions[i])
-	var ci: int = G.quiz.pick(G.learn_record(), cands, G.rng)
-	if ci >= 0: pick = pool[ci]
-	recent.append(pick)
-	while recent.size() > int(G.settings.get("avoidRepeatWithin", 3)): recent.pop_front()
-	var src: Dictionary = G.pack_questions[pick]
-	var q2 := shuffled_q(src, "", pick, false)
-	q2["wrong_text"] = q2["wrong"]
-	q2["source"] = tr("⏳ Time Quiz")
-	return q2
-
-## A Time Quiz question answered wrong at the first try: ask it again right after the next question.
-func retry_after_next(q: Dictionary) -> void:
-	G.S["retry_q"] = {"review": q.get("review", false), "card": str(q.get("card", "")), "qi": int(q.get("qi", 0)), "wait": 1}
-
-func _retry_question(rq: Dictionary) -> Dictionary:
-	var qi := int(rq.get("qi", 0))
-	if rq.get("review", false):
-		var cid := str(rq.get("card", ""))
-		if not G.nodes.has(cid): return {}
-		var qs: Array = G.nodes[cid].get("questions", [])
-		if qi < 0 or qi >= qs.size(): return {}
-		var q := shuffled_q(qs[qi], cid, qi, true)
-		q["source"] = tr("📚 Review: ") + G.nodes[cid]["name"]
-		return q
-	if qi < 0 or qi >= G.pack_questions.size(): return {}
-	var q2 := shuffled_q(G.pack_questions[qi], "", qi, false)
-	q2["wrong_text"] = q2["wrong"]
-	q2["source"] = tr("⏳ Time Quiz")
-	return q2
-
-## Remembers how a Time Quiz question went for this player, under its id (wrong: back after 3 others; right: 12, 32, 80 … later).
-func time_result(q: Dictionary, first_try: bool) -> void:
-	if q.get("review", false) or str(q.get("id", "")) == "": return
-	G.quiz.record(G.learn_record(), str(q["id"]), first_try)
-	G.save_learning()

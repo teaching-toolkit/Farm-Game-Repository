@@ -147,16 +147,8 @@ func _unchecked() -> void:
 func _go_in() -> void:
 	if not G.actions.check("forest_enter", G.actions.farmer)["ok"]: return
 	M.sheets.close_sheet()
-	M.timequiz.show_walk_question({"title": tr("🚶 Into the forest"), "emoji": "🌲", "button": tr("🌲 Look around"), "done": _entered})
-
-func _entered() -> String:
-	G.actions.perform("forest_enter", G.actions.farmer)
-	return tr("🌲 You are in the forest.")
+	M.timequiz.show_walk_question({"purpose": "into_forest", "title": tr("🚶 Into the forest"), "emoji": "🌲"})
 
 func _go_out() -> void:
 	M.sheets.close_sheet()
-	M.timequiz.show_walk_question({"title": tr("🚶 Back to the farm"), "emoji": "🏡", "button": tr("🧺 Look at the basket"), "done": _left})
-
-func _left() -> String:
-	G.actions.perform("forest_leave", G.actions.farmer)
-	return tr("🏡 You are home again. Your basket is not checked yet.")
+	M.timequiz.show_walk_question({"purpose": "out_of_forest", "title": tr("🚶 Back to the farm"), "emoji": "🏡"})

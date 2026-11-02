@@ -58,12 +58,12 @@ What a pass looks like:
   chapter 3 at 362, 526, 329, 326, 289, the spread is wider than first thought); if one run falls outside the range, run it twice more before concluding
   anything. If the change is meant to alter the pace, say by how much and update the numbers here and in the prototype README.
   A new mechanic needs the bot to learn it, or the bot no longer tests the game. `--trace=N` prints the first N questions;
-  `--flex` plays with dynamic difficulty; `--accuracy=0.8` misses a share of first tries in the Time Quiz.
-- **Golden run** (`tests/golden.sh`, part of `check_all.sh`): the bot plays seeds 1 and 2 to chapter 5 (654 and 742 steps,
+  `--flex` plays with dynamic difficulty; `--accuracy=0.8` misses a share of first tries (the bot answers real questions through `G.timeq`, on the farm and on every walk).
+- **Golden run** (`tests/golden.sh`, part of `check_all.sh`): the bot plays seeds 1 and 2 to chapter 5 (641 and 712 steps since 2 Nov 2026,
   30 Oct 2026) and must match `tests/golden/` step by step. A restructuring that changes it changed the rules: find out why
   before going on. Only a change to rules or numbers made on purpose is recorded anew (`bash tests/golden.sh --record`), and
   the log says so. **Short or full:** golden runs do not need to run through all chapters every time. `bash tests/golden.sh --short`
-  (or `check_all.sh --short`) plays seeds 1 and 2 only to the end of chapter 2 (332 and 344 steps, ~38 s); use it after every slice. Run the full
+  (or `check_all.sh --short`) plays seeds 1 and 2 only to the end of chapter 2 (332 and 525 steps, ~70 s); use it after every slice. Run the full
   run when a slice touches a late system (the Lord's share from chapter 3, Wren's check and poisoning, forest trips, medicine and healing
   ranks, pets' blessings in free play, wellbeing parties and visits) and once before a feature is done. `--record` records the files of the same limit.
 - **Save fixtures** (`tests/fixtures_test.tscn`): every save in `tests/fixtures/` loads, plays on and saves unchanged.

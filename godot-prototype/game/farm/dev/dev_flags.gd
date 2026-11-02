@@ -10,6 +10,8 @@ static func apply(main, G) -> void:
 			for _i in range(int(a.substr(7))): G.cheat_max()
 		elif a == "--quiz": main.timequiz.show_time_quiz.call_deferred()
 		elif a.begins_with("--qid="): main.timequiz.show_quiz_id.call_deferred(a.substr(6))     # screenshots: one Time Quiz question
+		elif a == "--answer": main.get_tree().create_timer(0.3).timeout.connect(main.timequiz.answer_right)     # screenshots: the open question answered right (after --quiz or --qid)
+		elif a == "--news": main.get_tree().create_timer(0.3).timeout.connect(_news.bind(main, G))     # screenshots: the farm news plays (rain, scarecrow, pests)
 		elif a == "--rest": main.rest.show_rest.call_deferred()
 		elif a.begins_with("--shotframes="): main.shot_at = int(a.substr(13))
 		elif a.begins_with("--act="): main.feedback.test_act.call_deferred(a.substr(6))   # screenshots: --act=weed@patch0, --act=cook@kitchen
@@ -92,3 +94,10 @@ static func apply(main, G) -> void:
 		elif a == "--built":                       # screenshots: pretend house, barn and workshop stand
 			for b in ["cottage", "barn_1", "workshop_1"]: G.S["unlocked"][b] = true
 			G.invalidate_caps()
+
+## Screenshots (--news): one step of time with rain, two pests chased off and a tenth of the crops eaten, then the playback.
+static func _news(main, G) -> void:
+	main.playback.begin()
+	G.step_time()
+	main.playback._on_step({"rain": true, "removed": 2, "eat_share": 0.1})
+	main.playback.play(Callable())

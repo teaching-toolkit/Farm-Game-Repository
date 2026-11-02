@@ -231,6 +231,7 @@
 	"read_progress": 0.0,
 	"reading": "",
 	"recent_q": [],
+	"retry_q": {},
 	"revealed": {},
 	"running": {},
 	"seeds": {},

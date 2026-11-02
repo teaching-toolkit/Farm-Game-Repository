@@ -250,7 +250,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   it, its clock moves with the questions instead of the wall clock, and it neither reads nor writes saves or learning records
   on the device. The flags are read in `game/farm/dev/dev_flags.gd` (the screen) and `Game._test_args()` (the rules).
 - Screenshots and tests: `--player=Name`, `--newgame`, `--timestep=N`, `--spot=storage`, `--patch=K`, `--unlock=id,id`, `--load=res://tests/fixtures/ch3-seed1.json` (start from a saved farm),
-  `--give=item:5`, `--water=1` (carried water), `--menu` (⚙️ Settings), `--grownup` (its grown-up part open), `--password` (the password box), `--celebrate=id`, `--postcard`, `--perks=all` (or a list of perk ids), `--rainbow`, `--rest` (the Rest start page; add `--restgo` for the sums), `--qid=PIC-004`
+  `--give=item:5`, `--water=1` (carried water), `--menu` (⚙️ Settings), `--grownup` (its grown-up part open), `--password` (the password box), `--celebrate=id`, `--postcard`, `--perks=all` (or a list of perk ids), `--rainbow`, `--rest` (the Rest start page; add `--restgo` for the sums), `--qid=PIC-004`, `--answer` (the open question answered right, after `--quiz` or `--qid`), `--news` (the farm news plays: rain, the scarecrow, pests; with `--shotframes=N`)
   (one Time Quiz question), `--lang=de` (quiz texts in German), `--toasts` (a stack of notification cards), `--nostory` (no story boxes or bubbles), `--pack=rope:2` (packs things for the trip), `--story=ID` (one story piece shown), `--sheetscroll=N` (the open window scrolled down, 9999 = to the end; use with `--shotframes=100`), `--pulse` (the energy bar's pulse and floating number), `--shot=file.png`.
 
 ## Changing content (no code needed)
@@ -308,13 +308,15 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - `godot --headless --path . res://tests/bot.tscn -- --iters=900 --chapter=3` — a greedy bot plays the rules engine and prints progress
   (chapter 3 in about 290–530 Time Quiz answers; `--chapter=5 --iters=1100` reaches chapter 5 in about 690–870; it plays randomly, so
   the number changes from run to run; `--flex` plays with dynamic difficulty on; `--trace=N` prints what happens during the first N questions;
-  `--accuracy=0.8` misses a share of first tries (only a right first try moves time) and reports how many questions it was asked; it prints
+  it answers real questions through the real rule (`G.timeq`) for farm time and for every walk (trip, forest, a visit when a friend
+  invites it and it has 10 energy or more; `--novisits` plays without visits, to compare the pace);
+  `--accuracy=0.8` misses a share of first tries (only a right first try moves time; the missed question comes back after the next) and reports how many questions it was asked; it prints
   its pace, which `meta.flex.basePace` is taken from).
 - `bash tests/check_all.sh` — all quick checks in one go (about 2 minutes): smoke test, save fixtures, save versions, core kit, places and pets, data checks, golden run, translations.
 - `bash tests/golden.sh` — the golden run: the bot plays seeds 1 and 2 to chapter 6 (through all five chapters) and every step of time is compared with
   `tests/golden/` (coins, energy, water, goals, what is unlocked, the store). A restructuring must leave it unchanged. `--strict`
   also compares a hash of the whole save (it changes when the save layout does: record anew then, and check that without the hash nothing differs); `--record` records new golden runs after a change to the rules or numbers on purpose.
-  `--short` plays only to the end of chapter 2 (`--chapter=3`; files `bot-seed1-ch3.txt`, `bot-seed2-ch3.txt`, 332 and 344 steps, about 38 s for both seeds instead of about 2 min); `--chapter=N` any other limit. `check_all.sh --short` passes it on. Use the short pair after every slice; the full run when a slice touches a late system (the Lord's share, Wren's check and poisoning, forest trips, medicine and healing ranks, pets' blessings in free play, wellbeing parties and visits) and once before a feature is done.
+  `--short` plays only to the end of chapter 2 (`--chapter=3`; files `bot-seed1-ch3.txt`, `bot-seed2-ch3.txt`, 332 and 525 steps, about 70 s for both seeds instead of about 2.5 min); `--chapter=N` any other limit. `check_all.sh --short` passes it on. Use the short pair after every slice; the full run when a slice touches a late system (the Lord's share, Wren's check and poisoning, forest trips, medicine and healing ranks, pets' blessings in free play, wellbeing parties and visits) and once before a feature is done.
   Bot flags for it: `--seed=N`, `--golden=FILE`, `--save-at=CHAPTER:FILE` (writes a save fixture), `--report=FILE` (the pacing of the run as JSON).
 - `bash tools/update_explorer.sh` (the double-click `../Update explorer.command`) — checks the data, lets the bot play seeds 1 and 2 to chapter 5 with `--report`, and writes
   the data and the bot's pacing report into `../progression/progression-explorer.html` (about 3 minutes; needs Godot and python3).
@@ -326,6 +328,9 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   every place on the map, quest book, album, log) and checks the sums, the market, postcards, perks, the farmer, quiz ids,
   answers and pictures, German texts, stoking, carrying, rooting out and dynamic prices. It reaches the screen only through
   `tests/ui_driver.gd`, so changes to the screen's parts change the driver, not the test.
+- `godot --headless --path . res://tests/timeq_test.tscn -- --seed=1` — the time question: a right first answer moves time and runs each
+  purpose's follow-up (farm, the trip, a visit, into and out of the forest), a wrong one doesn't and comes back after the next, a card review is
+  recorded as a review, retry and recent questions by id, a pack added through the one door works like a built-in one, picking never touches the farm's dice.
 - `godot --headless --path . -s res://tests/learn_sim.gd` — a pretend child practises 2,500 Rest sums: when is each level passed?
 - Screenshots: `godot --path . --resolution 834x1194 -- --shot=out.png [--spot=kitchen] [--spot=home] [--quiz] [--goal]`
   (`--demo=1` fast-forwards with the cheat; `--timestep=95` jumps to question 95, i.e. winter, to check the seasons).

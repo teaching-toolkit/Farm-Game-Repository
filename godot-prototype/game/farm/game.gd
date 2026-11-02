@@ -5,7 +5,7 @@ class_name FarmGame
 ## effects of everything done into one table (caps, g, m), and runs one step of time (one right Time Quiz answer, via the clock).
 ## The rules themselves live in the systems under game/farm/systems/ and are reached as G.<system>.<function>:
 ## seasons, inventory, needs (energy, Rest), pace (dynamic difficulty), progression (costs, requirements, unlocking), fields,
-## animals, crafting (stations, recipes, polish), trade, knowledge (cards, Time Quiz) and rewards (luck, gifts, jobs, acorns, perks).
+## animals, crafting (stations, recipes, polish), trade, knowledge (cards), timeq (the Time Quiz question) and rewards (luck, gifts, jobs, acorns, perks).
 ## Every amount is a float in the background; the UI rounds (stocks down, costs up).
 
 signal changed
@@ -83,7 +83,7 @@ var buying := false      # bought things are not "produced"
 var test_seed := -1
 ## The version of the save layout (kits/core/saves.gd). A save without a "version" is version 0. Every change to the layout of a save
 ## adds an upgrade step in save_steps() and raises this number; tests/fixtures/ keeps old saves that must still load.
-const SAVE_VERSION := 4
+const SAVE_VERSION := 5
 const TEST_CLOCK_START := 1800000000.0   # a fixed moment in 2027; one step of time counts as 10 minutes
 
 ## The systems: each owns one part of the rules and works on the farm's state G.S (see game/farm/systems/).
@@ -98,6 +98,7 @@ var animals: FarmAnimals
 var crafting: FarmCrafting
 var trade: FarmTrade
 var knowledge: FarmKnowledge
+var timeq: FarmTimeQuestion
 var rewards: FarmRewards
 var reveal: FarmReveal
 var quality: FarmQuality
@@ -124,6 +125,7 @@ func _init() -> void:
 	crafting = FarmCrafting.new(self)
 	trade = FarmTrade.new(self)
 	knowledge = FarmKnowledge.new(self)
+	timeq = FarmTimeQuestion.new(self)
 	rewards = FarmRewards.new(self)
 	reveal = FarmReveal.new(self)
 	quality = FarmQuality.new(self)
@@ -166,9 +168,11 @@ func _ready() -> void:
 	if test_seed >= 0:
 		rng.seed = test_seed
 		seed(test_seed)
+		timeq.seed_from(test_seed)
 		math.now_func = now
 	else:
 		rng.randomize()
+		timeq.seed_from(-1)
 	load_data()
 	if test_seed >= 0:
 		new_game()
@@ -286,22 +290,7 @@ func load_data() -> void:
 		for f in dir.get_files():
 			if not f.ends_with(".json"): continue
 			var p = JSON.parse_string(FileAccess.get_file_as_string("res://data/quiz_packs/" + f))
-			if typeof(p) != TYPE_DICTIONARY: continue
-			packs.append(p)
-			var code := str(p.get("code", p.get("id", "")))
-			if p.has("pool"):
-				var tp = quiz_tr.get(code + "-POOL", {})
-				var tpool: Array = tp.get("answers", []) if typeof(tp) == TYPE_DICTIONARY else []
-				var pool: Array = p["pool"].duplicate()
-				for i in range(mini(pool.size(), tpool.size())):
-					if str(tpool[i]) != "": pool[i] = tpool[i]
-				pack_pools[code] = pool
-			var active: Array = settings.get("activePacks", [])
-			for q in p.get("questions", []):
-				q["pack"] = code
-				quiz_keys[str(q.get("q", ""))] = quiz.key(q)
-				if active.is_empty() or active.has(p.get("id", "")):
-					pack_questions.append(q)
+			if typeof(p) == TYPE_DICTIONARY: timeq.add_pack(p)      # the one door for packs (built in now, pasted later)
 	if pack_questions.is_empty():
 		pack_questions.append({"id": "X-001", "q": "Which planet do we live on?", "answers": ["Earth", "Mars", "the Moon"], "correct": 0})
 	for cid in card_ids:
@@ -324,7 +313,7 @@ func save_defaults() -> Dictionary:
 ## Everything a save holds in a new game: the Game's keys and every system's.
 func all_save_defaults() -> Dictionary:
 	var d := save_defaults()
-	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, rewards, trade, reveal, skills, story, trip, gate, lord, pets, well, nature, forest]:
+	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, timeq, rewards, trade, reveal, skills, story, trip, gate, lord, pets, well, nature, forest]:
 		d.merge(sys.save_defaults())
 	return d
 
@@ -366,7 +355,8 @@ func save_steps() -> Array:
 	return [{"to": 1, "name": "saves from before the version number: gift offers become postcards, the gift shop is gone, the first cards owned are the active ones", "fn": upgrade_save_v0},
 		{"to": 2, "name": "quality: every batch of a thing that has a grade now says which (what was in the store is Proper)", "fn": upgrade_save_v1},
 		{"to": 3, "name": "skills: the uses counted per station become batches per skill family", "fn": upgrade_save_v2},
-		{"to": 4, "name": "money: coins are counted in bronze (one old coin = 15 bronze)", "fn": upgrade_save_v3}]
+		{"to": 4, "name": "money: coins are counted in bronze (one old coin = 15 bronze)", "fn": upgrade_save_v3},
+		{"to": 5, "name": "Time Quiz: recent questions and the retry are remembered by permanent id, not by position", "fn": timeq.upgrade_save_v4}]
 
 func upgrade_save_v3(save: Dictionary) -> void:
 	save["coins"] = float(save.get("coins", 0.0)) * float(meta.get("currency", {}).get("factor", 15))

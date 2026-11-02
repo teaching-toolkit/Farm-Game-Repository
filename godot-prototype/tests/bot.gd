@@ -93,6 +93,7 @@ func _ready() -> void:
 		var gf := FileAccess.open(golden_path, FileAccess.WRITE)
 		if gf: gf.store_string("\n".join(golden) + "\n")
 		print("golden run: %d lines written to %s" % [golden.size(), golden_path])
+	print("visits to friends: %d, trips to the village: %d" % [visits_done, trips_done])
 	if accuracy < 1.0: print("Time Quiz questions asked %d for %d steps of time (first-try accuracy %.2f)" % [asked, G.S["step"], accuracy])
 	var pets := []
 	for p in G.pet_ids:
@@ -255,10 +256,7 @@ func _trip() -> void:
 	trips_done += 1
 	if trips_done % 25 == 0 or trips_done < 6: print("trip %d at q%d ch%d: orders %d seeds %s buy %d barter %d sell %d coins %d" % [trips_done, G.S["step"], G.chapter(), orders.size(), str(want_seeds), want_buy.size(), want_barter.size(), int(sell_value), int(G.S["coins"])])
 	last_trip = G.S["step"]
-	asked += 1
-	while accuracy < 1.0 and quiz_rng.randf() >= accuracy: asked += 1
-	G.step_time()                       # the walk: one question answered right at the first try
-	G.trip.arrive()
+	_answer_until_moved("to_village")     # the walk: a question answered right at the first try, then the trip arrives
 	for id in orders:
 		if G.progression.can_unlock(id)["ok"]: G.progression.unlock(id)
 	if "--trips" in OS.get_cmdline_user_args(): print("   q%d coins before %d, packed %s load %.1f/%d, want_sell %s" % [G.S["step"], int(G.S["coins"]), str(G.trip.contents()), G.trip.load_now(), int(G.trip.capacity()), str(want_sell)])
@@ -285,6 +283,15 @@ func _held_for_order(k: String, orders: Array) -> bool:
 		if not G.done(id) and G.pace.node_cost(id).has(k): return true
 	return false
 
+## A friend has invited the farmer: the bot goes when it has energy to spare (the walk costs energy and a question, through the
+## time question's `visit` purpose, like the trip and the forest). It gives nothing at once, only wellbeing.
+func _visit() -> void:
+	if "--novisits" in OS.get_cmdline_user_args(): return      # compare the pace without visits
+	if G.well.invite() == "" or float(G.S["energy"]) < 10.0: return
+	if not G.actions.perform("visit_friend", G.actions.farmer)["done"]: return
+	_answer_until_moved("visit")
+	visits_done += 1
+
 ## The forest: walk in when a plant that is needed can be picked now, pick the right ones (the bot knows which is which), walk out and have it
 ## checked by Wren (a basket is always checked: nothing is ever used unchecked).
 func _forest() -> void:
@@ -303,18 +310,14 @@ func _forest() -> void:
 			if (t["kind"] == "find" or t["kind"] == "pick") and wanted.has(str(t["plant"])) and G.forest.in_season(t) and G.forest.rest_left(sid, str(t["id"])) == 0: todo.append([sid, t])
 	if not G.forest.inside():
 		if todo.is_empty(): return
-		asked += 1
-		G.step_time()
-		G.actions.perform("forest_enter", G.actions.farmer)
+		_answer_until_moved("into_forest")
 	for e in todo:
 		if G.forest.basket().size() >= G.forest.capacity(): break
 		var t: Dictionary = e[1]
 		if t["kind"] == "find": G.actions.perform("forest_find", G.actions.farmer, {"spot": e[0], "tid": str(t["id"]), "option": str(t["plant"])})
 		else: G.actions.perform("forest_pick", G.actions.farmer, {"spot": e[0], "tid": str(t["id"]), "part": str(t["part"])})
 	if G.forest.inside():
-		asked += 1
-		G.step_time()
-		G.actions.perform("forest_leave", G.actions.farmer)
+		_answer_until_moved("out_of_forest")
 		G.forest.check()
 
 func _gate_cost(k: String) -> Dictionary:
@@ -397,6 +400,7 @@ var want_barter := []     # [merchant, item]
 var want_sell := {}       # item -> units
 var last_trip := -99      # the step of the last trip
 var trips_done := 0
+var visits_done := 0     # visits to a friend who invited the farmer
 
 func _turn() -> void:
 	want_seeds = {}; want_buy = []; want_barter = []; want_sell = {}; want_grain = 0
@@ -540,6 +544,7 @@ func _turn() -> void:
 		for bk in G.gate.data().get("barter", {}):          # …and trades an axle for the first cart
 			if "--trips" in OS.get_cmdline_user_args() and need.has(bk): print("   q%d gate here, axle needed; coins %d baskets %d missing %s" % [G.S["step"], int(G.S["coins"]), int(G.inventory.count("wicker_basket")), str(G.pace.missing_cost(_gate_cost(bk)))])
 			if need.has(bk) and G.inventory.count(bk) < 1.0 and G.pace.missing_cost(_gate_cost(bk)).is_empty(): G.trade.barter_gate(bk)
+	_visit()
 	_forest()
 	_trip()
 	for pid in G.polish_ids:
@@ -547,7 +552,16 @@ func _turn() -> void:
 	# eat a dish now and then
 	for k in G.S["inv"].keys():
 		if G.items[k].has("buff") and G.inventory.count(k) > 3 and G.S["buff"].is_empty(): G.trade.eat(k)
-	# only a right first try moves time: with --accuracy below 1 some questions are asked without moving it
-	asked += 1
-	while accuracy < 1.0 and quiz_rng.randf() >= accuracy: asked += 1
-	G.step_time()
+	_answer_until_moved("farm")
+
+## Real Time Quiz questions through the real rule (G.timeq), one after another until one is answered right at the first try (only
+## that moves time and runs the purpose's follow-up): right, or wrong at the share --accuracy sets (a wrong one comes back after the next).
+func _answer_until_moved(purpose: String) -> Dictionary:
+	while true:
+		var q: Dictionary = G.timeq.next()
+		asked += 1
+		var right := accuracy >= 1.0 or quiz_rng.randf() < accuracy
+		if int(G.S["step"]) < trace: print("  q%d  question %s%s: %s" % [G.S["step"], str(q.get("id", "")), " (review)" if q.get("review", false) else "", "right" if right else "wrong"])
+		var rep: Dictionary = G.timeq.answered(q, right, purpose)
+		if rep["moved"]: return rep
+	return {}

@@ -28,7 +28,7 @@ func _ready() -> void:
 	_check(int(G.S["version"]) == G.SAVE_VERSION, "a new game has the current version (%d)" % G.SAVE_VERSION)
 	# every system's defaults are in a new game, and no two systems own the same key
 	var seen := {}
-	for sys in [G, G.seasons, G.inventory, G.needs, G.progression, G.fields, G.animals, G.crafting, G.knowledge, G.rewards, G.trade, G.reveal, G.story, G.trip, G.gate]:
+	for sys in [G, G.seasons, G.inventory, G.needs, G.progression, G.fields, G.animals, G.crafting, G.knowledge, G.timeq, G.rewards, G.trade, G.reveal, G.story, G.trip, G.gate]:
 		for k in sys.save_defaults():
 			_check(not seen.has(k), "save key %s has one owner" % k)
 			seen[k] = true
@@ -73,6 +73,27 @@ func _ready() -> void:
 	var before2 := JSON.stringify(G.S["inv"], "", true)
 	G.upgrade_save_v1(G.S)
 	_check(JSON.stringify(G.S["inv"], "", true) == before2, "the version 1 step is harmless when run again")
+	# version 4 -> 5: the Time Quiz's recent questions and retry were positions in the list of pack questions; now permanent ids
+	var v4: Dictionary = G.S.duplicate(true)
+	v4["version"] = 4
+	v4["recent_q"] = [0.0, 2.0]
+	v4["retry_q"] = {"review": false, "card": "", "qi": 1.0, "wait": 1.0}
+	G.Saves.write("user://saves_test.json", v4)
+	_check(G.load_game("user://saves_test.json"), "a version 4 save loads")
+	var id0 := str(G.pack_questions[0]["id"]); var id1 := str(G.pack_questions[1]["id"]); var id2 := str(G.pack_questions[2]["id"])
+	_check(G.S["recent_q"] == [id0, id2], "…its recent questions are ids now: %s" % str(G.S["recent_q"]))
+	_check(G.S["retry_q"] == {"id": id1, "wait": 1}, "…its retry is an id now: %s" % str(G.S["retry_q"]))
+	var b4 := JSON.stringify([G.S["recent_q"], G.S["retry_q"]])
+	G.timeq.upgrade_save_v4(G.S)
+	_check(JSON.stringify([G.S["recent_q"], G.S["retry_q"]]) == b4, "the version 4 step is harmless when run again")
+	G.timeq.next()                     # the retry waits one question…
+	_check(G.timeq.next().get("id", "") == id1, "…and the old save's retry comes back after the next question")
+	var v4r: Dictionary = G.S.duplicate(true)
+	v4r["version"] = 4
+	var cid0: String = G.card_ids[0]
+	v4r["retry_q"] = {"review": true, "card": cid0, "qi": 0.0, "wait": 0.0}
+	G.Saves.write("user://saves_test.json", v4r)
+	_check(G.load_game("user://saves_test.json") and G.S["retry_q"] == {"card": cid0, "qi": 0, "wait": 0}, "…a review retry keeps its card and question: %s" % str(G.S["retry_q"]))
 	# a save from a newer game is kept as it is
 	var future: Dictionary = G.S.duplicate(true)
 	future["version"] = G.SAVE_VERSION + 5

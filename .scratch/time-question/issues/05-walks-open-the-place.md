@@ -6,12 +6,12 @@ neighbour. Parent, 2 Nov 2026: the background will show where the farmer is.
 
 **Blocked by:** time-question/04
 
-**Status:** ready-for-agent
+**Status:** done
 
 **Milestone:** prototype
 
-- [ ] Village walk, forest in and forest out close straight into the place; the arrival texts are gone (and their German)
-- [ ] The visit keeps its scene and its "Back to the farm" button
-- [ ] Screenshots at iPad size in EN and DE; smoke test
+- [x] Village walk, forest in and forest out close straight into the place; the arrival texts are gone (and their German)
+- [x] The visit keeps its scene and its "Back to the farm" button
+- [x] Screenshots at iPad size in EN and DE; smoke test
 
 **Feature:** `time-question` · **Source:** `.scratch/time-question/spec.md` and the grilling in `01-grill-and-spec.md`. Filed 2 Nov 2026. Words: `GLOSSARY.md`.

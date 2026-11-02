@@ -187,6 +187,27 @@ func _ready() -> void:
 	var j4_skipped: bool = D.info_text() != info1 and not D.playback_playing() and not D.playback_held()
 	print("playback: held while open %s, old look while waiting %s, caught up %s, a tap skips %s" % [j4_held, j4_waiting, j4_caught, j4_skipped])
 	if not (j4_held and j4_waiting and j4_caught and j4_skipped): print("FAIL playback: see the line above")
+	# time-question/06: the farm news is shown on the farm with a short line under it; after a walk it waits until the farm is seen
+	D.clear_toasts()
+	await _frames(2)
+	D.playback_begin()
+	G.step_time()
+	D.playback_step({"rain": true, "removed": 2, "eat_share": 0.1})
+	D.playback_postpone()                       # a right answer on a walk: the pop-up closes into a place
+	D.open_sheet("forest")
+	await _frames(3)
+	var n6_waits: bool = D.playback_waiting() and not D.playback_held() and not _toast_has("Rain!")
+	D.close_sheet()                             # back on the farm
+	await _frames(3)
+	var n6_plays: bool = D.playback_playing()
+	await get_tree().create_timer(G.feel("playback.pause") + 0.3).timeout      # the short pause, then the rain with its line
+	var n6_rain: bool = n6_plays and _toast_has("Rain!") and not _toast_has("scarecrow")
+	D.tap_playback()                            # a tap: the lines not shown yet still come
+	await _frames(2)
+	var n6_all: bool = _toast_has("scarecrow chased off 2 pests") and _toast_has("Pests ate 10%") and not D.playback_waiting()
+	print("farm news: a walk's news waits under the sheet %s, plays when the farm is seen %s, nothing lost on a tap %s" % [n6_waits, n6_rain, n6_all])
+	if not (n6_waits and n6_rain and n6_all): print("FAIL farm news: see the line above")
+	D.clear_toasts()
 	D.playback_speed(0.0)
 	await _frames(6)                 # refreshes still queued from the lines above must not cut the flick short
 	# J4: a plant that moved on by two stages shows the one in between, 0.3 s each, and ends in the new state
@@ -360,7 +381,7 @@ func _ready() -> void:
 	var opts := {}
 	var pics := 0
 	for i in range(60):
-		var tq: Dictionary = G.knowledge.next_time_question()
+		var tq: Dictionary = G.timeq.next()
 		opts[tq["answers"].size()] = int(opts.get(tq["answers"].size(), 0)) + 1
 		if tq.get("pictures", false): pics += 1
 		assert(_atext_ok(tq), "answer missing")
@@ -374,12 +395,12 @@ func _ready() -> void:
 	for q in G.pack_questions:
 		if str(q.get("id", "")) == "CON-001": con = q
 	var con_q: Dictionary = G.knowledge.shuffled_q(con, "", 0, false)
-	G.knowledge.time_result(shown, true)
+	G.timeq.record(shown, true)
 	# J10: a question answered wrong at the first try comes back right after the next one
-	var qa: Dictionary = G.knowledge.next_time_question()
-	G.knowledge.retry_after_next(qa)
-	var qb: Dictionary = G.knowledge.next_time_question()
-	var qc: Dictionary = G.knowledge.next_time_question()
+	var qa: Dictionary = G.timeq.next()
+	G.timeq.record(qa, false)
+	var qb: Dictionary = G.timeq.next()
+	var qc: Dictionary = G.timeq.next()
 	print("r10 first-try rule: wrong one back after one other: ", qb.get("id", "") != qa.get("id", "") and qc.get("id", "") == qa.get("id", ""))
 	print("r8 quiz: ", ids.size(), " ids, doubles ", dup, "  options per question ", opts, "  picture questions ", pics, "/60",
 		"  PIC-004 pictures ", shown["pictures"], " img '", shown["img"], "' right '", shown["answers"][shown["correct"]]["text"], "'",
@@ -561,3 +582,8 @@ func _wrong_rest() -> String:
 	var ok: bool = float(G.S["energy"]) == before and str(pad.fb_lbl.text).begins_with("❌")
 	D.close_modal()
 	return "ok" if ok else "FAILED"
+
+func _toast_has(part: String) -> bool:
+	for t in D.toast_texts():
+		if str(t).contains(part): return true
+	return false

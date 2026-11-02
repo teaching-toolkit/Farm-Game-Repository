@@ -23,7 +23,8 @@ emits the signals the interface listens to (`changed`, `toast`, `gained`, `sold`
 | `skills` | eight skill families, ranks from batches and gates, what a rank changes (`rules/48-skills.json`) | crafting, fields, animals, needs, quality |
 | `story` | which story piece is ready and in what order (kinds, rationing, seen, taps; data in `data/farm/story/`) | the Game (conditions), the interface (`ui/storybox.gd`) |
 | `trip` | the bag (packing, capacity from the carrying thing, load) and the market trip (energy, the walk, the village square, what is bought on the way home; `rules/49-trip.json`) | inventory, trade, progression, the interface |
-| `knowledge` | knowledge cards, the library, reading, card quizzes, the Time Quiz (next question, retries, results) | rewards, progression, pace |
+| `knowledge` | knowledge cards, the library, reading, card quizzes, which cards are due and how a review went | rewards, progression, pace |
+| `timeq` | the Time Quiz question, the one rule that moves time: `next()` (a retry, a due review, or a pack question; its own random source) and `answered(q, first_try, purpose)` (records it; a right first answer steps time and runs the purpose's follow-up: `farm`, `to_village`, `home_from_village`, `visit`, `into_forest`, `out_of_forest`); the one door for packs (`add_pack`); retry and recent questions by id | knowledge, trip, well, actions, the Game (`step_time`) |
 | `rewards` | luck, gift cards, little jobs, golden acorns, perks | crafting, fields, inventory, seasons |
 
 **Rules of the house** (also in `.claude/skills/farm-game-session/SKILL.md`):

@@ -85,6 +85,7 @@ func close_sheet() -> void:
 		var p := M.interior_back
 		M.interior_back = ""
 		M.interiors.open_interior(p)
+	M.playback.farm_seen()        # a walk's news waits for the farm to be seen again
 
 ## The sheet grows with its content, up to 60% of the screen.
 func fit_sheet() -> void:

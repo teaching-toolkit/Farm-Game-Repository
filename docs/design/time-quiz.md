@@ -11,6 +11,18 @@ of farm time.** It is the only thing that moves time. After a wrong first pick t
 and its "why" show, but time stays where it was, and that question comes back right after the next one (a pack question as
 well as a card review).
 
+- **The same question everywhere.** Every walk costs one question too: to the village, to a neighbour's farm, into the forest and out of
+  it. Each is a *purpose* of the same rule: only a right first answer moves time and lets the walk happen; after a wrong one the walk
+  waits with *Next question* and the question comes back after the next one, as on the farm. After a right answer on the way to the
+  village, into the forest or out of it, the green answer shows for a moment (1.2 s, `playback.walkRight` in `rules/65-feel.json`) and
+  the pop-up closes straight into the place (the square, the forest, the basket at the forest edge): no arrival line, no extra button
+  (the background will show where the farmer is). A visit keeps its little scene with the neighbour and its *Back to the farm* button. (The walk home from the village has its purpose name ready for `money-market/04`.)
+- **Questions have their own dice.** Which question comes, and the order of its answers, is decided by the quiz's own random source, so
+  what the farm rolls (rain, pests, luck) never depends on which question came up. The retry and the recently asked questions are
+  remembered by the question's id, so a pack can be added or switched off without mixing them up.
+- **One door for packs.** The built-in packs come in through one door; the parent's own pasted packs will use the same one
+  (`parent-controls/02`), and from then on nothing treats them differently.
+
 - **Where questions come from.** Mostly from the **question packs** the parent switched on (`activePacks` in
   `data/settings.json`; packs are files in `data/quiz_packs/`). A share of the questions (25 % to start, `knowledgeReviewShare`;
   the parent changes it per farm in the grown-up part of ⚙️ Settings, in 5 % steps) are reviews of knowledge cards the child has already learned
@@ -38,11 +50,16 @@ well as a card review).
   has about 1,400 Time Quiz answers, so a live set of 40–80 questions, swapped as the child learns (one pack per school
   topic or term), keeps it fresh.
 
+- **The pop-up tells only right or wrong and time moving** (⏳ and the question number). What happened on the farm is shown on the farm.
 - **The farm after the quiz.** While the quiz is open **nothing on the farm changes** (the screen keeps its old look). After *Back to the
   farm*: a fixed short pause (0.8 s, the same after one question or eight), then what happened plays, mostly together: **rain** first
-  (about a second, if it rained), then the plants **flick through every stage in between** (0.3 s each: sped-up time, not a jump), a bar that
-  changed (energy, water) pulses with its change floating up (−4), pests and the scarecrow play out (§6.4), and last the short notes, a gift or
-  a celebration. **A tap anywhere jumps to the end.** *(planned: a travelling merchant coming down the road, the pets' work)*
+  (about a second, if it rained), the **rainbow** if the rain stopped (with its perk), then the plants **flick through every stage in
+  between** (0.3 s each: sped-up time, not a jump), a bar that changed (energy, water) pulses with its change floating up (−4), the
+  scarecrow and the pests play out (§6.4), and last the other notes, a gift or a celebration. The **farm news** (rain, rainbow,
+  scarecrow, pests) comes as its animation first with a short line under it (a note), the same after every kind of question. **A tap
+  anywhere jumps to the end**; the news lines not shown yet still come as notes, so nothing is lost.
+- **After a walk the news waits** until the farm is seen again (the square's or the forest's sheet is closed); the news of the walk
+  there and the walk back is shown together. *(planned: a travelling merchant coming down the road, the pets' work)*
 
 A pack file:
 

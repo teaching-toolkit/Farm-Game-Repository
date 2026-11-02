@@ -56,6 +56,15 @@ func bubbles() -> int:      # sticky speech bubbles on the screen
 	for c in M.toasts.get_children():
 		if c.get_meta("sticky", false): n += 1
 	return n
+func toast_texts() -> Array:      # the texts of the notes on the screen now
+	var out := []
+	for c in M.toasts.get_children():
+		if not c.is_queued_for_deletion(): out.append(str(c.get_meta("text", "")))
+	return out
+func playback_waiting() -> bool: return M.playback.waiting
+func playback_step(info: Dictionary) -> void: M.playback._on_step(info)     # what a step of time reports, as the playback hears it
+func playback_begin() -> void: M.playback.begin()
+func playback_postpone() -> void: M.playback.postpone()
 func clear_toasts() -> void:
 	for c in M.toasts.get_children(): c.queue_free()
 
