@@ -103,11 +103,17 @@ func _part_basket() -> void:
 	M.content.add_child(UI.label("   ".join(parts), 17, UI.INK, true))
 	var f: Dictionary = G.forest.favour()
 	var cost := tr("a small favour")
-	if f.has("item"): cost = "%s %s" % [G.iemoji(str(f["item"])), G.iname(str(f["item"]))]
-	elif f.has("coins"): cost = G.money(float(f["coins"]))
+	if f.has("items"):
+		var gift := []
+		for k in f["items"]: gift.append(("%s %s" % [G.iemoji(str(k)), G.iname(str(k))]) + ("" if int(f["items"][k]) == 1 else " × %d" % int(f["items"][k])))
+		cost = ", ".join(gift)
+	elif f.has("chore"): cost = tr("🪣 a bucket of water")
 	var row := HFlowContainer.new()
 	row.add_theme_constant_override("h_separation", 6)
 	row.add_child(UI.button(tr("🩺 Visit Wren: she checks it (%s)") % cost, _wren, true, UI.GREEN, 17))
+	if f.has("chore"):      # what the bucket costs, as cubes: energy and water
+		var q: Dictionary = G.actions.check(str(f["chore"]), G.actions.farmer)
+		row.add_child(M.widgets.costs(q["cost"], q["base"]))
 	row.add_child(UI.soft_button(tr("⚠️ Use it without checking"), _unchecked, true, 15))
 	M.content.add_child(row)
 

@@ -12,7 +12,6 @@ func _init(main: FarmMain) -> void:
 	M = main
 	G = main.G
 
-const GROWNUP_SECONDS := 300.0
 
 var grownup_until := 0.0
 
@@ -122,7 +121,7 @@ func ask_password() -> void:
 
 func _check_password(le: LineEdit, msg: Label) -> void:
 	if password_ok(le.text):
-		grownup_until = Time.get_ticks_msec() / 1000.0 + GROWNUP_SECONDS
+		grownup_until = Time.get_ticks_msec() / 1000.0 + G.feel("grownup.lockSeconds")
 		M.modals.close_modal()
 		show_menu()
 	else:

@@ -521,6 +521,13 @@ func m(k: String) -> float:
 func g(k: String, d: float = 0.0) -> float:
 	return Modifiers.value(caps(), k, d)
 
+## A "feel" number (timing and story pacing) from rules/65-feel.json, by "group.name" (tuning/01). tools/check_data.py checks that every one exists.
+func feel(path: String) -> float:
+	var parts := path.split(".")
+	var e: Variant = meta.get("feel", {}).get(parts[0], {}).get(parts[1], {})
+	if typeof(e) != TYPE_DICTIONARY or not e.has("value"): push_error("feel: no number %s in rules/65-feel.json" % path); return 0.0
+	return float(e["value"])
+
 ## The chapter the farm is in: each chapter ends when its pet comes home (chapters[].pet in the data); the last chapter's pet ends the game.
 func chapter() -> int:
 	var chapters: Array = D["chapters"]

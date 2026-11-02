@@ -9,13 +9,11 @@ prototype stands.
 
 ## Game
 
-- **Now (refactor):** the parent's review pass is finished (30 Oct 2026). Two things run side by side:
-  - **With the parent there:** the design interview for `time-question` (`time-question/01`, `/grill-with-docs`), then
-    `/to-spec` and `/to-tickets`.
-  - **Without the parent, or between rounds:** build the ready refactor tickets: `farm-actions/15` (remove the seed-buying path),
-    `farm-actions/16` (orchard trees use the field multiplier), `farm-actions/14` (Wren never takes coins), `tuning/01` (timing
-    numbers into one data file). `python3 tools/tracker.py` lists them first.
-- **Next (refactor):** `condition-language`, then `interruption-queue`, each through the same flow
+- **Now (refactor):** the `time-question` module is grilled and specified (2 Nov 2026, `.scratch/time-question/spec.md`).
+  - **Without the parent:** build `time-question/02` → `03` and `04` (refactor, golden runs identical; if they change, stop and find
+    the cause). Then `05` and `06` (prototype, visible changes for a play-test).
+  - **With the parent there:** the next grilling, `condition-language/01`.
+- **Next (refactor):** build `condition-language` after its grilling, then `interruption-queue` through the same flow
   (`docs/architecture-review-2026-10-22.md` Part B §3–4).
 - **Then (prototype):** a laptop game the child can play alone without major kinks: the 23 Oct play-test tickets
   (`interface-feel`, `season-look`, `money-market`, `nature/04–05`, `crops-and-items`), the village square as its own screen with

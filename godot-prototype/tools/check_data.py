@@ -257,6 +257,21 @@ else:
         if pid not in N or N[pid].get("type") != "pet": err("pets", f"first: {pid} is not a pet")
         if not f.get("emoji") or not f.get("place") or int(f.get("every", 0)) < 1: err(f"pets {pid}", "first needs an emoji, a place and every >= 1")
 
+# ---------------------------------------------------------------- feel numbers (rules/65-feel.json, tuning/01)
+FEEL = META.get("feel", {})
+if not FEEL: err("feel", "rules/65-feel.json is missing")
+for grp, entries in FEEL.items():
+    if grp == "note": continue
+    for name, e in entries.items():
+        if not isinstance(e, dict) or not isinstance(e.get("value"), (int, float)) or not e.get("unit") or not e.get("note"):
+            err(f"feel {grp}.{name}", "needs a number value, a unit and a note")
+import re as _re
+for root, _dirs, files in os.walk(os.path.join(ROOT, "game")):
+    for fn in files:
+        if not fn.endswith(".gd"): continue
+        for m in _re.finditer(r'feel\("([A-Za-z]+)\.([A-Za-z]+)"\)', open(os.path.join(root, fn), encoding="utf-8").read()):
+            if m.group(2) not in FEEL.get(m.group(1), {}): err(f"feel {m.group(1)}.{m.group(2)}", f"read in {fn} but not in rules/65-feel.json")
+
 # ---------------------------------------------------------------- wellbeing (rules/55-well.json)
 WL = META.get("well", {})
 if not WL: warn("well", "rules/55-well.json is missing")

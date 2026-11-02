@@ -1572,7 +1572,7 @@ details summary { cursor: pointer; font-weight: 500; }
       }
     },
     "chores": {
-      "note": "What each chore costs and trains, read by the actions system (game/farm/systems/actions.gd, farm-actions spec). base = the cost before skills, tools, the season and buffs (a number, or the path of a number written elsewhere); cat = the energy category (rules/10-farming.json gather, field, ...); mult = a second modifier (a chore may switch it off for some calls in code: planting an orchard tree) that multiplies the energy after the rest (optional; the old snow and weed code did this, kept so no number moves), raw = no skill, tool of the trade, season or buff changes the energy (optional; the party and the visit; a `mult` still applies), round = up rounds the energy up to a whole number and min is the least it can be (optional; the village trip), wear = the polish that wears, practice = the skill family that trains (both optional). The forest's trips cost no energy of their own (the question each way is asked by the interface), a look at a spot costs none, and the other tasks of a spot cost the gathering energy. A chore that works on a stretch of patch (weed, stones) or on a number of animals names its amount in code: the base energy is per unit. Other cost kinds that depend on the call (the water of a planting, the feed of the animals) come from code too. The effect of a chore stays in the system that owns it. The progression explorer reads water.fetchEnergy, which is why fetch_water points to it.",
+      "note": "What each chore costs and trains, read by the actions system (game/farm/systems/actions.gd, farm-actions spec). base = the cost before skills, tools, the season and buffs (a number, or the path of a number written elsewhere); cat = the energy category (rules/10-farming.json gather, field, ...); mult = a second modifier that multiplies the energy after the rest (optional; the old snow and weed code did this, kept so no number moves), raw = no skill, tool of the trade, season or buff changes the energy (optional; the party and the visit; a `mult` still applies), round = up rounds the energy up to a whole number and min is the least it can be (optional; the village trip), wear = the polish that wears, practice = the skill family that trains (both optional). A recipe at a station is one chore, recipe: its energy, inputs and water are read from recipes.json (this file only says it is a chore) through the chore's profile in crafting.gd. The forest's trips cost no energy of their own (the question each way is asked by the interface), a look at a spot costs none, and the other tasks of a spot cost the gathering energy. A chore that works on a stretch of patch (weed, stones) or on a number of animals names its amount in code: the base energy is per unit. Other cost kinds that depend on the call (the water of a planting, the feed of the animals) come from code too. The effect of a chore stays in the system that owns it. The progression explorer reads water.fetchEnergy, which is why fetch_water points to it.",
       "fetch_water": {
         "base": {
           "energy": "water.fetchEnergy"
@@ -1662,6 +1662,13 @@ details summary { cursor: pointer; font-weight: 500; }
         "base": {},
         "practice": "healing"
       },
+      "wren_water": {
+        "base": {
+          "energy": "forest.wren.chore.energy",
+          "water": "forest.wren.chore.water"
+        },
+        "cat": "gather"
+      },
       "forest_enter": {
         "base": {}
       },
@@ -1676,6 +1683,9 @@ details summary { cursor: pointer; font-weight: 500; }
         "mult": "energy:errand",
         "round": "up",
         "min": "trip.energy.min"
+      },
+      "recipe": {
+        "base": {}
       },
       "throw_party": {
         "base": {
@@ -3296,7 +3306,12 @@ details summary { cursor: pointer; font-weight: 500; }
           "dish",
           "remedy"
         ],
-        "coins": 30
+        "worth": 30,
+        "maxWorth": 90,
+        "chore": {
+          "energy": 2,
+          "water": 5
+        }
       },
       "poison": {
         "questions": 6,
@@ -3603,6 +3618,89 @@ details summary { cursor: pointer; font-weight: 500; }
             "skill_ranks>=1"
           ],
           "note": "Skills work from the start but are only shown, in the album, from the first rank-up (D4)."
+        }
+      }
+    },
+    "feel": {
+      "note": "How the game feels: the timing and story-pacing numbers (tuning/01). Change a value here, not in a script; the scripts read them through G.feel(\"group.name\"). Every entry has its value, its unit and what it does. Rule numbers (prices, weights, quality, growth ...) stay in the rule file of the system that owns them: the table 'Where to change a number' in docs/design/README.md says which.",
+      "playback": {
+        "pause": {
+          "value": 0.8,
+          "unit": "seconds",
+          "note": "After a question, back on the farm: a fixed short pause before anything moves, the same after one question or eight."
+        },
+        "rain": {
+          "value": 1.2,
+          "unit": "seconds",
+          "note": "How long the rain shows, if it rained during the questions."
+        },
+        "flick": {
+          "value": 0.9,
+          "unit": "seconds",
+          "note": "How long the playback waits while plants flick through their stages and the bars pulse (three stages of stageSecs)."
+        },
+        "last": {
+          "value": 0.4,
+          "unit": "seconds",
+          "note": "A last moment before the notes appear."
+        },
+        "stageSecs": {
+          "value": 0.3,
+          "unit": "seconds",
+          "note": "How long each in-between stage of a plant shows on the map when it grew by more than one stage."
+        }
+      },
+      "notes": {
+        "secs": {
+          "value": 5.0,
+          "unit": "seconds",
+          "note": "How long a note (notification) stays on screen."
+        },
+        "hintSecs": {
+          "value": 3.0,
+          "unit": "seconds",
+          "note": "How long a hint stays (the short note when a bar is tapped)."
+        },
+        "newSecs": {
+          "value": 6.0,
+          "unit": "seconds",
+          "note": "How long the 'New: ...' note stays when something new opens."
+        },
+        "maxShown": {
+          "value": 4,
+          "unit": "notes",
+          "note": "At most this many notes at a time; the oldest one leaves first."
+        }
+      },
+      "story": {
+        "rationSteps": {
+          "value": 3,
+          "unit": "questions",
+          "note": "At most one story piece per this many Time Quiz questions."
+        },
+        "barkRest": {
+          "value": 12,
+          "unit": "questions",
+          "note": "A bark (a short remark) does not come back within this many questions, unless the piece sets its own cooldown."
+        },
+        "pictureHeight": {
+          "value": 520,
+          "unit": "pixels",
+          "note": "How high a painted story picture is shown in the story box (the box is up to 760 wide)."
+        }
+      },
+      "grownup": {
+        "lockSeconds": {
+          "value": 300,
+          "unit": "seconds",
+          "note": "How long the grown-up settings stay open after the lock was opened."
+        }
+      },
+      "season": {
+        "snowDepth": {
+          "value": 0.05,
+          "unit": "part of the picture's height",
+          "note": "How far the winter snow caps reach down on roofs, tree tops and rails."
         }
       }
     }

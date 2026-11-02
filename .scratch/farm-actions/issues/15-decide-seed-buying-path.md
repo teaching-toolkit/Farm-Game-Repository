@@ -4,13 +4,13 @@
 
 **Blocked by:** farm-actions/13
 
-**Status:** ready-for-agent
+**Status:** done
 
 **Milestone:** refactor
 
 - [x] A 💡 recommendation is written in this ticket
-- [ ] The parent decided (✅ 30 Oct); the code and the ticket match
-- [ ] If removed: golden runs identical
+- [x] The parent decided (✅ 30 Oct); the code and the ticket match
+- [x] If removed: golden runs identical
 
 ## 💡 Recommendation (30 Oct 2026)
 
@@ -23,6 +23,12 @@ first trip to the village (ADR-0006 and the trip rules) and needs its own design
 ## ✅ Parent's answer (30 Oct 2026)
 
 Yes: remove the path. Golden runs must stay identical.
+
+## Done (30 Oct 2026)
+
+The path is gone from planting: the plan no longer carries seeds to buy or their coins, and the planting effect no longer buys. Seeds
+are bought only on the village square. Checked with only this change applied: short golden runs seeds 1 and 2 identical; all checks of
+`check_all.sh --short` pass.
 
 ---
 

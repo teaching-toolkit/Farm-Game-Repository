@@ -4,13 +4,13 @@
 
 **Blocked by:** farm-actions/13
 
-**Status:** ready-for-agent
+**Status:** done
 
 **Milestone:** refactor
 
 - [x] A 💡 recommendation is written in this ticket
-- [ ] The parent decided (✅ 30 Oct); the data entry matches
-- [ ] If changed: full golden runs are re-saved on purpose and explained in the log
+- [x] The parent decided (✅ 30 Oct); the data entry matches
+- [x] If changed: full golden runs are re-saved on purpose and explained in the log
 
 ## 💡 Recommendation (30 Oct 2026)
 
@@ -24,6 +24,14 @@ design says so, and it is invisible to the child.
 ## ✅ Parent's answer (30 Oct 2026)
 
 Yes: unify it with the other field chores. Full golden runs re-saved on purpose and explained in the log.
+
+## Done (30 Oct 2026)
+
+Planting a tree in the orchard now pays the field energy modifier like every other planting. The chores module's only special case,
+the `no_mult` hook, is removed (no other chore used it); the data entry for planting was already right and is unchanged. Golden runs
+re-recorded on purpose: seed 1 changes from step 314 (chapter 2), seed 2 from step 684 (chapter 4). Both
+still finish the story, a little faster: seed 1 in 893 Time Quiz answers instead of 906, seed 2 in 1017 instead of 1028. Short seed 2
+is unchanged. All checks of `check_all.sh --short` pass with the new files.
 
 ---
 

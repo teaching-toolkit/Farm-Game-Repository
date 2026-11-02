@@ -142,7 +142,7 @@ func stoke(need: float) -> float:
 ## and nowhere else: the energy through the chore's profile (the recipe's own category and station), the inputs and the water as extra costs.
 ## The fuel is the woodpile's, not an item: it is checked here and taken in `before`.
 func register_chores() -> void:
-	G.actions.register("recipe", _recipe_effect, _recipe_requires, _recipe_amount, _recipe_extra, Callable(), _recipe_profile, _recipe_before)
+	G.actions.register("recipe", _recipe_effect, _recipe_requires, _recipe_amount, _recipe_extra, _recipe_profile, _recipe_before)
 
 func _recipe_profile(_who, args: Dictionary) -> Dictionary:
 	var r = G.recipes[args["rid"]]

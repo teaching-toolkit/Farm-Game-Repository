@@ -2,7 +2,7 @@
 
 **What to build:** The walk home from the village costs one time unit, as the walk there does: one Time Quiz question has to be answered. (Assumption: "one time unit" means one question, as on the way there.)
 
-**Blocked by:** None (can start immediately)
+**Blocked by:** time-question/04 (the walk home is the purpose `home_from_village` there)
 
 **Status:** ready-for-agent
 

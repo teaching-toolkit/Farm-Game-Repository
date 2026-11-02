@@ -1,0 +1,29 @@
+{
+  "feel": {
+    "note": "How the game feels: the timing and story-pacing numbers (tuning/01). Change a value here, not in a script; the scripts read them through G.feel(\"group.name\"). Every entry has its value, its unit and what it does. Rule numbers (prices, weights, quality, growth ...) stay in the rule file of the system that owns them: the table 'Where to change a number' in docs/design/README.md says which.",
+    "playback": {
+      "pause": {"value": 0.8, "unit": "seconds", "note": "After a question, back on the farm: a fixed short pause before anything moves, the same after one question or eight."},
+      "rain": {"value": 1.2, "unit": "seconds", "note": "How long the rain shows, if it rained during the questions."},
+      "flick": {"value": 0.9, "unit": "seconds", "note": "How long the playback waits while plants flick through their stages and the bars pulse (three stages of stageSecs)."},
+      "last": {"value": 0.4, "unit": "seconds", "note": "A last moment before the notes appear."},
+      "stageSecs": {"value": 0.3, "unit": "seconds", "note": "How long each in-between stage of a plant shows on the map when it grew by more than one stage."}
+    },
+    "notes": {
+      "secs": {"value": 5.0, "unit": "seconds", "note": "How long a note (notification) stays on screen."},
+      "hintSecs": {"value": 3.0, "unit": "seconds", "note": "How long a hint stays (the short note when a bar is tapped)."},
+      "newSecs": {"value": 6.0, "unit": "seconds", "note": "How long the 'New: ...' note stays when something new opens."},
+      "maxShown": {"value": 4, "unit": "notes", "note": "At most this many notes at a time; the oldest one leaves first."}
+    },
+    "story": {
+      "rationSteps": {"value": 3, "unit": "questions", "note": "At most one story piece per this many Time Quiz questions."},
+      "barkRest": {"value": 12, "unit": "questions", "note": "A bark (a short remark) does not come back within this many questions, unless the piece sets its own cooldown."},
+      "pictureHeight": {"value": 520, "unit": "pixels", "note": "How high a painted story picture is shown in the story box (the box is up to 760 wide)."}
+    },
+    "grownup": {
+      "lockSeconds": {"value": 300, "unit": "seconds", "note": "How long the grown-up settings stay open after the lock was opened."}
+    },
+    "season": {
+      "snowDepth": {"value": 0.05, "unit": "part of the picture's height", "note": "How far the winter snow caps reach down on roofs, tree tops and rails."}
+    }
+  }
+}

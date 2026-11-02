@@ -43,9 +43,28 @@ func _ready() -> void:
 	G.inventory.add_item("bread", 1.0, true)
 	var rep: Dictionary = F.check()
 	_check(rep["bad"] == ["hemlock"] and F.basket().is_empty() and G.inventory.count("yarrow") == 0.0 and G.inventory.count("chamomile") == 1.0, "Wren finds the hemlock, and the rest is in the store")
-	_check(G.inventory.count("porridge") + G.inventory.count("bread") == 1.0, "…for a small favour (one dish)")
-	# without a dish or coins she checks anyway
-	G.S["inv"].clear(); G.S["coins"] = 0.0
+	_check(G.inventory.count("porridge") == 0.0 and G.inventory.count("bread") == 1.0, "…for a small favour (the dish closest to her worth)")
+	# several cheap dishes may go together when that comes closer to her worth
+	var w: Dictionary = F.data()["wren"]
+	var worth0 = w["worth"]
+	w["worth"] = 130
+	G.inventory.add_item("porridge", 3.0, true)
+	_check(F.favour() == {"items": {"porridge": 2}}, "two porridges (60 + 60) come closest to 130")
+	w["worth"] = worth0
+	# nothing dearer than her limit: with only bread (200) and water she asks for the bucket instead
+	G.inventory.take("porridge", G.inventory.count("porridge"))
+	G.S["water"] = 20.0
+	_check(G.inventory.count("bread") >= 1.0 and F.favour() == {"chore": "wren_water"}, "a dish dearer than her limit is not taken: the bucket instead")
+	# without a dish she asks for a bucket of water: energy and water, never coins
+	G.S["inv"].clear(); G.S["coins"] = 500.0; G.S["water"] = 20.0
+	G.S["energy"] = 30.0; G.S["step"] = 45; G.S["forest"]["rest"] = {}
+	_do("forest_find", "glade", "chamomile", {"option": "chamomile"})
+	_check(F.favour() == {"chore": "wren_water"}, "without a dish she asks for a bucket of water")
+	var e1 := float(G.S["energy"])
+	F.check()
+	_check(float(G.S["coins"]) == 500.0 and float(G.S["water"]) == 20.0 - float(w["chore"]["water"]) and float(G.S["energy"]) < e1, "…which costs energy and water, never coins")
+	# without a dish or water she checks anyway
+	G.S["inv"].clear(); G.S["coins"] = 0.0; G.S["water"] = 0.0
 	G.S["energy"] = 30.0; G.S["step"] = 45; G.S["forest"]["rest"] = {}
 	_do("forest_find", "glade", "chamomile", {"option": "mayweed"})
 	_check(F.favour().is_empty() and F.check()["bad"] == ["mayweed"], "with nothing to give she still checks")

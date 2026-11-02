@@ -67,7 +67,7 @@ func _ready() -> void:
 	# a bark may come back after its cooldown, once pieces are unrationed
 	ST.mark_seen("k1")
 	_check(not ST.is_ready("k1"), "a bark rests after it spoke")
-	G.S["step"] = 4 + ST.BARK_COOLDOWN
+	G.S["step"] = 4 + ST.bark_rest()
 	_check(ST.is_ready("k1") and ST.is_bark("k1"), "…and comes back later")
 	_check(not ST.seen_in_order().has("k1") and ST.seen_in_order() == ["f0", "b1", "m1"], "the scroll lists seen pieces in data order, no barks")
 	# the chapter

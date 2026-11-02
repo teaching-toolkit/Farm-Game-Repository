@@ -9,7 +9,7 @@ var costs_seen := {}
 const FREE_CHORES := ["forest_look", "forest_enter", "forest_leave", "recipe"]   # no written cost: the forest walks cost no energy (the question each way is asked by the interface), a recipe is priced by recipes.json
 
 ## Every chore has a price-match (or, for the free ones, a requirements) test in this file; a new chore fails here until it is added.
-const COVERED := ["fetch_water", "clear_snow", "weed", "pick_stones", "plant", "harvest", "cut_tree", "collect_animal", "muck_out", "forest_find", "forest_pick", "forest_dig", "forest_look", "forest_enter", "forest_leave", "village_trip", "recipe", "throw_party", "visit_friend"]
+const COVERED := ["fetch_water", "clear_snow", "weed", "pick_stones", "plant", "harvest", "cut_tree", "collect_animal", "muck_out", "forest_find", "forest_pick", "forest_dig", "forest_look", "forest_enter", "forest_leave", "wren_water", "village_trip", "recipe", "throw_party", "visit_friend"]
 
 func _ready() -> void:
 	G = get_node("/root/Game")
@@ -428,6 +428,24 @@ func _price_match_forest(label: String) -> void:
 	_check(wrong["done"] and not wrong["result"]["good"] and G.forest.basket().is_empty() and G.S["energy"] < G.needs.energy_max(), "a wrong part costs the energy and brings nothing (%s)" % label)
 	var wrong2: Dictionary = A.perform("forest_find", who, {"spot": "meadow", "tid": "yarrow", "option": "hemlock"})
 	_check(wrong2["done"] and not wrong2["result"]["good"] and G.forest.has_bad(), "a look-alike brings the bad plant home (%s)" % label)
+	# Wren's bucket of water: gathering energy and the written water; perform takes exactly what check says, and never coins
+	var ww := float(G.meta["forest"]["wren"]["chore"]["water"])
+	for hair in [false, true]:
+		_forest_state()
+		G.S["water"] = 20.0
+		var c0 := float(G.S["coins"])
+		var wq: Dictionary = A.check("wren_water", who)
+		var we: float = wq["cost"]["energy"]
+		_check(wq["ok"] and is_equal_approx(we, G.needs.ecost("gather", float(G.meta["forest"]["wren"]["chore"]["energy"]))) and is_equal_approx(float(wq["cost"]["water"]), ww), "Wren's bucket costs the gathering energy and the written water (%s)" % label)
+		costs_seen[snappedf(we, 0.001)] = true
+		G.S["energy"] = we - 0.01 if hair else we
+		var wrep: Dictionary = A.perform("wren_water", who)
+		if hair: _check(not wrep["done"] and wrep["failed"] == "energy" and G.S["water"] == 20.0, "a hair too little energy fetches nothing (Wren's bucket, %s)" % label)
+		else: _check(wrep["done"] and G.S["energy"] < 0.001 and is_equal_approx(20.0 - float(G.S["water"]), ww) and float(G.S["coins"]) == c0, "Wren's bucket takes exactly the energy and water, never coins (%s)" % label)
+	_forest_state()
+	G.S["water"] = ww - 0.5
+	var wdry: Dictionary = A.check("wren_water", who)
+	_check(not wdry["ok"] and wdry["unmet"][0]["key"] == "water", "without enough water the bucket is an unmet requirement (%s)" % label)
 
 func _forest_state() -> void:
 	G.S["step"] = 40       # summer

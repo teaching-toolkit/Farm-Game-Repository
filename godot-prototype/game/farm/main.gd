@@ -346,6 +346,7 @@ func _build() -> void:
 	sheet_scroll.add_child(content)
 	# --- toasts and the centred pop-up (quizzes, Rest, cards, gifts)
 	toasts = Notifications.new()
+	toasts.max_shown = int(G.feel("notes.maxShown"))
 	add_child(toasts)
 	modal = Control.new()
 	modal.set_anchors_preset(Control.PRESET_FULL_RECT)

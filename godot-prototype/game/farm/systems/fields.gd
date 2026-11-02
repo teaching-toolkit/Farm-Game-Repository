@@ -155,7 +155,6 @@ func plant_plan(a: String, cid: String, water_have := -1.0) -> Dictionary:
 	var reasons := []
 	var k := want
 	var seeds := seed_have(cid)
-	var seed_cost := float(n.get("seedCost", 0))
 	if seeds < k:   # only seeds you have can be planted (they are bought at the market)
 		k = int(floorf(seeds + 0.0001)); reasons.append("seeds")
 	if not sow_season_ok(n):      # winter wheat is sown in autumn or winter only
@@ -178,8 +177,7 @@ func plant_plan(a: String, cid: String, water_have := -1.0) -> Dictionary:
 	while k > 0 and water + 0.001 < wper * k:
 		k -= 1
 		if not reasons.has("water"): reasons.append("water")
-	var buy := 0
-	return {"plants": k, "max": want, "reasons": reasons, "water": wper * k, "buy_seeds": buy, "coins": buy * seed_cost,
+	return {"plants": k, "max": want, "reasons": reasons, "water": wper * k,
 		"water_base": float(n.get("water", 0)) * k,
 		"water_full": wper * want, "water_full_base": float(n.get("water", 0)) * want}   # for a full patch: shows what is missing
 
@@ -202,10 +200,6 @@ func _plant_extra(_who, args: Dictionary) -> Dictionary:
 	var plan := plant_plan(args["a"], args["cid"])
 	return {"cost": {"water": float(plan["water"])}, "base": {"water": float(plan["water_base"])}}
 
-## Trees in the orchard are planted at the plain energy price; everything else also pays the field modifier.
-func _plant_no_mult(_who, args: Dictionary) -> bool:
-	return args["a"] == "orchard" and G.nodes[args["cid"]].has("regrow")
-
 func _plant_effect(who, args: Dictionary, cost: Dictionary) -> Dictionary:
 	var a: String = args["a"]
 	var cid: String = args["cid"]
@@ -213,10 +207,6 @@ func _plant_effect(who, args: Dictionary, cost: Dictionary) -> Dictionary:
 	var plan := plant_plan(a, cid, float(G.S["water"]) + float(cost.get("water", 0.0)))   # the water is already paid
 	var k := int(plan["plants"])
 	var n = G.nodes[cid]
-	if int(plan["buy_seeds"]) > 0:
-		G.S["coins"] -= float(plan["coins"])
-		G.S["seeds"][cid] = float(G.S["seeds"].get(cid, 0.0)) + int(plan["buy_seeds"])
-		if G.rewards.roll(G.rewards.luck_event("seed_bargain")): G.S["seeds"][cid] = float(G.S["seeds"][cid]) + 1.0; G.say(tr("🎁 The seed merchant adds one for free."))
 	if n.has("seedItem"): G.inventory.take(n["seedItem"], k)
 	else: G.S["seeds"][cid] = float(G.S["seeds"].get(cid, 0.0)) - k
 	if a == "field":
@@ -398,7 +388,7 @@ func register_chores() -> void:
 	G.actions.register("clear_snow", _clear_snow_effect, _clear_snow_requires)
 	G.actions.register("weed", _weed_effect, _weed_requires, _weed_amount)
 	G.actions.register("pick_stones", _stones_effect, _stones_requires, _stones_amount)
-	G.actions.register("plant", _plant_effect, _plant_requires, Callable(), _plant_extra, _plant_no_mult)
+	G.actions.register("plant", _plant_effect, _plant_requires, Callable(), _plant_extra)
 	G.actions.register("harvest", _harvest_effect, _harvest_requires)
 	G.actions.register("cut_tree", _cut_tree_effect, _cut_tree_requires)
 

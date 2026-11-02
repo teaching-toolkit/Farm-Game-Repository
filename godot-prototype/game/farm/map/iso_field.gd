@@ -64,7 +64,6 @@ var scare_level := 0             # how many fierce looks the scarecrow throws at
 var pending_rain := false        # it rained in the last question(s): the playback after the Time Quiz shows it (play_rain)
 var _flicks: Array = []          # tweens of plants flicking through their stages (killed when the playback is skipped)
 const STAGES := ["sprout", "grown", "ready"]
-const FLICK_SECS := 0.3          # how long each in-between stage shows
 
 func setup(patch_w: float, gap_w := 14.0) -> void:
 	patch = patch_w
@@ -194,7 +193,7 @@ func _flick_patch(k: int, spec: Dictionary) -> bool:
 	if a < 0 or b <= a: return false
 	var tw := create_tween()
 	for j in range(a + 1, b + 1):
-		tw.tween_interval(FLICK_SECS)
+		tw.tween_interval(G.feel("playback.stageSecs"))      # how long each in-between stage shows (rules/65-feel.json)
 		var step := spec if j == b else spec.merged({"stage": STAGES[j], "ready": false}, true)
 		tw.tween_callback(patches[k].show_state.bind(step))
 	_flicks.append(tw)

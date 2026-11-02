@@ -16,9 +16,11 @@ func _init(main: FarmMain) -> void:
 
 ## A short note when a bar is tapped (what it shows); it goes away sooner than other notes and not into the log.
 func hint(t: String) -> void:
-	toast(t, 3.0)
+	toast(t, G.feel("notes.hintSecs"))
 
-func toast(t: String, secs := 5.0) -> void:
+## secs < 0: the usual time (rules/65-feel.json, notes.secs).
+func toast(t: String, secs := -1.0) -> void:
+	if secs < 0.0: secs = G.feel("notes.secs")
 	if t.begins_with("⚡"): M.feedback.sfx("tired")             # too tired: a soft "not now"
 	# what flies to the store needs no words (it still goes into the log)
 	# harvests, collections and finished recipes fly to the store instead of a toast (in any language: the message's
@@ -52,7 +54,7 @@ func on_revealed(id: String) -> void:
 		"bag": what = tr("🎒 the bag")
 		"face": what = tr("😊 how you feel: tap the face")
 		_: return
-	toast(tr("✨ New: %s") % what, 6.0)
+	toast(tr("✨ New: %s") % what, G.feel("notes.newSecs"))
 	var node: Control = M.lbl_coins if id == "coins" else (M.face_btn if id == "face" else M.icon_buttons.get(id))
 	if node == null: return
 	node.visible = true

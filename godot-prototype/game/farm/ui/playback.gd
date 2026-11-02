@@ -7,10 +7,7 @@ class_name FarmUiPlayback
 
 const UI = preload("res://kits/ui/ui.gd")
 
-const PAUSE := 0.8        # on the farm again: a fixed short pause, the same after one question or eight
-const RAIN := 1.2         # about a second of rain, if it rained
-const FLICK := 0.9        # plants flicking through their stages (0.3 s each) and the bars pulsing
-const LAST := 0.4         # a moment before the notes
+# its pauses (pause, rain, flick, last) are "feel" numbers: rules/65-feel.json, group playback
 
 var M: FarmMain   # the main screen: its widgets and the other parts
 var G: FarmGame   # the rules (G.<system>.<function>)
@@ -60,19 +57,19 @@ func play(after: Callable) -> void:
 	_catcher.mouse_filter = Control.MOUSE_FILTER_STOP
 	_catcher.gui_input.connect(_tap)
 	M.add_child(_catcher)
-	if not await _wait(PAUSE, me): return
+	if not await _wait(G.feel("playback.pause"), me): return
 	if _rain:
 		M.map.play_rain()
-		if not await _wait(RAIN, me): return
+		if not await _wait(G.feel("playback.rain"), me): return
 	held = false
 	flicking = true
 	M.refresh()                                       # the new state: plants flick through their stages
 	flicking = false
 	_pulse_changes()
-	if not await _wait(FLICK, me): return
+	if not await _wait(G.feel("playback.flick"), me): return
 	M.map.play_pending()                              # pests, the scarecrow
 	_play_pets()
-	if not await _wait(LAST, me): return
+	if not await _wait(G.feel("playback.last"), me): return
 	playing = false
 	_end()
 

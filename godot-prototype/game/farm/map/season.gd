@@ -13,6 +13,8 @@ static func material() -> ShaderMaterial:
 	if _mat == null:
 		_mat = ShaderMaterial.new()
 		_mat.shader = SHADER
+		var g = (Engine.get_main_loop() as SceneTree).root.get_node_or_null("/root/Game")
+		if g != null: _mat.set_shader_parameter("snow_depth", g.feel("season.snowDepth"))     # rules/65-feel.json
 	return _mat
 
 static func flat_material() -> ShaderMaterial:

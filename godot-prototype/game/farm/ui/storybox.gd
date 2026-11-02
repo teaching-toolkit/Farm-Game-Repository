@@ -10,7 +10,6 @@ const Art = preload("res://kits/ui/art.gd")
 
 const KIND_EMOJI := {"frame": "📖", "beat": "✨", "discovery": "🔎", "letter": "✉️", "moment": "💬", "visit": "🚶", "scene": "🏘️", "bark": "💬"}
 const PICTURE_FOLDERS := ["story", "friends", "helpers", "ruins", "deco", "map"]
-const SCENE_H := 520.0         # height of a painted story scene (a square picture; the pop-up is up to 760 wide)
 
 var M: FarmMain   # the main screen: its widgets and the other parts
 var G: FarmGame   # the rules (G.<system>.<function>)
@@ -89,7 +88,7 @@ func _scene_view(tex: Texture2D) -> Control:
 	r.texture = tex
 	r.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	r.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	r.custom_minimum_size = Vector2(0, SCENE_H)
+	r.custom_minimum_size = Vector2(0, G.feel("story.pictureHeight"))      # a painted story scene (rules/65-feel.json)
 	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return r
 

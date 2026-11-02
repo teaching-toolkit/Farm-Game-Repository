@@ -7,7 +7,7 @@ class_name FarmActions
 
 var G: FarmGame   # the Game: the farm's state (G.S), its data and the other systems
 var farmer: Doer
-var _chores := {}   # chore -> {"effect": Callable, "requires": Callable, "amount": Callable, "extra": Callable, "no_mult": Callable, "profile": Callable, "before": Callable}
+var _chores := {}   # chore -> {"effect": Callable, "requires": Callable, "amount": Callable, "extra": Callable, "profile": Callable, "before": Callable}
 
 ## Who does a chore. The farmer's energy lives in the farm's state; a pet doing a chore for the farmer would pay from it too.
 class Doer extends RefCounted:
@@ -34,11 +34,10 @@ func _init(game: FarmGame) -> void:
 ##   requires: func(who: Doer, args: Dictionary) -> Array of {"key": reason key, "text": a sentence for the child}   (read-only)
 ##   amount:   func(who: Doer, args: Dictionary) -> float   (optional; how many units of work this call is: the base energy is per unit; read-only)
 ##   extra:    func(who: Doer, args: Dictionary) -> {"cost": {...}, "base": {...}}   (optional; costs of other kinds that depend on the call, e.g. the water of a planting or the feed of animals; spent as written; read-only)
-##   no_mult:  func(who: Doer, args: Dictionary) -> bool   (optional; true = the data's second energy modifier (mult) does not apply to this call; read-only)
 ##   profile:  func(who: Doer, args: Dictionary) -> Dictionary   (optional; the chore's data for this call, for a chore whose numbers are written elsewhere (a recipe): base, cat, station … replace the written ones; read-only)
 ##   before:   func(who: Doer, args: Dictionary, cost: Dictionary) -> Dictionary   (optional; runs once perform has found nothing in the way, before anything is spent. It may fix details of the call in args (how many loads) and take what the chore uses besides the cost (the woodpile's fuel). Returns {} to go on, or {"key", "message"} to stop with nothing spent)
-func register(chore: String, effect: Callable, requires := Callable(), amount := Callable(), extra := Callable(), no_mult := Callable(), profile := Callable(), before := Callable()) -> void:
-	_chores[chore] = {"effect": effect, "requires": requires, "amount": amount, "extra": extra, "no_mult": no_mult, "profile": profile, "before": before}
+func register(chore: String, effect: Callable, requires := Callable(), amount := Callable(), extra := Callable(), profile := Callable(), before := Callable()) -> void:
+	_chores[chore] = {"effect": effect, "requires": requires, "amount": amount, "extra": extra, "profile": profile, "before": before}
 
 ## The chore's data: the written entry of rules/46-chores.json, with what its profile says for this call (when asked with a doer and args).
 func data(chore: String, who: Doer = null, args := {}) -> Dictionary:
@@ -79,9 +78,7 @@ func effective_cost(chore: String, who: Doer, args := {}) -> Dictionary:
 	if cost.has("energy"):
 		if not bool(d.get("raw", false)):       # raw: no skill, tool, season or buff changes the energy (a party)
 			cost["energy"] = G.needs.ecost(str(d.get("cat", "")), float(cost["energy"]), str(d.get("station", "")))
-		var c: Dictionary = _chores.get(chore, {})
-		var skip: bool = c.has("no_mult") and c["no_mult"].is_valid() and bool(c["no_mult"].call(who, args))
-		if str(d.get("mult", "")) != "" and not skip: cost["energy"] = float(cost["energy"]) * G.m(str(d["mult"]))
+		if str(d.get("mult", "")) != "": cost["energy"] = float(cost["energy"]) * G.m(str(d["mult"]))
 		if str(d.get("round", "")) == "up": cost["energy"] = ceilf(float(cost["energy"]) - 0.0001)
 		if d.has("min"): cost["energy"] = maxf(float(cost["energy"]), _number(d["min"]))
 	if _chores.has(chore) and _chores[chore]["extra"].is_valid(): cost.merge(_chores[chore]["extra"].call(who, args)["cost"], true)

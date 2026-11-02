@@ -40,6 +40,16 @@ func register_chores() -> void:
 	G.actions.register("forest_leave", _leave_effect, _leave_requires)
 	for kind in ["find", "pick", "dig", "look"]:
 		G.actions.register("forest_" + kind, _task_effect, _task_requires)
+	G.actions.register("wren_water", _wren_water_effect, _wren_water_requires)
+
+## Wren's chore: fetch her a bucket of water (no args). Its energy and water are written in rules/57-forest.json (forest.wren.chore).
+func _wren_water_requires(who, _args: Dictionary) -> Array:
+	var need := float(G.actions.call_base("wren_water", who).get("water", 0.0))
+	if float(G.S["water"]) + 0.001 < need: return [{"key": "water", "text": tr("💧 Not enough water.")}]
+	return []
+
+func _wren_water_effect(_who, _args: Dictionary, _cost: Dictionary) -> Dictionary:
+	return {"gained": {}}
 
 func _enter_requires(_who, _args: Dictionary) -> Array:
 	if not open(): return [{"key": "closed", "text": ""}]
@@ -127,24 +137,45 @@ func has_bad() -> bool:
 		if e["claim"] != e["real"]: return true
 	return false
 
-## The small favour Wren asks for: the cheapest dish or remedy in the store, else a few coins, else nothing today (never stuck).
+## The small favour Wren asks for, worth about forest.wren.worth (bronze); never coins (farm-actions/14):
+##   {"items": {item: units}}  dishes or remedies worth at most forest.wren.maxWorth from the store whose value comes closest to that worth (the closest one first, then more
+##                             units only while the sum comes closer: several cheap ones may go together);
+##   {"chore": "wren_water"}   else fetch her a bucket of water, a chore of about that worth, if it can be done now;
+##   {}                        else she checks for nothing today (never stuck).
 func favour() -> Dictionary:
 	var w: Dictionary = data().get("wren", {})
-	var best := ""
+	var worth := float(w.get("worth", 30))
+	var most := float(w.get("maxWorth", INF))      # nothing dearer: no cheese board or fresh remedy for a tiny favour (farm-actions/17)
+	var have := {}
 	for k in G.S["inv"]:
 		if not G.items.has(k) or G.inventory.count(k) < 1.0: continue
+		if float(G.items[k].get("value", 0)) > most + 0.001: continue
 		if (w.get("cats", []) as Array).has(str(G.items[k].get("category", ""))) and not (G.items[k].get("tags", []) as Array).has("pet-dish"):
-			if best == "" or float(G.items[k].get("value", 0)) < float(G.items[best].get("value", 0)): best = k
-	if best != "": return {"item": best}
-	if float(G.S["coins"]) >= float(w.get("coins", 30)): return {"coins": float(w.get("coins", 30))}
+			have[k] = int(floorf(G.inventory.count(k) + 0.0001))
+	if not have.is_empty():
+		var take := {}
+		var sum := 0.0
+		while true:
+			var best := ""
+			var best_gap := INF
+			for k in have:
+				if int(take.get(k, 0)) >= int(have[k]): continue
+				var gap := absf(sum + float(G.items[k].get("value", 0)) - worth)
+				if gap < best_gap - 0.001 or (absf(gap - best_gap) <= 0.001 and float(G.items[k].get("value", 0)) < float(G.items[best].get("value", 0))):
+					best = k; best_gap = gap
+			if best == "" or (not take.is_empty() and best_gap >= absf(sum - worth) - 0.001): break
+			take[best] = int(take.get(best, 0)) + 1
+			sum += float(G.items[best].get("value", 0))
+		return {"items": take}
+	if G.actions.check("wren_water", G.actions.farmer)["ok"]: return {"chore": "wren_water"}
 	return {}
 
 ## Wren looks through the basket: the right plants go into the store, the wrong ones are thrown out. Returns what she found.
 func check() -> Dictionary:
 	if basket().is_empty(): return {"good": {}, "bad": []}
 	var f := favour()
-	if f.has("item"): G.inventory.take(str(f["item"]), 1.0)
-	elif f.has("coins"): G.S["coins"] -= float(f["coins"])
+	if f.has("items"):
+		for k in f["items"]: G.inventory.take(str(k), float(f["items"][k]))
 	var good := {}
 	var bad := []
 	for e in basket():
@@ -154,6 +185,9 @@ func check() -> Dictionary:
 	for k in good: G.inventory.add_item(k, float(good[k]), true)
 	_s()["basket"] = []
 	_s()["checked"] = int(_s()["checked"]) + 1
+	if f.has("chore"):      # the bucket last, with the basket already empty: perform saves and redraws
+		if not G.actions.perform(str(f["chore"]), G.actions.farmer)["done"]: f = {}
+		return {"good": good, "bad": bad, "favour": f}
 	G.save_game(); G.changed.emit()
 	return {"good": good, "bad": bad, "favour": f}
 

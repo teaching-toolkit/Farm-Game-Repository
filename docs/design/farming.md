@@ -81,7 +81,8 @@ Part of the game's design ([index](README.md)). It describes the game as built; 
 - **The orchard** (cleared in chapter 2; 3 tree spots, +2 with the orchard terraces in chapter 5): apple, walnut and olive
   trees are planted once, take long to grow (10–14 questions) and then give a harvest every 4–5 questions for good. A tree
   can be **cut down** (🪓, 3 energy, gives a log and sticks) to plant another kind — so three apple trees never block the
-  walnuts the pony's cake needs.
+  walnuts the pony's cake needs. Planting a tree costs energy like any other planting: the same field upgrades and skills make
+  it cheaper.
 - **The greenhouse** (chapter 4: frame, then glass; extension in chapter 5) grows the heirlooms: saffron crocus (one small
   harvest after 8 questions, leaving corms behind), rainbow carrots and golden beets.
 

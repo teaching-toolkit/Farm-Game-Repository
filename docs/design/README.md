@@ -37,6 +37,28 @@ rest up to date. Until 30 Oct 2026 this was one file, `farm-quiz-game-master-des
 
 The old §16 glossary is now part of `../../GLOSSARY.md`.
 
+## Where to change a number
+
+Every number lives in data under `godot-prototype/data/farm/`; the data wins over any document. Change it there, never in a script.
+The rule files are in `rules/`, one per system.
+
+| To change … | Edit |
+|---|---|
+| How the game *feels*: playback pauses and rain, plant flicking, how long notes stay and how many stack, story ration and bark rest, story picture height, grown-up lock, snow caps | `rules/65-feel.json` |
+| What a chore costs (energy, water) and what it trains | `rules/46-chores.json` (Wren's bucket: `rules/57-forest.json`, `forest.wren`) |
+| Weeds, water, pests, stones, crop rotation, harvests, carrying, seasons, freshness, muck, fuel | `rules/10-farming.json` |
+| Rest sums, the Time Quiz, knowledge cards | `rules/20-learning.json` |
+| Tool polish, building | `rules/30-crafting.json` |
+| Market, prices from ingredients, bronze and gold | `rules/40-economy.json`; seasonal prices `rules/52-season-prices.json`; trust `rules/51-trust.json` |
+| Weights, quality grades, skills | `rules/45-weight.json`, `rules/47-quality.json`, `rules/48-skills.json` |
+| The village trip and the bag; the gate; the Lord's share | `rules/49-trip.json`, `rules/50-gate.json`, `rules/53-lord.json` |
+| Luck, gift cards, jobs, acorns, perks, postcards | `rules/50-rewards.json` |
+| Pets' jobs, wellbeing, nature, the forest and Wren | `rules/54-pets.json`, `rules/55-well.json`, `rules/56-nature.json`, `rules/57-forest.json` |
+| What is shown when (reveal) | `rules/60-reveal.json` |
+| Goals, buildings, books, cards and their costs | `nodes/*.json` |
+| Item values, recipes, chapters, the start | `items.json`, `recipes.json`, `chapters.json`, `start.json` |
+| Story pieces | `story/*.json` (German in `data/i18n/`) |
+
 ## Key numbers (as of 24 Oct 2026; update when the data changes)
 
 Data v0.8: 182 items, 461 nodes, 131 recipes, 43 stations, 87 cards in 14 books, 22 polish jobs, 58 helpers, 28 side quests.

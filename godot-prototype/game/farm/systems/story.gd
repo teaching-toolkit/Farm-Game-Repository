@@ -6,9 +6,7 @@ class_name FarmStory
 ## showing it (the story box, the speech bubble, the 📜 scroll) is the interface's job (game/farm/ui/storybox.gd).
 
 const KINDS := ["frame", "beat", "discovery", "letter", "moment", "visit", "scene", "bark", "trace"]   # priority order: first wins
-const RATIONED := ["moment", "visit", "letter"]       # unprompted pieces: at most one per `RATION_STEPS` Time Quiz questions
-const RATION_STEPS := 3
-const BARK_COOLDOWN := 12                              # a bark does not come back within this many questions
+const RATIONED := ["moment", "visit", "letter"]       # unprompted pieces: at most one per story.rationSteps Time Quiz questions (rules/65-feel.json)
 
 var G: FarmGame   # the Game: the farm's state (G.S), its data and the other systems
 
@@ -49,14 +47,18 @@ func is_ready(id: String) -> bool:
 	var once: bool = bool(p.get("once", str(p.get("kind", "")) != "bark"))
 	if seen(id):
 		if once: return false
-		if G.S["step"] - int(G.S["story_seen"][id]) < int(p.get("cooldown", BARK_COOLDOWN)): return false
+		if G.S["step"] - int(G.S["story_seen"][id]) < int(p.get("cooldown", bark_rest())): return false
 	return G.cond_all(p.get("when", []))
+
+## A bark does not come back within this many questions (rules/65-feel.json, story.barkRest), unless the piece sets its own cooldown.
+func bark_rest() -> int:
+	return int(G.feel("story.barkRest"))
 
 ## The pieces ready now, the one to show first at the front: by kind, then by priority, then by the order of the data;
 ## a bark that was seen longest ago comes before one seen lately. Rationed kinds wait out their three questions.
 func ready() -> Array:
 	var out := []
-	var rationed_out: bool = G.S["step"] - int(G.S["story_last"]) < RATION_STEPS
+	var rationed_out: bool = G.S["step"] - int(G.S["story_last"]) < int(G.feel("story.rationSteps"))
 	var order := 0
 	for id in pieces():
 		order += 1

@@ -61,6 +61,15 @@ _Avoid_: quiz (alone), the clock
 One right first Time Quiz answer, the step by which farm time moves.
 _Avoid_: turn, tick
 
+**Walk**:
+Going somewhere that costs one Time Quiz question: to the village and back, into and out of the forest, a visit. A right first answer
+gets the farmer there; the place itself shows where they are.
+_Avoid_: trip question, travel question
+
+**Purpose**:
+What a Time Quiz question is answered for: farm time, or one of the walks. Each purpose names what happens after a right first answer.
+_Avoid_: mode, kind
+
 **Rest**:
 Mental-arithmetic sums that give the farmer energy.
 _Avoid_: training (the old name)

@@ -23,7 +23,10 @@ in the repo. Harmless messages: "ALSA … ERR_CANT_OPEN" / "All audio drivers fa
 silences them) and "RIDs … leaked" at exit.
 
 **Linked computer (Cowork device shell):** every shell call starts fresh, so set `G` again in each call, and pass the longest
-timeout (180 s). Run the checks on a work copy so that Linux Godot's cache stays out of the parent's folder. Refresh the copy
+timeout (180 s). A job started in the background (`&`, `nohup`) is stopped when the call ends, so run long things in the
+foreground: `check_all.sh --short` fits in one call; the full golden run does not, so run the bot per seed
+(`$G --headless --path . res://tests/bot.tscn -- --chapter=6 --seed=1 --golden=FILE`, ~70 s) and compare with
+`tests/golden/bot-seed1-ch6.txt` with the ` state …` column removed, as `golden.sh` does. Run the checks on a work copy so that Linux Godot's cache stays out of the parent's folder. Refresh the copy
 right before every run, so the checks always see the latest edits:
 
 ```bash
@@ -56,8 +59,8 @@ What a pass looks like:
   anything. If the change is meant to alter the pace, say by how much and update the numbers here and in the prototype README.
   A new mechanic needs the bot to learn it, or the bot no longer tests the game. `--trace=N` prints the first N questions;
   `--flex` plays with dynamic difficulty; `--accuracy=0.8` misses a share of first tries in the Time Quiz.
-- **Golden run** (`tests/golden.sh`, part of `check_all.sh`): the bot plays seeds 1 and 2 to chapter 5 (741 and 639 steps,
-  12 Oct 2026) and must match `tests/golden/` step by step. A restructuring that changes it changed the rules: find out why
+- **Golden run** (`tests/golden.sh`, part of `check_all.sh`): the bot plays seeds 1 and 2 to chapter 5 (654 and 742 steps,
+  30 Oct 2026) and must match `tests/golden/` step by step. A restructuring that changes it changed the rules: find out why
   before going on. Only a change to rules or numbers made on purpose is recorded anew (`bash tests/golden.sh --record`), and
   the log says so. **Short or full:** golden runs do not need to run through all chapters every time. `bash tests/golden.sh --short`
   (or `check_all.sh --short`) plays seeds 1 and 2 only to the end of chapter 2 (332 and 344 steps, ~38 s); use it after every slice. Run the full

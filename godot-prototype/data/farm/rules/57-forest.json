@@ -5,7 +5,7 @@
     "basketBonus": {"gathering_basket": 4},
     "pickEnergy": 2,
     "refill": 4,
-    "wren": {"cats": ["dish", "remedy"], "coins": 30},
+    "wren": {"cats": ["dish", "remedy"], "worth": 30, "maxWorth": 90, "chore": {"energy": 2, "water": 5}},
     "poison": {"questions": 6, "mult": 2.0},
     "spots": {
       "glade": {"emoji": "🌼", "name": "The glade", "tasks": [
