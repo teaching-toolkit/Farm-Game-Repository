@@ -74,12 +74,29 @@ func after_rest_answer(right: bool, fast: bool) -> void:
 func arith_info(level_id := "") -> Dictionary:
 	return G.math.level_info(G.learn_record(), level_id)
 
-## fast = answered before the Rest timer ran out (settings.json restTimerSeconds); slow answers give restSlowShare of it.
+## The share of the energy a slow right Rest answer gives (0..1, steps of 0.1). Set per farm in ⚙️ Settings (grown-up part);
+## data/settings.json restSlowShare gives the starting value (0.2). A farm that never changed it has no save key and follows it.
+func slow_share() -> float:
+	return clampf(float(G.S.get("rest_slow_share", G.settings.get("restSlowShare", 0.2))), 0.0, 1.0)
+
+func set_slow_share(v: float) -> void:
+	G.S["rest_slow_share"] = clampf(snappedf(v, 0.1), 0.0, 1.0)
+
+## fast = answered before the Rest timer ran out (settings.json restTimerSeconds); slow answers give slow_share() of it.
 func rest_correct(fast := true) -> float:
 	var before := float(G.S["energy"])
-	var gain := rest_per_answer() * (1.0 if fast else float(G.settings.get("restSlowShare", 0.5)))
+	var gain := rest_per_answer() * (1.0 if fast else slow_share())
 	G.S["energy"] = minf(energy_max(), before + gain)
 	G.S["stats"]["rest"] = int(G.S["stats"]["rest"]) + 1
 	G.rewards.job_progress("rest", "", 1.0)
 	G.changed.emit()
 	return float(G.S["energy"]) - before
+
+# ------------------------------------------------------------------ condition words
+
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("energy", func(_a): return float(G.S["energy"]), "number", "", "The farmer's energy now.", "energy<3")
+	c.register("rest_quick", func(_a): return float(G.S["stats"].get("rest_quick", 0)), "number", "", "Rest sums answered right and quickly so far.", "rest_quick>=10")
+	c.register("medals", func(_a): return float(G.math.medal_count(G.learn_record())), "number", "", "Rest sum medals won (all kinds).", "medals>=1")
+	c.register("arith_level", func(_a): return float(G.math.medal_count(G.learn_record(), "bronze") + 1), "number", "", "The Rest sums level: 1 + the bronze medals won.", "arith_level>=3")

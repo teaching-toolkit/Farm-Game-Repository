@@ -130,3 +130,11 @@ func pay(amount := -1.0) -> bool:
 		G.say(tr("🏮 Paid %s. Still owed: %s.") % [G.money(a), G.money(owed())])
 	G.save_game(); G.changed.emit()
 	return true
+
+# ------------------------------------------------------------------ condition words
+
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("lord_owed", func(_a): return owed(), "number", "", "Bronze owed for the Lord's share now.", "lord_owed>=1")
+	c.register("lord_paid", func(_a): return float(G.S["lord"]["paid"]), "number", "", "Bronze paid for the Lord's share so far.", "lord_paid>=1")
+	c.register("lord_shares", func(_a): return float(G.S["lord"]["shares"]), "number", "", "Lord's shares paid so far.", "lord_shares>=1")

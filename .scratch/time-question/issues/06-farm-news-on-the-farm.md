@@ -6,17 +6,16 @@ walk, on coming home). The pop-up shows only right or wrong and time moving (⏳
 
 **Blocked by:** time-question/04
 
-**Status:** needs-parent
+**Status:** done
 
 **Milestone:** prototype
 
-**Size:** quick
 
 - [x] The farm news is built from the part's report and shown by the playback, the same for every purpose
 - [x] The pop-up's news lines are gone; it shows right or wrong and ⏳ with the question number
 - [x] Nothing is lost: a walk's news waits until the farm is seen again
 - [x] Screenshots at iPad size in EN and DE; smoke test
-- [ ] The parent play-tests it
+- [x] The parent play-tests it (2 Nov 2026: looks good, no anomalies)
 
 **Feature:** `time-question` · **Source:** `.scratch/time-question/spec.md` and the grilling in `01-grill-and-spec.md`. Filed 2 Nov 2026. Words: `GLOSSARY.md`.
 

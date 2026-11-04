@@ -61,7 +61,7 @@ func _filter_cats() -> Array:
 	return []
 
 func _filter_name(id: String) -> String:
-	return {"all": tr("All"), "crops": tr("Crops"), "food": tr("Food"), "crafts": tr("Crafts"), "materials": tr("Materials")}.get(id, id)
+	return {"all": tr("All"), "crops": tr("Crops"), "food": tr("Food"), "crafts": tr("Crafts"), "herbs": tr("Herbs"), "materials": tr("Materials")}.get(id, id)
 
 ## A row of filters on top of the store: all, then the kinds of things (more can be added in the data).
 func _filter_row() -> Control:
@@ -94,7 +94,7 @@ func _store_tile(k: String) -> Control:
 	var v := UI.vbox(1)
 	v.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	pc.add_child(v)
-	var pic := Art.first("items", [k])
+	var pic := M.widgets.pic(k)
 	var top: Control
 	if pic:
 		var tr := TextureRect.new()
@@ -195,7 +195,7 @@ func part_bag() -> void:
 	head.add_child(UI.label("🎒", 34))
 	var bv := UI.vbox(2)
 	bv.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	bv.add_child(UI.label(tr("%s of %s room used") % [str(snappedf(ld, 0.1)).trim_suffix(".0"), str(int(cap))], 18))
+	bv.add_child(UI.label(tr("%s of %s room used") % [str(ceili(ld)), str(int(cap))], 18))
 	bv.add_child(UI.bar(G.trip.fill(), 260, 14, UI.AMBER if G.trip.fill() < 0.999 else UI.RED))
 	head.add_child(bv)
 	M.content.add_child(head)
@@ -208,7 +208,7 @@ func part_bag() -> void:
 		var ks: Array = G.trip.contents().keys()
 		ks.sort_custom(func(a, b): return G.inventory.load_of(a, G.trip.packed(a)) > G.inventory.load_of(b, G.trip.packed(b)))    # what takes the most room first
 		for k in ks:
-			var v := M.widgets.tile(Art.first("items", [k]), G.iemoji(k), "%s\n%d  ·  %s" % [G.iname(k), int(G.trip.packed(k)), tr("room %s") % str(snappedf(G.inventory.load_of(k, G.trip.packed(k)), 0.1)).trim_suffix(".0")])
+			var v := M.widgets.tile(M.widgets.pic(k), G.iemoji(k), "%s\n%d  ·  %s" % [G.iname(k), int(G.trip.packed(k)), tr("room %s") % str(ceili(G.inventory.load_of(k, G.trip.packed(k))))])
 			M.widgets.tile_button(v, UI.soft_button("↩ −1", G.trip.unpack.bind(k, 1), true, 16))
 			grid.add_child(v.get_meta("panel"))
 		M.content.add_child(UI.soft_button(tr("↩ Unpack everything"), G.trip.unpack_all, true, 17))

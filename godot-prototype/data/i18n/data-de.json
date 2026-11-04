@@ -600,8 +600,8 @@
   "de": "Gewürzhändler"
  },
  "nodes/spice_1/desc": {
-  "en": "Salt. (Barter idea: also asks for 1 onion per salt.)",
-  "de": "Salz. (Tauschidee: möchte auch 1 Zwiebel pro Salz.)"
+  "en": "Sells salt for cooking.",
+  "de": "Verkauft Salz zum Kochen."
  },
  "nodes/compost_bin/name": {
   "en": "Compost Bin",
@@ -616,8 +616,8 @@
   "de": "Das Häschen kommt nach Hause"
  },
  "nodes/pet_bunny/desc": {
-  "en": "Pet 1 (default name Pip; the player can rename). Bonus: every carrot harvest gives +1 carrot.",
-  "de": "Haustier 1 (heisst zuerst Pip; du kannst es umbenennen). Bonus: Jede Karottenernte bringt +1 Karotte."
+  "en": "Comes home as Pip; you can choose a new name. Bonus: every carrot harvest gives +1 carrot.",
+  "de": "Kommt als Pip nach Hause; du kannst einen neuen Namen wählen. Bonus: Jede Karottenernte bringt +1 Karotte."
  },
  "nodes/crop_hay/name": {
   "en": "Meadow hay",
@@ -704,7 +704,7 @@
   "de": "Tomate"
  },
  "nodes/crop_tomato/desc": {
-  "en": "Ingredient-threshold unlock (kept from the prototype): bring 2 eggs once. Hungry crop: needs compost.",
+  "en": "Opens when you bring 2 eggs once. Hungry crop: needs compost.",
   "de": "Wird freigeschaltet, wenn du einmal 2 Eier bringst. Hungrige Pflanze: braucht Kompost."
  },
  "nodes/d_stone_soup/name": {
@@ -936,8 +936,8 @@
   "de": "Die Schildkröte kommt nach Hause"
  },
  "nodes/pet_tortoise/desc": {
-  "en": "Pet 2 (default name Mossy). Bonus: finds a hidden spring (+1 💧 every water trip).",
-  "de": "Haustier 2 (heisst zuerst Mossy). Bonus: findet eine versteckte Quelle (+1 💧 bei jedem Wasserholen)."
+  "en": "Comes home as Mossy; you can choose a new name. Bonus: finds a hidden spring (+1 💧 every water trip).",
+  "de": "Kommt als Mossy nach Hause; du kannst einen neuen Namen wählen. Bonus: findet eine versteckte Quelle (+1 💧 bei jedem Wasserholen)."
  },
  "nodes/crop_kale/name": {
   "en": "Winter kale",
@@ -1336,8 +1336,8 @@
   "de": "Die Ziege kommt nach Hause"
  },
  "nodes/pet_goat/desc": {
-  "en": "Pet 3 (default name Bramble). Bonus: nibbles weeds (weeds −15%) and leaves compost (1 per 4 questions).",
-  "de": "Haustier 3 (heisst zuerst Bramble). Bonus: knabbert Unkraut (Unkraut −15%) und hinterlässt Kompost (1 alle 4 Fragen)."
+  "en": "Comes home as Bramble; you can choose a new name. Bonus: nibbles weeds (weeds −15%) and leaves compost (1 per 4 questions).",
+  "de": "Kommt als Bramble nach Hause; du kannst einen neuen Namen wählen. Bonus: knabbert Unkraut (Unkraut −15%) und hinterlässt Kompost (1 alle 4 Fragen)."
  },
  "nodes/kiln_2/name": {
   "en": "Brickworks",
@@ -1656,8 +1656,8 @@
   "de": "Das Pony kommt nach Hause"
  },
  "nodes/pet_pony/desc": {
-  "en": "Pet 4 (default name Hazel). Bonus: pulls the market cart (+10% on everything sold).",
-  "de": "Haustier 4 (heisst zuerst Hazel). Bonus: zieht den Marktwagen (+10% auf alles Verkaufte)."
+  "en": "Comes home as Hazel; you can choose a new name. Bonus: pulls the market cart (+10% on everything sold).",
+  "de": "Kommt als Hazel nach Hause; du kannst einen neuen Namen wählen. Bonus: zieht den Marktwagen (+10% auf alles Verkaufte)."
  },
  "nodes/ruins_stillroom/name": {
   "en": "Clear Berit's still-room",
@@ -1756,8 +1756,8 @@
   "de": "Samenbibliothek"
  },
  "nodes/seed_library/desc": {
-  "en": "Heirloom crops can be saved from your own harvest: 1 seed back per harvest. (Seed-saving lesson.)",
-  "de": "Samen alter Sorten kannst du aus deiner eigenen Ernte aufheben: 1 Samen zurück pro Ernte. (Wie man Samen aufbewahrt.)"
+  "en": "Heirloom crops can be saved from your own harvest: 1 seed back per harvest.",
+  "de": "Samen alter Sorten kannst du aus deiner eigenen Ernte aufheben: 1 Samen zurück pro Ernte."
  },
  "nodes/seed_library/steps/0/name": {
   "en": "Fit the planks",
@@ -1932,16 +1932,24 @@
   "de": "Der Dachs zieht ein"
  },
  "nodes/pet_badger/desc": {
-  "en": "Pet 5 (default name Bracken). Wise and slow, he knows which plants are good for you. Bonus: every herb harvest gives +1 herb.",
-  "de": "Haustier 5 (Standardname Bracken). Weise und gemächlich: Er weiss, welche Pflanzen gut für dich sind. Bonus: Jede Kräuterernte gibt +1 Kraut."
+  "en": "Comes home as Bracken; you can choose a new name. Wise and slow, he knows which plants are good for you. Bonus: every herb harvest gives +1 herb.",
+  "de": "Kommt als Bracken nach Hause; du kannst einen neuen Namen wählen. Weise und gemächlich: Er weiss, welche Pflanzen gut für dich sind. Bonus: Jede Kräuterernte gibt +1 Kraut."
  },
  "nodes/pet_alpaca/name": {
   "en": "Alpaca comes home",
   "de": "Das Alpaka kommt nach Hause"
  },
  "nodes/pet_alpaca/desc": {
-  "en": "Pet 5 (default name Alfie). Bonus: soft fleece, 1 wool every 4 questions.",
-  "de": "Haustier 5 (heisst zuerst Alfie). Bonus: weiches Vlies, 1 Wolle alle 4 Fragen."
+  "en": "Comes home as Alfie; you can choose a new name. Bonus: soft fleece, 1 wool every 4 questions.",
+  "de": "Kommt als Alfie nach Hause; du kannst einen neuen Namen wählen. Bonus: weiches Vlies, 1 Wolle alle 4 Fragen."
+ },
+ "nodes/clay_pit/name": {
+  "en": "Clay Pit",
+  "de": "Lehmgrube"
+ },
+ "nodes/clay_pit/desc": {
+  "en": "Always open: dig clay in the bank of the pond with a shovel. The clay comes at once; the pit fills up again slowly.",
+  "de": "Immer offen: Grabe mit der Schaufel Lehm am Ufer des Teichs. Der Lehm kommt sofort; die Grube füllt sich langsam wieder."
  },
  "nodes/wild_edge/name": {
   "en": "Field Edge & Woods",
@@ -2340,7 +2348,7 @@
   "de": "Jätgänse"
  },
  "nodes/weeder_geese/desc": {
-  "en": "Geese graze between the rows: weeds −20%. (Real old practice.)",
+  "en": "Geese graze between the rows: weeds −20%. (Farmers really did this long ago.)",
   "de": "Gänse grasen zwischen den Reihen: Unkraut −20%. (Das hat man früher wirklich so gemacht.)"
  },
  "nodes/linen_bedding/name": {
@@ -9968,8 +9976,8 @@
   "de": "Lehm"
  },
  "items/clay/desc": {
-  "en": "Dug at the field edge with a shovel, or bought.",
-  "de": "Mit der Schaufel am Feldrand ausgegraben oder gekauft."
+  "en": "Dug at the pond with a shovel, or bought.",
+  "de": "Mit der Schaufel am Teich ausgegraben oder gekauft."
  },
  "items/brick/name": {
   "en": "Brick",
@@ -11835,6 +11843,38 @@
   "en": "The tent flaps in the wind. You pull the blanket up to your nose.",
   "de": "Das Zelt flattert im Wind. Du ziehst die Decke bis zur Nase."
  },
+ "story/c1_k_hen_alone/text": {
+  "en": "Your one hen walks round the coop twice, looking for someone to argue with. There is nobody. She argues with a stone.",
+  "de": "Dein einziges Huhn läuft zweimal um den Stall und sucht jemanden zum Streiten. Da ist niemand. Also streitet es mit einem Stein."
+ },
+ "story/c1_k_eggs/text": {
+  "en": "So many eggs. You line them up on a plank. One rolls into the straw, on purpose, you are sure of it.",
+  "de": "So viele Eier. Du legst sie in einer Reihe auf ein Brett. Eines rollt ins Stroh, mit Absicht, da bist du sicher."
+ },
+ "story/c1_k_tall_weeds/text": {
+  "en": "The weeds on one patch reach over your boots now. A beetle sits right on top and enjoys the view.",
+  "de": "Das Unkraut auf einem Beet reicht dir schon über die Stiefel. Ganz oben sitzt ein Käfer und geniesst die Aussicht."
+ },
+ "story/c1_k_yawn/text": {
+  "en": "You yawn so wide that a passing fly changes its mind.",
+  "de": "Du gähnst so weit, dass eine Fliege es sich anders überlegt."
+ },
+ "story/c1_k_dry_bucket/text": {
+  "en": "You tip the bucket upside down. One drop falls out, very slowly, as if it is sorry.",
+  "de": "Du drehst den Eimer um. Ein Tropfen fällt heraus, ganz langsam, als täte es ihm leid."
+ },
+ "story/c1_k_rain/text": {
+  "en": "It rains. The field drinks and drinks and does not say thank you. Fields never do.",
+  "de": "Es regnet. Das Feld trinkt und trinkt und sagt nicht danke. Felder sagen nie danke."
+ },
+ "story/c1_k_caterpillar/text": {
+  "en": "A caterpillar sits on a leaf in your field, chewing. It has a very good plan and no manners at all.",
+  "de": "Eine Raupe sitzt auf einem Blatt in deinem Feld und kaut. Sie hat einen sehr guten Plan und überhaupt keine Manieren."
+ },
+ "story/c1_k_worm/text": {
+  "en": "Some patches lie bare. A worm pokes its head out, looks around, and goes back down to wait for seeds.",
+  "de": "Ein paar Beete liegen leer. Ein Wurm streckt den Kopf heraus, schaut sich um und geht wieder hinunter, um auf Samen zu warten."
+ },
  "story/c2_berit_note/text": {
   "en": "Between two pages of the old book there is a note in thin brown ink: “Rest the field. Rest yourself. — B.” You read it twice. Then you look at your hands.",
   "de": "Zwischen zwei Seiten des alten Buches steckt ein Zettel in dünner brauner Tinte: „Ruh das Feld aus. Ruh dich aus. – B.“ Du liest ihn zweimal. Dann schaust du auf deine Hände."
@@ -11908,8 +11948,8 @@
   "de": "Du räumst den letzten schwarzen Balken aus der Scheune. Dann hältst du inne. Der Brand beginnt nicht am Dach, wo ein Blitz einschlagen würde. Er beginnt unten, in der Ecke, wo das Heu lag."
  },
  "story/c2_barn/pages/1/text": {
-  "en": "You sit back on your heels. Lightning does not start low. Something else began this. You do not know what. And you find that you do not want to know. Not yet.",
-  "de": "Du setzt dich auf die Fersen. Ein Blitz fängt nicht unten an. Etwas anderes hat das hier begonnen. Du weisst nicht, was. Und du merkst, dass du es nicht wissen willst. Noch nicht."
+  "en": "You sit back on your heels. Lightning does not start low. You look at that corner for a long time, and your hands go cold. Then you pick up the beam and carry it out. Not yet.",
+  "de": "Du setzt dich auf die Fersen. Ein Blitz fängt nicht unten an. Du schaust lange in diese Ecke, und deine Hände werden kalt. Dann hebst du den Balken auf und trägst ihn hinaus. Noch nicht."
  },
  "story/c2_compost/text": {
   "en": "Behind the barn is a compost pit, clean and dry, its edges squared with flat stones. Someone cared about this. Scratched on the lid: “Feed the ground and it feeds you. — B.”",
@@ -11940,8 +11980,8 @@
   "de": "Du setzt dich neben sie und wartest. Der Teich füllt sich ein bisschen, dann noch ein bisschen. Nichts wird gehetzt. Und die zweite Zeile des alten Reims fällt dir wieder ein: „Langer Panzer hält das Wasser rein.“"
  },
  "story/c2_hook/text": {
-  "en": "In the new barn frame you find an old iron hook. It is black with soot, and it was made to hold a lantern. “If it was not lightning,” you think, “then what?” You hang the hook back up. Carefully.",
-  "de": "Im neuen Scheunengerüst findest du einen alten Eisenhaken. Er ist schwarz vor Russ und wurde gemacht, um eine Laterne zu halten. „Wenn es kein Blitz war“, denkst du, „was dann?“ Du hängst den Haken wieder auf. Vorsichtig."
+  "en": "In the new barn frame you find an old iron hook. It is black with soot, and it was made to hold a lantern. You know this hook. Your hands go still. You hang it back up. Carefully.",
+  "de": "Im neuen Scheunengerüst findest du einen alten Eisenhaken. Er ist schwarz vor Russ und wurde gemacht, um eine Laterne zu halten. Du kennst diesen Haken. Deine Hände werden still. Du hängst ihn wieder auf. Vorsichtig."
  },
  "story/c2_hook/title": {
   "en": "A blackened hook",
@@ -11952,12 +11992,24 @@
   "de": "Zurück im Zimmer"
  },
  "story/c2_frame2/pages/0/text": {
-  "en": "Back in the room, somebody has fallen asleep on the floor. “Did you find out who started it?” asks Minena. “Not then,” you say. “I didn't want to.”",
-  "de": "Zurück im Zimmer ist jemand auf dem Boden eingeschlafen. „Hast du herausgefunden, wer es angezündet hat?“, fragt Minena. „Damals nicht“, sagst du. „Ich wollte es nicht.“"
+  "en": "Back in the room, somebody has fallen asleep on the floor. “And the corner in the barn?” asks Minena. “What did it mean?” You are quiet for a moment. “Not then,” you say. “Later.”",
+  "de": "Zurück im Zimmer ist jemand auf dem Boden eingeschlafen. „Und die Ecke in der Scheune?“, fragt Minena. „Was hat das bedeutet?“ Du bist einen Moment still. „Damals noch nicht“, sagst du. „Später.“"
  },
  "story/c2_frame2/pages/1/text": {
   "en": "“And the man on the fence? Was he funny?” “Very.” “Was that good?” “It made him hard to talk to,” you say, and nobody understands. That is all right.",
   "de": "„Und der Mann auf dem Zaun? War der lustig?“ „Sehr.“ „War das gut?“ „Es hat ihn schwer zu verstehen gemacht“, sagst du, und niemand versteht. Das ist in Ordnung."
+ },
+ "story/c2_k_bunny_carrots/text": {
+  "en": "The bunny sits beside the carrots, very still, looking at the sky. As if carrots were something she had never heard of.",
+  "de": "Das Häschen sitzt neben den Karotten, ganz still, und schaut in den Himmel. Als hätte es noch nie von Karotten gehört."
+ },
+ "story/c2_k_tortoise_yard/text": {
+  "en": "The tortoise has been crossing the yard all morning. She is nearly in the middle. She looks very pleased about it.",
+  "de": "Die Schildkröte überquert schon den ganzen Morgen den Hof. Jetzt ist sie fast in der Mitte. Sie sieht sehr zufrieden aus."
+ },
+ "story/c2_k_hen_cow/text": {
+  "en": "A hen walks right under the cow. The cow looks down. The hen looks up. Neither of them will move first.",
+  "de": "Ein Huhn läuft direkt unter die Kuh. Die Kuh schaut hinunter. Das Huhn schaut hinauf. Keines will zuerst weitergehen."
  },
  "story/c3_pieter/title": {
   "en": "The night watchman",
@@ -12062,6 +12114,10 @@
  "story/c3_frame3/title": {
   "en": "Back in the room",
   "de": "Zurück im Zimmer"
+ },
+ "story/c3_k_count_sheep/text": {
+  "en": "You try to count the sheep. They keep swapping places. You get three, then five, then you nearly fall asleep.",
+  "de": "Du versuchst, die Schafe zu zählen. Sie tauschen dauernd die Plätze. Du kommst auf drei, dann auf fünf, und dann schläfst du fast ein."
  },
  "story/c4_quill/title": {
   "en": "Master Quill",

@@ -84,23 +84,21 @@ func set_second_job(pid: String, jid: String) -> bool:
 	G.save_game(); G.changed.emit()
 	return true
 
-## Does a WHEN hold now? No card means always.
+## Does a WHEN hold now? No card means always. The card's condition (rules/54-pets.json, `when` with `{n}`) gets the child's number,
+## less a hair (0.0001), so a store amount or water a hair under a whole number counts as that number, as it always has.
 func holds(w: Dictionary) -> bool:
 	if w.is_empty(): return true
 	var c: Dictionary = whens().get(str(w.get("card", "")), {})
 	if c.is_empty(): return true
-	var v := 0.0
-	if c.has("item"): v = G.inventory.count(str(c["item"]))
-	else:
-		match str(c.get("stat", "")):
-			"weeds_max":
-				for i in range(mini(G.progression.plots(), G.S["patches"].size())): v = maxf(v, float(G.S["patches"][i]["weeds"]))
-			"empty_patches":
-				for i in range(mini(G.progression.plots(), G.S["patches"].size())):
-					if G.S["patches"][i]["crop"] == "": v += 1.0
-			"water": v = float(G.S["water"])
-			"pests": v = float(G.S["pests"])
-	return v >= float(w["n"]) - 0.0001 if str(c.get("op", ">=")) == ">=" else v < float(w["n"]) - 0.0001
+	return G.conditions.holds(card_condition(c, float(w["n"]) - 0.0001))
+
+## A WHEN card's condition with its number filled in.
+static func card_condition(c: Dictionary, n: float) -> String:
+	return str(c.get("when", "")).replace("{n}", str(n))
+
+## "≥" or "<": how the card compares (for its label).
+static func card_sign(c: Dictionary) -> String:
+	return "<" if str(c.get("when", "")).contains("<") else "≥"
 
 ## The job it does now: the child's choice, or the first one.
 func job_id(pid: String) -> String:

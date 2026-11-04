@@ -3,6 +3,7 @@ class_name FarmUiWidgets
 ## Small building blocks of the sheets: text helpers, cost lines, tiles and grids, node rows, section headers.
 
 const UI = preload("res://kits/ui/ui.gd")
+const Art = preload("res://kits/ui/art.gd")
 const Spots = preload("res://game/farm/spots.gd")
 
 
@@ -128,7 +129,55 @@ func cost_bb(c: Dictionary) -> String:
 
 ## Costs as cube bars: filled = you have it, hollow = still missing, faint grey = saved by upgrades, practice and meals.
 func costs(c: Dictionary, base := {}) -> Control:
-	return UI.cost_row(c, base, have_any, _emoji_any, G.items, G.money)
+	return UI.cost_row(c, base, have_any, _emoji_any, G.items, G.money, pic)
+
+## The small picture of a thing (an item, or a tool such as the hand axe), cut and scaled once and kept (kits/ui/art.gd `icon`);
+## null when it has none yet, and the emoji is shown instead (interface-feel/04). "tag:…" (any flour …) shows the same choice as its emoji.
+func pic(k: String, px := 64) -> Texture2D:
+	if k.begins_with("tag:"):
+		var opts: Array = G.inventory.tag_choices(k.substr(4))
+		for o in opts:
+			if G.inventory.count(o) >= 1.0: return pic(str(o), px)
+		return pic(str(opts[0]), px) if opts.size() > 0 else null
+	if k == "coins": return Art.icon("ui", ["coin_gold"], px)      # the purse's gold coin (interface-feel/07)
+	if G.items.has(k): return Art.icon("items", [k], px)
+	if G.nodes.has(k) and str(G.nodes[k].get("type", "")) in ["tool", "gear"]:
+		var keys := [k]
+		for b in Spots.bench():
+			if str(b.get("id", "")) == k and b.has("pic"): keys.push_front(str(b["pic"]))
+		return Art.icon("tools", keys, px)
+	return null
+
+## A thing's icon: its small picture, or its emoji when it has none.
+func icon(k: String, px := 24.0, emoji_size := 18) -> Control:
+	var em: String = str(G.nodes[k].get("emoji", "")) if G.nodes.has(k) and not G.items.has(k) else _emoji_any(k)
+	return UI.pic_or_emoji(pic(k), em, px, emoji_size)
+
+## Amounts as icon and number side by side ("→ [picture]2 [picture]1"), for what a recipe or a step gives.
+func amounts_row(pairs: Array, lead := "→", size := 15) -> HFlowContainer:
+	var row := HFlowContainer.new()
+	row.add_theme_constant_override("h_separation", 5)
+	row.add_theme_constant_override("v_separation", 2)
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	if lead != "": row.add_child(UI.label(lead, size))
+	for p in pairs:
+		var h := UI.hbox(1)
+		h.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		h.add_child(icon(str(p[0]), size + 7.0, size))
+		if str(p[1]) != "": h.add_child(UI.label(str(p[1]), size))
+		row.add_child(h)
+	return row
+
+## A goal's name with its small picture in front (the hand axe shows the axe), or its emoji when it has no picture.
+func name_row(id: String, size := 19) -> HBoxContainer:
+	var h := UI.hbox(5)
+	var n: Dictionary = G.nodes[id]
+	var p := pic(id)
+	if p != null: h.add_child(UI.pic_or_emoji(p, "", size + 13.0))
+	var l := UI.label(str(n["name"]) if p != null else "%s %s" % [n.get("emoji", ""), n["name"]], size, UI.INK, true)
+	l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	h.add_child(l)
+	return h
 
 func have_any(k: String) -> float:
 	if k == "fuel": return float(G.S["woodpile"])     # only what is on the woodpile burns: stoke it first
@@ -158,7 +207,9 @@ func node_row(id: String, show_button := true, show_place := false, tile := fals
 	pc.add_child(v)
 	var h := UI.hbox(6)
 	v.add_child(h)
-	h.add_child(UI.label("%s %s" % [n.get("emoji", ""), n["name"]], 19, UI.INK, true))
+	var nr := name_row(id)
+	nr.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	h.add_child(nr)
 	if show_place:
 		var sid := Spots.spot_of(G, id)
 		var pb := UI.soft_button("📍 " + tr(Spots.name_of(sid)), go_spot.bind(sid), true, 15)
@@ -182,9 +233,10 @@ func node_row(id: String, show_button := true, show_place := false, tile := fals
 		sr.add_child(UI.explain(UI.stock_bar(float(G.progression.step_index(id)), float(steps.size()), Color("7cc04a"), 160), tr("🔨 Steps done so far.")))
 		var nx: Dictionary = steps[mini(G.progression.step_index(id), steps.size() - 1)]
 		sr.add_child(UI.label("%s %s" % [nx.get("emoji", ""), nx.get("name", "")], 16, UI.INK, true))
-		var gv := ""
-		for k in nx.get("gives", {}): gv += G.iemoji(k).repeat(clampi(int(round(float(nx["gives"][k]))), 1, 5))
-		if gv != "": sr.add_child(UI.label("→ " + gv, 16))
+		var gv := []
+		for k in nx.get("gives", {}):
+			for i in range(clampi(int(round(float(nx["gives"][k]))), 1, 5)): gv.append([k, ""])
+		if not gv.is_empty(): sr.add_child(amounts_row(gv, "→", 16))
 		if int(nx.get("wait", 0)) > 0 and G.progression.step_index(id) < steps.size() - 1: sr.add_child(UI.label(tr("then ⏳%d") % int(nx["wait"]), 15, UI.MUTED))
 		v.add_child(sr)
 	var c: Dictionary = G.pace.node_cost(id)

@@ -1,8 +1,15 @@
 # Hazelwood Harvest: the game's design
 
 How the game works and why, one file per system. It describes the **game as built**, not its history or the work still to do.
-The last full pass matched version 0.10.0; later systems were added as they were built, and `design-paper/01` (D1) brings the
-rest up to date. Until 30 Oct 2026 this was one file, `farm-quiz-game-master-design-document.md` (version 2.2); git has it.
+The last full pass (`design-paper/01`, D1, 3 Nov 2026) checked every *(planned)* mark and the chapters on energy and wellbeing, trips,
+packing and the store, quality and skills, seeds, money, prices and the Lord's share, sustainability and seasons and what is shown when
+against the code and the data. Until 30 Oct 2026 this was one file, `farm-quiz-game-master-design-document.md` (version 2.2); git has it.
+
+**Rules that changed on the way** (decided in rounds R1–R4, 10–12 Oct 2026; the decisions are in [`../adr/`](../adr/)): the Time Quiz
+may give or drain a little energy ([ADR-0003](../adr/0003-learning-is-the-economy.md), §5.1b); natural consequences replace "nothing
+punishes" ([ADR-0004](../adr/0004-natural-consequences.md)); quality stars are back as three grades ([ADR-0005](../adr/0005-quality-three-levels.md),
+§8.5); deliveries ride in the bag like everything else (§5.3b); only a right *first* try moves time (§4.1); every system runs from the
+start and is shown when its time comes ([ADR-0009](../adr/0009-systems-run-hidden-then-reveal.md), §13.2b).
 
 - **The data is the source of truth for numbers** (`godot-prototype/data/farm/`; the explorer in `progression/` shows it). If
   the data and these files disagree, the data wins and the file is corrected.
@@ -29,7 +36,7 @@ rest up to date. Until 30 Oct 2026 this was one file, `farm-quiz-game-master-des
 | [building-and-upgrading.md](building-and-upgrading.md) | 9 | Places, stages, ruins, tools, gear, helpers, polish |
 | [progression.md](progression.md) | 10 | Chapters, what opens what, pets, merchants, pacing, dynamic difficulty |
 | [friends-and-story.md](friends-and-story.md) | 11 | Favours, postcards, sound, perks, luck, little jobs, the story, free play |
-| [seasons.md](seasons.md) | 12 | Seasons |
+| [seasons.md](seasons.md) | 12 | Seasons, and sustainability (the forest edge, the soil, water) |
 | [map-and-interface.md](map-and-interface.md) | 13 | The map, what is shown when, screens, pictures, the farmer, young readers |
 | [art-direction.md](art-direction.md) | 14 | Art direction |
 | [technology.md](technology.md) | 15 | Engine, data, code, saves, checks |
@@ -44,7 +51,9 @@ The rule files are in `rules/`, one per system.
 
 | To change … | Edit |
 |---|---|
-| How the game *feels*: playback pauses and rain, plant flicking, how long notes stay and how many stack, story ration and bark rest, story picture height, grown-up lock, snow caps | `rules/65-feel.json` |
+| The seasons' look: creatures out of season, spring flowers, autumn leaves | `rules/66-season-look.json` |
+| How the game *feels*: playback pauses and rain, plant flicking, how long notes stay and how many stack, story ration and bark rest, story picture height, the farmer going into the tent or house for Rest, grown-up lock, snow caps and frost | `rules/65-feel.json` |
+| What takes the screen next: the order of notes after a pop-up, postcards, celebrations, story boxes and barks, and what each waits for | `rules/65-feel.json` ("interruptions") |
 | What a chore costs (energy, water) and what it trains | `rules/46-chores.json` (Wren's bucket: `rules/57-forest.json`, `forest.wren`) |
 | Weeds, water, pests, stones, crop rotation, harvests, carrying, seasons, freshness, muck, fuel | `rules/10-farming.json` |
 | Rest sums, the Time Quiz, knowledge cards | `rules/20-learning.json` |
@@ -59,8 +68,9 @@ The rule files are in `rules/`, one per system.
 | Item values, recipes, chapters, the start | `items.json`, `recipes.json`, `chapters.json`, `start.json` |
 | Story pieces | `story/*.json` (German in `data/i18n/`) |
 
-## Key numbers (as of 24 Oct 2026; update when the data changes)
+## Key numbers (data counted 3 Nov 2026, playthrough as of 24 Oct 2026; update when the data changes)
 
-Data v0.8: 182 items, 461 nodes, 131 recipes, 43 stations, 87 cards in 14 books, 22 polish jobs, 58 helpers, 28 side quests.
-Explorer playthrough: about 21.2 hours, ~1,417 Time Quiz answers, ~1,380 Rest answers; pets at about 1.6 / 5.8 / 12 / 17 / 20 h.
+Data v0.8: 182 items, 467 nodes, 131 recipes, 43 stations, 87 cards in 14 books, 22 polish jobs, 62 helpers, 34 side quests, 25 crops,
+6 pets. Explorer playthrough (not re-run on 3 Nov): about 21.2 hours, ~1,417 Time Quiz answers, ~1,380 Rest answers; pets at about
+1.6 / 5.8 / 12 / 17 / 20 h.
 Quiz packs: Farm basics (FRM, 4), Continents (CON, 12), Farm pictures (PIC, 18) + card questions KNW-001…261.

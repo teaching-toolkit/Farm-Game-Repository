@@ -18,13 +18,45 @@
     "story": {
       "rationSteps": {"value": 3, "unit": "questions", "note": "At most one story piece per this many Time Quiz questions."},
       "barkRest": {"value": 12, "unit": "questions", "note": "A bark (a short remark) does not come back within this many questions, unless the piece sets its own cooldown."},
-      "pictureHeight": {"value": 520, "unit": "pixels", "note": "How high a painted story picture is shown in the story box (the box is up to 760 wide)."}
+      "pictureHeight": {"value": 520, "unit": "pixels", "note": "How high a painted story picture is shown in the story box (the box is up to 760 wide)."},
+      "newsMax": {"value": 4, "unit": "boxes", "note": "At most this many news boxes (a change of season, a golden acorn, a favour done, a party) wait for a quiet moment; the oldest goes."}
+    },
+    "rest": {
+      "walkMin": {"value": 0.4, "unit": "seconds", "note": "Rest: the farmer walks to the tent or house first; the window opens when he is at the door, but not before this."},
+      "walkMax": {"value": 1.6, "unit": "seconds", "note": "… and not later than this, so that a far walk does not make anyone wait (he is put at the door)."},
+      "vanish": {"value": 0.35, "unit": "seconds", "note": "How long the farmer takes to disappear into the door before the Rest window opens."},
+      "inside": {"value": 0.3, "unit": "seconds", "note": "After the Rest window closes, he stays inside this long before he comes out again."},
+      "appear": {"value": 0.35, "unit": "seconds", "note": "How long he takes to appear at the door again."},
+      "stepOut": {"value": 22, "unit": "pixels", "note": "How far he walks out of the door after he has appeared (towards the player)."}
     },
     "grownup": {
       "lockSeconds": {"value": 300, "unit": "seconds", "note": "How long the grown-up settings stay open after the lock was opened."}
     },
     "season": {
-      "snowDepth": {"value": 0.05, "unit": "part of the picture's height", "note": "How far the winter snow caps reach down on roofs, tree tops and rails."}
+      "snowDepth": {"value": 0.05, "unit": "part of the picture's height", "note": "How far the winter snow caps reach down on roofs, tree tops and rails."},
+      "frostDepth": {"value": 0.06, "unit": "part of the picture's height", "note": "How far the winter frost reaches down on the top edge of the field patches and the road tiles (season-look/04)."},
+      "frostStrength": {"value": 0.8, "unit": "0 to 1", "note": "How white that frost is: 1 is as white as the snow caps (season-look/04; the parent checks it in W9)."}
     }
+  },
+  "interruptions": {
+    "note": "What takes the screen next (interruption-queue): the interruption queue (kits/ui/interruptions.gd, set up in game/farm/ui/interrupts.gd) shows things that arrive on their own in this order, first wins. Each kind waits for the busy screens and the other kinds it names: a kind name means 'while one of that kind is waiting'. Busy screens: see 'busy'. Change the order or what a kind waits for here, not in a script.",
+    "busy": {
+      "popup": "A pop-up is open (Time Quiz, Rest, a card, a menu, or another interruption's box).",
+      "rest": "The Rest pop-up is open.",
+      "playback": "After the Time Quiz the farm has not started catching up yet (it still shows the old state).",
+      "catchup": "The farm is catching up after the Time Quiz (rain, plants growing, pests); ends when it has played to the end or a tap skipped it.",
+      "sheet": "A sheet over the farm is open (a station, the store, a place).",
+      "bubble": "A speech bubble (a bark) is on screen until it is tapped away."
+    },
+    "order": [
+      {"kind": "note", "waitsFor": ["popup", "playback", "catchup"], "note": "The short notes kept for when a pop-up closes (a Rest medal …). They never hold the screen."},
+      {"kind": "postcard", "waitsFor": ["popup", "playback", "catchup"], "note": "A postcard from a friend with a gift to pick. May come over a sheet."},
+      {"kind": "celebration", "waitsFor": ["popup", "playback", "catchup", "postcard"], "note": "The big 'New!' pop-up for a building, tool, Helper or perk. May come over a sheet."},
+      {"kind": "discovery", "waitsFor": ["popup", "rest", "playback", "postcard", "celebration"], "note": "A story Discovery: comes over a sheet (the child just tapped what it is about)."},
+      {"kind": "scene", "waitsFor": ["popup", "rest", "playback", "postcard", "celebration"], "note": "A story Scene (a delivery or favour handed over on the village square): comes over a sheet, right after the hand-over tap, before the square is left."},
+      {"kind": "story", "waitsFor": ["popup", "rest", "playback", "postcard", "celebration", "sheet"], "note": "Every other story box (frame, beat, letter, moment, visit): waits until no sheet covers the farm."},
+      {"kind": "news", "waitsFor": ["popup", "rest", "playback", "postcard", "celebration", "sheet"], "note": "A news box with a picture (a change of season, a golden acorn, a favour done, a party): the same quiet moment as a story box, after it."},
+      {"kind": "bark", "waitsFor": ["popup", "rest", "playback", "bubble"], "note": "A bark: a speech bubble; only one at a time, and it blocks nothing."}
+    ]
   }
 }

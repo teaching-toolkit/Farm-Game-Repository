@@ -264,6 +264,7 @@
 	"step_ready": {},
 	"story_bark": {},
 	"story_last": -99.0,
+	"story_news": [],
 	"story_seen": {},
 	"story_taps": {},
 	"trip": {
@@ -275,6 +276,7 @@
 		"basket": true,
 		"book_basics": true,
 		"bucket": true,
+		"clay_pit": true,
 		"hands": true,
 		"land_start": true,
 		"library_box": true,

@@ -15,6 +15,14 @@ const EXTEND := 1500.0   # ground shapes that touch the edge continue beyond it 
 const ROAD_TILES := {1.0: [1, 2], 1.5: [2, 3], 2.0: [3, 4], 2.5: [4, 5], 3.0: [5, 6], 3.5: [6, 7], 4.0: [7, 8], 4.5: [8, 9], 5.0: [9]}
 
 var fence_level := 0
+var flowers := 0          # how many of the season's flowers stand in the grass (FarmSeasonLook.flower_count)
+var road_ci: CanvasItem   # where the road is drawn: the map's road layer (frost material), or the board itself
+
+## The road's own layer: the first thing on the board, drawn with the frost material (season-look/04).
+func make_road_layer(layer: Control) -> void:
+	road_ci = layer
+	layer.material = FarmSeasonLook.frost_material()
+	layer.draw.connect(_draw_road)
 
 # ------------------------------------------------------------------ ground
 
@@ -50,6 +58,46 @@ func _draw_grass_bits() -> void:
 		var h := w * float(t.get_height()) / float(t.get_width())
 		map.board.draw_texture_rect(t, Rect2(p - Vector2(w / 2.0, h), Vector2(w, h)), false)
 
+## The season's flowers in the grass (season-look/02): flower i always stands at the same place, so as their number grows and
+## shrinks with the season they come and go one by one. Drawn under everything else (the fields, the road and the buildings cover them).
+func _draw_flowers() -> void:
+	if flowers <= 0: return
+	var g = map.get_node_or_null("/root/Game")
+	if g == null: return
+	var fl: Dictionary = g.meta.get("seasonLook", {}).get("flowers", {})
+	var pics := []
+	for n in fl.get("pictures", []):
+		var t: Texture2D = Art.tex("deco", str(n))
+		if t: pics.append(t)
+	if pics.is_empty(): return
+	var sz: Array = fl.get("size", [16, 28])
+	var r := RandomNumberGenerator.new()
+	r.seed = 61
+	var fp := forest_poly()
+	var covered := []          # where a flower would not be seen: the fields, the places' footprints, the road
+	for fv in map.fields: covered.append(PackedVector2Array([fv.position + Vector2(fv.size.x / 2.0, 0), fv.position + Vector2(fv.size.x, fv.size.y / 2.0), fv.position + Vector2(fv.size.x / 2.0, fv.size.y), fv.position + Vector2(0, fv.size.y / 2.0)]))
+	for sid in map.slots:
+		var sl = map.slots[sid]
+		var ft := PackedVector2Array()
+		for q in sl.foot_points(): ft.append(q + sl.anchor)
+		if ft.size() >= 3: covered.append(ft)
+	var rb := road_band()
+	if rb.size() >= 3: covered.append(rb)
+	var drawn := 0
+	for _k in range(flowers * 8):
+		if drawn >= flowers: break
+		var p := Vector2(r.randf_range(-10, map.design.x + 10), r.randf_range(0, map.design.y + 20))
+		var t: Texture2D = pics[r.randi() % pics.size()]
+		var w := r.randf_range(float(sz[0]), float(sz[1]))
+		if fp.size() >= 3 and Geometry2D.is_point_in_polygon(p, fp): continue
+		var hidden := false
+		for poly in covered:
+			if Geometry2D.is_point_in_polygon(p, poly): hidden = true; break
+		if hidden: continue
+		drawn += 1
+		var h := w * float(t.get_height()) / float(t.get_width())
+		map.board.draw_texture_rect(t, Rect2(p - Vector2(w / 2.0, h), Vector2(w, h)), false)
+
 ## Ground shapes in farm coordinates: forest, road, the house yard, shadows and fences of the fields.
 func _draw_board() -> void:
 	var gr: Dictionary = map.L.get("ground", {})
@@ -64,8 +112,10 @@ func _draw_board() -> void:
 			_grass_blob(Vector2(r.randf() * map.design.x, r.randf() * map.design.y), r.randf_range(80, 170), gt, tint)
 	# the forest has no floor of its own: its trees stand on the meadow (forest_poly is still where taps open the forest)
 	_draw_grass_bits()
-	# the village road: a band along a line, as good as it has been made
-	_draw_road()
+	_draw_flowers()
+	# the village road is drawn on its own layer just above the ground (road_ci), with the frost of the season shader (season-look/04)
+	if road_ci != map.board: road_ci.queue_redraw()
+	else: _draw_road()
 	# the house yard (until the house is built): packed earth on the house's footprint
 	if not map.house_built and map.slots.has("home"):
 		var hs = map.slots["home"]
@@ -147,13 +197,13 @@ func _draw_road() -> void:
 	if lvl <= 1:
 		# a muddy track: two wheel ruts with grass between them, puddles and potholes
 		var faint := _band(line, w)
-		map.board.draw_colored_polygon(faint, Color(0.45, 0.35, 0.2, 0.14))
+		road_ci.draw_colored_polygon(faint, Color(0.45, 0.35, 0.2, 0.14))
 		for side in [-1.0, 1.0]:
 			var rut := PackedVector2Array()
 			for p in line: rut.append(p + nrm * side * w * 0.22)
 			var band := _band(rut, w * 0.2)
 			if path_tex: _textured(band, path_tex, Color(0.78, 0.66, 0.5))
-			else: map.board.draw_colored_polygon(band, Color("a88a5e"))
+			else: road_ci.draw_colored_polygon(band, Color("a88a5e"))
 		for i in range(9):
 			var t := rng.randf_range(0.42, 0.58) + (i - 4) * 0.012
 			var c := line[0].lerp(line[n - 1], t) + nrm * rng.randf_range(-0.3, 0.3) * w
@@ -167,29 +217,29 @@ func _draw_road() -> void:
 		4: tint = Color(0.78, 0.78, 0.76)
 		_: tint = Color(0.72, 0.72, 0.74)
 	if path_tex: _textured(full, path_tex, tint)
-	else: map.board.draw_colored_polygon(full, Color("d8bf8e") * tint)
-	if winter: map.board.draw_colored_polygon(full, Color(1, 1, 1, 0.25))
+	else: road_ci.draw_colored_polygon(full, Color("d8bf8e") * tint)
+	if winter: road_ci.draw_colored_polygon(full, Color(1, 1, 1, 0.25))
 	var left := full.slice(0, n)
 	var right := full.slice(n)
 	var edge := Color(0, 0, 0, 0.12)
 	if lvl >= 4: edge = Color(0.35, 0.35, 0.33, 0.7)
-	map.board.draw_polyline(left, edge, 4.0 if lvl < 4 else 6.0)
-	map.board.draw_polyline(right, edge, 4.0 if lvl < 4 else 6.0)
+	road_ci.draw_polyline(left, edge, 4.0 if lvl < 4 else 6.0)
+	road_ci.draw_polyline(right, edge, 4.0 if lvl < 4 else 6.0)
 	var a := line[0].lerp(line[n - 1], 0.4)
 	var b := line[0].lerp(line[n - 1], 0.6)
 	match lvl:
 		2:  # filled potholes: a few stones and old ruts
 			for i in range(14):
-				map.board.draw_circle(a.lerp(b, rng.randf()) + nrm * rng.randf_range(-0.4, 0.4) * w, rng.randf_range(2.0, 4.0), Color(0.55, 0.53, 0.5, 0.8))
+				road_ci.draw_circle(a.lerp(b, rng.randf()) + nrm * rng.randf_range(-0.4, 0.4) * w, rng.randf_range(2.0, 4.0), Color(0.55, 0.53, 0.5, 0.8))
 		3:  # gravel
 			for i in range(160):
-				map.board.draw_circle(a.lerp(b, rng.randf()) + nrm * rng.randf_range(-0.45, 0.45) * w, 1.3, Color(0.55, 0.52, 0.48, 0.6))
+				road_ci.draw_circle(a.lerp(b, rng.randf()) + nrm * rng.randf_range(-0.45, 0.45) * w, 1.3, Color(0.55, 0.52, 0.48, 0.6))
 		_:  # cobbles
 			var steps := 70
 			for i in range(steps):
 				for j in range(-3, 4):
 					var p := a.lerp(b, (i + (0.5 if j % 2 == 0 else 0.0)) / steps) + nrm * (j / 7.0) * w * 0.9
-					map.board.draw_rect(Rect2(p - Vector2(4, 2.5), Vector2(8, 5)), Color(0.5, 0.5, 0.48, 0.35), false, 1.0)
+					road_ci.draw_rect(Rect2(p - Vector2(4, 2.5), Vector2(8, 5)), Color(0.5, 0.5, 0.48, 0.35), false, 1.0)
 
 func _road_tiles() -> Array:
 	var key := clampf(snappedf(map.road_level, 0.5), 1.0, 5.0)
@@ -220,15 +270,15 @@ func _draw_road_tiles(line: PackedVector2Array, w: float, tl: Array) -> void:
 	for c in cells:
 		var t: Texture2D = tl[rng.randi() % tl.size()]
 		var h := W * float(t.get_height()) / float(t.get_width())
-		map.board.draw_texture_rect(t, Rect2(c - Vector2(W, h) / 2.0, Vector2(W, h)), false)
-	if map.season == "winter": map.board.draw_colored_polygon(_band(line, w), Color(1, 1, 1, 0.22))
+		road_ci.draw_texture_rect(t, Rect2(c - Vector2(W, h) / 2.0, Vector2(W, h)), false)
+	if map.season == "winter": road_ci.draw_colored_polygon(_band(line, w), Color(1, 1, 1, 0.22))
 
 func _blob(c: Vector2, r: float, col: Color) -> void:
 	var pts := PackedVector2Array()
 	for j in range(12):
 		var a := TAU * j / 12.0
 		pts.append(c + Vector2(cos(a) * r * (1.0 + 0.15 * sin(a * 3.0)), sin(a) * r * 0.5))
-	map.board.draw_colored_polygon(pts, col)
+	road_ci.draw_colored_polygon(pts, col)
 
 ## The forest floor shape, continued beyond the farm's edges (for drawing and for taps).
 func forest_poly() -> PackedVector2Array:
@@ -292,13 +342,15 @@ func _textured(poly: PackedVector2Array, tex: Texture2D, tint: Color) -> void:
 	var uvs := PackedVector2Array()
 	var ts := Vector2(tex.get_width(), tex.get_height()) * (map.GRASS_SCALE if tex == Art.tex("tiles", "grass") else 1.0)
 	for p in poly: uvs.append(p / ts)
-	map.board.draw_polygon(poly, PackedColorArray([tint]), uvs, tex)
+	road_ci.draw_polygon(poly, PackedColorArray([tint]), uvs, tex)
 
-func set_season(s: String, fence: int) -> void:
+func set_season(s: String, fence: int, flower_n := -1) -> void:
 	if map.perk_fx: map.perk_fx.set_season(s)
 	FarmSeasonLook.set_season(s)              # snow caps, muted or golden pictures (N7)
-	if s != map.season or fence != fence_level:
+	if flower_n < 0: flower_n = flowers
+	if s != map.season or fence != fence_level or flower_n != flowers:
 		map.season = s
 		fence_level = fence
+		flowers = flower_n
 		map.queue_redraw()
 		map.board.queue_redraw()

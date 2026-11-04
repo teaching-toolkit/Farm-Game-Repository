@@ -108,7 +108,7 @@ func _when_row(pid: String, rule: int, label: String) -> void:
 	row.add_theme_constant_override("h_separation", 6)
 	row.add_child(UI.label(label, 15, UI.MUTED))
 	var c: Dictionary = G.pets.whens().get(cur, {})
-	var txt := tr("always") if cur == "" else "%s %s %s %d" % [c["emoji"], tr(str(c["name"])), "≥" if c["op"] == ">=" else "<", int(w["n"])]
+	var txt := tr("always") if cur == "" else "%s %s %s %d" % [c["emoji"], tr(str(c["name"])), G.pets.card_sign(c), int(w["n"])]
 	row.add_child(UI.button(txt, G.pets.set_when.bind(pid, rule, nxt), true, UI.GREEN, 15))
 	if cur != "":
 		var step := float(c.get("step", 1))

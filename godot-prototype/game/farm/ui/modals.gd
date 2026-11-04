@@ -49,16 +49,14 @@ func close_modal() -> void:
 	M.modal.visible = false
 	M.widgets.clear(M.modal_box)
 	M.rest_state = {}
+	M.rest.come_back()        # the farmer was inside for Rest: he comes out again
 	if M.playback.held: M.playback.play(_after_close)      # after the Time Quiz the farm catches up first (J4)
 	else:
 		M.queue_refresh()
 		_after_close()
 
-## What follows a closed pop-up: things flying to the store, the notes, a gift or a celebration waiting.
+## What follows a closed pop-up: things flying to the store, then whatever waits for the screen (the interruption queue decides:
+## the notes, a postcard, a celebration, the story).
 func _after_close() -> void:
 	M.mapview.play_fx.call_deferred()
-	for t in M.after_close: M.notes.toast(t)
-	M.after_close.clear()
-	if G.S["gift_pending"].size() > 0: M.gifts.show_gift.call_deferred()
-	elif M.celebration_queue.size() > 0: M.celebrations.show_celebration.call_deferred()
-	else: M.story.queue_pump()
+	M.interrupts.request()      # at the end of the frame, as before: whoever closed the pop-up finishes first

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Static checks of the farm's data (data/farm/, see tools/farmdata.py): every id that something names exists, costs and effects use
-known keys, conditions parse, questions are well-formed, every node lands in a known place. Exit code 1 if there is an error.
+known keys, conditions parse, questions are well-formed, every node lands in a known place, no player text reads like a designer's note. Exit code 1 if there is an error.
 
     python3 tools/check_data.py            (from the godot-prototype folder)
 
@@ -159,33 +159,84 @@ for rid, r in RECIPES.items():
     for k in ("verb",):
         if k not in r: err(w, f"missing {k}")
 
-# ---------------------------------------------------------------- conditions (perks, golden acorns)
-counters = set()
-src = open(os.path.join(ROOT, "game", "farm", "game.gd"), encoding="utf-8").read()
-m = re.search(r"func counter\(name: String\) -> float:(.*?)\n\treturn NAN", src, re.S)
-for l in (m.group(1) if m else "").split("\n"):
-    mm = re.match(r'\t\t"(\w+)":', l)
-    if mm: counters.add(mm.group(1))
-if not counters: warn("conditions", "could not read the counters from game/farm/game.gd")
+# ---------------------------------------------------------------- conditions (one language: story, reveals, acorns, perks, pets' WHEN cards)
+# The words come from the game itself: data/farm/condition-words.json, written by tests/conditions_test.tscn --write-words (the test
+# fails when the file no longer matches the code). One validator for every place a condition is used.
+WORDS_PATH = os.path.join(ROOT, "data", "farm", "condition-words.json")
+WORDS = {}
+try:
+    WORDS = json.load(open(WORDS_PATH, encoding="utf-8")).get("words", {})
+except (OSError, ValueError):
+    pass
+if not WORDS: err("conditions", "data/farm/condition-words.json is missing, broken or empty (write it: tests/conditions_test.tscn -- --seed=1 --write-words)")
 reveal_ids = set(META.get("reveal", {}).get("elements", {}))
-def condition_ok(w, expr):
-    if expr.startswith("unlocked:") or expr.startswith("done:"):
-        node_id(w, expr.split(":", 1)[1], "condition")
-    elif expr.startswith("seen:"):
-        if expr[5:] not in reveal_ids: err(w, f"condition {expr!r}: {expr[5:]} is not an element of rules/60-reveal.json")
-    else:
-        p = expr.split(">=")
-        if len(p) != 2 or p[0] not in counters: err(w, f"condition {expr!r} is not 'unlocked:<node>' or '<counter>>=<n>' with a counter of the game ({', '.join(sorted(counters))})")
-        else:
-            try: float(p[1])
-            except ValueError: err(w, f"condition {expr!r}: {p[1]!r} is not a number")
+SEASONS = {"spring", "summer", "autumn", "winter"}
+STORY_IDS = set(D.get("story", {})) if "D" in globals() else set()
+CARD_IDS = {k for k, v in N.items() if v.get("type") == "knowledge"}
+PLACE_IDS = set(PLACES["spots"]) | {"board"}
+
+_NUM = re.compile(r"^[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$")
+def _is_num(t):
+    """A number as the game reads it (GDScript is_valid_float): plain digits, a point, an exponent; no 1_000, nan, inf."""
+    return bool(_NUM.match(t))
+
+def _arg_ok(kind, arg):
+    """None if the argument fits the word's kind, else why not."""
+    if kind == "item": return None if arg in ITEMS else f"{arg} is not an item"
+    if kind == "node": return None if arg in N else f"{arg} is not a node"
+    if kind == "card": return None if arg in CARD_IDS else f"{arg} is not a knowledge card"
+    if kind == "season": return None if arg in SEASONS else f"{arg} is not a season"
+    if kind == "seen": return None if arg in STORY_IDS or arg in reveal_ids else f"{arg} is neither a story piece nor an interface element"
+    if kind == "place": return None if arg in PLACE_IDS or arg.startswith("patch:") else f"{arg} is not a place (places.json spots) or patch:<kind>"
+    if kind == "chance": return None if _is_num(arg) and 0 <= float(arg) <= 1 else "a chance between 0 and 1"
+    if kind == "after":
+        pid, _, n = arg.partition(":")
+        if pid not in STORY_IDS: return f"{pid} is not a story piece"
+        return None if n.isascii() and n.isdigit() else "after:<piece>:<number of questions>"
+    return f"the word's argument kind {kind!r} is not known to the checker (add it to _arg_ok)"
+
+def condition_ok(w, expr, gap=False):
+    """Checks one condition against the game's words. gap: a pet WHEN card's condition, with {n} for the child's number."""
+    if not WORDS: return
+    e = str(expr).strip()
+    while e.startswith("not:"): e = e[4:]
+    op = ">=" if ">=" in e else ("<" if "<" in e else "")
+    left, rhs = (e.split(op, 1) if op else (e, ""))
+    name, has_arg, arg = left.strip().partition(":")
+    name, arg = name.strip(), arg.strip()      # as the game reads it (each part trimmed)
+    d = WORDS.get(name)
+    if d is None:
+        err(w, f"condition {expr!r}: unknown word {name!r} (the words: data/farm/condition-words.json)"); return
+    if op and d["kind"] != "number": err(w, f"condition {expr!r}: {name} is a yes-or-no word, it takes no comparison"); return
+    if not op and d["kind"] != "yes": err(w, f"condition {expr!r}: {name} is a number word, it needs >= or <"); return
+    if op and not (_is_num(rhs.strip()) or (gap and rhs.strip() == "{n}")):
+        err(w, f"condition {expr!r}: {rhs.strip()!r} is not a number"); return
+    if d["arg"] and not arg: err(w, f"condition {expr!r}: {name} needs an argument ({d['arg']})"); return
+    if not d["arg"] and has_arg: err(w, f"condition {expr!r}: {name} takes no argument"); return
+    why = _arg_ok(d["arg"], arg) if d["arg"] else None
+    if why: err(w, f"condition {expr!r}: {why}")
+
 for p in META.get("perks", {}).get("list", []):
     if p.get("when"): condition_ok(f"perk {p['id']}", str(p["when"]))
 for a in META.get("acorns", {}).get("list", []):
-    if a["when"] != "luck": condition_ok(f"acorn {a['id']}", str(a["when"]))     # "luck": found by a luck event (meta.luck.events)
+    if "when" in a: condition_ok(f"acorn {a['id']}", str(a["when"]))
+    elif a.get("on") != "luck": err(f"acorn {a['id']}", "needs a 'when' (a condition) or 'on': 'luck' (found by a luck event)")
+for e in META.get("luck", {}).get("events", []):
+    if "when" in e: err(f"luck event {e['id']}", "'when' is a condition; a chore that just happened is 'on' (a trigger)")
+    elif not str(e.get("on", "")): err(f"luck event {e['id']}", "needs 'on': the chore it follows (weed, harvest, collect:<animal> …)")
+for wd, d in WORDS.items():
+    condition_ok(f"condition word {wd} (its example)", str(d.get("example", "")))
+for cid, c in META.get("pets", {}).get("whens", {}).items():
+    w = f"pet WHEN card {cid}"
+    for old in ("op", "stat", "item"):
+        if old in c: err(w, f"'{old}' is gone: a card has one condition in 'when' with {{n}} for the child's number")
+    if not re.match(r"^(?!not:)[a-z_]+(:[a-z_0-9]+)?(>=|<)\{n\}$", str(c.get("when", ""))): err(w, "'when' must be one number word compared with {n} (weeds_max>={n}, water<{n}, item:compost<{n} …): the card's label shows ≥ or <")
+    else: condition_ok(w, str(c["when"]), gap=True)
+    for k in ("min", "max", "step", "default"):
+        if not isinstance(c.get(k), (int, float)): err(w, f"{k} must be a number")
 for rid, r in META.get("reveal", {}).get("elements", {}).items():
     if not isinstance(r.get("when", []), list): err(f"reveal {rid}", "'when' must be a list of conditions (all must hold)")
-    for expr in r.get("when", []): condition_ok(f"reveal {rid}", str(expr))
+    for expr in list(r.get("when", [])) + list(r.get("whenAny", [])): condition_ok(f"reveal {rid}", str(expr))
 
 # ---------------------------------------------------------------- weights (rules/45-weight.json)
 W = META.get("weights", {})
@@ -250,8 +301,7 @@ else:
         for wc in ws:
             if wc not in PT.get("whens", {}): err(f"pets {pid}", f"allowedWhens names {wc}, which is not a WHEN card")
     for wc, w in PT.get("whens", {}).items():
-        if not (w.get("stat") or w.get("item")): err(f"pets when {wc}", "needs a stat or an item")
-        if w.get("item") and w["item"] not in ITEMS: err(f"pets when {wc}", f"item {w['item']} is not an item")
+        # its condition ('when' with {n}) is checked with the other conditions (pet WHEN card …)
         if not float(w.get("min", 0)) <= float(w.get("default", 0)) <= float(w.get("max", 99)): err(f"pets when {wc}", "default outside min..max")
     for pid, f in PT.get("first", {}).items():
         if pid not in N or N[pid].get("type") != "pet": err("pets", f"first: {pid} is not a pet")
@@ -271,6 +321,53 @@ for root, _dirs, files in os.walk(os.path.join(ROOT, "game")):
         if not fn.endswith(".gd"): continue
         for m in _re.finditer(r'feel\("([A-Za-z]+)\.([A-Za-z]+)"\)', open(os.path.join(root, fn), encoding="utf-8").read()):
             if m.group(2) not in FEEL.get(m.group(1), {}): err(f"feel {m.group(1)}.{m.group(2)}", f"read in {fn} but not in rules/65-feel.json")
+
+# ---------------------------------------------------------------- the interruption queue's order list (rules/65-feel.json, interruption-queue)
+IQ = META.get("interruptions", {})
+if not IQ: err("interruptions", "rules/65-feel.json has no order list")
+else:
+    IQ_BUSY = IQ.get("busy", {})
+    IQ_KINDS = [str(e.get("kind", "")) for e in IQ.get("order", [])]
+    for b, note in IQ_BUSY.items():
+        if not note: err(f"interruptions busy {b}", "needs a note")
+        if b in IQ_KINDS: err(f"interruptions busy {b}", "is also a kind")
+    for e in IQ.get("order", []):
+        k = str(e.get("kind", ""))
+        if not k or IQ_KINDS.count(k) != 1: err(f"interruptions {k}", "a kind needs a name, once")
+        if not e.get("note"): err(f"interruptions {k}", "needs a note")
+        if not isinstance(e.get("waitsFor"), list): err(f"interruptions {k}", "waitsFor must be a list")
+        for w in e.get("waitsFor", []):
+            if w not in IQ_BUSY and w not in IQ_KINDS: err(f"interruptions {k}", f"waits for '{w}': neither a kind nor a busy screen")
+            if w == k: err(f"interruptions {k}", "waits for itself")
+    for root, _dirs, files in os.walk(os.path.join(ROOT, "game")):
+        for fn in files:
+            if not fn.endswith(".gd"): continue
+            src = open(os.path.join(root, fn), encoding="utf-8").read()
+            for m in _re.finditer(r'(?:submit|interrupt)\("([a-z_]+)"', src):
+                if m.group(1) not in IQ_KINDS: err(f"interruptions {m.group(1)}", f"used in {fn} but not in the order list")
+            for m in _re.finditer(r'(?:waiting|in_line|clear)\("([a-z_]+)"', src):
+                if fn in ("interrupts.gd", "storybox.gd", "ui_driver.gd") and m.group(1) not in IQ_KINDS: err(f"interruptions {m.group(1)}", f"asked for in {fn} but not a kind of the order list")
+            for m in _re.finditer(r'watch\("([a-z_]+)"', src):
+                if m.group(1) not in IQ_BUSY: err(f"interruptions busy {m.group(1)}", f"watched in {fn} but not listed under busy")
+
+# ---------------------------------------------------------------- the seasons' look (rules/66-season-look.json, season-look)
+SEASONS = ("spring", "summer", "autumn", "winter")
+SL = META.get("seasonLook", {})
+if not SL: warn("seasonLook", "rules/66-season-look.json is missing")
+CRIT = {k: v for k, v in SL.get("critters", {}).items() if k != "note"}
+_crit_needed = [nid for nid, n in N.items() if n.get("type") in ("animal", "pet")] + ["butterflies", "fireflies", "farm_cat"]
+for cid in _crit_needed:
+    if cid not in CRIT: warn(f"critter {cid}", "has no seasons list in rules/66-season-look.json critters (it shows in every season)")
+for cid, c in CRIT.items():
+    ss = c.get("seasons") if isinstance(c, dict) else None
+    if not isinstance(ss, list) or not ss: warn(f"critter {cid}", "has no seasons list (it shows in every season)"); continue
+    for s_ in ss:
+        if s_ not in SEASONS: err(f"critter {cid}", f"season {s_!r} is not one of {', '.join(SEASONS)}")
+    if c.get("pest") and not c.get("emoji"): err(f"critter {cid}", "a pest needs its emoji")
+    if not cid.startswith("pest_") and cid not in _crit_needed: warn(f"critter {cid}", "is not an animal, pet or known map creature")
+for kind in META.get("pests", {}).get("kinds", []):
+    if not any(c.get("pest") and c.get("emoji") == kind[0] for c in CRIT.values() if isinstance(c, dict)):
+        warn(f"critter {kind[0]}", "this pest kind (rules/10-farming.json) has no seasons list in rules/66-season-look.json")
 
 # ---------------------------------------------------------------- wellbeing (rules/55-well.json)
 WL = META.get("well", {})
@@ -374,38 +471,6 @@ for rid, r in RECIPES.items():
 # ---------------------------------------------------------------- story (data/farm/story/*.json)
 STORY = D.get("story", {}) if "D" in globals() else {}
 KINDS = ["frame", "beat", "discovery", "letter", "moment", "visit", "scene", "bark", "trace"]
-SEASONS = {"spring", "summer", "autumn", "winter"}
-def story_condition(w, expr):
-    if expr.startswith("seen:"):
-        if expr[5:] not in STORY and expr[5:] not in reveal_ids: err(w, f"condition {expr!r}: {expr[5:]} is neither a story piece nor an interface element")
-        return
-    if expr.startswith("unlocked:") or expr.startswith("done:"): node_id(w, expr.split(":", 1)[1], "condition"); return
-    if ">=" in expr: condition_ok(w, expr); return
-    name, _, arg = expr.partition(":")
-    if name == "start": return
-    if name == "has":
-        item, _, n = arg.partition(":")
-        if item not in ITEMS: err(w, f"condition {expr!r}: {item} is not an item")
-        try: float(n)
-        except ValueError: err(w, f"condition {expr!r}: {n!r} is not a number")
-    elif name == "season":
-        if arg not in SEASONS: err(w, f"condition {expr!r}: {arg} is not a season")
-    elif name == "chapter":
-        if not arg.isdigit() or not 1 <= int(arg) <= 6: err(w, f"condition {expr!r}: chapter 1 to 6")
-    elif name == "tap":
-        if arg not in spots_for_story and not arg.startswith("patch:"): err(w, f"condition {expr!r}: {arg} is not a place (places.json spots) or patch:<kind>")
-    elif name == "page":
-        if arg not in N or N[arg].get("type") != "knowledge": err(w, f"condition {expr!r}: {arg} is not a card")
-    elif name == "after":
-        pid, _, n = arg.partition(":")
-        if pid not in STORY: err(w, f"condition {expr!r}: {pid} is not a story piece")
-        if not n.isdigit(): err(w, f"condition {expr!r}: after:<piece>:<number of questions>")
-    elif name == "chance":
-        try:
-            if not 0 <= float(arg) <= 1: err(w, f"condition {expr!r}: a chance between 0 and 1")
-        except ValueError: err(w, f"condition {expr!r}: {arg!r} is not a number")
-    else: err(w, f"condition {expr!r}: unknown term {name!r}")
-spots_for_story = set(PLACES["spots"]) | {"board"}
 for sid, pc in STORY.items():
     w = f"story {sid}"
     if pc.get("kind") not in KINDS: err(w, f"kind {pc.get('kind')!r} is not one of {KINDS}")
@@ -414,7 +479,7 @@ for sid, pc in STORY.items():
     for pg in pc.get("pages", []):
         if not pg.get("text"): err(w, "a page without text")
     if not isinstance(pc.get("when", []), list): err(w, "'when' must be a list of conditions (all must hold)")
-    for expr in pc.get("when", []): story_condition(w, str(expr))
+    for expr in pc.get("when", []): condition_ok(w, str(expr))
     txt = " ".join([str(pc.get("text", ""))] + [str(pg.get("text", "")) for pg in pc.get("pages", [])])
     if "ß" in txt: err(w, "ß: German text uses ss")
     if len(txt.split()) > 70 and pc.get("kind") not in ("frame", "scene"): warn(w, f"{len(txt.split())} words: boxes are 2-4 sentences, about 35-45 words")
@@ -468,6 +533,28 @@ for b in PLACES["bench"]:
 layout = json.load(open(os.path.join(ROOT, "data", "map_layout.json"), encoding="utf-8"))
 for sid in layout.get("places", {}):
     if sid not in spots: err("map_layout", f"place {sid} is not in places.json spots")
+
+# ---------------------------------------------------------------- designer notes in player texts (crops-and-items/04)
+# Everything the player reads (data texts, interface texts and their translations, see tools/i18n.py) must be player information,
+# not a note to the designer such as "(Barter idea: …)", "Pet 1 (default name …)", "TODO" or "kept from the prototype".
+import i18n
+DESIGN_TALK = re.compile(
+    r"\b(?:TODO|FIXME|TBD|XXX)\b"
+    r"|\([^)]*\b(?:idea|ideas|note|notes|todo|planned|placeholder|prototype|lesson|designer|balance|balancing)\b[^)]*\)"
+    r"|\bthe player\b|\bdefault name\b|\bkept from the prototype\b|\bthreshold unlock\b|\bPet \d\b"
+    r"|\(\s*[^)]*\b(?:Idee|Ideen|Notiz|geplant|Platzhalter|Prototyp)\b[^)]*\)|Tauschidee|\bStandardname\b|\bder Spieler\b|\bHaustier \d\b",
+    re.IGNORECASE)
+def _design_talk(where, text):
+    if isinstance(text, str) and DESIGN_TALK.search(text):
+        err(where, f"reads like a designer's note, not player information: {DESIGN_TALK.search(text).group(0)!r} in {text[:80]!r}")
+for key, text in i18n.data_texts().items(): _design_talk(f"text {key}", text)
+for key in i18n.ui_texts(): _design_talk(f"interface text ({i18n.ui_texts()[key]})", key)
+for path in sorted(glob.glob(os.path.join(ROOT, "data", "i18n", "*-*.json"))):
+    if os.path.basename(path).startswith("languages"): continue
+    for key, v in json.load(open(path, encoding="utf-8")).items():
+        if key == "_unused": continue                  # texts no longer in the code
+        for lang_text in ([x for l, x in v.items() if l != "stale"] if isinstance(v, dict) else [v]):
+            _design_talk(f"{os.path.basename(path)} {key}", lang_text)
 
 print(f"data: {len(ITEMS)} items, {len(N)} nodes, {len(RECIPES)} recipes, {len(qids)} question ids, {chapters} chapters")
 for w in warnings: print("  warning:", w)

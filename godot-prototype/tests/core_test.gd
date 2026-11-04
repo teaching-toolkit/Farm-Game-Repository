@@ -9,13 +9,6 @@ const Rng = preload("res://kits/core/rng.gd")
 var fails := 0
 var checks := 0
 
-class FakeGame:
-	func done(id: String) -> bool: return id == "tent"
-	func seen(id: String) -> bool: return id == "album"
-	func term(name: String, arg: String) -> bool: return name == "start" or (name == "has" and arg == "carrot:3")
-	func counter(name: String) -> float:
-		return {"weeds": 12.0, "seasons": 2.0}.get(name, NAN)
-
 func _init() -> void:
 	# modifiers
 	var t: Dictionary = Modifiers.empty()
@@ -33,23 +26,26 @@ func _init() -> void:
 	var t0: Dictionary = Modifiers.empty()
 	Modifiers.apply(t0, {"mult": {"x": 0.1}, "add": {"y": 5}}, 0.0)
 	_check(Modifiers.mult(t0, "x") == 1.0 and Modifiers.value(t0, "y") == 0.0, "weight 0 has no effect")
-	# conditions
-	var fg := FakeGame.new()
-	_check(Conditions.check("unlocked:tent", fg), "unlocked: a node that is done")
-	_check(Conditions.check("done:tent", fg), "done: the same")
-	_check(not Conditions.check("unlocked:barn", fg), "unlocked: a node that is not")
-	_check(Conditions.check("weeds>=10", fg), "a counter that reaches the number")
-	_check(Conditions.check("weeds>=12", fg), "…exactly")
-	_check(not Conditions.check("weeds>=13", fg), "…not yet")
-	_check(not Conditions.check("unknown>=0", fg), "a counter nobody knows is false")
-	_check(not Conditions.check("weeds", fg) and not Conditions.check("", fg), "nonsense is false")
-	_check(Conditions.check("seen:album", fg) and not Conditions.check("seen:bag", fg), "seen: asks the provider")
-	_check(not Conditions.check("seen:album", Modifiers), "seen: is false for a provider that cannot tell")
-	_check(Conditions.check_all([], fg), "no conditions: holds")
-	_check(Conditions.check_all(["done:tent", "weeds>=10", "seen:album"], fg), "all of a list")
-	_check(not Conditions.check_all(["done:tent", "weeds>=13"], fg), "…one failing makes the list fail")
-	_check(Conditions.check("start", fg) and Conditions.check("has:carrot:3", fg) and not Conditions.check("has:carrot:4", fg), "the game's own terms: name or name:argument go to the provider")
-	_check(not Conditions.check("start", Modifiers), "…false for a provider without terms")
+	# conditions: the grammar and the register (the words here are made up; the game registers its own)
+	var cd = Conditions.new()
+	cd.register("done", func(a): return a == "tent", "yes", "node", "n", "done:tent")
+	cd.register("seen", func(a): return a == "album", "yes", "seen", "n", "seen:album")
+	cd.register("start", func(_a): return true, "yes", "", "n", "start")
+	cd.register("weeds", func(_a): return 12.0, "number", "", "n", "weeds>=10")
+	cd.register("item", func(a): return 3.0 if a == "carrot" else 0.0, "number", "item", "n", "item:carrot>=3")
+	cd.register("odd", func(_a): return NAN, "number", "", "n", "odd>=1")
+	_check(cd.holds("done:tent") and not cd.holds("done:barn"), "a yes-or-no word with an argument")
+	_check(cd.holds("weeds>=10") and cd.holds("weeds>=12") and not cd.holds("weeds>=13"), "at least: reaches, exactly, not yet")
+	_check(cd.holds("weeds<13") and not cd.holds("weeds<12"), "fewer than")
+	_check(cd.holds("item:carrot>=3") and not cd.holds("item:carrot>=4") and cd.holds("item:egg<1"), "a number word with an argument")
+	_check(cd.holds("not:done:barn") and not cd.holds("not:done:tent") and cd.holds("not:weeds>=13") and cd.holds("not:not:start"), "not: turns it round")
+	_check(not cd.holds("unknown>=0") and not cd.holds("not:unknown>=0") and not cd.holds("not:nothing:x"), "a word nobody registered is false, also behind not:")
+	_check(not cd.holds("weeds") and not cd.holds("not:weeds") and not cd.holds("start>=1") and not cd.holds("weeds>=x") and not cd.holds("") and not cd.holds("odd>=1") and not cd.holds("not:odd>=1"), "a number word without a comparison, a yes word with one, a bad number, nothing, a reader with no number: false")
+	_check(cd.valid("not:item:carrot<2") and not cd.valid("weeds") and not cd.valid("nothing"), "valid: well formed with known words")
+	_check(cd.holds_all([]) and cd.holds_all(["done:tent", "weeds>=10", "seen:album"]) and not cd.holds_all(["done:tent", "weeds>=13"]), "a list: all of them; an empty list holds")
+	_check(cd.value("weeds") == 12.0 and cd.value("item:carrot") == 3.0 and is_nan(cd.value("start")) and is_nan(cd.value("nothing")), "value of a number word")
+	var voc: Dictionary = cd.vocabulary()
+	_check(voc.size() == 6 and voc["item"]["arg"] == "item" and voc["weeds"]["kind"] == "number" and not voc["done"].has("read"), "the vocabulary lists every word without its reader")
 	# clock
 	var c = Clock.new()
 	var seen := []

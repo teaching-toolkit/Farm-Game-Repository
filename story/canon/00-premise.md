@@ -21,6 +21,7 @@ Round 1, tidied in the critical pass of 7 Oct 2026 (before Round 3). Labels: ✅
   the player meets.
 - **The bulk of the story is what happens in the present of the game.** On top of that runs a **mystery** uncovered slowly across
   the whole game: *why did the farm burn, and what is up with the magical pets?*
+- ✅ **The farmer was there, as a child (8), when the farm burned** (parent, 23 Oct 2026). So no text has the farmer wonder what caused the fire; at a clue the farmer notices it and looks troubled, and it stays open whether the farmer is unsure of what happened.
 - **The fire started in the hay barn while the girl was playing with Mumyo.** The imp caused it. As a child she saw an imp nobody
   believed, and later was never sure whether she saw a real imp or caused the fire herself and pushed the thought away. Part of her
   family suspected who caused it, and she had a hard time afterwards.

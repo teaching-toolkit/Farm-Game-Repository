@@ -84,6 +84,8 @@ Inside a joke she has no perspective on herself (non-negotiable 3). Between chap
 
 ## Never in the texts
 
+✅ (parent, 23 Oct 2026) You were there, as a child, the night the farm burned: never write you *wondering* what caused the fire ("what was it?", "who started it?"). At a clue you notice, recognise, go still or cold, and turn away; whether you are sure stays open.
+
 Her name, gender, looks or age; "she"/"he" about the player; what "you" feel, beyond the minimum; the word "guilt"; any explanation of her spine; her saying she has changed. Someone else may notice, once.
 
 ## Inventions in this file 💡

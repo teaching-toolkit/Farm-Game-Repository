@@ -18,6 +18,11 @@ func levels() -> Array:
 func default_grade() -> int:
 	return int(data().get("default", 1))
 
+## Where the expected grade of a thing made at a station starts for a beginner (skills-quality/03: Lumpy), before the station,
+## the rank and the inputs lift it. Crops start from default_grade() (Proper).
+func made_start() -> float:
+	return float(data().get("madeStart", default_grade()))
+
 func max_grade() -> int:
 	return maxi(0, levels().size() - 1)
 
@@ -96,10 +101,10 @@ func crop_expect(p: Dictionary) -> float:
 		if G.nodes.has(id) and G.satisfied(id) and not G.superseded(id): e += float(c["bonusNodes"][id])
 	return e + G.skills.grade_bonus("field")
 
-## Recipes: the station in use (the newest of its chain), what the inputs it will use are worth, and later the skill.
+## Recipes: start Lumpy (made_start), then the station in use (the newest of its chain), what the inputs it will use are worth, and later the skill.
 func recipe_expect(rid: String) -> float:
 	var r: Dictionary = G.recipes[rid]
-	var e := float(default_grade())
+	var e := made_start()
 	var root: String = G.crafting.chain_root(r["station"])
 	e += float(data().get("stationBonus", {}).get(G.crafting.active_of(root), 0.0))
 	e += G.skills.grade_bonus(G.skills.family_of_station(r["station"]))
@@ -121,7 +126,7 @@ func input_bonus(r: Dictionary) -> float:
 ## The grade a made batch gets right now (decided once, when the batch starts).
 func roll_recipe(rid: String, input_avg: float) -> int:
 	var r: Dictionary = G.recipes[rid]
-	var e := float(default_grade())
+	var e := made_start()
 	var root: String = G.crafting.chain_root(r["station"])
 	e += float(data().get("stationBonus", {}).get(G.crafting.active_of(root), 0.0))
 	e += G.skills.grade_bonus(G.skills.family_of_station(r["station"]))

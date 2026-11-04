@@ -56,9 +56,9 @@ Page 1. You clear the last black beam from the barn. Then you stop. The burn doe
 
 > Du räumst den letzten schwarzen Balken aus der Scheune. Dann hältst du inne. Der Brand beginnt nicht am Dach, wo ein Blitz einschlagen würde. Er beginnt unten, in der Ecke, wo das Heu lag.
 
-Page 2. You sit back on your heels. Lightning does not start low. Something else began this. You do not know what. And you find that you do not want to know. Not yet.
+Page 2. You sit back on your heels. Lightning does not start low. You look at that corner for a long time, and your hands go cold. Then you pick up the beam and carry it out. Not yet.
 
-> Du setzt dich auf die Fersen. Ein Blitz fängt nicht unten an. Etwas anderes hat das hier begonnen. Du weisst nicht, was. Und du merkst, dass du es nicht wissen willst. Noch nicht.
+> Du setzt dich auf die Fersen. Ein Blitz fängt nicht unten an. Du schaust lange in diese Ecke, und deine Hände werden kalt. Dann hebst du den Balken auf und trägst ihn hinaus. Noch nicht.
 
 ## c2_compost · moment · A tidy pit
 *When:* `done:ruins_compost`
@@ -88,17 +88,38 @@ Page 2. You sit down beside her and wait. The pond fills a little, then a little
 ## c2_hook · beat · A blackened hook
 *When:* `seen:c2_tortoise`
 
-In the new barn frame you find an old iron hook. It is black with soot, and it was made to hold a lantern. “If it was not lightning,” you think, “then what?” You hang the hook back up. Carefully.
+In the new barn frame you find an old iron hook. It is black with soot, and it was made to hold a lantern. You know this hook. Your hands go still. You hang it back up. Carefully.
 
-> Im neuen Scheunengerüst findest du einen alten Eisenhaken. Er ist schwarz vor Russ und wurde gemacht, um eine Laterne zu halten. „Wenn es kein Blitz war“, denkst du, „was dann?“ Du hängst den Haken wieder auf. Vorsichtig.
+> Im neuen Scheunengerüst findest du einen alten Eisenhaken. Er ist schwarz vor Russ und wurde gemacht, um eine Laterne zu halten. Du kennst diesen Haken. Deine Hände werden still. Du hängst ihn wieder auf. Vorsichtig.
 
 ## c2_frame2 · frame · Back in the room
 *When:* `seen:c2_hook`
 
-Page 1. Back in the room, somebody has fallen asleep on the floor. “Did you find out who started it?” asks Minena. “Not then,” you say. “I didn't want to.”
+Page 1. Back in the room, somebody has fallen asleep on the floor. “And the corner in the barn?” asks Minena. “What did it mean?” You are quiet for a moment. “Not then,” you say. “Later.”
 
-> Zurück im Zimmer ist jemand auf dem Boden eingeschlafen. „Hast du herausgefunden, wer es angezündet hat?“, fragt Minena. „Damals nicht“, sagst du. „Ich wollte es nicht.“
+> Zurück im Zimmer ist jemand auf dem Boden eingeschlafen. „Und die Ecke in der Scheune?“, fragt Minena. „Was hat das bedeutet?“ Du bist einen Moment still. „Damals noch nicht“, sagst du. „Später.“
 
 Page 2. “And the man on the fence? Was he funny?” “Very.” “Was that good?” “It made him hard to talk to,” you say, and nobody understands. That is all right.
 
 > „Und der Mann auf dem Zaun? War der lustig?“ „Sehr.“ „War das gut?“ „Es hat ihn schwer zu verstehen gemacht“, sagst du, und niemand versteht. Das ist in Ordnung.
+
+## c2_k_bunny_carrots · bark
+*When:* `done:pet_bunny + item:carrot>=1 + chance:0.15` · added 3 Nov 2026 (`story/12`) 💡
+
+The bunny sits beside the carrots, very still, looking at the sky. As if carrots were something she had never heard of.
+
+> Das Häschen sitzt neben den Karotten, ganz still, und schaut in den Himmel. Als hätte es noch nie von Karotten gehört.
+
+## c2_k_tortoise_yard · bark
+*When:* `done:pet_tortoise + chance:0.12` · added 3 Nov 2026 (`story/12`) 💡
+
+The tortoise has been crossing the yard all morning. She is nearly in the middle. She looks very pleased about it.
+
+> Die Schildkröte überquert schon den ganzen Morgen den Hof. Jetzt ist sie fast in der Mitte. Sie sieht sehr zufrieden aus.
+
+## c2_k_hen_cow · bark
+*When:* `animals:animal_cow>=1 + animals:animal_chicken>=1 + chance:0.15` · added 3 Nov 2026 (`story/12`) 💡
+
+A hen walks right under the cow. The cow looks down. The hen looks up. Neither of them will move first.
+
+> Ein Huhn läuft direkt unter die Kuh. Die Kuh schaut hinunter. Das Huhn schaut hinauf. Keines will zuerst weitergehen.

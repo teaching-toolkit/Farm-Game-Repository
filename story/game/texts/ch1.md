@@ -68,8 +68,8 @@ Under the black boards you find a page, burnt at the edges. A list of numbers. A
 
 > Unter den schwarzen Brettern findest du ein Blatt, an den Rändern verbrannt. Eine Liste mit Zahlen. Ganz unten, in Rot: „Der Anteil des Herrn.“ Jedes Jahr ist die rote Zahl grösser. Du faltest das Blatt klein und behältst es.
 
-## c1_seller · visit · The seller
-*When:* `done:d_porridge`
+## c1_seller · scene · The seller
+*When:* `done:d_porridge` · a scene since 3 Nov 2026 (`story/15`): it opens on the square right after *Hand over*. Picture: stand-in `map/market_stall` until `pictures/10` has the scene.
 
 Page 1. On the village square a seller sniffs the air. “Is that porridge?” You hand her a bowl. She eats it standing up, very fast.
 
@@ -127,7 +127,7 @@ Page 2. “And the bell? Who rang the bell?” “Shh!” says everybody at once
 > „Hörst du eigentlich nie auf?“, ruft ein Fuhrmann vom Weg. Du winkst. Du hörst nicht auf.
 
 ## c1_k_hens · bark
-*When:* `done:animal_chicken + chance:0.2`
+*When:* `animals:animal_chicken>=2 + chance:0.2` (two hens at least: `story/12`)
 
 The hens argue about who laid which egg. Nobody wins.
 
@@ -160,3 +160,59 @@ The wind still smells a little of old smoke.
 The tent flaps in the wind. You pull the blanket up to your nose.
 
 > Das Zelt flattert im Wind. Du ziehst die Decke bis zur Nase.
+
+## c1_k_hen_alone · bark
+*When:* `animals:animal_chicken>=1 + animals:animal_chicken<2 + chance:0.2` · added 3 Nov 2026 (`story/12`) 💡
+
+Your one hen walks round the coop twice, looking for someone to argue with. There is nobody. She argues with a stone.
+
+> Dein einziges Huhn läuft zweimal um den Stall und sucht jemanden zum Streiten. Da ist niemand. Also streitet es mit einem Stein.
+
+## c1_k_eggs · bark
+*When:* `item:egg>=6 + chance:0.2` · added 3 Nov 2026 (`story/12`) 💡
+
+So many eggs. You line them up on a plank. One rolls into the straw, on purpose, you are sure of it.
+
+> So viele Eier. Du legst sie in einer Reihe auf ein Brett. Eines rollt ins Stroh, mit Absicht, da bist du sicher.
+
+## c1_k_tall_weeds · bark
+*When:* `weeds_max>=3 + chance:0.25` · added 3 Nov 2026 (`story/12`) 💡
+
+The weeds on one patch reach over your boots now. A beetle sits right on top and enjoys the view.
+
+> Das Unkraut auf einem Beet reicht dir schon über die Stiefel. Ganz oben sitzt ein Käfer und geniesst die Aussicht.
+
+## c1_k_yawn · bark
+*When:* `energy<3 + step>=3 + chance:0.3` · added 3 Nov 2026 (`story/12`) 💡
+
+You yawn so wide that a passing fly changes its mind.
+
+> Du gähnst so weit, dass eine Fliege es sich anders überlegt.
+
+## c1_k_dry_bucket · bark
+*When:* `water<1 + step>=2 + chance:0.25` · added 3 Nov 2026 (`story/12`) 💡
+
+You tip the bucket upside down. One drop falls out, very slowly, as if it is sorry.
+
+> Du drehst den Eimer um. Ein Tropfen fällt heraus, ganz langsam, als täte es ihm leid.
+
+## c1_k_rain · bark
+*When:* `rain + not:season:winter + chance:0.3` · added 3 Nov 2026 (`story/12`) 💡
+
+It rains. The field drinks and drinks and does not say thank you. Fields never do.
+
+> Es regnet. Das Feld trinkt und trinkt und sagt nicht danke. Felder sagen nie danke.
+
+## c1_k_caterpillar · bark
+*When:* `pests>=1 + chance:0.25` · added 3 Nov 2026 (`story/12`) 💡
+
+A caterpillar sits on a leaf in your field, chewing. It has a very good plan and no manners at all.
+
+> Eine Raupe sitzt auf einem Blatt in deinem Feld und kaut. Sie hat einen sehr guten Plan und überhaupt keine Manieren.
+
+## c1_k_worm · bark
+*When:* `empty_patches>=2 + step>=5 + chance:0.2` · added 3 Nov 2026 (`story/12`) 💡
+
+Some patches lie bare. A worm pokes its head out, looks around, and goes back down to wait for seeds.
+
+> Ein paar Beete liegen leer. Ein Wurm streckt den Kopf heraus, schaut sich um und geht wieder hinunter, um auf Samen zu warten.

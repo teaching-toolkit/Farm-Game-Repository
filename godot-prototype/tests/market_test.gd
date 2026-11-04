@@ -35,10 +35,9 @@ func _ready() -> void:
 	G.reset_game()
 	_check(is_equal_approx(G.trade.season_factor("carrot", "spring"), 1.0) and is_equal_approx(G.trade.season_factor("egg", "spring"), 1.0), "spring: the list price for the familiar things")
 	_check(G.trade.season_factor("carrot", "winter") > 1.1 and G.trade.season_factor("carrot", "summer") < 1.0, "carrots pay more in winter and less in summer")
-	var lines := []
-	G.toast.connect(func(t): lines.append(t))
-	G.trade.season_news("winter")
-	_check(lines.size() == 1 and lines[0].contains("🪙"), "a news line at the change of season (%s)" % str(lines))
+	var line: String = G.trade.season_news("winter")
+	_check(line.contains("🪙"), "a news line for the change of season (%s)" % line)
+	_check(G.seasons.season_box("winter")["more"].contains(line), "…it is in the season's box (story/14), not said apart")
 	# the price follows the season
 	G.S["inv"].clear()
 	G.inventory.add_item("carrot", 1.0, true)

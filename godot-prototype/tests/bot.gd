@@ -505,8 +505,9 @@ func _turn() -> void:
 				if G.items[o].has("fertilizer") and G.fields.fert_points_have() < 12: useful = true
 				for k in need:
 					if k.begins_with("tag:") and (G.items[o].get("tags", []) as Array).has(k.substr(4)): useful = true
-			if r["station"] == "wild_edge" and G.S["woodpile"] < 6: useful = true
-			if coins_short and r["station"] != "wild_edge":       # a craft that sells for more than its stuff is worth (and the store has room)
+			var gathering: bool = r["station"] in ["wild_edge", "clay_pit"]      # the forest edge, and the clay pit at the pond (nature/05)
+			if gathering and G.S["woodpile"] < 6: useful = true
+			if coins_short and not gathering:       # a craft that sells for more than its stuff is worth (and the store has room)
 				for o in r["outputs"]:
 					if G.items[o].get("category", "") == "craft" and G.inventory.count(o) < 4.0 and G.inventory.value_of(o) >= 100.0: useful = true
 			if useful:

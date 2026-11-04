@@ -15,7 +15,7 @@ Part of the game's design ([index](README.md)). It describes the game as built; 
   question with its id and text, and download the record again.
 - **Settings** for the parent (`data/settings.json`): which packs, how many answers, the share of card reviews, the language,
   the maths categories and timing, dynamic difficulty, place names on the map, the test cheat buttons.
-- **The grown-up part of ⚙️ Settings** (the question share, the learning record, dynamic difficulty, a new game) is behind a
+- **The grown-up part of ⚙️ Settings** (the question share, the energy share of a slow right Rest answer (default 20 %, steps of 10 %, kept per farm), the learning record, dynamic difficulty, a new game) is behind a
   simple password (`parentPassword`, with a hint under the box) and stays open for 5 minutes; "Who is playing" and the log
   stay open to the child. It is a child lock, not a secret.
 

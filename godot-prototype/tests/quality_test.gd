@@ -101,6 +101,10 @@ func _ready() -> void:
 		G.S["inv"].clear()
 		G.S["unlocked"]["campfire"] = true
 		var e_plain: float = Q.recipe_expect(rid)
+		# skills-quality/03: a beginner's made thing starts Lumpy (crops stay Proper, see crop_expect above)
+		var d_plain: Array = Q.distribution(e_plain)
+		_check(e_plain < 0.5 and float(d_plain[0]) > 0.8, "a beginner's %s is expected Lumpy (E %.2f, Lumpy %d%%)" % [rid, e_plain, int(round(float(d_plain[0]) * 100.0))])
+		_check(is_equal_approx(Q.made_start(), 0.0) and Q.default_grade() == 1, "made things start Lumpy, crops and bought things Proper")
 		if Q.graded(inp):
 			G.inventory.add_item(inp, 20.0, true, 2)
 			var e_fancy: float = Q.recipe_expect(rid)

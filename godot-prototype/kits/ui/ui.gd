@@ -267,9 +267,10 @@ static func header(tex: Texture2D, emoji := "", h := 110.0, tint := Color.WHITE,
 
 ## A row of cube bars, one per key of a cost: [icon] ■■■□□ ▫▫  (filled = you have it, hollow = still missing,
 ## faint grey = what upgrades, practice and meals save compared with the first time). keys: energy, water, coins, items.
-## `money` (optional): writes an amount of coins as text (the game's bronze and gold); coin costs then show cubes of 10 bronze or of a gold,
-## with the sum as words ("2 🟡 35 🟤") instead of one cube per bronze.
-static func cost_row(c: Dictionary, base: Dictionary, have: Callable, emoji: Callable, items := {}, money := Callable()) -> HFlowContainer:
+## `money` (optional): writes an amount of coins as text (the game's bronze, gold and diamonds); coin costs then show one cube per
+## bronze under a gold, per gold from a gold, per diamond from a diamond (in that coin's colour), with the sum as words ("2 🟡 35 🟤").
+## `icon` (optional): gives the item's small picture (a Texture2D, or null: then the emoji is shown).
+static func cost_row(c: Dictionary, base: Dictionary, have: Callable, emoji: Callable, items := {}, money := Callable(), icon := Callable()) -> HFlowContainer:
 	var row := HFlowContainer.new()
 	row.add_theme_constant_override("h_separation", 14)
 	row.add_theme_constant_override("v_separation", 4)
@@ -279,7 +280,8 @@ static func cost_row(c: Dictionary, base: Dictionary, have: Callable, emoji: Cal
 		if need <= 0.0: continue
 		var item := hbox(3)
 		item.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		item.add_child(label(str(emoji.call(k)), 18))
+		var pic: Texture2D = icon.call(k) if icon.is_valid() else null
+		item.add_child(pic_or_emoji(pic, str(emoji.call(k)), 24.0, 18))
 		var cb := CubeBar.new()
 		cb.mode = "cost"
 		cb.need = need
@@ -287,11 +289,34 @@ static func cost_row(c: Dictionary, base: Dictionary, have: Callable, emoji: Cal
 		cb.saved = maxf(0.0, float(base.get(k, need)) - need)
 		cb.color = item_color(k, items)
 		if k == "coins" and money.is_valid():
-			cb.unit_min = 100.0 if need >= 100.0 else (10.0 if need >= 30.0 else 1.0)
+			cb.unit_min = coin_unit(need)       # one cube per bronze under a gold, per gold from a gold, per diamond from a diamond
+			cb.color = COIN_COLORS[cb.unit_min]
 			cb.num_text = str(money.call(ceilf(need - 0.0001)))
 		item.add_child(cb)
 		row.add_child(item)
 	return row
+
+const COIN_COLORS := {1.0: Color("b0703a"), 100.0: Color("e8b923"), 100000.0: Color("8fd3ee")}
+
+## What one cube of a coin cost stands for: 1 bronze, 1 gold (100 bronze) or 1 diamond (1000 gold).
+static func coin_unit(bronze: float) -> float:
+	if bronze >= 100000.0: return 100000.0
+	return 100.0 if bronze >= 100.0 else 1.0
+
+## A thing's small picture in a square of `px` (kept in proportion, centred), or its emoji when it has no picture.
+static func pic_or_emoji(pic: Texture2D, emoji: String, px := 24.0, emoji_size := 18) -> Control:
+	if pic == null:
+		var l := label(emoji, emoji_size)
+		l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		return l
+	var tr := TextureRect.new()
+	tr.texture = pic
+	tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	tr.custom_minimum_size = Vector2(px, px)
+	tr.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return tr
 
 ## Cubes for a stock: filled for what you have, empty slots up to what fits.
 static func stock_bar(have: float, cap: float, col: Color, max_w := 260.0) -> Control:
@@ -303,8 +328,10 @@ static func stock_bar(have: float, cap: float, col: Color, max_w := 260.0) -> Co
 	cb.max_w = max_w
 	return cb
 
-## Quantities as little cubes in the item's colour (whole cubes, a partly filled one for halves). Up to 10 cubes in a row;
-## more make more rows of smaller cubes (10 × 10 at most); beyond that one cube stands for 5, 10, 25 … (shown as ×5 …).
+## Quantities as little cubes in the item's colour (whole cubes, a partly filled one for halves): the number of cubes is the amount.
+## Up to 10 cubes in a row (20 when there is room); more make more rows of 10; beyond 100 the bar grows in both directions, in
+## tens of columns, about twice as wide as high (200 = 20 × 10). Cubes get smaller to fit the width (and `max_h` when set). No "×5":
+## one cube is always one (interface-feel/05); only coin costs count by the coin (a cube is a gold, or a diamond), and their words say the sum.
 ## A small number stands next to the cubes: how many you have (stock) or how many it takes (cost; red while missing).
 class CubeBar extends Control:
 	var mode := "stock"       # stock: have / cap · cost: need (filled up to have, hollow beyond) + saved (grey)
@@ -314,12 +341,14 @@ class CubeBar extends Control:
 	var saved := 0.0
 	var color := Color("e8c24a")
 	var max_w := 240.0
+	var max_h := 0.0          # > 0: the cubes also shrink to keep the bar this high (the top bar)
 	var show_num := true
 	var num_text := ""        # instead of the automatic number
 	var num_size := 14
 	var unit := 1.0
-	var unit_min := 1.0       # one cube stands for at least this much (coins: 10 bronze or a gold)
+	var unit_min := 1.0       # coin costs: one cube is a gold (100) or a diamond; everything else: 1
 	var cube := 16.0
+	var gap := 2.0
 	var per_row := 10
 	var rows := 1
 	var _cells := 0
@@ -338,33 +367,39 @@ class CubeBar extends Control:
 		if mode == "stock": return str(int(floorf(have + 0.0001)))
 		return str(int(ceilf(need - 0.0001)))
 
+	## Columns for n cubes: a single row up to 10 (20 if they fit), rows of 10 up to 100, then tens of columns, about twice as wide as high.
+	static func columns(n: int, room_w: float) -> int:
+		if n <= 10: return maxi(1, n)
+		if n <= 20 and room_w >= n * 15.0: return n
+		if n <= 100: return 10
+		return 10 * int(ceilf(sqrt(n / 50.0)))
+
 	func _layout() -> void:
 		var total := ceilf(cap) if mode == "stock" else ceilf(need) + ceilf(saved - 0.001)
 		if mode == "stock": total = maxf(total, ceilf(have))
-		unit = 1.0
-		for u in [1.0, 5.0, 10.0, 25.0, 50.0, 100.0, 250.0, 1000.0]:
-			if u < unit_min: continue
-			unit = u
-			if total / u <= 100.0: break
+		unit = maxf(1.0, unit_min)
 		_cells = maxi(1, int(ceilf(total / unit - 0.001)))
-		per_row = mini(10, _cells)
-		if _cells <= 20 and max_w >= _cells * 15.0: per_row = _cells     # up to 20 fit in one row when there is room
+		per_row = columns(_cells, max_w)
 		rows = int(ceilf(float(_cells) / per_row))
-		cube = 18.0 if rows == 1 else (13.0 if rows == 2 else (10.0 if rows <= 4 else 8.0))
+		cube = 18.0 if rows == 1 else (13.0 if rows == 2 else (10.0 if rows <= 4 else (8.0 if rows <= 10 else 6.0)))
 		if mode == "cost" and rows == 1: cube = 16.0
-		var w := per_row * (cube + 2.0)
-		if w > max_w: cube = maxf(6.0, max_w / per_row - 2.0)
-		var tag := 0.0 if unit <= 1.0 else 30.0
+		gap = 2.0
+		if max_h > 0.0: cube = minf(cube, max_h / rows - gap)
+		if per_row * (cube + gap) > max_w: cube = max_w / per_row - gap
+		if cube < 6.0:
+			gap = 1.0
+			cube = minf(cube + 1.0, minf(max_w / per_row, max_h / rows if max_h > 0.0 else 99.0) - gap)
+		cube = maxf(1.0, cube)
 		_num_w = 0.0
 		if show_num:
 			var f: Font = get_theme_font("font", "Label")
 			_num_w = f.get_string_size(_number(), HORIZONTAL_ALIGNMENT_LEFT, -1, num_size).x + 6.0
-		custom_minimum_size = Vector2(per_row * (cube + 2.0) + tag + _num_w, maxf(rows * (cube + 2.0), num_size + 4.0))
+		custom_minimum_size = Vector2(per_row * (cube + gap) + _num_w, maxf(rows * (cube + gap), num_size + 4.0))
 		queue_redraw()
 
 	func _cell(i: int) -> Rect2:
-		var oy := maxf(0.0, (custom_minimum_size.y - rows * (cube + 2.0)) / 2.0)
-		return Rect2(Vector2((i % per_row) * (cube + 2.0), oy + (i / per_row) * (cube + 2.0)), Vector2(cube, cube))
+		var oy := maxf(0.0, (custom_minimum_size.y - rows * (cube + gap)) / 2.0)
+		return Rect2(Vector2((i % per_row) * (cube + gap), oy + (i / per_row) * (cube + gap)), Vector2(cube, cube))
 
 	func _draw() -> void:
 		var filled := have / unit
@@ -385,11 +420,8 @@ class CubeBar extends Control:
 					if f2 > 0.0: _cube(r, f2, color)
 				elif i < int(whole + ceilf(n_saved - 0.001)):
 					_cube(r, clampf(n_saved - (i - whole), 0.0, 1.0), Color(0.75, 0.73, 0.7, 0.55), true)
-		var x := per_row * (cube + 2.0)
+		var x := per_row * (cube + gap)
 		var font: Font = get_theme_font("font", "Label")
-		if unit > 1.0:
-			draw_string(font, Vector2(x + 3.0, size.y / 2.0 + 4.0), "×%d" % int(unit), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color("7a705c"))
-			x += 30.0
 		if show_num:
 			var missing := mode == "cost" and have + 0.0001 < need
 			var col := Color("b9472f") if missing else Color("2f2a1f")
@@ -404,6 +436,9 @@ class CubeBar extends Control:
 		var rr := Rect2(r.position, Vector2(r.size.x * f, r.size.y))
 		draw_rect(rr, c)
 		if faint: return
+		if r.size.x < 6.0:          # tiny cubes (big amounts): a flat square with a thin edge
+			draw_rect(rr, c.darkened(0.35), false, 1.0)
+			return
 		var top := maxf(2.0, r.size.y * 0.24)
 		draw_rect(Rect2(rr.position, Vector2(rr.size.x, top)), c.lightened(0.35))
 		draw_rect(Rect2(rr.position + Vector2(maxf(0.0, rr.size.x - 2.5), 0), Vector2(minf(2.5, rr.size.x), rr.size.y)), c.darkened(0.25))
@@ -421,22 +456,100 @@ class SeasonBar extends Control:
 
 	func _ready() -> void:
 		if not has_meta("explain"): mouse_filter = Control.MOUSE_FILTER_IGNORE
-		custom_minimum_size = Vector2(length * 4.0 + 52.0, 18)
+		custom_minimum_size = Vector2(length * 3.0 + 52.0, 18)
+		resized.connect(queue_redraw)
 
 	func set_state(s: String, len_q: int, done_q: int, nxt: String) -> void:
 		season = s; length = maxi(1, len_q); passed = done_q; next_emoji = nxt
-		custom_minimum_size = Vector2(length * 4.0 + 52.0, 18)
+		custom_minimum_size = Vector2(length * 3.0 + 52.0, 18)
 		queue_redraw()
 
+	## The stripes spread over the width the bar is given (at least 3 px each, at most 8), the number after them.
 	func _draw() -> void:
 		var col: Color = COLORS.get(season, Color("7cc04a"))
 		var h := 14.0
 		var y := (size.y - h) / 2.0
+		var step := clampf((size.x - 52.0) / length, 3.0, 8.0)
+		var w := maxf(2.0, step - (1.0 if step < 5.0 else 2.0))
 		for i in range(length):
-			var r := Rect2(Vector2(i * 4.0, y), Vector2(3.0, h))
+			var r := Rect2(Vector2(i * step, y), Vector2(w, h))
 			draw_rect(r, col if i < passed else Color(col.r, col.g, col.b, 0.22))
 		var font: Font = get_theme_font("font", "Label")
-		draw_string(font, Vector2(length * 4.0 + 5.0, y + h - 2.0), "%d %s" % [length - passed, next_emoji], HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("2f2a1f"))
+		draw_string(font, Vector2(length * step + 5.0, y + h - 2.0), "%d %s" % [length - passed, next_emoji], HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color("2f2a1f"))
+
+
+## The purse: up to three rows stacked, diamonds over gold over bronze, each a coin picture and its number; a row shows only when
+## there is at least one of that coin (nothing at all: "0" bronze). Pictures: assets/ui/coin_gold.png (bronze is the same coin with
+## its colour shifted), assets/ui/diamond.png; without them the emoji. Fewer rows are drawn bigger (interface-feel/07).
+class Purse extends VBoxContainer:
+	const Artp = preload("art.gd")
+	const KINDS := ["diamond", "gold", "bronze"]
+	const EMOJI := {"diamond": "💎", "gold": "🟡", "bronze": "🟤"}
+	var counts := [0, 0, 0]
+	var _pics := {}
+	var _labels := {}
+	var _rows := {}
+
+	func _ready() -> void:
+		add_theme_constant_override("separation", 0)
+		alignment = BoxContainer.ALIGNMENT_CENTER
+		_pics = {"diamond": Artp.icon("ui", ["diamond"], 48), "gold": Artp.icon("ui", ["coin_gold"], 48),
+			"bronze": Artp.shifted("ui", "coin_gold", -0.055, 0.95, 0.72, 48)}
+		for k in KINDS:
+			var h := HBoxContainer.new()
+			h.add_theme_constant_override("separation", 4)
+			h.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			var l := Label.new()
+			l.add_theme_color_override("font_color", Color("2f2a1f"))
+			l.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			l.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT       # the coins line up under each other
+			h.add_child(l)
+			if _pics[k] != null:
+				var tr := TextureRect.new()
+				tr.texture = _pics[k]
+				tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+				tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+				tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				tr.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+				h.add_child(tr)
+			else:
+				var el := Label.new()
+				el.text = EMOJI[k]
+				el.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				h.add_child(el)
+			h.set_meta("kind", k)
+			_rows[k] = h
+			_labels[k] = l
+			add_child(h)
+		_show()
+
+	## The coins to show: [diamonds, gold, bronze] (whole numbers).
+	func set_coins(c: Array) -> void:
+		counts = c
+		if is_inside_tree() and not _rows.is_empty(): _show()
+
+	## How many rows are showing (for tests).
+	func rows_shown() -> Array:
+		var out := []
+		for k in KINDS:
+			if _rows.has(k) and _rows[k].visible: out.append(k)
+		return out
+
+	func _show() -> void:
+		var n := 0
+		for i in range(3):
+			if int(counts[i]) > 0: n += 1
+		var fs: int = [22, 22, 18, 15][n]
+		for i in range(3):
+			var k: String = KINDS[i]
+			var on := int(counts[i]) > 0 or (n == 0 and k == "bronze")
+			_rows[k].visible = on
+			_labels[k].text = str(int(counts[i]))
+			_labels[k].add_theme_font_size_override("font_size", fs)
+			var ic: Control = _rows[k].get_child(1)
+			if ic is TextureRect: ic.custom_minimum_size = Vector2(fs, fs)
+			else: ic.add_theme_font_size_override("font_size", fs - 2)
 
 
 ## A panel that acts like a button (for the energy cubes in the top bar: tap to rest).
@@ -625,6 +738,7 @@ class Celebration extends Control:
 		return clampf((4.2 - t) / 1.0, 0.0, 1.0)
 
 	func _star(c: Vector2, r: float, rot: float, col: Color) -> void:
+		if r < 0.5: return              # a star at the start or end of its twinkle has no size (nothing to fill)
 		var pts := PackedVector2Array()
 		for i in range(10):
 			var rr := r if i % 2 == 0 else r * 0.45

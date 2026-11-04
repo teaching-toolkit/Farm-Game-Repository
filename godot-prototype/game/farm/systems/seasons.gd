@@ -53,7 +53,6 @@ func step_rain(info: Dictionary) -> void:
 
 func _season_change(sn: int) -> void:
 	var nm: String = G.SEASON_NAMES[sn % 4]
-	G.trade.season_news(nm)
 	if nm != "winter": G.fields.melt_snow()
 	var spoiled := {}
 	var fr = G.meta.get("freshness", {})
@@ -73,13 +72,29 @@ func _season_change(sn: int) -> void:
 			var to: String = fr.get("spoilsTo", {}).get("animal" if animal_items.has(k) else "plant", "compost")
 			G.inventory.add_item(to, lost, true)
 			spoiled[k] = lost
-	var msg := tr("%s It's %s! %s") % [str(G.meta["seasons"]["mods"][nm].get("emoji", "")), tr(nm), str(G.meta["seasons"]["mods"][nm].get("abundance", ""))]
-	G.say(msg)
-	var intro: String = str(G.meta["seasons"]["mods"][nm].get("intro", ""))      # what changes now (TODO N8)
-	if intro != "": G.say("📜 " + tr(intro))
+	G.story.announce(season_box(nm))      # what changes now and the market news, in one box (story/14)
 	if not spoiled.is_empty():
 		var parts := []
 		for k in spoiled: parts.append("%s%d" % [G.iemoji(k), G.up(spoiled[k])])
 		G.say(tr("🍂 Went stale at the change of season (now feed mash or compost): ") + " ".join(parts))
 	G.lord.season_ended()
 	G.rewards.check_acorns()
+
+## The box at the start of a season (story/14): what changes now (the season's intro), what there is plenty of, and the market news,
+## with the season's picture (assets/story/season_<name>; until it exists, the season's emoji). The 📜 scroll shows it again.
+func season_box(nm: String) -> Dictionary:
+	var mods: Dictionary = G.meta["seasons"]["mods"][nm]
+	var more := []
+	if str(mods.get("abundance", "")) != "": more.append(tr(str(mods["abundance"])))
+	var news: String = G.trade.season_news(nm)
+	if news != "": more.append(news)
+	return {"key": "season:" + nm, "emoji": str(mods.get("emoji", "")), "title": tr("It's %s!") % tr(nm), "text": tr(str(mods.get("intro", ""))),
+		"more": "\n".join(more), "picture": "season_" + nm}
+
+# ------------------------------------------------------------------ condition words
+
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("seasons", func(_a): return float(season_no()), "number", "", "How many seasons have passed since the start (0 in the first spring).", "seasons>=2")
+	c.register("rain", func(_a): return bool(G.S.get("rain", false)), "yes", "", "It rained in this question (in winter it snows instead).", "rain")
+	c.register("season", func(a): return season() == a, "yes", "season", "It is this season now: spring, summer, autumn or winter.", "season:winter")

@@ -98,6 +98,7 @@ func _ready() -> void:
 		add_child(p)
 		patches[k] = p
 	borders = _layer()
+	borders.set_meta("frost", true)       # the edging along the patches' top edges gets frost in winter (season-look/04)
 	borders.draw.connect(_draw_borders)
 	front = _layer()
 	front.draw.connect(_draw_fence.bind(front, true))
@@ -289,13 +290,22 @@ func growing_count() -> int:
 func _spot_near(c: Vector2) -> Vector2:
 	return c + Vector2(randf_range(-0.22, 0.22) * patch, randf_range(-0.1, 0.1) * patch) - Vector2(12, 26)
 
+## Which pest comes (only a look: the rules count pests, not kinds). Mostly the chapter's own kind; only kinds that are out in this
+## season (rules/66-season-look.json, season-look/03): no slugs or caterpillars in winter.
 func _pest_kind() -> String:
-	return kinds[mini(G.chapter() - 1, kinds.size() - 1)] if randf() < 0.6 else kinds[randi() % kinds.size()]
+	var allowed: Array = FarmSeasonLook.pest_kinds(G)
+	if allowed.is_empty(): allowed = ["🐦"]
+	var own: String = kinds[mini(G.chapter() - 1, kinds.size() - 1)]
+	if randf() < 0.6 and allowed.has(own): return own
+	return allowed[randi() % allowed.size()]
 
 func _sync_critters() -> void:
 	var pts := _growing_points()
 	var want := 0
 	if pts.size() > 0: want = mini(14, int(round(float(G.S["pests"]) * pest_share)))
+	var allowed: Array = FarmSeasonLook.pest_kinds(G)
+	for c in critters:     # a new season: a pest that is not out now (a slug in winter) becomes one that is
+		if is_instance_valid(c) and not allowed.is_empty() and not allowed.has(c.text): c.text = _pest_kind()
 	while critters.size() > want:
 		var c: Label = critters.pop_back()
 		var tw := create_tween()
@@ -526,6 +536,7 @@ class IsoPatch extends Control:
 		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		pic.stretch_mode = TextureRect.STRETCH_SCALE
 		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		pic.set_meta("frost", true)          # frost on its top edge in winter (season-look/04)
 		add_child(pic)
 
 	## Where plant i of the grid stands, relative to the diamond centre (kept well inside, clear of the edging).

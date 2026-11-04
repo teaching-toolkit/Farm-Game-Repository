@@ -140,3 +140,9 @@ func next_step(f: String) -> Dictionary:
 	var gate := gate_node(f, nxt)
 	if gate != "" and G.satisfied(gate): gate = ""
 	return {"rank": nxt, "name": rank_name(nxt), "batches": need, "gate": gate}
+
+# ------------------------------------------------------------------ condition words
+
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("skill_ranks", func(_a): return float(total_ranks()), "number", "", "Skill ranks reached, all families together.", "skill_ranks>=4")

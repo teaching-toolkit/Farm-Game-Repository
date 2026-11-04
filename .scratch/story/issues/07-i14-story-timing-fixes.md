@@ -2,7 +2,7 @@
 
 **What to build:** The story timing problems found on 14 October (chapter gate, pile-ups at chapter turns, the chapter 5 low point that cannot fire, no negation, missing terms for pests, rain and energy, bark density, `pet_alpaca` before the garden) are fixed. The data-only retimes need the parent's yes. C5 and C6 need the new condition language; C2, C7 and C8 may be tuned in numbers or solved by the interruption queue.
 
-**Blocked by:** `condition-language/01` (for C5 and C6); `interruption-queue/01` (for C2, C7 and C8)
+**Blocked by:** `condition-language/05` (for C5 and C6); `interruption-queue/04` (for C2, C7 and C8: numbers in the queue's order list)
 
 **Status:** needs-parent
 

@@ -15,7 +15,7 @@ func _init(game: FarmGame) -> void:
 
 ## The save keys this system owns, with their values in a new game (kits/core/saves.gd fills missing ones into older saves).
 func save_defaults() -> Dictionary:
-	return {"story_seen": {}, "story_taps": {}, "story_last": -99, "story_bark": {}}
+	return {"story_seen": {}, "story_taps": {}, "story_last": -99, "story_bark": {}, "story_news": []}
 
 func pieces() -> Dictionary:
 	return G.D.get("story", {})
@@ -48,7 +48,7 @@ func is_ready(id: String) -> bool:
 	if seen(id):
 		if once: return false
 		if G.S["step"] - int(G.S["story_seen"][id]) < int(p.get("cooldown", bark_rest())): return false
-	return G.cond_all(p.get("when", []))
+	return G.conditions.holds_all(p.get("when", []))
 
 ## A bark does not come back within this many questions (rules/65-feel.json, story.barkRest), unless the piece sets its own cooldown.
 func bark_rest() -> int:
@@ -102,3 +102,45 @@ func seen_in_order() -> Array:
 	for id in pieces():
 		if seen(id) and str(piece(id).get("kind", "")) != "bark": out.append(id)
 	return out
+
+# ------------------------------------------------------------------ news boxes
+
+## A box worth the child's attention that is not a story piece (story/13, story/14): a change of season, a golden acorn, a favour
+## done, a party. box: {"key", "emoji", "title", "text", "more", "picture"} (texts already in the player's language). It waits in the
+## save until the farm is quiet (the interruption queue, kind "news", in rules/65-feel.json) and then shows as a box with a picture.
+## Boxes never pile up: a newer season box replaces a waiting one, the same key is in line once, and at most story.newsMax wait (the
+## oldest goes; the bot never opens a box). The text also goes into the farm's log, as a note would.
+func announce(box: Dictionary) -> void:
+	var key := str(box.get("key", ""))
+	var waiting: Array = G.S["story_news"]
+	for b in waiting.duplicate():
+		var k := str(b.get("key", ""))
+		if k == key or (key.begins_with("season:") and k.begins_with("season:")): waiting.erase(b)
+	waiting.append(box)
+	while waiting.size() > int(G.feel("story.newsMax")): waiting.pop_front()
+	G.S["log"].append("%s %s %s" % [str(box.get("emoji", "")), str(box.get("title", "")), str(box.get("text", ""))])
+	if G.S["log"].size() > 40: G.S["log"].pop_front()
+
+## The first box waiting, or {}.
+func news_next() -> Dictionary:
+	var waiting: Array = G.S["story_news"]
+	return waiting[0] if waiting.size() > 0 else {}
+
+## That box was shown: out of the line.
+func news_shown(key: String) -> void:
+	var waiting: Array = G.S["story_news"]
+	for b in waiting.duplicate():
+		if str(b.get("key", "")) == key: waiting.erase(b)
+
+# ------------------------------------------------------------------ condition words
+
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("story_seen", func(_a): return float(G.S["story_seen"].size()), "number", "", "Story pieces read.", "story_seen>=1")
+	c.register("tap", func(a): return G.S["story_taps"].has(a), "yes", "place", "This place (or patch:<kind>) has been tapped.", "tap:market")
+	c.register("after", _after, "yes", "after", "At least n Time Quiz questions have passed since this story piece was read (after:<piece>:<n>).", "after:c1_night:2")
+
+## after:<piece>:<n>: n Time Quiz questions have passed since the piece was seen.
+func _after(arg: String) -> bool:
+	var q := arg.split(":")
+	return q.size() == 2 and G.S["story_seen"].has(q[0]) and int(G.S["step"]) - int(G.S["story_seen"][q[0]]) >= int(q[1])

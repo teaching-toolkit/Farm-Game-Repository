@@ -210,10 +210,10 @@ func finish_unlock(id: String, auto: bool) -> void:
 			G.S["stats"]["sidequests"] = int(G.S["stats"]["sidequests"]) + 1
 			var ls = G.meta.get("luck", {}).get("sources", {}).get("sidequest", [0.5, 30])
 			G.rewards.add_luck(float(ls[0]), int(ls[1]) + int(G.g("luckDuration", 0.0)))
-			G.say(tr("🖼️ New picture in your album! You feel lucky for a while. ☘️"))
 			var fr: Dictionary = n.get("friend", {})
-			if not fr.is_empty():
-				G.say(tr("💌 %s %s is your friend now. Friends send postcards with a gift when they hear of your successes!") % [fr.get("emoji", ""), fr.get("name", "")])
+			G.story.announce({"key": "favour:" + id, "emoji": str(n.get("emoji", "🖼️")), "title": str(n["name"]), "picture": id,      # its album picture (story/13)
+				"text": tr("🖼️ New picture in your album! You feel lucky for a while. ☘️"),
+				"more": tr("💌 %s %s is your friend now. Friends send postcards with a gift when they hear of your successes!") % [fr.get("emoji", ""), fr.get("name", "")] if not fr.is_empty() else ""})
 			if n.has("perk"): G.rewards.give_perk(str(n["perk"]))
 		elif id.begins_with("library_"):
 			G.rewards.offer_gift(G.rewards.news_text("library"))
@@ -238,3 +238,9 @@ func set_attach(station: String, helper_id: String) -> void:
 	if not G.done(helper_id): return
 	G.S["attach"][station] = helper_id
 	G.invalidate_caps(); G.save_game(); G.changed.emit()
+
+# ------------------------------------------------------------------ condition words
+
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("open", func(a): return G.nodes.has(a) and is_open(a), "yes", "node", "This goal (or other node) can be started now: what it needs is there and it is not done yet.", "open:barn_1")

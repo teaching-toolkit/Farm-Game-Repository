@@ -147,7 +147,8 @@ func _party_effect(_who, _args: Dictionary, _cost: Dictionary) -> Dictionary:
 	G.S["well"]["party_step"] = int(G.S["step"])
 	_bump(data().get("party", {}).get("bump", {}))
 	helped()
-	G.say(tr("🎉 A party at the farm! Everybody laughs, eats and dances. You feel lighter."))
+	G.story.announce({"key": "party:%d" % int(G.S["step"]), "emoji": "🎉", "title": tr("A party at the farm!"), "picture": "news_party",      # a box, not a note (story/13)
+		"text": tr("Everybody laughs, eats and dances. You feel lighter.")})
 	return {"gained": {}}
 
 ## The friend who has invited you ("" if nobody has).
@@ -194,3 +195,9 @@ func step(info: Dictionary) -> void:
 	G.S["energy"] = clampf(e + d, 0.0, G.needs.energy_max())
 	G.S["well"]["last_delta"] = float(G.S["energy"]) - e
 	if absf(d) > 0.0001: info["well_delta"] = float(G.S["energy"]) - e
+
+# ------------------------------------------------------------------ condition words
+
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("well_mood", func(_a): return overall(), "number", "", "How well the farmer feels, from 0 to 1.", "well_mood<0.4")

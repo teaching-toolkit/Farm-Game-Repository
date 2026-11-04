@@ -43,9 +43,10 @@ var forestui: FarmUiForest
 var face_btn: Button        # the farmer's face at the end of the energy bar (opens the dashboard)
 var rest_icon: Label        # the 😴 before the face appears
 var welcome: FarmUiWelcome
+var interrupts: FarmUiInterrupts
 var widgets: FarmUiWidgets
 var bg: ColorRect
-var lbl_coins: Label
+var lbl_coins: Control     # the purse (UI.Purse): diamonds over gold over bronze, as coin pictures with their numbers
 var water_bar        # UI.CubeBar: water as cubes (with the number)
 var energy_bar       # UI.CubeBar: energy as cubes; tapping it opens Rest
 var season_bar       # UI.SeasonBar: the questions of this season
@@ -62,6 +63,7 @@ var goal_btn: Button
 var quiz_btn          # UI.ClockButton: the Time Quiz (an old clock; its hand goes round once when tapped)
 var sheet: PanelContainer
 var sheet_title: Label
+var sheet_close: Button        # the sheet's ✖ (hidden on the village square: only 🏠 Back home leaves it)
 var sheet_scroll: ScrollContainer
 var content: VBoxContainer
 var sheet_kind := ""
@@ -81,8 +83,6 @@ var shot_at := 45              # the frame the screenshot is taken at (--shotfra
 var shot_frames := 0
 var step_at := -1
 var rest_state := {}               # the Rest pop-up: question, typed answer, when it was asked, its nodes
-var celebration_queue: Array = []  # new buildings, tools and helpers waiting for their big pop-up
-var after_close: Array = []   # messages shown when the pop-up closes (rain …)
 var _look_sig := "-"
 
 
@@ -116,6 +116,7 @@ func _make_parts() -> void:
 	forestui = FarmUiForest.new(self)
 	welcome = FarmUiWelcome.new(self)
 	widgets = FarmUiWidgets.new(self)
+	interrupts = FarmUiInterrupts.new(self)
 
 func _ready() -> void:
 	G = get_node("/root/Game")
@@ -128,7 +129,7 @@ func _ready() -> void:
 	G.toast.connect(notes.toast)
 	G.revealed.connect(notes.on_revealed)
 	UI.explain_hook = notes.hint
-	G.offer_cards.connect(gifts.show_gift)
+	G.offer_cards.connect(func(_c): interrupts.request())
 	G.sold.connect(feedback.on_sold)
 	G.paid.connect(feedback.on_paid)
 	Sound.perk_on = func(id): return G.rewards.perk_on(id)
@@ -148,7 +149,7 @@ func _ready() -> void:
 	refresh()
 	if G.player == "" and shot_path == "" and DisplayServer.get_name() != "headless":
 		welcome.ask_player()
-	elif G.S["gift_pending"].size() > 0: gifts.show_gift()
+	elif interrupts.waiting("postcard") > 0: interrupts.pump()
 	elif G.S["step"] == 0 and not G.done("k_wheat"):
 		if not story.pump(): welcome.show_welcome()
 	else: story.queue_pump()
@@ -207,11 +208,11 @@ func _build() -> void:
 	root.add_child(hud)
 	var hh := UI.hbox(8)
 	hud.add_child(hh)
+	lbl_coins = UI.Purse.new(); hh.add_child(lbl_coins)       # the purse stands left of the bars, its rows stacked (interface-feel/07)
 	var hv := UI.vbox(2)
 	hh.add_child(hv)
 	var r1 := UI.hbox(8)
 	hv.add_child(r1)
-	lbl_coins = UI.label("", 22); r1.add_child(lbl_coins)
 	var wp = UI.TapPanel.new()
 	wp.add_theme_stylebox_override("panel", UI.box(Color("dcecf6"), 10, Color("9fc3dc"), 1, 6))
 	wp.tooltip_text = tr("Water: tap to carry more from the pond or the well.")
@@ -242,15 +243,17 @@ func _build() -> void:
 	ep.add_child(ebox)
 	ep.pressed.connect(rest.go_rest)
 	r1.add_child(ep)
+	# the season row, right under the water and energy bars and as wide as they are (interface-feel/06)
 	var r2 := UI.hbox(8)
 	hv.add_child(r2)
 	season_emoji = UI.label("", 18); r2.add_child(season_emoji)
 	season_bar = UI.SeasonBar.new(); r2.add_child(season_bar)
+	season_bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	UI.explain(season_bar, tr("🗓️ The season: one mark per Time Quiz question. The number = questions until the next season."))
+	# chapter and question are no longer in the top bar (⚙️ Settings shows them); the label stays, hidden, because the smoke test
+	# reads it to see when the farm has caught up after the Time Quiz (it is still set in refresh(), which waits for the playback)
 	lbl_info = UI.label("", 15, UI.MUTED)
-	lbl_info.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-	lbl_info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	lbl_info.custom_minimum_size = Vector2(60, 0)
+	lbl_info.visible = false
 	r2.add_child(lbl_info)
 	lbl_status = UI.label("", 15, UI.MUTED); r2.add_child(lbl_status)
 	# the next goal: the whole width and height between the energy bar and the buttons
@@ -261,6 +264,7 @@ func _build() -> void:
 	goal_btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	goal_btn.clip_text = true
 	goal_btn.custom_minimum_size = Vector2(90, 0)
+	goal_btn.resized.connect(goalbar.fit_text)      # the text takes the biggest size that fits the room it has
 	hh.add_child(goal_btn)
 	var rv := UI.vbox(0)
 	hh.add_child(rv)
@@ -338,6 +342,7 @@ func _build() -> void:
 	var close := UI.soft_button("✖", sheets.close_sheet, true, 20)
 	close.custom_minimum_size = Vector2(52, 44)
 	sh.add_child(close)
+	sheet_close = close
 	sheet_scroll = ScrollContainer.new()
 	sheet_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	sheet_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -387,6 +392,7 @@ func _on_resized() -> void:
 func _fit_hud() -> void:
 	var bw := clampf(size.x - 700.0, 80.0, 150.0)
 	for b in [water_bar, energy_bar]:
+		b.max_h = 62.0          # more energy or water: more, smaller cubes; the bar keeps its height (interface-feel/05)
 		if b.max_w != bw:
 			b.max_w = bw
 			b.refresh()
@@ -400,7 +406,8 @@ func refresh() -> void:
 	_queued = false
 	if playback.held: return          # the Time Quiz is open (or its playback has not caught up): the screen keeps the old state
 	var S: Dictionary = G.S
-	lbl_coins.text = G.purse_text()
+	lbl_coins.tooltip_text = G.purse_text()       # also notes that a gold has been seen
+	lbl_coins.set_coins(G.coins_split(float(S["coins"])))
 	lbl_coins.visible = G.reveal.shown("coins")          # what is shown when: data/farm/rules/60-reveal.json
 	for id in icon_buttons: if id != "bag_box": icon_buttons[id].visible = G.reveal.shown(id)
 	icon_buttons["bag_box"].visible = icon_buttons["bag"].visible
@@ -417,9 +424,9 @@ func refresh() -> void:
 		if _last_season != "": feedback.sfx("breeze")
 		_last_season = G.seasons.season()
 	if not modal.visible: Sound.music("farm", G.seasons.season())
-	map.set_perks({"butterflies": G.rewards.perk_on("perk_butterflies"), "sparkles": G.rewards.perk_on("perk_sparkles"),
+	map.set_perks({"butterflies": G.rewards.perk_on("perk_butterflies") and FarmSeasonLook.critter_out(G, "butterflies"), "sparkles": G.rewards.perk_on("perk_sparkles"),
 		"rainbow": G.rewards.perk_on("perk_rainbow"), "breeze": G.rewards.perk_on("perk_breeze"),
-		"fireflies": G.rewards.perk_on("perk_fireflies"), "stars": G.rewards.perk_on("perk_stars")})
+		"fireflies": G.rewards.perk_on("perk_fireflies") and FarmSeasonLook.critter_out(G, "fireflies"), "stars": G.rewards.perk_on("perk_stars")})
 	var lk: Dictionary = S.get("look", {})
 	var ls := JSON.stringify(lk)
 	if ls != _look_sig and map.avatar:
@@ -442,7 +449,7 @@ func refresh() -> void:
 	lbl_status.text = "  ".join(st)
 	bg.color = UI.SEASON_BG.get(G.seasons.season(), UI.BG)
 	cheat_box.visible = G.cheats_visible()
-	map.ground.set_season(G.seasons.season(), mapview.fence_level())
+	map.ground.set_season(G.seasons.season(), mapview.fence_level(), FarmSeasonLook.flower_count(G))
 	# fields, add-ons and the house yard
 	field_idx = clampi(field_idx, 0, maxi(0, G.fields.field_names().size() - 1))
 	map.refresh_fields(G, playback.flicking)
@@ -456,12 +463,12 @@ func refresh() -> void:
 	map.set_collector(G.lord.here())
 	map.set_field_badge(mapview.badge("field"))
 	map.critters.set_critters(mapview.critter_spec())
-	map.farmcat.set_cat(G.done("barn_cat"))
+	map.farmcat.set_cat(G.done("barn_cat") and FarmSeasonLook.critter_out(G, "farm_cat"))
 	goalbar.update_goal_bar()
 	if sheet.visible:
 		sheets.rebuild_sheet()
 		sheets.fit_sheet.call_deferred()
-	story.queue_pump()
+	interrupts.request()           # whatever waits for the screen may come now (the story's next piece …)
 
 ## Taps on the farm make sparkles (perk "Magic sparkles").
 func _input(e: InputEvent) -> void:

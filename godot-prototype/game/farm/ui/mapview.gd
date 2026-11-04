@@ -198,6 +198,10 @@ func mystery(sid: String) -> bool:
 func in_chapter(id: String) -> bool:
 	return int(G.nodes.get(id, {}).get("chapter", 1)) <= G.chapter()
 
+## Is this card on the library's shelves now? A card of a later chapter stays out of sight (and makes no sign) until its chapter.
+func card_shown(cid: String) -> bool:
+	return G.done(cid) or in_chapter(cid)
+
 # ------------------------------------------------------------------ things flying to the store
 
 func on_gained(source: String, got: Dictionary, lost: Dictionary = {}) -> void:
@@ -265,10 +269,10 @@ func badge(sid: String) -> String:
 	match sid:
 		"library":
 			for cid in G.card_ids:
-				if G.knowledge.card_status(cid) == "quiz": return "❓"
+				if card_shown(cid) and G.knowledge.card_status(cid) == "quiz": return "❓"
 			if G.S["reading"] == "":
 				for cid in G.card_ids:
-					if G.knowledge.card_status(cid) == "readable": return "📖"
+					if card_shown(cid) and G.knowledge.card_status(cid) == "readable": return "📖"
 		"storage":
 			for k in G.S["inv"]:
 				if G.inventory.stale_soon(k) >= 1.0: return "🍂"
@@ -289,13 +293,13 @@ func critter_spec() -> Dictionary:
 	for aid in G.animal_ids:
 		if not G.S["animals"].has(aid): continue
 		var c := int(G.S["animals"][aid]["count"])
-		if c <= 0: continue
+		if c <= 0 or not FarmSeasonLook.critter_out(G, aid): continue     # out of season (bees in winter): not drawn
 		var arr := []
 		for _i in range(mini(4, c)): arr.append([G.nodes[aid].get("emoji", "🐾"), Art.tex("animals", aid), aid, G.nodes[aid].get("facesLeft", false)])
 		spec[Spots.spot_of(G, aid)] = arr
 	var pets := []
 	for pid in G.pet_ids:
-		if G.done(pid): pets.append([G.nodes[pid].get("emoji", "🐾"), Art.tex("animals", pid), pid, G.nodes[pid].get("facesLeft", false)])
+		if G.done(pid) and FarmSeasonLook.critter_out(G, pid): pets.append([G.nodes[pid].get("emoji", "🐾"), Art.tex("animals", pid), pid, G.nodes[pid].get("facesLeft", false)])
 	if pets.size() > 0: spec["pets"] = pets
 	return spec
 

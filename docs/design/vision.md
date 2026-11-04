@@ -37,16 +37,20 @@ The satisfaction is not "I harvested a crop" but **"I turned a few scarce things
 the next part of my farm."** The long chains (§8.3) are the heart of it: seed → crop → ingredient → processed ingredient →
 dish → delivery → a new merchant, a new pet.
 
-The quiet goal of the whole game is **five pets coming home** (bunny, tortoise, goat, pony, alpaca). Each one needs a
+The quiet goal of the whole game is **six pets coming home** (bunny, tortoise, goat, pony, badger, alpaca). Each one needs a
 special dish and a comfort item, and each arrival ends a chapter. The farm is rebuilt *for someone to come home to*.
 
 ### 1.5 What the game deliberately is not
 
 - **No XP and no player level.** Progress is what the farm can do now.
-- **Nothing is ever lost.** Crops never die, animals never get sick or leave; pressure only slows things down.
+- **Natural consequences, never loss for good** ([ADR-0004](../adr/0004-natural-consequences.md)). Over-use and neglect have
+  consequences that last a while and can always be corrected (a tired forest edge gives less, a low mood drains energy, weeds lower
+  the grade); crops never die, animals never get sick or leave, Helpers never go. The one deliberate exception is the poisoning in
+  chapter 5 (§5.10).
 - **Farm time only moves with right answers.** Nothing happens while the child is away; no real-time timers, no waiting
   for hours.
-- **The Time Quiz never gives energy and never gives coins.** It moves time; Rest gives energy.
+- **The Time Quiz never gives coins.** It moves time; Rest gives energy. From chapter 2 each question may also add or take a little
+  energy, through how the farmer feels (§5.1b): at most one and a half right sums' worth, in practice much less.
 - **No buying power, no shop for advantages.** Gifts come from friends and cannot be bought. Perks make the farm prettier,
   never stronger.
 - **No streaks that break, no leagues, no comparing with other children.**
@@ -83,8 +87,8 @@ special dish and a comfort item, and each arrival ends a chapter. The farm is re
 ## 3. The core loop
 
 1. **Answer a Time Quiz question.** A right answer moves farm time one step: crops grow, ovens and kilns finish, reading
-   progresses, animals get ready, gathering spots refill, weeds grow, pests come and are chased, the season moves on. A
-   wrong answer can be tried again; it never moves time.
+   progresses, animals get ready, gathering spots refill, weeds grow, pests come and are chased, the season moves on. Only a
+   right *first* try moves time; after a wrong one the child keeps trying and sees why, and the question comes back soon.
 2. **Look at the changed farm.** Ripe crops glow, things that came in fly to the store, pests peck and leave.
 3. **Do things on the farm** — gather, plant, harvest, weed, cook, craft, build, collect from animals. Every job costs
    **energy** (and often water, materials and coins).

@@ -16,65 +16,65 @@
      "restAnswers": 525
     },
     {
-     "actions": 2614,
+     "actions": 2622,
      "chapter": 2,
      "complete": true,
-     "hours": 3.89,
-     "hoursTotal": 8.54,
+     "hours": 3.97,
+     "hoursTotal": 8.62,
      "knowledgeQuestions": 0,
      "pet": "pet_tortoise",
-     "questions": 177,
+     "questions": 192,
+     "restAnswers": 325
+    },
+    {
+     "actions": 4204,
+     "chapter": 3,
+     "complete": true,
+     "hours": 5.99,
+     "hoursTotal": 14.61,
+     "knowledgeQuestions": 0,
+     "pet": "pet_goat",
+     "questions": 258,
+     "restAnswers": 497
+    },
+    {
+     "actions": 3625,
+     "chapter": 4,
+     "complete": true,
+     "hours": 4.67,
+     "hoursTotal": 19.28,
+     "knowledgeQuestions": 0,
+     "pet": "pet_pony",
+     "questions": 167,
      "restAnswers": 349
     },
     {
-     "actions": 3709,
-     "chapter": 3,
-     "complete": true,
-     "hours": 5.34,
-     "hoursTotal": 13.88,
-     "knowledgeQuestions": 0,
-     "pet": "pet_goat",
-     "questions": 227,
-     "restAnswers": 481
-    },
-    {
-     "actions": 4445,
-     "chapter": 4,
-     "complete": true,
-     "hours": 5.63,
-     "hoursTotal": 19.51,
-     "knowledgeQuestions": 0,
-     "pet": "pet_pony",
-     "questions": 196,
-     "restAnswers": 403
-    },
-    {
-     "actions": 1159,
+     "actions": 884,
      "chapter": 5,
      "complete": true,
-     "hours": 1.47,
-     "hoursTotal": 20.98,
+     "hours": 1.1,
+     "hoursTotal": 20.38,
      "knowledgeQuestions": 0,
      "pet": "pet_badger",
-     "questions": 61,
-     "restAnswers": 60
+     "questions": 42,
+     "restAnswers": 48
     },
     {
-     "actions": 3953,
+     "actions": 3700,
      "chapter": 6,
      "complete": false,
-     "hours": 4.76,
-     "hoursTotal": 25.74,
+     "hours": 4.51,
+     "hoursTotal": 24.89,
      "knowledgeQuestions": 0,
      "pet": "pet_alpaca",
-     "questions": 163,
-     "restAnswers": 244
+     "questions": 159,
+     "restAnswers": 229
     }
    ],
    "label": "bot, seed 1, accuracy 1.00",
    "reachedChapter": 6,
    "seed": 1,
-   "stoppedAtStep": 1069
+   "stoppedAtStep": 1063
   },
   {
    "accuracy": 1.0,
@@ -91,65 +91,65 @@
      "restAnswers": 448
     },
     {
-     "actions": 2944,
+     "actions": 7620,
      "chapter": 2,
      "complete": true,
-     "hours": 4.69,
-     "hoursTotal": 8.68,
+     "hours": 11.28,
+     "hoursTotal": 15.27,
      "knowledgeQuestions": 0,
      "pet": "pet_tortoise",
-     "questions": 236,
-     "restAnswers": 432
+     "questions": 523,
+     "restAnswers": 933
     },
     {
-     "actions": 5255,
+     "actions": 364,
      "chapter": 3,
      "complete": true,
-     "hours": 7.61,
-     "hoursTotal": 16.29,
+     "hours": 0.47,
+     "hoursTotal": 15.74,
      "knowledgeQuestions": 0,
      "pet": "pet_goat",
-     "questions": 330,
-     "restAnswers": 677
+     "questions": 17,
+     "restAnswers": 34
     },
     {
-     "actions": 4266,
+     "actions": 4402,
      "chapter": 4,
      "complete": true,
-     "hours": 5.45,
-     "hoursTotal": 21.74,
+     "hours": 5.59,
+     "hoursTotal": 21.33,
      "knowledgeQuestions": 0,
      "pet": "pet_pony",
-     "questions": 196,
-     "restAnswers": 385
+     "questions": 198,
+     "restAnswers": 393
     },
     {
-     "actions": 1162,
+     "actions": 1220,
      "chapter": 5,
      "complete": true,
-     "hours": 1.48,
-     "hoursTotal": 23.22,
+     "hours": 1.57,
+     "hoursTotal": 22.9,
      "knowledgeQuestions": 0,
      "pet": "pet_badger",
-     "questions": 61,
-     "restAnswers": 66
+     "questions": 66,
+     "restAnswers": 70
     },
     {
-     "actions": 3699,
+     "actions": 4342,
      "chapter": 6,
      "complete": false,
-     "hours": 4.5,
-     "hoursTotal": 27.72,
+     "hours": 5.2,
+     "hoursTotal": 28.1,
      "knowledgeQuestions": 0,
      "pet": "pet_alpaca",
-     "questions": 157,
-     "restAnswers": 238
+     "questions": 182,
+     "restAnswers": 231
     }
    ],
    "label": "bot, seed 2, accuracy 1.00",
    "reachedChapter": 6,
    "seed": 2,
-   "stoppedAtStep": 1185
+   "stoppedAtStep": 1191
   }
  ],
  "targetPetHours": {

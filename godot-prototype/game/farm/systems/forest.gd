@@ -235,3 +235,11 @@ func poison() -> void:
 	G.say(tr("🤢 You wake up in bed. Wren stands next to you, grumpy: “What were you thinking?” Your energy and your coins are gone. Everything costs double for a while."))
 	G.poisoned.emit()
 	G.save_game(); G.changed.emit()
+
+# ------------------------------------------------------------------ condition words
+
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("forest_trips", func(_a): return float(G.S["forest"]["trips"]), "number", "", "Walks into the forest so far.", "forest_trips>=3")
+	c.register("forest_poisoned", func(_a): return float(G.S["forest"]["poisoned"]), "number", "", "Times the farmer was poisoned by a wrong plant.", "forest_poisoned>=1")
+	c.register("forest_checked", func(_a): return float(G.S["forest"]["checked"]), "number", "", "Baskets Wren has checked.", "forest_checked>=1")

@@ -4,7 +4,10 @@ Part of the game's design ([index](README.md)). It describes the game as built; 
 
 ### 4.3 Rest — energy from mental arithmetic
 
-Tapping the energy bar opens **Rest** (sleep, food, a sip of water). The child types answers to sums on a number pad (or the
+Tapping the energy bar (or 😴 Rest in the tent or house) opens **Rest** (sleep, food, a sip of water). First the farmer walks
+to the tent or house and disappears at its door; then the Rest window opens. When it closes he stays inside a moment, appears at
+the door again and steps out. A tap skips the walk (Rest opens at once) or the coming out (he is there at once). The timing is in
+`rules/65-feel.json` (`rest`). The child types answers to sums on a number pad (or the
 keyboard). The sums come from the **learning kit** (`kits/learn/`), a self-contained part that any game can use.
 
 - **A start page first.** Rest opens on a page that shows where the child stands: the category and its title (🌰 Seed …
@@ -16,8 +19,10 @@ keyboard). The sums come from the **learning kit** (`kits/learn/`), a self-conta
 
 - **Taking an answer.** The moment the typed number is right it is taken — no ✔ needed. A wrong number only counts when ✔
   is tapped; then the right sum is shown, with the steps for a tricky one (13 − 5: 13 − 3 = 10, 10 − 2 = 8).
-- **Energy.** A quick right answer gives the full energy per Rest answer (§5.1), a slower right one half
-  (`restSlowShare`), a wrong one nothing. Rest stops by itself when energy is full.
+- **Energy.** A quick right answer gives the full energy per Rest answer (§5.1), a slower right one a share of it
+  (20 % unless the parent changed it), a wrong one nothing. The share is a grown-up setting per farm (⚙️ Settings → grown-up
+  settings, ➖ / ➕ in steps of 10 %, 0–100 %); `restSlowShare` in `data/settings.json` is the starting value. The child sees only
+  the gain (⚡ +1 instead of ⚡ +5). Rest stops by itself when energy is full.
 - **The curriculum** (`kits/learn/curriculum/math.json`), planned from class 1 to about class 7 (Swiss Lehrplan 21 and the
   *Schweizer Zahlenbuch*): **7 categories** — Plus & minus, Times & divide, Numbers, Fractions, Decimals & percent,
   Measures, Powers & minus numbers — with **76 levels**. Each category has two sections:

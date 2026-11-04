@@ -125,7 +125,8 @@ The game looks for a picture named after the data id and uses the emoji when the
   painted with a field), `fences/stick_fence` (rickety) and `fences/picket_fence` (the low stake fence).
 
 Making pictures: the list of everything, in the order worth drawing, with a prompt for each, is `../art-inbox/ART_LIST.csv`
-(`python3 tools/art_list.py` refreshes it). Generate several objects at once as a sprite sheet on a white background in the same style
+(`python3 tools/art_list.py` refreshes it; the window pictures come from `tools/window_pictures.json` and use the window style prompt on the
+list's second line). Generate several objects at once as a sprite sheet on a white background in the same style
 (style C, bold cartoon — prompt at the top of the list), save it into `../art-inbox/`, then cut it into sprites:
 `python3 tools/import_art.py sheet ../art-inbox/sheet.png map/tent map/well_1 …` (names in reading order, `-` skips one;
 `tile` mode makes a seamless ground texture). Needs Python with Pillow, numpy and scipy.
@@ -235,9 +236,10 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   (books, reading, card quizzes), home (Rest, food, what you wear), notice board (little jobs, favours for neighbours).
 
 ## Testing shortcuts
-- **⏩ Cheat** (top bar) lets time pass until everything growing, cooking, reading or resting animals is done
-  (at most 60 questions), then fills energy and water. **🪙+100** adds coins.
-  Hide both by setting `"showCheatButton": false` in `data/settings.json`.
+- **⏩ Cheat** (top left, below the top bar) lets time pass until everything growing, cooking, reading or resting animals is done
+  (at most 60 questions), then fills energy and water. **🪙 +50** adds coins, **🎓 Quizzes** passes waiting card quizzes.
+  They are **off by default** (`"showCheatButton": false` in `data/settings.json`); switch them on in ⚙️ Settings, grown-up part
+  ("Testing buttons on the farm"). The choice is kept per device (`user://device.json`).
 - ⚙️ → **Start a new game** deletes this player's farm (the learning record stays).
 - Saves live in Godot's user folder, one folder per player: `players/<name>/farm_save.json` and `learning.json` (on a Mac:
   `~/Library/Application Support/Godot/app_userdata/Hazelwood Harvest/`; farms played before the rename on 12 Oct 2026 stay in
@@ -249,8 +251,8 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - `--seed=N` (tests, bot, screenshots): the same seed gives the same game. The rules engine takes all its random numbers from
   it, its clock moves with the questions instead of the wall clock, and it neither reads nor writes saves or learning records
   on the device. The flags are read in `game/farm/dev/dev_flags.gd` (the screen) and `Game._test_args()` (the rules).
-- Screenshots and tests: `--player=Name`, `--newgame`, `--timestep=N`, `--spot=storage`, `--patch=K`, `--unlock=id,id`, `--load=res://tests/fixtures/ch3-seed1.json` (start from a saved farm),
-  `--give=item:5`, `--water=1` (carried water), `--menu` (⚙️ Settings), `--grownup` (its grown-up part open), `--password` (the password box), `--celebrate=id`, `--postcard`, `--perks=all` (or a list of perk ids), `--rainbow`, `--rest` (the Rest start page; add `--restgo` for the sums), `--qid=PIC-004`, `--answer` (the open question answered right, after `--quiz` or `--qid`), `--news` (the farm news plays: rain, the scarecrow, pests; with `--shotframes=N`)
+- Screenshots and tests: `--player=Name`, `--newgame`, `--timestep=N`, `--season=autumn[:Q]`, `--spot=storage`, `--patch=K`, `--unlock=id,id`, `--load=res://tests/fixtures/ch3-seed1.json` (start from a saved farm),
+  `--give=item:5`, `--water=1` (carried water), `--menu` (⚙️ Settings), `--grownup` (its grown-up part open), `--password` (the password box), `--celebrate=id`, `--postcard`, `--perks=all` (or a list of perk ids), `--rainbow`, `--rest` (the Rest start page; add `--restgo` for the sums), `--gorest` (the farmer walks into the tent or house first; with `--shotframes=N`), `--qid=PIC-004`, `--answer` (the open question answered right, after `--quiz` or `--qid`), `--news` (the farm news plays: rain, the scarecrow, pests; with `--shotframes=N`)
   (one Time Quiz question), `--lang=de` (quiz texts in German), `--toasts` (a stack of notification cards), `--nostory` (no story boxes or bubbles), `--pack=rope:2` (packs things for the trip), `--story=ID` (one story piece shown), `--sheetscroll=N` (the open window scrolled down, 9999 = to the end; use with `--shotframes=100`), `--pulse` (the energy bar's pulse and floating number), `--shot=file.png`.
 
 ## Changing content (no code needed)
@@ -295,7 +297,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   - `mathCategories` — what the Rest sums practise (`addsub`, later `muldiv`, `numbers`, `fractions`, `decimals`, `measures`,
     `powers`; a parent can also tick them in ⚙️ → 📊 Learning record);
   - `restTimerScale` — stretches every time limit (1.5 = half as much time again); `restSlowShare` — the share of the energy a
-    slow right answer gives;
+    slow right answer gives (0.2; the starting value: each farm can change it in ⚙️ Settings → grown-up settings);
   - `mathCurriculum` — the curriculum file (`kits/learn/curriculum/math.json`: levels, times, repetition, medals, kind words);
   - `showPlaceNames` — name labels under the places on the map (off: no words on the map);
   - `parentPassword`, `parentHint` — the password for the grown-up part of ⚙️ Settings (question share, dynamic difficulty,
@@ -316,7 +318,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - `bash tests/golden.sh` — the golden run: the bot plays seeds 1 and 2 to chapter 6 (through all five chapters) and every step of time is compared with
   `tests/golden/` (coins, energy, water, goals, what is unlocked, the store). A restructuring must leave it unchanged. `--strict`
   also compares a hash of the whole save (it changes when the save layout does: record anew then, and check that without the hash nothing differs); `--record` records new golden runs after a change to the rules or numbers on purpose.
-  `--short` plays only to the end of chapter 2 (`--chapter=3`; files `bot-seed1-ch3.txt`, `bot-seed2-ch3.txt`, 332 and 525 steps, about 70 s for both seeds instead of about 2.5 min); `--chapter=N` any other limit. `check_all.sh --short` passes it on. Use the short pair after every slice; the full run when a slice touches a late system (the Lord's share, Wren's check and poisoning, forest trips, medicine and healing ranks, pets' blessings in free play, wellbeing parties and visits) and once before a feature is done.
+  `--short` plays only to the end of chapter 2 (`--chapter=3`; files `bot-seed1-ch3.txt`, `bot-seed2-ch3.txt`, 304 and 447 steps, about 70 s for both seeds instead of about 2.5 min); `--chapter=N` any other limit. `check_all.sh --short` passes it on. Use the short pair after every slice; the full run when a slice touches a late system (the Lord's share, Wren's check and poisoning, forest trips, medicine and healing ranks, pets' blessings in free play, wellbeing parties and visits) and once before a feature is done.
   Bot flags for it: `--seed=N`, `--golden=FILE`, `--save-at=CHAPTER:FILE` (writes a save fixture), `--report=FILE` (the pacing of the run as JSON).
 - `bash tools/update_explorer.sh` (the double-click `../Update explorer.command`) — checks the data, lets the bot play seeds 1 and 2 to chapter 5 with `--report`, and writes
   the data and the bot's pacing report into `../progression/progression-explorer.html` (about 3 minutes; needs Godot and python3).
@@ -328,12 +330,16 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   every place on the map, quest book, album, log) and checks the sums, the market, postcards, perks, the farmer, quiz ids,
   answers and pictures, German texts, stoking, carrying, rooting out and dynamic prices. It reaches the screen only through
   `tests/ui_driver.gd`, so changes to the screen's parts change the driver, not the test.
+- `godot --headless --path . res://tests/conditions_test.tscn -- --seed=1` — the condition language: every word answers on a new game and the
+  fixtures and has a note and a working example, the grammar on real words, and `data/farm/condition-words.json` (the word list the data checker
+  reads) matches the code. After adding or changing a condition word: run it once with `--write-words`.
 - `godot --headless --path . res://tests/timeq_test.tscn -- --seed=1` — the time question: a right first answer moves time and runs each
   purpose's follow-up (farm, the trip, a visit, into and out of the forest), a wrong one doesn't and comes back after the next, a card review is
   recorded as a review, retry and recent questions by id, a pack added through the one door works like a built-in one, picking never touches the farm's dice.
 - `godot --headless --path . -s res://tests/learn_sim.gd` — a pretend child practises 2,500 Rest sums: when is each level passed?
 - Screenshots: `godot --path . --resolution 834x1194 -- --shot=out.png [--spot=kitchen] [--spot=home] [--quiz] [--goal]`
-  (`--demo=1` fast-forwards with the cheat; `--timestep=95` jumps to question 95, i.e. winter, to check the seasons).
+  (`--demo=1` fast-forwards with the cheat; `--timestep=95` jumps to question 95, i.e. winter, to check the seasons; `--season=spring` jumps to
+  the middle of a season, `--season=spring:2` to its third question, to see the season's look: flowers coming, leaves falling, frost).
 
 ## What's simplified in this prototype
 - A patch upgrade (dug beds, raised beds…) is paid patch by patch, then applies to every patch; new fields get it too.

@@ -16,6 +16,7 @@ Part of the game's design ([index](README.md)). It describes the game as built; 
 - **Muck.** Every collection leaves muck (hens 0.3, cows 1, sheep 0.6 per animal). Above 4 per animal the animals give 25 %
   less, above 8 half. **Mucking out** costs energy and gives manure — which becomes compost. Perches, a drain gutter and a
   card reduce it.
+- The condition word `animals:<animal node>` counts the animals of a kind now (`animals:animal_chicken>=2`), for story pieces and other `when` lists.
 - Animals without feed or water simply wait; they never get sick, die or leave.
 - Products feed the chains: eggs (cakes, omelettes, the tomato unlock), milk (butter, yogurt, cheese), honeycomb (honey and
   beeswax: candles, waxed boots and gloves), wool (yarn, cloth, blankets).

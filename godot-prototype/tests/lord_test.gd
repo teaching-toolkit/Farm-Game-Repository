@@ -48,7 +48,7 @@ func _ready() -> void:
 	G.S["coins"] = 1.0e6
 	_check(L.pay() and not L.here() and L.owed() == 0.0, "paying all sends Pieter home")
 	_check(G.pace.missing_cost({"coins": 100.0}).is_empty(), "and buying works again")
-	_check(G.counter("lord_paid") > 0.0 and G.counter("lord_shares") == 1.0, "the story can ask about it")
+	_check(G.conditions.value("lord_paid") > 0.0 and G.conditions.value("lord_shares") == 1.0, "the story can ask about it")
 	# a quiet season costs little: at most a quarter of what was sold (or the floor)
 	G.S["stats"]["sold_coins"] = float(G.S["stats"]["sold_coins"]) + 400.0
 	L.season_ended()

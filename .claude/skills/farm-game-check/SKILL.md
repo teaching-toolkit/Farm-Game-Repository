@@ -36,6 +36,12 @@ cd $HOME/work/proj && $G --headless --path . --import   # only the first time, o
 
 Always edit the real files in the folder, never the copy.
 
+**When the VM is too slow** (2 Nov 2026: a short golden seed took 150–180 s at night, a full one did not fit in a call): pack the
+work copy (`tar --exclude=.godot -czf "Farm game/Claude outputs/proj.tgz" -C $HOME/work proj`), stage it into the cloud
+container, run `tools/setup_godot.sh` and the import there, and run the golden runs or `check_all.sh` with the Bash tool's
+longer timeout (up to 600 s per call; a full seed takes about 100–130 s there). The doc check (`../tools/check_docs.py`) still runs
+in the parent's folder.
+
 ## 2. The checks
 
 After any change to the game, run all three, and read the whole output:
@@ -59,11 +65,11 @@ What a pass looks like:
   anything. If the change is meant to alter the pace, say by how much and update the numbers here and in the prototype README.
   A new mechanic needs the bot to learn it, or the bot no longer tests the game. `--trace=N` prints the first N questions;
   `--flex` plays with dynamic difficulty; `--accuracy=0.8` misses a share of first tries (the bot answers real questions through `G.timeq`, on the farm and on every walk).
-- **Golden run** (`tests/golden.sh`, part of `check_all.sh`): the bot plays seeds 1 and 2 to chapter 5 (641 and 712 steps since 2 Nov 2026,
+- **Golden run** (`tests/golden.sh`, part of `check_all.sh`): the bot plays seeds 1 and 2 to chapter 5 (636 and 771 steps since 3 Nov 2026,
   30 Oct 2026) and must match `tests/golden/` step by step. A restructuring that changes it changed the rules: find out why
   before going on. Only a change to rules or numbers made on purpose is recorded anew (`bash tests/golden.sh --record`), and
   the log says so. **Short or full:** golden runs do not need to run through all chapters every time. `bash tests/golden.sh --short`
-  (or `check_all.sh --short`) plays seeds 1 and 2 only to the end of chapter 2 (332 and 525 steps, ~70 s); use it after every slice. Run the full
+  (or `check_all.sh --short`) plays seeds 1 and 2 only to the end of chapter 2 (304 and 447 steps, ~70 s); use it after every slice. Run the full
   run when a slice touches a late system (the Lord's share from chapter 3, Wren's check and poisoning, forest trips, medicine and healing
   ranks, pets' blessings in free play, wellbeing parties and visits) and once before a feature is done. `--record` records the files of the same limit.
 - **Save fixtures** (`tests/fixtures_test.tscn`): every save in `tests/fixtures/` loads, plays on and saves unchanged.
@@ -75,7 +81,7 @@ What a pass looks like:
   recorded (13 Oct 2026, from the code before slice R2). A new place, pet or chapter made on purpose is recorded anew:
   `$G --headless --path . res://tests/places_test.tscn -- --seed=1 --record`, and the log says so.
 - **Data checks** (`python3 tools/check_data.py`, part of `check_all.sh`): every id a node, recipe, chapter, place or perk names exists, costs and
-  effects use known keys, conditions parse, card questions are well-formed and their ids unique, every node lands at a known place. Errors fail the
+  effects use known keys, every condition uses the game's condition words (`data/farm/condition-words.json`, refreshed with `tests/conditions_test.tscn -- --seed=1 --write-words`) correctly, card questions are well-formed and their ids unique, every node lands at a known place, and no text the player reads (data, interface, translations) looks like a designer's note ("(Barter idea: …)", "Pet 1 (default name …)", TODO). Errors fail the
   check; warnings are for a look.
 - **Texts changed:** `python3 tools/i18n.py --check` exits with 0.
 - **Progression data changed:** `python3 tools/check_data.py`, `python3 tools/sync_progression.py`, then the explorer check. From the project root, in one

@@ -7,7 +7,11 @@
       "bag": {"whenAny": ["packed>=1", "trips>=1"], "note": "The bag icon (and the weights it explains) appears with the first packed thing or the first market trip (D4: carrying works unexplained until the first trip)."},
       "scroll": {"when": ["story_seen>=1"], "note": "The story scroll appears when the first story piece has been read."},
       "face": {"when": ["chapter>=2"], "note": "The farmer's face at the end of the energy bar appears in chapter 2, when wellbeing switches on (TODO L3, L4); tapping it or the farmer opens the dashboard."},
-      "skills": {"when": ["skill_ranks>=1"], "note": "Skills work from the start but are only shown, in the album, from the first rank-up (D4)."}
+      "skills": {"when": ["skill_ranks>=1"], "note": "Skills work from the start but are only shown, in the album, from the first rank-up (D4)."},
+      "ws_bench": {"whenAny": ["done:workbench", "open:workbench"], "note": "Workshop corners (interface-feel/08): a corner is drawn in the workshop only once something of it is built or can be built now; before that it is not there at all (no faded symbol). The workbench corner: the workbench."},
+      "ws_fire": {"when": ["chapter>=2"], "whenAny": ["done:kiln", "open:kiln", "done:forge", "open:forge"], "note": "The kiln and forge corner: the kiln (or the forge)."},
+      "ws_loom": {"when": ["chapter>=3"], "whenAny": ["done:hand_loom", "open:hand_loom", "done:spinning_wheel", "open:spinning_wheel", "done:dye_vat", "open:dye_vat"], "note": "The loom corner: the hand loom (or the spinning wheel, the dye vat)."},
+      "ws_tools": {"whenAny": ["done:tool_rack", "open:tool_rack", "done:whetstone", "open:whetstone", "done:shears", "open:shears"], "note": "The tool corner: the tool rack (or the whetstone, the shears)."}
     }
   }
 }

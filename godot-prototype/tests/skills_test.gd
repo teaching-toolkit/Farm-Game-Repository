@@ -17,7 +17,7 @@ func _ready() -> void:
 	_check(K.family_of_cat("plant") == "field" and K.family_of_cat("harvest") == "field" and K.family_of_cat("animal") == "animals" and K.family_of_cat("cook") == "", "plant, harvest and animal jobs belong to a family")
 	# a new game: everyone is a Beginner and nothing is shown
 	_check(K.rank("cooking") == 0 and K.input_mult("cooking") == 1.0 and K.energy_mult("cooking") == 1.0 and K.time_mult("cooking") == 1.0 and K.grade_bonus("cooking") == 0.0, "a Beginner changes nothing")
-	_check(not G.reveal.shown("skills") and G.counter("skill_ranks") == 0.0, "the skills are not shown yet")
+	_check(not G.reveal.shown("skills") and G.conditions.value("skill_ranks") == 0.0, "the skills are not shown yet")
 	# practice: 10 batches make Handy
 	var told := []
 	G.rank_up.connect(func(f, r): told.append([f, r]))
@@ -51,7 +51,7 @@ func _ready() -> void:
 	G.S["skills"]["wood"] = 200
 	for n in ["k_timber", "saw", "workshop_3"]: G.S["unlocked"][n] = true
 	_check(K.rank("wood") == 4 and K.input_mult("wood") < K.input_mult("cooking"), "a master carpenter saves more than a master cook (%.2f < %.2f)" % [K.input_mult("wood"), K.input_mult("cooking")])
-	_check(G.counter("skill_ranks") == 8.0, "the counter adds the ranks")
+	_check(G.conditions.value("skill_ranks") == 8.0, "the counter adds the ranks")
 	# a recipe really costs less for a Handy cook
 	G.reset_game()
 	var rid := "porridge"

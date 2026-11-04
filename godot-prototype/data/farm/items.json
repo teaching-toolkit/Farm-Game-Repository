@@ -6,7 +6,7 @@
   "straw": {"name": "Straw", "emoji": "🌾", "category": "byproduct", "value": 15, "tags": ["compostable"], "desc": "By-product of wheat and oats. Thatch, bedding, compost, beehive skeps. Nobody buys straw — use it.", "chapter": 1, "noSell": true},
   "log": {"name": "Log", "emoji": "🪵", "category": "material", "value": 15, "desc": "From stumps, the Woodlot and later the Lumbermill.", "chapter": 1},
   "plank": {"name": "Plank", "emoji": "🟫", "category": "material", "value": 15, "desc": "Split from logs (axe) — four times as many with a saw.", "chapter": 2},
-  "clay": {"name": "Clay", "emoji": "🟤", "category": "material", "desc": "Dug at the field edge with a shovel, or bought.", "chapter": 1, "value": 15},
+  "clay": {"name": "Clay", "emoji": "🟤", "category": "material", "desc": "Dug at the pond with a shovel, or bought.", "chapter": 1, "value": 15},
   "brick": {"name": "Brick", "emoji": "🧱", "category": "material", "desc": "Fired clay. Ovens, kilns, forges, the Farmhouse.", "chapter": 2, "value": 45},
   "charcoal": {"name": "Charcoal", "emoji": "⚫", "category": "fuel", "desc": "Slow-burnt logs. Fuel for forge and glass kiln.", "chapter": 2, "value": 90},
   "iron_ore": {"name": "Iron Ore", "emoji": "🪨", "category": "material", "desc": "Only from the Raw Materials Merchant (unlocked by a dish).", "chapter": 2, "value": 30},

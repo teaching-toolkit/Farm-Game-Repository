@@ -16,22 +16,41 @@ func content() -> VBoxContainer: return M.content
 func sheet_visible() -> bool: return M.sheet.visible
 func sheet_kind() -> String: return M.sheet_kind
 func sheet_title() -> String: return M.sheet_title.text
+func sheet_close_shown() -> bool: return M.sheet_close.visible      # the sheet's ✖
 func goal_id() -> String: return M.goal_id
-func celebrations() -> Array: return M.celebration_queue
+func celebrations() -> Array: return M.interrupts.q.in_line("celebration")
+func clear_celebrations() -> void: M.interrupts.q.clear("celebration")
 func rest_state() -> Dictionary: return M.rest_state
-func info_text() -> String: return M.lbl_info.text         # "Chapter 1 · question 12": only changes when the farm has caught up
+func info_text() -> String: return M.lbl_info.text         # "Chapter 1 · question 12": only changes when the farm has caught up (hidden since interface-feel/06; still set by refresh)
+func info_shown() -> bool: return M.lbl_info.is_visible_in_tree()
+func goal_text() -> String: return M.goal_btn.text
+func goal_text_size() -> int: return M.goalbar.text_size()
+func goal_box() -> Rect2: return M.goal_btn.get_global_rect()
+func season_box() -> Rect2: return M.season_bar.get_global_rect()
+func bars_box() -> Rect2: return M.water_bar.get_parent().get_parent().get_global_rect().merge(M.energy_bar.get_parent().get_parent().get_global_rect())
 func screen_size() -> Vector2: return M.size
 func set_screen_size(v: Vector2) -> void: M.set_deferred("size", v)
 func coins_shown() -> bool: return M.lbl_coins.visible
 func icon_shown(id: String) -> bool: return M.icon_buttons[id].visible
+func cheats_shown() -> bool: return M.cheat_box.visible      # the testing buttons below the top bar
 func hud_fits() -> bool: return M.hud_panel.get_combined_minimum_size().x <= M.size.x + 0.5     # the top bar is not wider than the screen
 func playback_held() -> bool: return M.playback.held
 func playback_playing() -> bool: return M.playback.playing
 func is_open(spot: String) -> bool: return M.mapview.is_open(spot)
 func mystery(spot: String) -> bool: return M.mapview.mystery(spot)
+func interior_corners() -> Dictionary:      # the corners drawn in the open building window: id -> drawn faded (locked)
+	var out := {}
+	var stack: Array = [M.modal_box]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		if n.get("spot_id") != null and str(n.get("spot_id")) != "": out[str(n.get("spot_id"))] = bool(n.get("locked"))
+		stack.append_array(n.get_children())
+	return out
+func badge(spot: String) -> String: return M.mapview.badge(spot)      # the small sign on a place (📖 a card to read, ❓ a card quiz …)
 
 # --- what a child does
 func close_modal() -> void: M.modals.close_modal()
+func celebrate(id: String) -> void: M.celebrations.celebrate(id)      # what the rules signal when something new is done
 func close_sheet() -> void: M.sheets.close_sheet()
 func show_card(cid: String) -> void: M.cards.show_card(cid)
 func tap_patch(area: String, i: int) -> void: M.patches.on_patch(area, i)
@@ -42,6 +61,17 @@ func tap_playback() -> void: M.playback.finish()
 func show_rest() -> void: M.rest.show_rest()
 func go_rest() -> void: M.rest.go_rest()
 func rest_go() -> void: M.rest.rest_go()
+func farmer_shown() -> bool: return M.map.avatar.visible and M.map.avatar.modulate.a > 0.99     # Rest: he is out of the tent or house
+func farmer_hidden() -> bool: return not M.map.avatar.visible                                   # … or inside it
+func farmer_feet() -> Vector2: return M.map.avatar.feet
+func tap_rest_walk() -> bool:      # a tap on the screen while the farmer walks in or comes out (false: nothing caught it)
+	var c = M.rest._catcher
+	if c == null or not is_instance_valid(c): return false
+	var e := InputEventMouseButton.new()
+	e.button_index = MOUSE_BUTTON_LEFT
+	e.pressed = true
+	c.gui_input.emit(e)
+	return true
 func open_spot(spot: String) -> void: M.sheets.open_spot(spot)
 func open_sheet(kind: String) -> void: M.sheets.open_sheet(kind)
 func enter_corner(corner: String, parent: String) -> void: M.interiors.enter_corner(corner, parent)
@@ -51,6 +81,7 @@ func play_fx() -> void: M.mapview.play_fx()
 func refresh() -> void: M.refresh()
 func item_panel(k: String) -> void: M.pantry.item_panel(k)
 func story_enabled(on: bool) -> void: M.story.enabled = on
+func story_pump() -> bool: return M.story.pump()      # what the start of a new game asks before its welcome
 func bubbles() -> int:      # sticky speech bubbles on the screen
 	var n := 0
 	for c in M.toasts.get_children():

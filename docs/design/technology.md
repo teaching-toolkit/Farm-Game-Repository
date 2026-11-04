@@ -40,7 +40,7 @@ value checks) and keeps a copy of the current data.
 | `game/farm/main.gd` and `game/farm/ui/` | the interface: `main.gd` builds the screen (bars, map, sheet, pop-up) and refreshes it; one script per job in `ui/`: sheets, pop-ups, notes, the Time Quiz, Rest, cards, the places' sheets, inside windows, album, quest book, settings |
 | `game/farm/map/` (`farm_map.gd`, `slot.gd`, `iso_field.gd`), `game/farm/spots.gd` with `data/farm/places.json`, `game/farm/ui/field_view.gd` | the one-screen map, a place, a field, which data node belongs where (the places, their insides, picture chains, ruins, pens and the workbench are data), the patch grid |
 | `game/farm/fx.gd`, `game/farm/dev/dev_flags.gd` | perk effects drawn over the farm; the test and screenshot flags |
-| `kits/ui/` (`art.gd`, `ui.gd`), `kits/avatar/` (`avatar.gd`, `actor.gd`), `kits/audio/` (`sound.gd`, `synth.gd`), `kits/i18n/i18n.gd` | pictures with emoji fallback, styles and explanations, the farmer, sound and music, languages (reusable parts, 12 Oct 2026) |
+| `kits/ui/` (`art.gd`, `ui.gd`, `interruptions.gd`), `kits/avatar/` (`avatar.gd`, `actor.gd`), `kits/audio/` (`sound.gd`, `synth.gd`), `kits/i18n/i18n.gd` | pictures with emoji fallback, styles and explanations, the interruption queue (what takes the screen next: one order list in `rules/65-feel.json`, `interruption-queue`), the farmer, sound and music, languages (reusable parts, 12 Oct 2026) |
 | `kits/learn/` | the learning kit — learner record, spaced repetition, maths engine, quiz engine, timer, number pad; reusable in any Godot game |
 
 ### 15.4 Saves

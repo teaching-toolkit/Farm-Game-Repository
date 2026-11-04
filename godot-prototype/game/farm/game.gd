@@ -58,12 +58,12 @@ var card_ids: Array = []
 var animal_ids: Array = []          # the animals (nodes of type "animal"), in the data's order
 var pet_ids: Array = []             # the pets in the order they come home: one at the end of each chapter (chapters[].pet)
 const Modifiers = preload("res://kits/core/modifiers.gd")
-const Conditions = preload("res://kits/core/conditions.gd")
 const Saves = preload("res://kits/core/saves.gd")
 const Data = preload("res://kits/core/data.gd")
 var prefs = preload("res://kits/core/prefs.gd").new()   # this device's small choices (cheat buttons, read aloud): user://device.json
 var rng = preload("res://kits/core/rng.gd").new()    # the one random source of the rules (seedable)
 var clock = preload("res://kits/core/clock.gd").new()  # one step of time: the systems that run in it, in order
+var conditions = preload("res://kits/core/conditions.gd").new()   # the condition language: "when" in the data, and its words
 
 const Learner = preload("res://kits/learn/learner.gd")
 var math = preload("res://kits/learn/math_engine.gd").new()   # Rest sums: curriculum, spaced repetition, medals (learnkit)
@@ -139,6 +139,8 @@ func _init() -> void:
 	nature = FarmNature.new(self)
 	forest = FarmForest.new(self)
 	trust = FarmTrust.new(self)
+	_register_words()
+	for sys in [seasons, fields, needs, progression, knowledge, rewards, trade, inventory, story, trip, skills, well, forest, lord, animals]: sys.register_words(conditions)
 	fields.register_chores()
 	animals.register_chores()
 	well.register_chores()
@@ -272,7 +274,7 @@ func load_data() -> void:
 		var st = recipes[rid]["station"]
 		if not station_recipes.has(st): station_recipes[st] = []
 		station_recipes[st].append(rid)
-	settings = {"activePacks": [], "wrongAnswer": "retry", "avoidRepeatWithin": 3, "knowledgeReviewShare": 0.25, "restMaxNumber": 20, "restOps": ["+", "-"], "showCheatButton": true}
+	settings = {"activePacks": [], "wrongAnswer": "retry", "avoidRepeatWithin": 3, "knowledgeReviewShare": 0.25, "restMaxNumber": 20, "restOps": ["+", "-"], "showCheatButton": false}
 	if FileAccess.file_exists("res://data/settings.json"):
 		var st2 = JSON.parse_string(FileAccess.get_file_as_string("res://data/settings.json"))
 		if typeof(st2) == TYPE_DICTIONARY:
@@ -298,7 +300,7 @@ func load_data() -> void:
 
 ## Do the testing buttons show on the farm? (data/settings.json "showCheatButton" is the starting value; ⚙️ Settings → grown-up part changes it.)
 func cheats_visible() -> bool:
-	return bool(prefs.get_value("cheatButtons", settings.get("showCheatButton", true)))
+	return bool(prefs.get_value("cheatButtons", settings.get("showCheatButton", false)))
 
 ## How questions and card pages are read aloud: "off" (no 🔊 buttons), "button" (a 🔊 button to press), "auto" (read as they open; 🔊 repeats).
 func read_aloud_mode() -> String:
@@ -424,13 +426,26 @@ func say(t: String) -> void:
 func money(bronze: float, both := false) -> String:
 	var cur: Dictionary = meta.get("currency", {})
 	var sy: Dictionary = cur.get("symbols", {"bronze": "🟤", "gold": "🟡"})
-	var per := int(cur.get("bronzePerGold", 100))
 	var t := int(floor(bronze + 0.0001))
 	if t < int(cur.get("goldFrom", 100)) and not both: return "%d %s" % [t, sy["bronze"]]
+	var c := coins_split(t)
+	if c[0] == 0:
+		if c[2] == 0 and not both: return "%d %s" % [c[1], sy["gold"]]
+		return "%d %s %d %s" % [c[1], sy["gold"], c[2], sy["bronze"]]
+	var out := ["%d %s" % [c[0], str(sy.get("diamond", "💎"))]]      # from 1000 gold: diamonds first, then what is left (interface-feel/07)
+	if c[1] > 0 or both: out.append("%d %s" % [c[1], sy["gold"]])
+	if c[2] > 0 or both: out.append("%d %s" % [c[2], sy["bronze"]])
+	return " ".join(out)
+
+## Whole coins of an amount in bronze (rounded down): [diamonds, gold, bronze]; 100 bronze = 1 gold, 1000 gold = 1 diamond.
+## Coins are still counted (and saved) in bronze; this is only how they are shown.
+func coins_split(bronze: float) -> Array:
+	var cur: Dictionary = meta.get("currency", {})
+	var per := int(cur.get("bronzePerGold", 100))
+	var per_d := int(cur.get("goldPerDiamond", 1000))
+	var t := int(floor(bronze + 0.0001))
 	var g := t / per
-	var r := t % per
-	if r == 0 and not both: return "%d %s" % [g, sy["gold"]]
-	return "%d %s %d %s" % [g, sy["gold"], r, sy["bronze"]]
+	return [g / per_d, g % per_d, t % per]
 
 func money_up(bronze: float) -> String:
 	return money(ceil(bronze - 0.0001))
@@ -569,69 +584,19 @@ func setup_clock() -> void:
 
 # ------------------------------------------------------------------ conditions ("when" in the data)
 
-## A condition from the data (kits/core/conditions.gd): "unlocked:id" or "<counter>>=N". This game's counters are below.
-func cond(w: String) -> bool:
-	return Conditions.check(w, self)
-
-## The value of a named counter for conditions: sidequests, seasons, weeds, cards, harvests, rest_quick, medals (Rest sum medals
-## won), arith_level, sold_kinds, friends. NAN for a name that is not one (the condition is then false).
-func counter(name: String) -> float:
-	var st: Dictionary = S["stats"]
-	match name:
-		"sidequests": return float(st.get("sidequests", 0))
-		"seasons": return float(seasons.season_no())
-		"weeds": return float(st.get("weeds", 0))
-		"cards": return float(progression.cards_learned())
-		"harvests": return float(st.get("harvests", 0))
-		"rest_quick": return float(st.get("rest_quick", 0))
-		"medals": return float(math.medal_count(learn_record()))
-		"arith_level": return float(math.medal_count(learn_record(), "bronze") + 1)
-		"sold_kinds": return float(S.get("sold_kinds", {}).size())
-		"friends": return float(rewards.friends().size())
-		"coins": return float(S["coins"])
-		"album": return float(S["album"].size())
-		"chapter": return float(chapter())
-		"step": return float(S["step"])
-		"items_seen": return float(S["seen"].size())
-		"story_seen": return float(S["story_seen"].size())
-		"goals": return float(S["goals"])
-		"trips": return float(S["trips"])
-		"packed": return float(trip.contents().size())
-		"skill_ranks": return float(skills.total_ranks())
-		"well_mood": return well.overall()
-		"forest_trips": return float(S["forest"]["trips"])
-		"forest_poisoned": return float(S["forest"]["poisoned"])
-		"forest_checked": return float(S["forest"]["checked"])
-		"lord_owed": return lord.owed()
-		"lord_paid": return float(S["lord"]["paid"])
-		"lord_shares": return float(S["lord"]["shares"])
-	return NAN
-
-## Has this part of the interface, or this story piece, been shown (condition term `seen:<id>`)?
-func seen(id: String) -> bool:
-	return S["revealed"].has(id) or S["story_seen"].has(id)
-
-## The game's own condition terms (kits/core/conditions.gd): the start of a new game, what is in the store, the season, the chapter, what was tapped,
-## a card page that was read, a chance.
-func term(name: String, arg: String) -> bool:
-	match name:
-		"start": return int(S["step"]) == 0
-		"has":
-			var p := arg.split(":")
-			return p.size() == 2 and inventory.count(p[0]) >= float(p[1])
-		"season": return seasons.season() == arg
-		"chapter": return chapter() == int(arg)
-		"tap": return S["story_taps"].has(arg)
-		"page": return knowledge.page_seen(arg)
-		"after":                                                  # after:<piece>:<n> — n Time Quiz questions have passed since the piece was seen
-			var q := arg.split(":")
-			return q.size() == 2 and S["story_seen"].has(q[0]) and S["step"] - int(S["story_seen"][q[0]]) >= int(q[1])
-		"chance": return float(hash("%d/%s" % [int(S["step"]), arg]) % 1000) / 1000.0 < float(arg)   # the same answer all through one question: asking does not use up luck
-	return false
-
-## All of a list of conditions ("when" in the data).
-func cond_all(list: Array) -> bool:
-	return Conditions.check_all(list, self)
+## The Game's own condition words (kits/core/conditions.gd); every other word is registered by the system that owns what it reads.
+func _register_words() -> void:
+	var c = conditions
+	c.register("done", func(a): return done(a), "yes", "node", "This node (a goal, building, card …) is done.", "done:tent")
+	c.register("unlocked", func(a): return done(a), "yes", "node", "The same as done:.", "unlocked:tent")
+	c.register("seen", func(a): return S["revealed"].has(a) or S["story_seen"].has(a), "yes", "seen", "This interface element has been shown, or this story piece read.", "seen:coins")
+	c.register("start", func(_a): return int(S["step"]) == 0, "yes", "", "A new game, before the first question.", "start")
+	c.register("chance", func(a): return float(hash("%d/%s" % [int(S["step"]), a]) % 1000) / 1000.0 < float(a), "yes", "chance",
+		"Holds with this chance (0 to 1), the same answer all through one question: asking does not use up luck.", "chance:0.2")
+	c.register("step", func(_a): return float(S["step"]), "number", "", "Time Quiz questions answered right (steps of farm time).", "step>=40")
+	c.register("chapter", func(_a): return float(chapter()), "number", "", "The chapter now (1 + the pets home).", "chapter>=2")
+	c.register("coins", func(_a): return float(S["coins"]), "number", "", "Coins in the purse, in bronze.", "coins>=100")
+	c.register("goals", func(_a): return float(S["goals"]), "number", "", "Goals reached so far.", "goals>=12")
 
 # ------------------------------------------------------------------ cheat (for testing)
 

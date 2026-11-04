@@ -8,7 +8,7 @@ A girl who keeps busy so that nobody will ask what she did comes alone to the as
 
 ## 2. The locked ✅ facts (full text: `../archive/RUN-CHARTER.md` §3)
 
-Six chapters, six Helpers (bunny, tortoise, goat, pony, badger, alpaca) who do not talk, a six-line rhyme that comes back one line per return. The fire began in the hay barn while the girl played with Mumyo; the Lord (Wexley) took more each year and owes upward; the chain reaction dried the land; the family split. One stalk, one grain, the bunny kept the patch alive. The melody comes from the conch (deepest layer 🔒🔒, never in any text). The frame's last line: *"If you meet a little fellow with bells, tell him I was never angry."* The steward arrives in chapter 4; no religion; game time is never counted in player texts (D11). The cousin is a girl. Free play after chapter 6, no epilogue chapter. The bend triggers automatically at the Fair. Poison costs all coins (a parent exception). Pictures never show the farmer's face.
+Six chapters, six Helpers (bunny, tortoise, goat, pony, badger, alpaca) who do not talk, a six-line rhyme that comes back one line per return. The fire began in the hay barn while the girl played with Mumyo; ✅ **the farmer was there, as a child of 8, the night the farm burned** (parent, 23 Oct 2026): no text has the farmer wonder what caused the fire; at a clue the farmer notices, recognises and looks troubled, and whether the farmer is unsure of what happened stays open; the Lord (Wexley) took more each year and owes upward; the chain reaction dried the land; the family split. One stalk, one grain, the bunny kept the patch alive. The melody comes from the conch (deepest layer 🔒🔒, never in any text). The frame's last line: *"If you meet a little fellow with bells, tell him I was never angry."* The steward arrives in chapter 4; no religion; game time is never counted in player texts (D11). The cousin is a girl. Free play after chapter 6, no epilogue chapter. The bend triggers automatically at the Fair. Poison costs all coins (a parent exception). Pictures never show the farmer's face.
 
 ## 3. The hidden truth 🔒 and its settled form
 
@@ -34,7 +34,7 @@ Each question is *planted* (first appearance, not known as a clue), *hinted* (a 
 | Q5 Lightning? | the Ballad, "it started low" | ch2 barn; Maud's line; the telling |
 | Q10 Why the badger left | ch5 still-room | the torn page, the finger-count |
 | Q11 The melody | ch1 night | Lark, "Mr. Mumble"/"Yours." (ch5) |
-| Q13 Did she cause it | "I didn't want to know" | the bend; the mother's "You were a child." |
+| Q13 Did she cause it | the low corner and the hook: you notice, your hands go cold, "Not yet" (ch2) | the bend; the mother's "You were a child." |
 | Q14 The dented bucket | the box note | the telling |
 | Q16 Whose is the second hand | "T." (ch2) | Tilda's hand (ch6 supper) |
 | Q17 Who carried the lantern in | the hook found empty, Jan | **never answered** |

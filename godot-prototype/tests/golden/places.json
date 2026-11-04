@@ -619,6 +619,7 @@
 		"d_fair_cloth": "market",
 		"pet_badger": "pets",
 		"pet_alpaca": "pets",
+		"clay_pit": "pond",
 		"wild_edge": "forest",
 		"stick_hoe": "ws_tools",
 		"iron_hoe": "ws_tools",
@@ -1264,6 +1265,7 @@
 		"pond": [
 			"pond",
 			"pond_station",
+			"clay_pit",
 			"retting_trough",
 			"duck_house"
 		],

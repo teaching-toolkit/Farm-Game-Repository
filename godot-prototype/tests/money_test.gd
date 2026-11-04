@@ -23,17 +23,39 @@ func _ready() -> void:
 	var old: Dictionary = {"coins": 12.0}
 	G.upgrade_save_v3(old)
 	_check(is_equal_approx(float(old["coins"]), 180.0), "an old save's 12 coins are 180 bronze (×15)")
-	# a coin cost in the cost rows: cubes of a gold (or of 10 bronze), the sum as words
+	# a coin cost in the cost rows: one cube per gold from a gold, per bronze below (no "×10": interface-feel/05), the sum as words
 	var UI = preload("res://kits/ui/ui.gd")
 	var have_fn := func(_k): return 0.0
 	var emo_fn := func(_k): return "🪙"
-	for t in [[225.0, 100.0, "2 🟡 25 🟤"], [60.0, 10.0, "60 🟤"], [12.0, 1.0, "12 🟤"]]:
+	for t in [[225.0, 100.0, "2 🟡 25 🟤"], [60.0, 1.0, "60 🟤"], [12.0, 1.0, "12 🟤"]]:
 		var row = UI.cost_row({"coins": t[0]}, {}, have_fn, emo_fn, {}, G.money)
 		add_child(row)
 		await get_tree().process_frame
 		var cb = row.get_child(0).get_child(1)
 		_check(cb.num_text == t[2] and cb.unit == t[1], "a cost of %d bronze: cubes of %d, text %s (got %s, unit %d)" % [t[0], t[1], t[2], cb.num_text, cb.unit])
 		row.free()
+	# interface-feel/07: 1000 gold = 1 diamond; coins stay counted in bronze, the split is only how they are shown
+	_check(G.coins_split(0) == [0, 0, 0] and G.coins_split(235) == [0, 2, 35] and G.coins_split(99999.9) == [0, 999, 99], "split under a diamond: gold and bronze, rounded down")
+	_check(G.coins_split(100000) == [1, 0, 0] and G.coins_split(123456) == [1, 234, 56] and G.coins_split(250000) == [2, 500, 0], "from 1000 gold: diamonds, then gold, then bronze")
+	_check(G.money(100000) == "1 💎" and G.money(123456) == "1 💎 234 🟡 56 🟤" and G.money(100050) == "1 💎 50 🟤" and G.money(100000, true) == "1 💎 0 🟡 0 🟤", "diamonds as text (%s, %s)" % [G.money(123456), G.money(100050)])
+	_check(G.money_up(99999.2) == "1 💎" and G.money(99999.9) == "999 🟡 99 🟤", "costs round up to the next diamond, stocks down")
+	G.S["coins"] = 123456.0
+	_check(G.purse_text() == "1 💎 234 🟡 56 🟤" and is_equal_approx(float(G.S["coins"]), 123456.0), "the purse with a diamond; the coins stay bronze")
+	var purse = UI.Purse.new()
+	add_child(purse)
+	await get_tree().process_frame
+	var rows_seen := []
+	for t2 in [[0.0, ["bronze"]], [40.0, ["bronze"]], [200.0, ["gold"]], [235.0, ["gold", "bronze"]], [100000.0, ["diamond"]], [123456.0, ["diamond", "gold", "bronze"]]]:
+		purse.set_coins(G.coins_split(t2[0]))
+		rows_seen.append(purse.rows_shown())
+		_check(purse.rows_shown() == t2[1], "the purse with %d bronze shows the rows %s (got %s)" % [t2[0], t2[1], purse.rows_shown()])
+	purse.free()
+	var row2 = UI.cost_row({"coins": 150000.0}, {}, have_fn, emo_fn, {}, G.money)
+	add_child(row2)
+	await get_tree().process_frame
+	var cb2 = row2.get_child(0).get_child(1)
+	_check(cb2.unit == 100000.0 and cb2.num_text == "1 💎 500 🟡", "a cost of 1500 gold: cubes of a diamond (got unit %d, %s)" % [cb2.unit, cb2.num_text])
+	row2.free()
 	# the data
 	var cur: Dictionary = G.meta.get("currency", {})
 	_check(bool(cur.get("rescaled", false)) and int(cur.get("bronzePerGold", 0)) == 100 and int(cur.get("factor", 0)) == 15, "the currency is in the data (100 bronze = 1 gold)")

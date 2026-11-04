@@ -19,9 +19,8 @@ var _last_fx := ""             # the celebration effect shown last time (the nex
 # ------------------------------------------------------------------ celebrations: something new was built or made
 
 func celebrate(id: String) -> void:
-	if (not G.nodes.has(id) and not id.begins_with("perk:")) or M.celebration_queue.has(id): return
-	M.celebration_queue.append(id)
-	if not M.modal.visible: show_celebration.call_deferred()
+	if not G.nodes.has(id) and not id.begins_with("perk:"): return
+	M.interrupts.celebration(id, show_celebration.bind(id))      # it shows in its turn (rules/65-feel.json, "interruptions")
 
 ## The picture of a node for its celebration (the building, the tool on the bench, the helper, the cat).
 func _node_picture(id: String) -> Texture2D:
@@ -34,9 +33,8 @@ func _node_picture(id: String) -> Texture2D:
 		if b["id"] == id: return Art.first("tools", [str(b["pic"])])
 	return Art.first("interior", [id])
 
-func show_celebration() -> void:
-	if M.modal.visible or M.celebration_queue.is_empty(): return
-	var id: String = M.celebration_queue.pop_front()
+## The interruption queue calls this when it is the celebration's turn.
+func show_celebration(id: String) -> void:
 	M.feedback.sfx("celebrate")
 	if M.map.avatar: M.feedback.play_act("cheer", M.map.avatar.feet)
 	var perk := id.begins_with("perk:")

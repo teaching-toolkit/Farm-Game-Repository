@@ -33,7 +33,7 @@ Written 24 Oct 2026 by the story manager. All 💡. Seed ids as in `ch1.md`; fat
 | 15 | E-2.R01 The letter that does not get sent | `seen:c2_letter + after:2` | G | "I'm staying a bit longer" reads as the reply; "Small is…" | keep |
 | 16 | shipped `c2_barn` + E-2.L06 Hook outside, hay inside (+ E-2.B07 Not past the sill) | `seen:c2_hook + after:2` | T | it began low; the hook found *inside* is out of place; Jan coughs at "past the sill": **Tilda is a person who is gone** | keep (B07 merged; **chapter turn**) |
 | 16 | E-2.H11 The seat in the dry pond | `tap:pond` | W | the pond had a keeper who waited; the pond becomes a debt (Q6) | keep |
-| – | shipped `c2_tortoise`, `c2_frame2` | `done:pet_tortoise` | W | the tortoise comes home; frame 2: "Did you find out who started it?" "Not then. I didn't want to." | shipped |
+| – | shipped `c2_tortoise`, `c2_frame2` | `done:pet_tortoise` | W | the tortoise comes home; frame 2: "And the corner in the barn? What did it mean?" "Not then. Later." (reworded 3 Nov 2026, `story/10`) | shipped |
 
 17 rows. Small on purpose: chapter 2 is the first place the player is *asked to wait* (the tortoise, the winter) and carries the turn of the book (not lightning). **Free play / optional:** #3, #7, #11, #12.
 

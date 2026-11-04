@@ -180,6 +180,11 @@ for p, what in [("bird", "small sparrow pecking"), ("rabbit", "small wild rabbit
 for k, it in DATA["items"].items():
     ch = int(it.get("chapter", 1))
     add(5 if ch <= 2 else ch + 3, ch, f"items/{k}.png", "128 max", f"Item: {it['name']}", f"{it['name'].lower()}, single object icon")
+# every window gets a painted full-bleed picture on top (pictures/08): the list, briefs and prompts are tools/window_pictures.json;
+# these prompts go after the WINDOW style prompt (second line of the CSV), not after the sprite style
+WINDOWS = json.load(open(os.path.join(ROOT, "tools", "window_pictures.json"), encoding="utf-8"))
+for w in WINDOWS["windows"]:
+    add(w["priority"], w["chapter"], f"windows/{w['id']}.webp", WINDOWS["size"] + " (window style)", f"Window: {w['window']} — {w['brief']}", w["prompt"])
 rows.sort(key=lambda r: (r[0], r[1], r[2]))
 # pictures already generated on a sheet that is not in the art inbox yet (e.g. round 8: the parent still picks the best version)
 _inbox = os.path.join(os.path.dirname(ROOT), "art-inbox")
@@ -199,6 +204,7 @@ out = os.path.join(inbox if os.path.isdir(inbox) else os.path.dirname(os.path.ab
 with open(out, "w", newline="", encoding="utf-8") as f:
     w = csv.writer(f)
     w.writerow(["# style prompt: " + STYLE])
+    w.writerow(["# window style prompt (rows whose size says window style): " + WINDOWS["style"]])
     w.writerow(["priority", "chapter", "file", "size", "what", "prompt", "status"])
     seen = set()
     for r in rows:

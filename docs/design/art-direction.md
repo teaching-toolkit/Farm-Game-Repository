@@ -13,7 +13,15 @@ Part of the game's design ([index](README.md)). It describes the game as built; 
   so they darken whatever is beneath them.
 - **Names follow the data ids** (`assets/map/tent.png`, `assets/items/egg.png`, `assets/animals/animal_cow.png`). A missing picture
   shows the emoji; an upgrade without its own picture keeps the previous one. So pictures can be added one at a time, no code.
+- **Icons are small pictures** (interface-feel/04): wherever an item or a tool appears next to an amount (cost rows, recipe tiles and
+  what they give, goal cards such as the hand axe, the store, the bag, the square), it shows a small version of its own picture
+  (`assets/items/<id>.png`, tools `assets/tools/`), cut to its edges and scaled down once, then kept; the emoji only while it has no picture.
 - **Final look first, upgrades as add-ons:** each place gets a picture of its final look without anything that is an upgrade of
   its own; upgrades are separate pictures shown when built.
+- **Window pictures** *(planned: listed, not generated yet, `pictures/09`)*: every window (a place's sheet, the store, the bag, the quest book,
+  the Time Quiz, Rest, the square …) gets a painted full-bleed scene on top, seen through the farmer's eyes: no farmer, not even a hand, no
+  words, one picture per window that fits every upgrade stage. The list with a brief and a prompt for each is `godot-prototype/tools/window_pictures.json`
+  (58 windows, most-seen first; its `noPicture` part names the windows that keep their own content picture); `tools/art_list.py` adds them to
+  `ART_LIST.csv` as `assets/windows/<id>.webp` after a second, *window* style prompt.
 - **The to-do list** is `art-inbox/ART_LIST.csv` (every picture, in the order worth drawing, with a prompt; `tools/art_list.py`
   refreshes it). The folder layout of `assets/` is described in `godot-prototype/README.md`.

@@ -83,7 +83,7 @@ func _ready() -> void:
 	T.unpack_all()
 	# counters for the reveal
 	T.pack("egg", 1)
-	_check(G.counter("packed") == 1.0 and G.counter("trips") == 1.0, "the counters the reveal asks for")
+	_check(G.conditions.value("packed") == 1.0 and G.conditions.value("trips") == 1.0, "the counters the reveal asks for")
 	# every graded item is packable and weighs something
 	var bad := []
 	for k in G.items:

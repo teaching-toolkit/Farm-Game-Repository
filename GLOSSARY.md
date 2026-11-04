@@ -134,6 +134,18 @@ _Avoid_: stars
 **Woodpile**:
 The fuel store for heat stations; stoked by hand.
 
+**Condition**:
+One short line in the data that says *when* something happens or shows (a story piece, an interface element, a golden acorn, a perk): `chapter>=2`, `item:carrot>=3`, `not:done:barn`. It compares a condition word with a number (at least, or fewer than), or asks a yes-or-no word; `not:` turns it round. A list of conditions holds when all of them hold.
+_Avoid_: trigger (an event that just happened), requirement (what a node needs before it can be unlocked)
+
+**Condition word**:
+One word a condition may use (`coins`, `pests`, `forest_trips`, `season:winter`, `item:<item>`). Each word belongs to the system that owns what it reads. A word nobody owns is an error in the data checker.
+_Avoid_: counter, term (the old code's two names for the same idea)
+
+**Trigger**:
+A chore that just happened, which a luck event or a little job reacts to (`"on": "weed"`: right after a weeding). A trigger is an event; a condition is a state that holds or not.
+_Avoid_: when (in the data, `when` is always a condition)
+
 ### Friends and rewards
 
 **Favour**:
@@ -146,6 +158,16 @@ _Avoid_: gift card
 
 **Perk**:
 A cosmetic extra (butterflies, sounds, rainbows), never stronger.
+
+### The screen
+
+**Interruption**:
+Something that arrives on its own and wants the screen: a celebration of something new, a postcard, a story box, a bark, a note after a pop-up closes. A screen the child opens herself (Time Quiz, Rest, a card, a sheet, a menu) is not an interruption, and neither are the animations of the farm catching up.
+_Avoid_: pop-up (any centred window, also the ones the child opens), notification (only the short notes)
+
+**Quiet**:
+The moment when no screen the child opened is in the way of an interruption and no other interruption is showing, so the next one in line may come. What counts as "in the way" depends on the kind: a celebration may come over an open sheet, a story box waits for it to close.
+_Avoid_: idle
 
 ### Pacing and tools of the project
 

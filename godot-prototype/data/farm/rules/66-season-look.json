@@ -1,0 +1,42 @@
+{
+  "seasonLook": {
+    "note": "How the seasons look on the farm map (feature season-look). Only looks: nothing here changes a game rule, the golden runs do not see it. Season names: spring, summer, autumn, winter.",
+    "critters": {
+      "note": "Every creature that shows on the map, with the seasons it can be seen in (season-look/03). Animals and pets are named by their node id; 'pest_…' are the pests that come to eat on the fields (emoji in the order the fields pick them: the chapter's own kind first); butterflies and fireflies are perks. A creature that is out of season is simply not drawn; its rules (pests eating, animals giving) go on. tools/check_data.py warns about an animal, pet or pest without a seasons list.",
+      "animal_chicken": {"seasons": ["spring", "summer", "autumn", "winter"]},
+      "animal_cow": {"seasons": ["spring", "summer", "autumn", "winter"]},
+      "animal_sheep": {"seasons": ["spring", "summer", "autumn", "winter"]},
+      "animal_bees": {"seasons": ["spring", "summer", "autumn"], "why": "In winter the bees stay in the hive, huddled together to keep warm."},
+      "pet_bunny": {"seasons": ["spring", "summer", "autumn", "winter"]},
+      "pet_tortoise": {"seasons": ["spring", "summer", "autumn", "winter"], "why": "A real tortoise sleeps through the winter, but Helpers never leave: see the question in season-look/03."},
+      "pet_goat": {"seasons": ["spring", "summer", "autumn", "winter"]},
+      "pet_pony": {"seasons": ["spring", "summer", "autumn", "winter"]},
+      "pet_badger": {"seasons": ["spring", "summer", "autumn", "winter"]},
+      "pet_alpaca": {"seasons": ["spring", "summer", "autumn", "winter"]},
+      "farm_cat": {"seasons": ["spring", "summer", "autumn", "winter"]},
+      "pest_bird": {"emoji": "🐦", "pest": true, "seasons": ["spring", "summer", "autumn", "winter"]},
+      "pest_rabbit": {"emoji": "🐇", "pest": true, "seasons": ["spring", "summer", "autumn", "winter"]},
+      "pest_slug": {"emoji": "🐌", "pest": true, "seasons": ["spring", "summer", "autumn"], "why": "Slugs hide deep in the soil when it is cold."},
+      "pest_caterpillar": {"emoji": "🐛", "pest": true, "seasons": ["spring", "summer", "autumn"], "why": "Caterpillars are only out in the warm months."},
+      "pest_vole": {"emoji": "🐭", "pest": true, "seasons": ["spring", "summer", "autumn", "winter"]},
+      "butterflies": {"seasons": ["spring", "summer", "autumn"], "why": "Butterflies sleep through the winter or are not born yet."},
+      "fireflies": {"seasons": ["spring", "summer", "autumn"], "why": "Agent's choice: real fireflies glow in early summer only; kept for three seasons so the perk does not seem lost."}
+    },
+    "flowers": {
+      "note": "Flowers in the grass (season-look/02): spring is full of them, summer has a few, autumn and winter none. Over the first 'changeQuestions' Time Quiz questions of a season their number moves from the last season's to this season's, one flower at a time, so they come and go. Each flower stays in its own place on the farm. Pictures: assets/deco/<name>.png (the ones in the grass pictures that have flowers); more spring flowers are listed in pictures/12.",
+      "pictures": ["grass_2", "grass_3", "grass_4", "grass_6"],
+      "count": {"spring": 240, "summer": 24, "autumn": 0, "winter": 0},
+      "changeQuestions": 10,
+      "size": [38, 58]
+    },
+    "leaves": {
+      "note": "Autumn leaves drifting down over the farm (season-look/01), each flipping from side to side as it falls. Only in autumn: they start falling when autumn begins and stop when it ends (the last ones fall to the ground). 'count' leaves are in the air at a time (each one is a small picture drawn every frame: keep it modest for the iPad). Pictures: assets/deco/leaf_1 … leaf_4 when they exist (pictures/12); until then a drawn leaf stands in.",
+      "count": 20,
+      "pictures": ["leaf_1", "leaf_2", "leaf_3", "leaf_4"],
+      "size": [18, 28],
+      "fallSpeed": [22, 40],
+      "wind": [8, 26],
+      "flipsPerSecond": [0.5, 1.2]
+    }
+  }
+}

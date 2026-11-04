@@ -1,0 +1,281 @@
+{
+	"note": "The condition words of the game (kits/core/conditions.gd), written by: godot --headless --path . res://tests/conditions_test.tscn -- --seed=1 --write-words. The data checker reads it. Do not edit by hand.",
+	"words": {
+		"after": {
+			"arg": "after",
+			"example": "after:c1_night:2",
+			"kind": "yes",
+			"note": "At least n Time Quiz questions have passed since this story piece was read (after:<piece>:<n>)."
+		},
+		"album": {
+			"arg": "",
+			"example": "album>=3",
+			"kind": "number",
+			"note": "Pictures in the album."
+		},
+		"animals": {
+			"arg": "node",
+			"example": "animals:animal_chicken>=2",
+			"kind": "number",
+			"note": "How many of this animal live on the farm now (its animal node)."
+		},
+		"arith_level": {
+			"arg": "",
+			"example": "arith_level>=3",
+			"kind": "number",
+			"note": "The Rest sums level: 1 + the bronze medals won."
+		},
+		"cards": {
+			"arg": "",
+			"example": "cards>=5",
+			"kind": "number",
+			"note": "Knowledge cards learned."
+		},
+		"chance": {
+			"arg": "chance",
+			"example": "chance:0.2",
+			"kind": "yes",
+			"note": "Holds with this chance (0 to 1), the same answer all through one question: asking does not use up luck."
+		},
+		"chapter": {
+			"arg": "",
+			"example": "chapter>=2",
+			"kind": "number",
+			"note": "The chapter now (1 + the pets home)."
+		},
+		"coins": {
+			"arg": "",
+			"example": "coins>=100",
+			"kind": "number",
+			"note": "Coins in the purse, in bronze."
+		},
+		"done": {
+			"arg": "node",
+			"example": "done:tent",
+			"kind": "yes",
+			"note": "This node (a goal, building, card …) is done."
+		},
+		"empty_patches": {
+			"arg": "",
+			"example": "empty_patches>=2",
+			"kind": "number",
+			"note": "Field patches in use with nothing planted now."
+		},
+		"energy": {
+			"arg": "",
+			"example": "energy<3",
+			"kind": "number",
+			"note": "The farmer's energy now."
+		},
+		"forest_checked": {
+			"arg": "",
+			"example": "forest_checked>=1",
+			"kind": "number",
+			"note": "Baskets Wren has checked."
+		},
+		"forest_poisoned": {
+			"arg": "",
+			"example": "forest_poisoned>=1",
+			"kind": "number",
+			"note": "Times the farmer was poisoned by a wrong plant."
+		},
+		"forest_trips": {
+			"arg": "",
+			"example": "forest_trips>=3",
+			"kind": "number",
+			"note": "Walks into the forest so far."
+		},
+		"friends": {
+			"arg": "",
+			"example": "friends>=2",
+			"kind": "number",
+			"note": "Neighbours who became friends."
+		},
+		"goals": {
+			"arg": "",
+			"example": "goals>=12",
+			"kind": "number",
+			"note": "Goals reached so far."
+		},
+		"harvests": {
+			"arg": "",
+			"example": "harvests>=10",
+			"kind": "number",
+			"note": "Harvests so far."
+		},
+		"item": {
+			"arg": "item",
+			"example": "item:carrot>=3",
+			"kind": "number",
+			"note": "How many of this item are in the store."
+		},
+		"items_seen": {
+			"arg": "",
+			"example": "items_seen>=10",
+			"kind": "number",
+			"note": "Different things the farmer has had."
+		},
+		"lord_owed": {
+			"arg": "",
+			"example": "lord_owed>=1",
+			"kind": "number",
+			"note": "Bronze owed for the Lord's share now."
+		},
+		"lord_paid": {
+			"arg": "",
+			"example": "lord_paid>=1",
+			"kind": "number",
+			"note": "Bronze paid for the Lord's share so far."
+		},
+		"lord_shares": {
+			"arg": "",
+			"example": "lord_shares>=1",
+			"kind": "number",
+			"note": "Lord's shares paid so far."
+		},
+		"medals": {
+			"arg": "",
+			"example": "medals>=1",
+			"kind": "number",
+			"note": "Rest sum medals won (all kinds)."
+		},
+		"open": {
+			"arg": "node",
+			"example": "open:barn_1",
+			"kind": "yes",
+			"note": "This goal (or other node) can be started now: what it needs is there and it is not done yet."
+		},
+		"packed": {
+			"arg": "",
+			"example": "packed>=1",
+			"kind": "number",
+			"note": "Different things in the bag now."
+		},
+		"page": {
+			"arg": "card",
+			"example": "page:k_fire",
+			"kind": "yes",
+			"note": "The page of this knowledge card has been opened."
+		},
+		"pests": {
+			"arg": "",
+			"example": "pests>=1",
+			"kind": "number",
+			"note": "Pests on the field now."
+		},
+		"rain": {
+			"arg": "",
+			"example": "rain",
+			"kind": "yes",
+			"note": "It rained in this question (in winter it snows instead)."
+		},
+		"rest_quick": {
+			"arg": "",
+			"example": "rest_quick>=10",
+			"kind": "number",
+			"note": "Rest sums answered right and quickly so far."
+		},
+		"season": {
+			"arg": "season",
+			"example": "season:winter",
+			"kind": "yes",
+			"note": "It is this season now: spring, summer, autumn or winter."
+		},
+		"seasons": {
+			"arg": "",
+			"example": "seasons>=2",
+			"kind": "number",
+			"note": "How many seasons have passed since the start (0 in the first spring)."
+		},
+		"seen": {
+			"arg": "seen",
+			"example": "seen:coins",
+			"kind": "yes",
+			"note": "This interface element has been shown, or this story piece read."
+		},
+		"sidequests": {
+			"arg": "",
+			"example": "sidequests>=1",
+			"kind": "number",
+			"note": "Favours done for neighbours."
+		},
+		"skill_ranks": {
+			"arg": "",
+			"example": "skill_ranks>=4",
+			"kind": "number",
+			"note": "Skill ranks reached, all families together."
+		},
+		"sold_kinds": {
+			"arg": "",
+			"example": "sold_kinds>=5",
+			"kind": "number",
+			"note": "Different things sold at the market."
+		},
+		"start": {
+			"arg": "",
+			"example": "start",
+			"kind": "yes",
+			"note": "A new game, before the first question."
+		},
+		"step": {
+			"arg": "",
+			"example": "step>=40",
+			"kind": "number",
+			"note": "Time Quiz questions answered right (steps of farm time)."
+		},
+		"stones": {
+			"arg": "",
+			"example": "stones>=10",
+			"kind": "number",
+			"note": "Stones picked so far."
+		},
+		"story_seen": {
+			"arg": "",
+			"example": "story_seen>=1",
+			"kind": "number",
+			"note": "Story pieces read."
+		},
+		"tap": {
+			"arg": "place",
+			"example": "tap:market",
+			"kind": "yes",
+			"note": "This place (or patch:<kind>) has been tapped."
+		},
+		"trips": {
+			"arg": "",
+			"example": "trips>=1",
+			"kind": "number",
+			"note": "Trips to the village so far."
+		},
+		"unlocked": {
+			"arg": "node",
+			"example": "unlocked:tent",
+			"kind": "yes",
+			"note": "The same as done:."
+		},
+		"water": {
+			"arg": "",
+			"example": "water<8",
+			"kind": "number",
+			"note": "Water the farmer has now (in the bucket and barrels)."
+		},
+		"weeds": {
+			"arg": "",
+			"example": "weeds>=20",
+			"kind": "number",
+			"note": "Weeds pulled so far."
+		},
+		"weeds_max": {
+			"arg": "",
+			"example": "weeds_max>=3",
+			"kind": "number",
+			"note": "The most weeds on one field patch in use now."
+		},
+		"well_mood": {
+			"arg": "",
+			"example": "well_mood<0.4",
+			"kind": "number",
+			"note": "How well the farmer feels, from 0 to 1."
+		}
+	}
+}

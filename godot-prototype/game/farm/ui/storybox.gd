@@ -1,9 +1,9 @@
 extends RefCounted
 class_name FarmUiStory
 ## The story on screen (TODO Phase 5.2): the story box (pages, one big button), speech bubbles that stay until tapped, and the 📜 scroll
-## that lists what was read. WHAT may show and WHEN is decided by G.story (game/farm/systems/story.gd); this part only shows it,
-## and only when the farm is quiet: no Time Quiz or Rest, no pop-up, no celebration or gift waiting, no sheet open (a Discovery
-## may come over a sheet: you just tapped it).
+## that lists what was read. WHICH piece is ready and how often is decided by G.story (game/farm/systems/story.gd); WHEN it shows is
+## the interruption queue's (M.interrupts, order list in rules/65-feel.json): a story box when no pop-up, Rest, sheet, celebration or
+## postcard is in the way (a Discovery may come over a sheet: you just tapped it), a bark when no other bubble is on screen.
 
 const UI = preload("res://kits/ui/ui.gd")
 const Art = preload("res://kits/ui/art.gd")
@@ -15,7 +15,6 @@ var M: FarmMain   # the main screen: its widgets and the other parts
 var G: FarmGame   # the rules (G.<system>.<function>)
 
 var enabled := true            # tests and screenshots of other things switch the story off (--nostory)
-var _queued := false
 var _then := ""                # what follows the box that is open ("welcome": the old welcome hints)
 
 func _init(main: FarmMain) -> void:
@@ -24,29 +23,28 @@ func _init(main: FarmMain) -> void:
 
 # ------------------------------------------------------------------ when
 
-## Asks for a pump once the current frame is over (many things ask; one pump runs).
+## Asks the interruption queue for a pump once the current frame is over (many things ask; one pump runs).
 func queue_pump() -> void:
-	if _queued: return
-	_queued = true
-	pump.call_deferred()
+	M.interrupts.request()
 
-## Shows the next ready piece if the farm is quiet. Returns true when something was shown.
+## Shows the next ready piece now if it is its turn (only story pieces; anything else waiting stays in line). True when one was shown.
 func pump() -> bool:
-	_queued = false
-	if not enabled or G == null: return false
-	var id := G.story.next_piece()
-	if id == "": return false
-	if not _quiet(id): return false
-	show_piece(id)
-	return true
+	return M.interrupts.pump_story()
 
-func _quiet(id: String) -> bool:
-	if M.modal.visible or M.playback.held or not M.rest_state.is_empty(): return false
+## The queue kind of a piece: a bark, a Discovery and a Scene have their own (both may come over a sheet: a Scene opens on the square
+## right after the hand-over); every other piece is a "story" box.
+func queue_kind(id: String) -> String:
 	var kind := str(G.story.piece(id).get("kind", ""))
-	if kind == "bark": return bubble_count() == 0      # a bubble blocks nothing (one at a time)
-	if M.celebration_queue.size() > 0 or G.S["gift_pending"].size() > 0: return false
-	if M.sheet.visible and kind != "discovery": return false
-	return true
+	return kind if kind in ["bark", "discovery", "scene"] else "story"
+
+## The next ready piece of this queue kind as the interruption queue wants it ({"kind", "key", "show"}), or {}. One source per queue
+## kind, so a Scene on the square is not held back by a story box that waits for the square to close (the order list ranks them).
+func candidate(qkind := "") -> Dictionary:
+	if not enabled or G == null: return {}
+	for id in G.story.ready():
+		var k := queue_kind(id)
+		if qkind == "" or k == qkind: return {"kind": k, "key": id, "show": show_piece.bind(id)}
+	return {}
 
 func bubble_count() -> int:
 	var n := 0
@@ -128,12 +126,43 @@ func _finish(_id: String) -> void:
 	M.modals.close_modal()
 	if then == "welcome" and G.S["step"] == 0 and not G.done("k_wheat"): M.welcome.show_welcome.call_deferred(true)
 
+# ------------------------------------------------------------------ news boxes (story/13, story/14)
+
+## The first waiting news box (a change of season, a golden acorn, a favour done, a party) for the interruption queue, or {}.
+func news_candidate() -> Dictionary:
+	if not enabled or G == null: return {}
+	var box: Dictionary = G.story.news_next()
+	if box.is_empty(): return {}
+	return {"kind": "news", "key": str(box.get("key", "")), "show": show_news.bind(box)}
+
+## A news box: its picture big (assets/story, friends or album; else the emoji), the title, the text, a smaller line under it, one button.
+func show_news(box: Dictionary, reread := false) -> void:
+	if not reread: G.story.news_shown(str(box.get("key", "")))
+	var m := M.modals.open_modal(str(box.get("title", "")))
+	var pic := str(box.get("picture", ""))
+	var tex: Texture2D = null
+	if pic != "":
+		for f in ["story", "friends", "album"]:
+			tex = Art.first(f, [pic])
+			if tex: break
+	if tex: m.add_child(_scene_view(tex))
+	else: m.add_child(UI.header(_picture("", pic), str(box.get("emoji", "✨")), 140, Color.WHITE, true))
+	var text := str(box.get("text", ""))
+	m.add_child(UI.label(text, 22, UI.INK, true))
+	if str(box.get("more", "")) != "": m.add_child(UI.label(str(box["more"]), 17, UI.MUTED, true))
+	if G.read_aloud_mode() != "off":
+		m.add_child(UI.soft_button(tr("🔊 Read aloud"), M.timequiz.speak.bind(text), true, 17))
+		if G.read_aloud_mode() == "auto": M.timequiz.speak.call_deferred(text)
+	var go := UI.button(tr("Got it ✔"), M.modals.close_modal, true, UI.GREEN, 22)
+	go.custom_minimum_size = Vector2(0, 62)
+	m.add_child(go)
+
 # ------------------------------------------------------------------ the scroll
 
 ## The 📜 scroll: everything read so far, a chapter at a time; a tap reads a piece again.
 func sheet_scroll() -> void:
 	var ids: Array = G.story.seen_in_order()
-	if ids.is_empty():
+	if ids.is_empty() and G.seasons.season_no() < 1:
 		M.content.add_child(UI.label(tr("Nothing here yet. The story is waiting for you on the farm."), 18, UI.MUTED, true))
 		return
 	var chap := 0
@@ -146,6 +175,19 @@ func sheet_scroll() -> void:
 		var b := UI.soft_button("%s %s" % [_emoji(id), _short(id)], _reread.bind(id), true, 18)
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.clip_text = true
+		b.custom_minimum_size = Vector2(0, 52)
+		M.content.add_child(b)
+	_scroll_seasons()
+
+## The season boxes seen so far (one per season reached: summer, autumn, winter, then spring), to read again (story/14).
+func _scroll_seasons() -> void:
+	var n := mini(G.seasons.season_no(), 4)
+	if n < 1: return
+	M.widgets.section(tr("Seasons"))
+	for i in range(1, n + 1):
+		var box: Dictionary = G.seasons.season_box(G.SEASON_NAMES[i % 4])
+		var b := UI.soft_button("%s %s" % [box["emoji"], box["title"]], show_news.bind(box, true), true, 18)
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.custom_minimum_size = Vector2(0, 52)
 		M.content.add_child(b)
 

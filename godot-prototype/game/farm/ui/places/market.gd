@@ -43,7 +43,7 @@ func _bag_summary() -> void:
 	head.add_child(UI.label("🎒", 30))
 	var bv := UI.vbox(2)
 	bv.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	bv.add_child(UI.label(tr("%s of %s room used") % [str(snappedf(G.trip.load_now(), 0.1)).trim_suffix(".0"), str(int(G.trip.capacity()))], 17))
+	bv.add_child(UI.label(tr("%s of %s room used") % [str(ceili(G.trip.load_now())), str(int(G.trip.capacity()))], 17))
 	bv.add_child(UI.bar(G.trip.fill(), 240, 12, UI.AMBER if G.trip.fill() < 0.999 else UI.RED))
 	head.add_child(bv)
 	head.add_child(UI.soft_button(tr("🎒 Open the bag"), M.sheets.open_bag, true, 16))
@@ -97,7 +97,7 @@ func _part_square() -> void:
 	var home := UI.button(tr("🏠 Back home"), _back_home, true, UI.BLUE, 20)
 	home.custom_minimum_size = Vector2(0, 52)
 	M.content.add_child(home)
-	M.content.add_child(UI.label(tr("🎒 Room to carry things home: %s of %s") % [str(snappedf(G.trip.buy_room(), 0.1)).trim_suffix(".0"), str(int(G.trip.capacity()))], 15, UI.MUTED, true))
+	M.content.add_child(UI.label(tr("🎒 Room to carry things home: %s of %s") % [str(floori(G.trip.buy_room())), str(int(G.trip.capacity()))], 15, UI.MUTED, true))
 	# sell
 	var bag: Dictionary = G.trip.contents()
 	var sellable := bag.keys().filter(func(k): return G.inventory.sellable(k))
@@ -110,7 +110,7 @@ func _part_square() -> void:
 		for k in sellable:
 			var q: int = int(G.trip.packed(k))
 			var em := G.iemoji(k)
-			var v := M.widgets.tile(Art.first("items", [k]), em, "%s\n%d" % [G.iname(k), q])
+			var v := M.widgets.tile(M.widgets.pic(k), em, "%s\n%d" % [G.iname(k), q])
 			var row := HFlowContainer.new()
 			row.add_child(UI.soft_button("1 %s = %s" % [em, G.money(G.trade.sell_total(k, 1))], G.trade.sell.bind(k, 1.0), true, 17))
 			if q > 1: row.add_child(UI.soft_button("%d %s = %s" % [q, em, G.money(G.trade.sell_total(k, q))], G.trade.sell.bind(k, 999.0), true, 17))
@@ -162,7 +162,7 @@ func _part_shops() -> void:
 		var mg := M.widgets.grid()
 		M.content.add_child(mg)
 		for k in mn.get("sells", {}):
-			var v2 := M.widgets.tile(Art.first("items", [k]), G.iemoji(k), "%s\n%s" % [G.iname(k), G.money_up(G.trade.buy_price(mid, k))])
+			var v2 := M.widgets.tile(M.widgets.pic(k), G.iemoji(k), "%s\n%s" % [G.iname(k), G.money_up(G.trade.buy_price(mid, k))])
 			var row2 := UI.hbox(6)
 			row2.add_child(UI.soft_button("🛒 1", G.trade.buy_item.bind(mid, k, 1), G.trip.can_buy(G.inventory.weight_of(k)) >= 1, 18))
 			row2.add_child(UI.soft_button("🛒 5", G.trade.buy_item.bind(mid, k, 5), G.trip.can_buy(G.inventory.weight_of(k)) >= 5, 18))
@@ -219,7 +219,7 @@ func part_library() -> void:
 		var cg := M.widgets.grid()
 		for cid in G.card_ids:
 			if G.nodes[cid]["requires"][0] != bid: continue
-			if not M.mapview.in_chapter(cid) and not G.done(cid): continue
+			if not M.mapview.card_shown(cid): continue
 			cg.add_child(_card_tile(cid))
 		M.content.add_child(cg)
 

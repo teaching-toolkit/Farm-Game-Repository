@@ -54,7 +54,7 @@ For a long file, list its headings (`grep -n '^#'`) and read only what you need;
 ## 4. Where code goes
 
 Prefer new systems in new scripts over a longer `main.gd` or `game.gd`. A rule goes into the system in `game/farm/systems/` that owns
-the thing (a new system registers its per-step work in `Game.setup_clock()`); shared parts (modifiers, conditions, rng, clock) are
+the thing (a new system registers its per-step work in `Game.setup_clock()`, and the condition words it owns in its `register_words`); shared parts (modifiers, conditions, rng, clock) are
 in `kits/core/`; a screen or interface part gets its own script in `game/farm/ui/`; content is data, not code. Call other systems as
 `G.<system>.<function>`. Old saves must keep loading: a new key goes into its system's `save_defaults()`, a changed layout needs a
 `SAVE_VERSION` step in `Game.save_steps()`.

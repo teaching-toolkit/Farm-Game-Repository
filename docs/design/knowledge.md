@@ -17,6 +17,10 @@ campfire, rope, the oven …), gives a lasting boost (✨, e.g. fuel −5 %), or
    it builds on (weakest and longest-unseen first). Wrong answers grey out with a one-line "why" and can be retried; a
    missed review never blocks learning.
 
+The library shows only the cards of the chapters reached so far (and every card already learned). Its sign on the map follows the
+same rule: **❓** when a shown card's quiz waits, **📖** when a shown card can be read and nothing is being read; a card of a later
+chapter makes no sign, even when its book and the cards before it are there.
+
 Learned cards come back as **reviews in the Time Quiz** (Leitner boxes 1–4: due after 12 / 40 / 100 / 250 questions or 1 /
 3 / 7 / 21 days, whichever comes first). Only first-try answers move a card up.
 

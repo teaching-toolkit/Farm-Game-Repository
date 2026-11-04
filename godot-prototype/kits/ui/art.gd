@@ -35,5 +35,51 @@ static func first(folder: String, keys: Array) -> Texture2D:
 		if t != null: return t
 	return null
 
+static var _icons := {}
+
+## A small version of a picture, for icons next to names and amounts (cost rows, recipe tiles, the store, the bag): the first of
+## `keys` found in `folder`, its empty border cut off, scaled down once to at most `px` pixels and kept (null when there is none,
+## so the caller shows the emoji). Scaling down once looks smoother than drawing the big picture small, and costs nothing later.
+static func icon(folder: String, keys: Array, px := 64) -> Texture2D:
+	var ck := "%s|%s|%d" % [folder, ",".join(PackedStringArray(keys.map(func(k): return str(k)))), px]
+	if _icons.has(ck): return _icons[ck]
+	var out: Texture2D = null
+	var t := first(folder, keys)
+	if t != null:
+		out = t
+		var img: Image = t.get_image()
+		if img != null:
+			if img.is_compressed(): img.decompress()
+			var used := img.get_used_rect()
+			if used.size.x > 0 and used.size.y > 0 and used.size != img.get_size(): img = img.get_region(used)
+			var k := float(px) / float(maxi(img.get_width(), img.get_height()))
+			if k < 1.0: img.resize(maxi(1, int(round(img.get_width() * k))), maxi(1, int(round(img.get_height() * k))), Image.INTERPOLATE_CUBIC)
+			out = ImageTexture.create_from_image(img)
+	_icons[ck] = out
+	return out
+
+## A small picture with its colours shifted (the bronze coin is the gold coin, browner and darker): hue moved by `hue` (0..1),
+## saturation and brightness multiplied. Made once and kept; null when the picture is missing.
+static func shifted(folder: String, key: String, hue: float, sat := 1.0, val := 1.0, px := 64) -> Texture2D:
+	var ck := "shift|%s|%s|%.3f|%.3f|%.3f|%d" % [folder, key, hue, sat, val, px]
+	if _icons.has(ck): return _icons[ck]
+	var base := icon(folder, [key], px)
+	var out: Texture2D = base
+	if base != null:
+		var img: Image = base.get_image()
+		if img != null:
+			img = img.duplicate()
+			if img.is_compressed(): img.decompress()
+			img.convert(Image.FORMAT_RGBA8)
+			for y in range(img.get_height()):
+				for x in range(img.get_width()):
+					var c := img.get_pixel(x, y)
+					if c.a <= 0.0: continue
+					img.set_pixel(x, y, Color.from_hsv(fposmod(c.h + hue, 1.0), clampf(c.s * sat, 0.0, 1.0), clampf(c.v * val, 0.0, 1.0), c.a))
+			out = ImageTexture.create_from_image(img)
+	_icons[ck] = out
+	return out
+
 static func clear_cache() -> void:
 	_cache.clear()
+	_icons.clear()

@@ -11,6 +11,11 @@ func _init(game: FarmGame) -> void:
 func save_defaults() -> Dictionary:
 	return {"animals": {}}
 
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("animals", func(a): return float(int((G.S["animals"].get(a, {}) as Dictionary).get("count", 0))), "number", "node",
+		"How many of this animal live on the farm now (its animal node).", "animals:animal_chicken>=2")
+
 # ------------------------------------------------------------------ animals & muck
 
 func animal_key(aid: String) -> String:

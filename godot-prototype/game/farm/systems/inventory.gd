@@ -255,3 +255,10 @@ func total_load() -> float:
 func step_producers(_info: Dictionary) -> void:
 	for k in G.caps()["produces"]:
 		add_item(k, float(G.caps()["produces"][k]), true)
+
+# ------------------------------------------------------------------ condition words
+
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("items_seen", func(_a): return float(G.S["seen"].size()), "number", "", "Different things the farmer has had.", "items_seen>=10")
+	c.register("item", func(a): return count(a), "number", "item", "How many of this item are in the store.", "item:carrot>=3")

@@ -97,3 +97,10 @@ In the morning the scarecrow is wearing your hat. Nobody saw who put it there. U
 “Were you scared of the cousin?” asks somebody from under a blanket. “More than of any imp,” you say. “What's an imp?” “Shh!” say three children at once. “That comes later!”
 
 > „Hattest du Angst vor der Cousine?“, fragt jemand unter einer Decke. „Mehr als vor jedem Kobold“, sagst du. „Was ist ein Kobold?“ „Psst!“, machen drei Kinder gleichzeitig. „Das kommt später!“
+
+## c3_k_count_sheep · bark
+*When:* `animals:animal_sheep>=3 + chance:0.2` · added 3 Nov 2026 (`story/12`) 💡
+
+You try to count the sheep. They keep swapping places. You get three, then five, then you nearly fall asleep.
+
+> Du versuchst, die Schafe zu zählen. Sie tauschen dauernd die Plätze. Du kommst auf drei, dann auf fünf, und dann schläfst du fast ein.

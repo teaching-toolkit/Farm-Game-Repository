@@ -1,6 +1,6 @@
 {
   "quality": {
-    "note": "Quality of made and grown things (TODO Y1): three grades, Lumpy / Proper / Fancy (German Naja / Tiptop / Picobello!). Only the categories listed have a grade; raw materials do not. An item's grade is decided when it is made: an expected grade E (Proper = 1.0) from what went into it, then floor(E) plus a coin flip on the fraction, then a small chance of one grade more or less.",
+    "note": "Quality of made and grown things (TODO Y1): three grades, Lumpy / Proper / Fancy (German Naja / Tiptop / Picobello!). Only the categories listed have a grade; raw materials do not. An item's grade is decided when it is made: an expected grade E from what went into it (crops start from Proper = 1.0, things made at a station from madeStart = Lumpy), then floor(E) plus a coin flip on the fraction, then a small chance of one grade more or less.",
     "categories": [
       "crop",
       "ingredient",
@@ -27,6 +27,8 @@
       }
     ],
     "default": 1,
+    "madeStart": 0,
+    "madeStartNote": "skills-quality/03 (parent, 30 Oct 2026): everything made at a station (crafts, tools, cooking, baking) starts from this expected grade (0 = Lumpy) for a beginner; stations, ranks and good inputs lift it. Crops and animal products start from 'default' (Proper). Things bought or given without a grade are Proper.",
     "chance": {
       "up": 0.07,
       "down": 0.07

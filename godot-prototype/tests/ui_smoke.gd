@@ -62,6 +62,31 @@ func _ready() -> void:
 	G.inventory.take("stone", 2.0)
 	print("weights: classes %s, two stones add 8 load units %s" % [wt_ok, wt_add])
 	if not (wt_ok and wt_add): print("FAIL weights: see the line above")
+	# interface-feel/09: the book box's sign (📖 a card to read, ❓ a card quiz) shows only for a card the library shows now
+	var bk_saved: Array = [G.S["unlocked"].duplicate(true), G.S["read_done"].duplicate(true), G.S["reading"]]
+	var bk_card := func(): return D.badge("library") in ["📖", "❓"]
+	var bk_new: bool = bk_card.call() and G.knowledge.card_status("k_wheat") == "quiz"     # a new game: the first card's quiz waits
+	for cid in G.card_ids:                         # every card of this chapter in the first book learned
+		if G.nodes[cid]["requires"][0] == "book_basics" and int(G.nodes[cid].get("chapter", 1)) <= G.chapter(): G.S["unlocked"][cid] = true
+	G.S["unlocked"].erase("k_hay")
+	var bk_later: bool = G.knowledge.card_status("k_compost") == "readable" and int(G.nodes["k_compost"]["chapter"]) > G.chapter()
+	G.S["unlocked"]["k_hay"] = true
+	var bk_none: bool = not bk_card.call()          # only a later chapter's card (k_compost) could be read: no sign
+	G.S["unlocked"].erase("k_hay")                 # a card of this chapter can be read: the sign
+	var bk_one: bool = D.badge("library") == "📖"
+	var bk_reading: bool = G.knowledge.start_reading("k_hay") and not bk_card.call()
+	G.S["reading"] = ""
+	G.S["read_done"]["k_hay"] = true               # read: its quiz waits
+	var bk_quiz: bool = D.badge("library") == "❓"
+	G.S["unlocked"]["k_hay"] = true                # learned: no sign
+	var bk_gone: bool = not bk_card.call()
+	G.S["unlocked"] = bk_saved[0]; G.S["read_done"] = bk_saved[1]; G.S["reading"] = bk_saved[2]
+	G.invalidate_caps()
+	G.changed.emit()
+	await _frames(2)
+	D.clear_toasts()
+	print("book box sign: new game (first card's quiz) %s, a later chapter's card makes none %s (it is readable %s), a card to read %s, none while reading %s, quiz %s, gone when learned %s" % [bk_new, bk_none, bk_later, bk_one, bk_reading, bk_quiz, bk_gone])
+	if not (bk_new and bk_later and bk_none and bk_one and bk_reading and bk_quiz and bk_gone): print("FAIL book box sign: see the line above")
 	# Phase 5.2: the story on screen: a two-page box (Next, Got it), then a bark as a speech bubble that stays; the scroll lists the box
 	D.story_enabled(true)
 	G.D["story"] = {
@@ -97,16 +122,46 @@ func _ready() -> void:
 	D.story_enabled(false)
 	var screen0: Vector2 = D.screen_size()
 	var narrow_ok := true
+	var tb_ok := true
+	var tb_txt := []
 	for w in [834.0, 744.0]:                       # iPad Pro 11" and iPad mini, upright
 		D.set_screen_size(Vector2(w, 1194.0))
 		await _frames(3)
 		D.refresh()
 		await _frames(3)
 		if not D.hud_fits(): narrow_ok = false
+		# interface-feel/06: the goal is symbol and name only, its text sized to fit; the season row right under the bars; no chapter line
+		var gid: String = D.goal_id()
+		var gt: String = D.goal_text()
+		var name_only: bool = gid == "" or (gt.ends_with(str(G.nodes[gid]["name"])) and not gt.contains("⚡"))
+		var sb: Rect2 = D.season_box()
+		var bb: Rect2 = D.bars_box()
+		var under: bool = sb.position.y >= bb.end.y - 1.0 and sb.position.y - bb.end.y < 12.0 and sb.position.x >= bb.position.x - 30.0 and sb.end.x <= bb.end.x + 1.0 and sb.size.x >= bb.size.x * 0.6
+		tb_txt.append("%d: goal '%s' at %d px, season row %dx%d under bars %d wide" % [w, gt, D.goal_text_size(), sb.size.x, sb.position.y - bb.end.y, bb.size.x])
+		if not (name_only and under and not D.info_shown() and D.goal_text_size() >= 11): tb_ok = false
+	print("top bar layout: %s  %s" % [tb_ok, "; ".join(tb_txt)])
+	if not tb_ok: print("FAIL top bar layout: see the line above")
 	D.set_screen_size(screen0)
 	await _frames(2)
 	print("top bar fits 834 and 744 wide: ", narrow_ok)
 	if not narrow_ok: print("FAIL top bar: wider than the screen")
+	# interface-feel/05: one cube is one (no "×5"); a big amount grows the bar in rows and columns and still fits the top bar's room
+	var UIk = preload("res://kits/ui/ui.gd")
+	var cb_ok := true
+	var cb_txt := []
+	for n in [8.0, 30.0, 65.0, 100.0, 200.0, 450.0]:
+		var cb = UIk.stock_bar(n * 0.5, n, Color.GOLD, 80.0)
+		cb.max_h = 62.0
+		add_child(cb)
+		await _frames(1)
+		var ms: Vector2 = cb.get_combined_minimum_size()
+		var cells: int = cb.per_row * cb.rows
+		var ok: bool = cb.unit == 1.0 and cells >= int(n) and cells - int(n) < cb.per_row and ms.y <= 62.0 + 0.5 and ms.x - cb._num_w <= 80.0 + 0.5
+		cb_txt.append("%d=%dx%d@%d" % [n, cb.per_row, cb.rows, int(cb.cube)])
+		if not ok: cb_ok = false
+		cb.free()
+	print("cube bars, one cube each, fit 80×62: %s %s" % [cb_ok, " ".join(cb_txt)])
+	if not cb_ok: print("FAIL cube bars: see the line above")
 	D.playback_speed(0.0)          # the farm catches up after a Time Quiz without waiting (the J4 check below runs at the real speed)
 	# 1) open the book and pass the first card's quiz
 	D.show_card("k_wheat")
@@ -162,7 +217,26 @@ func _ready() -> void:
 	await get_tree().create_timer(2.0).timeout
 	print("go rest: window not yet open at once %s, open after the walk %s" % [not rest_open_early, D.modal_visible()])
 	if rest_open_early or not D.modal_visible(): print("FAIL go rest: the window must open after the walk, not at once")
+	# interface-feel/10: he is inside while Rest is open, and comes out again after it closes
+	var hid_inside: bool = D.farmer_hidden()
 	D.close_modal()
+	var still_inside: bool = D.farmer_hidden()
+	await get_tree().create_timer(G.feel("rest.inside") + G.feel("rest.appear") + 0.5).timeout
+	var back_out: bool = D.farmer_shown()
+	print("rest farmer: hidden while resting %s, still inside just after closing %s, back and visible after %s" % [hid_inside, still_inside, back_out])
+	if not hid_inside or not still_inside or not back_out: print("FAIL rest farmer: he must disappear while resting and come back afterwards")
+	# a tap skips: during the walk it opens Rest at once, while he comes out it shows him at once
+	D.go_rest()
+	await _frames(2)
+	var caught: bool = D.tap_rest_walk()
+	var open_at_once: bool = D.modal_visible() and D.farmer_hidden()
+	D.close_modal()
+	await _frames(2)
+	var caught2: bool = D.tap_rest_walk()
+	var shown_at_once: bool = D.farmer_shown()
+	await _frames(2)
+	print("rest skip: tap on the walk opens Rest at once %s, tap while coming out shows him at once %s" % [caught and open_at_once, caught2 and shown_at_once])
+	if not (caught and open_at_once and caught2 and shown_at_once): print("FAIL rest skip: a tap must skip the walk and the coming out")
 	# J4: while the Time Quiz is open the farm keeps its old look; after it closes it catches up, and a tap jumps to the end
 	D.playback_speed(1.0)
 	var info0: String = D.info_text()
@@ -361,7 +435,7 @@ func _ready() -> void:
 	if not pc.is_empty(): G.rewards.pick_gift(pc["offer"][0])
 	print("r7 album postcards ", G.S["postcards"].size(), "  celebrations queued ", D.celebrations())
 	D.close_modal()
-	D.celebrations().clear()
+	D.clear_celebrations()
 	var av = D.map().avatar
 	var a0: Vector2 = av.feet
 	var path: PackedVector2Array = D.map().find_path(a0, Vector2(600, 900))
@@ -459,6 +533,21 @@ func _ready() -> void:
 	G.pace.set_review_share(1.4); var rs2: float = G.pace.review_share()
 	G.S.erase("review_share")
 	print("r9 review share: start %.2f -> 0.52 gives %.2f, 1.4 gives %.2f, back to %.2f" % [rs0, rs1, rs2, G.pace.review_share()])
+	# parent-controls/01: the energy share of a slow right Rest answer (per farm, 10% steps, default 20%)
+	var ss_e0 := float(G.S["energy"])
+	var ss_default: float = G.needs.slow_share()
+	var ss_gains := []
+	for sh in [0.0, 0.2, 1.0]:
+		G.needs.set_slow_share(sh)
+		G.S["energy"] = 0.0
+		ss_gains.append(G.needs.rest_correct(false))
+	G.S["energy"] = 0.0
+	var ss_quick: float = G.needs.rest_correct(true)
+	G.needs.set_slow_share(0.34); var ss_snap: float = G.needs.slow_share()
+	G.S.erase("rest_slow_share"); G.S["energy"] = ss_e0
+	print("slow Rest share: default %.2f; slow answer at 0/20/100%% gives %s, a quick one %.2f; 0.34 snaps to %.2f" % [ss_default, str(ss_gains), ss_quick, ss_snap])
+	if not (is_equal_approx(ss_default, 0.2) and is_equal_approx(ss_gains[0], 0.0) and is_equal_approx(ss_gains[1], 0.2 * ss_quick)
+			and is_equal_approx(ss_gains[2], ss_quick) and is_equal_approx(ss_snap, 0.3)): print("FAIL slow Rest share: see the line above")
 	# r9: sounds — every name the game plays exists in data/sounds.json; buses; switching music and effects
 	var snd = get_node("/root/Sound")
 	var names_missing := []
@@ -476,11 +565,42 @@ func _ready() -> void:
 	D.set_grownup_open(true)
 	D.show_menu()
 	await _frames(2)
+	# interface-feel/11: the testing buttons start off; the grown-up switch turns them on and off again (tests that want them switch them on)
+	var ch_off0: bool = not G.cheats_visible() and not D.cheats_shown()
+	var ch_on_pressed := _press_text("Testing buttons on the farm")
+	await _frames(2)
+	var ch_on: bool = G.cheats_visible() and D.cheats_shown()
+	var ch_off_pressed := _press_text("Testing buttons on the farm")
+	await _frames(2)
+	var ch_off: bool = not G.cheats_visible() and not D.cheats_shown()
+	print("testing buttons: off at the start %s, switched on %s, switched off %s" % [ch_off0, ch_on, ch_off])
+	if not (ch_off0 and ch_on_pressed and ch_on and ch_off_pressed and ch_off): print("FAIL testing buttons: see the line above")
 	D.close_modal()
 	D.set_grownup_open(false)
 	D.open_sheet("album")
 	await _frames(2)
 	D.close_sheet()
+	# money-market/05: on the village square, closing a window keeps the farmer there; only 🏠 Back home goes home
+	D.close_modal()
+	D.close_sheet()
+	G.trip.test_square()
+	D.open_spot("market")
+	await _frames(2)
+	var sq_open: bool = D.sheet_visible() and D.sheet_kind() == "spot:market" and not D.sheet_close_shown()
+	D.close_sheet()                                # the ✖ (hidden here) or any other way of closing the window
+	await _frames(2)
+	var sq_stays: bool = G.trip.at_square() and D.sheet_visible() and D.sheet_kind() == "spot:market"
+	D.open_sheet("bag")
+	await _frames(2)
+	var sq_bag: bool = D.sheet_close_shown()
+	D.close_sheet()                                # closing the bag comes back to the square
+	await _frames(2)
+	var sq_back: bool = G.trip.at_square() and D.sheet_visible() and D.sheet_kind() == "spot:market"
+	var sq_home_pressed := _press_text("Back home")
+	await _frames(2)
+	var sq_home: bool = not G.trip.at_square() and not D.sheet_visible()
+	print("square: opens without ✖ %s, closing keeps the square %s, the bag's ✖ %s and back to the square %s, Back home goes home %s" % [sq_open, sq_stays, sq_bag, sq_back, sq_home])
+	if not (sq_open and sq_stays and sq_bag and sq_back and sq_home_pressed and sq_home): print("FAIL square: see the line above")
 	# 5) visit every place on the map and every page
 	var n := 0
 	for sid in D.map().slots:
@@ -505,6 +625,33 @@ func _ready() -> void:
 		D.open_spot(parent)
 		await _frames(2)
 		var opened: bool = D.modal_visible()
+		if parent == "workshop":
+			# interface-feel/08: no ghost symbols: a corner with nothing of it within reach is not drawn (G.reveal), and none is drawn faded
+			var drawn: Dictionary = D.interior_corners()
+			var ws_ok: bool = drawn.has("ws_build") and not drawn.has("ws_loom") and not drawn.has("ws_fire") and not drawn.values().has(true)
+			for m in Spots.interior("workshop")["members"]:
+				if drawn.has(m) != G.reveal.shown(m): ws_ok = false
+			D.close_modal()
+			var wb_saved: Array = [G.S["unlocked"].has("workbench"), G.S["unlocked"].has("ruins_workshop")]
+			G.S["unlocked"].erase("workbench")          # as before the workbench (and its ruins cleared): its corner is not drawn
+			G.S["unlocked"].erase("ruins_workshop")
+			G.S["revealed"].erase("ws_bench")
+			G.invalidate_caps()
+			D.open_spot(parent)
+			await _frames(2)
+			var drawn1: Dictionary = D.interior_corners()
+			D.close_modal()
+			if wb_saved[1]: G.S["unlocked"]["ruins_workshop"] = true
+			G.S["unlocked"]["workbench"] = true        # the workbench built: its corner comes into view, for good, not faded
+			G.invalidate_caps()
+			D.open_spot(parent)
+			await _frames(2)
+			var drawn2: Dictionary = D.interior_corners()
+			if not wb_saved[0]: G.S["unlocked"].erase("workbench")
+			G.invalidate_caps()
+			var ws_more: bool = not drawn1.has("ws_bench") and drawn2.has("ws_bench") and not drawn2["ws_bench"] and not drawn2.has("ws_loom")
+			print("workshop corners (id: faded): now %s, before the workbench %s, with it %s; only what is reached %s, the bench comes %s" % [drawn, drawn1, drawn2, ws_ok, ws_more])
+			if not (ws_ok and ws_more): print("FAIL workshop corners: see the line above")
 		var corners: Array = Spots.interior(parent)["members"]
 		D.enter_corner(corners[1], parent)
 		await _frames(2)
@@ -514,6 +661,45 @@ func _ready() -> void:
 		insides.append("%s inside:%s corner:%s back:%s" % [parent, opened, sheet_ok, D.modal_visible()])
 		D.close_modal()
 	print("insides: ", insides, " house visible: ", D.map().slots["home"].visible, " tent hidden: ", not D.map().slots["living"].visible)
+	# the checks below change the farm (a step of time): they come last, so the lines above stay comparable with older runs
+	# interruption-queue/03: a celebration that comes during the Time Quiz waits in line until the farm has caught up, then shows once
+	D.playback_speed(1.0)
+	D.show_time_quiz()
+	await _frames(2)
+	G.step_time()
+	D.celebrate("workbench")
+	D.celebrate("workbench")
+	await _frames(3)
+	var iq_quiz: bool = D.celebrations() == ["workbench"]
+	D.close_modal()
+	for _i in range(300):                      # until the farm starts to show the new state (after the pause and any rain)
+		if not D.playback_held(): break
+		await _frames(1)
+	await _frames(3)
+	var iq_catchup: bool = D.playback_playing() and not D.playback_held() and not D.modal_visible() and D.celebrations() == ["workbench"]
+	D.tap_playback()
+	await _frames(3)
+	var iq_shown: bool = D.modal_visible() and D.celebrations().is_empty()
+	D.close_modal()
+	await _frames(3)
+	var iq_once: bool = not D.modal_visible()
+	D.playback_speed(0.0)
+	print("interruptions: a celebration waits in line during the quiz %s, during the catch-up %s, shows after it %s, once %s" % [iq_quiz, iq_catchup, iq_shown, iq_once])
+	if not (iq_quiz and iq_catchup and iq_shown and iq_once): print("FAIL interruptions: see the line above")
+	# interruption-queue/04 (review): the start of a new game asks only for a story piece before its welcome; a celebration that
+	# waits stays in line and comes after (it must not be shown and then covered by the welcome)
+	D.story_enabled(false)                       # no bark may come in between (a bark does not wait for a celebration)
+	D.show_menu()
+	await _frames(2)
+	D.celebrate("stone_axe")
+	D.close_modal()
+	var iq_story_only: bool = not D.story_pump() and not D.modal_visible() and D.celebrations() == ["stone_axe"]
+	await _frames(3)
+	var iq_after: bool = D.modal_visible() and D.celebrations().is_empty()
+	D.close_modal()
+	D.story_enabled(true)
+	print("interruptions: the story pump shows only story and leaves a celebration in line %s, which comes at the end of the frame %s" % [iq_story_only, iq_after])
+	if not (iq_story_only and iq_after): print("FAIL interruptions: see the line above")
 	get_tree().quit()
 
 func _atext_ok(q: Dictionary) -> bool:

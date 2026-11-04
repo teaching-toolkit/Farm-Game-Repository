@@ -1,6 +1,6 @@
 extends RefCounted
 class_name FarmNature
-## What the forest edge gives (TODO N1–N5, design document 5.9): sticks, loose stones and clay are pools that fall when gathered and grow
+## What the forest edge and the clay pit at the pond give (TODO N1–N5, design document 5.9): sticks, loose stones and clay are pools that fall when gathered and grow
 ## back slowly; trees go round a cycle (tree → stump → sapling → tree). A tap yields less when its pool is low, never less than 1.
 ## Data: data/farm/rules/56-nature.json.
 
@@ -18,6 +18,15 @@ func data() -> Dictionary:
 
 func pools() -> Dictionary:
 	return data().get("pools", {})
+
+## The pools that the recipes of this station (root of its chain) take from: where each pool shows (nature/05: clay at the pond).
+func pools_at(root: String) -> Array:
+	var members: Array = G.crafting.chain_members(root)
+	var out := []
+	for p in pools():
+		for rid in (pools()[p].get("recipes", {}) as Dictionary):
+			if G.recipes.has(rid) and members.has(str(G.recipes[rid]["station"])) and not out.has(p): out.append(p)
+	return out
 
 func pool_of(rid: String) -> String:
 	for p in pools():

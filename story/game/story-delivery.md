@@ -70,8 +70,11 @@ The first ten minutes of chapter 1 get a hook, a strange thing (the nibbled stal
   "text": "On the one green patch stands one ripe wheat stalk. Every grain is nibbled off. All but one." }
 ```
 
-Conditions (`when`, all must be true): `start`, `done:<node>`, `tap:<place>`, `tap_patch:<kind>`, `has:<item>:<n>`, `season:<name>`,
-`seen:<id>`, `chapter:<n>`, `step>=<n>`, `chance:<0..1>`. A `seen` list in the save marks what has shown. Barks have `once: false` and
+Conditions (`when`, all must be true): one condition language for the whole game since 2 Nov 2026 (`condition-language`): a number word
+with `>=` or `<` (`step>=6`, `chapter<4`, `item:egg>=1`, `forest_trips>=5`), a yes-or-no word (`start`, `done:<node>`, `tap:<place>`,
+`season:<name>`, `seen:<id>`, `after:<piece>:<n>`, `chance:<0..1>`), and `not:` in front of any of them. Every word, with a note and an
+example: `godot-prototype/data/farm/condition-words.json`. Older drafts here still write `has:<item>:<n>` (now `item:<item>>=<n>`) and
+`chapter:<n>` (now `chapter<n+1`, with the piece's own chapter as the earliest). A `seen` list in the save marks what has shown. Barks have `once: false` and
 are picked least-recently-seen. German via `tools/i18n.py`. Tests: the bot skips boxes; a check that every condition names something
 that exists.
 

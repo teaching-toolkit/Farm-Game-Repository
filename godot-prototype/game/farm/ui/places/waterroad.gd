@@ -95,7 +95,7 @@ func _part_gate() -> void:
 	head.add_child(UI.label("🛒", 28))
 	var bv := UI.vbox(2)
 	bv.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	bv.add_child(UI.label(tr("His cart: %s of %s room used") % [str(snappedf(G.gate.cart_size() - G.gate.cart_room(), 0.1)).trim_suffix(".0"), str(int(G.gate.cart_size()))], 16))
+	bv.add_child(UI.label(tr("His cart: %s of %s room used") % [str(ceili(G.gate.cart_size() - G.gate.cart_room())), str(int(G.gate.cart_size()))], 16))
 	bv.add_child(UI.bar(G.gate.fill(), 240, 12, UI.AMBER if G.gate.fill() < 0.999 else UI.RED))
 	head.add_child(bv)
 	M.content.add_child(head)
@@ -117,7 +117,7 @@ func _part_gate() -> void:
 	for k in ks:
 		var q: int = G.gate.can_take(k)
 		var em := G.iemoji(k)
-		var v := M.widgets.tile(Art.first("items", [k]), em, "%s\n%d" % [G.iname(k), G.down(G.inventory.count(k))])
+		var v := M.widgets.tile(M.widgets.pic(k), em, "%s\n%d" % [G.iname(k), G.down(G.inventory.count(k))])
 		var row := HFlowContainer.new()
 		row.add_child(UI.soft_button("1 %s = %s" % [em, G.money(G.gate.price(k))], G.trade.sell_gate.bind(k, 1.0), q >= 1, 17))
 		if q > 1: row.add_child(UI.soft_button("%d %s = %s" % [q, em, G.money(G.gate.price(k, q))], G.trade.sell_gate.bind(k, 999.0), true, 17))

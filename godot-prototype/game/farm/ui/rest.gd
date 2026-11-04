@@ -23,27 +23,128 @@ const MEDAL_WORDS := {"bronze": "🥉 Bronze: answer %d of its sums quick and ri
 
 ## Quick sums: the answer is typed on a number pad (or the keyboard) and sent with ✔. A timer runs for
 ## Rest: sums on the number pad (kits/learn/number_pad_quiz.gd asks, checks and remembers). A right answer gives energy:
-## all of it when quick (the level's time — 2.5 s for a sum learned by heart), half when slow.
-## The Rest buttons (the energy pill, the bed): the farmer first walks to the house with the farm scrolled to it, then the window opens
-## (when he has arrived, but after 0.4 s at the earliest and 1.6 s at the latest, so that a far walk does not make anyone wait).
+## all of it when quick (the level's time — 2.5 s for a sum learned by heart), a share when slow (G.needs.slow_share(), 20 % unless the parent changed it).
+## The Rest buttons (the energy pill, the bed): the farmer first walks to the tent or house with the farm scrolled to it,
+## disappears at its door, then the window opens. When the window closes he comes out again (come_back). The timing is data
+## (rules/65-feel.json, "rest"); a tap skips the walk or the coming out.
+var away := false            # the farmer is inside the tent or house (Rest)
+var _run := 0                # every new walk or coming out gets a new number; older ones see it and stop
+var _catcher: Control = null # catches a tap during the walk or the coming out (under the pop-up, over the farm)
+var _phase := ""             # "going" (walking in), "coming" (coming out) or ""
+
 func go_rest() -> void:
 	if M.modal.visible: return
 	M.interior_back = ""        # Rest ends on the farm, not back in the house window
 	M.sheets.close_sheet()
 	var sid: String = M.mapview.map_sid("living")
 	M.mapview.reveal(M.map.spot_rect(sid))
-	M.feedback.play_act("rest", M.map.stand_point(sid))
-	await M.get_tree().create_timer(0.4).timeout
-	var waited := 0.4
-	while M.map.avatar.moving and waited < 1.6:
+	_run += 1
+	var me := _run
+	var av = M.map.avatar
+	if av == null:
+		show_rest()
+		return
+	if M.map.actor: M.map.actor.stop()
+	av.visible = true
+	av.modulate.a = 1.0
+	av.walk_to(M.map.stand_point(sid))
+	_catch()
+	_phase = "going"
+	await M.get_tree().create_timer(G.feel("rest.walkMin")).timeout
+	var waited := G.feel("rest.walkMin")
+	while me == _run and av.moving and waited < G.feel("rest.walkMax"):
 		await M.get_tree().process_frame
 		waited += M.get_process_delta_time()
+	if me != _run: return
+	await _fade(av, 0.0, G.feel("rest.vanish"), me)
+	if me != _run: return
+	_go_inside()
 	if not M.modal.visible: show_rest()
+
+## The door of the tent or house (farm coordinates): where the farmer disappears and appears again.
+func _door() -> Vector2:
+	var sid: String = M.mapview.map_sid("living")
+	if M.map.slots.has(sid): return M.map.slots[sid].anchor + Vector2(0, 6)
+	return M.map.stand_point(sid)
+
+## He is inside now: put at the door and hidden (also when Rest opened without the walk, or a tap skipped it).
+func _go_inside() -> void:
+	_run += 1
+	_phase = ""
+	_uncatch()
+	var av = M.map.avatar if M.map else null
+	if av == null: return
+	if M.map.actor: M.map.actor.stop()
+	av.stop_walking()
+	av.set_feet(_door())
+	av.modulate.a = 0.0
+	av.visible = false
+	away = true
+
+## The pop-up closed while he was inside: he waits a moment, appears at the door and steps out.
+func come_back() -> void:
+	if not away: return
+	away = false
+	var av = M.map.avatar if M.map else null
+	if av == null: return
+	_run += 1
+	var me := _run
+	_catch()
+	_phase = "coming"
+	await M.get_tree().create_timer(G.feel("rest.inside")).timeout
+	if me != _run: return
+	av.set_feet(_door())
+	av.visible = true
+	av.modulate.a = 0.0
+	av.walk_to(_door() + Vector2(0, G.feel("rest.stepOut")))
+	await _fade(av, 1.0, G.feel("rest.appear"), me)
+	if me != _run: return
+	_out_now()
+
+## He is out and fully shown (the end of coming out, or a tap skipped it).
+func _out_now() -> void:
+	_run += 1
+	_phase = ""
+	_uncatch()
+	var av = M.map.avatar if M.map else null
+	if av == null: return
+	av.visible = true
+	av.modulate.a = 1.0
+
+func _fade(av, to: float, secs: float, me: int) -> void:
+	var from: float = av.modulate.a
+	var t := 0.0
+	while me == _run and t < secs:
+		await M.get_tree().process_frame
+		t += M.get_process_delta_time()
+		av.modulate.a = lerpf(from, to, clampf(t / maxf(secs, 0.001), 0.0, 1.0))
+
+## A tap during the walk opens Rest at once; a tap while he comes out shows him at once.
+func skip() -> void:
+	match _phase:
+		"going":
+			_go_inside()
+			if not M.modal.visible: show_rest()
+		"coming": _out_now()
+
+func _catch() -> void:
+	_uncatch()
+	_catcher = Control.new()
+	_catcher.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_catcher.mouse_filter = Control.MOUSE_FILTER_STOP
+	_catcher.gui_input.connect(func(e: InputEvent):
+		if (e is InputEventMouseButton and e.pressed) or (e is InputEventScreenTouch and e.pressed): skip())
+	M.add_child(_catcher)
+	M.move_child(_catcher, M.modal.get_index())       # under the pop-up: a box that opens meanwhile still gets its taps
+
+func _uncatch() -> void:
+	if _catcher != null and is_instance_valid(_catcher): _catcher.queue_free()
+	_catcher = null
 
 func show_rest() -> void:
 	var box := M.modals.open_modal(tr("😴 Rest"))
 	Sound.music("rest")
-	M.feedback.play_act("rest", M.map.stand_point(M.mapview.map_sid("living")))
+	if not away: _go_inside()          # Rest opened without the walk (a test flag): he is inside all the same
 	var beds: Array = Spots.corner_art("living").filter(func(id): return G.nodes.has(id) and G.done(id))
 	beds.reverse()
 	var bed: Texture2D = Art.first("interior", beds)
@@ -172,7 +273,7 @@ func _rest_answered(res: Dictionary) -> void:
 	var fb: Dictionary = res["fb"]
 	if res["right"]:
 		var gained: float = G.needs.rest_correct(res["quick"])
-		var t := (tr("⚡ +%s  quick!") if res["quick"] else tr("⚡ +%s  (a bit slow: half)")) % M.widgets.num(gained)
+		var t := (tr("⚡ +%s  quick!") if res["quick"] else tr("⚡ +%s  (a bit slow)")) % M.widgets.num(gained)
 		var txt := str(res["text"])
 		res["text"] = t + (txt.substr(txt.find("\n")) if txt.contains("\n") else "")
 		M.rest_state["eb"].have = float(G.S["energy"])
@@ -186,7 +287,7 @@ func _rest_answered(res: Dictionary) -> void:
 		fx.size = M.size
 		fx.start("stars", M.rest_state["pad"].ans_box.get_global_rect().get_center())
 		for m in fb["medals"]:
-			if m["medal"] != "bronze": M.after_close.append(str(fb.get("comment", "")))
+			if m["medal"] != "bronze": M.interrupts.note(str(fb.get("comment", "")))
 	elif fb.get("level_up", false): M.feedback.sfx("levelup")
 	elif int(fb.get("streak", 0)) in [5, 10, 20, 30]: M.feedback.sfx("streak")
 	M.modals.fit_modal.call_deferred()

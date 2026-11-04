@@ -29,6 +29,9 @@ emits the signals the interface listens to (`changed`, `toast`, `gained`, `sold`
 
 **Rules of the house** (also in `.claude/skills/farm-game-session/SKILL.md`):
 - A new mechanic is a new system file here (or a new function in the system that owns the thing), not new lines in `game.gd` or `main.gd`.
+- A system that reads something a condition in the data may ask about registers a **condition word** for it in its `register_words(c)`
+  (`kits/core/conditions.gd`; called from `Game._init`), with a note and an example; then `tests/conditions_test.tscn -- --seed=1 --write-words`
+  refreshes the word list the data checker reads.
 - A system that has to run every step of time registers a function in `Game.setup_clock()`, right after the one it must follow (order is part of
   the rules), and puts what the interface should show into the step's report.
 - Functions another system or the interface uses have public names (no leading `_`); the state shared between systems still lives in `G.S`

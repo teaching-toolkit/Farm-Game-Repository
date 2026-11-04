@@ -50,6 +50,9 @@ well as a card review).
   has about 1,400 Time Quiz answers, so a live set of 40–80 questions, swapped as the child learns (one pack per school
   topic or term), keeps it fresh.
 
+- **Energy.** The Time Quiz never gives coins, and its main job is time, not energy. But from chapter 2, every question that moves time also
+  changes energy a little: a busy farm and a low mood drain it, helping someone boosts it for a few questions (§5.1b). That change is one of
+  the bars that pulse after the quiz (below).
 - **The pop-up tells only right or wrong and time moving** (⏳ and the question number). What happened on the farm is shown on the farm.
 - **The farm after the quiz.** While the quiz is open **nothing on the farm changes** (the screen keeps its old look). After *Back to the
   farm*: a fixed short pause (0.8 s, the same after one question or eight), then what happened plays, mostly together: **rain** first

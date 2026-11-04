@@ -13,6 +13,7 @@ static func apply(main, G) -> void:
 		elif a == "--answer": main.get_tree().create_timer(0.3).timeout.connect(main.timequiz.answer_right)     # screenshots: the open question answered right (after --quiz or --qid)
 		elif a == "--news": main.get_tree().create_timer(0.3).timeout.connect(_news.bind(main, G))     # screenshots: the farm news plays (rain, scarecrow, pests)
 		elif a == "--rest": main.rest.show_rest.call_deferred()
+		elif a == "--gorest": main.rest.go_rest.call_deferred()             # screenshots: the farmer walks to the tent or house for Rest (with --shotframes=N)
 		elif a.begins_with("--shotframes="): main.shot_at = int(a.substr(13))
 		elif a.begins_with("--act="): main.feedback.test_act.call_deferred(a.substr(6))   # screenshots: --act=weed@patch0, --act=cook@kitchen
 		elif a == "--restgo": main.rest.rest_go.call_deferred()              # screenshots: past the Rest start page (after --rest)
@@ -24,6 +25,12 @@ static func apply(main, G) -> void:
 		elif a.begins_with("--pests="): G.S["pests"] = float(a.substr(8))
 		elif a.begins_with("--water="): G.S["water"] = float(a.substr(8))   # screenshots: carried water
 		elif a.begins_with("--timestep="): G.S["step"] = int(a.substr(11))   # e.g. 95 = winter (screenshots only)
+		elif a.begins_with("--season="):          # screenshots: --season=spring (the middle of that season) or --season=spring:2 (its 3rd question); the first year
+			var sp: PackedStringArray = a.substr(9).split(":")
+			var si: int = G.SEASON_NAMES.find(sp[0])
+			if si >= 0:
+				G.S["step"] = si * G.seasons.season_len() + (int(sp[1]) if sp.size() > 1 else G.seasons.season_len() / 2)
+				G.S["last_season"] = si
 		elif a.begins_with("--stepat="): main.step_at = int(a.substr(9))
 		elif a.begins_with("--sheet="): main.sheets.open_sheet.call_deferred(a.substr(8))
 		elif a.begins_with("--spot="): main.sheets.open_spot.call_deferred(a.substr(7))
@@ -55,6 +62,7 @@ static func apply(main, G) -> void:
 		elif a.begins_with("--unlock="):           # screenshots: pretend these are done (--unlock=workbench,stone_axe)
 			for id in a.substr(9).split(","): G.S["unlocked"][id] = true
 			G.invalidate_caps()
+		elif a.begins_with("--coins="): G.S["coins"] = float(a.substr(8))     # screenshots: the purse holds this many bronze (123456 = 1 💎 234 🟡 56 🟤)
 		elif a.begins_with("--give="):             # screenshots: --give=rope:2,stick:5
 			for kv in a.substr(7).split(","):
 				var parts: PackedStringArray = kv.split(":")
@@ -64,10 +72,12 @@ static func apply(main, G) -> void:
 				var parts2: PackedStringArray = kv.split(":")
 				G.trip.pack(parts2[0], int(parts2[1]) if parts2.size() > 1 else 1)
 		elif a == "--gate": G.S["gate"] = {"here": true, "until": 999, "cart": 12.0, "visits": 1}; G.S["unlocked"]["road_2"] = true; G.invalidate_caps()     # screenshots: the travelling merchant is at the gate
-		elif a == "--pets":                        # screenshots: the first three pets are home (the bunny and the tortoise have jobs), the patches are weedy
+		elif a == "--pets":                        # screenshots: the first three pets are home (the bunny and the tortoise have jobs), the patches are weedy; the tortoise and the bunny have WHEN cards
 			for pid in ["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony"]: G.S["unlocked"][pid] = true
 			for i in range(mini(G.S["patches"].size(), 4)): G.S["patches"][i]["weeds"] = 4.0
 			G.invalidate_caps()
+			G.pets.set_when("pet_tortoise", 0, "water")
+			G.pets.set_when("pet_bunny", 0, "weeds", 5.0)
 		elif a == "--well":                        # screenshots: chapter 2, the book Body and mind and two of its cards learned, some parameters moved (use with --spot=… or --sheet=well)
 			for id in ["pet_bunny", "book_body", "k_sleep", "k_food", "k_play", "straw_bed", "sq_healer_honey"]: G.S["unlocked"][id] = true
 			G.S["well"]["v"] = {"sleep": 0.7, "food": 0.3, "strength": 0.6, "friends": 0.5, "calm": 0.35, "play": 0.2}
@@ -90,6 +100,16 @@ static func apply(main, G) -> void:
 			G.S["forest"]["basket"] = [{"claim": "yarrow", "real": "hemlock"}, {"claim": "chamomile", "real": "chamomile"}]
 			G.invalidate_caps()
 		elif a == "--lord": G.S["lord"]["owed"] = 450.0       # screenshots: Pieter waits at the gate for the Lord's share
+		elif a.begins_with("--seen="):             # screenshots: these story pieces were read already (--seen=c1_board,c1_night; --seen=all)
+			for id in (G.story.pieces().keys() if a == "--seen=all" else Array(a.substr(7).split(","))): G.S["story_seen"][id] = 0
+		elif a.begins_with("--announce="):         # screenshots of a news box: --announce=season:summer, acorn:acorn_first_pet, favour:sq_twins_porridge, party
+			var w: PackedStringArray = a.substr(11).split(":")
+			match w[0]:
+				"season": G.story.announce(G.seasons.season_box(w[1]))
+				"acorn": G.rewards.acorn_box(w[1])
+				"favour": G.progression.finish_unlock(w[1], false)
+				"party": G.well._party_effect(null, {}, {})
+		elif a.begins_with("--handover="): main.get_tree().create_timer(0.6).timeout.connect(func(): main.widgets.do_unlock(a.substr(11)))     # screenshots: tap Hand over on the square (--handover=d_porridge, with --square --pack --spot=market)
 		elif a == "--square": G.S["trip"] = {"phase": "square", "bought": 0.0}       # screenshots: standing on the village square (use with --give, --pack, --spot=market)
 		elif a == "--built":                       # screenshots: pretend house, barn and workshop stand
 			for b in ["cottage", "barn_1", "workshop_1"]: G.S["unlocked"][b] = true

@@ -50,7 +50,7 @@ what happened in the last question. After the Time Quiz the pets **walk to where
 then (the tortoise 💧, the goat 🌿, the alpaca 🧶). **Levels 3 and 4** *(built, phase 12)*: a pet's level is 1 + the pets that came home after it (at most 4); once the last pet is home and the story is over, every pet is level 4 and the alpaca (guard the fields, grow fleece) gets its jobs too. **Level 3** adds a **WHEN card** to the job (weeds on a patch ≥ n, empty patches ≥ n, water < n, compost < n, sticks < n, logs < n, herbs < n, pests ≥ n; the child sets the number with − and +; each pet has two cards that fit it); the pet then works only when the condition holds. **Level 4** adds a second rule, read after the first when its WHEN does not hold (*OTHERWISE*: another job and its own WHEN, or always). A rule that cannot run waits (⏸️). Data: `rules/54-pets.json`; system `G.pets`.
 
 The child names each pet (or keeps the default). Each pet adds a little luck for good, walks about the pet corner, and its
-arrival brings a celebration and a chance of a postcard. The fifth pet needs the most branches at once: fine flour, honey,
+arrival brings a celebration and a chance of a postcard. The last pet, the alpaca, needs the most branches at once: fine flour, honey,
 butter, eggs, saffron and walnuts for the cake; rainbow carrots, golden beets, onions, olive oil and herbs for the roast;
 linen and plant-dyed wool for the quilt (no silk — making silk kills the silkworms, which does not fit a vegetarian farm).
 

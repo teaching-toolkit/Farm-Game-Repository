@@ -1408,9 +1408,9 @@ Fenna sits back on her heels in the ash.
 
 Lightning does not start low.
 
-Something else started this.
+She looks at that corner.
 
-She sits there for a long time with a black beam across her knees, and she finds that she does not want to know what. Not yet. Not this winter.
+She sits there for a long time with a black beam across her knees. Her hands have gone cold. Not yet. Not this winter.
 
 She stacks the beam with the others. She stacks them very neatly.
 

@@ -48,7 +48,7 @@ func weed_luck() -> void:
 	if roll(luck_event("weed_relic")):
 		G.inventory.add_item("relic", 1.0); G.S["album"].append({"id": "relic", "text": tr("An old relic you dug up while weeding"), "emoji": "🏺"}); G.say(tr("🏺 Something old in the soil: a relic for the album!"))
 	if not G.S["acorns"].has("acorn_lucky") and roll(luck_event("golden_acorn")):
-		G.S["acorns"]["acorn_lucky"] = true; G.invalidate_caps(); G.say(tr("🌰✨ A golden acorn glints under a leaf! Energy max +3 for good."))
+		G.S["acorns"]["acorn_lucky"] = true; G.invalidate_caps(); acorn_box("acorn_lucky")
 
 # ------------------------------------------------------------------ one Time Quiz answer
 
@@ -233,13 +233,22 @@ func check_acorns(_info := {}) -> void:
 	var ac = G.meta.get("acorns", {})
 	for a in ac.get("list", []):
 		var id: String = a["id"]
-		if G.S["acorns"].has(id): continue
-		var ok := G.cond(str(a["when"]))
+		if G.S["acorns"].has(id) or not a.has("when"): continue      # "on": "luck": found by a luck event, not by a condition
+		var ok: bool = G.conditions.holds(str(a["when"]))
 		if ok:
 			G.S["acorns"][id] = true
 			G.invalidate_caps()
-			G.say(tr("🌰✨ Golden Acorn: %s! Energy max +%d for good.") % [a["name"], int(ac.get("energyMaxEach", 3))])
+			acorn_box(id)
 	check_perks()
+
+## A golden acorn was found: a box with its picture at the next quiet moment, instead of a note (story/13).
+func acorn_box(id: String) -> void:
+	var ac = G.meta.get("acorns", {})
+	var nm := id
+	for a in ac.get("list", []): if a["id"] == id: nm = str(a.get("name", id))
+	G.story.announce({"key": "acorn:" + id, "emoji": "🌰", "title": tr("A golden acorn!"), "picture": "news_golden_acorn",
+		"text": tr("You earned it: %s. From now on you can hold %d more energy.") % [tr(nm), int(ac.get("energyMaxEach", 3))],
+		"more": tr("Seven golden acorns hide in the game. The album 🖼️ shows the ones you found.")})
 
 # ------------------------------------------------------------------ perks
 
@@ -274,7 +283,7 @@ func give_perk(id: String) -> void:
 func check_perks(_info := {}) -> void:
 	for p in G.meta.get("perks", {}).get("list", []):
 		if perk_owned(p["id"]) or str(p.get("when", "")) == "": continue
-		if G.cond(str(p["when"])): give_perk(p["id"])
+		if G.conditions.holds(str(p["when"])): give_perk(p["id"])
 
 ## Something happened that perks count (things sold …).
 func perk_event(kind: String, data := {}) -> void:
@@ -282,3 +291,11 @@ func perk_event(kind: String, data := {}) -> void:
 		if not G.S.has("sold_kinds"): G.S["sold_kinds"] = {}
 		G.S["sold_kinds"][str(data.get("item", ""))] = true
 	check_perks()
+
+# ------------------------------------------------------------------ condition words
+
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("sidequests", func(_a): return float(G.S["stats"].get("sidequests", 0)), "number", "", "Favours done for neighbours.", "sidequests>=1")
+	c.register("friends", func(_a): return float(friends().size()), "number", "", "Neighbours who became friends.", "friends>=2")
+	c.register("album", func(_a): return float(G.S["album"].size()), "number", "", "Pictures in the album.", "album>=3")

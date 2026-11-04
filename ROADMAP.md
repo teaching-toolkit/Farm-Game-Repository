@@ -4,16 +4,15 @@ One page. What the project is working on now, next and later, per track. It list
 the tickets themselves are in `.scratch/` and `python3 tools/tracker.py` prints the frontier (what an agent can start) and the
 parent's queue. Change this page only when "Now" changes. Why the order: [ADR-0001](docs/adr/0001-refactor-first-and-project-layout.md).
 
-**Milestones in order:** refactor (now) → prototype → story. Parked: iPad, web build, GitHub publishing (W2, W9) until the
-prototype stands.
+**Milestones in order:** refactor (done 3 Nov 2026) → prototype (now) → story. Parked: iPad, web build, GitHub publishing (W2, W9)
+until the prototype stands.
 
 ## Game
 
-- **Now (refactor):** the `time-question` feature is built (2 Nov 2026); its last ticket waits for the parent's play-test.
-  - **With the parent there:** the next grilling, `condition-language/01`.
-- **Next (refactor):** build `condition-language` after its grilling, then `interruption-queue` through the same flow
-  (`docs/architecture-review-2026-10-22.md` Part B §3–4).
-- **Then (prototype):** a laptop game the child can play alone without major kinks: the 23 Oct play-test tickets
+- **Done (refactor):** `farm-actions`, `tuning`, `time-question`, `condition-language`, `interruption-queue` (3 Nov 2026).
+- **Now (prototype):** the frontier of `python3 tools/tracker.py`. With the parent: `story/07` (the story timing; C2, C7 and C8 are
+  now numbers in the order list), then the `action-budget` and `pets-automation` grillings.
+- **The prototype's goal:** a laptop game the child can play alone without major kinks: the 23 Oct play-test tickets
   (`interface-feel`, `season-look`, `money-market`, `nature/04–05`, `crops-and-items`), the village square as its own screen with
   working payments, `action-budget` and `pets-automation` (both start with a grilling).
 - **Later:** `farm-numbers`, curriculum, wellbeing levers, people as figures, iPad and web.

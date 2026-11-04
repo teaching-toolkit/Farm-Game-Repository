@@ -494,3 +494,26 @@ func pest_eat_share() -> float:
 ## How many plants a patch shows for a (fractional) number of plants.
 func shown_plants(x: float) -> int:
 	return clampi(int(round(x)), 0, 9)
+
+# ------------------------------------------------------------------ condition words
+
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("weeds", func(_a): return float(G.S["stats"].get("weeds", 0)), "number", "", "Weeds pulled so far.", "weeds>=20")
+	c.register("weeds_max", _weeds_max, "number", "", "The most weeds on one field patch in use now.", "weeds_max>=3")
+	c.register("empty_patches", _empty_patches, "number", "", "Field patches in use with nothing planted now.", "empty_patches>=2")
+	c.register("water", func(_a): return float(G.S["water"]), "number", "", "Water the farmer has now (in the bucket and barrels).", "water<8")
+	c.register("pests", func(_a): return float(G.S["pests"]), "number", "", "Pests on the field now.", "pests>=1")
+	c.register("stones", func(_a): return float(G.S["stats"].get("stones", 0)), "number", "", "Stones picked so far.", "stones>=10")
+	c.register("harvests", func(_a): return float(G.S["stats"].get("harvests", 0)), "number", "", "Harvests so far.", "harvests>=10")
+
+func _weeds_max(_a: String) -> float:
+	var v := 0.0
+	for i in range(mini(G.progression.plots(), G.S["patches"].size())): v = maxf(v, float(G.S["patches"][i]["weeds"]))
+	return v
+
+func _empty_patches(_a: String) -> float:
+	var v := 0.0
+	for i in range(mini(G.progression.plots(), G.S["patches"].size())):
+		if G.S["patches"][i]["crop"] == "": v += 1.0
+	return v

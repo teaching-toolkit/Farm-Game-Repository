@@ -16,6 +16,7 @@ func _init(main: FarmMain) -> void:
 # ------------------------------------------------------------------ gift cards, names, menu, welcome
 
 ## A postcard from a friend (someone you helped) who heard of your success, with a gift: pick one of 1–3.
+## The interruption queue calls this when it is the postcard's turn (the first one waiting).
 func show_gift(_offer = null) -> void:
 	if M.modal.visible: return
 	var pc: Dictionary = G.rewards.postcard_pending()

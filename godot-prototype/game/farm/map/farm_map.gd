@@ -75,7 +75,9 @@ func _ready() -> void:
 	board = _layer(self)
 	board.size = design
 	board.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+	ground.road_ci = board
 	board.draw.connect(ground._draw_board)
+	ground.make_road_layer(_layer(board))       # the road, above the ground and below everything else, with frost in winter
 	ground_tap = GroundTap.new()
 	ground_tap.map = self
 	ground_tap.size = design
@@ -162,6 +164,8 @@ func _ready() -> void:
 	board.add_child(field_badge)
 	perk_fx = Fx.MapFx.new()
 	perk_fx.size = design
+	var g = get_node_or_null("/root/Game")
+	if g != null: perk_fx.leaf_conf = g.meta.get("seasonLook", {}).get("leaves", {})     # autumn leaves (season-look/01)
 	for fv in fields:
 		perk_fx.areas.append(Rect2(fv.position + Vector2(fv.size.x * 0.15, fv.size.y * 0.1), fv.size * Vector2(0.7, 0.7)))
 		fv.patch_pressed.connect(walker._walk_to_patch.bind(fv))

@@ -12,8 +12,8 @@ Most lateness was a **trigger-density** problem (solved by new pieces on existin
 | C2 | A pile-up at chapter turns; pieces are rationed, so the player waits through the avalanche | several beats on one step at chapter changes | raise the ration or let two non-frame pieces through per quiet period |
 | C3 | `c5_page` waits for `has:healers_chest:1`, which is consumed by the pet cost, so the low point cannot fire | the bot never sees `c5_page` or `c5_collapse` | `c5_page` → `forest_trips>=5`; `c5_collapse` → `seen:c5_page + forest_trips>=9` |
 | C4 | `tap:` and `page:` pieces cannot be tested headless | ~40 pieces never fire in the bot | let the bot open cards and tap the map in a test mode |
-| C5 | No negation in the condition language | cannot say "not yet done" | add `not:<cond>` |
-| C6 | No terms for pests, rain, frost, energy, `open:<node>`, or a generic stats counter | see `../archive/immersion-triggers.md` §3 | add the terms to `conditions.gd` |
+| C5 | No negation in the condition language | cannot say "not yet done" | ✅ solved in code (2 Nov 2026, `condition-language`): `not:<condition>` and "fewer than" (`water<5`) |
+| C6 | No terms for pests, rain, frost, energy, `open:<node>`, or a generic stats counter | see `../archive/immersion-triggers.md` §3 | ✅ solved in code (2 Nov 2026): `pests`, `rain`, `energy`, `water`, `open:<node>`, `stones`; no frost word (the game has only winter: `season:winter`), no general stats word (each count has its own word); all words in `godot-prototype/data/farm/condition-words.json`. No piece uses them yet (`story/07`). |
 | C7 | Bark density: a bark needs the quiet gate, so most barks wait | barks fire late in busy stretches | allow barks while a quiet period of N steps has passed |
 | C8 | Quiet-gate delays (`storybox.gd` waits for the box to be idle) | delays of up to 15 steps | log, then lower |
 | C9 | `pet_alpaca` can come home before the garden | `c6_alpaca` fires at step 1069 with the end frames | require `river_meadow_drain` |

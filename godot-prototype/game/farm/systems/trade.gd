@@ -40,7 +40,7 @@ func season_factor(k: String, season := "") -> float:
 	return float(sp.get("cats", {}).get(str(G.items.get(k, {}).get("category", "")), 1.0))
 
 ## The news line at a change of season: what pays more and what pays less this season (a few words from the data's categories).
-func season_news(season: String) -> void:
+func season_news(season: String) -> String:
 	var up := []
 	var down := []
 	var cats: Dictionary = G.meta.get("seasonPrices", {}).get(season, {}).get("cats", {})
@@ -48,10 +48,10 @@ func season_news(season: String) -> void:
 		var name: String = {"crop": tr("crops"), "dish": tr("dishes"), "animal": tr("eggs, milk and wool"), "ingredient": tr("flour and ingredients"), "craft": tr("crafts"), "textile": tr("cloth")}.get(c, str(c))
 		if float(cats[c]) >= 1.08: up.append(name)
 		elif float(cats[c]) <= 0.94: down.append(name)
-	if up.is_empty() and down.is_empty(): return
-	if not up.is_empty() and not down.is_empty(): G.say(tr("🪙 Market news: the village pays more for %s and less for %s.") % [", ".join(up), ", ".join(down)])
-	elif not up.is_empty(): G.say(tr("🪙 Market news: the village pays more for %s.") % ", ".join(up))
-	else: G.say(tr("🪙 Market news: the village pays less for %s.") % ", ".join(down))
+	if up.is_empty() and down.is_empty(): return ""
+	if not up.is_empty() and not down.is_empty(): return tr("🪙 Market news: the village pays more for %s and less for %s.") % [", ".join(up), ", ".join(down)]
+	elif not up.is_empty(): return tr("🪙 Market news: the village pays more for %s.") % ", ".join(up)
+	return tr("🪙 Market news: the village pays less for %s.") % ", ".join(down)
 
 ## What the next one would sell for right now (the best grade goes first).
 func sell_price(k: String) -> float:
@@ -225,3 +225,9 @@ func eat(k: String) -> bool:
 	G.say((tr("😋 Yum! Work costs %d%% less energy for %d question.") if int(b["questions"]) == 1 else tr("😋 Yum! Work costs %d%% less energy for %d questions.")) % [int(round((1.0 - float(b["energy"])) * 100)), int(b["questions"])])
 	G.save_game(); G.changed.emit()
 	return true
+
+# ------------------------------------------------------------------ condition words
+
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("sold_kinds", func(_a): return float(G.S.get("sold_kinds", {}).size()), "number", "", "Different things sold at the market.", "sold_kinds>=5")

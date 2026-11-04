@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# All quick checks in one go (about 2 minutes): UI smoke test, save fixtures, save versions, core kit, data checks, places and pets, quality, skills, money, story, trip, gate, trust and season prices, the time question, golden run, translations, project documents (../tools/check_docs.py).
+# All quick checks in one go (about 2 minutes): UI smoke test, save fixtures, save versions, core kit, data checks, places and pets, quality, skills, money, story, trip, gate, trust and season prices, the time question, the condition language, what takes the screen next, golden run, translations, project documents (../tools/check_docs.py).
 # Run after every restructuring step:  bash tests/check_all.sh   (Godot as in tests/golden.sh)
 #   bash tests/check_all.sh --short   the same, but the golden run only to the end of chapter 2 (saves about 40 s); the options go to golden.sh
 set -uo pipefail
@@ -15,7 +15,7 @@ export GODOT="$G"
 FAIL=0
 LOG="$(mktemp)"
 "$G" --headless --path . res://tests/ui_smoke.tscn -- --seed=1 > "$LOG" 2>&1
-if grep -q "SCRIPT ERROR" "$LOG" || grep -q "^FAIL" "$LOG" || ! grep -q "^insides: " "$LOG"; then echo "✘ UI smoke test"; grep -m3 -A3 "SCRIPT ERROR" "$LOG"; grep "^FAIL" "$LOG"; FAIL=1
+if grep -q "SCRIPT ERROR" "$LOG" || grep -q "^FAIL" "$LOG" || grep -q "^ERROR: interrupt" "$LOG" || ! grep -q "^insides: " "$LOG"; then echo "✘ UI smoke test"; grep -m3 -A3 "SCRIPT ERROR" "$LOG"; grep "^FAIL\|^ERROR: interrupt" "$LOG"; FAIL=1
 else echo "✔ UI smoke test ($(grep -c . "$LOG") lines; read them against .claude/skills/farm-game-check)"; fi
 "$G" --headless --path . res://tests/fixtures_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^FIXTURES|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^FIXTURES OK/✔ save fixtures/; s/^FIXTURES FAILED/✘ save fixtures/'
@@ -71,9 +71,15 @@ grep -q "^ACTIONS OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/market_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^MARKET|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^MARKET OK/✔ trust and season prices/; s/^MARKET FAILED/✘ trust and season prices/'
 grep -q "^MARKET OK" "$LOG" || FAIL=1
+"$G" --headless --path . res://tests/conditions_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
+grep -E "^CONDITIONS|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^CONDITIONS OK/✔ the condition language/; s/^CONDITIONS FAILED/✘ the condition language/'
+grep -q "^CONDITIONS OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/timeq_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^TIMEQ|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^TIMEQ OK/✔ the time question/; s/^TIMEQ FAILED/✘ the time question/'
 grep -q "^TIMEQ OK" "$LOG" || FAIL=1
+"$G" --headless --path . res://tests/interruption_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
+grep -E "^INTERRUPTIONS|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^INTERRUPTIONS OK/✔ what takes the screen next/; s/^INTERRUPTIONS FAILED/✘ what takes the screen next/'
+grep -q "^INTERRUPTIONS OK" "$LOG" || FAIL=1
 bash tests/golden.sh "$@" || { echo "✘ golden run"; FAIL=1; }
 python3 tools/check_data.py > "$LOG" 2>&1 && echo "✔ data checks ($(tail -1 "$LOG"))" || { echo "✘ data checks"; grep ERROR "$LOG" | head -5; FAIL=1; }
 python3 tools/i18n.py --check > /dev/null || { echo "✘ translations (python3 tools/i18n.py)"; FAIL=1; }

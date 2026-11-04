@@ -72,13 +72,15 @@ func station_card(root: String) -> PanelContainer:
 	var skill := ""
 	if fam != "" and G.reveal.shown("skills") and G.skills.rank(fam) > 0: skill = "   %s %s" % [G.skills.family_emoji(fam), tr(G.skills.rank_name(G.skills.rank(fam)))]
 	v.add_child(UI.label("%s %s%s" % [n.get("emoji", ""), n["name"], skill], 19, UI.INK, true))
-	if root == "wild_edge" and G.nature.known(): _nature_rows(v)
+	if G.nature.known(): _nature_rows(v, root)
 	if root == "wild_edge" and G.forest.open(): v.add_child(UI.button(tr("🌲 Into the forest"), M.sheets.open_sheet.bind("forest"), true, UI.GREEN, 19))
 	var soonest := 999
 	for job in running: soonest = mini(soonest, G.up(job["left"]))
 	var att := []
 	for hid in G.nodes:
-		if G.nodes[hid].has("attach") and G.crafting.chain_members(root).has(G.nodes[hid]["attach"]): att.append(hid)
+		if not (G.nodes[hid].has("attach") and G.crafting.chain_members(root).has(G.nodes[hid]["attach"])): continue
+		# a choice not built yet is named only when it can be built now (it is then in the list below): nothing hints at what comes later
+		if G.done(hid) or (M.mapview.in_chapter(hid) and G.progression.missing_reqs(hid).is_empty()): att.append(hid)
 	if att.size() > 0:
 		var ah := HFlowContainer.new()
 		ah.add_child(UI.label(tr("Choice slot: "), 14, UI.MUTED))
@@ -110,7 +112,7 @@ func station_card(root: String) -> PanelContainer:
 			continue
 		var outs := []
 		var batch: int = G.crafting.recipe_batch(rid)     # carrying gear: a bigger load per tap (and more energy)
-		for k in r["outputs"]: outs.append("%s%s" % [G.iemoji(k), M.widgets.num(G.nature.scaled(rid, float(r["outputs"][k]) * G.m("out:" + r["station"]) * batch))])
+		for k in r["outputs"]: outs.append([k, M.widgets.num(G.nature.scaled(rid, float(r["outputs"][k]) * G.m("out:" + r["station"]) * batch))])
 		var shown: Dictionary = G.actions.check("recipe", G.actions.farmer, {"rid": rid, "n": batch})      # the price of the whole load
 		var c: Dictionary = (shown["cost"] as Dictionary).duplicate()
 		var base: Dictionary = shown["base"]
@@ -122,11 +124,15 @@ func station_card(root: String) -> PanelContainer:
 		var tm: float = G.crafting.recipe_time(rid)
 		if batch > 1: extra.append("🧺×%d" % batch)
 		if tm > 0.0: extra.append("⏳%d" % G.up(tm))
-		for k in r.get("keeps", []): extra.append("keeps %s" % G.iemoji(k))
-		var wv: Vector2 = G.trade.recipe_worth(rid)
-		var t := M.widgets.tile(Art.first("items", [out0]), G.iemoji(out0), title)
-		t.add_child(UI.rich("→ %s  [color=#7a705c]%s[/color]%s" % [" ".join(outs), " ".join(extra),
-			("\n[color=#3c8a3c]%s → %s[/color]" % [G.money(wv.x), G.money(wv.y)]) if wv.y > 0.0 else ""], 15))
+		var t := M.widgets.tile(M.widgets.pic(out0), G.iemoji(out0), title)
+		var orow := M.widgets.amounts_row(outs)      # what it gives, as small pictures; no sell value here: prices show where selling happens (interface-feel/03)
+		if not extra.is_empty(): orow.add_child(UI.label(" ".join(extra), 15, UI.MUTED))
+		for k in r.get("keeps", []):
+			var kh := UI.hbox(2)
+			kh.add_child(UI.label(tr("keeps"), 15, UI.MUTED))
+			kh.add_child(M.widgets.icon(k, 22.0, 15))
+			orow.add_child(kh)
+		t.add_child(orow)
 		if G.crafting.makes_graded(rid): t.add_child(UI.label(tr("Expect: %s") % G.quality.expect_text(G.quality.recipe_expect(rid)), 14, UI.MUTED, true))
 		t.add_child(M.widgets.costs(c, base))
 		var cq: Dictionary = G.actions.check("recipe", G.actions.farmer, {"rid": rid})      # without a load: a smaller load still works
@@ -154,9 +160,10 @@ func station_card(root: String) -> PanelContainer:
 	for line in locked: v.add_child(UI.label(line, 14, UI.MUTED, true))
 	return pc
 
-## How the forest edge is doing (TODO N3, N4): a bar for what grows back, and the trees' cycle (shown once the card *Take only what grows back* is learned).
-func _nature_rows(v: VBoxContainer) -> void:
-	for p in G.nature.pools():
+## How the forest edge or the clay pit is doing (TODO N3, N4): a bar for what grows back, and the trees' cycle (shown once the card
+## *Take only what grows back* is learned). Each station shows the pools its own recipes take from (the clay pit at the pond: clay).
+func _nature_rows(v: VBoxContainer, root: String) -> void:
+	for p in G.nature.pools_at(root):
 		var sp: Dictionary = G.nature.pools()[p]
 		var row := UI.hbox(8)
 		row.add_child(UI.label("%s" % sp["emoji"], 20))

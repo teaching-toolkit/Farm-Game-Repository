@@ -216,3 +216,10 @@ func pack_cost(cost: Dictionary) -> void:
 func test_square() -> void:
 	G.S["trip"] = {"phase": "square", "bought": 0.0}
 	for k in G.S["inv"]: G.S["bag"][k] = floorf(G.inventory.count(k))
+
+# ------------------------------------------------------------------ condition words
+
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("trips", func(_a): return float(G.S["trips"]), "number", "", "Trips to the village so far.", "trips>=1")
+	c.register("packed", func(_a): return float(contents().size()), "number", "", "Different things in the bag now.", "packed>=1")

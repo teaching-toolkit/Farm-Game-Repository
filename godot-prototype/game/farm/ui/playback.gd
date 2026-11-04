@@ -171,6 +171,7 @@ func _end() -> void:
 	var a := _after
 	_after = Callable()
 	if a.is_valid(): a.call()
+	M.interrupts.request()          # the catch-up is over: whatever waited for it may come (also after a walk's news)
 
 func _wait(secs: float, me: int) -> bool:
 	if speed > 0.0: await M.get_tree().create_timer(secs * speed).timeout

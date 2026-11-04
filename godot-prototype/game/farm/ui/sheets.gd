@@ -85,6 +85,10 @@ func close_sheet() -> void:
 		var p := M.interior_back
 		M.interior_back = ""
 		M.interiors.open_interior(p)
+	# on the village square, closing a window does not take the farmer home: the square comes back (only 🏠 Back home leaves it)
+	if G.trip.at_square():
+		open_sheet_for("market")
+		return
 	M.playback.farm_seen()        # a walk's news waits for the farm to be seen again
 
 ## The sheet grows with its content, up to 60% of the screen.
@@ -102,6 +106,7 @@ func _place_sheet() -> void:
 func rebuild_sheet() -> void:
 	M.widgets.clear(M.content)
 	var k := M.sheet_kind
+	if M.sheet_close: M.sheet_close.visible = not (k == "spot:market" and G.trip.at_square())
 	if k.begins_with("spot:"):
 		var sid := k.substr(5)
 		if M.mapview.mystery(sid):

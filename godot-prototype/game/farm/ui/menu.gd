@@ -38,6 +38,7 @@ func show_menu() -> void:
 	sr.add_child(UI.soft_button((tr("🔔 Sounds: on") if Sound.sfx_on else tr("🔕 Sounds: off")), _toggle_sfx, true, 17))
 	sr.add_child(UI.soft_button(tr("🎼 Credits"), _show_credits, true, 17))
 	box.add_child(sr)
+	box.add_child(UI.label("📖 " + tr("Chapter %d · question %d%s") % [G.chapter(), int(G.S["step"]), ""], 16, UI.MUTED, true))     # moved here from the top bar (interface-feel/06)
 	box.add_child(UI.soft_button(tr("📋 What happened (log)"), M.questlog.open_log, true, 18))
 	box.add_child(UI.label(_version_text(), 14, UI.MUTED, true))
 	if not grownup_open():
@@ -45,6 +46,7 @@ func show_menu() -> void:
 		return
 	box.add_child(UI.label(tr("🔓 Grown-up settings (open for a few minutes)"), 17, UI.MUTED, true))
 	_part_review_share(box)
+	_part_slow_share(box)
 	_part_device(box)
 	box.add_child(UI.label(tr("Question packs and the size of Rest sums are set in data/settings.json and data/quiz_packs/."), 15, UI.MUTED, true))
 	box.add_child(UI.soft_button(tr("📊 Learning record (sums and questions)"), _show_learning, true, 18))
@@ -150,6 +152,30 @@ func _part_review_share(box: Control) -> void:
 	v.add_child(UI.label(tr("📚 %d%% from the books read   ·   📦 %d%% from your question packs") % [pct, 100 - pct], 16, UI.INK, true))
 	v.add_child(UI.label(tr("A book question only comes when a card is due for review; otherwise a pack question takes its place."), 14, UI.MUTED, true))
 	box.add_child(pc)
+
+## Settings: how much energy a slow right Rest answer gives, in percent of a quick one (10% steps).
+func _part_slow_share(box: Control) -> void:
+	var pc := UI.card(Color("f3f7ea"))
+	var v := UI.vbox(4)
+	pc.add_child(v)
+	v.add_child(UI.label(tr("⚡ Energy for a slow right sum"), 18, UI.INK, true))
+	var pct := int(round(G.needs.slow_share() * 100.0))
+	var row := UI.hbox(8)
+	row.alignment = BoxContainer.ALIGNMENT_CENTER
+	row.add_child(UI.soft_button("➖", _change_slow_share.bind(-0.1), pct > 0, 20))
+	var bar := UI.bar(G.needs.slow_share(), 220, 16, UI.AMBER)
+	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	row.add_child(bar)
+	row.add_child(UI.soft_button("➕", _change_slow_share.bind(0.1), pct < 100, 20))
+	v.add_child(row)
+	v.add_child(UI.label(tr("🐢 %d%% of the energy of a quick answer") % pct, 16, UI.INK, true))
+	v.add_child(UI.label(tr("A right answer after the timer gives this share; a quick one always gives all of it."), 14, UI.MUTED, true))
+	box.add_child(pc)
+
+func _change_slow_share(d: float) -> void:
+	G.needs.set_slow_share(G.needs.slow_share() + d)
+	M.modals.close_modal()
+	show_menu()
 
 ## Settings for this device: the testing buttons, and whether questions are read aloud.
 func _part_device(box: Control) -> void:

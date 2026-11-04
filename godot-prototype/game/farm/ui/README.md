@@ -17,7 +17,8 @@ Parts call each other as `M.<part>.<function>`. Functions with a leading `_` are
 | `celebrations` | the big pop-up for something new |
 | `timequiz` | the Time Quiz question pop-up, read aloud |
 | `playback` | after the Time Quiz: the farm keeps its old look while the quiz is open, then a pause, rain, plants flicking through their stages, bars pulsing, pests, notes; a tap skips (J4) |
-| `story` | the story on screen: box with pages, speech bubbles that stay until tapped, the 📜 scroll; shows only when the farm is quiet; what may show is `G.story` (5.2) |
+| `story` | the story on screen: box with pages, speech bubbles that stay until tapped, the 📜 scroll; which piece is ready is `G.story` (5.2), when it shows is `interrupts` |
+| `interrupts` | what takes the screen next: sets up the interruption queue, watches the busy screens, hands it the waiting postcards and the story's next piece; `celebration`, `note`, `request` |
 | `rest` | Rest: start page and sums |
 | `feedback` | the farmer's acts, animal voices, sounds, coins landing |
 | `cards` | knowledge cards: page, quiz |
@@ -27,6 +28,11 @@ Parts call each other as `M.<part>.<function>`. Functions with a leading `_` are
 | `placesheet` | a place's sheet: header, goals, which kind of place |
 | `stations`, `animalsheet`, `home`, `waterroad`, `pantry`, `market` (in `places/`) | the sheets of kitchen and workshop machines, animals, the house, the well and road, the pantry, the market, book cart and library |
 | `album`, `questlog` | the album; the quest book and the log |
+
+**What takes the screen next** (`interruption-queue`): things that arrive on their own (a celebration, a postcard, a story box, a bark, the
+notes after a pop-up) are interruptions. One queue decides when each shows: `kits/ui/interruptions.gd` (draws nothing, tested by
+`tests/interruption_test`), with the order of the kinds and what each waits for in `data/farm/rules/65-feel.json` ("interruptions").
+A part that wants the screen hands its interruption to the queue instead of checking whether a pop-up, a sheet or the playback is busy.
 
 **Rules of the house:** a new screen or sheet is a new part (or a function in the part that owns that kind of place), not new lines in
 `main.gd`; a part never writes into `G.S` (it calls the systems); the tests reach the screen only through `tests/ui_driver.gd`, the dev

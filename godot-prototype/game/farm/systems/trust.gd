@@ -15,7 +15,7 @@ func data() -> Dictionary:
 ## The village's reputation level, 0 … max: the farm's main goals done, so many to a level.
 func reputation() -> int:
 	var r: Dictionary = data().get("reputation", {})
-	return clampi(int(floorf(G.counter(str(r.get("counter", "goals"))) / maxf(1.0, float(r.get("perLevel", 14))))), 0, int(r.get("max", 4)))
+	return clampi(int(floorf(G.conditions.value(str(r.get("counter", "goals"))) / maxf(1.0, float(r.get("perLevel", 14))))), 0, int(r.get("max", 4)))
 
 func reputation_max() -> int:
 	return int(data().get("reputation", {}).get("max", 4))

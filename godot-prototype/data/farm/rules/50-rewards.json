@@ -23,7 +23,7 @@
     "events": [
       {
         "id": "weed_coin",
-        "when": "weed",
+        "on": "weed",
         "chance": 0.04,
         "text": "A lost coin in the weeds!",
         "gives": {
@@ -32,7 +32,7 @@
       },
       {
         "id": "weed_seed",
-        "when": "weed",
+        "on": "weed",
         "chance": 0.02,
         "text": "An old seed packet!",
         "gives": {
@@ -41,7 +41,7 @@
       },
       {
         "id": "weed_clover",
-        "when": "weed",
+        "on": "weed",
         "chance": 0.01,
         "text": "A four-leaf clover! You feel lucky.",
         "luck": [
@@ -51,7 +51,7 @@
       },
       {
         "id": "weed_relic",
-        "when": "weed",
+        "on": "weed",
         "chance": 0.007,
         "text": "Something old in the soil: a relic for the album!",
         "gives": {
@@ -60,7 +60,7 @@
       },
       {
         "id": "stone_quartz",
-        "when": "stones",
+        "on": "stones",
         "chance": 0.02,
         "text": "A sparkling quartz crystal inside a stone!",
         "gives": {
@@ -69,21 +69,21 @@
       },
       {
         "id": "rain",
-        "when": "question",
+        "on": "question",
         "chance": "season.rain",
         "text": "It rained: no watering needed, and the well fills a little.",
         "rain": true
       },
       {
         "id": "double_harvest",
-        "when": "harvest",
+        "on": "harvest",
         "chance": 0.03,
         "text": "Bumper crop: double harvest!",
         "mult": 2
       },
       {
         "id": "double_yolk",
-        "when": "collect:animal_chicken",
+        "on": "collect:animal_chicken",
         "chance": 0.05,
         "text": "A double-yolk egg!",
         "gives": {
@@ -92,7 +92,7 @@
       },
       {
         "id": "honey_flow",
-        "when": "collect:animal_bees",
+        "on": "collect:animal_bees",
         "chance": 0.05,
         "text": "A honey flow: extra comb!",
         "gives": {
@@ -101,7 +101,7 @@
       },
       {
         "id": "thick_fleece",
-        "when": "collect:animal_sheep",
+        "on": "collect:animal_sheep",
         "chance": 0.05,
         "text": "An extra-thick fleece!",
         "gives": {
@@ -110,7 +110,7 @@
       },
       {
         "id": "neighbour_gift",
-        "when": "question",
+        "on": "question",
         "chance": 0.01,
         "text": "A neighbour drops off a little gift basket.",
         "gives": {
@@ -119,7 +119,7 @@
       },
       {
         "id": "seed_bargain",
-        "when": "buy_seeds",
+        "on": "buy_seeds",
         "chance": 0.05,
         "text": "The seed merchant adds one for free.",
         "gives": {
@@ -128,7 +128,7 @@
       },
       {
         "id": "golden_acorn",
-        "when": "weed",
+        "on": "weed",
         "chance": 0.002,
         "text": "A golden acorn glints under a leaf!",
         "acorn": "acorn_lucky"
@@ -513,7 +513,7 @@
       {
         "id": "acorn_lucky",
         "name": "Found while weeding",
-        "when": "luck"
+        "on": "luck"
       }
     ],
     "note": "Seven Golden Acorns hide in the game, each found a different way. Each one raises the energy max by 3 for good."

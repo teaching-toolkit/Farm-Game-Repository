@@ -4,10 +4,10 @@ Part of the game's design ([index](README.md)). It describes the game as built; 
 
 ### 5.9 What the forest edge gives *(built, phase 10)*
 
-Gathering at the forest edge draws on **pools**: sticks (40, +1.2 a question), loose stones (30, +0.15), clay (20, +0.4) and the **trees**, which go round a cycle: a felled tree becomes a stump, after about 14 questions a sapling, after about
+Gathering at the forest edge draws on **pools**: sticks (40, +1.2 a question), loose stones (30, +0.15) and the **trees**, which go round a cycle: a felled tree becomes a stump, after about 14 questions a sapling, after about
 22 more a tree again. A tap gives its full yield while the pool is full and less when it is not (the share is the pool's fullness, never below a half to two thirds), **rounded and never below 1**, so the campfire is never impossible. The first time a pool
 is low the farm says so (*a recommendation first*), and again after 40 questions. Stones come back hardly at all: the stones in the fields (frost heave) and the quarry merchant matter. The numbers (a bar per pool, 🌲🪵🌱 for the trees) show in the forest
-edge's window once the card *Take only what grows back* has been learned. *(Planned: water as a pool, herbs, the Helper who pauses a job and gives a look.)* Data: `rules/56-nature.json`; system `G.nature`.
+edge's window once the card *Take only what grows back* has been learned. **Clay is dug at the pond**, not at the forest edge: the *Clay Pit* (always open, at the pond) offers *Dig clay* (shovel) and has its own clay pool (20, +0.4) with its own bar; old saves keep their clay and their clay pool. *(Planned: water as a pool, herbs, the Helper who pauses a job and gives a look.)* Data: `rules/56-nature.json`; system `G.nature`.
 
 ### 5.10 The still-room, the forest and Wren's check *(built, phase 11; 💡 all of it for the parent to review, above all the plant texts and the safety wording)*
 
@@ -20,4 +20,4 @@ edge's window once the card *Take only what grows back* has been learned. *(Plan
 
 **Wren's check.** *Visit Wren*: she looks through the basket, the right plants go into the store, the wrong ones are thrown out and she says why; it costs a small favour worth about 30 🟤, never coins: the dish or remedy from the store, worth at most 90 🟤, whose value comes closest (several cheap ones may go together), else she asks you to fetch her a bucket of water (a chore: 2 ⚡ and 5 💧, shown as cubes beside the button), else nothing today: nobody is stuck. Or *use it without checking*: everything goes into the store, but the bad units are remembered; when a remedy uses a bad unit (a chance that grows with how many there are), the farmer is **poisoned**:
 the recipe does not happen, energy 0, **all coins gone**, every job costs double for 6 questions, Wren is grumpy and clears out the bad plants. It can only happen if the check was skipped (a deliberate exception to "nothing punishes", decided by the parent), and the first forest trip has Wren explain the rule. Data: `rules/57-forest.json`; systems `G.forest`; the story pieces `c5_*`.
-*(Planned: the badger doing the check as a job card; a painted forest instead of tiles; arnica look-alikes.)*
+*(planned: the badger doing the check as a job card; a painted forest instead of tiles; arnica look-alikes.)*

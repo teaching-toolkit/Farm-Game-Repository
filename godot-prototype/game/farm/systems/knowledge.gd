@@ -159,3 +159,10 @@ func due_cards() -> Array:
 		if G.S["step"] - int(c.get("last", 0)) >= G.STEP_GAPS[b - 1] or t_now - float(c.get("time", t_now)) >= G.DAY_GAPS[b - 1] * 86400.0:
 			out.append(cid)
 	return out
+
+# ------------------------------------------------------------------ condition words
+
+## The condition words this system owns (kits/core/conditions.gd; listed with the data checker's word list).
+func register_words(c) -> void:
+	c.register("cards", func(_a): return float(G.progression.cards_learned()), "number", "", "Knowledge cards learned.", "cards>=5")
+	c.register("page", func(a): return page_seen(a), "yes", "card", "The page of this knowledge card has been opened.", "page:k_fire")

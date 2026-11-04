@@ -49,6 +49,7 @@ func open_interior(parent: String) -> void:
 	for c in corners:
 		var m: String = c[1]
 		var at: Dictionary = c[2]
+		if not G.reveal.shown(m): continue      # a corner with nothing of it within reach is not drawn at all, not even faded (D4, data/farm/rules/60-reveal.json)
 		var cw := float(at.get("w", 0.2)) * w
 		var s = SlotScript.new()
 		s.setup(m, Vector2(float(at.get("x", 0.5)) * w, float(at.get("y", 0.6)) * h), cw, Vector2i(1, 1), cw * 0.9)
@@ -60,7 +61,7 @@ func open_interior(parent: String) -> void:
 		if tex == null:
 			key = M.mapview.first_key("map", keys)
 			tex = Art.tex("map", key) if key != "" else null
-		var open := M.mapview.is_open(m) or m in ["barn_build", "ws_build"]
+		var open := M.mapview.is_open(m) or m in ["barn_build", "ws_build"] or G.reveal.rules().has(m)      # a corner with a reveal rule is drawn only once reached, and then never faded
 		s.set_state(tr(Spots.name_of(m)), Spots.emoji_of(m), tex, not open, M.mapview.badge(m), key)
 		s.tapped.connect(enter_corner.bind(parent))
 	if parent == "workshop" and G.nodes.has("tool_rack") and G.done("tool_rack"):

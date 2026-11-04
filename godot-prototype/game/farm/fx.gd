@@ -98,6 +98,11 @@ class CoinShower extends Control:
 ## and the season breeze (petals, fluff, leaves, snow). on = {"butterflies": bool, "sparkles": …, "rainbow": …, "breeze": …}.
 class MapFx extends Control:
 	const WING := [Color("f4a3c0"), Color("ffd166"), Color("9ad1f5"), Color("c3a6ff"), Color("ffffff")]
+	const ArtK = preload("res://kits/ui/art.gd")
+	## The stand-in autumn leaf until the leaf pictures exist (pictures/12): a pointed leaf with a stem, in four autumn colours.
+	const LEAF_COLS := [Color("d9822b"), Color("b5562b"), Color("e3b23c"), Color("9c5a2e")]
+	var LEAF_SHAPE := PackedVector2Array([Vector2(0, -10), Vector2(4, -6), Vector2(6, -1), Vector2(5, 4), Vector2(2, 8), Vector2(0, 10),
+		Vector2(-2, 8), Vector2(-5, 4), Vector2(-6, -1), Vector2(-4, -6)])
 	var on := {}
 	var areas: Array = []          # Rect2s the butterflies like (the fields)
 	var season := "spring"
@@ -111,6 +116,11 @@ class MapFx extends Control:
 	var rainbow_t := -1.0
 	var rainbow_len := 40.0
 	var t := 0.0
+	var leaf_conf := {}            # rules/66-season-look.json "leaves" (season-look/01), set by the map
+	var leaves := []               # the autumn leaves in the air
+	var _leaf_pics := []
+	var _leaf_spawn := 0.0
+	var _season_set := false       # the first season set (the farm opening) fills the air at once; a new season starts from the top
 
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -133,8 +143,12 @@ class MapFx extends Control:
 		if not on.get("stars", false): star_t = -1.0
 
 	func set_season(s: String) -> void:
-		if s == season: return
+		var first := not _season_set
+		_season_set = true
+		if s == season and not first: return
 		season = s
+		if s == "autumn" and first:      # the farm opens in autumn: leaves are already on their way down
+			for i in range(_leaf_n()): leaves.append(_leaf(true))
 		drift.clear()
 		if on.get("breeze", false):
 			for i in range(22): drift.append(_flake(true))
@@ -143,6 +157,58 @@ class MapFx extends Control:
 		if areas.is_empty(): return Vector2(randf_range(0.2, 0.8) * size.x, randf_range(0.4, 0.8) * size.y)
 		var r: Rect2 = areas[randi() % areas.size()]
 		return r.position + Vector2(randf() * r.size.x, randf() * r.size.y * 0.8)
+
+	# ---------------------------------------------------------------- autumn leaves (season-look/01)
+	func _leaf_n() -> int:
+		return int(leaf_conf.get("count", 0))
+
+	func _rng(key: String, a: float, b: float) -> float:
+		var r: Array = leaf_conf.get(key, [a, b])
+		return randf_range(float(r[0]), float(r[1]))
+
+	## A new leaf: above the farm (or anywhere when the farm opens in autumn), with its own speed, sway and flip.
+	func _leaf(anywhere: bool) -> Dictionary:
+		var p := Vector2(randf_range(-0.15, 0.95) * size.x, randf_range(0.0, 1.0) * size.y if anywhere else -24.0)
+		return {"p": p, "v": Vector2(_rng("wind", 8, 26), _rng("fallSpeed", 22, 40)), "ph": randf() * TAU,
+			"flip": randf() * TAU, "fs": _rng("flipsPerSecond", 0.5, 1.2) * TAU, "rot": randf_range(-0.6, 0.6),
+			"s": _rng("size", 14, 22), "k": randi() % 4, "a": 1.0}
+
+	## Leaves fall only in autumn: while it is autumn a new one starts at the top whenever there are fewer than "count" in the air
+	## (one at a time, so they start smoothly); after autumn no new ones start and the last ones fall out of sight.
+	func _tick_leaves(d: float) -> void:
+		if season == "autumn" and leaves.size() < _leaf_n():
+			_leaf_spawn -= d
+			if _leaf_spawn <= 0.0:
+				leaves.append(_leaf(false))
+				_leaf_spawn = randf_range(0.2, 0.7)
+		for lf in leaves:
+			lf["ph"] = float(lf["ph"]) + d * 1.6
+			lf["flip"] = float(lf["flip"]) + d * float(lf["fs"])
+			var sway := sin(float(lf["ph"])) * 18.0
+			lf["p"] = lf["p"] + (lf["v"] as Vector2) * d + Vector2(sway * d, 0)
+			lf["rot"] = float(lf["rot"]) + cos(float(lf["ph"])) * d * 0.8
+		leaves = leaves.filter(func(lf): return lf["p"].y < size.y + 30.0 and lf["p"].x < size.x + 30.0)
+
+	func _leaf_draw(lf: Dictionary) -> void:
+		var flip := cos(float(lf["flip"]))          # 1 … -1: the leaf turns over from one side to the other
+		var sc := Vector2(maxf(0.12, absf(flip)), 1.0) * float(lf["s"]) / 20.0
+		draw_set_transform(lf["p"], float(lf["rot"]), sc)
+		if _leaf_pics.is_empty() and not leaf_conf.is_empty():
+			for n in leaf_conf.get("pictures", []):
+				var tx: Texture2D = ArtK.tex("deco", str(n))
+				if tx: _leaf_pics.append(tx)
+			if _leaf_pics.is_empty(): _leaf_pics.append(null)       # none yet: the drawn leaf below
+		var tex: Texture2D = _leaf_pics[int(lf["k"]) % _leaf_pics.size()] if not _leaf_pics.is_empty() else null
+		var back := flip < 0.0                       # the leaf's underside is a little paler
+		if tex:
+			draw_texture_rect(tex, Rect2(Vector2(-10, -10), Vector2(20, 20)), false, Color(1, 1, 1, 0.92) if not back else Color(1.1, 1.05, 0.95, 0.92))
+		else:
+			var col: Color = LEAF_COLS[int(lf["k"]) % LEAF_COLS.size()]
+			if back: col = col.lightened(0.18)
+			draw_colored_polygon(LEAF_SHAPE, col)
+			draw_line(Vector2(0, 10), Vector2(0, -8), col.darkened(0.35), 1.2)
+			draw_line(Vector2(0, 10), Vector2(0, 13), col.darkened(0.45), 1.5)
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 
 	func _flake(anywhere: bool) -> Dictionary:
 		var p := Vector2(randf_range(-0.1, 1.0) * size.x, randf_range(0.0, 1.0) * size.y if anywhere else -20.0)
@@ -159,8 +225,10 @@ class MapFx extends Control:
 
 	func _process(d: float) -> void:
 		t += d
-		var busy: bool = not flies.is_empty() or not sparks.is_empty() or not drift.is_empty() or rainbow_t >= 0.0 or not glow.is_empty() or bool(on.get("stars", false))
+		var busy: bool = not flies.is_empty() or not sparks.is_empty() or not drift.is_empty() or rainbow_t >= 0.0 or not glow.is_empty() or bool(on.get("stars", false)) \
+			or not leaves.is_empty() or (season == "autumn" and _leaf_n() > 0)
 		if not busy: return
+		_tick_leaves(d)
 		for g in glow:
 			g["ph"] = float(g["ph"]) + d * 2.4
 			g["p"] = g["p"] + (g["v"] as Vector2) * d
@@ -210,6 +278,8 @@ class MapFx extends Control:
 				draw_arc(c, r0 - i * 9.0, PI * 1.08, PI * 1.92, 64, Color(col.r, col.g, col.b, 0.38 * a), 9.0, true)
 		for fl in drift:
 			_flake_draw(fl)
+		for lf in leaves:
+			_leaf_draw(lf)
 		for g in glow:
 			var b := 0.5 + 0.5 * sin(float(g["ph"]))
 			draw_circle(g["p"], 7.0, Color(1.0, 0.92, 0.45, 0.10 + 0.18 * b))
@@ -254,9 +324,7 @@ class MapFx extends Control:
 				for k in range(6):
 					var a := TAU * k / 6.0 + float(fl["rot"])
 					draw_line(p, p + Vector2(cos(a), sin(a)) * 5.0 * s, Color(1, 1, 1, 0.45), 1.0)
-			"autumn":
-				draw_set_transform(p, float(fl["rot"]), Vector2(1.0, 0.5) * s)
-				draw_circle(Vector2.ZERO, 5.5, Color("d9822b") if int(fl["ph"] * 10.0) % 2 == 0 else Color("b5562b"))
-				draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+			"autumn":     # the breeze perk's leaves look like the autumn leaves, a little smaller
+				_leaf_draw({"p": p, "rot": float(fl["rot"]), "flip": float(fl["ph"]) * 1.5, "s": 13.0 * s, "k": int(float(fl["s"]) * 10.0)})
 			"winter":
 				draw_circle(p, 3.0 * s, Color(1, 1, 1, 0.9))
