@@ -9,7 +9,7 @@ const Interruptions = preload("res://kits/ui/interruptions.gd")
 
 var M: FarmMain   # the main screen: its widgets and the other parts
 var G: FarmGame   # the rules (G.<system>.<function>)
-const STORY_KINDS := ["discovery", "scene", "story", "bark"]      # the kinds the story box hands the queue (story.candidate, one source each)
+const STORY_KINDS := ["discovery", "scene", "frame", "story", "bark"]      # the kinds the story box hands the queue (story.candidate, one source each)
 
 var q = Interruptions.new()
 var _notes := 0
@@ -19,7 +19,7 @@ func _init(main: FarmMain) -> void:
 	G = main.G
 	q.configure(G.meta.get("interruptions", {}).get("order", []))
 	# the busy screens (their meaning: "busy" in the order list)
-	q.watch("popup", func(): return M.modal.visible)
+	q.watch("popup", func(): return M.modal.visible or M.frame_scene.active())      # the full-screen frame scene counts as a pop-up
 	q.watch("rest", func(): return not M.rest_state.is_empty())
 	q.watch("playback", func(): return M.playback.held)
 	q.watch("catchup", func(): return M.playback.playing)
@@ -57,7 +57,7 @@ func request() -> void:
 func pump() -> Array:
 	return q.pump()
 
-## Shows only story pieces (a box, a Discovery or a bark) if it is their turn; the rest stays in line. True when one was shown.
+## Shows only story pieces (a box, a frame, a Discovery or a bark) if it is their turn; the rest stays in line. True when one was shown.
 ## The start of a new game asks this before its welcome: anything else waiting comes after the welcome, as before.
 func pump_story() -> bool:
 	for key in q.pump(STORY_KINDS):

@@ -4,7 +4,7 @@ Part of the game's design ([index](README.md)). It describes the game as built; 
 
 ### 4.3 Rest — energy from mental arithmetic
 
-Tapping the energy bar (or 😴 Rest in the tent or house) opens **Rest** (sleep, food, a sip of water). First the farmer walks
+Tapping the energy bar shows its note, and the note's 😴 Rest button (like 😴 Rest in the tent or house) opens **Rest** (sleep, food, a sip of water). First the farmer walks
 to the tent or house and disappears at its door; then the Rest window opens. When it closes he stays inside a moment, appears at
 the door again and steps out. A tap skips the walk (Rest opens at once) or the coming out (he is there at once). The timing is in
 `rules/65-feel.json` (`rest`). The child types answers to sums on a number pad (or the

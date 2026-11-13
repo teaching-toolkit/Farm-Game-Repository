@@ -57,12 +57,12 @@ func act_for_gain(source: String, kind: String) -> void:
 func gain_sound(source: String, got: Dictionary) -> String:
 	if source.begins_with("patch:"):
 		if got.has("fiber"): return "weed"
-		if got.has("stone"): return "dig"
+		if got.has("stone") or got.has("boulder"): return "dig"
 		if got.has("log") or got.has("stick"): return "chop"
 		return "harvest"
 	if source.begins_with("recipe:"):
 		var cat: String = G.crafting.recipe_cat(source.substr(7))
-		if got.has("stone") or got.has("clay"): return "dig"
+		if got.has("stone") or got.has("boulder") or got.has("clay"): return "dig"
 		if got.has("fiber"): return "weed"
 		return {"cook": "cook", "prep": "cook", "wood": "chop", "gather": "chop", "smith": "smith", "kiln": "smith",
 			"craft": "craft", "textile": "craft", "process": "craft", "mill": "craft", "animal": "collect"}.get(cat, "build")
@@ -119,6 +119,7 @@ func on_sold(_k: String, n: float, coins: float) -> void:
 	cs.size = M.size
 	var from := Vector2(M.size.x / 2.0, M.size.y * 0.62)
 	if M.sheet.visible: from = M.sheet.get_global_rect().get_center()
+	if M.square.active(): from = M.square.stall_point("sell")
 	cs.start(from, M.lbl_coins.get_global_rect().get_center(), clampi(int(n), 3, 12), _coin_landed)
 
 ## Something was paid for: coins fly from the purse to the trader.
@@ -130,6 +131,7 @@ func on_paid(coins: float) -> void:
 func fly_coins(bronze: float, to_purse: bool) -> void:
 	var pieces := clampi(ceili(bronze / 10.0), 1, 60)
 	var mid := M.sheet.get_global_rect().get_center() if M.sheet.visible else Vector2(M.size.x / 2.0, M.size.y * 0.62)
+	if M.square.active(): mid = M.square.stall_point(M.square.stall)      # in the village: the stall that pays or is paid
 	var purse := M.lbl_coins.get_global_rect().get_center()
 	var from := mid if to_purse else purse
 	var to := purse if to_purse else mid

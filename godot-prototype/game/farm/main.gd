@@ -16,9 +16,11 @@ var animalsheet: FarmUiAnimalSheet
 var cards: FarmUiCards
 var celebrations: FarmUiCelebrations
 var feedback: FarmUiFeedback
+var frame_scene: FarmUiFrameScene
 var gifts: FarmUiGifts
 var goalbar: FarmUiGoalBar
 var home: FarmUiHome
+var info: FarmUiInfo
 var interiors: FarmUiInteriors
 var mapview: FarmUiMapView
 var market: FarmUiMarket
@@ -34,6 +36,7 @@ var placesheet: FarmUiPlaceSheet
 var questlog: FarmUiQuestLog
 var rest: FarmUiRest
 var sheets: FarmUiSheets
+var square: FarmUiSquare     # the village square as its own screen (money-market/07)
 var stations: FarmUiStations
 var story: FarmUiStory
 var timequiz: FarmUiTimeQuiz
@@ -92,9 +95,11 @@ func _make_parts() -> void:
 	cards = FarmUiCards.new(self)
 	celebrations = FarmUiCelebrations.new(self)
 	feedback = FarmUiFeedback.new(self)
+	frame_scene = FarmUiFrameScene.new(self)
 	gifts = FarmUiGifts.new(self)
 	goalbar = FarmUiGoalBar.new(self)
 	home = FarmUiHome.new(self)
+	info = FarmUiInfo.new(self)
 	interiors = FarmUiInteriors.new(self)
 	mapview = FarmUiMapView.new(self)
 	market = FarmUiMarket.new(self)
@@ -108,6 +113,7 @@ func _make_parts() -> void:
 	questlog = FarmUiQuestLog.new(self)
 	rest = FarmUiRest.new(self)
 	sheets = FarmUiSheets.new(self)
+	square = FarmUiSquare.new(self)
 	stations = FarmUiStations.new(self)
 	story = FarmUiStory.new(self)
 	timequiz = FarmUiTimeQuiz.new(self)
@@ -117,6 +123,9 @@ func _make_parts() -> void:
 	welcome = FarmUiWelcome.new(self)
 	widgets = FarmUiWidgets.new(self)
 	interrupts = FarmUiInterrupts.new(self)
+	# the stalls of the village square: each part that owns a stall's things registers it (ui/square.gd)
+	market.register_stalls(square)
+	placesheet.register_stalls(square)
 
 func _ready() -> void:
 	G = get_node("/root/Game")
@@ -128,7 +137,7 @@ func _ready() -> void:
 	G.changed.connect(queue_refresh)
 	G.toast.connect(notes.toast)
 	G.revealed.connect(notes.on_revealed)
-	UI.explain_hook = notes.hint
+	info.connect_hooks()          # the short note on tap: bars, items, greyed-out buttons (game/farm/ui/info.gd)
 	G.offer_cards.connect(func(_c): interrupts.request())
 	G.sold.connect(feedback.on_sold)
 	G.paid.connect(feedback.on_paid)
@@ -209,6 +218,7 @@ func _build() -> void:
 	var hh := UI.hbox(8)
 	hud.add_child(hh)
 	lbl_coins = UI.Purse.new(); hh.add_child(lbl_coins)       # the purse stands left of the bars, its rows stacked (interface-feel/07)
+	UI.info(lbl_coins, "bar", "coins")                        # a tap on it: what the coins are and what changes them (interface-feel/01)
 	var hv := UI.vbox(2)
 	hh.add_child(hv)
 	var r1 := UI.hbox(8)
@@ -223,7 +233,7 @@ func _build() -> void:
 	wbox.add_child(water_bar)
 	wbox.add_child(UI.label("🪣", 18))
 	wp.add_child(wbox)
-	wp.pressed.connect(sheets.open_spot.bind("well"))
+	wp.pressed.connect(info.bar.bind("water", wp))         # the note has a button for the well (interface-feel/01)
 	r1.add_child(wp)
 	var ep = UI.TapPanel.new()
 	ep.add_theme_stylebox_override("panel", UI.box(Color("dbe8f4"), 10, Color("9fbbd6"), 1, 6))
@@ -241,7 +251,7 @@ func _build() -> void:
 	face_btn.visible = false
 	ebox.add_child(face_btn)
 	ep.add_child(ebox)
-	ep.pressed.connect(rest.go_rest)
+	ep.pressed.connect(info.bar.bind("energy", ep))        # the note has a button for Rest (interface-feel/01)
 	r1.add_child(ep)
 	# the season row, right under the water and energy bars and as wide as they are (interface-feel/06)
 	var r2 := UI.hbox(8)
@@ -280,7 +290,12 @@ func _build() -> void:
 			var bv := UI.vbox(1)
 			bv.add_child(b)
 			bag_bar = UI.bar(0.0, 44, 5, UI.AMBER)
-			bv.add_child(bag_bar)
+			bag_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			var bh := MarginContainer.new()          # a taller place to tap than the thin bar itself: it tells how full the bag is (interface-feel/01)
+			bh.add_theme_constant_override("margin_top", 3)
+			bh.add_theme_constant_override("margin_bottom", 3)
+			bh.add_child(bag_bar)
+			bv.add_child(UI.info(bh, "bar", "bag"))
 			ir.add_child(bv)
 			icon_buttons["bag_box"] = bv
 		else: ir.add_child(b)
@@ -385,6 +400,7 @@ func _place_quiz_button() -> void:
 
 func _on_resized() -> void:
 	_place_quiz_button()
+	square.place.call_deferred()
 	if sheet.visible: sheets.fit_sheet()
 	if modal.visible: modals.fit_modal()
 
@@ -411,8 +427,9 @@ func refresh() -> void:
 	lbl_coins.visible = G.reveal.shown("coins")          # what is shown when: data/farm/rules/60-reveal.json
 	for id in icon_buttons: if id != "bag_box": icon_buttons[id].visible = G.reveal.shown(id)
 	icon_buttons["bag_box"].visible = icon_buttons["bag"].visible
-	bag_bar.value = G.trip.fill()
-	bag_bar.get_theme_stylebox("fill").bg_color = UI.AMBER if G.trip.fill() < 0.999 else UI.RED
+	var carried: float = G.trip.carry_fill()          # at home what is packed; on the village square also what is bought (money-market/06)
+	bag_bar.value = carried
+	bag_bar.get_theme_stylebox("fill").bg_color = UI.AMBER if carried < 0.999 else UI.RED
 	_fit_hud()
 	water_bar.have = float(S["water"]); water_bar.cap = G.needs.water_cap(); water_bar.refresh()
 	energy_bar.have = float(S["energy"]); energy_bar.cap = G.needs.energy_max(); energy_bar.refresh()
@@ -423,7 +440,7 @@ func refresh() -> void:
 	if G.seasons.season() != _last_season:            # a new season: its music on the farm, a breeze with the perk
 		if _last_season != "": feedback.sfx("breeze")
 		_last_season = G.seasons.season()
-	if not modal.visible: Sound.music("farm", G.seasons.season())
+	if not modal.visible and not frame_scene.active(): Sound.music("farm", G.seasons.season())
 	map.set_perks({"butterflies": G.rewards.perk_on("perk_butterflies") and FarmSeasonLook.critter_out(G, "butterflies"), "sparkles": G.rewards.perk_on("perk_sparkles"),
 		"rainbow": G.rewards.perk_on("perk_rainbow"), "breeze": G.rewards.perk_on("perk_breeze"),
 		"fireflies": G.rewards.perk_on("perk_fireflies") and FarmSeasonLook.critter_out(G, "fireflies"), "stars": G.rewards.perk_on("perk_stars")})
@@ -465,6 +482,7 @@ func refresh() -> void:
 	map.critters.set_critters(mapview.critter_spec())
 	map.farmcat.set_cat(G.done("barn_cat") and FarmSeasonLook.critter_out(G, "farm_cat"))
 	goalbar.update_goal_bar()
+	square.sync()                  # in the village the square stands where the farm was
 	if sheet.visible:
 		sheets.rebuild_sheet()
 		sheets.fit_sheet.call_deferred()
@@ -473,6 +491,6 @@ func refresh() -> void:
 ## Taps on the farm make sparkles (perk "Magic sparkles").
 func _input(e: InputEvent) -> void:
 	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT and not modal.visible:
-		if not scroll.get_global_rect().has_point(e.position): return
+		if not scroll.get_global_rect().has_point(e.position) or square.active(): return
 		if sheet.visible and sheet.get_global_rect().has_point(e.position): return
 		map.sparkle_global(e.position)

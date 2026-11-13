@@ -11,6 +11,8 @@ var log_lines := []
 var max_iters := 900
 var target_chapter := 4
 var flex := false
+var noclear := false      # --noclear: do not pull weeds or pick stones before a harvest (the bot as it was before crops-and-items/02)
+var crowd := {}           # chapter -> [field harvests, with weeds or stones on the patch, sum of the share lost, sum of what the old rule slowed growth by]
 var accuracy := 1.0       # --accuracy=0.8: share of Time Quiz questions answered right at the first try (only those move time)
 var asked := 0           # Time Quiz questions asked (with accuracy < 1 more than the steps of time)
 var quiz_rng := RandomNumberGenerator.new()   # separate from the game's own random numbers
@@ -30,6 +32,7 @@ func _ready() -> void:
 		if a.begins_with("--iters="): max_iters = int(a.substr(8))
 		if a.begins_with("--chapter="): target_chapter = int(a.substr(10))
 		if a == "--flex": flex = true
+		if a == "--noclear": noclear = true
 		if a == "--end": target_chapter = 7          # play to the end of the story (until the last pet is home)
 		if a.begins_with("--trace="): trace = int(a.substr(8))
 		if a.begins_with("--accuracy="): accuracy = clampf(float(a.substr(11)), 0.05, 1.0)
@@ -86,6 +89,9 @@ func _ready() -> void:
 			print("   patch %d: crop %s plants %s ready %s weeds %.1f stones %.1f snow %s growth %.2f" % [i, q["crop"], str(q["plants"]), str(q["ready"]), float(q["weeds"]), float(q["stones"]), str(q.get("snow", false)), float(q["growth"])])
 		for c in G.fields.crops_for("field"): print("   plan %s: %s sow_ok %s" % [c, str(G.fields.plant_plan("field", c)), str(G.fields.sow_ok("field", c))])
 		print("   season %s seeds %s inv carrots %.0f clover %.0f" % [G.seasons.season(), str(G.S["seeds"]), G.inventory.count("carrot"), G.inventory.count("clover")])
+	for ch in crowd:
+		var cw: Array = crowd[ch]
+		print("crowding ch%d: %d field harvests, %.1f%% of the harvest lost to weeds and stones on average (%d%% of the patches had some); the old rule slowed growth by %.1f%% at harvest" % [ch, cw[0], 100.0 * float(cw[2]) / maxf(1.0, float(cw[0])), int(round(100.0 * float(cw[1]) / maxf(1.0, float(cw[0])))), 100.0 * float(cw[3]) / maxf(1.0, float(cw[0]))])
 	print("DONE iters %d steps %d chapter %d unlocked %d cards %d goals %d coins %d ms %d" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.progression.cards_learned(), G.S["goals"], int(G.S["coins"]), Time.get_ticks_msec() - t0])
 	_close_chapter(G.chapter() > int(_row["chapter"]))
 	if report_path != "": _write_report()
@@ -138,6 +144,30 @@ func _ready() -> void:
 	get_tree().quit()
 
 ## ------------------------------------------------------------------ the pacing report (--report=FILE)
+## A child pulls the weeds and picks the stones of a ripe patch before harvesting it (each takes a share of the harvest, crops-and-items/02),
+## when two or more stand on it and the energy allows. The rest of the clearing stays as it was (weeds from 3, stones from 2).
+func _clear_before_harvest(p: Dictionary, i: int) -> void:
+	if G.fields.crowd_things(p) < 2: return
+	var taps := 0
+	while int(floor(float(p["weeds"]))) >= 1 and G.S["energy"] >= 4.0 and taps < 4:
+		if not G.actions.perform("weed", G.actions.farmer, {"i": i})["done"]: break
+		taps += 1
+	taps = 0
+	while int(floor(float(p["stones"]))) >= 1 and G.S["energy"] >= 4.0 and taps < 3:
+		if not G.actions.perform("pick_stones", G.actions.farmer, {"i": i})["done"]: break
+		taps += 1
+
+## What the weeds and stones on a ripe field patch cost its harvest, and what the old rule would have slowed it by (a report line at the end).
+func _note_crowding(p: Dictionary) -> void:
+	var ch: int = G.chapter()
+	if not crowd.has(ch): crowd[ch] = [0, 0, 0.0, 0.0]
+	var c: Array = crowd[ch]
+	var loss: float = G.fields.crowd_loss(p)
+	c[0] += 1
+	if loss > 0.0: c[1] += 1
+	c[2] += loss
+	c[3] += 1.0 - maxf(0.5, 1.0 - 0.04 * float(p["weeds"]) - 0.04 * float(p["stones"]))
+
 func _begin_chapter() -> void:
 	_row = {"chapter": G.chapter(), "step0": int(G.S["step"]), "rest0": int(G.S["stats"]["rest"]),
 		"actions0": G.saves_requested - int(G.S["step"]), "know0": know_answers}
@@ -225,7 +255,7 @@ func _ready_orders() -> Array:
 	return out
 
 ## A market trip when there is something to do in the village: pack (orders first, then the surplus that sells best per load),
-## go (the walk is one question), then deliver, buy, barter, sell, and come home.
+## go (the walk is one question), then deliver, buy, barter, sell, and come home (one more question).
 func _trip() -> void:
 	var orders := _ready_orders()
 	var sell_value := 0.0
@@ -240,7 +270,7 @@ func _trip() -> void:
 	for k in want_sell: sell_load += G.inventory.load_of(k, float(want_sell[k]))
 	var near_cap := false      # a full store wastes harvests: go before it overflows
 	for k in want_sell:
-		if G.inventory.count(k) >= G.needs.storage_cap() - 3.0: near_cap = true
+		if G.inventory.count(k) >= G.needs.storage_cap(k) - 3.0: near_cap = true
 	var selling: bool = sell_value >= 150.0 and (sell_load >= 0.6 * G.trip.capacity() or near_cap or G.S["step"] - last_trip >= 12)
 	if not errands and not selling: return
 	if orders.is_empty() and G.S["step"] - last_trip < 3: return
@@ -272,10 +302,10 @@ func _trip() -> void:
 		var need_n := ceili(float(_needed_items().get(mid_k[1], 1.0)) - G.inventory.count(mid_k[1]))
 		var c0: float = G.inventory.count(mid_k[1])
 		G.trade.buy_item(mid_k[0], mid_k[1], maxi(1, need_n))
-		if "--trips" in OS.get_cmdline_user_args() and G.S["step"] > 280: print("   buy %s %d (need %d) had %.0f now %.0f room %d coins %d cap %d" % [mid_k[1], maxi(1, need_n), need_n, c0, G.inventory.count(mid_k[1]), G.trip.can_buy(G.inventory.weight_of(mid_k[1])), int(G.S["coins"]), int(G.needs.storage_cap())])
+		if "--trips" in OS.get_cmdline_user_args() and G.S["step"] > 280: print("   buy %s %d (need %d) had %.0f now %.0f room %d coins %d cap %d" % [mid_k[1], maxi(1, need_n), need_n, c0, G.inventory.count(mid_k[1]), G.trip.can_buy(G.inventory.weight_of(mid_k[1])), int(G.S["coins"]), int(G.needs.storage_cap(mid_k[1]))])
 	for mid_k in want_barter:
 		G.trade.barter(mid_k[0], mid_k[1])
-	G.trip.leave()
+	_answer_until_moved("home_from_village")     # the walk home is one question too: a right first answer, then the farmer is home
 
 ## Is the item packed for an order that was not handed over (it should not be sold)?
 func _held_for_order(k: String, orders: Array) -> bool:
@@ -356,7 +386,7 @@ func _needed_items() -> Dictionary:
 	for id in G.nodes:
 		if not G.progression.is_open(id): continue
 		var n = G.nodes[id]
-		if n.get("optional", false) and n["type"] != "gear" and id != "hand_cart": continue      # (the first cart carries the trips: worth the axle)
+		if n.get("optional", false) and n["type"] != "gear" and not id in ["hand_cart", "sq_sick_neighbour"]: continue      # (the first cart carries the trips: worth the axle; Old Jan's soup gets the donkey that makes them cheaper)
 		var c: Dictionary = G.pace.node_cost(id)
 		for k in c:
 			if k in ["coins", "energy", "water"]: continue
@@ -424,7 +454,10 @@ func _turn() -> void:
 	for i in range(G.S["patches"].size()):
 		if not G.fields.patch_usable("field", i): continue
 		var p = G.S["patches"][i]
-		if p["ready"]: G.actions.perform("harvest", G.actions.farmer, {"a": "field", "i": i})
+		if p["ready"]:
+			if not noclear: _clear_before_harvest(p, i)
+			_note_crowding(p)
+			G.actions.perform("harvest", G.actions.farmer, {"a": "field", "i": i})
 		if float(p["weeds"]) >= 3.0: G.actions.perform("weed", G.actions.farmer, {"i": i})
 		if float(p["stones"]) >= 2.0: G.actions.perform("pick_stones", G.actions.farmer, {"i": i})
 		if p["crop"] == "":
@@ -506,7 +539,9 @@ func _turn() -> void:
 				for k in need:
 					if k.begins_with("tag:") and (G.items[o].get("tags", []) as Array).has(k.substr(4)): useful = true
 			var gathering: bool = r["station"] in ["wild_edge", "clay_pit"]      # the forest edge, and the clay pit at the pond (nature/05)
-			if gathering and G.S["woodpile"] < 6: useful = true
+			if gathering and G.S["woodpile"] < 6:      # (only what still has room in the store: a tap on a full shelf gains nothing but uses up the allowance of the others, money-market/08)
+				for o in r["outputs"]:
+					if G.inventory.count(o) < G.needs.storage_cap(o) - 0.5: useful = true
 			if coins_short and not gathering:       # a craft that sells for more than its stuff is worth (and the store has room)
 				for o in r["outputs"]:
 					if G.items[o].get("category", "") == "craft" and G.inventory.count(o) < 4.0 and G.inventory.value_of(o) >= 100.0: useful = true
@@ -526,7 +561,7 @@ func _turn() -> void:
 	for mid in G.nodes:
 		if G.nodes[mid]["type"] != "merchant" or not G.done(mid): continue
 		for k in G.nodes[mid].get("sells", {}):
-			if need.has(k) and G.inventory.count(k) < float(need[k]) and (G.S["coins"] > 900 or not G.S["seen"].has(k)) and G.inventory.count(k) < G.needs.storage_cap() - 0.5: want_buy.append([mid, k])
+			if need.has(k) and G.inventory.count(k) < float(need[k]) and (G.S["coins"] > 900 or not G.S["seen"].has(k)) and G.inventory.count(k) < G.needs.storage_cap(k) - 0.5: want_buy.append([mid, k])
 		for k in G.nodes[mid].get("barter", {}):
 			if need.has(k) and G.inventory.count(k) < 1: want_barter.append([mid, k])
 	# unlock what we can: main goals first, then optional upgrades and gear, polish once

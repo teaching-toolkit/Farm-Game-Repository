@@ -23,6 +23,25 @@ func _ready() -> void:
 	ST.mark_seen("c1_bunny")
 	G.S["step"] = 3
 	_check(ST.is_ready("c1_bell_out"), "…one question after")
+	# story/11: a chapter ends with its frame; nothing of the next chapter shows before it (the real data, chapter 1 to 2)
+	G.reset_game()
+	G.S["unlocked"]["pet_bunny"] = true
+	G.S["step"] = 5
+	_check(G.chapter() == 2 and ST.is_ready("c1_bunny") and ST.is_ready("c2_letter") == false, "the bunny is home, chapter 2 has begun, but its first beat waits for chapter 1's frame")
+	_check(ST.frame_owed(2) and not ST.frame_owed(1), "chapter 1's frames are still to come for a later chapter's pieces, not for chapter 1's own")
+	ST.mark_seen("c1_frame0")      # the opening frame was shown at the start
+	ST.mark_seen("c1_bunny")
+	ST.mark_seen("c1_bell_out")
+	_check(ST.next_piece() == "c1_frame1" and str(ST.piece("c1_frame1").get("kind", "")) == "frame", "right after the last beat of the chapter the frame is next")
+	_check(not ST.ready().has("c2_letter"), "…and the next chapter's beats still wait")
+	ST.mark_seen("c1_frame1")
+	_check(not ST.frame_owed(2) and ST.is_ready("c2_letter") and ST.next_piece() == "c2_letter", "once the frame was shown, the next chapter starts with its beat")
+	_check(ST.is_ready("c2_frame2") == false and ST.piece("c2_frame2").get("when", []) == ["seen:c2_hook"], "a later frame's own conditions say when it comes (a frame is not held back by an earlier one)")
+	# every chapter's frame hangs on that chapter's last beat, so a frame always comes (chapters 1 to 6, one frame each, the opening one first)
+	var frames := []
+	for id in ST.pieces():
+		if str(ST.piece(id).get("kind", "")) == "frame": frames.append(id)
+	_check(frames.size() == 7 and frames[0] == "c1_frame0", "seven frames: the opening and one after each chapter (%s)" % str(frames))
 	# story/12: the hens argue only when there are two of them; one hen gets her own bark (chance left out: it is the same every question)
 	var hens_when: Array = ST.piece("c1_k_hens")["when"].filter(func(c): return not str(c).begins_with("chance:"))
 	var alone_when: Array = ST.piece("c1_k_hen_alone")["when"].filter(func(c): return not str(c).begins_with("chance:"))

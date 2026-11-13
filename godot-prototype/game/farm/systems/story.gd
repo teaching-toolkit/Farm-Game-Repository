@@ -39,16 +39,27 @@ func pages(id: String) -> Array:
 func _fill(t: String) -> String:
 	return t.replace("{player}", G.player if G.player != "" else tr("friend"))
 
-## Can this piece show now? Its chapter has come, it has not been seen (unless it is a bark that may come back) and its conditions hold.
+## Can this piece show now? Its chapter has come, no frame of an earlier chapter is still to be shown, it has not been seen (unless it is a bark
+## that may come back) and its conditions hold.
 func is_ready(id: String) -> bool:
 	var p := piece(id)
 	if p.is_empty() or pages(id).is_empty(): return false
 	if int(p.get("chapter", 1)) > G.chapter(): return false
+	if str(p.get("kind", "")) != "frame" and frame_owed(int(p.get("chapter", 1))): return false
 	var once: bool = bool(p.get("once", str(p.get("kind", "")) != "bark"))
 	if seen(id):
 		if once: return false
 		if G.S["step"] - int(G.S["story_seen"][id]) < int(p.get("cooldown", bark_rest())): return false
 	return G.conditions.holds_all(p.get("when", []))
+
+## A chapter ends with its frame (the grandchildren at the bed, story/11): nothing of a later chapter shows before the frame of every earlier
+## chapter has been shown. True while such a frame is still to come (the last beat of its chapter hangs on the Helper's coming home, so it
+## always comes; a frame's own `when` says after which beat).
+func frame_owed(chapter: int) -> bool:
+	for id in pieces():
+		var p: Dictionary = pieces()[id]
+		if str(p.get("kind", "")) == "frame" and int(p.get("chapter", 1)) < chapter and not seen(id): return true
+	return false
 
 ## A bark does not come back within this many questions (rules/65-feel.json, story.barkRest), unless the piece sets its own cooldown.
 func bark_rest() -> int:

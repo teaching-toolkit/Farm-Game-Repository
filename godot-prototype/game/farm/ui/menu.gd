@@ -143,11 +143,11 @@ func _part_review_share(box: Control) -> void:
 	var pct := int(round(G.pace.review_share() * 100.0))
 	var row := UI.hbox(8)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_child(UI.soft_button("➖", _change_review_share.bind(-0.05), pct > 0, 20))
+	row.add_child(UI.soft_button("➖", _change_review_share.bind(-0.05), pct > 0, 20, tr("That is as low as it goes.")))
 	var bar := UI.bar(G.pace.review_share(), 220, 16, UI.BLUE)
 	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(bar)
-	row.add_child(UI.soft_button("➕", _change_review_share.bind(0.05), pct < 100, 20))
+	row.add_child(UI.soft_button("➕", _change_review_share.bind(0.05), pct < 100, 20, tr("That is as high as it goes.")))
 	v.add_child(row)
 	v.add_child(UI.label(tr("📚 %d%% from the books read   ·   📦 %d%% from your question packs") % [pct, 100 - pct], 16, UI.INK, true))
 	v.add_child(UI.label(tr("A book question only comes when a card is due for review; otherwise a pack question takes its place."), 14, UI.MUTED, true))
@@ -162,11 +162,11 @@ func _part_slow_share(box: Control) -> void:
 	var pct := int(round(G.needs.slow_share() * 100.0))
 	var row := UI.hbox(8)
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_child(UI.soft_button("➖", _change_slow_share.bind(-0.1), pct > 0, 20))
+	row.add_child(UI.soft_button("➖", _change_slow_share.bind(-0.1), pct > 0, 20, tr("That is as low as it goes.")))
 	var bar := UI.bar(G.needs.slow_share(), 220, 16, UI.AMBER)
 	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(bar)
-	row.add_child(UI.soft_button("➕", _change_slow_share.bind(0.1), pct < 100, 20))
+	row.add_child(UI.soft_button("➕", _change_slow_share.bind(0.1), pct < 100, 20, tr("That is as high as it goes.")))
 	v.add_child(row)
 	v.add_child(UI.label(tr("🐢 %d%% of the energy of a quick answer") % pct, 16, UI.INK, true))
 	v.add_child(UI.label(tr("A right answer after the timer gives this share; a quick one always gives all of it."), 14, UI.MUTED, true))

@@ -65,6 +65,9 @@ grep -q "^FOREST OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/crops_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^CROPS|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^CROPS OK/✔ hay and winter wheat/; s/^CROPS FAILED/✘ hay and winter wheat/'
 grep -q "^CROPS OK" "$LOG" || FAIL=1
+"$G" --headless --path . res://tests/crowding_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
+grep -E "^CROWDING|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^CROWDING OK/✔ weeds and stones crowd a patch/; s/^CROWDING FAILED/✘ weeds and stones crowd a patch/'
+grep -q "^CROWDING OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/actions_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^ACTIONS|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^ACTIONS OK/✔ chores: check and perform/; s/^ACTIONS FAILED/✘ chores: check and perform/'
 grep -q "^ACTIONS OK" "$LOG" || FAIL=1

@@ -1,8 +1,9 @@
 {
   "trip": {
-    "note": "The bag and the market trip (TODO M5, M6, M11). What the farmer carries to the village: the bag holds load units (the weights of rules/45-weight.json; a normal thing is 1). Capacity = the best carrying thing you own (devices: node id -> load units), at least `base` (what fits in your arms). Packing does not take things out of the store: packed things stay there, marked, and can be unpacked for free. A trip costs `energy.base` x the errand multiplier (rucksacks, boots) x what a better road saves (roadSaving per road level above 1, never below roadFloor), at least `energy.min`, and exactly one Time Quiz question.",
+    "note": "The bag and the market trip (TODO M5, M6, M11). What the farmer carries to the village: the bag holds load units (the weights of rules/45-weight.json; a normal thing is 1). Capacity = the best carrying thing you own (devices: node id -> load units), at least `base` (what fits in your arms). Packing does not take things out of the store: packed things stay there, marked, and can be unpacked for free. Strength (the wellbeing parameter, 0.5 at the start and frozen until chapter 2) carries more: above `strength.from` every point of strength adds `strength.perPoint` of the capacity (full strength: +30%), never less than the plain capacity, in whole load units. A trip costs `energy.base` x the errand multiplier (boots: energy:errand) x what a better road saves (roadSaving per road level above 1, never below roadFloor) x the trip multiplier (a borrowed donkey, a favour: energy:trip), rounded up, at least `energy.min`, and exactly one Time Quiz question; the way back from the village is one more Time Quiz question and no energy.",
     "base": 20,
     "devices": {"fiber_bag": 30, "hand_cart": 60, "wicker_pack": 44, "canvas_rucksack": 60, "frame_rucksack": 80, "wheelbarrow": 100},
+    "strength": {"from": 0.5, "perPoint": 0.6},
     "energy": {"base": 3, "roadSaving": 0.15, "roadFloor": 0.4, "min": 1},
     "storeFilters": [
       {"id": "crops", "emoji": "🌾", "cats": ["crop"]},
@@ -10,6 +11,35 @@
       {"id": "crafts", "emoji": "🧺", "cats": ["craft", "textile", "container", "pet-item", "find", "keeper"]},
       {"id": "herbs", "emoji": "🌿", "cats": ["herb", "remedy"]},
       {"id": "materials", "emoji": "🪵", "cats": ["material", "fertilizer", "byproduct", "feed", "fuel"]}
-    ]
+    ],
+    "square": {
+      "note": "The village square as its own screen (money-market/07): a mockup made from pictures the game already has. While the farmer is in the village, this scene stands where the farm was, and the window below it shows the stall that was tapped. backdrop: a painted picture assets/<backdrop>.png, used as the whole scene once it exists (pictures/04); until then the sky and ground colours, the ground tile and the deco pictures below make the scene. Every picture stands with the middle of its lower edge at x, y (shares of the scene's width and height) and is w of the scene's width wide (never taller than maxH of its height). stalls: what can be tapped; id is a stall a part of the interface registered (ui/square.gd add_stall: sell, seeds, traders, orders, board) or home (the walk home); first: the stall open on arrival when the farmer came for none in particular; art '' makes a stall an invisible tap area of w x h (for a painted backdrop). Swapping the mockup for painted pictures needs only this block and the picture files.",
+      "backdrop": "square/square",
+      "first": "seeds",
+      "sky": "bfe3f0",
+      "hills": "9cc98a",
+      "ground": "tiles/path",
+      "horizon": 0.4,
+      "maxH": 0.62,
+      "deco": [
+        {"art": "deco/tree_pine", "x": 0.04, "y": 0.44, "w": 0.1},
+        {"art": "map/cottage", "x": 0.17, "y": 0.5, "w": 0.2},
+        {"art": "deco/tree_oak", "x": 0.33, "y": 0.46, "w": 0.13},
+        {"art": "map/windmill_1", "x": 0.5, "y": 0.47, "w": 0.13},
+        {"art": "map/farmhouse", "x": 0.68, "y": 0.5, "w": 0.19},
+        {"art": "deco/tree_oak", "x": 0.86, "y": 0.47, "w": 0.14},
+        {"art": "deco/tree_pine", "x": 0.97, "y": 0.45, "w": 0.09},
+        {"art": "map/well_3", "x": 0.52, "y": 0.6, "w": 0.07},
+        {"art": "deco/bench", "x": 0.8, "y": 0.6, "w": 0.07}
+      ],
+      "stalls": [
+        {"id": "sell", "art": "map/market_stall", "emoji": "🪙", "x": 0.16, "y": 0.97, "w": 0.24},
+        {"id": "seeds", "art": "map/market", "emoji": "🌱", "x": 0.4, "y": 0.99, "w": 0.2},
+        {"id": "traders", "art": "map/broker", "emoji": "🧺", "x": 0.64, "y": 0.99, "w": 0.2},
+        {"id": "orders", "art": "addons/hand_cart", "emoji": "📦", "x": 0.52, "y": 0.86, "w": 0.11},
+        {"id": "board", "art": "map/board", "emoji": "📋", "x": 0.81, "y": 0.92, "w": 0.12},
+        {"id": "home", "art": "map/village_sign", "emoji": "🏠", "x": 0.94, "y": 0.99, "w": 0.1}
+      ]
+    }
   }
 }

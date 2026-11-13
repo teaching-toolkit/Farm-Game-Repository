@@ -11,13 +11,15 @@
     },
     "notes": {
       "secs": {"value": 5.0, "unit": "seconds", "note": "How long a note (notification) stays on screen."},
-      "hintSecs": {"value": 3.0, "unit": "seconds", "note": "How long a hint stays (the short note when a bar is tapped)."},
+      "hintSecs": {"value": 3.0, "unit": "seconds", "note": "How long a hint stays (the short toast of an older kind; the note of a tapped bar, item or greyed-out button is `infoSecs`)."},
+      "infoSecs": {"value": 8.0, "unit": "seconds", "note": "How long the short note stays when something is tapped (a bar, an item, a greyed-out button): long enough to read it, or to hear it read aloud. A tap anywhere sends it away sooner. interface-feel/01, 02."},
       "newSecs": {"value": 6.0, "unit": "seconds", "note": "How long the 'New: ...' note stays when something new opens."},
       "maxShown": {"value": 4, "unit": "notes", "note": "At most this many notes at a time; the oldest one leaves first."}
     },
     "story": {
       "rationSteps": {"value": 3, "unit": "questions", "note": "At most one story piece per this many Time Quiz questions."},
       "barkRest": {"value": 12, "unit": "questions", "note": "A bark (a short remark) does not come back within this many questions, unless the piece sets its own cooldown."},
+      "frameFade": {"value": 0.4, "unit": "seconds", "note": "The grandchildren's frame between the chapters (a full-screen black scene): how long the picture and the words take to fade in on every page."},
       "pictureHeight": {"value": 520, "unit": "pixels", "note": "How high a painted story picture is shown in the story box (the box is up to 760 wide)."},
       "newsMax": {"value": 4, "unit": "boxes", "note": "At most this many news boxes (a change of season, a golden acorn, a favour done, a party) wait for a quiet moment; the oldest goes."}
     },
@@ -41,7 +43,7 @@
   "interruptions": {
     "note": "What takes the screen next (interruption-queue): the interruption queue (kits/ui/interruptions.gd, set up in game/farm/ui/interrupts.gd) shows things that arrive on their own in this order, first wins. Each kind waits for the busy screens and the other kinds it names: a kind name means 'while one of that kind is waiting'. Busy screens: see 'busy'. Change the order or what a kind waits for here, not in a script.",
     "busy": {
-      "popup": "A pop-up is open (Time Quiz, Rest, a card, a menu, or another interruption's box).",
+      "popup": "A pop-up is open (Time Quiz, Rest, a card, a menu, or another interruption's box, also a full-screen frame scene).",
       "rest": "The Rest pop-up is open.",
       "playback": "After the Time Quiz the farm has not started catching up yet (it still shows the old state).",
       "catchup": "The farm is catching up after the Time Quiz (rain, plants growing, pests); ends when it has played to the end or a tap skipped it.",
@@ -54,9 +56,10 @@
       {"kind": "celebration", "waitsFor": ["popup", "playback", "catchup", "postcard"], "note": "The big 'New!' pop-up for a building, tool, Helper or perk. May come over a sheet."},
       {"kind": "discovery", "waitsFor": ["popup", "rest", "playback", "postcard", "celebration"], "note": "A story Discovery: comes over a sheet (the child just tapped what it is about)."},
       {"kind": "scene", "waitsFor": ["popup", "rest", "playback", "postcard", "celebration"], "note": "A story Scene (a delivery or favour handed over on the village square): comes over a sheet, right after the hand-over tap, before the square is left."},
-      {"kind": "story", "waitsFor": ["popup", "rest", "playback", "postcard", "celebration", "sheet"], "note": "Every other story box (frame, beat, letter, moment, visit): waits until no sheet covers the farm."},
-      {"kind": "news", "waitsFor": ["popup", "rest", "playback", "postcard", "celebration", "sheet"], "note": "A news box with a picture (a change of season, a golden acorn, a favour done, a party): the same quiet moment as a story box, after it."},
-      {"kind": "bark", "waitsFor": ["popup", "rest", "playback", "bubble"], "note": "A bark: a speech bubble; only one at a time, and it blocks nothing."}
+      {"kind": "frame", "waitsFor": ["popup", "rest", "playback", "catchup", "postcard", "celebration", "sheet"], "note": "A frame scene (the grandchildren at the bed, the opening and after each chapter's last beat): a full-screen black scene with its own music. Waits like a story box, and also for the farm to finish catching up, so the child sees what the last answer did first. Nothing of the story comes before it."},
+      {"kind": "story", "waitsFor": ["popup", "rest", "playback", "postcard", "celebration", "frame", "sheet"], "note": "Every other story box (beat, letter, moment, visit): waits until no sheet covers the farm."},
+      {"kind": "news", "waitsFor": ["popup", "rest", "playback", "postcard", "celebration", "frame", "sheet"], "note": "A news box with a picture (a change of season, a golden acorn, a favour done, a party): the same quiet moment as a story box, after it."},
+      {"kind": "bark", "waitsFor": ["popup", "rest", "playback", "frame", "bubble"], "note": "A bark: a speech bubble; only one at a time, and it blocks nothing."}
     ]
   }
 }

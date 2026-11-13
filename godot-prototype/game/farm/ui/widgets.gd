@@ -50,7 +50,7 @@ func effect_text(e: Dictionary) -> String:
 			"energyPerRest": out.append(tr("%s ⚡ per Rest answer") % num(float(v)))
 			"waterPerStep": out.append(tr("+%s 💧 per question") % num(float(v)))
 			"waterCap": out.append(tr("holds %d 💧") % int(v))
-			"storageCap": out.append(tr("holds %d of each item") % int(v))
+			"storageLoad": out.append(tr("every kind of thing gets %d load of room") % int(v))
 			"patchCap": out.append(tr("%d plants per patch") % int(v))
 			"scare": out.append(tr("chases %s pests per question") % num(float(v)))
 			"pestBlock": out.append(tr("%d%% fewer pests get in") % int(round(float(v) * 100)))
@@ -224,7 +224,7 @@ func node_row(id: String, show_button := true, show_place := false, tile := fals
 		if str(ck.get("why", "")) == "wait":
 			b = UI.wait_button(int(ck["wait"]), M.timequiz.show_time_quiz)      # the mortar is drying: wait for the next step
 		else:
-			b = UI.action_button("", do_unlock.bind(id), ck["ok"], UI.GREEN, verb, _node_word(id))
+			b = UI.action_button("", do_unlock.bind(id), ck, UI.GREEN, verb, _node_word(id))      # grey when the rule says no; a tap tells why (interface-feel/02)
 		if tile: bottom = b
 		else: h.add_child(b)
 	if steps.size() > 0:
@@ -300,8 +300,9 @@ func grid(cols := 3) -> GridContainer:
 	g.add_theme_constant_override("v_separation", 8)
 	return g
 
-## One tile of a grid: a picture (or emoji), a name, and room below for amounts and buttons.
-func tile(pic: Texture2D, emoji: String, title: String, bg := UI.PAPER) -> VBoxContainer:
+## One tile of a grid: a picture (or emoji), a name, and room below for amounts and buttons. `item`: the thing it shows; a tap on the tile
+## (not on its buttons) then gives that item's note (interface-feel/01).
+func tile(pic: Texture2D, emoji: String, title: String, bg := UI.PAPER, item := "") -> VBoxContainer:
 	var pc := UI.card(bg)
 	pc.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var v := UI.vbox(3)
@@ -321,6 +322,7 @@ func tile(pic: Texture2D, emoji: String, title: String, bg := UI.PAPER) -> VBoxC
 	top.add_child(tl)
 	v.add_child(top)
 	v.set_meta("panel", pc)
+	if item != "": UI.info(pc, "item", item)
 	return v
 
 ## The action button at the bottom of a tile: as wide as the tile, pushed to the bottom so the buttons of a row line up.

@@ -31,11 +31,12 @@ func queue_pump() -> void:
 func pump() -> bool:
 	return M.interrupts.pump_story()
 
-## The queue kind of a piece: a bark, a Discovery and a Scene have their own (both may come over a sheet: a Scene opens on the square
-## right after the hand-over); every other piece is a "story" box.
+## The queue kind of a piece: a bark, a Discovery, a Scene and a frame have their own (a Discovery and a Scene may come over a sheet: a
+## Scene opens on the square right after the hand-over; a frame is the full-screen bedside scene, ui/framescene.gd); every other piece
+## is a "story" box.
 func queue_kind(id: String) -> String:
 	var kind := str(G.story.piece(id).get("kind", ""))
-	return kind if kind in ["bark", "discovery", "scene"] else "story"
+	return kind if kind in ["bark", "discovery", "scene", "frame"] else "story"
 
 ## The next ready piece of this queue kind as the interruption queue wants it ({"kind", "key", "show"}), or {}. One source per queue
 ## kind, so a Scene on the square is not held back by a story box that waits for the square to close (the order list ranks them).
@@ -54,17 +55,33 @@ func bubble_count() -> int:
 
 # ------------------------------------------------------------------ showing
 
-## Shows a piece: a bark as a speech bubble, everything else as a box. Marks it seen (a box that is closed early is not shown again).
+## Shows a piece: a bark as a speech bubble, a frame as the full-screen black scene, everything else as a box. Marks it seen (a box that
+## is closed early is not shown again).
 func show_piece(id: String, reread := false) -> void:
 	var kind := str(G.story.piece(id).get("kind", ""))
 	var again := reread or G.story.seen(id)
 	if not reread: G.story.mark_seen(id)
+	if kind == "frame":
+		M.frame_scene.show_frame(id, again)
+		return
 	if kind == "bark":
 		for pg in G.story.pages(id):
 			M.toasts.notify("%s %s" % [_emoji(id), pg["text"]], 0.0, true)
 		return
 	_then = str(G.story.piece(id).get("then", "")) if not reread else ""
 	_page(id, 0, again)
+
+## The picture of one page of a piece as the story box draws it: a painted scene (assets/story/<id>_p<page>.png, else <id>.png), else the
+## page's own picture name from a folder; null if there is none (the caller shows the emoji). `page` counts from 0.
+func page_picture(id: String, page: int) -> Texture2D:
+	var scene := _scene(id, page)
+	if scene: return scene
+	var pages: Array = G.story.pages(id)
+	return _picture(id, str(pages[page].get("picture", ""))) if page < pages.size() else null
+
+## The piece's emoji (its own, else its kind's).
+func emoji_of(id: String) -> String:
+	return _emoji(id)
 
 func _emoji(id: String) -> String:
 	var p := G.story.piece(id)

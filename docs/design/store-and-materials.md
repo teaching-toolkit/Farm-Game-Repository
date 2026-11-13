@@ -34,7 +34,7 @@ harvest. **In winter** only hardy crops (winter wheat, onions, beans, kale) can 
 - **Carrying gear takes bigger loads.** The Gathering Basket, Wicker Pack and Canvas and Frame Rucksacks add loads to every
   gathering tap (🧺×2, ×3 …): more comes in per question, for the same energy per piece (`meta.carry`). A tap takes a
   smaller load when energy is short.
-- **The store** holds a limited number of **each** item: Basket 10 → Log Shed 25 → Warehouse 60 (gifts add a few). It opens from the
+- **The store** gives **each kind of thing** the same shelf, counted in load units (`storageLoad`, `money-market/08`): Basket 40 → Log Shed 100 → Warehouse 240 (the Deep Pockets gift adds 20). How many fit follows the weight of §5.5: the Basket holds 10 big rocks or logs (4 each), 20 planks or straw (2), 40 carrots (1), 80 sticks or small stones (0.5), 400 herbs (0.1). One kind never crowds out another, and the heavy things hold exactly what they held before. Tools and the like have no limit. A thing's pop-up shows how many fit. It opens from the
   storage place on the map (the basket, later the log shed and the warehouse): on top *🧺 Harvest all*, then *What you have* as a grid of tiles (picture, name, the number, 🍂 when it goes stale
   soon, 🎒 and the number packed, and a coloured dot for each grade there is), with a filter row (All, Crops, Food, Crafts, Herbs,
   Materials; `storeFilters` in `rules/49-trip.json`), and the 🌱 *Seeds*. A tap on a tile opens the thing: how many of each grade
@@ -43,7 +43,7 @@ harvest. **In winter** only hardy crops (winter wheat, onions, beans, kale) can 
   not fit flies to the store, bounces off and tumbles away (🚫). Some things are **keepers** — needed but not used up (the
   tin pot, the sourdough starter, cultures, the stone in Stone Soup).
 - **Every thing has a weight** (five classes: feather 0.1 · light 0.5 · normal 1 · bulky 2 · heavy 4 load units; seeds are feathers; straw is light but
-  bulky, logs, stones and iron ore are heavy; `data/farm/rules/45-weight.json`). It works from the start but is not shown and limits nothing until
+  bulky, logs, big rocks and iron ore are heavy, a small stone is light; `data/farm/rules/45-weight.json`). It works from the start but is not shown and limits nothing until
   the first market trip (§5.3b), when carrying (backpack → basket → cart, the farmer's strength, the road) starts to matter.
 
 ### 5.6 Fuel and the woodpile 🪵

@@ -43,7 +43,7 @@ func _spot_card(sid: String) -> void:
 		var ck: Dictionary = G.actions.check("forest_" + str(t["kind"]), G.actions.farmer, {"spot": sid, "tid": str(t["id"])})
 		var left: int = G.forest.rest_left(sid, str(t["id"]))
 		var txt := tr(str(t["heading"]))
-		var b := UI.button(txt + ("   ⏳%d" % left if left > 0 else ""), _task.bind(sid, str(t["id"])), ck["ok"], UI.GREEN if t["kind"] != "look" else UI.AMBER, 16)
+		var b := UI.button(txt + ("   ⏳%d" % left if left > 0 else ""), _task.bind(sid, str(t["id"])), ck, UI.GREEN if t["kind"] != "look" else UI.AMBER, 16)
 		b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		v.add_child(b)
 		if not ck["ok"] and ck["unmet"][0]["text"] != "" and left == 0: v.add_child(UI.label(str(ck["unmet"][0]["text"]), 13, UI.MUTED, true))

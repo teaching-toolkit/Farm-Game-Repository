@@ -227,16 +227,53 @@ func grow_target(p: Dictionary) -> float:
 	if n.has("regrow") and int(p.get("cycles", 0)) > 0: return float(n["regrow"])
 	return float(n.get("grow", 3))
 
-func slow_factor(p: Dictionary) -> float:
-	var sl := float(G.meta.get("stones", {}).get("slowPerStone", 0.04))
-	return maxf(0.5, 1.0 - 0.04 * float(p["weeds"]) - sl * float(p["stones"]))
-
+## Growth no longer feels weeds and stones (crops-and-items/02): what they cost is a share of the harvest (crowd_loss).
 func grow_speed(a: String, p: Dictionary) -> float:
 	var base := 1.0 / maxf(0.2, G.m("grow"))
 	if a == "gh": return base
 	var sg := float(G.seasons.smod("grow", 1.0))
 	if G.seasons.season() == "winter": sg += G.g("winterGrow", 0.0)
-	return base * sg * float(p.get("soil", 1.0)) * slow_factor(p)
+	return base * sg * float(p.get("soil", 1.0))
+
+# ------------------------------------------------------------------ weeds and stones crowd a patch (crops-and-items/02)
+
+## How many weeds and stones stand on a patch: the whole ones, as the map draws them (a half weed is not drawn and cannot be pulled).
+func crowd_things(p: Dictionary) -> int:
+	return int(floor(float(p.get("weeds", 0.0)) + 0.001)) + int(floor(float(p.get("stones", 0.0)) + 0.001))
+
+## The share of a patch's harvest the weeds and stones take: perThing each, at most max (data: crowding). Worked out at harvest,
+## so pulling and picking before it gives everything back.
+func crowd_loss(p: Dictionary) -> float:
+	return minf(float(G.meta.get("crowding", {}).get("max", 0.75)), crowd_per_thing() * float(crowd_things(p)))
+
+## The share of the harvest one weed or one stone takes (data: crowding.perThing).
+func crowd_per_thing() -> float:
+	return float(G.meta.get("crowding", {}).get("perThing", 0.04))
+
+## How many of the plants shown on the patch stand wilted and grey (the share lost, in whole plants; the map and the sheet draw them).
+func crowd_plants(p: Dictionary) -> int:
+	var n := clampi(shown_plants(float(p.get("plants", 0.0))), 0, 9)
+	return clampi(int(round(float(n) * crowd_loss(p))), 0, n)
+
+## Splits one harvest's amounts into what is kept and what the weeds and stones took: every item loses the share of its total
+## (the fraction rounded up or down at random, so the average holds), and the main crop (the first) keeps at least keepMain.
+## Returns {"kept": {item: n}, "lost": {item: n}}. A clean patch draws no random number.
+func crowd_split(amounts: Dictionary, loss: float) -> Dictionary:
+	if loss <= 0.0: return {"kept": amounts.duplicate(), "lost": {}}
+	var keep_main := float(G.meta.get("crowding", {}).get("keepMain", 1))
+	var kept := {}
+	var lost := {}
+	var first := true
+	for k in amounts:
+		var tot := float(amounts[k])
+		var x := tot * (1.0 - loss)
+		var whole := floorf(x)
+		if G.rng.randf() < x - whole: whole += 1.0
+		if first: whole = minf(tot, maxf(whole, keep_main))
+		first = false
+		kept[k] = whole
+		if tot - whole > 0.0: lost[k] = tot - whole
+	return {"kept": kept, "lost": lost}
 
 ## Harvest one patch, a chore of the actions system (args: a, i). The order of the rolls is luck, then the grade, then every item.
 func _harvest_requires(_who, args: Dictionary) -> Array:
@@ -256,18 +293,23 @@ func _harvest_effect(_who, args: Dictionary, _cost: Dictionary) -> Dictionary:
 	var got := []
 	var arrived := {}
 	var amounts := harvest_amounts(n, maxi(1, shown_plants(float(p["plants"]))), float(p.get("quality", 1.0)), mult)
+	for k in amounts: amounts[k] = float(amounts[k]) + G.g("yield_" + k, 0.0)
+	var split := crowd_split(amounts, crowd_loss(p))           # the weeds and stones on the patch take their share (crops-and-items/02)
 	var grade := G.quality.roll(G.quality.crop_expect(p))      # the whole harvest of a patch has one grade (soil, weeds, stones, upgrades)
-	for k in amounts:
-		var q := float(amounts[k]) + G.g("yield_" + k, 0.0)
-		q = G.inventory.add_item(k, q, false, grade)
+	for k in split["kept"]:
+		var q := G.inventory.add_item(k, float(split["kept"][k]), false, grade)
 		got.append("%s%d" % [G.iemoji(k), G.down(q)])
 		arrived[k] = q
 		G.rewards.job_progress("harvest", k, q)
 	if n.has("seedItem") and G.g("heirloomSeedSaving", 0.0) > 0.0: G.inventory.add_item(n["seedItem"], 1.0)
 	G.S["stats"]["harvests"] = int(G.S["stats"]["harvests"]) + 1
 	G.rewards.check_perks()
+	var took := []
+	for k in split["lost"]: took.append("%s%d" % [G.iemoji(k), G.down(float(split["lost"][k]))])
 	G.say(tr("🧺 Harvested %s: %s") % [n["name"], " ".join(got)] + "  " + G.quality.stars(grade))
+	if not took.is_empty(): G.say(tr("🌿🪨 Weeds and stones took %s") % " ".join(took))
 	G.inventory.emit_gained("patch:%s:%d" % [a, i], arrived)
+	if not split["lost"].is_empty(): G.crowded_out.emit("patch:%s:%d" % [a, i], split["lost"])
 	if n.has("regrow"):
 		p["growth"] = 0.0; p["ready"] = false; p["cycles"] = int(p.get("cycles", 0)) + 1
 	else:

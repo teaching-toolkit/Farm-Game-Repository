@@ -97,7 +97,7 @@
   "pick_stones": {"name": "Pick stones", "station": "wild_edge", "inputs": {}, "outputs": {"stone": 1}, "energy": 2, "cat": "gather", "time": 1, "verb": "Pick"},
   "pull_wild_weeds": {"name": "Pull wild weeds", "station": "wild_edge", "inputs": {}, "outputs": {"fiber": 2}, "energy": 1, "cat": "gather", "time": 1, "verb": "Pull"},
   "chop_deadwood": {"name": "Chop deadwood", "station": "wild_edge", "requires": ["stone_axe"], "inputs": {}, "outputs": {"log": 1, "stick": 1}, "energy": 4, "cat": "wood", "time": 1, "verb": "Chop"},
-  "dig_stones": {"name": "Dig out stones", "station": "wild_edge", "requires": ["wooden_shovel"], "inputs": {}, "outputs": {"stone": 3}, "energy": 5, "cat": "field", "time": 1, "verb": "Dig"},
+  "dig_stones": {"name": "Dig out big rocks", "station": "wild_edge", "requires": ["wooden_shovel"], "inputs": {}, "outputs": {"boulder": 3}, "energy": 5, "cat": "field", "time": 1, "verb": "Dig"},
   "ash": {"name": "Wood ash (burn weeds & twigs)", "station": "campfire", "inputs": {"fiber": 2, "stick": 1}, "outputs": {"ash": 2}, "energy": 2, "cat": "field", "requires": ["k_ash"], "verb": "Sweep"},
   "worm_castings": {"station": "worm_bin", "inputs": {"compost": 1, "straw": 2}, "outputs": {"worm_castings": 1}, "energy": 0, "time": 4, "requires": ["k_worms"], "verb": "Collect"},
   "honey_cake": {"name": "Honey Cake", "station": "oven_2", "inputs": {"tag:flour": 2, "honey": 1, "tag:fat": 1, "egg": 2}, "outputs": {"honey_cake": 1}, "energy": 7, "note": "Same family as the Simple Cake (sugar) — both are cakes, but they taste different.", "fuel": 2, "verb": "Bake"},

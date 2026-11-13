@@ -256,8 +256,8 @@
   "de": "Korb"
  },
  "nodes/basket/desc": {
-  "en": "Holds up to 10 of each item.",
-  "de": "Fasst bis zu 10 von jeder Sache."
+  "en": "A shelf of 40 load for every kind of thing: 10 logs or 40 carrots.",
+  "de": "Ein Regal mit Platz 40 für jede Sorte: 10 Baumstämme oder 40 Karotten."
  },
  "nodes/hands/name": {
   "en": "Hands",
@@ -780,8 +780,8 @@
   "de": "Holzschuppen"
  },
  "nodes/shed/desc": {
-  "en": "First chapter-2 build: room for 25 of each item, so bigger projects fit.",
-  "de": "Der erste Bau in Kapitel 2: Platz für 25 von jeder Sache, damit grössere Vorhaben hineinpassen."
+  "en": "First chapter-2 build: a shelf of 100 load for every kind of thing (25 logs or 100 carrots), so bigger projects fit.",
+  "de": "Der erste Bau in Kapitel 2: ein Regal mit Platz 100 für jede Sorte (25 Baumstämme oder 100 Karotten), damit grössere Vorhaben hineinpassen."
  },
  "nodes/shed/steps/0/name": {
   "en": "Raise the beams",
@@ -2558,6 +2558,14 @@
  "nodes/sq_sick_neighbour/reward/picture": {
   "en": "Old Jan sitting up in bed, cheeks pink, holding your bowl of tomato soup",
   "de": "Der alte Jan sitzt im Bett, mit rosa Backen, und hält deine Schüssel Tomatensuppe"
+ },
+ "nodes/jans_donkey/name": {
+  "en": "Old Jan's donkey",
+  "de": "Der Esel vom alten Jan"
+ },
+ "nodes/jans_donkey/desc": {
+  "en": "Old Jan lends you his donkey. It carries the heavy part: the walk to the village costs less energy.",
+  "de": "Der alte Jan leiht dir seinen Esel. Er trägt das Schwere: Der Weg ins Dorf kostet weniger Energie."
  },
  "nodes/sq_bridge/name": {
   "en": "Mend the footbridge",
@@ -9924,12 +9932,20 @@
   "de": "Vom Gebüsch-Räumen und aus dem Waldstück."
  },
  "items/stone/name": {
-  "en": "Stone",
-  "de": "Stein"
+  "en": "Small stone",
+  "de": "Kleiner Stein"
  },
  "items/stone/desc": {
-  "en": "From clearing rocky patches; cheap at the Raw Materials Merchant.",
-  "de": "Vom Räumen steiniger Beete; billig beim Rohstoffhändler."
+  "en": "Picked up from the ground and out of the soil. For tools, fire rings and small things.",
+  "de": "Vom Boden und aus der Erde aufgelesen. Für Werkzeug, Feuerringe und kleine Dinge."
+ },
+ "items/boulder/name": {
+  "en": "Big rock",
+  "de": "Felsbrocken"
+ },
+ "items/boulder/desc": {
+  "en": "Dug out with a shovel or taken from old ruins. Heavy! For roads, walls and big buildings.",
+  "de": "Mit der Schaufel ausgegraben oder aus alten Ruinen. Schwer! Für Wege, Mauern und grosse Gebäude."
  },
  "items/fiber/name": {
   "en": "Plant Fiber",
@@ -11436,8 +11452,8 @@
   "de": "Hacken"
  },
  "recipes/dig_stones/name": {
-  "en": "Dig out stones",
-  "de": "Steine ausgraben"
+  "en": "Dig out big rocks",
+  "de": "Felsbrocken ausgraben"
  },
  "recipes/dig_stones/verb": {
   "en": "Dig",
@@ -12676,8 +12692,8 @@
   "de": "Tiefe Taschen"
  },
  "meta/giftCards/pool/0/desc": {
-  "en": "Every store holds 5 more.",
-  "de": "Jedes Lager fasst 5 mehr."
+  "en": "Every kind of thing gets 20 load more room in the store.",
+  "de": "Jede Sorte bekommt 20 Platz mehr im Lager."
  },
  "meta/giftCards/pool/1/name": {
   "en": "Hidden Spring",
@@ -13196,8 +13212,8 @@
   "de": "Kraft"
  },
  "meta/well/params/strength/hint": {
-  "en": "Practise: every skill rank makes you stronger.",
-  "de": "Übe: Jede Fähigkeitsstufe macht dich stärker."
+  "en": "Practise: every skill rank makes you stronger, and you can carry more.",
+  "de": "Übe: Jede Fähigkeitsstufe macht dich stärker, und du kannst mehr tragen."
  },
  "meta/well/params/friends/name": {
   "en": "Friends",

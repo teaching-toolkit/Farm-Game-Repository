@@ -24,7 +24,10 @@ func animal_card(aid: String) -> PanelContainer:
 	v.add_child(h)
 	h.add_child(UI.label("%s %s  %d / %d" % [n.get("emoji", ""), n["name"], int(a["count"]), G.animals.animal_cap(aid)], 20, UI.INK, true))
 	var can_buy: bool = int(a["count"]) < G.animals.animal_cap(aid) and G.pace.missing_cost(G.animals.animal_price(aid)).is_empty()
-	h.add_child(UI.button(tr("Buy one  ") + G.pace.cost_text(G.animals.animal_price(aid)), G.animals.buy_animal.bind(aid), can_buy, UI.GREEN, 16))
+	var price_rule: Dictionary = G.pace.cost_check(G.animals.animal_price(aid))
+	if int(a["count"]) >= G.animals.animal_cap(aid): price_rule["unmet"].push_front({"key": "no_room", "text": tr("🏠 No room for more %s. Build a bigger home for them.") % n["name"]})
+	price_rule["ok"] = can_buy
+	h.add_child(UI.button(tr("Buy one  ") + G.pace.cost_text(G.animals.animal_price(aid)), G.animals.buy_animal.bind(aid), price_rule, UI.GREEN, 16))
 	v.add_child(UI.label(str(n.get("desc", "")), 15, UI.MUTED, true))
 	if G.animals.animal_cap(aid) <= 0: v.add_child(UI.label(tr("No room yet: build them a home first."), 15, UI.RED, true))
 	var ag := M.widgets.grid(2)
@@ -44,7 +47,7 @@ func animal_card(aid: String) -> PanelContainer:
 			if mf < 1.0: mt.add_child(UI.label(tr("Animals give %d%% less!") % int(round((1.0 - mf) * 100)), 15, UI.RED, true))
 			var mq: Dictionary = G.actions.check("muck_out", G.actions.farmer, {"aid": aid})
 			mt.add_child(M.widgets.costs(mq["cost"], mq["base"]))
-			M.widgets.tile_button(mt, UI.action_button("animal", _do_muck_out.bind(aid), float(a["muck"]) >= 0.5, UI.SOIL, "🧹", tr("Clean")))
+			M.widgets.tile_button(mt, UI.action_button("animal", _do_muck_out.bind(aid), float(a["muck"]) >= 0.5, UI.SOIL, "🧹", tr("Clean"), tr("Already clean.")))
 			ag.add_child(mt.get_meta("panel"))
 	if ag.get_child_count() > 0: v.add_child(ag)
 	return pc

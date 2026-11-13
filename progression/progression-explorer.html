@@ -1140,7 +1140,7 @@ details summary { cursor: pointer; font-weight: 500; }
         "brambles",
         "brambles and bindweed"
       ],
-      "note": "Weeds grow on every field patch every question, planted or not: ratePerQuestion × weed tier of the chapter × (1 + fertilizerFactor × fertilizer points the patch density needs) × weed multipliers (edging, borders, geese, goat, mulch…). One weeding tap clears weedsPerPull weeds; each weed costs 1 energy (less with hoes) and gives 1 fiber. Orchard spots grow half as many. The first freeDensity plants per patch need no fertilizer; each plant beyond needs 1 fertilizer point per planting.",
+      "note": "Weeds grow on every field patch every question, planted or not: ratePerQuestion × weed tier of the chapter × (1 + fertilizerFactor × fertilizer points the patch density needs) × weed multipliers (edging, borders, geese, goat, mulch…). Weeds do not slow growth; each whole weed on a patch takes a share of its harvest (see crowding) and lowers the grade. One weeding tap clears weedsPerPull weeds; each weed costs 1 energy (less with hoes) and gives 1 fiber. Orchard spots grow half as many. The first freeDensity plants per patch need no fertilizer; each plant beyond needs 1 fertilizer point per planting.",
       "diminishing": "Weeding has no floor: you can always 'Root out the weeds' (a polish) — the first time cuts regrowth most, every next time half as much and costs more energy, because the last weeds are harder to find."
     },
     "water": {
@@ -1196,10 +1196,15 @@ details summary { cursor: pointer; font-weight: 500; }
       },
       "barePatchFactor": 1.5,
       "capPerPatch": 6,
-      "slowPerStone": 0.04,
       "stonesPerPick": 2,
       "energyPerStone": 1,
-      "note": "In winter, frost lifts stones in every field patch (more in deep beds and bare beds). Stones slow growth a little (like weeds, together at most 50%). Picking them gives stones for walls, paths and buildings."
+      "note": "In winter, frost lifts stones in every field patch (more in deep beds and bare beds). Stones do not slow growth; like weeds each whole stone takes a share of the patch's harvest (see crowding) and lowers the grade. Picking them gives stones for walls, paths and buildings."
+    },
+    "crowding": {
+      "perThing": 0.04,
+      "max": 0.75,
+      "keepMain": 1,
+      "note": "Weeds and stones crowd a patch (rules 2026-10-30, crops-and-items/02): at harvest, every whole weed and every whole stone on the patch takes perThing (4 %) of the harvest, together at most max (75 %), and the main crop never drops below keepMain. What is lost is shown (the plants stand wilted and grey on the patch, and the lost crops fade away as grey ghosts at harvest). Pulling the weeds and picking the stones before the harvest gives it all back. Weeds and stones no longer slow growth. They also still lower the grade of the whole harvest (rules/47-quality.json)."
     },
     "rotation": {
       "sameCropGrow": 0.85,
@@ -1483,7 +1488,7 @@ details summary { cursor: pointer; font-weight: 500; }
       "note": "Coins are counted in bronze: 100 bronze = 1 gold, like Rappen and Franken. The first rescale (13 Oct 2026) turned every old coin into 15 bronze, so the pace of the game stayed the same, and set familiar goods to realistic Swiss prices (planning/price-table.md). Amounts under goldFrom show as bronze only (35), from there as gold and bronze (2 gold 35 bronze)."
     },
     "weights": {
-      "note": "How hard each thing is to carry (TODO M4). Five classes, in load units; every item has one: its own entry in `items`, else its category's in `byCategory`. Works from the start but is not shown and limits nothing until the first market trip (design document 13.2b). Straw is light but bulky, so it counts as bulky; logs, stones and iron ore are heavy. Seeds are feathers.",
+      "note": "How hard each thing is to carry (TODO M4). Five classes, in load units; every item has one: its own entry in `items`, else its category's in `byCategory`. Works from the start but is not shown and limits nothing until the first market trip (design document 13.2b). Straw is light but bulky, so it counts as bulky; logs, big rocks and iron ore are heavy; a small stone is light (nature/04). Seeds are feathers.",
       "classes": {
         "feather": 0.1,
         "light": 0.5,
@@ -1513,7 +1518,8 @@ details summary { cursor: pointer; font-weight: 500; }
         "remedy": "light"
       },
       "items": {
-        "stone": "heavy",
+        "stone": "light",
+        "boulder": "heavy",
         "log": "heavy",
         "iron_ore": "heavy",
         "iron": "heavy",
@@ -1701,7 +1707,7 @@ details summary { cursor: pointer; font-weight: 500; }
       }
     },
     "quality": {
-      "note": "Quality of made and grown things (TODO Y1): three grades, Lumpy / Proper / Fancy (German Naja / Tiptop / Picobello!). Only the categories listed have a grade; raw materials do not. An item's grade is decided when it is made: an expected grade E (Proper = 1.0) from what went into it, then floor(E) plus a coin flip on the fraction, then a small chance of one grade more or less.",
+      "note": "Quality of made and grown things (TODO Y1): three grades, Lumpy / Proper / Fancy (German Naja / Tiptop / Picobello!). Only the categories listed have a grade; raw materials do not. An item's grade is decided when it is made: an expected grade E from what went into it (crops start from Proper = 1.0, things made at a station from madeStart = Lumpy), then floor(E) plus a coin flip on the fraction, then a small chance of one grade more or less.",
       "categories": [
         "crop",
         "ingredient",
@@ -1728,6 +1734,8 @@ details summary { cursor: pointer; font-weight: 500; }
         }
       ],
       "default": 1,
+      "madeStart": 0,
+      "madeStartNote": "skills-quality/03 (parent, 30 Oct 2026): everything made at a station (crafts, tools, cooking, baking) starts from this expected grade (0 = Lumpy) for a beginner; stations, ranks and good inputs lift it. Crops and animal products start from 'default' (Proper). Things bought or given without a grade are Proper.",
       "chance": {
         "up": 0.07,
         "down": 0.07
@@ -1988,7 +1996,7 @@ details summary { cursor: pointer; font-weight: 500; }
       }
     },
     "trip": {
-      "note": "The bag and the market trip (TODO M5, M6, M11). What the farmer carries to the village: the bag holds load units (the weights of rules/45-weight.json; a normal thing is 1). Capacity = the best carrying thing you own (devices: node id -> load units), at least `base` (what fits in your arms). Packing does not take things out of the store: packed things stay there, marked, and can be unpacked for free. A trip costs `energy.base` x the errand multiplier (rucksacks, boots) x what a better road saves (roadSaving per road level above 1, never below roadFloor), at least `energy.min`, and exactly one Time Quiz question.",
+      "note": "The bag and the market trip (TODO M5, M6, M11). What the farmer carries to the village: the bag holds load units (the weights of rules/45-weight.json; a normal thing is 1). Capacity = the best carrying thing you own (devices: node id -> load units), at least `base` (what fits in your arms). Packing does not take things out of the store: packed things stay there, marked, and can be unpacked for free. Strength (the wellbeing parameter, 0.5 at the start and frozen until chapter 2) carries more: above `strength.from` every point of strength adds `strength.perPoint` of the capacity (full strength: +30%), never less than the plain capacity, in whole load units. A trip costs `energy.base` x the errand multiplier (boots: energy:errand) x what a better road saves (roadSaving per road level above 1, never below roadFloor) x the trip multiplier (a borrowed donkey, a favour: energy:trip), rounded up, at least `energy.min`, and exactly one Time Quiz question; the way back from the village is one more Time Quiz question and no energy.",
       "base": 20,
       "devices": {
         "fiber_bag": 30,
@@ -1997,6 +2005,10 @@ details summary { cursor: pointer; font-weight: 500; }
         "canvas_rucksack": 60,
         "frame_rucksack": 80,
         "wheelbarrow": 100
+      },
+      "strength": {
+        "from": 0.5,
+        "perPoint": 0.6
       },
       "energy": {
         "base": 3,
@@ -2052,7 +2064,123 @@ details summary { cursor: pointer; font-weight: 500; }
             "fuel"
           ]
         }
-      ]
+      ],
+      "square": {
+        "note": "The village square as its own screen (money-market/07): a mockup made from pictures the game already has. While the farmer is in the village, this scene stands where the farm was, and the window below it shows the stall that was tapped. backdrop: a painted picture assets/<backdrop>.png, used as the whole scene once it exists (pictures/04); until then the sky and ground colours, the ground tile and the deco pictures below make the scene. Every picture stands with the middle of its lower edge at x, y (shares of the scene's width and height) and is w of the scene's width wide (never taller than maxH of its height). stalls: what can be tapped; id is a stall a part of the interface registered (ui/square.gd add_stall: sell, seeds, traders, orders, board) or home (the walk home); first: the stall open on arrival when the farmer came for none in particular; art '' makes a stall an invisible tap area of w x h (for a painted backdrop). Swapping the mockup for painted pictures needs only this block and the picture files.",
+        "backdrop": "square/square",
+        "first": "seeds",
+        "sky": "bfe3f0",
+        "hills": "9cc98a",
+        "ground": "tiles/path",
+        "horizon": 0.4,
+        "maxH": 0.62,
+        "deco": [
+          {
+            "art": "deco/tree_pine",
+            "x": 0.04,
+            "y": 0.44,
+            "w": 0.1
+          },
+          {
+            "art": "map/cottage",
+            "x": 0.17,
+            "y": 0.5,
+            "w": 0.2
+          },
+          {
+            "art": "deco/tree_oak",
+            "x": 0.33,
+            "y": 0.46,
+            "w": 0.13
+          },
+          {
+            "art": "map/windmill_1",
+            "x": 0.5,
+            "y": 0.47,
+            "w": 0.13
+          },
+          {
+            "art": "map/farmhouse",
+            "x": 0.68,
+            "y": 0.5,
+            "w": 0.19
+          },
+          {
+            "art": "deco/tree_oak",
+            "x": 0.86,
+            "y": 0.47,
+            "w": 0.14
+          },
+          {
+            "art": "deco/tree_pine",
+            "x": 0.97,
+            "y": 0.45,
+            "w": 0.09
+          },
+          {
+            "art": "map/well_3",
+            "x": 0.52,
+            "y": 0.6,
+            "w": 0.07
+          },
+          {
+            "art": "deco/bench",
+            "x": 0.8,
+            "y": 0.6,
+            "w": 0.07
+          }
+        ],
+        "stalls": [
+          {
+            "id": "sell",
+            "art": "map/market_stall",
+            "emoji": "🪙",
+            "x": 0.16,
+            "y": 0.97,
+            "w": 0.24
+          },
+          {
+            "id": "seeds",
+            "art": "map/market",
+            "emoji": "🌱",
+            "x": 0.4,
+            "y": 0.99,
+            "w": 0.2
+          },
+          {
+            "id": "traders",
+            "art": "map/broker",
+            "emoji": "🧺",
+            "x": 0.64,
+            "y": 0.99,
+            "w": 0.2
+          },
+          {
+            "id": "orders",
+            "art": "addons/hand_cart",
+            "emoji": "📦",
+            "x": 0.52,
+            "y": 0.86,
+            "w": 0.11
+          },
+          {
+            "id": "board",
+            "art": "map/board",
+            "emoji": "📋",
+            "x": 0.81,
+            "y": 0.92,
+            "w": 0.12
+          },
+          {
+            "id": "home",
+            "art": "map/village_sign",
+            "emoji": "🏠",
+            "x": 0.94,
+            "y": 0.99,
+            "w": 0.1
+          }
+        ]
+      }
     },
     "gate": {
       "note": "The travelling merchant at the gate (TODO M7). He comes only where a cart can come (minRoad), with `chance` at the end of a question (+ perRoadLevel for each better road level), stays `stay` questions, buys the kinds in `cats` without a trip and without energy at the village price x `cut`, until his cart (base + perRoadLevel x (road level - 1) load units) is full. A new visit starts with an empty cart.",
@@ -2109,7 +2237,7 @@ details summary { cursor: pointer; font-weight: 500; }
       "events": [
         {
           "id": "weed_coin",
-          "when": "weed",
+          "on": "weed",
           "chance": 0.04,
           "text": "A lost coin in the weeds!",
           "gives": {
@@ -2118,7 +2246,7 @@ details summary { cursor: pointer; font-weight: 500; }
         },
         {
           "id": "weed_seed",
-          "when": "weed",
+          "on": "weed",
           "chance": 0.02,
           "text": "An old seed packet!",
           "gives": {
@@ -2127,7 +2255,7 @@ details summary { cursor: pointer; font-weight: 500; }
         },
         {
           "id": "weed_clover",
-          "when": "weed",
+          "on": "weed",
           "chance": 0.01,
           "text": "A four-leaf clover! You feel lucky.",
           "luck": [
@@ -2137,7 +2265,7 @@ details summary { cursor: pointer; font-weight: 500; }
         },
         {
           "id": "weed_relic",
-          "when": "weed",
+          "on": "weed",
           "chance": 0.007,
           "text": "Something old in the soil: a relic for the album!",
           "gives": {
@@ -2146,7 +2274,7 @@ details summary { cursor: pointer; font-weight: 500; }
         },
         {
           "id": "stone_quartz",
-          "when": "stones",
+          "on": "stones",
           "chance": 0.02,
           "text": "A sparkling quartz crystal inside a stone!",
           "gives": {
@@ -2155,21 +2283,21 @@ details summary { cursor: pointer; font-weight: 500; }
         },
         {
           "id": "rain",
-          "when": "question",
+          "on": "question",
           "chance": "season.rain",
           "text": "It rained: no watering needed, and the well fills a little.",
           "rain": true
         },
         {
           "id": "double_harvest",
-          "when": "harvest",
+          "on": "harvest",
           "chance": 0.03,
           "text": "Bumper crop: double harvest!",
           "mult": 2
         },
         {
           "id": "double_yolk",
-          "when": "collect:animal_chicken",
+          "on": "collect:animal_chicken",
           "chance": 0.05,
           "text": "A double-yolk egg!",
           "gives": {
@@ -2178,7 +2306,7 @@ details summary { cursor: pointer; font-weight: 500; }
         },
         {
           "id": "honey_flow",
-          "when": "collect:animal_bees",
+          "on": "collect:animal_bees",
           "chance": 0.05,
           "text": "A honey flow: extra comb!",
           "gives": {
@@ -2187,7 +2315,7 @@ details summary { cursor: pointer; font-weight: 500; }
         },
         {
           "id": "thick_fleece",
-          "when": "collect:animal_sheep",
+          "on": "collect:animal_sheep",
           "chance": 0.05,
           "text": "An extra-thick fleece!",
           "gives": {
@@ -2196,7 +2324,7 @@ details summary { cursor: pointer; font-weight: 500; }
         },
         {
           "id": "neighbour_gift",
-          "when": "question",
+          "on": "question",
           "chance": 0.01,
           "text": "A neighbour drops off a little gift basket.",
           "gives": {
@@ -2205,7 +2333,7 @@ details summary { cursor: pointer; font-weight: 500; }
         },
         {
           "id": "seed_bargain",
-          "when": "buy_seeds",
+          "on": "buy_seeds",
           "chance": 0.05,
           "text": "The seed merchant adds one for free.",
           "gives": {
@@ -2214,7 +2342,7 @@ details summary { cursor: pointer; font-weight: 500; }
         },
         {
           "id": "golden_acorn",
-          "when": "weed",
+          "on": "weed",
           "chance": 0.002,
           "text": "A golden acorn glints under a leaf!",
           "acorn": "acorn_lucky"
@@ -2235,10 +2363,10 @@ details summary { cursor: pointer; font-weight: 500; }
           "emoji": "👖",
           "effects": {
             "add": {
-              "storageCap": 5
+              "storageLoad": 20
             }
           },
-          "desc": "Every store holds 5 more."
+          "desc": "Every kind of thing gets 20 load more room in the store."
         },
         {
           "id": "gc_spring_water",
@@ -2599,7 +2727,7 @@ details summary { cursor: pointer; font-weight: 500; }
         {
           "id": "acorn_lucky",
           "name": "Found while weeding",
-          "when": "luck"
+          "on": "luck"
         }
       ],
       "note": "Seven Golden Acorns hide in the game, each found a different way. Each one raises the energy max by 3 for good."
@@ -2886,7 +3014,7 @@ details summary { cursor: pointer; font-weight: 500; }
       "maxSeasons": 2
     },
     "pets": {
-      "note": "The pets' jobs (TODO S2). Level 1 is the pet's bonus from its node (always on, nothing changes). Level 2 opens when the NEXT pet has come home (the last pet has no level 2 yet): then the child chooses one of the pet's jobs on the job board, and the pet does it once every question (the same step as everything else; no questions, no work). A job that cannot run just waits (💤 nothing to do, 📦 the store is full). kinds: weeds and stones (take `amount` from the patch that has most; stones go into the store), water (adds `amount` to the water), makes (an item, `rate` per question, whole units arrive). `first`: what a pet with only its level 1 does for the eye: every `every` questions it walks to `place` ('water', 'field', 'spot:<place>') and shows its emoji. Levels 3 and 4 (TODO S5): a pet's level is 1 + the pets that came home after it (at most 4); once the last pet is home (the story is over: free play) every pet is level 4 and the last one has its jobs too. Level 3: the job can have a WHEN card (`whens`: a condition with a number the child sets; `allowedWhens` per pet). Level 4: a second rule, read after the first when the first's WHEN does not hold (a job, and a WHEN or always). A rule that cannot run waits.",
+      "note": "The pets' jobs (TODO S2). Level 1 is the pet's bonus from its node (always on, nothing changes). Level 2 opens when the NEXT pet has come home (the last pet has no level 2 yet): then the child chooses one of the pet's jobs on the job board, and the pet does it once every question (the same step as everything else; no questions, no work). A job that cannot run just waits (💤 nothing to do, 📦 the store is full). kinds: weeds and stones (take `amount` from the patch that has most; stones go into the store), water (adds `amount` to the water), makes (an item, `rate` per question, whole units arrive). `first`: what a pet with only its level 1 does for the eye: every `every` questions it walks to `place` ('water', 'field', 'spot:<place>') and shows its emoji. Levels 3 and 4 (TODO S5): a pet's level is 1 + the pets that came home after it (at most 4); once the last pet is home (the story is over: free play) every pet is level 4 and the last one has its jobs too. Level 3: the job can have a WHEN card (`whens`: a picture, a name, a slider (`min`, `max`, `step`, `default`) and one condition with `{n}` where the number the child sets goes, in the game's condition language; `allowedWhens` per pet). Level 4: a second rule, read after the first when the first's WHEN does not hold (a job, and a WHEN or always). A rule that cannot run waits.",
       "jobs": {
         "pet_bunny": [
           {
@@ -3024,8 +3152,7 @@ details summary { cursor: pointer; font-weight: 500; }
         "weeds": {
           "emoji": "🌿",
           "name": "Weeds on a patch",
-          "op": ">=",
-          "stat": "weeds_max",
+          "when": "weeds_max>={n}",
           "min": 1,
           "max": 8,
           "step": 1,
@@ -3034,8 +3161,7 @@ details summary { cursor: pointer; font-weight: 500; }
         "empty": {
           "emoji": "🟫",
           "name": "Empty patches",
-          "op": ">=",
-          "stat": "empty_patches",
+          "when": "empty_patches>={n}",
           "min": 1,
           "max": 9,
           "step": 1,
@@ -3044,8 +3170,7 @@ details summary { cursor: pointer; font-weight: 500; }
         "water": {
           "emoji": "💧",
           "name": "Water",
-          "op": "<",
-          "stat": "water",
+          "when": "water<{n}",
           "min": 2,
           "max": 40,
           "step": 2,
@@ -3054,8 +3179,7 @@ details summary { cursor: pointer; font-weight: 500; }
         "compost": {
           "emoji": "🟫",
           "name": "Compost",
-          "op": "<",
-          "item": "compost",
+          "when": "item:compost<{n}",
           "min": 1,
           "max": 10,
           "step": 1,
@@ -3064,8 +3188,7 @@ details summary { cursor: pointer; font-weight: 500; }
         "sticks": {
           "emoji": "🌿",
           "name": "Sticks",
-          "op": "<",
-          "item": "stick",
+          "when": "item:stick<{n}",
           "min": 2,
           "max": 10,
           "step": 2,
@@ -3074,8 +3197,7 @@ details summary { cursor: pointer; font-weight: 500; }
         "logs": {
           "emoji": "🪵",
           "name": "Logs",
-          "op": "<",
-          "item": "log",
+          "when": "item:log<{n}",
           "min": 1,
           "max": 10,
           "step": 1,
@@ -3084,8 +3206,7 @@ details summary { cursor: pointer; font-weight: 500; }
         "herbs": {
           "emoji": "🌿",
           "name": "Herbs",
-          "op": "<",
-          "item": "herbs",
+          "when": "item:herbs<{n}",
           "min": 1,
           "max": 10,
           "step": 1,
@@ -3094,8 +3215,7 @@ details summary { cursor: pointer; font-weight: 500; }
         "pests": {
           "emoji": "🐦",
           "name": "Pests",
-          "op": ">=",
-          "stat": "pests",
+          "when": "pests>={n}",
           "min": 1,
           "max": 8,
           "step": 1,
@@ -3213,7 +3333,7 @@ details summary { cursor: pointer; font-weight: 500; }
           "floor": 0.35,
           "ranks": 0.05,
           "stat": "well_strength",
-          "hint": "Practise: every skill rank makes you stronger."
+          "hint": "Practise: every skill rank makes you stronger, and you can carry more."
         },
         "friends": {
           "emoji": "🤝",
@@ -3241,7 +3361,7 @@ details summary { cursor: pointer; font-weight: 500; }
       }
     },
     "nature": {
-      "note": "What the forest edge gives (TODO N1-N5, design document 5.9). Each pool is a number from 0 to `max` that falls when something is gathered (`recipes`: how much one tap takes) and grows back by `regrow` every question. The yield of a tap is its amount x max(floor, pool / max), rounded, at least 1, so the campfire is never impossible. The trees are a cycle instead: a tree that is felled becomes a stump, a stump a sapling after about `stumpToSapling` questions, a sapling a tree after about `saplingToTree`. The first time a pool falls below `adviceBelow` of its maximum there is a short advice (a recommendation first, then the yield falls), and again after `adviceEvery` questions. The numbers are shown in the forest edge's window once the card *Take only what grows back* is learned (frozen until then, D4).",
+      "note": "What the forest edge and the clay pit at the pond give (TODO N1-N5, design document 5.9; clay at the pond since nature/05). Each pool is a number from 0 to `max` that falls when something is gathered (`recipes`: how much one tap takes) and grows back by `regrow` every question. The yield of a tap is its amount x max(floor, pool / max), rounded, at least 1, so the campfire is never impossible. The trees are a cycle instead: a tree that is felled becomes a stump, a stump a sapling after about `stumpToSapling` questions, a sapling a tree after about `saplingToTree`. The first time a pool falls below `adviceBelow` of its maximum there is a short advice (a recommendation first, then the yield falls), and again after `adviceEvery` questions. A pool shows in the window of the place its recipes belong to (sticks, stones and trees at the forest edge, clay at the pond). The numbers are shown in that window once the card *Take only what grows back* is learned (frozen until then, D4).",
       "adviceBelow": 0.35,
       "adviceEvery": 40,
       "pools": {
@@ -3618,6 +3738,50 @@ details summary { cursor: pointer; font-weight: 500; }
             "skill_ranks>=1"
           ],
           "note": "Skills work from the start but are only shown, in the album, from the first rank-up (D4)."
+        },
+        "ws_bench": {
+          "whenAny": [
+            "done:workbench",
+            "open:workbench"
+          ],
+          "note": "Workshop corners (interface-feel/08): a corner is drawn in the workshop only once something of it is built or can be built now; before that it is not there at all (no faded symbol). The workbench corner: the workbench."
+        },
+        "ws_fire": {
+          "when": [
+            "chapter>=2"
+          ],
+          "whenAny": [
+            "done:kiln",
+            "open:kiln",
+            "done:forge",
+            "open:forge"
+          ],
+          "note": "The kiln and forge corner: the kiln (or the forge)."
+        },
+        "ws_loom": {
+          "when": [
+            "chapter>=3"
+          ],
+          "whenAny": [
+            "done:hand_loom",
+            "open:hand_loom",
+            "done:spinning_wheel",
+            "open:spinning_wheel",
+            "done:dye_vat",
+            "open:dye_vat"
+          ],
+          "note": "The loom corner: the hand loom (or the spinning wheel, the dye vat)."
+        },
+        "ws_tools": {
+          "whenAny": [
+            "done:tool_rack",
+            "open:tool_rack",
+            "done:whetstone",
+            "open:whetstone",
+            "done:shears",
+            "open:shears"
+          ],
+          "note": "The tool corner: the tool rack (or the whetstone, the shears)."
         }
       }
     },
@@ -3664,7 +3828,12 @@ details summary { cursor: pointer; font-weight: 500; }
         "hintSecs": {
           "value": 3.0,
           "unit": "seconds",
-          "note": "How long a hint stays (the short note when a bar is tapped)."
+          "note": "How long a hint stays (the short toast of an older kind; the note of a tapped bar, item or greyed-out button is `infoSecs`)."
+        },
+        "infoSecs": {
+          "value": 8.0,
+          "unit": "seconds",
+          "note": "How long the short note stays when something is tapped (a bar, an item, a greyed-out button): long enough to read it, or to hear it read aloud. A tap anywhere sends it away sooner. interface-feel/01, 02."
         },
         "newSecs": {
           "value": 6.0,
@@ -3688,10 +3857,52 @@ details summary { cursor: pointer; font-weight: 500; }
           "unit": "questions",
           "note": "A bark (a short remark) does not come back within this many questions, unless the piece sets its own cooldown."
         },
+        "frameFade": {
+          "value": 0.4,
+          "unit": "seconds",
+          "note": "The grandchildren's frame between the chapters (a full-screen black scene): how long the picture and the words take to fade in on every page."
+        },
         "pictureHeight": {
           "value": 520,
           "unit": "pixels",
           "note": "How high a painted story picture is shown in the story box (the box is up to 760 wide)."
+        },
+        "newsMax": {
+          "value": 4,
+          "unit": "boxes",
+          "note": "At most this many news boxes (a change of season, a golden acorn, a favour done, a party) wait for a quiet moment; the oldest goes."
+        }
+      },
+      "rest": {
+        "walkMin": {
+          "value": 0.4,
+          "unit": "seconds",
+          "note": "Rest: the farmer walks to the tent or house first; the window opens when he is at the door, but not before this."
+        },
+        "walkMax": {
+          "value": 1.6,
+          "unit": "seconds",
+          "note": "… and not later than this, so that a far walk does not make anyone wait (he is put at the door)."
+        },
+        "vanish": {
+          "value": 0.35,
+          "unit": "seconds",
+          "note": "How long the farmer takes to disappear into the door before the Rest window opens."
+        },
+        "inside": {
+          "value": 0.3,
+          "unit": "seconds",
+          "note": "After the Rest window closes, he stays inside this long before he comes out again."
+        },
+        "appear": {
+          "value": 0.35,
+          "unit": "seconds",
+          "note": "How long he takes to appear at the door again."
+        },
+        "stepOut": {
+          "value": 22,
+          "unit": "pixels",
+          "note": "How far he walks out of the door after he has appeared (towards the player)."
         }
       },
       "grownup": {
@@ -3706,7 +3917,337 @@ details summary { cursor: pointer; font-weight: 500; }
           "value": 0.05,
           "unit": "part of the picture's height",
           "note": "How far the winter snow caps reach down on roofs, tree tops and rails."
+        },
+        "frostDepth": {
+          "value": 0.06,
+          "unit": "part of the picture's height",
+          "note": "How far the winter frost reaches down on the top edge of the field patches and the road tiles (season-look/04)."
+        },
+        "frostStrength": {
+          "value": 0.8,
+          "unit": "0 to 1",
+          "note": "How white that frost is: 1 is as white as the snow caps (season-look/04; the parent checks it in W9)."
         }
+      }
+    },
+    "interruptions": {
+      "note": "What takes the screen next (interruption-queue): the interruption queue (kits/ui/interruptions.gd, set up in game/farm/ui/interrupts.gd) shows things that arrive on their own in this order, first wins. Each kind waits for the busy screens and the other kinds it names: a kind name means 'while one of that kind is waiting'. Busy screens: see 'busy'. Change the order or what a kind waits for here, not in a script.",
+      "busy": {
+        "popup": "A pop-up is open (Time Quiz, Rest, a card, a menu, or another interruption's box, also a full-screen frame scene).",
+        "rest": "The Rest pop-up is open.",
+        "playback": "After the Time Quiz the farm has not started catching up yet (it still shows the old state).",
+        "catchup": "The farm is catching up after the Time Quiz (rain, plants growing, pests); ends when it has played to the end or a tap skipped it.",
+        "sheet": "A sheet over the farm is open (a station, the store, a place).",
+        "bubble": "A speech bubble (a bark) is on screen until it is tapped away."
+      },
+      "order": [
+        {
+          "kind": "note",
+          "waitsFor": [
+            "popup",
+            "playback",
+            "catchup"
+          ],
+          "note": "The short notes kept for when a pop-up closes (a Rest medal …). They never hold the screen."
+        },
+        {
+          "kind": "postcard",
+          "waitsFor": [
+            "popup",
+            "playback",
+            "catchup"
+          ],
+          "note": "A postcard from a friend with a gift to pick. May come over a sheet."
+        },
+        {
+          "kind": "celebration",
+          "waitsFor": [
+            "popup",
+            "playback",
+            "catchup",
+            "postcard"
+          ],
+          "note": "The big 'New!' pop-up for a building, tool, Helper or perk. May come over a sheet."
+        },
+        {
+          "kind": "discovery",
+          "waitsFor": [
+            "popup",
+            "rest",
+            "playback",
+            "postcard",
+            "celebration"
+          ],
+          "note": "A story Discovery: comes over a sheet (the child just tapped what it is about)."
+        },
+        {
+          "kind": "scene",
+          "waitsFor": [
+            "popup",
+            "rest",
+            "playback",
+            "postcard",
+            "celebration"
+          ],
+          "note": "A story Scene (a delivery or favour handed over on the village square): comes over a sheet, right after the hand-over tap, before the square is left."
+        },
+        {
+          "kind": "frame",
+          "waitsFor": [
+            "popup",
+            "rest",
+            "playback",
+            "catchup",
+            "postcard",
+            "celebration",
+            "sheet"
+          ],
+          "note": "A frame scene (the grandchildren at the bed, the opening and after each chapter's last beat): a full-screen black scene with its own music. Waits like a story box, and also for the farm to finish catching up, so the child sees what the last answer did first. Nothing of the story comes before it."
+        },
+        {
+          "kind": "story",
+          "waitsFor": [
+            "popup",
+            "rest",
+            "playback",
+            "postcard",
+            "celebration",
+            "frame",
+            "sheet"
+          ],
+          "note": "Every other story box (beat, letter, moment, visit): waits until no sheet covers the farm."
+        },
+        {
+          "kind": "news",
+          "waitsFor": [
+            "popup",
+            "rest",
+            "playback",
+            "postcard",
+            "celebration",
+            "frame",
+            "sheet"
+          ],
+          "note": "A news box with a picture (a change of season, a golden acorn, a favour done, a party): the same quiet moment as a story box, after it."
+        },
+        {
+          "kind": "bark",
+          "waitsFor": [
+            "popup",
+            "rest",
+            "playback",
+            "frame",
+            "bubble"
+          ],
+          "note": "A bark: a speech bubble; only one at a time, and it blocks nothing."
+        }
+      ]
+    },
+    "seasonLook": {
+      "note": "How the seasons look on the farm map (feature season-look). Only looks: nothing here changes a game rule, the golden runs do not see it. Season names: spring, summer, autumn, winter.",
+      "critters": {
+        "note": "Every creature that shows on the map, with the seasons it can be seen in (season-look/03). Animals and pets are named by their node id; 'pest_…' are the pests that come to eat on the fields (emoji in the order the fields pick them: the chapter's own kind first); butterflies and fireflies are perks. A creature that is out of season is simply not drawn; its rules (pests eating, animals giving) go on. tools/check_data.py warns about an animal, pet or pest without a seasons list.",
+        "animal_chicken": {
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn",
+            "winter"
+          ]
+        },
+        "animal_cow": {
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn",
+            "winter"
+          ]
+        },
+        "animal_sheep": {
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn",
+            "winter"
+          ]
+        },
+        "animal_bees": {
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn"
+          ],
+          "why": "In winter the bees stay in the hive, huddled together to keep warm."
+        },
+        "pet_bunny": {
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn",
+            "winter"
+          ]
+        },
+        "pet_tortoise": {
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn",
+            "winter"
+          ],
+          "why": "A real tortoise sleeps through the winter, but Helpers never leave: see the question in season-look/03."
+        },
+        "pet_goat": {
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn",
+            "winter"
+          ]
+        },
+        "pet_pony": {
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn",
+            "winter"
+          ]
+        },
+        "pet_badger": {
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn",
+            "winter"
+          ]
+        },
+        "pet_alpaca": {
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn",
+            "winter"
+          ]
+        },
+        "farm_cat": {
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn",
+            "winter"
+          ]
+        },
+        "pest_bird": {
+          "emoji": "🐦",
+          "pest": true,
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn",
+            "winter"
+          ]
+        },
+        "pest_rabbit": {
+          "emoji": "🐇",
+          "pest": true,
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn",
+            "winter"
+          ]
+        },
+        "pest_slug": {
+          "emoji": "🐌",
+          "pest": true,
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn"
+          ],
+          "why": "Slugs hide deep in the soil when it is cold."
+        },
+        "pest_caterpillar": {
+          "emoji": "🐛",
+          "pest": true,
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn"
+          ],
+          "why": "Caterpillars are only out in the warm months."
+        },
+        "pest_vole": {
+          "emoji": "🐭",
+          "pest": true,
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn",
+            "winter"
+          ]
+        },
+        "butterflies": {
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn"
+          ],
+          "why": "Butterflies sleep through the winter or are not born yet."
+        },
+        "fireflies": {
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn"
+          ],
+          "why": "Agent's choice: real fireflies glow in early summer only; kept for three seasons so the perk does not seem lost."
+        }
+      },
+      "flowers": {
+        "note": "Flowers in the grass (season-look/02): spring is full of them, summer has a few, autumn and winter none. Over the first 'changeQuestions' Time Quiz questions of a season their number moves from the last season's to this season's, one flower at a time, so they come and go. Each flower stays in its own place on the farm. Pictures: assets/deco/<name>.png (the ones in the grass pictures that have flowers); more spring flowers are listed in pictures/12.",
+        "pictures": [
+          "grass_2",
+          "grass_3",
+          "grass_4",
+          "grass_6"
+        ],
+        "count": {
+          "spring": 240,
+          "summer": 24,
+          "autumn": 0,
+          "winter": 0
+        },
+        "changeQuestions": 10,
+        "size": [
+          38,
+          58
+        ]
+      },
+      "leaves": {
+        "note": "Autumn leaves drifting down over the farm (season-look/01), each flipping from side to side as it falls. Only in autumn: they start falling when autumn begins and stop when it ends (the last ones fall to the ground). 'count' leaves are in the air at a time (each one is a small picture drawn every frame: keep it modest for the iPad). Pictures: assets/deco/leaf_1 … leaf_4 when they exist (pictures/12); until then a drawn leaf stands in.",
+        "count": 20,
+        "pictures": [
+          "leaf_1",
+          "leaf_2",
+          "leaf_3",
+          "leaf_4"
+        ],
+        "size": [
+          18,
+          28
+        ],
+        "fallSpeed": [
+          22,
+          40
+        ],
+        "wind": [
+          8,
+          26
+        ],
+        "flipsPerSecond": [
+          0.5,
+          1.2
+        ]
       }
     }
   },
@@ -3742,19 +4283,21 @@ details summary { cursor: pointer; font-weight: 500; }
       "seed_1",
       "land_start",
       "wild_edge",
+      "clay_pit",
       "book_basics",
       "library_box"
     ]
   },
   "items": {
     "stick": {"name": "Stick", "emoji": "🪵", "category": "material", "value": 0, "desc": "From clearing bushes and the Woodlot.", "chapter": 1},
-    "stone": {"name": "Stone", "emoji": "🪨", "category": "material", "value": 0, "desc": "From clearing rocky patches; cheap at the Raw Materials Merchant.", "chapter": 1},
+    "stone": {"name": "Small stone", "emoji": "🪨", "category": "material", "value": 0, "desc": "Picked up from the ground and out of the soil. For tools, fire rings and small things.", "chapter": 1},
+    "boulder": {"name": "Big rock", "emoji": "⛰️", "category": "material", "value": 0, "desc": "Dug out with a shovel or taken from old ruins. Heavy! For roads, walls and big buildings.", "chapter": 1},
     "fiber": {"name": "Plant Fiber", "emoji": "🌿", "category": "material", "value": 0, "desc": "Tough weed stems. Twisted into rope; compostable.", "chapter": 1},
-    "rope": {"name": "Rope", "emoji": "🪢", "category": "material", "value": 30, "desc": "3 fiber twisted together. Ties every early build.", "chapter": 1},
+    "rope": {"name": "Rope", "emoji": "🪢", "category": "material", "value": 45, "desc": "3 fiber twisted together. Ties every early build.", "chapter": 1},
     "straw": {"name": "Straw", "emoji": "🌾", "category": "byproduct", "value": 15, "tags": ["compostable"], "desc": "By-product of wheat and oats. Thatch, bedding, compost, beehive skeps. Nobody buys straw — use it.", "chapter": 1, "noSell": true},
     "log": {"name": "Log", "emoji": "🪵", "category": "material", "value": 15, "desc": "From stumps, the Woodlot and later the Lumbermill.", "chapter": 1},
     "plank": {"name": "Plank", "emoji": "🟫", "category": "material", "value": 15, "desc": "Split from logs (axe) — four times as many with a saw.", "chapter": 2},
-    "clay": {"name": "Clay", "emoji": "🟤", "category": "material", "desc": "Dug at the field edge with a shovel, or bought.", "chapter": 1, "value": 15},
+    "clay": {"name": "Clay", "emoji": "🟤", "category": "material", "desc": "Dug at the pond with a shovel, or bought.", "chapter": 1, "value": 15},
     "brick": {"name": "Brick", "emoji": "🧱", "category": "material", "desc": "Fired clay. Ovens, kilns, forges, the Farmhouse.", "chapter": 2, "value": 45},
     "charcoal": {"name": "Charcoal", "emoji": "⚫", "category": "fuel", "desc": "Slow-burnt logs. Fuel for forge and glass kiln.", "chapter": 2, "value": 90},
     "iron_ore": {"name": "Iron Ore", "emoji": "🪨", "category": "material", "desc": "Only from the Raw Materials Merchant (unlocked by a dish).", "chapter": 2, "value": 30},
@@ -3804,7 +4347,7 @@ details summary { cursor: pointer; font-weight: 500; }
     "yogurt_culture": {"name": "Yogurt Culture", "emoji": "🧫", "category": "keeper", "desc": "Bought once from the Culture Specialist; kept alive by every batch.", "chapter": 2, "value": 0},
     "cheese_culture": {"name": "Cheese Culture", "emoji": "🧫", "category": "keeper", "desc": "Bought once from the Culture Specialist (plant-based rennet).", "chapter": 2, "value": 0},
     "flour": {"name": "Flour", "emoji": "🌾", "category": "ingredient", "tags": ["flour"], "chapter": 1, "value": 100},
-    "fine_flour": {"name": "Fine Flour", "emoji": "✨", "category": "ingredient", "tags": ["flour"], "chapter": 6, "value": 135},
+    "fine_flour": {"name": "Fine Flour", "emoji": "✨", "category": "ingredient", "tags": ["flour"], "chapter": 6, "value": 178},
     "butter": {"name": "Butter", "emoji": "🧈", "category": "ingredient", "tags": ["dairy", "fat"], "chapter": 2, "value": 330},
     "honey": {"name": "Honey", "emoji": "🍯", "category": "ingredient", "tags": ["sweet", "sweetener"], "chapter": 2, "value": 150},
     "sugar": {"name": "Sugar", "emoji": "🧂", "category": "ingredient", "tags": ["sweet", "sweetener"], "chapter": 3, "value": 210},
@@ -3837,7 +4380,7 @@ details summary { cursor: pointer; font-weight: 500; }
     "rainbow_yarn": {"name": "Rainbow Yarn", "emoji": "🌈", "category": "textile", "chapter": 6, "value": 1185},
     "porridge": {"name": "Porridge", "emoji": "🥣", "category": "dish", "buff": {"energy": 0.9, "questions": 1}, "chapter": 1, "value": 60},
     "roast_carrots": {"name": "Roast Carrots", "emoji": "🥕", "category": "dish", "buff": {"energy": 0.9, "questions": 1}, "chapter": 1, "value": 105},
-    "flatbread": {"name": "Flatbread", "emoji": "🫓", "category": "dish", "tags": ["bread"], "buff": {"energy": 0.9, "questions": 1}, "chapter": 1, "value": 75},
+    "flatbread": {"name": "Flatbread", "emoji": "🫓", "category": "dish", "tags": ["bread"], "buff": {"energy": 0.9, "questions": 1}, "chapter": 1, "value": 105},
     "veg_soup": {"name": "Vegetable Soup", "emoji": "🍲", "category": "dish", "tags": ["soup"], "buff": {"energy": 0.8, "questions": 2}, "chapter": 1, "value": 105},
     "bunny_bowl": {"name": "Carrot-Clover Bowl", "emoji": "🥗", "category": "dish", "tags": ["pet-dish"], "chapter": 1, "value": 210},
     "stone_soup": {"name": "Stone Soup", "emoji": "🍲", "category": "dish", "tags": ["soup"], "buff": {"energy": 0.8, "questions": 2}, "chapter": 2, "value": 180},
@@ -3927,28 +4470,28 @@ details summary { cursor: pointer; font-weight: 500; }
     "marigold_salve": {"name": "Marigold salve", "emoji": "🫙", "category": "remedy", "value": 330, "tags": ["remedy"], "desc": "In the old days people used it like this. Today: ask a grown-up or a doctor.", "chapter": 5},
     "arnica_salve": {"name": "Arnica salve (skin only)", "emoji": "🫙", "category": "remedy", "value": 360, "tags": ["remedy"], "desc": "In the old days people used it like this. Today: ask a grown-up or a doctor.", "chapter": 5},
     "lavender_water": {"name": "Lavender water", "emoji": "💜", "category": "remedy", "value": 390, "tags": ["remedy"], "desc": "In the old days people used it like this. Today: ask a grown-up or a doctor.", "chapter": 5},
-    "healers_chest": {"name": "Healer's Chest", "emoji": "🧰", "category": "dish", "tags": ["pet-dish"], "desc": "A box with different remedies, each made from the right part of the right plant. The badger will want to see it.", "chapter": 5, "value": 900},
+    "healers_chest": {"name": "Healer's Chest", "emoji": "🧰", "category": "dish", "tags": ["pet-dish"], "desc": "A box with different remedies, each made from the right part of the right plant. The badger will want to see it.", "chapter": 5, "value": 1150},
     "tea_set": {"name": "Tea Set", "emoji": "🫖", "category": "pet-item", "desc": "A little pot and cups of fired clay. The badger's spine is: tea first.", "chapter": 5, "value": 0}
   },
   "nodes": {
     "tent": {"type": "building", "name": "Tent", "emoji": "⛺", "chapter": 1, "slot": "living", "desc": "Where it starts. Energy max 20; each Rest answer gives 5 energy.", "effects": {"set": {"energyMax": 20, "energyPerRest": 5, "homeFuel": 0.2}}},
     "well_1": {"type": "building", "name": "Old Bucket", "emoji": "🪣", "chapter": 1, "slot": "well", "desc": "All that is left: a small dented bucket. Carry water from the wild pond: 2 💧 a trip for 1 ⚡. Holds 8.", "effects": {"set": {"waterPerStep": 0, "waterCap": 8, "fetchWater": 2}}},
-    "ruins_workshop": {"type": "land", "name": "Clear the old workshop", "emoji": "🪨", "chapter": 1, "slot": "workshop", "requires": ["campfire"], "cost": {"energy": 7}, "gives": {"stone": 7}, "steps": [{"name": "Lift the fallen stones", "emoji": "🪨", "cost": {"energy": 2}, "gives": {"stone": 2}}, {"name": "Break up the old wall", "emoji": "🔨", "cost": {"energy": 2}, "gives": {"stone": 3}}, {"name": "Carry off the rubble", "emoji": "💪", "cost": {"energy": 2}, "gives": {"stone": 2}}, {"name": "Level the ground", "emoji": "🧹", "cost": {"energy": 1}}], "cat": "build", "desc": "What is left of the old workshop is in the way: clear it away before anything new can stand here. It gives stones back."},
+    "ruins_workshop": {"type": "land", "name": "Clear the old workshop", "emoji": "🪨", "chapter": 1, "slot": "workshop", "requires": ["campfire"], "cost": {"energy": 7}, "gives": {"boulder": 5, "stone": 2}, "steps": [{"name": "Lift the fallen stones", "emoji": "🪨", "cost": {"energy": 2}, "gives": {"boulder": 2}}, {"name": "Break up the old wall", "emoji": "🔨", "cost": {"energy": 2}, "gives": {"boulder": 3}}, {"name": "Carry off the rubble", "emoji": "💪", "cost": {"energy": 2}, "gives": {"stone": 2}}, {"name": "Level the ground", "emoji": "🧹", "cost": {"energy": 1}}], "cat": "build", "desc": "What is left of the old workshop is in the way: clear it away before anything new can stand here. It gives stones back."},
     "ruins_lumber": {"type": "land", "name": "Clear the burnt woodshed", "emoji": "🪵", "chapter": 2, "slot": "lumber", "requires": ["shed", "k_trees"], "cost": {"energy": 6}, "gives": {"stick": 4, "charcoal": 1, "ash": 2}, "steps": [{"name": "Pull out the charred beams", "emoji": "💪", "cost": {"energy": 2}, "gives": {"stick": 2, "charcoal": 1}}, {"name": "Stack the burnt planks", "emoji": "🪵", "cost": {"energy": 2}, "gives": {"stick": 2}}, {"name": "Rake up the ashes", "emoji": "🧹", "cost": {"energy": 1}, "gives": {"ash": 2}}, {"name": "Level the ground", "emoji": "🟫", "cost": {"energy": 1}}], "cat": "build", "desc": "What is left of the burnt woodshed is in the way: clear it away before anything new can stand here. It gives sticks, charcoal and ash back."},
     "ruins_barn": {"type": "land", "name": "Clear the burnt barn", "emoji": "🪵", "chapter": 2, "slot": "barn", "requires": ["carpenter_bench", "k_building"], "cost": {"energy": 6}, "gives": {"stick": 4, "charcoal": 1, "ash": 2}, "steps": [{"name": "Pull out the charred beams", "emoji": "💪", "cost": {"energy": 2}, "gives": {"stick": 2, "charcoal": 1}}, {"name": "Stack the burnt planks", "emoji": "🪵", "cost": {"energy": 2}, "gives": {"stick": 2}}, {"name": "Rake up the ashes", "emoji": "🧹", "cost": {"energy": 1}, "gives": {"ash": 2}}, {"name": "Level the ground", "emoji": "🟫", "cost": {"energy": 1}}], "cat": "build", "desc": "What is left of the burnt barn is in the way: clear it away before anything new can stand here. It gives sticks, charcoal and ash back."},
     "ruins_compost": {"type": "land", "name": "Clear the old compost corner", "emoji": "🪵", "chapter": 2, "slot": "compost", "requires": ["workbench", "seed_3", "k_compost"], "cost": {"energy": 6}, "gives": {"stick": 4, "charcoal": 1, "ash": 2}, "steps": [{"name": "Pull out the charred beams", "emoji": "💪", "cost": {"energy": 2}, "gives": {"stick": 2, "charcoal": 1}}, {"name": "Stack the burnt planks", "emoji": "🪵", "cost": {"energy": 2}, "gives": {"stick": 2}}, {"name": "Rake up the ashes", "emoji": "🧹", "cost": {"energy": 1}, "gives": {"ash": 2}}, {"name": "Level the ground", "emoji": "🟫", "cost": {"energy": 1}}], "cat": "build", "desc": "What is left of the old compost corner is in the way: clear it away before anything new can stand here. It gives sticks, charcoal and ash back."},
-    "ruins_windmill": {"type": "land", "name": "Clear the old mill", "emoji": "🪨", "chapter": 3, "slot": "windmill", "requires": ["workshop_2", "iron_hammer", "k_wind"], "cost": {"energy": 7}, "gives": {"stone": 7}, "steps": [{"name": "Lift the fallen stones", "emoji": "🪨", "cost": {"energy": 2}, "gives": {"stone": 2}}, {"name": "Break up the old wall", "emoji": "🔨", "cost": {"energy": 2}, "gives": {"stone": 3}}, {"name": "Carry off the rubble", "emoji": "💪", "cost": {"energy": 2}, "gives": {"stone": 2}}, {"name": "Level the ground", "emoji": "🧹", "cost": {"energy": 1}}], "cat": "build", "desc": "What is left of the old mill is in the way: clear it away before anything new can stand here. It gives stones back."},
-    "ruins_greenhouse": {"type": "land", "name": "Clear the old glasshouse", "emoji": "🪨", "chapter": 4, "slot": "greenhouse", "requires": ["smiths_hammer", "k_greenhouse"], "cost": {"energy": 7}, "gives": {"stone": 7}, "steps": [{"name": "Lift the fallen stones", "emoji": "🪨", "cost": {"energy": 2}, "gives": {"stone": 2}}, {"name": "Break up the old wall", "emoji": "🔨", "cost": {"energy": 2}, "gives": {"stone": 3}}, {"name": "Carry off the rubble", "emoji": "💪", "cost": {"energy": 2}, "gives": {"stone": 2}}, {"name": "Level the ground", "emoji": "🧹", "cost": {"energy": 1}}], "cat": "build", "desc": "What is left of the old glasshouse is in the way: clear it away before anything new can stand here. It gives stones back."},
+    "ruins_windmill": {"type": "land", "name": "Clear the old mill", "emoji": "🪨", "chapter": 3, "slot": "windmill", "requires": ["workshop_2", "iron_hammer", "k_wind"], "cost": {"energy": 7}, "gives": {"boulder": 5, "stone": 2}, "steps": [{"name": "Lift the fallen stones", "emoji": "🪨", "cost": {"energy": 2}, "gives": {"boulder": 2}}, {"name": "Break up the old wall", "emoji": "🔨", "cost": {"energy": 2}, "gives": {"boulder": 3}}, {"name": "Carry off the rubble", "emoji": "💪", "cost": {"energy": 2}, "gives": {"stone": 2}}, {"name": "Level the ground", "emoji": "🧹", "cost": {"energy": 1}}], "cat": "build", "desc": "What is left of the old mill is in the way: clear it away before anything new can stand here. It gives stones back."},
+    "ruins_greenhouse": {"type": "land", "name": "Clear the old glasshouse", "emoji": "🪨", "chapter": 4, "slot": "greenhouse", "requires": ["smiths_hammer", "k_greenhouse"], "cost": {"energy": 7}, "gives": {"boulder": 5, "stone": 2}, "steps": [{"name": "Lift the fallen stones", "emoji": "🪨", "cost": {"energy": 2}, "gives": {"boulder": 2}}, {"name": "Break up the old wall", "emoji": "🔨", "cost": {"energy": 2}, "gives": {"boulder": 3}}, {"name": "Carry off the rubble", "emoji": "💪", "cost": {"energy": 2}, "gives": {"stone": 2}}, {"name": "Level the ground", "emoji": "🧹", "cost": {"energy": 1}}], "cat": "build", "desc": "What is left of the old glasshouse is in the way: clear it away before anything new can stand here. It gives stones back."},
     "road_1": {"type": "building", "name": "Muddy track", "emoji": "🛤️", "chapter": 1, "slot": "road", "desc": "The old road is mud and potholes. Only the seed seller with her basket gets through.", "effects": {"set": {"roadLevel": 1}}},
     "road_1b": {"type": "building", "name": "Lay brushwood over the mud", "emoji": "🌿", "chapter": 1, "slot": "road", "requires": ["road_1"], "cost": {"stick": 6, "fiber": 4, "energy": 3}, "replaces": "road_1", "cat": "build", "desc": "Bundles of brushwood over the worst mud: the seed seller's handcart gets through a little more often.", "effects": {"set": {"roadLevel": 1.5}}},
-    "road_2": {"type": "building", "name": "Fill the potholes", "emoji": "🪨", "chapter": 1, "slot": "road", "requires": ["road_1b"], "cost": {"stone": 6, "stick": 4, "energy": 5}, "replaces": "road_1b", "cat": "build", "desc": "Stones and sticks in the worst holes: carts can come now — the timber & stone seller, the seed cart and the book cart.", "effects": {"set": {"roadLevel": 2}}},
-    "road_2b": {"type": "building", "name": "Dig a ditch for the puddles", "emoji": "⛏️", "chapter": 2, "slot": "road", "requires": ["road_2", "wooden_shovel"], "cost": {"stone": 6, "energy": 6}, "replaces": "road_2", "cat": "build", "desc": "A ditch along the road drains the puddles: the bean grower's cart can come now.", "effects": {"set": {"roadLevel": 2.5}}},
-    "road_3": {"type": "building", "name": "Gravel road", "emoji": "🛤️", "chapter": 2, "slot": "road", "requires": ["road_2b", "wooden_shovel"], "cost": {"stone": 14, "coins": 300, "energy": 10}, "replaces": "road_2b", "cat": "build", "desc": "A firm gravel road: heavy carts with clay and iron ore can reach your farm, and the seed shop delivers.", "effects": {"set": {"roadLevel": 3}}, "steps": [{"cost": {"coins": 300, "stone": 7, "energy": 5}, "name": "Spread the gravel bed", "emoji": "🪨", "wait": 2}, {"cost": {"stone": 7, "energy": 5}, "name": "Rake and tamp the gravel", "emoji": "🪏"}]},
-    "road_3b": {"type": "building", "name": "Edge the road with kerbstones", "emoji": "🪨", "chapter": 3, "slot": "road", "requires": ["road_3"], "cost": {"stone": 12, "energy": 8}, "replaces": "road_3", "cat": "build", "desc": "Kerbstones keep the gravel in place: the sunflower seller from the hills dares the trip.", "effects": {"set": {"roadLevel": 3.5}}},
-    "road_4": {"type": "building", "name": "Cobbled road", "emoji": "🛣️", "chapter": 3, "slot": "road", "requires": ["road_3b"], "cost": {"stone": 24, "brick": 6, "coins": 900, "energy": 16}, "replaces": "road_3b", "cat": "build", "desc": "Cobbles and a ditch: the hardwood & sand carts and the nursery come even after rain.", "effects": {"set": {"roadLevel": 4}}},
+    "road_2": {"type": "building", "name": "Fill the potholes", "emoji": "🪨", "chapter": 1, "slot": "road", "requires": ["road_1b"], "cost": {"boulder": 6, "stick": 4, "energy": 5}, "replaces": "road_1b", "cat": "build", "desc": "Stones and sticks in the worst holes: carts can come now — the timber & stone seller, the seed cart and the book cart.", "effects": {"set": {"roadLevel": 2}}},
+    "road_2b": {"type": "building", "name": "Dig a ditch for the puddles", "emoji": "⛏️", "chapter": 2, "slot": "road", "requires": ["road_2", "wooden_shovel"], "cost": {"boulder": 6, "energy": 6}, "replaces": "road_2", "cat": "build", "desc": "A ditch along the road drains the puddles: the bean grower's cart can come now.", "effects": {"set": {"roadLevel": 2.5}}},
+    "road_3": {"type": "building", "name": "Gravel road", "emoji": "🛤️", "chapter": 2, "slot": "road", "requires": ["road_2b", "wooden_shovel"], "cost": {"boulder": 14, "coins": 300, "energy": 10}, "replaces": "road_2b", "cat": "build", "desc": "A firm gravel road: heavy carts with clay and iron ore can reach your farm, and the seed shop delivers.", "effects": {"set": {"roadLevel": 3}}, "steps": [{"cost": {"coins": 300, "boulder": 7, "energy": 5}, "name": "Spread the gravel bed", "emoji": "🪨", "wait": 2}, {"cost": {"boulder": 7, "energy": 5}, "name": "Rake and tamp the gravel", "emoji": "🪏"}]},
+    "road_3b": {"type": "building", "name": "Edge the road with kerbstones", "emoji": "🪨", "chapter": 3, "slot": "road", "requires": ["road_3"], "cost": {"boulder": 12, "energy": 8}, "replaces": "road_3", "cat": "build", "desc": "Kerbstones keep the gravel in place: the sunflower seller from the hills dares the trip.", "effects": {"set": {"roadLevel": 3.5}}},
+    "road_4": {"type": "building", "name": "Cobbled road", "emoji": "🛣️", "chapter": 3, "slot": "road", "requires": ["road_3b"], "cost": {"boulder": 24, "brick": 6, "coins": 900, "energy": 16}, "replaces": "road_3b", "cat": "build", "desc": "Cobbles and a ditch: the hardwood & sand carts and the nursery come even after rain.", "effects": {"set": {"roadLevel": 4}}},
     "road_4b": {"type": "building", "name": "Plant trees along the road", "emoji": "🌳", "chapter": 3, "slot": "road", "requires": ["road_4", "k_trees"], "cost": {"stick": 10, "compost": 3, "energy": 8}, "replaces": "road_4", "cat": "build", "desc": "A row of young trees gives shade and shelter: the herb woman walks over from the next valley.", "effects": {"set": {"roadLevel": 4.5}}},
-    "road_5": {"type": "building", "name": "Paved road & bridge", "emoji": "🌉", "chapter": 4, "slot": "road", "requires": ["road_4b"], "cost": {"stone": 30, "brick": 12, "plank": 10, "coins": 1800, "energy": 22}, "replaces": "road_4b", "cat": "build", "desc": "A paved road with a stone bridge: guild wagons and travellers from far away find your farm.", "effects": {"set": {"roadLevel": 5}}, "steps": [{"cost": {"coins": 1800, "stone": 15, "energy": 7}, "name": "Lay the road bed", "emoji": "🪨", "wait": 3}, {"cost": {"stone": 15, "energy": 7}, "name": "Set the paving stones", "emoji": "🧱", "wait": 3}, {"cost": {"brick": 12, "plank": 10, "energy": 8}, "name": "Build the bridge", "emoji": "🌉"}]},
-    "basket": {"type": "building", "name": "Basket", "emoji": "🧺", "chapter": 1, "slot": "storage", "desc": "Holds up to 10 of each item.", "effects": {"set": {"storageCap": 10, "woodpileCap": 20}}},
+    "road_5": {"type": "building", "name": "Paved road & bridge", "emoji": "🌉", "chapter": 4, "slot": "road", "requires": ["road_4b"], "cost": {"boulder": 30, "brick": 12, "plank": 10, "coins": 1800, "energy": 22}, "replaces": "road_4b", "cat": "build", "desc": "A paved road with a stone bridge: guild wagons and travellers from far away find your farm.", "effects": {"set": {"roadLevel": 5}}, "steps": [{"cost": {"coins": 1800, "boulder": 15, "energy": 7}, "name": "Lay the road bed", "emoji": "🪨", "wait": 3}, {"cost": {"boulder": 15, "energy": 7}, "name": "Set the paving stones", "emoji": "🧱", "wait": 3}, {"cost": {"brick": 12, "plank": 10, "energy": 8}, "name": "Build the bridge", "emoji": "🌉"}]},
+    "basket": {"type": "building", "name": "Basket", "emoji": "🧺", "chapter": 1, "slot": "storage", "desc": "A shelf of 40 load for every kind of thing: 10 logs or 40 carrots.", "effects": {"set": {"storageLoad": 40, "woodpileCap": 20}}},
     "hands": {"type": "tool", "name": "Hands", "emoji": "✋", "chapter": 1, "slot": "tool:digging", "desc": "Plant, harvest and pull weeds by hand.", "track": "digging", "tier": 0},
     "rock": {"type": "tool", "name": "Rock", "emoji": "🪨", "chapter": 1, "slot": "tool:hammering", "desc": "Good enough to knock simple things together.", "track": "hammering", "tier": 0},
     "bucket": {"type": "tool", "name": "Watering Scoop", "emoji": "🫗", "chapter": 1, "slot": "tool:watering", "desc": "Waters the plants. Plants use their full water cost.", "track": "watering", "tier": 0, "effects": {"set": {"waterMult": 1}}},
@@ -3959,7 +4502,7 @@ details summary { cursor: pointer; font-weight: 500; }
     "campfire": {"type": "station", "name": "Campfire", "emoji": "🔥", "chapter": 1, "slot": "kitchen", "cost": {"stick": 3, "stone": 3, "energy": 3}, "desc": "First build. With the Tin Pot: porridge and soup.", "requires": ["k_fire"], "cat": "cook"},
     "d_porridge": {"type": "delivery", "name": "Feed the travelling merchant", "emoji": "🥣", "chapter": 1, "slot": "market", "requires": ["campfire"], "cost": {"porridge": 2, "energy": 3}, "desc": "She shares news — and opens her cart properly."},
     "seed_2": {"type": "merchant", "name": "Seed Merchant · cart", "emoji": "🧑‍🌾", "chapter": 1, "slot": "market", "requires": ["d_porridge", "road_2"], "desc": "Adds clover and onion seeds."},
-    "raw_1": {"type": "merchant", "name": "Raw Materials · timber & stone", "emoji": "🪨", "chapter": 1, "slot": "market", "requires": ["d_porridge", "road_2"], "desc": "Safety valve for basic building materials.", "sells": {"stick": 15, "stone": 45, "fiber": 15, "log": 75}},
+    "raw_1": {"type": "merchant", "name": "Raw Materials · timber & stone", "emoji": "🪨", "chapter": 1, "slot": "market", "requires": ["d_porridge", "road_2"], "desc": "Safety valve for basic building materials.", "sells": {"stick": 15, "stone": 15, "boulder": 45, "fiber": 15, "log": 75}},
     "crop_clover": {"type": "crop", "name": "Clover", "emoji": "☘️", "chapter": 1, "slot": "field", "requires": ["seed_2"], "desc": "Cheap, quick fodder. Its flowers feed bees.", "grow": 2, "water": 1, "seedCost": 15, "yields": {"clover": 1.95}, "flower": true},
     "crop_onion": {"type": "crop", "name": "Onion", "emoji": "🧅", "chapter": 1, "slot": "field", "requires": ["seed_2", "k_roots", "present_onion"], "grow": 3, "water": 2, "seedCost": 30, "yields": {"onion": 1.3}, "winterHardy": true},
     "present_onion": {"type": "delivery", "name": "A present for the seed cart", "emoji": "🎁", "chapter": 1, "slot": "market", "requires": ["seed_2"], "cost": {"porridge": 2, "energy": 1}, "cat": "errand", "desc": "Give the seed seller two bowls of porridge — next time she brings onion sets."},
@@ -3969,44 +4512,44 @@ details summary { cursor: pointer; font-weight: 500; }
     "stone_knife": {"type": "tool", "name": "Stone Knife", "emoji": "🔪", "chapter": 1, "slot": "tool:cutting", "requires": ["workbench", "k_tools"], "cost": {"stick": 2, "stone": 2, "fiber": 2, "energy": 4}, "desc": "Rough chopping. Needed for any recipe that cuts things.", "track": "cutting", "tier": 1},
     "stone_axe": {"type": "tool", "name": "Hand Axe", "emoji": "🪓", "chapter": 1, "slot": "tool:woodworking", "requires": ["workbench", "k_tools"], "cost": {"stick": 3, "stone": 3, "rope": 2, "energy": 5}, "desc": "Clears stumps, splits logs into planks, cuts sticks faster.", "track": "woodworking", "tier": 1, "effects": {"mult": {"energy:gather": 0.85}}},
     "wooden_shovel": {"type": "tool", "name": "Wooden Shovel", "emoji": "🪏", "chapter": 1, "slot": "tool:digging", "requires": ["workbench", "k_tools"], "cost": {"stick": 4, "rope": 2, "energy": 4}, "desc": "Pries out rocks and digs beds: field work −10% energy.", "track": "digging", "tier": 1, "replaces": "hands", "effects": {"mult": {"energy:field": 0.9}}},
-    "clear_rocks": {"type": "land", "name": "Clear the rocks (2 patches)", "emoji": "🪨", "chapter": 1, "slot": "field", "requires": ["wooden_shovel"], "cost": {"energy": 8.5}, "gives": {"stone": 8, "fiber": 2}, "effects": {"add": {"plots": 2}}, "steps": [{"name": "Dig out the big rocks", "emoji": "⛏️", "cost": {"energy": 2.5}, "gives": {"stone": 3}}, {"name": "Lever out the boulder", "emoji": "💪", "cost": {"energy": 2.5}, "gives": {"stone": 3}}, {"name": "Pick up the small stones", "emoji": "🤏", "cost": {"energy": 1.5}, "gives": {"stone": 2}}, {"name": "Pull the weeds", "emoji": "🌿", "cost": {"energy": 1}, "gives": {"fiber": 2}}, {"name": "Rake the soil", "emoji": "🧹", "cost": {"energy": 1}}], "desc": "Takes 5 steps, one tap each; every step gives something back. After the first 2 steps the 2 patches can be planted; the other steps make them better (bigger harvests, fewer weeds).", "openAfter": 2},
+    "clear_rocks": {"type": "land", "name": "Clear the rocks (2 patches)", "emoji": "🪨", "chapter": 1, "slot": "field", "requires": ["wooden_shovel"], "cost": {"energy": 8.5}, "gives": {"boulder": 6, "stone": 2, "fiber": 2}, "effects": {"add": {"plots": 2}}, "steps": [{"name": "Dig out the big rocks", "emoji": "⛏️", "cost": {"energy": 2.5}, "gives": {"boulder": 3}}, {"name": "Lever out the boulder", "emoji": "💪", "cost": {"energy": 2.5}, "gives": {"boulder": 3}}, {"name": "Pick up the small stones", "emoji": "🤏", "cost": {"energy": 1.5}, "gives": {"stone": 2}}, {"name": "Pull the weeds", "emoji": "🌿", "cost": {"energy": 1}, "gives": {"fiber": 2}}, {"name": "Rake the soil", "emoji": "🧹", "cost": {"energy": 1}}], "desc": "Takes 5 steps, one tap each; every step gives something back. After the first 2 steps the 2 patches can be planted; the other steps make them better (bigger harvests, fewer weeds).", "openAfter": 2},
     "clear_stumps": {"type": "land", "name": "Clear the stumps (2 patches)", "emoji": "🪵", "chapter": 1, "slot": "field", "requires": ["stone_axe"], "cost": {"energy": 8.0}, "gives": {"log": 1, "stick": 4, "fiber": 2, "stone": 1}, "effects": {"add": {"plots": 2}}, "steps": [{"name": "Chop the stumps", "emoji": "🪓", "cost": {"energy": 2.5}, "gives": {"log": 1, "stick": 2}}, {"name": "Dig out the roots", "emoji": "⛏️", "cost": {"energy": 2.5}, "gives": {"stick": 2}}, {"name": "Pull the weeds", "emoji": "🌿", "cost": {"energy": 1}, "gives": {"fiber": 2}}, {"name": "Pick the stones", "emoji": "🤏", "cost": {"energy": 1}, "gives": {"stone": 1}}, {"name": "Rake the soil", "emoji": "🧹", "cost": {"energy": 1}}], "desc": "Takes 5 steps, one tap each; every step gives something back. After the first 2 steps the 2 patches can be planted; the other steps make them better (bigger harvests, fewer weeds).", "openAfter": 2},
     "chopping_block": {"type": "station", "name": "Chopping Block", "emoji": "🪵", "chapter": 1, "slot": "kitchen", "requires": ["stone_axe"], "cost": {"log": 1, "energy": 2}, "desc": "A stump to cut on. Salads and bowls (needs a knife).", "cat": "prep"},
-    "quern": {"type": "station", "name": "Hand Quern", "emoji": "⚙️", "chapter": 1, "slot": "kitchen", "requires": ["workbench", "clear_rocks", "k_grinding"], "cost": {"stone": 8, "coins": 195, "energy": 4}, "desc": "Two flat stones from the rocky patch grind wheat into flour. Hard work (2 ⚡).", "cat": "mill"},
-    "well_2": {"type": "building", "name": "Dig a well", "emoji": "🪣", "chapter": 1, "slot": "well", "requires": ["well_1", "k_water"], "cost": {"coins": 450, "stone": 7, "energy": 4}, "replaces": "well_1", "effects": {"set": {"waterPerStep": 0, "waterCap": 24, "fetchWater": 4}}, "desc": "A stone well right by the house: 4 💧 a trip, holds 24."},
-    "well_3": {"type": "building", "name": "Well · winch", "emoji": "🪣", "chapter": 1, "slot": "well", "requires": ["well_2", "clear_rocks", "k_water"], "cost": {"coins": 1125, "stone": 10, "rope": 3, "energy": 7}, "replaces": "well_2", "effects": {"set": {"waterPerStep": 0, "waterCap": 36, "fetchWater": 6}}, "desc": "A winch and a bigger bucket: 6 💧 a trip, holds 36."},
+    "quern": {"type": "station", "name": "Hand Quern", "emoji": "⚙️", "chapter": 1, "slot": "kitchen", "requires": ["workbench", "clear_rocks", "k_grinding"], "cost": {"boulder": 8, "coins": 195, "energy": 4}, "desc": "Two flat stones from the rocky patch grind wheat into flour. Hard work (2 ⚡).", "cat": "mill"},
+    "well_2": {"type": "building", "name": "Dig a well", "emoji": "🪣", "chapter": 1, "slot": "well", "requires": ["well_1", "k_water"], "cost": {"coins": 450, "boulder": 7, "energy": 4}, "replaces": "well_1", "effects": {"set": {"waterPerStep": 0, "waterCap": 24, "fetchWater": 4}}, "desc": "A stone well right by the house: 4 💧 a trip, holds 24."},
+    "well_3": {"type": "building", "name": "Well · winch", "emoji": "🪣", "chapter": 1, "slot": "well", "requires": ["well_2", "clear_rocks", "k_water"], "cost": {"coins": 1125, "boulder": 10, "rope": 3, "energy": 7}, "replaces": "well_2", "effects": {"set": {"waterPerStep": 0, "waterCap": 36, "fetchWater": 6}}, "desc": "A winch and a bigger bucket: 6 💧 a trip, holds 36."},
     "coop_1": {"type": "building", "name": "Chicken Coop", "emoji": "🐔", "chapter": 1, "slot": "chicken_area", "requires": ["stone_axe", "seed_2", "k_chickens"], "cost": {"stick": 8, "rope": 3, "straw": 7, "coins": 285, "energy": 9}, "effects": {"set": {"cap_chicken": 3}}, "steps": [{"cost": {"coins": 285, "stick": 8, "energy": 4.0}, "name": "Set the sticks", "emoji": "🌿", "wait": 1}, {"cost": {"straw": 7, "energy": 3.5}, "name": "Bring the straw", "emoji": "🌾", "wait": 1}, {"cost": {"rope": 3, "energy": 1.5}, "name": "Tie it all together", "emoji": "🪢"}]},
     "animal_chicken": {"type": "animal", "voice": "chicken", "facesLeft": true, "name": "Chickens", "emoji": "🐔", "chapter": 1, "slot": "chicken_area", "requires": ["coop_1"], "desc": "Eat any grain (wheat, oats, sunflower seeds, linseed, mash), need water and nest straw, lay an egg every question — and drop a feather now and then.", "price": {"coins": 450}, "feed": {"tag:feed-grain": 2, "straw": 0.5}, "feedWater": 1, "produces": {"egg": 1, "feather": 0.3}, "cooldown": 1, "collectEnergy": 1, "muck": 0.3},
     "scarecrow_1": {"type": "building", "name": "Stick Scarecrow", "emoji": "🧍", "chapter": 1, "slot": "field", "requires": ["workbench", "clear_stumps", "k_birds"], "cost": {"stick": 7, "straw": 7, "rope": 2, "energy": 8}, "desc": "Shoots fierce looks at birds and rabbits (removes 0.6 pests per question) and they leave the seeds alone: planting costs half the energy.", "effects": {"set": {"scare": 0.6}, "mult": {"energy:plant": 0.5}}, "steps": [{"cost": {"stick": 7, "energy": 3.5}, "name": "Set the sticks", "emoji": "🌿", "wait": 1}, {"cost": {"straw": 7, "energy": 3.5}, "name": "Bring the straw", "emoji": "🌾", "wait": 1}, {"cost": {"rope": 2, "energy": 1.0}, "name": "Tie it all together", "emoji": "🪢"}]},
     "d_veg_soup": {"type": "delivery", "name": "Soup for the village", "emoji": "🍲", "chapter": 1, "slot": "market", "requires": ["seed_2", "well_2"], "cost": {"veg_soup": 3, "energy": 3}, "desc": "The village notices you. Two new merchants arrive."},
     "seed_3": {"type": "merchant", "name": "Seed Merchant · stall", "emoji": "🧑‍🌾", "chapter": 1, "slot": "market", "requires": ["d_veg_soup"], "desc": "Potato, lettuce, beans and beet seeds."},
-    "spice_1": {"type": "merchant", "name": "Spice Merchant", "emoji": "🧂", "chapter": 1, "slot": "market", "requires": ["d_veg_soup"], "desc": "Salt. (Barter idea: also asks for 1 onion per salt.)", "sells": {"salt": 60}},
+    "spice_1": {"type": "merchant", "name": "Spice Merchant", "emoji": "🧂", "chapter": 1, "slot": "market", "requires": ["d_veg_soup"], "desc": "Sells salt for cooking.", "sells": {"salt": 60}},
     "compost_bin": {"type": "station", "name": "Compost Bin", "emoji": "♻️", "chapter": 2, "slot": "field", "requires": ["workbench", "seed_3", "k_compost", "ruins_compost"], "cost": {"stick": 6, "rope": 1, "energy": 5}, "desc": "Turns straw, fiber and manure into compost over a few questions.", "slots": 2, "cat": "field"},
-    "pet_bunny": {"type": "pet", "name": "Bunny comes home", "emoji": "🐰", "chapter": 1, "slot": "pet", "requires": ["chopping_block", "well_3", "animal_chicken"], "cost": {"bunny_bowl": 1, "straw_hutch": 1, "energy": 4}, "desc": "Pet 1 (default name Pip; the player can rename). Bonus: every carrot harvest gives +1 carrot.", "defaultName": "Pip", "effects": {"add": {"yield_carrot": 1, "well_calm": 0.04}}},
+    "pet_bunny": {"type": "pet", "name": "Bunny comes home", "emoji": "🐰", "chapter": 1, "slot": "pet", "requires": ["chopping_block", "well_3", "animal_chicken"], "cost": {"bunny_bowl": 1, "straw_hutch": 1, "energy": 4}, "desc": "Comes home as Pip; you can choose a new name. Bonus: every carrot harvest gives +1 carrot.", "defaultName": "Pip", "effects": {"add": {"yield_carrot": 1, "well_calm": 0.04}}},
     "crop_hay": {"type": "crop", "name": "Meadow hay", "emoji": "🌿", "chapter": 1, "slot": "field", "requires": ["k_hay"], "desc": "Meadow grass, cut and dried: bedding for the hutch, feed for the pen, and it sells. The hay you keep is the seed.", "grow": 2, "water": 1, "seedItem": "hay", "yields": {"hay": 2.0}},
     "crop_winter_wheat": {"type": "crop", "name": "Winter wheat", "emoji": "❄️", "chapter": 1, "slot": "field", "requires": ["k_winter_wheat"], "desc": "Sow it in autumn or winter. It grows slowly in the cold and gives more grain than summer wheat. The grain is the seed.", "grow": 3, "water": 2, "seedItem": "winter_wheat", "sowSeasons": ["autumn", "winter"], "yields": {"winter_wheat": 4.0, "straw": 1.0}, "winterHardy": true},
-    "cottage_walls": {"type": "building", "name": "Cottage · log walls", "emoji": "🏗️", "chapter": 2, "slot": "living", "requires": ["tent", "shed", "k_building"], "cost": {"log": 6, "stone": 8, "coins": 300, "energy": 10}, "desc": "Big builds go up in stages; the slot shows the progress.", "stage": 1},
+    "cottage_walls": {"type": "building", "name": "Cottage · log walls", "emoji": "🏗️", "chapter": 2, "slot": "living", "requires": ["tent", "shed", "k_building"], "cost": {"log": 6, "boulder": 8, "coins": 300, "energy": 10}, "desc": "Big builds go up in stages; the slot shows the progress.", "stage": 1},
     "cottage_roof": {"type": "building", "name": "Cottage · thatched roof", "emoji": "🏗️", "chapter": 2, "slot": "living", "requires": ["cottage_walls", "k_thatch"], "cost": {"straw": 10, "rope": 4, "stick": 6, "coins": 300, "energy": 14}, "stage": 2, "steps": [{"cost": {"coins": 300, "stick": 6, "energy": 4.2}, "name": "Set the sticks", "emoji": "🌿", "wait": 2}, {"cost": {"straw": 10, "energy": 7.0}, "name": "Bring the straw", "emoji": "🌾", "wait": 2}, {"cost": {"rope": 4, "energy": 2.8}, "name": "Tie it all together", "emoji": "🪢"}]},
-    "cottage": {"type": "building", "name": "Cottage", "emoji": "🏡", "chapter": 2, "slot": "living", "requires": ["cottage_roof", "raw_2"], "cost": {"stone": 6, "clay": 4, "coins": 450, "energy": 7}, "desc": "Hearth and door finish it. Energy max 30, 6 energy per Rest answer, a proper kitchen.", "replaces": "tent", "stage": 3, "effects": {"set": {"energyMax": 30, "energyPerRest": 6, "homeFuel": 0.3}}},
+    "cottage": {"type": "building", "name": "Cottage", "emoji": "🏡", "chapter": 2, "slot": "living", "requires": ["cottage_roof", "raw_2"], "cost": {"boulder": 6, "clay": 4, "coins": 450, "energy": 7}, "desc": "Hearth and door finish it. Energy max 30, 6 energy per Rest answer, a proper kitchen.", "replaces": "tent", "stage": 3, "effects": {"set": {"energyMax": 30, "energyPerRest": 6, "homeFuel": 0.3}}},
     "crop_potato": {"type": "crop", "name": "Potato", "emoji": "🥔", "chapter": 2, "slot": "field", "requires": ["seed_3"], "grow": 4, "water": 3, "seedCost": 45, "yields": {"potato": 1.95}},
     "crop_lettuce": {"type": "crop", "name": "Lettuce", "emoji": "🥬", "chapter": 2, "slot": "field", "requires": ["seed_3", "present_lettuce"], "grow": 2, "water": 3, "seedCost": 15, "yields": {"lettuce": 0.65}},
     "present_lettuce": {"type": "delivery", "name": "Soup for the seed stall", "emoji": "🎁", "chapter": 2, "slot": "market", "requires": ["seed_3"], "cost": {"veg_soup": 2, "energy": 1}, "cat": "errand", "desc": "Two bowls of vegetable soup for the stall keeper — she orders lettuce seed for you."},
     "crop_beans": {"type": "crop", "name": "Beans", "emoji": "🫘", "chapter": 2, "slot": "field", "requires": ["seed_3", "road_2b"], "grow": 4, "water": 2, "seedCost": 30, "yields": {"beans": 1.95}, "winterHardy": true},
     "crop_beet": {"type": "crop", "name": "Beet", "emoji": "🟣", "chapter": 2, "slot": "field", "requires": ["seed_3", "present_beet"], "grow": 4, "water": 2, "seedCost": 30, "yields": {"beet": 1.3}},
     "present_beet": {"type": "delivery", "name": "Pancakes for the seed stall", "emoji": "🎁", "chapter": 2, "slot": "market", "requires": ["seed_3", "d_pancakes"], "cost": {"pancakes": 2, "energy": 1}, "cat": "errand", "desc": "A pancake breakfast for the stall keeper — she asks her cousin for beet seed."},
-    "crop_tomato": {"type": "crop", "name": "Tomato", "emoji": "🍅", "chapter": 2, "slot": "field", "requires": ["seed_3", "compost_bin", "animal_chicken"], "cost": {"egg": 2}, "desc": "Ingredient-threshold unlock (kept from the prototype): bring 2 eggs once. Hungry crop: needs compost.", "grow": 4, "water": 3, "seedCost": 60, "needs": {"compost": 1}, "yields": {"tomato": 1.95}},
+    "crop_tomato": {"type": "crop", "name": "Tomato", "emoji": "🍅", "chapter": 2, "slot": "field", "requires": ["seed_3", "compost_bin", "animal_chicken"], "cost": {"egg": 2}, "desc": "Opens when you bring 2 eggs once. Hungry crop: needs compost.", "grow": 4, "water": 3, "seedCost": 60, "needs": {"compost": 1}, "yields": {"tomato": 1.95}},
     "d_stone_soup": {"type": "delivery", "name": "Stone Soup for the quarry folk", "emoji": "🍲", "chapter": 2, "slot": "market", "requires": ["seed_3"], "cost": {"stone_soup": 2, "energy": 4}, "desc": "The folk-tale soup. The quarry folk start selling clay."},
     "raw_2": {"type": "merchant", "name": "Raw Materials · clay", "emoji": "🟤", "chapter": 2, "slot": "market", "requires": ["d_stone_soup", "road_3"], "sells": {"clay": 45}},
-    "workshop_1": {"type": "building", "name": "Carpenter's Shed", "emoji": "🛠️", "chapter": 2, "slot": "workshop", "requires": ["workbench", "shed", "k_timber"], "cost": {"log": 4, "stone": 6, "rope": 2, "coins": 300, "energy": 8}, "desc": "Workshop tier 1 — wood working.", "replaces": "workbench"},
+    "workshop_1": {"type": "building", "name": "Carpenter's Shed", "emoji": "🛠️", "chapter": 2, "slot": "workshop", "requires": ["workbench", "shed", "k_timber"], "cost": {"log": 4, "boulder": 6, "rope": 2, "coins": 300, "energy": 8}, "desc": "Workshop tier 1 — wood working.", "replaces": "workbench"},
     "carpenter_bench": {"type": "station", "name": "Carpenter's Bench", "emoji": "🪚", "chapter": 2, "slot": "workshop", "requires": ["workshop_1", "k_timber"], "cost": {"log": 2, "stick": 4, "energy": 4}, "desc": "Split logs into planks with the axe (1 log → 2 planks).", "cat": "wood"},
-    "kiln": {"type": "station", "name": "Kiln", "emoji": "🔥", "chapter": 2, "slot": "workshop", "requires": ["workshop_1", "raw_2", "k_clay"], "cost": {"stone": 10, "clay": 6, "energy": 11}, "desc": "Fires bricks and jars, burns charcoal.", "slots": 2, "cat": "kiln"},
-    "stove_1": {"type": "station", "name": "Stove", "emoji": "♨️", "chapter": 2, "slot": "kitchen", "requires": ["cottage", "raw_2", "k_stove"], "cost": {"stone": 8, "clay": 4, "coins": 450, "energy": 8}, "desc": "Replaces the campfire. Soups, stews, pancakes.", "replaces": "campfire", "cat": "cook"},
-    "oven_1": {"type": "station", "name": "Oven", "emoji": "🍞", "chapter": 2, "slot": "kitchen", "requires": ["cottage", "kiln", "k_bread"], "cost": {"stone": 6, "brick": 6, "coins": 600, "energy": 8}, "desc": "Bread, baked potatoes.", "cat": "cook"},
+    "kiln": {"type": "station", "name": "Kiln", "emoji": "🔥", "chapter": 2, "slot": "workshop", "requires": ["workshop_1", "raw_2", "k_clay"], "cost": {"boulder": 10, "clay": 6, "energy": 11}, "desc": "Fires bricks and jars, burns charcoal.", "slots": 2, "cat": "kiln"},
+    "stove_1": {"type": "station", "name": "Stove", "emoji": "♨️", "chapter": 2, "slot": "kitchen", "requires": ["cottage", "raw_2", "k_stove"], "cost": {"boulder": 8, "clay": 4, "coins": 450, "energy": 8}, "desc": "Replaces the campfire. Soups, stews, pancakes.", "replaces": "campfire", "cat": "cook"},
+    "oven_1": {"type": "station", "name": "Oven", "emoji": "🍞", "chapter": 2, "slot": "kitchen", "requires": ["cottage", "kiln", "k_bread"], "cost": {"boulder": 6, "brick": 6, "coins": 600, "energy": 8}, "desc": "Bread, baked potatoes.", "cat": "cook"},
     "prep_table_1": {"type": "station", "name": "Prep Table", "emoji": "🔪", "chapter": 2, "slot": "kitchen", "requires": ["cottage", "carpenter_bench"], "cost": {"plank": 4, "log": 1, "energy": 4}, "desc": "Replaces the chopping block. Salads, platters, dough.", "replaces": "chopping_block", "cat": "prep"},
     "woodlot": {"type": "building", "name": "Woodlot", "emoji": "🌳", "chapter": 2, "slot": "lumber", "requires": ["shed", "k_trees", "ruins_lumber"], "cost": {"stick": 6, "log": 2, "coins": 375, "energy": 6}, "desc": "Planted saplings: 1 log every 2 questions, forever.", "effects": {"produces": {"log": 0.5}}},
-    "shed": {"type": "building", "name": "Log Shed", "emoji": "🏚️", "chapter": 2, "slot": "storage", "requires": ["stone_axe", "k_building"], "cost": {"log": 6, "stick": 10, "straw": 8, "rope": 3, "coins": 600, "energy": 19}, "desc": "First chapter-2 build: room for 25 of each item, so bigger projects fit.", "replaces": "basket", "effects": {"set": {"storageCap": 25, "woodpileCap": 40}}, "steps": [{"cost": {"coins": 600, "log": 6, "energy": 4.2}, "name": "Raise the beams", "emoji": "🪵", "wait": 2}, {"cost": {"stick": 10, "energy": 7.0}, "name": "Set the sticks", "emoji": "🌿", "wait": 2}, {"cost": {"straw": 8, "energy": 5.6}, "name": "Bring the straw", "emoji": "🌾", "wait": 2}, {"cost": {"rope": 3, "energy": 2.2}, "name": "Tie it all together", "emoji": "🪢"}]},
+    "shed": {"type": "building", "name": "Log Shed", "emoji": "🏚️", "chapter": 2, "slot": "storage", "requires": ["stone_axe", "k_building"], "cost": {"log": 6, "stick": 10, "straw": 8, "rope": 3, "coins": 600, "energy": 19}, "desc": "First chapter-2 build: a shelf of 100 load for every kind of thing (25 logs or 100 carrots), so bigger projects fit.", "replaces": "basket", "effects": {"set": {"storageLoad": 100, "woodpileCap": 40}}, "steps": [{"cost": {"coins": 600, "log": 6, "energy": 4.2}, "name": "Raise the beams", "emoji": "🪵", "wait": 2}, {"cost": {"stick": 10, "energy": 7.0}, "name": "Set the sticks", "emoji": "🌿", "wait": 2}, {"cost": {"straw": 8, "energy": 5.6}, "name": "Bring the straw", "emoji": "🌾", "wait": 2}, {"cost": {"rope": 3, "energy": 2.2}, "name": "Tie it all together", "emoji": "🪢"}]},
     "barn_frame": {"type": "building", "name": "Barn · frame", "emoji": "🏗️", "chapter": 2, "slot": "barn", "requires": ["carpenter_bench", "k_building", "ruins_barn"], "cost": {"log": 6, "plank": 6, "rope": 4, "coins": 450, "energy": 11}, "stage": 1, "steps": [{"cost": {"coins": 450, "log": 6, "energy": 4.1}, "name": "Raise the beams", "emoji": "🪵", "wait": 2}, {"cost": {"plank": 6, "energy": 4.1}, "name": "Fit the planks", "emoji": "🪚", "wait": 2}, {"cost": {"rope": 4, "energy": 2.8}, "name": "Tie it all together", "emoji": "🪢"}]},
-    "barn_1": {"type": "building", "name": "Barn", "emoji": "🛖", "chapter": 2, "slot": "barn", "requires": ["barn_frame", "k_cows"], "cost": {"plank": 4, "stone": 8, "straw": 8, "coins": 750, "energy": 14}, "desc": "Shelter for big animals. Cows can move in.", "stage": 2, "effects": {"set": {"cap_cow": 2}}, "steps": [{"cost": {"coins": 750, "stone": 8, "energy": 5.6}, "name": "Lay the stones", "emoji": "🪨", "wait": 2}, {"cost": {"plank": 4, "energy": 2.8}, "name": "Fit the planks", "emoji": "🪚", "wait": 2}, {"cost": {"straw": 8, "energy": 5.6}, "name": "Bring the straw", "emoji": "🌾"}]},
+    "barn_1": {"type": "building", "name": "Barn", "emoji": "🛖", "chapter": 2, "slot": "barn", "requires": ["barn_frame", "k_cows"], "cost": {"plank": 4, "boulder": 8, "straw": 8, "coins": 750, "energy": 14}, "desc": "Shelter for big animals. Cows can move in.", "stage": 2, "effects": {"set": {"cap_cow": 2}}, "steps": [{"cost": {"coins": 750, "boulder": 8, "energy": 5.6}, "name": "Lay the stones", "emoji": "🪨", "wait": 2}, {"cost": {"plank": 4, "energy": 2.8}, "name": "Fit the planks", "emoji": "🪚", "wait": 2}, {"cost": {"straw": 8, "energy": 5.6}, "name": "Bring the straw", "emoji": "🌾"}]},
     "animal_cow": {"type": "animal", "voice": "cow", "name": "Cows", "emoji": "🐄", "chapter": 2, "slot": "cow_area", "requires": ["barn_1", "crop_clover"], "desc": "Eat any fodder (clover, lettuce, beets, oilcake, mash), drink lots, need bedding straw; milking every 2 questions. The barn fills with muck — muck it out for manure.", "price": {"coins": 600}, "feed": {"tag:fodder": 3, "straw": 1}, "feedWater": 3, "produces": {"milk": 1}, "cooldown": 2, "collectEnergy": 3, "muck": 1},
     "churn": {"type": "station", "name": "Butter Churn", "emoji": "🧈", "chapter": 2, "slot": "cow_area", "requires": ["barn_1", "carpenter_bench", "k_butter"], "cost": {"plank": 4, "rope": 1, "energy": 4}, "cat": "process"},
     "animal_bees": {"type": "animal", "voice": "bees", "name": "Bees (straw skeps)", "emoji": "🐝", "chapter": 2, "slot": "bee_yard", "requires": ["cap_bees_1"], "desc": "Never fed, but they need a water dish and flowering crops (clover, sunflower, flax, berries, herbs, fruit trees).", "price": {"coins": 150, "straw": 4, "rope": 1}, "feedWater": 1, "produces": {"honeycomb": 1}, "cooldown": 2, "needsFlowers": true, "collectEnergy": 2},
@@ -4020,11 +4563,11 @@ details summary { cursor: pointer; font-weight: 500; }
     "seed_4": {"type": "merchant", "name": "Seed Merchant · shop", "emoji": "🧑‍🌾", "chapter": 2, "slot": "market", "requires": ["d_pancakes", "road_3"], "desc": "Sunflower, flax, oats seeds and apple saplings (apples need the old orchard cleared)."},
     "d_hearty_stew": {"type": "delivery", "name": "Hearty Stew for the miners", "emoji": "🍲", "chapter": 2, "slot": "market", "requires": ["spice_1", "stove_1"], "cost": {"hearty_stew": 2, "energy": 4}, "desc": "Hungry miners pay in iron ore — the iron age begins."},
     "raw_3": {"type": "merchant", "name": "Raw Materials · iron ore", "emoji": "⛏️", "chapter": 2, "slot": "market", "requires": ["d_hearty_stew", "road_3"], "sells": {"iron_ore": 75}},
-    "pet_tortoise": {"type": "pet", "name": "Tortoise comes home", "emoji": "🐢", "chapter": 2, "slot": "pet", "requires": ["prep_table_1", "pet_bunny", "animal_cow"], "cost": {"garden_platter": 1, "shell_house": 1, "energy": 8}, "desc": "Pet 2 (default name Mossy). Bonus: finds a hidden spring (+1 💧 every water trip).", "defaultName": "Mossy", "effects": {"add": {"fetchWater": 1, "well_calm": 0.04}}},
+    "pet_tortoise": {"type": "pet", "name": "Tortoise comes home", "emoji": "🐢", "chapter": 2, "slot": "pet", "requires": ["prep_table_1", "pet_bunny", "animal_cow"], "cost": {"garden_platter": 1, "shell_house": 1, "energy": 8}, "desc": "Comes home as Mossy; you can choose a new name. Bonus: finds a hidden spring (+1 💧 every water trip).", "defaultName": "Mossy", "effects": {"add": {"fetchWater": 1, "well_calm": 0.04}}},
     "crop_kale": {"type": "crop", "name": "Winter kale", "emoji": "🥬", "chapter": 2, "slot": "field", "requires": ["seed_3", "k_kale"], "desc": "Slow and small, but it grows in the cold and pays well in winter.", "grow": 5, "water": 2, "seedCost": 24, "sowSeasons": ["autumn", "winter"], "winterHardy": true, "yields": {"kale": 1.0}},
-    "smithy_chimney": {"type": "building", "name": "Smithy · chimney", "emoji": "🏗️", "chapter": 3, "slot": "workshop", "requires": ["workshop_1", "kiln", "raw_3", "k_iron"], "cost": {"brick": 14, "stone": 14, "coins": 1425, "energy": 25}, "stage": 1},
-    "workshop_2": {"type": "building", "name": "Smithy", "emoji": "🛠️", "chapter": 3, "slot": "workshop", "requires": ["smithy_chimney"], "cost": {"plank": 14, "stone": 5, "coins": 2250, "energy": 17}, "desc": "Workshop tier 2 — metal.", "replaces": "workshop_1", "stage": 2, "steps": [{"cost": {"coins": 2250, "stone": 5, "energy": 4.5}, "name": "Lay the stones", "emoji": "🪨", "wait": 2}, {"cost": {"plank": 14, "energy": 12.5}, "name": "Fit the planks", "emoji": "🪚"}]},
-    "forge": {"type": "station", "name": "Forge", "emoji": "🔥", "chapter": 3, "slot": "workshop", "requires": ["workshop_2", "k_iron"], "cost": {"brick": 10, "stone": 8, "coins": 1425, "energy": 16}, "desc": "Smelts iron ore with charcoal.", "slots": 2, "cat": "smith"},
+    "smithy_chimney": {"type": "building", "name": "Smithy · chimney", "emoji": "🏗️", "chapter": 3, "slot": "workshop", "requires": ["workshop_1", "kiln", "raw_3", "k_iron"], "cost": {"brick": 14, "boulder": 14, "coins": 1425, "energy": 25}, "stage": 1},
+    "workshop_2": {"type": "building", "name": "Smithy", "emoji": "🛠️", "chapter": 3, "slot": "workshop", "requires": ["smithy_chimney"], "cost": {"plank": 14, "boulder": 5, "coins": 2250, "energy": 17}, "desc": "Workshop tier 2 — metal.", "replaces": "workshop_1", "stage": 2, "steps": [{"cost": {"coins": 2250, "boulder": 5, "energy": 4.5}, "name": "Lay the stones", "emoji": "🪨", "wait": 2}, {"cost": {"plank": 14, "energy": 12.5}, "name": "Fit the planks", "emoji": "🪚"}]},
+    "forge": {"type": "station", "name": "Forge", "emoji": "🔥", "chapter": 3, "slot": "workshop", "requires": ["workshop_2", "k_iron"], "cost": {"brick": 10, "boulder": 8, "coins": 1425, "energy": 16}, "desc": "Smelts iron ore with charcoal.", "slots": 2, "cat": "smith"},
     "anvil": {"type": "station", "name": "Anvil", "emoji": "⚒️", "chapter": 3, "slot": "workshop", "requires": ["forge", "k_smithing"], "cost": {"iron": 4, "log": 1, "energy": 5}, "desc": "Nails and iron tools.", "cat": "smith"},
     "iron_shovel": {"type": "tool", "name": "Iron Shovel", "emoji": "🪏", "chapter": 3, "slot": "tool:digging", "requires": ["iron_hammer"], "cost": {"iron": 3, "plank": 1, "energy": 4}, "desc": "Needed for double-dug beds; field work −20% energy.", "track": "digging", "tier": 2, "replaces": "wooden_shovel", "effects": {"mult": {"energy:field": 0.8}}},
     "iron_knife": {"type": "tool", "name": "Iron Knife", "emoji": "🔪", "chapter": 3, "slot": "tool:cutting", "requires": ["iron_hammer"], "cost": {"iron": 1, "stick": 1, "energy": 2}, "desc": "Fine dicing: sauces, pasta. Prep −20% energy.", "track": "cutting", "tier": 2, "replaces": "stone_knife", "effects": {"mult": {"energy:prep": 0.8}}},
@@ -4044,7 +4587,7 @@ details summary { cursor: pointer; font-weight: 500; }
     "animal_sheep": {"type": "animal", "voice": "sheep", "name": "Sheep", "emoji": "🐑", "chapter": 3, "slot": "sheep_area", "requires": ["shears"], "desc": "Eat any fodder, drink, need bedding straw; shearing every 3 questions. Muck out the pen for manure.", "price": {"coins": 1500}, "feed": {"tag:fodder": 2, "straw": 1}, "feedWater": 2, "produces": {"wool": 2}, "cooldown": 3, "collectEnergy": 4, "muck": 0.6},
     "spindle": {"type": "station", "name": "Hand Spindle", "emoji": "🧵", "chapter": 3, "slot": "sheep_area", "requires": ["workshop_1", "seed_4", "k_wool"], "cost": {"stick": 3, "stone": 1, "energy": 4}, "desc": "Wool → yarn, flax fiber → linen thread. Slow (2 ⚡).", "cat": "textile"},
     "hand_loom": {"type": "station", "name": "Hand Loom", "emoji": "🧶", "chapter": 3, "slot": "workshop", "requires": ["spindle", "k_weaving"], "cost": {"plank": 8, "rope": 3, "stick": 5, "energy": 14}, "desc": "Yarn → wool cloth, thread → linen.", "cat": "textile", "steps": [{"cost": {"plank": 8, "stick": 5, "energy": 11.4}, "name": "Fit the planks", "emoji": "🪚", "wait": 2}, {"cost": {"rope": 3, "energy": 2.6}, "name": "Tie it all together", "emoji": "🪢"}]},
-    "windmill_tower": {"type": "building", "name": "Windmill · stone tower", "emoji": "🏗️", "chapter": 3, "slot": "windmill", "requires": ["workshop_2", "iron_hammer", "k_wind", "ruins_windmill"], "cost": {"stone": 14, "plank": 10, "nails": 8, "coins": 1425, "energy": 29}, "stage": 1, "steps": [{"cost": {"coins": 1425, "stone": 14, "energy": 12.7}, "name": "Lay the stones", "emoji": "🪨", "wait": 2}, {"cost": {"plank": 10, "energy": 9.1}, "name": "Fit the planks", "emoji": "🪚", "wait": 2}, {"cost": {"nails": 8, "energy": 7.2}, "name": "Fix the ironwork", "emoji": "🔩"}]},
+    "windmill_tower": {"type": "building", "name": "Windmill · stone tower", "emoji": "🏗️", "chapter": 3, "slot": "windmill", "requires": ["workshop_2", "iron_hammer", "k_wind", "ruins_windmill"], "cost": {"boulder": 14, "plank": 10, "nails": 8, "coins": 1425, "energy": 29}, "stage": 1, "steps": [{"cost": {"coins": 1425, "boulder": 14, "energy": 12.7}, "name": "Lay the stones", "emoji": "🪨", "wait": 2}, {"cost": {"plank": 10, "energy": 9.1}, "name": "Fit the planks", "emoji": "🪚", "wait": 2}, {"cost": {"nails": 8, "energy": 7.2}, "name": "Fix the ironwork", "emoji": "🔩"}]},
     "windmill_1": {"type": "building", "name": "Windmill", "emoji": "🌬️", "chapter": 3, "slot": "windmill", "requires": ["windmill_tower"], "cost": {"plank": 5, "wool_cloth": 3, "coins": 2250, "energy": 7}, "desc": "Cloth sails grind flour by themselves every question — the quern is retired.", "stage": 2, "effects": {"set": {"autoMill": 1}}, "cat": "mill"},
     "honey_extractor": {"type": "station", "name": "Honey Extractor", "emoji": "🍯", "chapter": 3, "slot": "bee_yard", "requires": ["workshop_2", "animal_bees"], "cost": {"iron": 3, "plank": 5, "nails": 3, "energy": 10}, "desc": "Spins honey out of the comb: more honey, no crushing.", "cat": "process"},
     "cap_bees_2": {"type": "building", "name": "Wooden Hives", "emoji": "🐝", "chapter": 2, "slot": "bee_yard", "requires": ["animal_bees", "carpenter_bench"], "cost": {"plank": 8, "beeswax": 2, "coins": 450, "energy": 7}, "desc": "Box hives (pegged, no nails needed yet).", "replaces": "cap_bees_1", "effects": {"set": {"cap_bees": 4}}},
@@ -4065,8 +4608,8 @@ details summary { cursor: pointer; font-weight: 500; }
     "seed_5": {"type": "merchant", "name": "Seed Merchant · nursery", "emoji": "🧑‍🌾", "chapter": 3, "slot": "market", "requires": ["d_simple_cake", "road_4"], "desc": "Pumpkin, berries, herbs, walnut and olive saplings."},
     "scarecrow_2": {"type": "building", "name": "Dressed Scarecrow", "emoji": "🧍", "chapter": 3, "slot": "field", "requires": ["scarecrow_1", "hand_loom"], "cost": {"wool_cloth": 1, "straw": 5, "energy": 5}, "desc": "Flapping wool sleeves: removes 1.2 pests per question; planting costs a quarter of the energy.", "replaces": "scarecrow_1", "effects": {"set": {"scare": 1.2}, "mult": {"energy:plant": 0.25}}},
     "lumbermill": {"type": "building", "name": "Lumbermill", "emoji": "🪚", "chapter": 3, "slot": "lumber", "requires": ["woodlot", "saw"], "cost": {"plank": 14, "iron": 5, "nails": 8, "coins": 4125, "energy": 24}, "replaces": "woodlot", "effects": {"produces": {"log": 1.5}}, "steps": [{"cost": {"coins": 4125, "plank": 14, "energy": 12.4}, "name": "Fit the planks", "emoji": "🪚", "wait": 2}, {"cost": {"iron": 5, "nails": 8, "energy": 11.6}, "name": "Fix the ironwork", "emoji": "🔩"}]},
-    "pet_goat": {"type": "pet", "voice": "goat", "name": "Goat comes home", "emoji": "🐐", "chapter": 3, "slot": "pet", "requires": ["pet_tortoise", "oven_2", "windmill_1"], "cost": {"apple_crumble": 1, "goat_shed": 1, "energy": 12}, "desc": "Pet 3 (default name Bramble). Bonus: nibbles weeds (weeds −15%) and leaves compost (1 per 4 questions).", "defaultName": "Bramble", "effects": {"produces": {"compost": 0.25}, "mult": {"weeds": 0.85}, "add": {"well_calm": 0.04}}},
-    "kiln_2": {"type": "station", "name": "Brickworks", "emoji": "🧱", "chapter": 4, "slot": "workshop", "requires": ["kiln", "iron_hammer", "raw_4", "k_masonry"], "cost": {"brick": 12, "iron": 4, "stone": 12, "coins": 1875, "energy": 31}, "desc": "Five chambers instead of two: bricks, jars and charcoal in bulk.", "replaces": "kiln", "slots": 5, "cat": "kiln", "steps": [{"cost": {"coins": 1875, "brick": 12, "stone": 12, "energy": 26.6}, "name": "Lay the bricks", "emoji": "🧱", "wait": 3}, {"cost": {"iron": 4, "energy": 4.4}, "name": "Fix the ironwork", "emoji": "🔩"}]},
+    "pet_goat": {"type": "pet", "voice": "goat", "name": "Goat comes home", "emoji": "🐐", "chapter": 3, "slot": "pet", "requires": ["pet_tortoise", "oven_2", "windmill_1"], "cost": {"apple_crumble": 1, "goat_shed": 1, "energy": 12}, "desc": "Comes home as Bramble; you can choose a new name. Bonus: nibbles weeds (weeds −15%) and leaves compost (1 per 4 questions).", "defaultName": "Bramble", "effects": {"produces": {"compost": 0.25}, "mult": {"weeds": 0.85}, "add": {"well_calm": 0.04}}},
+    "kiln_2": {"type": "station", "name": "Brickworks", "emoji": "🧱", "chapter": 4, "slot": "workshop", "requires": ["kiln", "iron_hammer", "raw_4", "k_masonry"], "cost": {"brick": 12, "iron": 4, "boulder": 12, "coins": 1875, "energy": 31}, "desc": "Five chambers instead of two: bricks, jars and charcoal in bulk.", "replaces": "kiln", "slots": 5, "cat": "kiln", "steps": [{"cost": {"coins": 1875, "brick": 12, "boulder": 12, "energy": 26.6}, "name": "Lay the bricks", "emoji": "🧱", "wait": 3}, {"cost": {"iron": 4, "energy": 4.4}, "name": "Fix the ironwork", "emoji": "🔩"}]},
     "forge_2": {"type": "station", "name": "Blast Forge", "emoji": "🔥", "chapter": 4, "slot": "workshop", "requires": ["forge", "raw_4", "k_steel"], "cost": {"brick": 10, "iron": 4, "hardwood": 2, "coins": 1875, "energy": 18}, "desc": "Hot enough for steel.", "replaces": "forge", "slots": 2, "cat": "smith", "steps": [{"cost": {"coins": 1875, "brick": 10, "energy": 11.2}, "name": "Lay the bricks", "emoji": "🧱", "wait": 3}, {"cost": {"hardwood": 2, "energy": 2.2}, "name": "Raise the beams", "emoji": "🪵", "wait": 3}, {"cost": {"iron": 4, "energy": 4.6}, "name": "Fix the ironwork", "emoji": "🔩"}]},
     "glass_kiln": {"type": "station", "name": "Glass Kiln", "emoji": "🪟", "chapter": 4, "slot": "workshop", "requires": ["kiln", "forge", "raw_4", "k_glass"], "cost": {"brick": 12, "iron": 4, "coins": 1500, "energy": 18}, "slots": 2, "cat": "kiln", "steps": [{"cost": {"coins": 1500, "brick": 12, "energy": 13.5}, "name": "Lay the bricks", "emoji": "🧱", "wait": 3}, {"cost": {"iron": 4, "energy": 4.5}, "name": "Fix the ironwork", "emoji": "🔩"}]},
     "steel_shovel": {"type": "tool", "name": "Steel Shovel", "emoji": "🪏", "chapter": 4, "slot": "tool:digging", "requires": ["smiths_hammer"], "cost": {"steel": 2, "hardwood": 1, "energy": 4}, "desc": "Needed for deep-worked beds; field work −30% energy.", "track": "digging", "tier": 3, "replaces": "iron_shovel", "effects": {"mult": {"energy:field": 0.7}}},
@@ -4074,10 +4617,10 @@ details summary { cursor: pointer; font-weight: 500; }
     "smiths_hammer": {"type": "tool", "name": "Smith's Hammer", "emoji": "⚒️", "chapter": 4, "slot": "tool:hammering", "requires": ["forge_2"], "cost": {"steel": 2, "hardwood": 1, "energy": 4}, "desc": "Needed for the Farmhouse, Greenhouse and machines. Building −35% energy.", "track": "hammering", "tier": 2, "replaces": "iron_hammer", "effects": {"mult": {"energy:build": 0.65, "energy:smith": 0.7, "energy:craft": 0.75}}},
     "master_saw": {"type": "tool", "name": "Master Saw", "emoji": "🪚", "chapter": 4, "slot": "tool:woodworking", "requires": ["smiths_hammer", "k_hardwood"], "cost": {"steel": 2, "hardwood": 1, "energy": 4}, "desc": "Fine joinery for looms and windmill gears. Wood work −40% energy.", "track": "woodworking", "tier": 3, "replaces": "saw", "effects": {"mult": {"energy:wood": 0.6, "energy:gather": 0.75}}},
     "drip_line": {"type": "tool", "name": "Drip Line", "emoji": "💧", "chapter": 4, "slot": "tool:watering", "requires": ["forge_2", "glass_kiln"], "cost": {"steel": 1, "brick": 6, "beeswax": 2, "energy": 12}, "desc": "Clay pipes drip water right at the roots: half the water.", "track": "watering", "tier": 2, "replaces": "watering_can", "effects": {"set": {"waterMult": 0.5}}},
-    "farmhouse_base": {"type": "building", "name": "Farmhouse · foundation", "emoji": "🏗️", "chapter": 4, "slot": "living", "requires": ["cottage_loft", "raw_4", "k_masonry"], "cost": {"stone": 16, "brick": 10, "coins": 900, "energy": 29}, "stage": 1},
+    "farmhouse_base": {"type": "building", "name": "Farmhouse · foundation", "emoji": "🏗️", "chapter": 4, "slot": "living", "requires": ["cottage_loft", "raw_4", "k_masonry"], "cost": {"boulder": 16, "brick": 10, "coins": 900, "energy": 29}, "stage": 1},
     "farmhouse_walls": {"type": "building", "name": "Farmhouse · brick walls", "emoji": "🏗️", "chapter": 4, "slot": "living", "requires": ["farmhouse_base", "smiths_hammer"], "cost": {"brick": 10, "plank": 16, "nails": 12, "coins": 1275, "energy": 42}, "stage": 2, "steps": [{"cost": {"coins": 1275, "brick": 10, "energy": 11.1}, "name": "Lay the bricks", "emoji": "🧱", "wait": 3}, {"cost": {"plank": 16, "energy": 17.7}, "name": "Fit the planks", "emoji": "🪚", "wait": 3}, {"cost": {"nails": 12, "energy": 13.2}, "name": "Fix the ironwork", "emoji": "🔩"}]},
     "farmhouse": {"type": "building", "name": "Farmhouse", "emoji": "🏠", "chapter": 4, "slot": "living", "requires": ["farmhouse_walls", "glass_kiln"], "cost": {"glass": 4, "plank": 4, "coins": 1875, "energy": 9}, "desc": "Energy max 50, 8 energy per Rest answer, the master kitchen.", "replaces": "cottage_loft", "stage": 3, "effects": {"set": {"energyMax": 50, "energyPerRest": 8, "homeFuel": 0.4}}},
-    "warehouse": {"type": "building", "name": "Warehouse", "emoji": "🏬", "chapter": 4, "slot": "storage", "requires": ["shed", "iron_hammer"], "cost": {"brick": 16, "plank": 20, "nails": 10, "coins": 2250, "energy": 50}, "replaces": "shed", "effects": {"set": {"storageCap": 60, "woodpileCap": 80}}, "steps": [{"cost": {"coins": 2250, "brick": 16, "energy": 17.4}, "name": "Lay the bricks", "emoji": "🧱", "wait": 3}, {"cost": {"plank": 20, "energy": 21.7}, "name": "Fit the planks", "emoji": "🪚", "wait": 3}, {"cost": {"nails": 10, "energy": 10.9}, "name": "Fix the ironwork", "emoji": "🔩"}]},
+    "warehouse": {"type": "building", "name": "Warehouse", "emoji": "🏬", "chapter": 4, "slot": "storage", "requires": ["shed", "iron_hammer"], "cost": {"brick": 16, "plank": 20, "nails": 10, "coins": 2250, "energy": 50}, "replaces": "shed", "effects": {"set": {"storageLoad": 240, "woodpileCap": 80}}, "steps": [{"cost": {"coins": 2250, "brick": 16, "energy": 17.4}, "name": "Lay the bricks", "emoji": "🧱", "wait": 3}, {"cost": {"plank": 20, "energy": 21.7}, "name": "Fit the planks", "emoji": "🪚", "wait": 3}, {"cost": {"nails": 10, "energy": 10.9}, "name": "Fix the ironwork", "emoji": "🔩"}]},
     "workshop_3": {"type": "building", "name": "Master Workshop", "emoji": "🛠️", "chapter": 4, "slot": "workshop", "requires": ["workshop_2", "smiths_hammer"], "cost": {"brick": 20, "plank": 20, "steel": 4, "hardwood": 6, "coins": 3750, "energy": 50}, "replaces": "workshop_2", "steps": [{"cost": {"coins": 3750, "brick": 20, "energy": 20.0}, "name": "Lay the bricks", "emoji": "🧱", "wait": 3}, {"cost": {"hardwood": 6, "energy": 6.0}, "name": "Raise the beams", "emoji": "🪵", "wait": 3}, {"cost": {"plank": 20, "energy": 20.0}, "name": "Fit the planks", "emoji": "🪚", "wait": 3}, {"cost": {"steel": 4, "energy": 4.0}, "name": "Fix the ironwork", "emoji": "🔩"}]},
     "greenhouse_frame": {"type": "building", "name": "Greenhouse · frame", "emoji": "🏗️", "chapter": 4, "slot": "special", "requires": ["smiths_hammer", "k_greenhouse", "ruins_greenhouse"], "cost": {"plank": 10, "nails": 10, "steel": 2, "coins": 900, "energy": 24}, "stage": 1, "steps": [{"cost": {"coins": 900, "plank": 10, "energy": 10.9}, "name": "Fit the planks", "emoji": "🪚", "wait": 3}, {"cost": {"nails": 10, "steel": 2, "energy": 13.1}, "name": "Fix the ironwork", "emoji": "🔩"}]},
     "greenhouse": {"type": "building", "name": "Greenhouse", "emoji": "🪴", "chapter": 4, "slot": "special", "requires": ["greenhouse_frame", "glass_kiln"], "cost": {"glass": 12, "coins": 2250, "energy": 13}, "desc": "Special patch 3: 4 beds, water is recycled (half water). Heirlooms grow here.", "stage": 2, "effects": {"add": {"greenhouseBeds": 4}}},
@@ -4094,12 +4637,12 @@ details summary { cursor: pointer; font-weight: 500; }
     "crop_walnut": {"type": "crop", "name": "Walnut Tree", "emoji": "🌰", "chapter": 4, "slot": "orchard", "requires": ["seed_5", "orchard", "k_orchard"], "grow": 12, "regrow": 5, "water": 4, "seedCost": 600, "yields": {"walnut": 1.95}},
     "crop_olive": {"type": "crop", "name": "Olive Tree", "emoji": "🫒", "chapter": 4, "slot": "orchard", "requires": ["seed_5", "orchard", "k_orchard"], "grow": 14, "regrow": 5, "water": 3, "seedCost": 750, "yields": {"olive": 2.6}},
     "d_pizza": {"type": "delivery", "name": "Pizza night for the builders", "emoji": "🍕", "chapter": 4, "slot": "market", "requires": ["oven_2", "cheese_vat"], "cost": {"pizza": 2, "energy": 6}, "desc": "The builders' guild sells finished steel and glass (expensive shortcut)."},
-    "raw_5": {"type": "merchant", "name": "Raw Materials · guild stock", "emoji": "⚙️", "chapter": 4, "slot": "market", "requires": ["d_pizza", "road_5"], "sells": {"steel": 675, "glass": 300}},
+    "raw_5": {"type": "merchant", "name": "Raw Materials · guild stock", "emoji": "⚙️", "chapter": 4, "slot": "market", "requires": ["d_pizza", "road_5"], "sells": {"steel": 740, "glass": 235}},
     "scarecrow_3": {"type": "building", "name": "Guardian Scarecrow", "emoji": "🧍", "chapter": 4, "slot": "field", "requires": ["scarecrow_2", "iron_hammer"], "cost": {"iron": 2, "linen_cloth": 1, "straw": 4, "energy": 8}, "desc": "Iron-framed with flapping linen: removes 2 pests per question; planting cheap, harvesting −40% energy.", "replaces": "scarecrow_2", "effects": {"set": {"scare": 2}, "mult": {"energy:plant": 0.25, "energy:harvest": 0.6}}},
     "lumbermill_2": {"type": "building", "name": "Lumbermill · hardwood grove", "emoji": "🪚", "chapter": 4, "slot": "lumber", "requires": ["lumbermill", "master_saw", "k_hardwood"], "cost": {"plank": 12, "steel": 2, "nails": 8, "coins": 2625, "energy": 24}, "replaces": "lumbermill", "effects": {"produces": {"log": 2, "hardwood": 0.34}}, "steps": [{"cost": {"coins": 2625, "plank": 12, "energy": 13.1}, "name": "Fit the planks", "emoji": "🪚", "wait": 3}, {"cost": {"steel": 2, "nails": 8, "energy": 10.9}, "name": "Fix the ironwork", "emoji": "🔩"}]},
     "import_broker": {"type": "merchant", "name": "Import Broker", "emoji": "🧳", "chapter": 6, "slot": "market", "requires": ["pet_badger", "road_5"], "desc": "Only barters: rare seeds for fine goods. Arrives with the 5th pet and opens the last chapter.", "barter": {"saffron_corm": {"coins": 900, "aged_cheese": 1}, "rainbow_carrot_seed": {"coins": 300, "jam": 1}, "golden_beet_seed": {"coins": 375, "pickles": 1}, "woad_seed": {"coins": 225, "wool_cloth": 1}}, "barterGives": {"saffron_corm": 10, "rainbow_carrot_seed": 8, "golden_beet_seed": 8, "woad_seed": 8}},
-    "pet_pony": {"type": "pet", "voice": "pony", "name": "Pony comes home", "emoji": "🐴", "chapter": 4, "slot": "pet", "requires": ["pet_goat", "barn_3", "farmhouse"], "cost": {"apple_carrot_cake": 1, "saddle_blanket": 1, "energy": 16}, "desc": "Pet 4 (default name Hazel). Bonus: pulls the market cart (+10% on everything sold).", "defaultName": "Hazel", "effects": {"add": {"sellBonusPct": 10, "well_calm": 0.04}}},
-    "ruins_stillroom": {"type": "land", "name": "Clear Berit's still-room", "emoji": "🪨", "chapter": 5, "slot": "kitchen", "requires": ["pet_pony", "crop_herbs"], "cost": {"energy": 8}, "gives": {"stone": 6, "clay": 2}, "steps": [{"name": "Lift the fallen stones", "emoji": "🪨", "cost": {"energy": 3}, "gives": {"stone": 4}}, {"name": "Sweep out the ashes", "emoji": "🧹", "cost": {"energy": 2}, "gives": {"clay": 1}}, {"name": "Dust the old shelves", "emoji": "🪟", "cost": {"energy": 3}, "gives": {"stone": 2, "clay": 1}}], "desc": "The room behind the old kitchen where the matriarch dried her herbs and brewed her teas. A torn page lies under the shelf."},
+    "pet_pony": {"type": "pet", "voice": "pony", "name": "Pony comes home", "emoji": "🐴", "chapter": 4, "slot": "pet", "requires": ["pet_goat", "barn_3", "farmhouse"], "cost": {"apple_carrot_cake": 1, "saddle_blanket": 1, "energy": 16}, "desc": "Comes home as Hazel; you can choose a new name. Bonus: pulls the market cart (+10% on everything sold).", "defaultName": "Hazel", "effects": {"add": {"sellBonusPct": 10, "well_calm": 0.04}}},
+    "ruins_stillroom": {"type": "land", "name": "Clear Berit's still-room", "emoji": "🪨", "chapter": 5, "slot": "kitchen", "requires": ["pet_pony", "crop_herbs"], "cost": {"energy": 8}, "gives": {"boulder": 4, "stone": 2, "clay": 2}, "steps": [{"name": "Lift the fallen stones", "emoji": "🪨", "cost": {"energy": 3}, "gives": {"boulder": 4}}, {"name": "Sweep out the ashes", "emoji": "🧹", "cost": {"energy": 2}, "gives": {"clay": 1}}, {"name": "Dust the old shelves", "emoji": "🪟", "cost": {"energy": 3}, "gives": {"stone": 2, "clay": 1}}], "desc": "The room behind the old kitchen where the matriarch dried her herbs and brewed her teas. A torn page lies under the shelf."},
     "drying_rack": {"type": "station", "name": "Drying Rack", "emoji": "🧺", "chapter": 5, "slot": "kitchen", "requires": ["ruins_stillroom", "k_drying"], "cost": {"stick": 8, "rope": 2, "energy": 4}, "cat": "prep", "desc": "Bunches of plants hang here, in the shade, until they are dry."},
     "mortar": {"type": "station", "name": "Mortar and Pestle", "emoji": "🥣", "chapter": 5, "slot": "kitchen", "requires": ["ruins_stillroom", "k_plant_parts"], "cost": {"stone": 4, "energy": 3}, "cat": "prep", "desc": "Crushes fresh leaves into a paste."},
     "tea_pot": {"type": "station", "name": "Tea Pot Hearth", "emoji": "🫖", "chapter": 5, "slot": "kitchen", "requires": ["ruins_stillroom", "k_teas"], "cost": {"clay_pot": 1, "stick": 4, "energy": 3}, "cat": "cook", "desc": "Hot water on dried plants: teas and gargles."},
@@ -4110,22 +4653,23 @@ details summary { cursor: pointer; font-weight: 500; }
     "crop_rainbow_carrot": {"type": "crop", "name": "Rainbow Carrot", "emoji": "🥕", "chapter": 6, "slot": "greenhouse", "requires": ["greenhouse", "import_broker"], "grow": 3, "water": 2, "seedItem": "rainbow_carrot_seed", "needs": {"compost": 1}, "yields": {"rainbow_carrot": 1.95}},
     "crop_golden_beet": {"type": "crop", "name": "Golden Beet", "emoji": "🟡", "chapter": 6, "slot": "greenhouse", "requires": ["greenhouse", "import_broker"], "grow": 4, "water": 2, "seedItem": "golden_beet_seed", "needs": {"compost": 1}, "yields": {"golden_beet": 1.3}},
     "crop_woad": {"type": "crop", "name": "Woad", "emoji": "🍃", "chapter": 6, "slot": "field", "requires": ["import_broker"], "desc": "Old European blue-dye plant.", "grow": 4, "water": 2, "seedItem": "woad_seed", "yields": {"woad": 1.95}, "flower": true},
-    "seed_library": {"type": "building", "name": "Seed Library", "emoji": "📚", "chapter": 6, "slot": "barn", "requires": ["import_broker", "warehouse", "k_seed_saving"], "cost": {"plank": 14, "glass": 4, "clay_jar": 7, "coins": 2625, "energy": 33}, "desc": "Heirloom crops can be saved from your own harvest: 1 seed back per harvest. (Seed-saving lesson.)", "effects": {"set": {"heirloomSeedSaving": 1}}, "steps": [{"cost": {"coins": 2625, "plank": 14, "energy": 18.5}, "name": "Fit the planks", "emoji": "🪚", "wait": 3}, {"cost": {"glass": 4, "energy": 5.3}, "name": "Set the glass", "emoji": "🪟", "wait": 3}, {"cost": {"clay_jar": 7, "energy": 9.2}, "name": "Finish it off", "emoji": "✨"}]},
+    "seed_library": {"type": "building", "name": "Seed Library", "emoji": "📚", "chapter": 6, "slot": "barn", "requires": ["import_broker", "warehouse", "k_seed_saving"], "cost": {"plank": 14, "glass": 4, "clay_jar": 7, "coins": 2625, "energy": 33}, "desc": "Heirloom crops can be saved from your own harvest: 1 seed back per harvest.", "effects": {"set": {"heirloomSeedSaving": 1}}, "steps": [{"cost": {"coins": 2625, "plank": 14, "energy": 18.5}, "name": "Fit the planks", "emoji": "🪚", "wait": 3}, {"cost": {"glass": 4, "energy": 5.3}, "name": "Set the glass", "emoji": "🪟", "wait": 3}, {"cost": {"clay_jar": 7, "energy": 9.2}, "name": "Finish it off", "emoji": "✨"}]},
     "dye_vat": {"type": "station", "name": "Dye Vat", "emoji": "🎨", "chapter": 6, "slot": "workshop", "requires": ["workshop_3", "import_broker", "k_dyes"], "cost": {"brick": 7, "iron": 2, "plank": 4, "clay_jar": 2, "energy": 20}, "desc": "Plant dyes — and colour mixing.", "cat": "textile", "steps": [{"cost": {"brick": 7, "energy": 9.3}, "name": "Lay the bricks", "emoji": "🧱", "wait": 3}, {"cost": {"plank": 4, "energy": 5.3}, "name": "Fit the planks", "emoji": "🪚", "wait": 3}, {"cost": {"iron": 2, "energy": 2.7}, "name": "Fix the ironwork", "emoji": "🔩", "wait": 3}, {"cost": {"clay_jar": 2, "energy": 2.7}, "name": "Finish it off", "emoji": "✨"}]},
-    "windmill_2": {"type": "building", "name": "Windmill · stone grinders", "emoji": "🌬️", "chapter": 6, "slot": "windmill", "requires": ["windmill_1", "master_saw"], "cost": {"hardwood": 7, "steel": 2, "linen_cloth": 2, "stone": 14, "coins": 3750, "energy": 33}, "desc": "Fine flour for master baking.", "replaces": "windmill_1", "effects": {"set": {"autoMill": 2}}, "cat": "mill", "steps": [{"cost": {"coins": 3750, "stone": 14, "energy": 18.5}, "name": "Lay the stones", "emoji": "🪨", "wait": 3}, {"cost": {"hardwood": 7, "energy": 9.2}, "name": "Raise the beams", "emoji": "🪵", "wait": 3}, {"cost": {"linen_cloth": 2, "energy": 2.6}, "name": "Hang the cloth", "emoji": "🧵", "wait": 3}, {"cost": {"steel": 2, "energy": 2.7}, "name": "Fix the ironwork", "emoji": "🔩"}]},
+    "windmill_2": {"type": "building", "name": "Windmill · stone grinders", "emoji": "🌬️", "chapter": 6, "slot": "windmill", "requires": ["windmill_1", "master_saw"], "cost": {"hardwood": 7, "steel": 2, "linen_cloth": 2, "boulder": 14, "coins": 3750, "energy": 33}, "desc": "Fine flour for master baking.", "replaces": "windmill_1", "effects": {"set": {"autoMill": 2}}, "cat": "mill", "steps": [{"cost": {"coins": 3750, "boulder": 14, "energy": 18.5}, "name": "Lay the stones", "emoji": "🪨", "wait": 3}, {"cost": {"hardwood": 7, "energy": 9.2}, "name": "Raise the beams", "emoji": "🪵", "wait": 3}, {"cost": {"linen_cloth": 2, "energy": 2.6}, "name": "Hang the cloth", "emoji": "🧵", "wait": 3}, {"cost": {"steel": 2, "energy": 2.7}, "name": "Fix the ironwork", "emoji": "🔩"}]},
     "oven_3": {"type": "station", "name": "Master Oven", "emoji": "🍞", "chapter": 6, "slot": "kitchen", "requires": ["oven_2", "farmhouse", "k_master_baking"], "cost": {"brick": 14, "steel": 3, "glass": 2, "coins": 4500, "energy": 25}, "replaces": "oven_2", "cat": "cook", "steps": [{"cost": {"coins": 4500, "brick": 14, "energy": 18.4}, "name": "Lay the bricks", "emoji": "🧱", "wait": 3}, {"cost": {"steel": 3, "glass": 2, "energy": 6.6}, "name": "Fix the ironwork", "emoji": "🔩"}]},
     "stove_3": {"type": "station", "name": "Master Stove", "emoji": "♨️", "chapter": 6, "slot": "kitchen", "requires": ["stove_2", "farmhouse"], "cost": {"steel": 4, "brick": 7, "coins": 3750, "energy": 14}, "replaces": "stove_2", "cat": "cook"},
     "wind_pump": {"type": "building", "name": "Wind Pump", "emoji": "🌬️", "chapter": 6, "slot": "windmill", "requires": ["windmill_2", "k_wind_pump"], "cost": {"hardwood": 7, "steel": 3, "brick": 10, "coins": 4500, "energy": 26}, "desc": "The windmill also pumps water.", "effects": {"add": {"waterCap": 40, "fetchWater": 4}}, "steps": [{"cost": {"coins": 4500, "brick": 10, "energy": 13.0}, "name": "Lay the bricks", "emoji": "🧱", "wait": 3}, {"cost": {"hardwood": 7, "energy": 9.1}, "name": "Raise the beams", "emoji": "🪵", "wait": 3}, {"cost": {"steel": 3, "energy": 3.9}, "name": "Fix the ironwork", "emoji": "🔩"}]},
     "greenhouse_2": {"type": "building", "name": "Greenhouse · extension", "emoji": "🪴", "chapter": 6, "slot": "special", "requires": ["greenhouse", "crop_saffron"], "cost": {"glass": 10, "plank": 8, "steel": 2, "coins": 3750, "energy": 26}, "effects": {"add": {"greenhouseBeds": 2}}, "steps": [{"cost": {"coins": 3750, "plank": 8, "energy": 10.4}, "name": "Fit the planks", "emoji": "🪚", "wait": 3}, {"cost": {"glass": 10, "steel": 2, "energy": 15.6}, "name": "Set the glass", "emoji": "🪟"}]},
-    "orchard_2": {"type": "land", "name": "Orchard terraces", "emoji": "🌳", "chapter": 6, "slot": "special", "requires": ["orchard", "steel_shovel", "import_broker"], "cost": {"energy": 15, "stone": 20, "coins": 2625}, "effects": {"add": {"orchardSpots": 2}}},
+    "orchard_2": {"type": "land", "name": "Orchard terraces", "emoji": "🌳", "chapter": 6, "slot": "special", "requires": ["orchard", "steel_shovel", "import_broker"], "cost": {"energy": 15, "boulder": 20, "coins": 2625}, "effects": {"add": {"orchardSpots": 2}}},
     "cap_bees_3": {"type": "building", "name": "Bee Garden", "emoji": "🐝", "chapter": 6, "slot": "bee_yard", "requires": ["cap_bees_2", "crop_herbs", "import_broker"], "cost": {"plank": 10, "nails": 7, "glass": 2, "coins": 1875, "energy": 25}, "desc": "Observation hive with a glass window.", "replaces": "cap_bees_2", "effects": {"set": {"cap_bees": 6}}, "steps": [{"cost": {"coins": 1875, "plank": 10, "energy": 13.2}, "name": "Fit the planks", "emoji": "🪚", "wait": 3}, {"cost": {"nails": 7, "glass": 2, "energy": 11.8}, "name": "Fix the ironwork", "emoji": "🔩"}]},
-    "cellar_2": {"type": "station", "name": "Cheese Cave", "emoji": "🧀", "chapter": 6, "slot": "barn", "requires": ["cellar", "import_broker"], "cost": {"brick": 20, "stone": 20, "coins": 3750, "energy": 52}, "desc": "Twice the aging space.", "replaces": "cellar", "slots": 6, "cat": "process"},
+    "cellar_2": {"type": "station", "name": "Cheese Cave", "emoji": "🧀", "chapter": 6, "slot": "barn", "requires": ["cellar", "import_broker"], "cost": {"brick": 20, "boulder": 20, "coins": 3750, "energy": 52}, "desc": "Twice the aging space.", "replaces": "cellar", "slots": 6, "cat": "process"},
     "d_fair_pies": {"type": "delivery", "name": "Harvest Fair · pie table", "emoji": "🎀", "chapter": 6, "slot": "market", "requires": ["import_broker"], "cost": {"pumpkin_pie": 2, "apple_pie": 2, "energy": 7}, "desc": "Blue ribbon: +5% on everything sold.", "effects": {"add": {"sellBonusPct": 5}}},
     "d_fair_cheese": {"type": "delivery", "name": "Harvest Fair · cheese table", "emoji": "🎀", "chapter": 6, "slot": "market", "requires": ["d_fair_pies", "cellar_2"], "cost": {"cheese_board": 2, "tapenade": 2, "energy": 7}, "desc": "Second ribbon: another +5%.", "effects": {"add": {"sellBonusPct": 5}}},
     "d_fair_preserves": {"type": "delivery", "name": "Harvest Fair · preserves table", "emoji": "🎀", "chapter": 6, "slot": "market", "requires": ["d_fair_pies"], "cost": {"pickles": 2, "jam": 2, "cured_olives": 2, "energy": 7}, "desc": "Another ribbon: +5%.", "effects": {"add": {"sellBonusPct": 5}}},
     "d_fair_cloth": {"type": "delivery", "name": "Harvest Fair · weaving table", "emoji": "🎀", "chapter": 6, "slot": "market", "requires": ["d_fair_cheese", "dye_vat"], "cost": {"rainbow_yarn": 3, "linen_cloth": 2, "energy": 7}, "desc": "Third ribbon: another +5%.", "effects": {"add": {"sellBonusPct": 5}}},
-    "pet_badger": {"type": "pet", "name": "Badger comes home", "emoji": "🦡", "chapter": 5, "slot": "pet", "requires": ["pet_pony", "ruins_stillroom", "k_ask_grownup"], "cost": {"healers_chest": 1, "tea_set": 1, "energy": 16}, "desc": "Pet 5 (default name Bracken). Wise and slow, he knows which plants are good for you. Bonus: every herb harvest gives +1 herb.", "defaultName": "Bramble", "effects": {"add": {"yield_herbs": 1, "well_calm": 0.04}}},
-    "pet_alpaca": {"type": "pet", "name": "Alpaca comes home", "emoji": "🦙", "chapter": 6, "slot": "pet", "requires": ["pet_badger", "oven_3", "greenhouse", "d_fair_cloth", "farmhouse_sunroom"], "cost": {"golden_honey_cake": 1, "rainbow_roast": 1, "rainbow_quilt": 1, "energy": 20}, "desc": "Pet 5 (default name Alfie). Bonus: soft fleece, 1 wool every 4 questions.", "defaultName": "Alfie", "effects": {"produces": {"wool": 0.25}, "add": {"well_calm": 0.04}}},
+    "pet_badger": {"type": "pet", "name": "Badger comes home", "emoji": "🦡", "chapter": 5, "slot": "pet", "requires": ["pet_pony", "ruins_stillroom", "k_ask_grownup"], "cost": {"healers_chest": 1, "tea_set": 1, "energy": 16}, "desc": "Comes home as Bracken; you can choose a new name. Wise and slow, he knows which plants are good for you. Bonus: every herb harvest gives +1 herb.", "defaultName": "Bramble", "effects": {"add": {"yield_herbs": 1, "well_calm": 0.04}}},
+    "pet_alpaca": {"type": "pet", "name": "Alpaca comes home", "emoji": "🦙", "chapter": 6, "slot": "pet", "requires": ["pet_badger", "oven_3", "greenhouse", "d_fair_cloth", "farmhouse_sunroom"], "cost": {"golden_honey_cake": 1, "rainbow_roast": 1, "rainbow_quilt": 1, "energy": 20}, "desc": "Comes home as Alfie; you can choose a new name. Bonus: soft fleece, 1 wool every 4 questions.", "defaultName": "Alfie", "effects": {"produces": {"wool": 0.25}, "add": {"well_calm": 0.04}}},
+    "clay_pit": {"type": "station", "name": "Clay Pit", "emoji": "🟫", "chapter": 1, "slot": "special", "desc": "Always open: dig clay in the bank of the pond with a shovel. The clay comes at once; the pit fills up again slowly.", "cat": "gather", "slots": 1, "outputNow": true},
     "wild_edge": {"type": "station", "name": "Field Edge & Woods", "emoji": "🌳", "chapter": 1, "slot": "field", "desc": "Always open: gather sticks, pick stones, pull wild weeds. What you gather comes at once; each spot refills after a Time Quiz question. Costs energy, never coins.", "cat": "gather", "slots": 3, "outputNow": true},
     "stick_hoe": {"type": "tool", "name": "Stick Hoe", "emoji": "🪓", "chapter": 1, "slot": "tool:weeding", "requires": ["workbench", "k_tools"], "cost": {"stick": 3, "stone": 1, "rope": 1, "energy": 3}, "desc": "Weeding −25% energy.", "track": "weeding", "tier": 1, "effects": {"mult": {"energy:weed": 0.75}}},
     "iron_hoe": {"type": "tool", "name": "Iron Hoe", "emoji": "⛏️", "chapter": 3, "slot": "tool:weeding", "requires": ["iron_hammer"], "cost": {"iron": 3, "stick": 1, "energy": 4}, "desc": "Thistles come out root and all: weeding −45% energy, and the weeds come back 20% slower.", "track": "weeding", "tier": 2, "replaces": "stick_hoe", "effects": {"mult": {"energy:weed": 0.55, "weeds": 0.8}}},
@@ -4142,9 +4686,9 @@ details summary { cursor: pointer; font-weight: 500; }
     "cottage_loft": {"type": "building", "name": "Cottage · loft & second room", "emoji": "🏡", "chapter": 3, "slot": "living", "requires": ["cottage", "sawbench"], "cost": {"plank": 16, "nails": 10, "straw": 8, "coins": 2625, "energy": 31}, "desc": "Energy max 40, 7 energy per Rest answer.", "replaces": "cottage", "effects": {"set": {"energyMax": 40, "energyPerRest": 7, "homeFuel": 0.35}}, "steps": [{"cost": {"coins": 2625, "plank": 16, "energy": 14.6}, "name": "Fit the planks", "emoji": "🪚", "wait": 2}, {"cost": {"straw": 8, "energy": 7.3}, "name": "Bring the straw", "emoji": "🌾", "wait": 2}, {"cost": {"nails": 10, "energy": 9.1}, "name": "Fix the ironwork", "emoji": "🔩"}]},
     "farmhouse_sunroom": {"type": "building", "name": "Farmhouse · sun room", "emoji": "🏠", "chapter": 6, "slot": "living", "requires": ["farmhouse", "import_broker"], "cost": {"glass": 8, "hardwood": 4, "brick": 10, "coins": 5625, "energy": 29}, "desc": "Energy max 65, 9 energy per Rest answer.", "replaces": "farmhouse", "effects": {"set": {"energyMax": 65, "energyPerRest": 9, "homeFuel": 0.4}}, "steps": [{"cost": {"coins": 5625, "brick": 10, "energy": 13.2}, "name": "Lay the bricks", "emoji": "🧱", "wait": 3}, {"cost": {"hardwood": 4, "energy": 5.3}, "name": "Raise the beams", "emoji": "🪵", "wait": 3}, {"cost": {"glass": 8, "energy": 10.5}, "name": "Set the glass", "emoji": "🪟"}]},
     "worm_bin": {"type": "station", "name": "Worm Bin", "emoji": "🪱", "chapter": 6, "slot": "field", "requires": ["compost_bin_2", "import_broker", "k_worms"], "cost": {"plank": 7, "clay_jar": 2, "energy": 12}, "desc": "Worms turn compost and straw into castings worth 4 fertilizer points.", "slots": 4, "cat": "field"},
-    "north_field_clear": {"type": "land", "name": "North Field · clear the scrub", "emoji": "🏗️", "chapter": 4, "slot": "field2", "requires": ["iron_hoe", "barn_2"], "cost": {"energy": 30, "coins": 1875}, "desc": "A second field to swipe to. First the scrub has to go.", "gives": {"log": 6, "stone": 10, "fiber": 10}, "stage": 1},
+    "north_field_clear": {"type": "land", "name": "North Field · clear the scrub", "emoji": "🏗️", "chapter": 4, "slot": "field2", "requires": ["iron_hoe", "barn_2"], "cost": {"energy": 30, "coins": 1875}, "desc": "A second field to swipe to. First the scrub has to go.", "gives": {"log": 6, "boulder": 6, "stone": 4, "fiber": 10}, "stage": 1},
     "north_field": {"type": "land", "name": "North Field", "emoji": "🌾", "chapter": 4, "slot": "field2", "requires": ["north_field_clear", "sawbench"], "cost": {"plank": 12, "nails": 8, "energy": 20, "coins": 1875}, "desc": "Fence it and it's yours: +9 field patches (they start at level 1 and need their own upgrades and scarecrow).", "effects": {"add": {"plots": 9}}, "stage": 2},
-    "river_meadow_drain": {"type": "land", "name": "River Meadow · drain the marsh", "emoji": "🏗️", "chapter": 6, "slot": "field3", "requires": ["north_field", "import_broker", "steel_hoe"], "cost": {"energy": 45, "stone": 20, "plank": 10, "coins": 4500}, "desc": "A third field by the river.", "stage": 1, "optional": true},
+    "river_meadow_drain": {"type": "land", "name": "River Meadow · drain the marsh", "emoji": "🏗️", "chapter": 6, "slot": "field3", "requires": ["north_field", "import_broker", "steel_hoe"], "cost": {"energy": 45, "boulder": 20, "plank": 10, "coins": 4500}, "desc": "A third field by the river.", "stage": 1, "optional": true},
     "river_meadow": {"type": "land", "name": "River Meadow", "emoji": "🌊", "chapter": 6, "slot": "field3", "requires": ["river_meadow_drain", "kiln_2"], "cost": {"brick": 18, "steel": 2, "energy": 30, "coins": 4500}, "desc": "Optional third field. A sluice from the river: +9 field patches and +2 water per question.", "effects": {"add": {"plots": 9, "fetchWater": 2}}, "stage": 2, "optional": true},
     "gathering_basket": {"type": "helper", "name": "Gathering Basket", "emoji": "🧺", "chapter": 1, "slot": "field", "requires": ["workbench"], "cost": {"fiber": 4, "stick": 2, "energy": 3}, "desc": "Carry more per trip: gathering takes 2 loads per tap (2× energy), and −25% energy.", "effects": {"mult": {"energy:gather": 0.75}, "add": {"carry": 1}}, "optional": true},
     "fire_ring": {"type": "helper", "name": "Stone Fire Ring", "emoji": "🔥", "chapter": 1, "slot": "kitchen", "requires": ["campfire", "clear_rocks"], "cost": {"stone": 8, "energy": 4}, "desc": "Holds the heat: cooking −15% energy, and the campfire burns 20% less wood.", "effects": {"mult": {"energy:cook": 0.85, "fuel:campfire": 0.8}}, "optional": true, "attach": "campfire"},
@@ -4155,16 +4699,16 @@ details summary { cursor: pointer; font-weight: 500; }
     "pot_shelf": {"type": "helper", "name": "Pot Shelf & Clay Pots", "emoji": "🏺", "chapter": 2, "slot": "kitchen", "requires": ["stove_1", "kiln"], "cost": {"plank": 4, "clay_jar": 2, "energy": 4}, "desc": "Everything in reach: cooking −15% energy.", "effects": {"mult": {"energy:cook": 0.85}}, "optional": true},
     "dough_trough": {"type": "helper", "name": "Dough Trough & Rolling Pin", "emoji": "🥖", "chapter": 2, "slot": "kitchen", "requires": ["oven_1"], "cost": {"plank": 3, "log": 1, "energy": 3}, "desc": "Prep work −15% energy.", "effects": {"mult": {"energy:prep": 0.85}}, "optional": true, "attach": "oven_1"},
     "milking_stool": {"type": "helper", "name": "Milking Stool & Pail", "emoji": "🪣", "chapter": 2, "slot": "cow_area", "requires": ["animal_cow"], "cost": {"plank": 2, "clay_jar": 1, "energy": 2}, "desc": "Animal work −20% energy.", "effects": {"mult": {"energy:animal": 0.8}}, "optional": true},
-    "water_trough": {"type": "helper", "name": "Water Trough", "emoji": "🚰", "chapter": 2, "slot": "barn", "requires": ["barn_1"], "cost": {"plank": 4, "stone": 6, "energy": 7}, "desc": "No spilled buckets: animals use 20% less water.", "effects": {"mult": {"water:animal": 0.8}}, "optional": true},
+    "water_trough": {"type": "helper", "name": "Water Trough", "emoji": "🚰", "chapter": 2, "slot": "barn", "requires": ["barn_1"], "cost": {"plank": 4, "boulder": 6, "energy": 7}, "desc": "No spilled buckets: animals use 20% less water.", "effects": {"mult": {"water:animal": 0.8}}, "optional": true},
     "hay_rack": {"type": "helper", "name": "Hay Rack", "emoji": "🌾", "chapter": 2, "slot": "barn", "requires": ["barn_1"], "cost": {"plank": 3, "rope": 2, "energy": 4}, "desc": "Less trampled fodder: cows and sheep eat 15% less.", "effects": {"mult": {"feed:animal_cow": 0.85, "feed:animal_sheep": 0.85}}, "optional": true, "attach": "barn_1"},
     "salt_lick": {"type": "helper", "name": "Salt Lick", "emoji": "🧂", "chapter": 2, "slot": "cow_area", "requires": ["animal_cow", "spice_1"], "cost": {"salt": 4, "stone": 2, "energy": 4}, "desc": "Healthy cows: +20% milk and manure.", "effects": {"mult": {"out:animal_cow": 1.2}}, "optional": true},
     "bee_smoker": {"type": "helper", "name": "Bee Smoker", "emoji": "💨", "chapter": 2, "slot": "bee_yard", "requires": ["animal_bees", "kiln"], "cost": {"clay": 2, "fiber": 3, "energy": 4}, "desc": "Calm bees: +25% honeycomb.", "effects": {"mult": {"out:animal_bees": 1.25, "energy:animal": 0.95}}, "optional": true, "attach": "cap_bees_1"},
     "scaffolding": {"type": "helper", "name": "Scaffolding", "emoji": "🪜", "chapter": 2, "slot": "workshop", "requires": ["carpenter_bench"], "cost": {"plank": 6, "rope": 4, "log": 2, "energy": 8}, "desc": "Building −15% energy.", "effects": {"mult": {"energy:build": 0.85}}, "optional": true},
-    "hearth": {"type": "helper", "name": "Brick Hearth", "emoji": "🧱", "chapter": 2, "slot": "living", "requires": ["cottage", "kiln"], "cost": {"brick": 8, "stone": 6, "energy": 10}, "desc": "A warm room: energy max +5, and the house needs 30% less firewood in winter.", "effects": {"add": {"energyMax": 5, "well_sleep": 0.05, "well_calm": 0.05}, "mult": {"homeFuel": 0.7}}, "optional": true},
+    "hearth": {"type": "helper", "name": "Brick Hearth", "emoji": "🧱", "chapter": 2, "slot": "living", "requires": ["cottage", "kiln"], "cost": {"brick": 8, "boulder": 6, "energy": 10}, "desc": "A warm room: energy max +5, and the house needs 30% less firewood in winter.", "effects": {"add": {"energyMax": 5, "well_sleep": 0.05, "well_calm": 0.05}, "mult": {"homeFuel": 0.7}}, "optional": true},
     "compost_fork": {"type": "helper", "name": "Compost Fork", "emoji": "🔱", "chapter": 2, "slot": "field", "requires": ["compost_bin", "carpenter_bench"], "cost": {"plank": 1, "stick": 2, "energy": 2}, "desc": "Turned heaps rot faster: compost −25% time.", "effects": {"mult": {"time:compost_bin": 0.75}}, "optional": true, "attach": "compost_bin"},
     "tool_rack": {"type": "helper", "name": "Tool Rack", "emoji": "🧰", "chapter": 2, "slot": "workshop", "requires": ["workshop_1"], "cost": {"plank": 4, "log": 1, "energy": 4}, "desc": "No searching: crafting −10%, field work −5% energy.", "effects": {"mult": {"energy:craft": 0.9, "energy:field": 0.95}}, "optional": true},
     "bellows": {"type": "helper", "name": "Bellows", "emoji": "🌬️", "chapter": 3, "slot": "workshop", "requires": ["forge"], "cost": {"plank": 4, "wool_cloth": 1, "nails": 3, "energy": 7}, "desc": "Hotter fire: the forge needs half the charcoal.", "effects": {"mult": {"in:forge:charcoal": 0.5, "energy:smith": 0.9}}, "optional": true, "attach": "forge"},
-    "grindstone": {"type": "helper", "name": "Grindstone", "emoji": "⚙️", "chapter": 3, "slot": "workshop", "requires": ["whetstone", "sawbench"], "cost": {"stone": 14, "plank": 3, "nails": 3, "energy": 18}, "desc": "Replaces the whetstone: cutting and wood work −15% energy.", "effects": {"mult": {"energy:prep": 0.85, "energy:wood": 0.85}}, "optional": true, "replaces": "whetstone"},
+    "grindstone": {"type": "helper", "name": "Grindstone", "emoji": "⚙️", "chapter": 3, "slot": "workshop", "requires": ["whetstone", "sawbench"], "cost": {"boulder": 14, "plank": 3, "nails": 3, "energy": 18}, "desc": "Replaces the whetstone: cutting and wood work −15% energy.", "effects": {"mult": {"energy:prep": 0.85, "energy:wood": 0.85}}, "optional": true, "replaces": "whetstone"},
     "shearing_table": {"type": "helper", "name": "Shearing Table", "emoji": "✂️", "chapter": 3, "slot": "sheep_area", "requires": ["animal_sheep"], "cost": {"plank": 5, "nails": 3, "energy": 7}, "desc": "Cleaner fleeces: +25% wool.", "effects": {"mult": {"energy:animal": 0.85, "out:animal_sheep": 1.25}}, "optional": true},
     "wool_mattress": {"type": "helper", "name": "Wool Mattress", "emoji": "🛏️", "chapter": 3, "slot": "gear:bed", "requires": ["straw_bed", "hand_loom"], "cost": {"wool_cloth": 3, "straw": 5, "energy": 7}, "desc": "Replaces the straw bed: +2 energy per Rest answer.", "effects": {"add": {"energyPerRest": 2, "well_sleep": 0.2}}, "optional": true, "replaces": "straw_bed"},
     "cheese_moulds": {"type": "helper", "name": "Cheese Moulds", "emoji": "🧀", "chapter": 3, "slot": "cow_area", "requires": ["cheese_vat"], "cost": {"plank": 3, "nails": 3, "linen_cloth": 1, "energy": 6}, "desc": "Less spilled curd: cheese needs 25% less milk.", "effects": {"mult": {"in:cheese_vat:milk": 0.75}}, "optional": true},
@@ -4172,7 +4716,7 @@ details summary { cursor: pointer; font-weight: 500; }
     "hand_cart": {"type": "helper", "name": "Hand Cart", "emoji": "🛒", "chapter": 1, "slot": "storage", "requires": ["workbench", "road_2", "stone_axe"], "cost": {"axle": 1, "log": 2, "rope": 2, "stick": 6, "energy": 8}, "desc": "Two wheels on a real axle: the bag holds twice as much on the way to the village, and harvesting costs less energy.", "effects": {"mult": {"energy:harvest": 0.9}}, "optional": true},
     "insect_hotel": {"type": "helper", "name": "Insect Hotel", "emoji": "🐞", "chapter": 3, "slot": "field", "requires": ["animal_bees", "sawbench", "k_pests"], "cost": {"plank": 3, "straw": 5, "stick": 5, "energy": 12}, "desc": "Wild bees and ladybirds move in: +20% honeycomb, weeds −5%, pests −10%.", "effects": {"mult": {"out:animal_bees": 1.2, "weeds": 0.95, "pests": 0.9}}, "optional": true},
     "iron_pans": {"type": "helper", "name": "Iron Pans", "emoji": "🍳", "chapter": 3, "slot": "kitchen", "requires": ["stove_2"], "cost": {"iron": 3, "energy": 3}, "desc": "Cooking −15% energy.", "effects": {"mult": {"energy:cook": 0.85}}, "optional": true},
-    "weeder_geese": {"type": "helper", "name": "Weeder Geese", "emoji": "🪿", "chapter": 3, "slot": "field", "requires": ["pond", "sawbench"], "cost": {"plank": 5, "coins": 2250, "energy": 5}, "desc": "Geese graze between the rows: weeds −20%. (Real old practice.)", "effects": {"mult": {"weeds": 0.8}}, "optional": true},
+    "weeder_geese": {"type": "helper", "name": "Weeder Geese", "emoji": "🪿", "chapter": 3, "slot": "field", "requires": ["pond", "sawbench"], "cost": {"plank": 5, "coins": 2250, "energy": 5}, "desc": "Geese graze between the rows: weeds −20%. (Farmers really did this long ago.)", "effects": {"mult": {"weeds": 0.8}}, "optional": true},
     "linen_bedding": {"type": "helper", "name": "Linen Bedding", "emoji": "🛏️", "chapter": 4, "slot": "gear:bed", "requires": ["wool_mattress", "textile_loom"], "cost": {"linen_cloth": 3, "wool_cloth": 1, "energy": 4}, "desc": "Replaces the mattress: +3 energy per Rest answer.", "effects": {"add": {"energyPerRest": 3, "well_sleep": 0.3}}, "optional": true, "replaces": "wool_mattress"},
     "lanterns": {"type": "helper", "name": "Lanterns", "emoji": "🏮", "chapter": 4, "slot": "living", "requires": ["glass_kiln", "anvil"], "cost": {"glass": 2, "iron": 1, "candle": 4, "energy": 8}, "desc": "Work into the evening: energy max +5.", "effects": {"add": {"energyMax": 5}}, "optional": true},
     "seed_drill": {"type": "helper", "name": "Seed Drill", "emoji": "🌱", "chapter": 4, "slot": "field", "requires": ["master_saw"], "cost": {"hardwood": 3, "steel": 1, "nails": 4, "energy": 9}, "desc": "Sows a whole row in one pass: planting −40% energy.", "effects": {"mult": {"energy:plant": 0.6}}, "optional": true},
@@ -4180,7 +4724,7 @@ details summary { cursor: pointer; font-weight: 500; }
     "rotary_churn": {"type": "helper", "name": "Rotary Churn", "emoji": "🧈", "chapter": 4, "slot": "cow_area", "requires": ["churn", "smiths_hammer"], "cost": {"hardwood": 2, "steel": 1, "energy": 3}, "desc": "Butter needs 25% less milk.", "effects": {"mult": {"in:churn:milk": 0.75}}, "optional": true},
     "mulch_spreader": {"type": "helper", "name": "Straw Mulch", "emoji": "🌾", "chapter": 4, "slot": "field", "requires": ["patch_deep", "warehouse", "k_mulch"], "cost": {"straw": 20, "coins": 600, "energy": 22}, "desc": "A straw blanket on every bed: weeds −15%, field water −5%.", "effects": {"mult": {"weeds": 0.85, "water:field": 0.95}}, "optional": true},
     "master_tool_chest": {"type": "helper", "name": "Master Tool Chest", "emoji": "🧰", "chapter": 6, "slot": "workshop", "requires": ["workshop_3", "import_broker"], "cost": {"hardwood": 7, "steel": 2, "linen_cloth": 2, "energy": 14}, "desc": "Crafting −15%, field and wood work −10% energy, and polish wears off a fifth slower.", "effects": {"mult": {"energy:craft": 0.85, "energy:field": 0.9, "energy:wood": 0.9, "wear": 0.8}}, "optional": true},
-    "paved_yard": {"type": "helper", "name": "Paved Yard", "emoji": "🧱", "chapter": 6, "slot": "storage", "requires": ["warehouse", "import_broker"], "cost": {"stone": 35, "brick": 10, "energy": 59}, "desc": "Dry feet everywhere: harvesting and animal work −10% energy.", "effects": {"mult": {"energy:harvest": 0.9, "energy:animal": 0.9, "energy:build": 0.95}}, "optional": true},
+    "paved_yard": {"type": "helper", "name": "Paved Yard", "emoji": "🧱", "chapter": 6, "slot": "storage", "requires": ["warehouse", "import_broker"], "cost": {"boulder": 35, "brick": 10, "energy": 59}, "desc": "Dry feet everywhere: harvesting and animal work −10% energy.", "effects": {"mult": {"energy:harvest": 0.9, "energy:animal": 0.9, "energy:build": 0.95}}, "optional": true},
     "copper_still": {"type": "helper", "name": "Herb Drying Loft", "emoji": "🌿", "chapter": 5, "slot": "kitchen", "requires": ["farmhouse", "crop_herbs"], "cost": {"plank": 7, "linen_cloth": 2, "herbs": 7, "energy": 21}, "desc": "Dried herbs on hand: cooking and prep −10% energy.", "effects": {"mult": {"energy:cook": 0.9, "energy:prep": 0.9}}, "optional": true},
     "willow_whistle": {"type": "helper", "name": "Willow Whistle", "emoji": "🎵", "chapter": 2, "slot": "living", "requires": ["workbench", "k_play"], "cost": {"stick": 4, "fiber": 3, "energy": 3}, "desc": "A little tune after work: it makes you feel like playing.", "effects": {"add": {"well_play": 0.1}}, "optional": true},
     "sketchbook": {"type": "helper", "name": "Sketchbook & Charcoal", "emoji": "🖍️", "chapter": 3, "slot": "living", "requires": ["workbench", "k_play"], "cost": {"charcoal": 2, "straw": 4, "energy": 4}, "desc": "Draw the farm on bark paper: a quiet kind of play.", "effects": {"add": {"well_play": 0.1, "well_calm": 0.03}}, "optional": true},
@@ -4195,8 +4739,9 @@ details summary { cursor: pointer; font-weight: 500; }
     "brass_bell": {"type": "helper", "name": "Ella's brass bell", "emoji": "🔔", "chapter": 1, "slot": "board", "requires": ["sq_miller_basket"], "optional": true, "desc": "A little bell on the field gate: it jingles in the wind and the birds don't like it.", "effects": {"add": {"scare": 0.15}}, "gift": true},
     "sq_washing_line": {"type": "sidequest", "name": "The washerwoman's line snapped", "emoji": "🧺", "chapter": 2, "slot": "village", "requires": ["carpenter_bench", "pet_bunny"], "cost": {"rope": 4, "plank": 2, "energy": 6}, "desc": "Reward: a picture for the album — Hilde smiling, holding the end of your new rope line full of flapping sheets.", "reward": {"picture": "Hilde smiling, holding the end of your new rope line full of flapping sheets", "helper": "wind_chime"}, "optional": true, "friend": {"name": "Hilde the washerwoman", "emoji": "👩"}, "perk": "perk_rainbow"},
     "wind_chime": {"type": "helper", "name": "Hilde's wind chime", "emoji": "🎐", "chapter": 2, "slot": "board", "requires": ["sq_washing_line"], "optional": true, "desc": "Shells and sticks that clatter in the wind: rabbits stay away.", "effects": {"add": {"scare": 0.15}}, "gift": true},
-    "sq_sick_neighbour": {"type": "sidequest", "name": "Soup for a sick neighbour", "emoji": "🤒", "chapter": 2, "slot": "village", "requires": ["stove_1", "crop_tomato", "pet_bunny"], "cost": {"tomato_soup": 2, "energy": 4}, "desc": "Reward: a picture for the album — Old Jan sitting up in bed, cheeks pink, holding your bowl of tomato soup.", "reward": {"picture": "Old Jan sitting up in bed, cheeks pink, holding your bowl of tomato soup"}, "optional": true, "friend": {"name": "Old Jan", "emoji": "👴"}},
-    "sq_bridge": {"type": "sidequest", "name": "Mend the footbridge", "emoji": "🌉", "chapter": 2, "slot": "village", "requires": ["carpenter_bench", "pet_bunny"], "cost": {"log": 6, "stone": 8, "plank": 4, "energy": 18}, "desc": "Reward: a picture for the album — Ferryman Otto waving a plank from your mended footbridge as children skip across.", "reward": {"picture": "Ferryman Otto waving a plank from your mended footbridge as children skip across", "helper": "bird_feeder"}, "optional": true, "friend": {"name": "Otto the ferryman", "emoji": "🧔"}},
+    "sq_sick_neighbour": {"type": "sidequest", "name": "Soup for a sick neighbour", "emoji": "🤒", "chapter": 2, "slot": "village", "requires": ["stove_1", "crop_tomato", "pet_bunny"], "cost": {"tomato_soup": 2, "energy": 4}, "desc": "Reward: a picture for the album — Old Jan sitting up in bed, cheeks pink, holding your bowl of tomato soup.", "reward": {"picture": "Old Jan sitting up in bed, cheeks pink, holding your bowl of tomato soup", "helper": "jans_donkey"}, "optional": true, "friend": {"name": "Old Jan", "emoji": "👴"}},
+    "jans_donkey": {"type": "helper", "name": "Old Jan's donkey", "emoji": "🫏", "chapter": 2, "slot": "board", "requires": ["sq_sick_neighbour"], "optional": true, "desc": "Old Jan lends you his donkey. It carries the heavy part: the walk to the village costs less energy.", "effects": {"mult": {"energy:trip": 0.6}}, "gift": true},
+    "sq_bridge": {"type": "sidequest", "name": "Mend the footbridge", "emoji": "🌉", "chapter": 2, "slot": "village", "requires": ["carpenter_bench", "pet_bunny"], "cost": {"log": 6, "boulder": 8, "plank": 4, "energy": 18}, "desc": "Reward: a picture for the album — Ferryman Otto waving a plank from your mended footbridge as children skip across.", "reward": {"picture": "Ferryman Otto waving a plank from your mended footbridge as children skip across", "helper": "bird_feeder"}, "optional": true, "friend": {"name": "Otto the ferryman", "emoji": "🧔"}},
     "bird_feeder": {"type": "helper", "name": "Otto's bird feeder", "emoji": "🐦", "chapter": 2, "slot": "board", "requires": ["sq_bridge"], "optional": true, "desc": "Songbirds come to the feeder and eat the caterpillars on your plants.", "effects": {"mult": {"pests": 0.92}}, "gift": true},
     "sq_healer_honey": {"type": "sidequest", "name": "Honey for the healer", "emoji": "🍯", "chapter": 2, "slot": "village", "requires": ["animal_bees", "pet_bunny"], "cost": {"honey": 2, "energy": 3}, "desc": "Reward: a picture for the album — Healer Wren smiling, holding a jar of your honey up to the light.", "reward": {"picture": "Healer Wren smiling, holding a jar of your honey up to the light", "helper": "lavender_bunch"}, "optional": true, "friend": {"name": "Wren the healer", "emoji": "🌿"}},
     "lavender_bunch": {"type": "helper", "name": "Wren's lavender", "emoji": "💜", "chapter": 2, "slot": "board", "requires": ["sq_healer_honey"], "optional": true, "desc": "Healer Wren's dried lavender by the beds: slugs and caterpillars don't like the smell.", "effects": {"mult": {"pests": 0.92}}, "gift": true},
@@ -4217,7 +4762,7 @@ details summary { cursor: pointer; font-weight: 500; }
     "sq_lamp_maker": {"type": "sidequest", "name": "Oil for the old lamp-maker", "emoji": "🪔", "chapter": 5, "slot": "village", "requires": ["crop_olive", "press", "pet_pony"], "cost": {"olive_oil": 3, "energy": 5}, "desc": "Reward: a picture for the album — Old lamp-maker Ferdinand holding a lamp filled with your olive oil, glowing.", "reward": {"picture": "Old lamp-maker Ferdinand holding a lamp filled with your olive oil, glowing"}, "optional": true, "friend": {"name": "Ferdinand the lamp-maker", "emoji": "💡"}},
     "sq_elders_feast": {"type": "sidequest", "name": "A feast for the village elders", "emoji": "🍽️", "chapter": 6, "slot": "village", "requires": ["food_processor", "pet_pony"], "cost": {"tapenade": 1, "pumpkin_soup": 2, "bread": 2, "energy": 12}, "desc": "Reward: a picture for the album — Elder Agnes holding up your tapenade bowl as the elders laugh around the table.", "reward": {"picture": "Elder Agnes holding up your tapenade bowl as the elders laugh around the table"}, "optional": true, "friend": {"name": "Elder Agnes and the elders", "emoji": "👴"}},
     "sq_festival_flags": {"type": "sidequest", "name": "Dye the festival flags", "emoji": "🚩", "chapter": 6, "slot": "village", "requires": ["dye_vat", "pet_pony"], "cost": {"red_dye": 2, "yellow_dye": 2, "blue_dye": 2, "linen_cloth": 2, "energy": 10}, "desc": "Reward: a picture for the album — Mayor Juno holding a string of your dyed flags over the village square.", "reward": {"picture": "Mayor Juno holding a string of your dyed flags over the village square"}, "optional": true, "friend": {"name": "Mayor Juno", "emoji": "🎏"}},
-    "sq_village_well": {"type": "sidequest", "name": "Rebuild the village well", "emoji": "⛲", "chapter": 6, "slot": "village", "requires": ["smiths_hammer", "pet_pony"], "cost": {"brick": 20, "steel": 2, "stone": 10, "energy": 40}, "desc": "Reward: a picture for the album — Young Sami holding a brimming bucket from the well you rebuilt.", "reward": {"picture": "Young Sami holding a brimming bucket from the well you rebuilt"}, "optional": true, "friend": {"name": "Young Sami", "emoji": "🎩"}},
+    "sq_village_well": {"type": "sidequest", "name": "Rebuild the village well", "emoji": "⛲", "chapter": 6, "slot": "village", "requires": ["smiths_hammer", "pet_pony"], "cost": {"brick": 20, "steel": 2, "boulder": 10, "energy": 40}, "desc": "Reward: a picture for the album — Young Sami holding a brimming bucket from the well you rebuilt.", "reward": {"picture": "Young Sami holding a brimming bucket from the well you rebuilt"}, "optional": true, "friend": {"name": "Young Sami", "emoji": "🎩"}},
     "sq_telescope": {"type": "sidequest", "name": "The astronomer's telescope", "emoji": "🔭", "chapter": 6, "slot": "village", "requires": ["glass_kiln", "master_saw", "pet_pony"], "cost": {"glass": 4, "steel": 1, "hardwood": 2, "energy": 14}, "desc": "Reward: a picture for the album — Astronomer Vega holding your telescope, pointing happily at the stars.", "reward": {"picture": "Astronomer Vega holding your telescope, pointing happily at the stars"}, "optional": true, "friend": {"name": "Vega the astronomer", "emoji": "🔭"}},
     "sq_healer_garden": {"type": "sidequest", "name": "Herbs for the healer's garden", "emoji": "🌿", "chapter": 5, "slot": "village", "requires": ["crop_herbs", "pet_pony"], "cost": {"herbs": 8, "compost": 4, "energy": 10}, "desc": "Reward: a picture for the album — Healer Wren kneeling in her new herb garden, holding a bunch of your herbs.", "reward": {"picture": "Healer Wren kneeling in her new herb garden, holding a bunch of your herbs"}, "optional": true, "friend": {"name": "Wren the healer", "emoji": "🌿"}},
     "sq_free_family": {"type": "sidequest", "name": "A table for the family", "emoji": "👪", "chapter": 6, "slot": "village", "requires": ["pet_alpaca"], "cost": {"pumpkin_pie": 1, "apple_pie": 1, "energy": 8}, "desc": "Reward: a picture for the album — the whole family at the long table, and your cousin passing you the bread.", "reward": {"picture": "The whole family at the long table, your cousin passing you the bread"}, "optional": true, "friend": {"name": "Your cousin", "emoji": "👪"}},
@@ -4357,7 +4902,7 @@ details summary { cursor: pointer; font-weight: 500; }
     "stick_fence": {"type": "building", "name": "Rickety Stick Fence", "emoji": "🪵", "chapter": 1, "slot": "fence", "requires": ["workbench", "k_birds"], "cost": {"stick": 10, "rope": 2, "energy": 6}, "desc": "Crooked sticks tied with string round the Home Field: better than nothing — a few pests stay out.", "effects": {"set": {"pestBlock": 0.15}}, "optional": true},
     "wattle_fence": {"type": "building", "name": "Woven Wattle Fence", "emoji": "🧺", "chapter": 2, "slot": "fence", "requires": ["carpenter_bench", "stick_fence"], "cost": {"stick": 14, "rope": 2, "log": 2, "energy": 13}, "desc": "Woven willow: 30% fewer pests arrive.", "effects": {"set": {"pestBlock": 0.3}}, "replaces": "stick_fence", "optional": true, "steps": [{"cost": {"log": 2, "energy": 1.4}, "name": "Raise the beams", "emoji": "🪵", "wait": 2}, {"cost": {"stick": 14, "energy": 10.1}, "name": "Set the sticks", "emoji": "🌿", "wait": 2}, {"cost": {"rope": 2, "energy": 1.5}, "name": "Tie it all together", "emoji": "🪢"}]},
     "picket_fence": {"type": "building", "name": "Stake Fence", "emoji": "🏡", "chapter": 3, "slot": "fence", "requires": ["sawbench", "wattle_fence", "k_pests"], "cost": {"plank": 14, "nails": 8, "energy": 20}, "desc": "A neat, low row of pointed stakes with no gaps between them: mice and rabbits stay out, and you can still see the whole field.", "effects": {"set": {"pestBlock": 0.45}}, "replaces": "wattle_fence", "optional": true, "steps": [{"cost": {"plank": 14, "energy": 12.7}, "name": "Fit the planks", "emoji": "🪚", "wait": 2}, {"cost": {"nails": 8, "energy": 7.3}, "name": "Fix the ironwork", "emoji": "🔩"}]},
-    "stone_wall": {"type": "building", "name": "Field Stone Wall", "emoji": "🧱", "chapter": 4, "slot": "fence", "requires": ["iron_hammer", "picket_fence"], "cost": {"stone": 25, "log": 2, "energy": 30}, "desc": "All those frost-heaved stones become a wall: 55% fewer pests arrive.", "effects": {"set": {"pestBlock": 0.55}}, "replaces": "picket_fence", "optional": true, "steps": [{"cost": {"stone": 25, "energy": 27.8}, "name": "Lay the stones", "emoji": "🪨", "wait": 3}, {"cost": {"log": 2, "energy": 2.2}, "name": "Raise the beams", "emoji": "🪵"}]},
+    "stone_wall": {"type": "building", "name": "Field Stone Wall", "emoji": "🧱", "chapter": 4, "slot": "fence", "requires": ["iron_hammer", "picket_fence"], "cost": {"boulder": 25, "log": 2, "energy": 30}, "desc": "All those frost-heaved stones become a wall: 55% fewer pests arrive.", "effects": {"set": {"pestBlock": 0.55}}, "replaces": "picket_fence", "optional": true, "steps": [{"cost": {"boulder": 25, "energy": 27.8}, "name": "Lay the stones", "emoji": "🪨", "wait": 3}, {"cost": {"log": 2, "energy": 2.2}, "name": "Raise the beams", "emoji": "🪵"}]},
     "hedge_row": {"type": "building", "name": "Hedgerow", "emoji": "🌳", "chapter": 6, "slot": "fence", "requires": ["crop_berries", "stone_wall"], "cost": {"stick": 10, "berries": 4, "compost": 4, "energy": 23}, "desc": "A living fence full of birds that eat bugs: 65% fewer pests arrive.", "effects": {"set": {"pestBlock": 0.65}}, "replaces": "stone_wall", "optional": true, "steps": [{"cost": {"stick": 10, "energy": 12.8}, "name": "Set the sticks", "emoji": "🌿", "wait": 3}, {"cost": {"berries": 4, "compost": 4, "energy": 10.2}, "name": "Finish it off", "emoji": "✨"}]},
     "barn_cat": {"type": "helper", "name": "Ginger the farm cat", "emoji": "🐈", "chapter": 2, "slot": "board", "requires": ["sq_stray_kitten"], "desc": "The kitten stayed! She prowls round the fields, chases off birds and mice — and naps a lot. Fewer pests come, and fewer of them stay.", "effects": {"add": {"scare": 0.4, "well_calm": 0.05}, "mult": {"pests": 0.85}}, "optional": true},
     "retting_trough": {"type": "helper", "name": "Retting Trough", "emoji": "🛁", "chapter": 3, "slot": "special", "requires": ["pond_station", "k_flax"], "cost": {"plank": 5, "clay": 5, "energy": 9}, "desc": "A clay-lined trough next to the pond: soak two more batches of flax at once.", "effects": {"add": {"slots:pond_station": 2}}, "optional": true},
@@ -4440,7 +4985,7 @@ details summary { cursor: pointer; font-weight: 500; }
     "yarn": {"station": "spindle", "inputs": {"wool": 2}, "outputs": {"yarn": 1}, "energy": 3, "requires": ["k_wool"], "verb": "Spin"},
     "wool_cloth": {"station": "hand_loom", "inputs": {"yarn": 3}, "outputs": {"wool_cloth": 1}, "energy": 3, "requires": ["k_weaving"], "verb": "Weave"},
     "ret_flax": {"name": "Soak (ret) flax", "station": "pond_station", "inputs": {"flax": 3}, "outputs": {"flax_fiber": 2}, "energy": 3, "time": 3, "requires": ["k_flax"], "verb": "Soak"},
-    "dig_clay": {"name": "Dig clay", "station": "wild_edge", "requires": ["wooden_shovel"], "inputs": {}, "outputs": {"clay": 1}, "energy": 3, "cat": "gather", "time": 1, "verb": "Dig"},
+    "dig_clay": {"name": "Dig clay", "station": "clay_pit", "requires": ["wooden_shovel"], "inputs": {}, "outputs": {"clay": 1}, "energy": 3, "cat": "gather", "time": 1, "verb": "Dig"},
     "linen_thread": {"station": "spindle", "inputs": {"flax_fiber": 2}, "outputs": {"linen_thread": 1}, "energy": 3, "requires": ["k_flax"], "verb": "Spin"},
     "linen_cloth": {"station": "hand_loom", "inputs": {"linen_thread": 3}, "outputs": {"linen_cloth": 1}, "energy": 3, "requires": ["k_flax"], "verb": "Weave"},
     "honey_extract": {"name": "Honey (extractor)", "station": "honey_extractor", "inputs": {"honeycomb": 2}, "outputs": {"honey": 2, "beeswax": 1}, "energy": 1, "verb": "Spin"},
@@ -4498,7 +5043,7 @@ details summary { cursor: pointer; font-weight: 500; }
     "pick_stones": {"name": "Pick stones", "station": "wild_edge", "inputs": {}, "outputs": {"stone": 1}, "energy": 2, "cat": "gather", "time": 1, "verb": "Pick"},
     "pull_wild_weeds": {"name": "Pull wild weeds", "station": "wild_edge", "inputs": {}, "outputs": {"fiber": 2}, "energy": 1, "cat": "gather", "time": 1, "verb": "Pull"},
     "chop_deadwood": {"name": "Chop deadwood", "station": "wild_edge", "requires": ["stone_axe"], "inputs": {}, "outputs": {"log": 1, "stick": 1}, "energy": 4, "cat": "wood", "time": 1, "verb": "Chop"},
-    "dig_stones": {"name": "Dig out stones", "station": "wild_edge", "requires": ["wooden_shovel"], "inputs": {}, "outputs": {"stone": 3}, "energy": 5, "cat": "field", "time": 1, "verb": "Dig"},
+    "dig_stones": {"name": "Dig out big rocks", "station": "wild_edge", "requires": ["wooden_shovel"], "inputs": {}, "outputs": {"boulder": 3}, "energy": 5, "cat": "field", "time": 1, "verb": "Dig"},
     "ash": {"name": "Wood ash (burn weeds & twigs)", "station": "campfire", "inputs": {"fiber": 2, "stick": 1}, "outputs": {"ash": 2}, "energy": 2, "cat": "field", "requires": ["k_ash"], "verb": "Sweep"},
     "worm_castings": {"station": "worm_bin", "inputs": {"compost": 1, "straw": 2}, "outputs": {"worm_castings": 1}, "energy": 0, "time": 4, "requires": ["k_worms"], "verb": "Collect"},
     "honey_cake": {"name": "Honey Cake", "station": "oven_2", "inputs": {"tag:flour": 2, "honey": 1, "tag:fat": 1, "egg": 2}, "outputs": {"honey_cake": 1}, "energy": 7, "note": "Same family as the Simple Cake (sugar) — both are cakes, but they taste different.", "fuel": 2, "verb": "Bake"},

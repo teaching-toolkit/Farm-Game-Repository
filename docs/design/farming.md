@@ -44,22 +44,37 @@ Part of the game's design ([index](README.md)). It describes the game as built; 
 - **Planting** uses one seed, water and energy per plant; the patch sheet shows how many plants fit and why fewer (seeds,
   water, fertilizer). Each plant is drawn on the patch.
 - **Growing** takes a number of Time Quiz questions per crop (2 for wheat, up to 14 for an olive tree), changed by the
-  season, the cloches, stones and weeds on the patch (together at most half speed) and **crop rotation**: the same crop
-  twice in a row grows 15 % slower (tired soil); after beans or clover the next crop grows 10 % faster (rested soil).
+  season, the cloches and **crop rotation**: the same crop twice in a row grows 15 % slower (tired soil); after beans or clover
+  the next crop grows 10 % faster (rested soil). Weeds and stones do not slow growth any more (they take a share of the harvest, §6.3).
 - **Harvests vary** around an average per plant (`meta.yield`): average × (1 + luck × 0.1) × the patch's quality, with a
   random spread of ±22 %, rounded up or down at random so the average holds; whole numbers only, at least 1 of the main crop
-  per plant. Upgrades add to it (the bunny +1 carrot per harvest, autumn +40 % in the orchard).
+  per plant. Upgrades add to it (the bunny +1 carrot per harvest, autumn +40 % in the orchard). Then the **weeds and stones on the
+  patch take their share** (§6.3).
 - **🧺 Harvest all** at the storage basket harvests every ripe patch at once.
 
 ### 6.3 Weeds and stones
 
 - **Weeds** grow on every field patch every question, planted or not: faster with more plants and more fertilizer, faster in
-  later chapters (dandelions → docks → thistles → brambles → bindweed), +50 % in spring. Weeds slow growth. One weeding tap
+  later chapters (dandelions → docks → thistles → brambles → bindweed), +50 % in spring. One weeding tap
   pulls 3 weeds (energy per weed) and gives plant fibre. The answers: edging and borders, hoes (stick → iron → steel), gloves,
   weeder geese, the goat, straw mulch, and the endless polish **Root out the weeds** (keeps regrowth down; each time also puts
   the weeds into the store as fibre: 2, then 4, 6 …).
-- **Frost stones.** In winter, frost lifts stones in every patch (more in deep and bare beds). Stones slow growth a little;
-  picking them gives stones for walls and paths.
+- **Frost stones.** In winter, frost lifts stones in every patch (more in deep and bare beds); picking them gives **small stones** (light, 0.5):
+  they are for tools, fire rings and small things. **Big rocks** (`boulder`, heavy, 4) are a different item (`nature/04`): they come from the
+  shovel (*Dig out big rocks* at the forest edge, *Clear the rocks*, the first steps of clearing a ruin) and are what roads, walls, wells, ovens
+  and big buildings are made of. Old saves: what was carried as stone is a big rock now, nothing is lost.
+- **What weeds and stones cost** *(crops-and-items/02, the parent's rule of 30 Oct 2026; numbers in `rules/10-farming.json`, `crowding`)*:
+  they no longer slow growth. At harvest **every whole weed and every whole stone on the patch takes 4 % of the harvest, together at
+  most 75 %**, and the main crop never drops below 1. It is worked out when the patch is harvested, so pulling and picking first gives
+  everything back; a half weed is not drawn, cannot be pulled and costs nothing. They also still lower the **grade** of the whole harvest (§8.5).
+  A bare patch loses nothing (nothing grows on it); an orchard or greenhouse bed has no weeds. *(Measured with the test bot, 9 Nov 2026: a player who
+  clears a ripe patch first loses about 2 % of the harvests, one who lets the weeds stand 5–9 %; the old slowing cost about as much. A neglected patch
+  with 12 weeds and 6 stones gives 28 %.)*
+- **The loss is seen, not read.** On the map the plants the weeds and stones take (the share, in whole plants) stand **small, grey and
+  drooping** while the others stay green (ripe ones glow and sway); pulling the weeds makes them stand up again. At harvest the lost
+  crops rise from the patch as **grey ghosts** (one per piece) next to the weeds and stones, while the kept crops fly to the store.
+  The patch's window shows a red **🌿🪨 −16 %** with the crops that would be lost in grey, the harvest button shows only the crops that
+  stay, and a line says that each weed and stone takes 4 % of the harvest. The log adds "Weeds and stones took …".
 
 ### 6.4 Pests
 

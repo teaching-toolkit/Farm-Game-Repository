@@ -106,6 +106,13 @@ _Avoid_: slot
 
 ### Making and improving
 
+**Small stone / Big rock**:
+Two different materials (items `stone` and `boulder`). A small stone is light and comes out of the soil and off the ground; it is for tools, fire rings and small things. A big rock is heavy (it weighs what a log does) and comes from the shovel and from old ruins; roads, walls, wells, ovens and big buildings are made of it.
+_Avoid_: rock for the small one, stone for the big one (the tool "Rock" is a hammer)
+
+**Shelf**:
+The room one kind of thing has in the store, in load units (`storageLoad`). Every kind has its own shelf of the same size; how many fit is the shelf divided by what one weighs. It is not the bag (the bag holds a trip's load, all kinds together).
+
 **Station**:
 Where recipes are made.
 
@@ -168,6 +175,14 @@ _Avoid_: pop-up (any centred window, also the ones the child opens), notificatio
 **Quiet**:
 The moment when no screen the child opened is in the way of an interruption and no other interruption is showing, so the next one in line may come. What counts as "in the way" depends on the kind: a celebration may come over an open sheet, a story box waits for it to close.
 _Avoid_: idle
+
+**Village square**:
+The screen the farmer is on while in the village: a scene of the square instead of the farm, with stalls to tap. Selling, buying, barter and handing over orders happen only here (or with the merchant at the gate). It is reached by a trip and left by the walk home.
+_Avoid_: market window, market screen (the market is the place on the farm where a trip starts)
+
+**Stall**:
+One thing to tap on the village square: the stall that buys what is in the bag, the seed merchant, the traders' cart, the cart for the orders, the notice board, the sign for the walk home. The window below the scene shows the stall that was tapped.
+_Avoid_: tab, shop
 
 ### Pacing and tools of the project
 

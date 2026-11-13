@@ -95,7 +95,8 @@ Whole game: about **21 hours**, 1,400 Time Quiz answers, 1,400 Rest answers, 67 
 The simulation rests on guesses (25 seconds per Time Quiz question, 3 per action, 5 per Rest answer, a player using 60 % of
 their capacity) that play-tests should replace. The test bot (`tests/bot.gd`) plays the real rules engine: chapter 3 after
 about 290–530 questions and chapter 5 (the first four pets; it stops before the alpaca) after about 690–870, in runs of
-12 Oct 2026 (it plays randomly). `--accuracy=0.8` lets it miss a share of first tries, which costs extra questions.
+12 Oct 2026 (it plays randomly). Since 9 Nov 2026 the walk home from the village costs a question too (`money-market/04`): the bot, which goes to the
+village about every fifth answer, then reaches chapter 5 after about 1020–1120 (three seeds) instead of about 850–990; without the walks home it is about the same pace. `--accuracy=0.8` lets it miss a share of first tries, which costs extra questions.
 
 ### 10.6 Dynamic difficulty — prices that fit the farm *(built, off by default)*
 

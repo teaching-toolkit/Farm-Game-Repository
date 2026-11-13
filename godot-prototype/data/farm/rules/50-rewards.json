@@ -149,10 +149,10 @@
         "emoji": "👖",
         "effects": {
           "add": {
-            "storageCap": 5
+            "storageLoad": 20
           }
         },
-        "desc": "Every store holds 5 more."
+        "desc": "Every kind of thing gets 20 load more room in the store."
       },
       {
         "id": "gc_spring_water",

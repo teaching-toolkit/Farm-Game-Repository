@@ -42,7 +42,8 @@ neighbour. Where everything stands, and how big it is, comes from `data/map_layo
   The three **fields** fill the screen from edge to edge — Home Field, North Field, River Meadow — each 3×3 big patches with a
   thin gap between them; the later two are on the map from the start, overgrown and walled by a crumbling stone wall until they
   are cleared. **No words on the field:** every plant is drawn one by one (2 seeds planted = 2 sprouts), every weed and stone too
-  (fewer as you clear them); a patch not cleared yet is a diamond of wild growth with what is in the way on it (weeds, rocks or
+  (fewer as you clear them; the plants that weeds and stones take from the harvest stand wilted and grey, and at harvest the lost crops rise as grey ghosts);
+  a patch not cleared yet is a diamond of wild growth with what is in the way on it (weeds, rocks or
   stumps; scrub on the North Field, marsh on the River Meadow). What is built for the patches (stick edging, stone borders, log
   beds, irrigation channels, a drip line) appears in the gaps, and the field fence runs round each field.
 - **Pens** (chickens, cows, sheep, pets, bees, orchard) have big footprints that may reach past the edge of the screen. They have
@@ -74,7 +75,9 @@ neighbour. Where everything stands, and how big it is, comes from `data/map_layo
 ## Pictures (assets/)
 The game looks for a picture named after the data id and uses the emoji when there is none — add pictures one at a time, no code needed
 (see `kits/ui/art.gd`):
-- `assets/map/<id>.png` — buildings and places (`tent.png`, `well_1.png` …; or the place name: `market.png`, `forest.png`).
+- `assets/map/<id>.png` — buildings and places (`tent.png`, `well_1.png` …; or the place name: `forest.png`, `board.png`; `placeArt` in `data/farm/places.json`
+  names another picture for a place: the market place shows `village_sign.png`, the blank `deco/signpost.png` with an arrow painted on its board,
+  made by `godot --headless --path . --script res://tools/make_village_sign.gd` (no Pillow needed; the old `market.png` stall is no longer used).
   A picture is named after the **first** stage it stands for and later upgrades keep it until they get their own: the final
   farmhouse is `cottage.png`, the barn `barn_1.png`, the workshop `workshop_1.png`, the warehouse `shed.png`.
 - `assets/plots/<place>.png` — `pond.png` (dug out), `pond_wild.png` (at the start) and `home.png` (the house plot before the
@@ -176,7 +179,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   32 − 17 and on to times tables, fractions and more in later years, spaced repetition for every sum, an easy one now and then
   when it is hard going, and medals for every level (🥉 passed, 🥈 every sum quick, 🥇 still quick a week later; in the album).
   Better home, bed, pillow and water bottle give more per answer.
-- **💧 Water** never comes by itself: every drop is carried (tap the water in the top bar, or the pond or the well). A trip costs
+- **💧 Water** never comes by itself: every drop is carried (tap the water in the top bar and then 🪣 Get water, or go to the pond or the well). A trip costs
   1 ⚡; the old bucket brings 2 💧 and holds 8, a well 4 (holds 24), the winch 6, the brick well 9, the hand pump 12 (holds 80);
   the yoke, the dug-out pond, the rain barrel and more add to every trip. When there isn't enough to plant, a pop-up with a
   crossed-out drop offers to fetch some. Rain waters the fields: planting costs no water until the next question.
@@ -253,7 +256,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   on the device. The flags are read in `game/farm/dev/dev_flags.gd` (the screen) and `Game._test_args()` (the rules).
 - Screenshots and tests: `--player=Name`, `--newgame`, `--timestep=N`, `--season=autumn[:Q]`, `--spot=storage`, `--patch=K`, `--unlock=id,id`, `--load=res://tests/fixtures/ch3-seed1.json` (start from a saved farm),
   `--give=item:5`, `--water=1` (carried water), `--menu` (⚙️ Settings), `--grownup` (its grown-up part open), `--password` (the password box), `--celebrate=id`, `--postcard`, `--perks=all` (or a list of perk ids), `--rainbow`, `--rest` (the Rest start page; add `--restgo` for the sums), `--gorest` (the farmer walks into the tent or house first; with `--shotframes=N`), `--qid=PIC-004`, `--answer` (the open question answered right, after `--quiz` or `--qid`), `--news` (the farm news plays: rain, the scarecrow, pests; with `--shotframes=N`)
-  (one Time Quiz question), `--lang=de` (quiz texts in German), `--toasts` (a stack of notification cards), `--nostory` (no story boxes or bubbles), `--pack=rope:2` (packs things for the trip), `--story=ID` (one story piece shown), `--sheetscroll=N` (the open window scrolled down, 9999 = to the end; use with `--shotframes=100`), `--pulse` (the energy bar's pulse and floating number), `--shot=file.png`.
+  (one Time Quiz question), `--lang=de` (quiz texts in German), `--toasts` (a stack of notification cards), `--nostory` (no story boxes or bubbles), `--pack=rope:2` (packs things for the trip), `--square` (stands on the village square), `--stall=seeds` (taps a stall there: `sell`, `seeds`, `traders`, `orders`; with `--square --spot=market`) and `--homeq` (the question on the walk home, with `--square --spot=market`), `--story=ID` (one story piece shown; a frame piece such as `c1_frame1` as the full-screen black scene; the opening frame of a new game opens by itself unless `--nostory` or `--seen=c1_frame0`), `--sheetscroll=N` (the open window scrolled down, 9999 = to the end; use with `--shotframes=100`), `--note=energy|water|bag|coins|item:stone|grey` (the short note on tap; `grey` = the first greyed-out button of the open sheet; use with `--shotframes=90`), `--pulse` (the energy bar's pulse and floating number), `--crowded` (the cleared patches planted and crowded with weeds and stones; with `--unlock=clear_thistles,clear_weeds`), `--shot=file.png`.
 
 ## Changing content (no code needed)
 - **`data/farm/`** — the whole tree, split into files (since R8, 13 Oct 2026): `items.json`, `recipes.json`, `chapters.json`, `start.json`; `nodes/NN-theme.json` (the
@@ -308,20 +311,23 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 
 ## Automated checks
 - `godot --headless --path . res://tests/bot.tscn -- --iters=900 --chapter=3` — a greedy bot plays the rules engine and prints progress
-  (chapter 3 in about 290–530 Time Quiz answers; `--chapter=5 --iters=1100` reaches chapter 5 in about 690–870; it plays randomly, so
+  (chapter 3 in about 290–530 Time Quiz answers; `--chapter=5 --iters=1100` reaches chapter 5 in about 690–870 (about 1020–1120 since 9 Nov 2026, when the walk home from the village became a question too); it plays randomly, so
   the number changes from run to run; `--flex` plays with dynamic difficulty on; `--trace=N` prints what happens during the first N questions;
   it answers real questions through the real rule (`G.timeq`) for farm time and for every walk (trip, forest, a visit when a friend
   invites it and it has 10 energy or more; `--novisits` plays without visits, to compare the pace);
   `--accuracy=0.8` misses a share of first tries (only a right first try moves time; the missed question comes back after the next) and reports how many questions it was asked; it prints
-  its pace, which `meta.flex.basePace` is taken from).
+  its pace, which `meta.flex.basePace` is taken from; it pulls the weeds and picks the stones of a ripe patch before it harvests it and prints per chapter what weeds and stones cost the harvest
+  (`--noclear` plays without that, as the bot did before crops-and-items/02)).
 - `bash tests/check_all.sh` — all quick checks in one go (about 2 minutes): smoke test, save fixtures, save versions, core kit, places and pets, data checks, golden run, translations.
 - `bash tests/golden.sh` — the golden run: the bot plays seeds 1 and 2 to chapter 6 (through all five chapters) and every step of time is compared with
   `tests/golden/` (coins, energy, water, goals, what is unlocked, the store). A restructuring must leave it unchanged. `--strict`
   also compares a hash of the whole save (it changes when the save layout does: record anew then, and check that without the hash nothing differs); `--record` records new golden runs after a change to the rules or numbers on purpose.
-  `--short` plays only to the end of chapter 2 (`--chapter=3`; files `bot-seed1-ch3.txt`, `bot-seed2-ch3.txt`, 304 and 447 steps, about 70 s for both seeds instead of about 2.5 min); `--chapter=N` any other limit. `check_all.sh --short` passes it on. Use the short pair after every slice; the full run when a slice touches a late system (the Lord's share, Wren's check and poisoning, forest trips, medicine and healing ranks, pets' blessings in free play, wellbeing parties and visits) and once before a feature is done.
+  `--short` plays only to the end of chapter 2 (`--chapter=3`; files `bot-seed1-ch3.txt`, `bot-seed2-ch3.txt`, 185 and 202 steps, about 70 s for both seeds instead of about 2.5 min); `--chapter=N` any other limit. `check_all.sh --short` passes it on. Use the short pair after every slice; the full run when a slice touches a late system (the Lord's share, Wren's check and poisoning, forest trips, medicine and healing ranks, pets' blessings in free play, wellbeing parties and visits) and once before a feature is done.
   Bot flags for it: `--seed=N`, `--golden=FILE`, `--save-at=CHAPTER:FILE` (writes a save fixture), `--report=FILE` (the pacing of the run as JSON).
 - `bash tools/update_explorer.sh` (the double-click `../Update explorer.command`) — checks the data, lets the bot play seeds 1 and 2 to chapter 5 with `--report`, and writes
   the data and the bot's pacing report into `../progression/progression-explorer.html` (about 3 minutes; needs Godot and python3).
+- `godot --headless --path . res://tests/crowding_test.tscn -- --seed=1` — weeds and stones take 4 % of a patch's harvest each, at most 75 %, no longer slow growth,
+  and what they take is told to the map (`rules/10-farming.json` `crowding`).
 - `godot --headless --path . res://tests/fixtures_test.tscn -- --seed=1` — every save in `tests/fixtures/` still loads, plays
   on for 10 steps and saves unchanged; a save in an older layout is completed when loaded.
 - `godot --headless --path . res://tests/saves_test.tscn -- --seed=1` — a new game has the recorded keys (`tests/golden/newgame.json`; `--record` after a

@@ -12,7 +12,7 @@ Every data node belongs to a **place** on the map (its `slot`). The main ladders
 |---|---|
 | Home | Tent → Cottage (log walls, thatched roof, cottage) → Cottage · loft → Farmhouse (foundation, brick walls, farmhouse) → Farmhouse · sun room |
 | Library | Book box → Bookshelf → Bookcase & reading chair → Library room |
-| Storage | Basket (10 of each) → Log Shed (25) → Warehouse (60) |
+| Storage | Basket (a shelf of 40 load per kind) → Log Shed (100) → Warehouse (240) |
 | Well | Old bucket → Dig a well → Winch → Brick lining & pulley → Hand pump; rain barrel, wind pump |
 | Workshop | Workbench → Carpenter's Shed → Smithy (chimney, workshop) → Master Workshop |
 | Barn | Barn frame → Barn → cellar → stable; seed library |
@@ -39,7 +39,7 @@ store can hold.
 ### 9.3 Ruins to clear first
 
 Where an old building stood, its remains must be cleared before the first new building there: 4 steps that cost energy and
-give material back (stone ruins give stones; burnt wooden ones sticks, charcoal and ash) — the old workshop (ch 1), the burnt
+give material back (stone ruins give big rocks and a few small stones; burnt wooden ones sticks, charcoal and ash) — the old workshop (ch 1), the burnt
 woodshed, barn and compost corner (ch 2), the old mill (ch 3), the old glasshouse (ch 4). Before the campfire there is no ruin,
 only an old fire spot: a few blackened rocks round a burnt log.
 

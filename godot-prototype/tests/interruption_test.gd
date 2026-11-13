@@ -4,7 +4,7 @@ extends Node
 ## interruption's `show` writes into a log and, for a box, opens a pretend pop-up.
 ## Run:  godot --headless --path . res://tests/interruption_test.tscn -- --seed=1
 const Interruptions = preload("res://kits/ui/interruptions.gd")
-const BOXES := ["postcard", "celebration", "discovery", "scene", "story", "news"]    # these open a pop-up when they show; a note and a bark do not
+const BOXES := ["postcard", "celebration", "discovery", "scene", "frame", "story", "news"]    # these open a pop-up when they show; a note and a bark do not
 var G
 var fails := 0
 var checks := 0
@@ -18,13 +18,14 @@ func _ready() -> void:
 	_check(not cfg.is_empty(), "the order list is in the data")
 	var kinds := []
 	for e in cfg.get("order", []): kinds.append(str(e["kind"]))
-	_check(kinds == ["note", "postcard", "celebration", "discovery", "scene", "story", "news", "bark"], "today's order of kinds: %s" % str(kinds))
+	_check(kinds == ["note", "postcard", "celebration", "discovery", "scene", "frame", "story", "news", "bark"], "today's order of kinds: %s" % str(kinds))
 	# today's rules, written out here on purpose: a change to the order list must change this table too (story/07 will; story/13–15 added scene and news)
 	var today := {"note": ["popup", "playback", "catchup"], "postcard": ["popup", "playback", "catchup"],
 		"celebration": ["popup", "playback", "catchup", "postcard"], "discovery": ["popup", "rest", "playback", "postcard", "celebration"],
 		"scene": ["popup", "rest", "playback", "postcard", "celebration"],
-		"story": ["popup", "rest", "playback", "postcard", "celebration", "sheet"],
-		"news": ["popup", "rest", "playback", "postcard", "celebration", "sheet"], "bark": ["popup", "rest", "playback", "bubble"]}
+		"frame": ["popup", "rest", "playback", "catchup", "postcard", "celebration", "sheet"],
+		"story": ["popup", "rest", "playback", "postcard", "celebration", "frame", "sheet"],
+		"news": ["popup", "rest", "playback", "postcard", "celebration", "frame", "sheet"], "bark": ["popup", "rest", "playback", "frame", "bubble"]}
 	for e in cfg.get("order", []):
 		var want: Array = today.get(str(e["kind"]), [])
 		var have: Array = Array(e["waitsFor"])
@@ -49,7 +50,7 @@ func _ready() -> void:
 	var first: Array = q.pump()
 	_check(first == ["x", "x"] and shown == ["note:x", "postcard:x"], "first pump: the note, then the postcard holds the screen: %s" % str(shown))
 	_until_quiet()
-	_check(shown == ["note:x", "postcard:x", "celebration:x", "discovery:x", "scene:x", "story:x", "news:x", "bark:x"], "then one box per closed pop-up, the bark last: %s" % str(shown))
+	_check(shown == ["note:x", "postcard:x", "celebration:x", "discovery:x", "scene:x", "frame:x", "story:x", "news:x", "bark:x"], "then one box per closed pop-up, the bark last: %s" % str(shown))
 
 	# a chapter turn: during the Time Quiz the pet and a building are done, a postcard comes, two story pieces get ready
 	_fresh()
@@ -72,6 +73,34 @@ func _ready() -> void:
 	busy["catchup"] = false
 	_until_quiet()
 	_check(shown == ["note:medal", "postcard:pc_mira", "celebration:pet_dog", "celebration:barn", "story:c2_frame", "story:c2_beat"], "chapter turn: note, postcard, both celebrations in the order they came, then the story pieces: %s" % str(shown))
+
+	# story/11: the grandchildren's frame comes right after the chapter's last beat and before the next chapter's first one; it waits for the
+	# farm to finish catching up (a story box does not) and for a sheet, and holds back every story box, news box and bark behind it
+	_fresh()
+	busy["catchup"] = true
+	q.submit("story", "c3_beat", _show.bind("story", "c3_beat"))
+	q.submit("frame", "c2_frame", _show.bind("frame", "c2_frame"))
+	q.submit("bark", "k", _show.bind("bark", "k"))
+	q.submit("news", "season", _show.bind("news", "season"))
+	_check(q.pump(["frame"]).is_empty() and q.waiting("frame") == 1, "frame: waits while the farm catches up")
+	_check(q.pump(["story", "news", "bark"]).is_empty(), "frame: …and so does everything behind it, a story box, a news box and a bark")
+	busy["catchup"] = false
+	busy["sheet"] = true
+	_check(q.pump().is_empty(), "frame: waits while a sheet covers the farm")
+	busy["sheet"] = false
+	_check(q.pump() == ["c2_frame"] and shown == ["frame:c2_frame"] and busy["popup"], "frame: the frame comes first, and its scene holds the screen")
+	_until_quiet()
+	_check(shown == ["frame:c2_frame", "story:c3_beat", "news:season", "bark:k"], "frame: then the next chapter's beat, the news and the bark: %s" % str(shown))
+	_fresh()
+	busy["sheet"] = true
+	q.submit("discovery", "d", _show.bind("discovery", "d"))
+	q.submit("frame", "f", _show.bind("frame", "f"))
+	q.pump()
+	_check(shown == ["discovery:d"], "frame: a Discovery still comes over the sheet the child just tapped, the frame waits: %s" % str(shown))
+	busy["popup"] = false
+	busy["sheet"] = false
+	q.pump()
+	_check(shown == ["discovery:d", "frame:f"], "frame: …and comes when the sheet is closed")
 
 	# a walk: a right answer closes the pop-up into a place (a sheet); the news waits, a celebration comes over the place
 	_fresh()

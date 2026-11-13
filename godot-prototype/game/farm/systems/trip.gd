@@ -18,12 +18,27 @@ func data() -> Dictionary:
 
 # ------------------------------------------------------------------ the bag
 
-## How many load units the farmer can carry: what fits in the arms, or the best carrying thing owned.
+## How many load units the farmer can carry: what fits in the arms, or the best carrying thing owned, and more with strength (whole units).
 func capacity() -> float:
+	return floorf(plain_capacity() * strength_mult() + 0.0001)
+
+## What the arms or the best carrying thing owned hold, before strength.
+func plain_capacity() -> float:
 	var cap := float(data().get("base", 10))
 	for id in data().get("devices", {}):
 		if G.nodes.has(id) and G.done(id): cap = maxf(cap, float(data()["devices"][id]))
 	return cap
+
+## What strength (the wellbeing parameter) makes of the capacity: above `strength.from` every point adds `strength.perPoint` of it, never less than 1
+## (the wellbeing is frozen at the middle until chapter 2, so nothing changes before). Numbers: rules/49-trip.json.
+func strength_mult() -> float:
+	if not G.well.active(): return 1.0
+	var s: Dictionary = data().get("strength", {})
+	return 1.0 + float(s.get("perPoint", 0.0)) * maxf(0.0, G.well.value("strength") - float(s.get("from", 0.5)))
+
+## The load units that strength adds now (0 while the farmer is not stronger than the middle), for the bag's window.
+func strength_room() -> float:
+	return capacity() - floorf(plain_capacity() + 0.0001)
 
 ## The carrying thing that sets the capacity ("" while it is just the arms).
 func device() -> String:
@@ -105,17 +120,18 @@ func at_square() -> bool:
 func walking() -> bool:
 	return phase() == "walk"
 
-## The trip as a chore of the actions system (rules/46-chores.json): the base energy, the errand multiplier (rucksacks, boots …), the rounding up and the
-## minimum are in the data; what a better road saves is the amount (a factor on the base) and the requirements and the effect are here. The walk starts
-## when the packed bag is confirmed (the interface asks exactly one Time Quiz question; arrive() follows).
+## The trip as a chore of the actions system (rules/46-chores.json): the base energy, the errand multiplier (boots …), the rounding up and the
+## minimum are in the data; what a better road saves and what a borrowed donkey saves are the amount (a factor on the base) and the requirements and the
+## effect are here. The walk starts when the packed bag is confirmed (the interface asks exactly one Time Quiz question; arrive() follows).
 func register_chores() -> void:
-	G.actions.register("village_trip", _go_effect, _go_requires, _road_factor)
+	G.actions.register("village_trip", _go_effect, _go_requires, _energy_factor)
 
-## What a better road saves: `roadSaving` per road level above 1, never below `roadFloor`.
-func _road_factor(_who, _args: Dictionary) -> float:
+## What makes the trip cheaper besides the errand multiplier: a better road (`roadSaving` per road level above 1, never below `roadFloor`) and the trip
+## multiplier (`energy:trip`: a donkey lent by someone helped).
+func _energy_factor(_who, _args: Dictionary) -> float:
 	var e: Dictionary = data().get("energy", {})
 	var road := int(round(G.g("roadLevel", 1.0)))
-	return maxf(float(e.get("roadFloor", 0.4)), 1.0 - float(e.get("roadSaving", 0.15)) * float(road - 1))
+	return maxf(float(e.get("roadFloor", 0.4)), 1.0 - float(e.get("roadSaving", 0.15)) * float(road - 1)) * G.m("energy:trip")
 
 func _go_requires(_who, _args: Dictionary) -> Array:
 	if phase() != "": return [{"key": "on_the_way", "text": tr("You are on the way already.")}]
@@ -132,7 +148,8 @@ func arrive() -> void:
 	G.S["trips"] = int(G.S["trips"]) + 1
 	G.save_game(); G.changed.emit()
 
-## Back home: what was not sold stays in the store, the bag is empty again.
+## Back home: what was not sold stays in the store, the bag is empty again. The walk home is a Time Quiz question like the walk there (purpose
+## home_from_village of the time question, money-market/04): the farmer stays on the square until one is answered right at the first try, then this runs.
 func leave() -> void:
 	if phase() == "": return
 	G.S["trip"] = {"phase": "", "bought": 0.0}
@@ -184,6 +201,20 @@ func can_buy(weight: float) -> int:
 
 func note_bought(load_units: float) -> void:
 	G.S["trip"]["bought"] = float(G.S["trip"].get("bought", 0.0)) + load_units
+
+## What the thin bar under the 🎒 icon in the top bar shows: the bag's load at home; on the village square what is still to sell or hand over *plus* what is
+## bought for the way home, so it falls with every sale and delivery and rises with every purchase (money-market/06).
+func carry_fill() -> float:
+	var cap := capacity()
+	if cap <= 0.0: return 0.0
+	var bought := float(G.S["trip"].get("bought", 0.0)) if at_square() else 0.0
+	return clampf((load_now() + bought) / cap, 0.0, 1.0)
+
+## How full the way home is: what was bought on this trip as a share of the capacity (0 at home). The bar of the square's other half: it fills with
+## every purchase while `fill()` (what is still in the bag to sell or hand over) empties; `buy_room()` is what is left.
+func home_fill() -> float:
+	var cap := capacity()
+	return clampf(float(G.S["trip"].get("bought", 0.0)) / cap, 0.0, 1.0) if cap > 0.0 else 0.0
 
 ## Packs what a cost asks for from the store (an order: *pack what it needs*). Whole units of the items; a kind ("tag:…") takes the cheapest first.
 func can_pack_cost(cost: Dictionary) -> bool:

@@ -80,7 +80,7 @@ add(4, 2, "tiles/overgrown.png", "256x256", "Orchard/greenhouse patch: overgrown
 SPOT_ART = {  # places without an upgrade chain get one picture named after the place
     "forest": (1, 1, "Forest edge (gathering)", "edge of a forest, cluster of trees with a small path leading in"),
     "lumber": (2, 1, "Woodlot clearing (before the woodlot is built)", "small forest clearing with a tree stump, an axe and a few logs"),
-    "market": (1, 1, "Market stall (seed merchant)", "small village market stall with a striped awning and sacks of seeds"),
+    "market": (1, 1, "Sign to the village (market place: where the trip starts)", "wooden signpost with a blank board; the arrow is painted on afterwards by tools/make_village_sign.gd (from deco/signpost.png)"),
     "board": (1, 1, "Notice board (jobs, favours)", "wooden notice board on two posts with blank pinned papers"),
     "bookcart": (2, 1, "Book cart", "wooden hand cart full of colourful books"),
     "pets": (2, 1, "Pet corner", "small wooden bunny hutch with a straw roof"),
@@ -89,7 +89,7 @@ SPOT_ART = {  # places without an upgrade chain get one picture named after the 
     "broker": (6, 5, "Import Broker", "fancy travelling merchant wagon with crates and a canopy"),
 }
 for sid, (pr, ch, what, prompt) in SPOT_ART.items():
-    add(pr, ch, f"map/{sid}.png", "512 max", what, prompt)
+    add(pr, ch, f"map/{PLACES.get('placeArt', {}).get(sid, sid)}.png", "512 max", what, prompt)   # placeArt: a place may use another picture name
 # buildings in the order the story reaches them
 for sid, chain in chains.items():
     for nid in chain:

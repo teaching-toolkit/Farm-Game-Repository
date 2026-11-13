@@ -94,7 +94,7 @@ func flexed(id: String, c: Dictionary) -> Dictionary:
 		elif key in ["energy", "read", "water"] or v < 2.0: out[key] = v
 		else:
 			# never more than the store can hold (else the goal could not be reached at all)
-			var cap := G.needs.storage_cap() if G.items.has(key) and G.items[key].get("category", "") != "keeper" else 1.0e9
+			var cap := G.needs.storage_cap(key) if G.items.has(key) else 1.0e9
 			out[key] = maxf(1.0, minf(roundf(v * k), maxf(v, cap)))
 	return out
 
@@ -158,6 +158,20 @@ func missing_cost(c: Dictionary) -> Array:
 	if c.has("coins") and float(c["coins"]) > 0.0 and G.lord.coin_refusal(0.0) == "lord":      # the Lord's share comes first
 		miss.append({"key": "lord", "need": 1.0, "have": 0.0})
 	return miss
+
+## What is missing of a price in words, one entry per missing kind ("🪵 3 more", "🏮 the Lord's share first"), from `missing_cost`.
+func missing_words(mc: Array) -> Array:
+	var parts := []
+	for x in mc: parts.append(tr("🏮 the Lord's share first") if x["key"] == "lord" else tr("%s %d more") % [G.iemoji(x["key"]), G.up(float(x["need"]) - float(x["have"]))])
+	return parts
+
+## `missing_cost` as the answer a chore's check gives ({"ok", "cost", "base", "unmet": [{"key", "text"}]}): a button that is grey because of a price
+## shows these reasons when it is tapped (interface-feel/02), so the button and the note come from the same rule. Changes nothing.
+func cost_check(c: Dictionary) -> Dictionary:
+	var mc := missing_cost(c)
+	var unmet := []
+	if not mc.is_empty(): unmet.append({"key": "missing", "text": tr("Missing: ") + ", ".join(missing_words(mc))})
+	return {"ok": mc.is_empty(), "cost": c, "base": c, "unmet": unmet}
 
 func pay(c: Dictionary) -> bool:
 	if not missing_cost(c).is_empty(): return false

@@ -32,6 +32,7 @@ static func apply(main, G) -> void:
 				G.S["step"] = si * G.seasons.season_len() + (int(sp[1]) if sp.size() > 1 else G.seasons.season_len() / 2)
 				G.S["last_season"] = si
 		elif a.begins_with("--stepat="): main.step_at = int(a.substr(9))
+		elif a.begins_with("--note="): main.info.test_note.call_deferred(a.substr(7))      # screenshots: the short note on tap: --note=energy|water|bag|coins|item:stone|grey (use --shotframes=90)
 		elif a.begins_with("--sheet="): main.sheets.open_sheet.call_deferred(a.substr(8))
 		elif a.begins_with("--spot="): main.sheets.open_spot.call_deferred(a.substr(7))
 		elif a.begins_with("--scroll="): main.mapview.scroll_to.call_deferred(float(a.substr(9)), false)
@@ -78,6 +79,12 @@ static func apply(main, G) -> void:
 			G.invalidate_caps()
 			G.pets.set_when("pet_tortoise", 0, "water")
 			G.pets.set_when("pet_bunny", 0, "weeds", 5.0)
+		elif a == "--crowded":                     # screenshots: the cleared patches are planted and crowded with weeds and stones (use with --unlock=clear_thistles,clear_weeds and --sheet=patch:field:0 or --spot=field)
+			for i in range(mini(G.S["patches"].size(), G.progression.plots())):
+				var cp = G.S["patches"][i]
+				cp["crop"] = "crop_wheat" if i % 2 == 0 else "crop_carrot"
+				cp["plants"] = 4.0; cp["ready"] = i % 2 == 0; cp["growth"] = 99.0 if cp["ready"] else 1.0
+				cp["weeds"] = [8.0, 3.0, 10.0, 0.0][i % 4]; cp["stones"] = [4.0, 1.0, 6.0, 0.0][i % 4]
 		elif a == "--well":                        # screenshots: chapter 2, the book Body and mind and two of its cards learned, some parameters moved (use with --spot=… or --sheet=well)
 			for id in ["pet_bunny", "book_body", "k_sleep", "k_food", "k_play", "straw_bed", "sq_healer_honey"]: G.S["unlocked"][id] = true
 			G.S["well"]["v"] = {"sleep": 0.7, "food": 0.3, "strength": 0.6, "friends": 0.5, "calm": 0.35, "play": 0.2}
@@ -111,6 +118,8 @@ static func apply(main, G) -> void:
 				"party": G.well._party_effect(null, {}, {})
 		elif a.begins_with("--handover="): main.get_tree().create_timer(0.6).timeout.connect(func(): main.widgets.do_unlock(a.substr(11)))     # screenshots: tap Hand over on the square (--handover=d_porridge, with --square --pack --spot=market)
 		elif a == "--square": G.S["trip"] = {"phase": "square", "bought": 0.0}       # screenshots: standing on the village square (use with --give, --pack, --spot=market)
+		elif a.begins_with("--stall="): main.get_tree().create_timer(0.4).timeout.connect(main.square.pick.bind(a.substr(8)))     # screenshots: tap a stall on the square (--stall=seeds|traders|orders|sell, with --square --spot=market)
+		elif a == "--homeq": main.timequiz.show_home_question.call_deferred()      # screenshots: the question on the walk home (use with --square, --spot=market)
 		elif a == "--built":                       # screenshots: pretend house, barn and workshop stand
 			for b in ["cottage", "barn_1", "workshop_1"]: G.S["unlocked"][b] = true
 			G.invalidate_caps()

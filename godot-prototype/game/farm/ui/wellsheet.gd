@@ -60,10 +60,10 @@ func _play_actions(rv: VBoxContainer) -> void:
 	var d: Dictionary = G.well.data().get("party", {})
 	var fb := HFlowContainer.new()
 	fb.add_theme_constant_override("h_separation", 6)
-	fb.add_child(UI.button(tr("🎉 Throw a party (%d dishes, %d ⚡)") % [int(d.get("dishes", 3)), int(pc["cost"]["energy"])], _party, pc["ok"], UI.AMBER, 16))
+	fb.add_child(UI.button(tr("🎉 Throw a party (%d dishes, %d ⚡)") % [int(d.get("dishes", 3)), int(pc["cost"]["energy"])], _party, pc, UI.AMBER, 16))
 	if G.well.invite() != "":
 		var vc: Dictionary = G.actions.check("visit_friend", G.actions.farmer)
-		fb.add_child(UI.button(tr("💌 Visit %s (%d ⚡ and a question)") % [G.well.invite(), int(vc["cost"]["energy"])], _visit, vc["ok"], UI.GREEN, 16))
+		fb.add_child(UI.button(tr("💌 Visit %s (%d ⚡ and a question)") % [G.well.invite(), int(vc["cost"]["energy"])], _visit, vc, UI.GREEN, 16))
 	rv.add_child(fb)
 	if not pc["ok"]: rv.add_child(UI.label(str(pc["unmet"][0]["text"]), 14, UI.MUTED, true))
 

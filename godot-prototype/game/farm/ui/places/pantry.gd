@@ -21,7 +21,7 @@ var filter := "all"            # the store's filter row: "all" or the id of a fi
 
 func part_pantry() -> void:
 	var ready_n := M.patches.ready_count("field") + M.patches.ready_count("orchard") + M.patches.ready_count("gh")
-	var hb := UI.button(tr("🧺 Harvest all  (%d ready)") % ready_n if ready_n > 0 else tr("🧺 Harvest all — nothing is ready yet"), _harvest_everything, ready_n > 0, UI.GREEN, 20)
+	var hb := UI.button(tr("🧺 Harvest all  (%d ready)") % ready_n if ready_n > 0 else tr("🧺 Harvest all — nothing is ready yet"), _harvest_everything, ready_n > 0, UI.GREEN, 20, tr("🌱 Nothing is ready yet. Plants need a few Time Quiz questions to grow."))
 	hb.custom_minimum_size = Vector2(0, 58)
 	M.content.add_child(hb)
 	M.widgets.section(tr("🧺 What you have"), tr("Tap a thing to see what you can do with it. 🍂 = goes stale at the next change of season — sell it, eat it or cook it into something that keeps. 🎒 = packed for the trip."))
@@ -144,8 +144,9 @@ func item_panel(k: String) -> void:
 	var q: float = G.inventory.count(k)
 	var box := M.modals.open_modal("%s %s" % [it.get("emoji", ""), it["name"]])
 	box.add_child(UI.header(Art.first("items", [k]), str(it.get("emoji", "📦")), 96))
-	box.add_child(UI.explain(UI.stock_bar(q, maxf(q, G.needs.storage_cap()), UI.item_color(k, G.items), 260),
-		tr("%d %s — your store holds %d of each.") % [G.down(q), str(it["name"]), G.down(G.needs.storage_cap())]))
+	box.add_child(UI.explain(UI.stock_bar(q, maxf(q, G.needs.storage_cap(k)), UI.item_color(k, G.items), 260),
+		tr("%d %s — there is room for %d.") % [G.down(q), str(it["name"]), G.down(G.needs.storage_cap(k))]))
+	if str(it.get("desc", "")) != "": box.add_child(UI.label(str(it["desc"]), 15, UI.MUTED, true))      # a few words about it (interface-feel/01)
 	if G.quality.graded(k):      # how many of each grade: ⭐⭐⭐ 2  ⭐⭐ 5
 		var gs: Dictionary = G.inventory.grades(k)
 		var gk := gs.keys()
@@ -155,6 +156,7 @@ func item_panel(k: String) -> void:
 		for g in gk: gparts.append("%s %d" % [G.quality.stars(int(g)), G.down(float(gs[g]))])
 		box.add_child(UI.label("   ".join(gparts), 16, UI.MUTED, true))
 	if G.inventory.stale_soon(k) >= 1.0: box.add_child(UI.label(tr("🍂 %d of it goes stale at the next change of season.") % G.down(G.inventory.stale_soon(k)), 15, Color("b5562b"), true))
+	if G.reveal.shown("bag"): box.add_child(UI.label(M.info.room_text(k), 15, UI.MUTED, true))      # how much room it takes in the bag (interface-feel/01)
 	var row := HFlowContainer.new()
 	row.add_theme_constant_override("h_separation", 8)
 	row.add_theme_constant_override("v_separation", 8)
@@ -163,8 +165,8 @@ func item_panel(k: String) -> void:
 	var pk := int(G.trip.packed(k))
 	var fit: int = G.trip.can_pack(k)
 	if G.inventory.sellable(k) or G.trip.can_pack(k) > 0 or pk > 0:
-		row.add_child(_act_button("🎒 +1", G.trip.pack.bind(k, 1), k, fit >= 1))
-		row.add_child(_act_button(tr("🎒 + all that fits") if fit > 1 else "🎒 +all", G.trip.pack.bind(k, 9999), k, fit >= 1))
+		row.add_child(_act_button("🎒 +1", G.trip.pack.bind(k, 1), k, fit >= 1, _pack_why(k)))
+		row.add_child(_act_button(tr("🎒 + all that fits") if fit > 1 else "🎒 +all", G.trip.pack.bind(k, 9999), k, fit >= 1, _pack_why(k)))
 		if pk > 0: row.add_child(_act_button("↩ −1", G.trip.unpack.bind(k, 1), k))
 	if G.inventory.sellable(k):
 		box.add_child(UI.label(tr("🪙 Sells for about %s each — pack it and take it to the village.") % G.money(G.trade.sell_total(k, 1)), 15, UI.MUTED, true))
@@ -176,13 +178,18 @@ func item_panel(k: String) -> void:
 	box.add_child(done)
 
 ## An action button inside the panel: does it, then shows the panel again with the new numbers.
-func _act_button(text: String, act: Callable, k: String, enabled := true) -> Button:
+func _act_button(text: String, act: Callable, k: String, enabled := true, why := "") -> Button:
 	var b := UI.soft_button(text, func():
 		act.call()
 		if G.items.has(k) and (G.inventory.count(k) >= 0.999 or G.items[k].get("category", "") == "keeper"): item_panel(k)
-		else: M.modals.close_modal(), enabled, 18)
+		else: M.modals.close_modal(), enabled, 18, why)
 	b.custom_minimum_size = Vector2(0, 50)
 	return b
+
+## Why 🎒 +1 is grey: no room left in the bag, or all of it is packed already (the rule is `G.trip.can_pack`).
+func _pack_why(k: String) -> String:
+	if G.trip.room() < G.inventory.weight_of(k) - 0.0001: return tr("🎒 The bag is full. Take something out first.")
+	return tr("🎒 All of it is packed already.")
 
 # ------------------------------------------------------------------ the bag
 
@@ -200,6 +207,8 @@ func part_bag() -> void:
 	head.add_child(bv)
 	M.content.add_child(head)
 	M.content.add_child(UI.label((tr("Carried with: %s") % G.nodes[dev]["name"]) if dev != "" else tr("You carry it in your arms. A bag, a basket or a cart would hold more."), 15, UI.MUTED, true))
+	if G.trip.strength_room() > 0.0:      # strength carries more (money-market/02)
+		M.content.add_child(UI.label(tr("💪 You are strong: your strength adds %d room.") % int(G.trip.strength_room()), 15, UI.MUTED, true))
 	if G.trip.is_empty():
 		M.content.add_child(UI.label(tr("Nothing packed. Tap a thing in the store and pack it with 🎒."), 17, UI.MUTED, true))
 	else:
@@ -208,7 +217,7 @@ func part_bag() -> void:
 		var ks: Array = G.trip.contents().keys()
 		ks.sort_custom(func(a, b): return G.inventory.load_of(a, G.trip.packed(a)) > G.inventory.load_of(b, G.trip.packed(b)))    # what takes the most room first
 		for k in ks:
-			var v := M.widgets.tile(M.widgets.pic(k), G.iemoji(k), "%s\n%d  ·  %s" % [G.iname(k), int(G.trip.packed(k)), tr("room %s") % str(ceili(G.inventory.load_of(k, G.trip.packed(k))))])
+			var v := M.widgets.tile(M.widgets.pic(k), G.iemoji(k), "%s\n%d  ·  %s" % [G.iname(k), int(G.trip.packed(k)), tr("room %s") % str(ceili(G.inventory.load_of(k, G.trip.packed(k))))], UI.PAPER, k)
 			M.widgets.tile_button(v, UI.soft_button("↩ −1", G.trip.unpack.bind(k, 1), true, 16))
 			grid.add_child(v.get_meta("panel"))
 		M.content.add_child(UI.soft_button(tr("↩ Unpack everything"), G.trip.unpack_all, true, 17))

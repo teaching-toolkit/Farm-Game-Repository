@@ -47,6 +47,11 @@ static func interior(parent: String) -> Dictionary:
 static func art_chain(sid: String) -> Array:
 	return _data().get("artChains", {}).get(sid, [])
 
+## The picture name a place uses for itself when nothing built there has one: the place's own name, unless `placeArt` names another
+## (the market place is a signpost to the village: "village_sign").
+static func place_art(sid: String) -> String:
+	return str(_data().get("placeArt", {}).get(sid, sid))
+
 ## Pictures of the corners inside (assets/interior/<id>.png, then assets/map/<id>.png): the newest one built is shown.
 static func corner_art(sid: String) -> Array:
 	return _data().get("cornerArt", {}).get(sid, [])

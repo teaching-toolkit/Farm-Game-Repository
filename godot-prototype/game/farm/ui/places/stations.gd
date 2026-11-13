@@ -40,7 +40,7 @@ func _polish_card(pid: String) -> PanelContainer:
 	v.add_child(h)
 	v.add_child(UI.label(tr("At full polish: ") + M.widgets.effect_text(n.get("effects", {})), 14, UI.GREEN_DARK, true))
 	var c: Dictionary = G.crafting.polish_cost(pid)
-	M.widgets.tile_button(v, UI.button("✨ " + G.pace.cost_text(c), G.crafting.do_polish.bind(pid), G.pace.missing_cost(c).is_empty(), UI.AMBER, 16))
+	M.widgets.tile_button(v, UI.button("✨ " + G.pace.cost_text(c), G.crafting.do_polish.bind(pid), G.pace.cost_check(c), UI.AMBER, 16))
 	return pc
 
 func part_woodpile() -> void:
@@ -124,7 +124,7 @@ func station_card(root: String) -> PanelContainer:
 		var tm: float = G.crafting.recipe_time(rid)
 		if batch > 1: extra.append("🧺×%d" % batch)
 		if tm > 0.0: extra.append("⏳%d" % G.up(tm))
-		var t := M.widgets.tile(M.widgets.pic(out0), G.iemoji(out0), title)
+		var t := M.widgets.tile(M.widgets.pic(out0), G.iemoji(out0), title, UI.PAPER, out0)
 		var orow := M.widgets.amounts_row(outs)      # what it gives, as small pictures; no sell value here: prices show where selling happens (interface-feel/03)
 		if not extra.is_empty(): orow.add_child(UI.label(" ".join(extra), 15, UI.MUTED))
 		for k in r.get("keeps", []):
@@ -137,8 +137,11 @@ func station_card(root: String) -> PanelContainer:
 		t.add_child(M.widgets.costs(c, base))
 		var cq: Dictionary = G.actions.check("recipe", G.actions.farmer, {"rid": rid})      # without a load: a smaller load still works
 		var lacking := []       # what stops it (a missing thing that is only kept is told on the tap, as before)
+		var lacking_why := []   # the same, with the words: a tap on the grey button says them (interface-feel/02)
 		for u in cq["unmet"]:
-			if u["key"] != "keeps": lacking.append(u["key"])
+			if u["key"] != "keeps":
+				lacking.append(u["key"])
+				lacking_why.append(u)
 		var have_all: bool = lacking.is_empty()
 		# everything else is there, only the woodpile needs wood first: then the button stokes it
 		var stoke_now: bool = fuel > 0.0 and lacking == ["fuel"]
@@ -150,10 +153,10 @@ func station_card(root: String) -> PanelContainer:
 			btn = UI.wait_button(soonest if soonest < 999 else 1, M.timequiz.show_time_quiz)    # busy: wait for a batch
 		elif stoke_now:
 			var can: bool = G.crafting.fuel_in_store() + float(G.S["woodpile"]) + 0.001 >= fuel
-			btn = UI.action_button("cook", _stoke.bind(fuel), can, UI.AMBER, "🪵", tr("Stoke") if can else tr("Need wood"))
+			btn = UI.action_button("cook", _stoke.bind(fuel), can, UI.AMBER, "🪵", tr("Stoke") if can else tr("Need wood"), tr("🪵 This needs %d fuel and there is no wood to stoke with. Chop or gather some first.") % G.up(fuel))
 			btn.tooltip_text = tr("Put wood on the woodpile first: %d fuel.") % G.up(fuel)
 		else:
-			btn = UI.action_button(G.crafting.recipe_cat(rid), _make.bind(rid), have_all, UI.GREEN, "", str(r.get("verb", "")))
+			btn = UI.action_button(G.crafting.recipe_cat(rid), _make.bind(rid), {"ok": have_all, "unmet": lacking_why, "cost": c, "base": base}, UI.GREEN, "", str(r.get("verb", "")))
 		M.widgets.tile_button(t, btn)
 		grid.add_child(t.get_meta("panel"))
 	if grid.get_child_count() > 0: v.add_child(grid)

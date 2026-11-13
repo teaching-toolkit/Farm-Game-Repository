@@ -29,6 +29,10 @@ func _ready() -> void:
 	for id in G.nodes:
 		var sid := Spots.spot_of(G, id)
 		_check(Spots.name_of(sid) != sid.capitalize() or Spots._data()["spots"].has(sid), "%s: place %s has a name" % [id, sid])
+	# the market place is the sign to the village (placeArt): its own picture is village_sign.png; other places use their own name
+	_check(Spots.place_art("market") == "village_sign", "the market place uses the village sign (%s)" % Spots.place_art("market"))
+	_check(Spots.place_art("forest") == "forest", "a place without placeArt uses its own name")
+	_check(ResourceLoader.exists("res://assets/map/%s.png" % Spots.place_art("market")), "the market place's picture exists")
 	# the pets: one per chapter, in order
 	_check(G.pet_ids.size() == G.D["chapters"].size(), "one pet per chapter (%d pets)" % G.pet_ids.size())
 	_check(G.animal_ids.size() == 4, "four animals (%d)" % G.animal_ids.size())

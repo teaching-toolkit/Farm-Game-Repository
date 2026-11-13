@@ -56,6 +56,7 @@ The **load** is how much runs on the farm: (patches + 2 × animals + 2 × the le
 *What they do* (all clamped; at 0.5 everything is exactly the base):
 - **energy maximum** × (0.7 + 0.6 × (food + strength) ÷ 2);
 - **energy per Rest answer** × (0.7 + 0.6 × sleep);
+- **what the farmer can carry** to the village: × (1 + 0.6 × how far strength is above 0.5), never less than 1 (`money-market/02`; §5.3b);
 - **energy change per question** = **+ boost − drain**, where drain = load × (1 − mood)² × 1.5 × (energy per Rest answer), the **mood** being the mean of friends, calm and play. So the drain is at most
   1.5 right sums' worth per question and in practice a small fraction of one; it **stops at zero energy** (no debt). The **boost** comes from helping someone (a favour, a delivery): +0.2 sums' worth for the next 6 questions.
 - the **face** on the farmer is the overall mood (the mean of all six): 😄 ≥ 0.75, 🙂 ≥ 0.55, 😐 ≥ 0.4, 😟 ≥ 0.25, 😣 below.

@@ -19,8 +19,15 @@ func energy_max() -> float:
 func water_cap() -> float:
 	return G.g("waterCap", 20.0)
 
-func storage_cap() -> float:
-	return G.g("storageCap", 10.0)
+## The shelf every kind of thing has in the store, in load units (money-market/08; the baskets and sheds raise it).
+func storage_load() -> float:
+	return G.g("storageLoad", 40.0)
+
+## How many of one kind the store holds: its shelf divided by what one weighs, so it holds many feathers and few logs
+## (40 load: 10 big rocks, 40 carrots, 80 sticks). Keepers (tools and the like) have no limit.
+func storage_cap(k: String) -> float:
+	if G.items.get(k, {}).get("category", "") == "keeper": return 1.0e9
+	return storage_load() / maxf(0.01, G.inventory.weight_of(k))
 
 func rest_per_answer() -> float:
 	var v := G.g("energyPerRest", 5.0)

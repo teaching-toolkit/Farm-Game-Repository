@@ -29,7 +29,7 @@ func part_water(sid: String) -> void:
 	var fr := UI.hbox(8)
 	var wq: Dictionary = G.actions.check("fetch_water", G.actions.farmer)
 	var room: float = G.needs.water_cap() - float(G.S["water"])
-	var fb := UI.button("🪣  %s" % "💧".repeat(clampi(int(round(minf(room, G.fields.fetch_amount()))), 1, 8)), _fetch_water, room >= 0.5, UI.BLUE, 22)
+	var fb := UI.button("🪣  %s" % "💧".repeat(clampi(int(round(minf(room, G.fields.fetch_amount()))), 1, 8)), _fetch_water, {"ok": room >= 0.5, "unmet": wq["unmet"], "cost": wq["cost"], "base": wq["base"]}, UI.BLUE, 22)
 	fb.custom_minimum_size = Vector2(0, 54)
 	fb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	fr.add_child(fb)
@@ -84,7 +84,7 @@ func _part_lord() -> void:
 	if have >= G.lord.owed():
 		row.add_child(UI.button(tr("Pay %s") % G.money(G.lord.owed()), G.lord.pay.bind(-1.0), true, UI.GREEN, 20))
 	else:
-		row.add_child(UI.button(tr("Pay what I have (%s)") % G.money(have), G.lord.pay.bind(-1.0), have >= 1.0, UI.AMBER, 18))
+		row.add_child(UI.button(tr("Pay what I have (%s)") % G.money(have), G.lord.pay.bind(-1.0), have >= 1.0, UI.AMBER, 18, tr("🪙 You have no coins to pay with yet.")))
 	v.add_child(row)
 	M.content.add_child(card)
 
@@ -106,7 +106,7 @@ func _part_gate() -> void:
 		var brow := UI.hbox(6)
 		brow.add_child(UI.rich("%s %s  for  %s" % [G.iemoji(bk), G.iname(bk), M.widgets.cost_bb(bc)], 17))
 		var can: bool = G.pace.missing_cost(bc).is_empty()
-		brow.add_child(UI.soft_button("🤝", G.trade.barter_gate.bind(bk), can, 20))
+		brow.add_child(UI.soft_button("🤝", G.trade.barter_gate.bind(bk), G.pace.cost_check(bc), 20))
 		M.content.add_child(brow)
 	var ks: Array = G.S["inv"].keys().filter(func(k): return G.gate.wants(k) and G.inventory.count(k) >= 1.0)
 	if ks.is_empty():
@@ -117,9 +117,9 @@ func _part_gate() -> void:
 	for k in ks:
 		var q: int = G.gate.can_take(k)
 		var em := G.iemoji(k)
-		var v := M.widgets.tile(M.widgets.pic(k), em, "%s\n%d" % [G.iname(k), G.down(G.inventory.count(k))])
+		var v := M.widgets.tile(M.widgets.pic(k), em, "%s\n%d" % [G.iname(k), G.down(G.inventory.count(k))], UI.PAPER, k)
 		var row := HFlowContainer.new()
-		row.add_child(UI.soft_button("1 %s = %s" % [em, G.money(G.gate.price(k))], G.trade.sell_gate.bind(k, 1.0), q >= 1, 17))
+		row.add_child(UI.soft_button("1 %s = %s" % [em, G.money(G.gate.price(k))], G.trade.sell_gate.bind(k, 1.0), q >= 1, 17, tr("🛒 His cart has no room for that now.")))
 		if q > 1: row.add_child(UI.soft_button("%d %s = %s" % [q, em, G.money(G.gate.price(k, q))], G.trade.sell_gate.bind(k, 999.0), true, 17))
 		v.add_child(row)
 		grid.add_child(v.get_meta("panel"))

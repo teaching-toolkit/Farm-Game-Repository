@@ -40,19 +40,37 @@ selling or paying happens (the square, the gate, the store's tiles, a goal that 
 **Quality pays.** A grown or made thing has a grade (§8.5): Lumpy sells for 60 %, Proper for 100 %, Fancy for 150 %. Selling goes best grade first
 (so the market's "lots sold lately" drop falls on the cheaper ones).
 
+**Made things and their price** (`money-market/01`): what a merchant asks for a made thing lies between what it costs a master and what it costs
+a beginner to make it (inputs, energy, fuel, water and waiting), so a beginner does better buying and a master making: the guild merchant asks 740 for
+steel (making costs 687 to 795). Glass is the exception: he asks 235, the lowest the no-resale rule allows (a merchant never asks less than 1.3 × a
+thing's worth), and making it is cheaper. Selling a made thing pays at least a master's cost, except for things made for the farm (compost, ash),
+gathered things, what a merchant sells, and three Swiss prices (fresh cheese, cider, tomato sauce). `python3 godot-prototype/tools/price_rule.py`
+prints every recipe against the two costs; run it when a recipe or a price is added.
+
 ### 5.3b The bag, the trip and the village square
 
 **The bag.** Packing is how things leave the farm: in the store tap a thing and put one (or all that fit) into the 🎒 bag; packed things *stay in the store*, marked 🎒, and
 can be unpacked for free. The bag holds **load units** (the weights of §5.5): the farmer's arms 20, a woven bag 30, a wicker pack 44, a canvas rucksack 60, the hand
-cart 60, a frame rucksack 80, a wheelbarrow 100 (the best one owned counts; `rules/49-trip.json`). The 🎒 icon in the top bar (it appears with the first packed thing) has a thin bar under it that fills as you pack;
+cart 60, a frame rucksack 80, a wheelbarrow 100 (the best one owned counts; `rules/49-trip.json`). The 🎒 icon in the top bar (it appears with the first packed thing) has a thin bar under it that fills as you pack (on the village square it also counts what is bought for the way home);
 its window shows the load and what is packed.
+**Strength carries more** (`money-market/02`): the 💪 strength of the wellbeing dashboard (§5.1b; every farm starts at 0.5, frozen until chapter 2, and it rises with the skill ranks) adds
+0.6 of the capacity for every point above 0.5 — full strength carries 30 % more — in whole load units and never less than the plain capacity (a weak farmer is not made to carry less).
+The bag's window says so in a line (*💪 You are strong: your strength adds N room.*) once it is more than nothing. Numbers: `strength` in `rules/49-trip.json`.
 
-**The trip.** The market place on the map is a signpost to the village. Its window prepares the trip: the bag, the *orders to deliver* (each with *pack what it needs*) and
-*Go to the village* — it costs a little energy (3 ⚡ × the errand factor of rucksacks and boots × what a better road saves, at least 1) and **exactly one Time Quiz question** on the way
-(a wrong first try leads to another question; only a right first answer gets you there). Then the **village square** opens: **sell** what is in the bag (the market pays less for a
+**The trip.** The market place on the map is a signpost to the village: a wooden sign beside the road with a painted cream arrow that points along the road, towards the village beyond the screen's right edge (`assets/map/village_sign.png`, made from the blank `deco/signpost.png` by `tools/make_village_sign.gd`; no words). Tapping the sign opens the window; once the Market Stall (a building, +10 % on sales) is built, its picture stands there instead and the tap does the same. The window prepares the trip: the bag, the *orders to deliver* (each with *pack what it needs*) and
+*Go to the village* — it costs a little energy (3 ⚡ × the errand factor of boots and the big rucksacks × what a better road saves × the factor of a borrowed donkey, rounded up, at least 1) and **exactly one Time Quiz question** on the way
+(a wrong first try leads to another question; only a right first answer gets you there). **Boots** (straw sandals, wooden clogs, hobnail boots, waxed walking boots, the polish for the boots) and **Old Jan's donkey**
+(×0.6 on the trip only; the helper of the favour *Soup for a sick neighbour* in chapter 2, `jans_donkey`) make it cheaper; because the cost is rounded up to whole ⚡ a small saving shows only once the road is better
+(boots from road level 3) while the donkey takes a trip from 3 to 2 ⚡ at once. The canvas and the frame rucksack lower the errand factor too (−10 %, −15 %). Then the **village square** opens: **sell** what is in the bag (the market pays less for a
 pile of one thing), **hand over orders** from the bag (deliveries ride in the bag like everything else), **buy** seeds and wares within the room left for the way home (the
-same size as the way there, counted separately; seeds weigh almost nothing), and go **back home** — what was not sold simply stays in the store. A trip with an empty bag, only to buy, is allowed.
-Selling, buying, barter and deliveries work only on the square (or with the merchant at the gate). The square is a window for now *(planned: one painted village square, `pictures/04`)*.
+same size as the way there, counted separately; seeds weigh almost nothing), and go **back home**: *🏠 Back home* is a walk like the one there and costs **one Time Quiz question** too (no energy; a wrong first try leads to another question, a pop-up closed without an answer leaves the
+farmer on the square, only a right first answer takes him home); what was not sold simply stays in the store. A trip with an empty bag, only to buy, is allowed.
+**Does the room count each way separately?** Yes, and it is the same size both ways: the bag's capacity is the room for the way there (what is packed to sell or hand over) and the same capacity is the
+room for the way home (what is bought on the square); the two do not share one load (this is what the game does; the answer to the question in `money-market/02`).
+Selling, buying, barter and deliveries work only on the square (or with the merchant at the gate). **The square is its own screen** (`money-market/07`): while the farmer is in the village, a scene of the square stands where the farm was, and nothing of the farm is seen or can be tapped. Its stalls are pictures with a symbol, no words: 🪙 the stall that buys what is in the bag, 🌱 the seed merchant, 🧺 the other traders (once one trades with the farm), 📦 a cart for the orders (only while an order can be handed over), 📋 the notice board (the same favours and little jobs as the board on the farm, which stays there too) and 🏠 the sign for the walk home. A tap on a stall shows its things in the window below the scene (always the same height, no ✖); the stall that is open stands on a light spot. On arrival the stall the farmer most likely came for is open: selling when something in the bag sells, else the orders, else the seeds. The bag, the quest book and the album open over the scene and close back to it. The scene is a mockup made from pictures the game already has (`rules/49-trip.json`, "square": what stands where, in shares of the scene); *planned: one painted village square (`pictures/04`) and a face for every trader (`pictures/06`), which need only that data block and the picture files.*
+At the top of the square window the bag is shown as **two bars** that move with every sale, purchase and delivery: the 🎒 bar is what is still in the bag to sell or hand
+over (it empties as things are sold or delivered), the 🏠 bar is what has been bought for the way home (it fills with every purchase; the number beside it is the room left,
+which is what the shops take). Seeds weigh almost nothing, so buying only seeds hardly moves it.
 
 **The travelling merchant.** Where a cart can come (road level 2 and up) he turns up at the gate now and then — more often and with a bigger cart on a better road — stays a few
 questions and buys crops, ingredients, dishes, animal things, crafts, cloth and finds in bulk without a trip or energy, at the village price less his cut (15 %), until his cart is full

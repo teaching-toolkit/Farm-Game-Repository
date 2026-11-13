@@ -64,11 +64,11 @@ func _ready() -> void:
 	# version 1 -> 2: what is in the store and has a grade now says so (Proper); raw materials stay as they are
 	var v1: Dictionary = G.S.duplicate(true)
 	v1["version"] = 1
-	v1["inv"] = {"bread": [[0, 2.0]], "stone": [[0, 3.0]], "carrot": [[1, 1.0, 2]]}
+	v1["inv"] = {"bread": [[0, 2.0]], "stick": [[0, 3.0]], "carrot": [[1, 1.0, 2]]}
 	G.Saves.write("user://saves_test.json", v1)
 	_check(G.load_game("user://saves_test.json"), "a version 1 save loads")
 	_check(G.S["inv"]["bread"][0].size() == 3 and int(G.S["inv"]["bread"][0][2]) == 1, "…a batch of bread is now Proper")
-	_check(G.S["inv"]["stone"][0].size() == 2, "…a batch of stone has no grade")
+	_check(G.S["inv"]["stick"][0].size() == 2, "…a batch of sticks has no grade")
 	_check(int(G.S["inv"]["carrot"][0][2]) == 2, "…a grade that was already there stays")
 	var before2 := JSON.stringify(G.S["inv"], "", true)
 	G.upgrade_save_v1(G.S)
@@ -94,6 +94,16 @@ func _ready() -> void:
 	v4r["retry_q"] = {"review": true, "card": cid0, "qi": 0.0, "wait": 0.0}
 	G.Saves.write("user://saves_test.json", v4r)
 	_check(G.load_game("user://saves_test.json") and G.S["retry_q"] == {"card": cid0, "qi": 0, "wait": 0}, "…a review retry keeps its card and question: %s" % str(G.S["retry_q"]))
+	# nature/04: the stone of a version 5 save is a big rock (what was carried for building stays usable)
+	var v5: Dictionary = G.S.duplicate(true)
+	v5["version"] = 5
+	v5["inv"] = {"stone": [[0, 12.0]], "boulder": [[0, 1.0]], "stick": [[0, 3.0]]}
+	v5["bag"] = {"stone": 2.0}
+	v5["seen"] = {"stone": true}
+	G.Saves.write("user://saves_test.json", v5)
+	_check(G.load_game("user://saves_test.json") and not G.S["inv"].has("stone") and G.inventory.count("boulder") == 13.0 and G.inventory.count("stick") == 3.0, "a version 5 save: its stones are big rocks now (13 of them, sticks stay)")
+	_check(not G.S["bag"].has("stone") and float(G.S["bag"].get("boulder", 0.0)) == 2.0 and G.S["seen"].has("boulder"), "…also in the bag, and the big rock counts as seen")
+	_check(G.inventory.weight_class("stone") == "light" and G.inventory.weight_class("boulder") == "heavy", "a small stone is light, a big rock heavy")
 	# a save from a newer game is kept as it is
 	var future: Dictionary = G.S.duplicate(true)
 	future["version"] = G.SAVE_VERSION + 5

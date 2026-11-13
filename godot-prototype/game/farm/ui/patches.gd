@@ -57,7 +57,7 @@ func sheet_patch(a: String, i: int) -> void:
 		var cap: int = G.fields.plants_per_patch(a)
 		if a == "field" and G.fields.patch_snow(i):          # winter: the snow has to go before anything is sown (TODO N6)
 			M.content.add_child(UI.label(tr("❄️ Snow covers this patch. Clear it before you sow."), 18, UI.INK, true))
-			M.content.add_child(UI.action_button("field", _do_snow.bind(i), G.actions.check("clear_snow", G.actions.farmer, {"i": i})["ok"], UI.SOIL, "🧹", tr("Clear the snow")))
+			M.content.add_child(UI.action_button("field", _do_snow.bind(i), G.actions.check("clear_snow", G.actions.farmer, {"i": i}), UI.SOIL, "🧹", tr("Clear the snow")))
 			return
 		M.content.add_child(UI.label("🌱".repeat(cap) + tr("  fits here"), 17, UI.MUTED, true))
 		var cs: Array = G.fields.crops_for(a)
@@ -85,7 +85,7 @@ func sheet_patch(a: String, i: int) -> void:
 				t.add_child(UI.label("fewer: " + " ".join(why), 14, UI.MUTED))
 			if G.fields.seed_have(cid) < 1.0 and not n.has("seedItem"):
 				t.add_child(UI.soft_button(tr("🛒 Buy seeds"), M.widgets.go_spot.bind("market"), true, 15))
-			M.widgets.tile_button(t, UI.action_button("plant", _do_plant.bind(a, i, cid), plants >= 1))
+			M.widgets.tile_button(t, UI.action_button("plant", _do_plant.bind(a, i, cid), {"ok": plants >= 1, "unmet": q["unmet"], "cost": c, "base": base}))
 			grid.add_child(t.get_meta("panel"))
 		if grid.get_child_count() > 0: M.content.add_child(grid)
 	else:
@@ -96,24 +96,30 @@ func sheet_patch(a: String, i: int) -> void:
 			Color(1.1, 0.95, 0.55) if p["ready"] else Color.WHITE, p["ready"]))
 		var shown := clampi(G.fields.shown_plants(float(p["plants"])), 1, 9)
 		var row2 := UI.hbox(8)
-		row2.add_child(UI.label(("🌱" if young else str(n2.get("emoji", ""))).repeat(shown), 24))
+		var wilted := G.fields.crowd_plants(p)          # crowded out by weeds and stones: shown grey (crops-and-items/02)
+		var plant_e: String = "🌱" if young else str(n2.get("emoji", ""))
+		row2.add_child(UI.label(plant_e.repeat(shown - wilted), 24))
+		if wilted > 0:
+			var wl := UI.label(plant_e.repeat(wilted), 20)
+			wl.modulate = Color(0.42, 0.48, 0.48, 0.8)
+			row2.add_child(wl)
 		if not p["ready"]:
 			row2.add_child(UI.explain(UI.stock_bar(float(p["growth"]), ceilf(G.fields.grow_target(p)), Color("8cc63f"), 160), tr("🌱 Growing: a bit more with every Time Quiz question. Full = ready to harvest.")))
 			row2.add_child(UI.wait_button(M.widgets.grow_left(a, p), M.timequiz.show_time_quiz))
 		M.content.add_child(row2)
+		_crowd_note(p, n2)
 		if n2.has("regrow") and G.fields.crops_for(a).size() > 1:
 			# a tree stays for good, so one can be cut down to plant another kind
 			var cr2 := UI.hbox(8)
 			cr2.add_child(UI.label(tr("Want another tree here?"), 15, UI.MUTED, true))
 			var ct: Dictionary = G.actions.check("cut_tree", G.actions.farmer, {"a": a, "i": i})
 			cr2.add_child(M.widgets.costs(ct["cost"], ct["base"]))
-			cr2.add_child(UI.action_button("wood", M.stations.do_cut_tree.bind(a, i), ct["ok"], UI.SOIL, "🪓", tr("Cut down")))
+			cr2.add_child(UI.action_button("wood", M.stations.do_cut_tree.bind(a, i), ct, UI.SOIL, "🪓", tr("Cut down")))
 			M.content.add_child(cr2)
 		if float(p.get("soil", 1.0)) < 0.99: M.content.add_child(UI.label(tr("😴 Tired soil: the same crop as last time grows slower. Swap crops next time (beans and clover rest the soil)."), 15, UI.MUTED, true))
 		elif float(p.get("soil", 1.0)) > 1.01: M.content.add_child(UI.label(tr("💚 Rested soil after beans or clover: grows faster."), 15, UI.GREEN_DARK, true))
 		if p["ready"]:
-			var ys := ""
-			for k in n2.get("yields", {}): ys += G.iemoji(k).repeat(clampi(G.down(float(n2["yields"][k]) * float(p["plants"])), 1, 12))
+			var ys: String = _yield_icons(n2, p)[0]
 			M.content.add_child(UI.label(tr("Expect: %s") % G.quality.expect_text(G.quality.crop_expect(p)), 15, UI.MUTED, true))
 			var hr := UI.hbox(8)
 			var hb := UI.button(tr("🧺 Harvest   ") + ys, _do_harvest.bind(a, i), true, UI.GREEN, 20)
@@ -128,18 +134,46 @@ func sheet_patch(a: String, i: int) -> void:
 		var wg := M.widgets.grid()
 		if float(p["weeds"]) >= 0.5:
 			var wt := M.widgets.tile(Art.tex("deco", "weeds"), "🌿", tr("Weeds"))
-			wt.add_child(UI.explain(UI.stock_bar(float(p["weeds"]), maxf(6.0, ceilf(float(p["weeds"]))), UI.item_color("fiber"), 150), tr("🌿 Weeds here: they make the harvest smaller. Pull them!")))
+			wt.add_child(UI.explain(UI.stock_bar(float(p["weeds"]), maxf(6.0, ceilf(float(p["weeds"]))), UI.item_color("fiber"), 150), tr("🌿 Weeds steal from your plants: each one takes %d%% of the harvest. Pull them!") % int(round(G.fields.crowd_per_thing() * 100.0))))
 			var wq: Dictionary = G.actions.check("weed", G.actions.farmer, {"i": i})
 			wt.add_child(M.widgets.costs(wq["cost"], wq["base"]))
 			M.widgets.tile_button(wt, UI.action_button("weed", _do_weed.bind(i), true, UI.GREEN_DARK, "💪", tr("Pull")))
 			wg.add_child(wt.get_meta("panel"))
 		if float(p["stones"]) >= 0.5:
 			var st := M.widgets.tile(Art.tex("deco", "stone"), "🪨", tr("Stones"))
-			st.add_child(UI.explain(UI.stock_bar(float(p["stones"]), maxf(6.0, ceilf(float(p["stones"]))), UI.item_color("stone"), 150), tr("🪨 Stones in the soil: they make the harvest smaller. Pick them out.")))
+			st.add_child(UI.explain(UI.stock_bar(float(p["stones"]), maxf(6.0, ceilf(float(p["stones"]))), UI.item_color("stone"), 150), tr("🪨 Stones in the soil: each one takes %d%% of the harvest. Pick them out.") % int(round(G.fields.crowd_per_thing() * 100.0))))
 			M.widgets.tile_button(st, UI.action_button("field", _do_stones.bind(i), true, UI.SOIL, "🤏", tr("Pick")))
 			wg.add_child(st.get_meta("panel"))
 		if wg.get_child_count() > 0: M.content.add_child(wg)
 		M.placesheet.part_field_below()
+
+## The crops a patch gives when harvested now, as icons: [kept, lost to weeds and stones] (the plants × the crop's average; the main crop keeps one).
+func _yield_icons(n: Dictionary, p: Dictionary) -> Array:
+	var loss := G.fields.crowd_loss(p)
+	var kept := ""
+	var lost := ""
+	var first := true
+	for k in n.get("yields", {}):
+		var full := maxi(1, G.down(float(n["yields"][k]) * float(p["plants"])))
+		var gone := mini(int(round(float(full) * loss)), full - 1 if first else full)
+		first = false
+		kept += G.iemoji(k).repeat(clampi(full - gone, 0, 12))
+		lost += G.iemoji(k).repeat(clampi(gone, 0, 12))
+	return [kept, lost]
+
+## What the weeds and stones on a planted patch will take: the share in red and the crops lost in grey (the picture), then a line that says it.
+func _crowd_note(p: Dictionary, n: Dictionary) -> void:
+	var loss := G.fields.crowd_loss(p)
+	if loss <= 0.0: return
+	var row := UI.hbox(8)
+	row.add_child(UI.label("🌿🪨 −%d%%" % int(round(loss * 100.0)), 20, UI.RED))
+	var lost: String = _yield_icons(n, p)[1]
+	if lost != "":
+		var gl := UI.label(lost, 22)
+		gl.modulate = Color(0.42, 0.48, 0.48, 0.8)
+		row.add_child(gl)
+	M.content.add_child(row)
+	M.content.add_child(UI.label(tr("Each weed and each stone here takes %d%% of the harvest. Pull and pick them first!") % int(round(G.fields.crowd_per_thing() * 100.0)), 15, UI.MUTED, true))
 
 func _do_plant(a: String, i: int, cid: String) -> void:
 	var plan: Dictionary = G.fields.plant_plan(a, cid)
@@ -253,9 +287,9 @@ func part_whole_field() -> void:
 	var qa := HFlowContainer.new()
 	qa.add_theme_constant_override("h_separation", 8)
 	qa.add_theme_constant_override("v_separation", 8)
-	qa.add_child(UI.button("%s  %d" % [tr("🧺 Harvest all"), jobs["ready"]], harvest_field.bind(f), jobs["ready"] > 0, UI.GREEN, 17))
-	qa.add_child(UI.button("%s  %d" % [tr("🌿 Pick all weeds"), jobs["weeds"]], weed_field.bind(f), jobs["weeds"] > 0, UI.GREEN_DARK, 17))
-	qa.add_child(UI.button("%s  %d" % [tr("🪨 Pick all stones"), jobs["stones"]], stones_field.bind(f), jobs["stones"] > 0, UI.SOIL, 17))
+	qa.add_child(UI.button("%s  %d" % [tr("🧺 Harvest all"), jobs["ready"]], harvest_field.bind(f), jobs["ready"] > 0, UI.GREEN, 17, tr("🌱 Nothing is ready yet. Plants need a few Time Quiz questions to grow.")))
+	qa.add_child(UI.button("%s  %d" % [tr("🌿 Pick all weeds"), jobs["weeds"]], weed_field.bind(f), jobs["weeds"] > 0, UI.GREEN_DARK, 17, tr("🌿 No weeds to pull right now.")))
+	qa.add_child(UI.button("%s  %d" % [tr("🪨 Pick all stones"), jobs["stones"]], stones_field.bind(f), jobs["stones"] > 0, UI.SOIL, 17, tr("🪨 No stones to pick right now.")))
 	if jobs["snow"] > 0: qa.add_child(UI.button("%s  %d" % [tr("❄️ Clear all snow"), jobs["snow"]], snow_field.bind(f), true, UI.SOIL, 17))
 	M.content.add_child(qa)
 
@@ -287,4 +321,4 @@ func part_area(a: String) -> void:
 	fv.custom_minimum_size = Vector2(0, 110 * int(ceil(arr.size() / 3.0)))
 	M.content.add_child(fv)
 	fv.patch_pressed.connect(on_patch)
-	M.content.add_child(UI.button(tr("🧺 Harvest all"), harvest_all.bind(a), ready_count(a) > 0, UI.GREEN, 18))
+	M.content.add_child(UI.button(tr("🧺 Harvest all"), harvest_all.bind(a), ready_count(a) > 0, UI.GREEN, 18, tr("🌱 Nothing is ready yet. Plants need a few Time Quiz questions to grow.")))

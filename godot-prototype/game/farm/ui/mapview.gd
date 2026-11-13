@@ -14,10 +14,12 @@ var G: FarmGame   # the rules (G.<system>.<function>)
 func _init(main: FarmMain) -> void:
 	M = main
 	G = main.G
+	G.crowded_out.connect(on_crowded)
 
 var _scroll_tw: Tween
 
 var _fx_queue: Array = []      # things that arrived while a pop-up was open: they fly to the store when it closes
+var _ghost_queue: Array = []   # the same for crops the weeds and stones took: [from, pieces]
 
 # ------------------------------------------------------------------ layout
 
@@ -90,7 +92,7 @@ func first_key(folder: String, keys: Array) -> String:
 	return ""
 
 ## Picture names to try for a place: the newest thing built, then the earlier upgrades (so an upgrade without
-## its own picture keeps the last one), then the place itself.
+## its own picture keeps the last one), then the place itself (its own name, or the one `placeArt` in places.json gives it).
 func art_keys(sid: String) -> Array:
 	var head := headline(sid)
 	var keys := [head]
@@ -98,7 +100,7 @@ func art_keys(sid: String) -> Array:
 		var chain: Array = Spots.art_chain(sid)
 		var at := chain.find(head)
 		for i in range(at - 1, -1, -1): keys.append(chain[i])
-	keys.append(sid)
+	keys.append(Spots.place_art(sid))
 	return keys
 
 func update_slot(sid: String) -> void:
@@ -224,6 +226,17 @@ func on_gained(source: String, got: Dictionary, lost: Dictionary = {}) -> void:
 	if M.modal.visible: _fx_queue.append(job)
 	else: M.map.fly(job[0], job[1], job[2], job[3])
 
+## Weeds and stones took part of a harvest: the lost crops rise from the patch as grey ghosts (the map's ghosts()).
+func on_crowded(source: String, lost: Dictionary) -> void:
+	var pieces := []
+	for k in lost:
+		var q := float(lost[k])
+		if q < 0.01: continue
+		for _i in range(clampi(int(round(q)), 1, 8)): pieces.append([G.iemoji(k), Art.first("items", [k])])
+	if pieces.is_empty(): return
+	if M.modal.visible: _ghost_queue.append([_source_point(source), pieces])
+	else: M.map.ghosts(_source_point(source), pieces)
+
 func _source_point(source: String) -> Vector2:
 	var parts := source.split(":")
 	match parts[0]:
@@ -248,6 +261,8 @@ func play_fx() -> void:
 	M.map.play_pending()
 	for job in _fx_queue: M.map.fly(job[0], job[1], job[2], job[3])
 	_fx_queue.clear()
+	for job in _ghost_queue: M.map.ghosts(job[0], job[1])
+	_ghost_queue.clear()
 
 ## Small sign on a place: something to build (🔨), animals ready (🧺), a card quiz (❓), food going stale (🍂) …
 func badge(sid: String) -> String:

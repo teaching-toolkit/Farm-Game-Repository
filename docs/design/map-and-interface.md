@@ -13,7 +13,7 @@ front. Only a picture's visible pixels react to taps, so a tall roof never steal
 
 - **The forest** comes in diagonally from the top left (gathering, later the woodlot): its trees stand right on the meadow,
   with no darker forest floor; **the village road** from the top right
-  (market stall, book cart, notice board, later the Import Broker).
+  (the sign to the village with its arrow, book cart, notice board, later the Import Broker).
 - **The three fields** stand in a column in the middle, edge to edge; animals and the pond on the left; workshop, bees, barn,
   orchard and greenhouse on the right; compost, scarecrow and broker in the pockets between.
 - **The house plot** (2×2) holds the tent, the book box and the campfire until the cottage stands; then the bed, the books and
@@ -60,13 +60,14 @@ are gated by their own data (a chapter, a card, a building), as the table says.
 | Workshop corners (benches, kiln & forge, loom, tools) *(built)* | not drawn in the workshop window | something of the corner is built or can be built now (the workbench; the kiln or forge, from chapter 2; the hand loom, spinning wheel or dye vat, from chapter 3; the tool rack, whetstone or shears) |
 
 **The first screen** (a new game): the water and energy bars (with the 😴 Rest icon), the season bar with the question count, the next goal,
-📖 the quest book, ⚙️ settings, the Time Quiz clock; the farm with its ruins, the tent, the one cleared patch, the workbench, the market stall and
+📖 the quest book, ⚙️ settings, the Time Quiz clock; the farm with its ruins, the tent, the one cleared patch, the workbench, the sign to the village and
 the board, each with a 🔨 when there is something to do. The purse, the bag, the scroll, the album and the face wait for their rule above.
 
 ### 13.3 Screens
 
 - **Top bar** (it fits every iPad width from 744 px): the purse (coin pictures stacked: 💎 from 1000 gold, gold, bronze); 💧 water and ⚡ energy
-  as rows of cubes (tap water to fetch, energy to Rest); right under them the season row, as wide as the bars (one stripe per question, in the
+  as rows of cubes (tap one for its note: the numbers and what fills and drains it, with a button for the old job: 🪣 Get water, 😴 Rest; the purse and the
+  thin bar under the 🎒 have notes too, see *The short note on tap* below); right under them the season row, as wide as the bars (one stripe per question, in the
   season's colour, then the questions left and the next season); **the next story goal** across the whole middle, only its symbol and name, the
   text as big as fits (tap: its place glows; what it needs is on its place's sheet); chapter and question number are in ⚙️ Settings, not in the bar
   (interface-feel/06); 🎒 pantry, 📖 quest book, 📜 the story scroll, 🖼️ album, ⚙️ settings; from chapter 2 the farmer's face at the end of the energy bar (it opens the wellbeing dashboard); and the **Time Quiz clock** hanging from the bar's right end (its hour hand goes once
@@ -92,7 +93,7 @@ the board, each with a 🔨 when there is something to do. The purse, the bag, t
 ### 13.4 Pictures instead of words
 
 - No text on the map (place names can be switched on, `showPlaceNames`). Every plant, weed, stone and stump is drawn one by
-  one and gets fewer as it is cleared; patch upgrades appear in the gaps between the patches, the fence round the field.
+  one and gets fewer as it is cleared; the plants that weeds and stones take from the harvest stand wilted and grey (farming §6.3); patch upgrades appear in the gaps between the patches, the fence round the field.
 - **Amounts are cubes** in the item's colour, **one cube for one** (no "×5" label, interface-feel/05): up to 10 in a row (20 when there is
   room), then rows of 10, and beyond 100 the bar grows in both directions (200 = 20 × 10) with smaller cubes, so it fits any width from
   744 px; the top bar's water and energy keep their height. Coin costs count by the coin: a cube per bronze under a gold, per gold from
@@ -102,7 +103,20 @@ the board, each with a 🔨 when there is something to do. The purse, the bag, t
 - **Things fly** to the store, one picture per piece; what does not fit bounces off (🚫).
 - **Buttons** carry an emoji and one word (💪 gather, 🌱 plant, 🧺 harvest, 🪓 wood, 🤏 fine work, 🔨 build, 🍲 cook, 🔪 prepare,
   ⚙️ mill, 🫙 press, 🧶 textiles).
-- **Tap a bar** (season, growing, weeds, stones, pages, steps, polish, pests, seeds, store) for a one-line explanation.
+- **The short note on tap** (interface-feel/01, 02; `game/farm/ui/info.gd`). One small card with a picture or an emoji and a few words, for three kinds
+  of tap, all with a tap and none with hover. It sits just below (or above) what was tapped, above everything, also above a pop-up; it goes away
+  by itself after 8 seconds (`notes.infoSecs` in `rules/65-feel.json`), when it is tapped, or when anything else is tapped; one note at a time.
+  - **A bar** (energy, water, the bag's thin bar, the purse, and every bar with a line of its own: season, growing, weeds, stones, pages, steps,
+    polish, pests, seeds, store): the numbers (cubes and "You have 7 of 20"), what fills it and what drains it. Energy and water also carry the
+    button of their old job (😴 Rest, 🪣 Get water). The bag says how much room is used, at home (what is packed) and on the village square (what is
+    still to sell plus what was bought); the purse says the coins in gold and bronze, 100 bronze = 1 gold, what brings and what uses coins, and the Lord's share when it is owed.
+  - **An item** (its tile in the bag, at the travelling merchant, in the village shop or in a recipe; the little picture of a cost; in the store the tile opens the item's pop-up): its name, a few words (the item's `desc`), how many you have (a cost: "It needs 3. You have 1."),
+    how many of each grade, and from the first packed thing on how much room it takes in the bag (½, 1, 2, 4; the lightest "hardly any"). The store's pop-up shows the same words.
+  - **A greyed-out button** (every one the game makes, `UI.button` and its kin): why it is grey and what it will need. The reason is the answer of the rule
+    that greyed it: a chore's `G.actions.check` ("⚡ Too tired", "🌱 Winter wheat is sown in autumn / winter"), `G.progression.can_unlock` ("Missing: 🪵 3 more", "Needs first: …"),
+    `G.pace.cost_check` for a plain price, so the button and its note cannot disagree; a button greyed by a plain condition carries one sentence. A shortage is shown
+    with the cost's cubes (hollow = missing). A greyed-out button is never silent: the smoke test walks every place's sheet, the quest book and the bag and fails on a grey without a reason.
+  - **Read aloud** as in the settings: "off" says nothing, "button" adds a 🔊, "auto" also reads the note as it opens; emojis are not read.
 - **Celebrations** for new buildings, tools, gear and helpers (§11.5); after the quiz the farm plays what changed (§4.1).
 
 ### 13.5 The farmer

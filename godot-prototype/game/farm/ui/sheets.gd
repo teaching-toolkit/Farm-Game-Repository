@@ -89,15 +89,22 @@ func close_sheet() -> void:
 	if G.trip.at_square():
 		open_sheet_for("market")
 		return
+	M.square.sync()               # back home: the farm is seen again
 	M.playback.farm_seen()        # a walk's news waits for the farm to be seen again
+	M.interrupts.request()        # what waited for the sheet to close (a frame scene, a story box) comes now, not at the next change
 
 ## The sheet grows with its content, up to 60% of the screen.
 func fit_sheet() -> void:
 	if not M.sheet.visible: return
 	var want := M.content.get_combined_minimum_size().y + 96.0
 	M.sheet_h = clampf(want, 240.0, M.size.y * 0.6)
+	if _on_square(): M.sheet_h = M.square.sheet_height()      # the square's window always has the same height, so the scene above it stands still
 	_place_sheet()
 	M.map.set_extra_bottom(M.sheet_h)
+
+## Is the sheet the village square's window (the stall that was tapped, below the scene)?
+func _on_square() -> bool:
+	return M.sheet_kind == "spot:market" and G.trip.at_square()
 
 func _place_sheet() -> void:
 	M.sheet.size = Vector2(M.size.x, M.sheet_h)
@@ -106,7 +113,12 @@ func _place_sheet() -> void:
 func rebuild_sheet() -> void:
 	M.widgets.clear(M.content)
 	var k := M.sheet_kind
-	if M.sheet_close: M.sheet_close.visible = not (k == "spot:market" and G.trip.at_square())
+	if M.sheet_close: M.sheet_close.visible = not _on_square()
+	M.square.sync()            # the scene of the village square comes and goes with the farmer
+	if _on_square():           # in the village: the window of the stall that was tapped (the scene above it is ui/square.gd)
+		M.sheet_title.text = tr("🏘️ The village")
+		M.square.build_window()
+		return
 	if k.begins_with("spot:"):
 		var sid := k.substr(5)
 		if M.mapview.mystery(sid):

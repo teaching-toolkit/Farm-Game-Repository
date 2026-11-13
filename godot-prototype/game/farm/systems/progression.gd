@@ -115,21 +115,23 @@ func auto_unlocks(_info := {}) -> void:
 			finish_unlock(id, true)
 			again = true
 
-## Build, buy, deliver, learn — anything with a cost.
+## Build, buy, deliver, learn — anything with a cost. {"ok", "why" (one line, English: for the log and the bot), "unmet": [{"key", "text"}] (the same
+## reasons for the child: a greyed-out button shows them when tapped, interface-feel/02), "cost", "base"}.
 func can_unlock(id: String) -> Dictionary:
-	if G.done(id): return {"ok": false, "why": tr("already done")}
+	if G.done(id): return {"ok": false, "why": tr("already done"), "unmet": [{"key": "done", "text": tr("✔ Already done.")}], "cost": {}, "base": {}}
 	var mr := missing_reqs(id)
-	if not mr.is_empty(): return {"ok": false, "why": "needs " + ", ".join(mr)}
+	if not mr.is_empty(): return {"ok": false, "why": "needs " + ", ".join(mr), "unmet": [{"key": "requires", "text": tr("Needs first: ") + ", ".join(mr)}], "cost": {}, "base": {}}
 	if G.nodes[id]["type"] == "delivery":      # handed over in the village, from the bag
-		if not G.trip.at_square(): return {"ok": false, "why": tr("Deliveries are handed over in the village.")}
-		if not G.trip.bag_covers(G.pace.node_cost(id)): return {"ok": false, "why": tr("It is not all in your bag.")}
-	if step_wait_left(id) > 0: return {"ok": false, "why": "wait", "wait": step_wait_left(id)}
-	var mc := G.pace.missing_cost(G.pace.node_cost(id))
+		if not G.trip.at_square(): return {"ok": false, "why": tr("Deliveries are handed over in the village."), "unmet": [{"key": "village", "text": tr("Deliveries are handed over in the village.")}], "cost": {}, "base": {}}
+		if not G.trip.bag_covers(G.pace.node_cost(id)): return {"ok": false, "why": tr("It is not all in your bag."), "unmet": [{"key": "bag", "text": tr("It is not all in your bag.")}], "cost": {}, "base": {}}
+	if step_wait_left(id) > 0: return {"ok": false, "why": "wait", "wait": step_wait_left(id), "unmet": [{"key": "wait", "text": tr("⏳ The next step needs a few Time Quiz questions.")}], "cost": {}, "base": {}}
+	var cost := G.pace.node_cost(id)
+	var mc := G.pace.missing_cost(cost)
 	if not mc.is_empty():
-		var parts := []
-		for x in mc: parts.append(tr("🏮 the Lord's share first") if x["key"] == "lord" else "%s %d more" % [G.iemoji(x["key"]), G.up(float(x["need"]) - float(x["have"]))])
-		return {"ok": false, "why": "missing " + ", ".join(parts)}
-	return {"ok": true, "why": ""}
+		var parts := G.pace.missing_words(mc)
+		return {"ok": false, "why": "missing " + ", ".join(parts), "unmet": [{"key": "lord" if mc.any(func(x): return x["key"] == "lord") else "missing", "text": tr("Missing: ") + ", ".join(parts)}],
+			"cost": cost, "base": G.pace.node_cost_base(id)}
+	return {"ok": true, "why": "", "unmet": [], "cost": cost, "base": cost}
 
 func patch_progress(id: String) -> int:
 	return int(G.S.get("patch_progress", {}).get(id, 0))

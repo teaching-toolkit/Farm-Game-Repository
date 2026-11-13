@@ -14,7 +14,8 @@ var rng = preload("res://kits/core/rng.gd").new()   # picks questions and the or
 
 ## The purposes a question can be answered for. Each names what happens after a right first answer, besides time moving
 ## (follow_up below). A walk's cost is paid before its question (the chores village_trip, visit_friend); the forest chores are the
-## follow-ups themselves. home_from_village is reserved for the walk home (money-market/04) and has no follow-up yet.
+## follow-ups themselves. home_from_village is the walk home from the village square (money-market/04): it costs a question and no energy,
+## and the farmer stays on the square until one is answered right at the first try.
 const PURPOSES := ["farm", "to_village", "home_from_village", "visit", "into_forest", "out_of_forest"]
 
 func _init(game: FarmGame) -> void:
@@ -139,6 +140,7 @@ func answered(q: Dictionary, first_try: bool, purpose := "farm") -> Dictionary:
 func follow_up(purpose: String) -> Variant:
 	match purpose:
 		"to_village": G.trip.arrive()
+		"home_from_village": G.trip.leave()
 		"visit": return G.well.visited()
 		"into_forest": return G.actions.perform("forest_enter", G.actions.farmer)
 		"out_of_forest": return G.actions.perform("forest_leave", G.actions.farmer)

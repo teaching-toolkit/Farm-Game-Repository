@@ -494,21 +494,22 @@ func _forest_requirements() -> void:
 	_check(look["done"] and G.inventory.count("quartz") == 1.0 and look["gained"].get("quartz", 0.0) == 1.0, "a look costs no energy and what it gives goes into the store")
 	_check(A.perform("forest_leave", A.farmer)["done"] and not G.forest.inside(), "going out works")
 
-## The village trip: the written base energy times the errand multiplier times what the road saves, rounded up, at least the minimum; no skill, tool-of-the-trade or buff changes it.
+## The village trip: the written base energy times the errand multiplier (boots …) times what the road saves times the trip multiplier (a borrowed donkey), rounded up, at least the minimum; no skill, tool-of-the-trade or buff changes it.
 func _price_match_trip(label: String) -> void:
 	var A = G.actions
 	var who = A.farmer
 	var d: Dictionary = G.meta["trip"]["energy"]
-	for road in [false, true]:
-		G.S["unlocked"]["road_5"] = road
+	for road in ["plain road", "paved road", "borrowed donkey"]:
+		G.S["unlocked"]["road_5"] = road == "paved road"
+		G.S["unlocked"]["jans_donkey"] = road == "borrowed donkey"
 		G.invalidate_caps()
 		G.S["trip"] = {"phase": "", "bought": 0.0}
 		var lvl := int(round(G.g("roadLevel", 1.0)))
 		var f := maxf(float(d["roadFloor"]), 1.0 - float(d["roadSaving"]) * float(lvl - 1))
-		var want := maxi(int(d["min"]), int(ceilf(float(d["base"]) * G.m("energy:errand") * f - 0.0001)))
+		var want := maxi(int(d["min"]), int(ceilf(float(d["base"]) * G.m("energy:errand") * G.m("energy:trip") * f - 0.0001)))
 		G.S["energy"] = G.needs.energy_max()
 		var q: Dictionary = A.check("village_trip", who)
-		_check(q["ok"] and is_equal_approx(float(q["cost"]["energy"]), float(want)) and q["cost"].size() == 1, "the trip costs the errand energy: %d (%s, road %s)" % [want, label, road])
+		_check(q["ok"] and is_equal_approx(float(q["cost"]["energy"]), float(want)) and q["cost"].size() == 1, "the trip costs the errand energy: %d (%s, %s)" % [want, label, road])
 		costs_seen[snappedf(float(want), 0.001)] = true
 		for hair in [false, true]:
 			G.S["trip"] = {"phase": "", "bought": 0.0}
@@ -516,6 +517,8 @@ func _price_match_trip(label: String) -> void:
 			var rep: Dictionary = A.perform("village_trip", who)
 			if hair: _check(not rep["done"] and rep["failed"] == "energy" and G.trip.phase() == "" and is_equal_approx(float(G.S["energy"]), float(want) - 0.01), "a hair too little energy starts no walk (%s)" % label)
 			else: _check(rep["done"] and G.S["energy"] < 0.001 and G.trip.walking() and is_equal_approx(float(rep["spent"]["energy"]), float(want)), "the trip takes exactly the energy check says and the walk begins (%s)" % label)
+	G.S["unlocked"].erase("jans_donkey")
+	G.invalidate_caps()
 
 func _trip_requirements() -> void:
 	var A = G.actions

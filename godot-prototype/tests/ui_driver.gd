@@ -17,6 +17,22 @@ func sheet_visible() -> bool: return M.sheet.visible
 func sheet_kind() -> String: return M.sheet_kind
 func sheet_title() -> String: return M.sheet_title.text
 func sheet_close_shown() -> bool: return M.sheet_close.visible      # the sheet's ✖
+func bag_bar_value() -> float: return M.bag_bar.value      # the thin bar under the 🎒 icon in the top bar
+## The two bars at the top of the village square window: "sell" (what is still in the bag to sell or hand over) and "home" (what is bought for the way home). -1 when not shown.
+func square_bar(which: String) -> float:
+	var b = M.content.find_child("sq_%s_bar" % which, true, false)
+	return float(b.value) if b is ProgressBar else -1.0
+func square_shown() -> bool: return M.square.active()      # the village square stands where the farm was (money-market/07)
+func square_covers_farm() -> bool: return M.square.active() and M.square.root().get_global_rect().encloses(M.scroll.get_global_rect()) and M.square.root().mouse_filter == Control.MOUSE_FILTER_STOP
+func square_stalls() -> Array: return M.square.stalls()      # the stalls that stand there now
+func square_stall() -> String: return M.square.stall         # the one whose things the window shows
+func square_orders() -> bool: return not M.market.orders().is_empty()      # an order can be handed over now (the cart for the orders stands on the square)
+func sheet_height() -> float: return M.sheet_h
+func square_tap(id: String) -> bool:      # a tap on a stall's picture (false: it does not stand there)
+	var b = M.square.root().find_child("stall_" + id, true, false) if M.square.root() != null else null
+	if not (b is Button): return false
+	b.emit_signal("pressed")
+	return true
 func goal_id() -> String: return M.goal_id
 func celebrations() -> Array: return M.interrupts.q.in_line("celebration")
 func clear_celebrations() -> void: M.interrupts.q.clear("celebration")
@@ -55,6 +71,8 @@ func close_sheet() -> void: M.sheets.close_sheet()
 func show_card(cid: String) -> void: M.cards.show_card(cid)
 func tap_patch(area: String, i: int) -> void: M.patches.on_patch(area, i)
 func show_time_quiz() -> void: M.timequiz.show_time_quiz()
+func answer_right() -> void: M.timequiz.answer_right()      # the question on screen: the right answer…
+func answer_wrong() -> void: M.timequiz.answer_wrong()      # … or a wrong pick first
 func show_question(box: VBoxContainer, q: Dictionary, on_done: Callable) -> void: M.timequiz.question(box, q, on_done)
 func playback_speed(f: float) -> void: M.playback.speed = f     # 0 = the farm catches up after the Time Quiz without waiting
 func tap_playback() -> void: M.playback.finish()
@@ -82,6 +100,31 @@ func refresh() -> void: M.refresh()
 func item_panel(k: String) -> void: M.pantry.item_panel(k)
 func story_enabled(on: bool) -> void: M.story.enabled = on
 func story_pump() -> bool: return M.story.pump()      # what the start of a new game asks before its welcome
+func frame_close() -> void: M.frame_scene.close()      # leaves the frame scene (a no-op when none is open)
+func frame_open() -> bool: return M.frame_scene.active()      # story/11: the grandchildren's full-screen frame scene
+func frame_id() -> String: return M.frame_scene.shown_id()
+func frame_page() -> int: return M.frame_scene.page_no()
+func frame_skip_shown() -> bool: return M.frame_scene.skip_shown()
+func frame_covers_screen() -> bool:      # a black, opaque scene over the whole screen, the top bar included
+	var r: Control = M.frame_scene.root()
+	if r == null: return false
+	var black := r.get_child(0) as ColorRect
+	return black != null and black.color == Color.BLACK and r.get_global_rect().encloses(M.get_global_rect()) and r.get_global_rect().encloses(M.hud_panel.get_global_rect())
+func frame_tap() -> void:      # a tap on the scene, as the screen gets it
+	var e := InputEventMouseButton.new()
+	e.button_index = MOUSE_BUTTON_LEFT
+	e.pressed = true
+	M.frame_scene.root().gui_input.emit(e)
+func frame_press(text: String) -> bool:      # press a button of the scene (Skip, Read aloud)
+	var stack: Array = [M.frame_scene.root()]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		if n is Button and n.text.contains(text) and not n.disabled:
+			n.emit_signal("pressed")
+			return true
+		stack.append_array(n.get_children())
+	return false
+func interrupts_request() -> void: M.interrupts.request()      # something waits for the screen: pump at the end of the frame
 func bubbles() -> int:      # sticky speech bubbles on the screen
 	var n := 0
 	for c in M.toasts.get_children():
@@ -103,3 +146,32 @@ func clear_toasts() -> void:
 func grownup_open() -> bool: return M.menu.grownup_open()
 func password_ok(t: String) -> bool: return M.menu.password_ok(t)
 func set_grownup_open(on: bool) -> void: M.menu.grownup_until = 1e12 if on else 0.0
+
+# --- interface-feel/01 and 02: the short note on tap (game/farm/ui/info.gd)
+func info_note() -> Dictionary: return M.info.now()          # what the note on the screen says ({} when none): kind, icon, title, lines, spoken, action, extra
+func info_card() -> Control: return M.info.card
+func info_close() -> void: M.info.close()
+func info_spoken() -> String: return M.info.spoken           # the last text given to the voice
+func info_forget_spoken() -> void: M.info.spoken = ""
+func info_item(k: String, need := 0.0) -> void: M.info.item(k, null, need)
+func read_aloud(mode: String) -> void: M.G.prefs.set_value("readAloud", mode)      # "off", "button" or "auto" (this device only; tests keep nothing)
+func bar_control(which: String) -> Control:      # the control a finger taps for a bar of the top bar
+	match which:
+		"energy": return M.energy_bar.get_parent().get_parent()
+		"water": return M.water_bar.get_parent().get_parent()
+		"bag": return M.bag_bar.get_parent()
+		"coins": return M.lbl_coins
+	return null
+func reveal(c: Control) -> void:      # scrolls the sheet so that the control can be tapped
+	if M.sheet_scroll.is_ancestor_of(c): M.sheet_scroll.ensure_control_visible(c)
+func tap_at(p: Vector2) -> void:      # a finger tap at a point of the screen, through the real input path (press, then release)
+	for down in [true, false]:
+		var ev := InputEventMouseButton.new()
+		ev.button_index = MOUSE_BUTTON_LEFT
+		ev.pressed = down
+		ev.button_mask = MOUSE_BUTTON_MASK_LEFT if down else 0
+		ev.position = p
+		ev.global_position = p
+		M.get_viewport().push_input(ev, true)
+func tap(c: Control) -> void: tap_at(c.get_global_rect().get_center())
+func sheet_settled() -> bool: return not M.sheet.visible or M.sheets._slide >= 0.999      # the sheet is all the way up (a tap on it would miss while it slides)

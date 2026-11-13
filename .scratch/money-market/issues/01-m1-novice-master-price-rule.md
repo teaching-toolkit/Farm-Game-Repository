@@ -4,15 +4,70 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
 **Milestone:** prototype
 
-- [ ] The price rule is in place for made things and shown to the child through the usual price displays
-- [ ] The explorer's value-check notes for `rope_straw`, `compost`, `steel` and `jam` are looked at
-- [ ] Pace re-checked with the bot and the explorer (the playthrough stays about 20 hours); golden runs identical or re-recorded on purpose
-- [ ] Dynamic difficulty (`meta.flex`) re-checked
-- [ ] The Swiss prices stay the parent's check in W9
+- [x] The price rule is in place for made things and shown to the child through the usual price displays (option A, see "Built" below: the prices are data, every display reads them)
+- [x] The explorer's value-check notes for `rope_straw`, `compost`, `steel` and `jam` are looked at (the report below: jam is fine; rope, compost and steel pay less than they cost)
+- [x] Pace re-checked with the bot (the explorer's own browser check was not run); short golden identical, full golden re-recorded on purpose
+- [x] Dynamic difficulty (`meta.flex`) re-checked (bot `--flex`, seeds 1 and 2: chapter 5 after 899 and 898 Time Quiz answers)
+- [x] The Swiss prices stay the parent's check in W9 (none was changed)
+
+
+## 💡 Recommendation (13 Nov 2026): one question before anything is repriced
+
+Prepared, not built. New report `python3 godot-prototype/tools/price_rule.py` (changes nothing; `--all`, `--csv`): for each of the 131
+recipes it compares what selling the result pays with what a beginner and a master pay to make it (inputs at their own price; energy,
+fuel and a question of waiting 7.5 bronze each, water 3, from `pricing`; the master's savings from `rules/48-skills.json`).
+
+**What it shows today:** a master makes a thing only about 11 % cheaper than a beginner, so "between the two" is a narrow band (0.89 to 1.00
+of the beginner's cost). Of 119 priced recipes, 20 are in it, **80 pay more than even a beginner spends** (the middle is 1.17 ×: bread 400
+against 340, pizza 1500 against 1205, cheese board 2500 against 1580), and **19 never pay, not even for a master**: rope 30 (costs 52),
+rope from straw 30 (40), every compost 30–45 (48–69), ash, deadwood, clay, fine flour 135 (178), flatbread 150 (208), fresh cheese 300
+(401), tomato sauce 350 (432), cider 300 (383), the healer's chest 900 (1145), glass 180 (198), steel 435 (687). Jam 400 is in the band.
+
+**Why I did not build the rule as written:** taken word for word it lowers about 80 selling prices by 15–25 % and makes cooking and crafting
+for sale a loss until the child is a Master (200 batches in a family). That turns the game's main loop (make it, sell it) into a setback
+for most of the game, slows the money that the last two pace checks were about, and overrides the Swiss prices of W9. It is hard to undo
+(new golden runs, new pace), so it waits for you.
+
+**The question: which price does the rule speak about?**
+
+- **💡 A. The price a merchant asks (buying), not what selling pays.** "Buying beats making for a beginner, making pays for a master" then
+  holds for the made things a merchant sells: today only steel (asked 675; making costs a master 687, a beginner 795: buying beats making for
+  everyone, so ask about 740) and glass (asked 300; making costs about 200: nobody would buy it, which is fine as a safety valve or goes to
+  about 235, the lowest the 1.3 × rule allows). Selling prices stay, except the 19 that never pay: those go up to the master's cost (rope
+  30 → 40, steel 435 → 690 …) unless they are meant as by-products (compost, ash: used on the farm, not sold; I would leave those).
+  Small, pace about unchanged, about 12 numbers. "Yes" means this.
+- **B. Word for word, on selling prices.** About 100 prices move into the band. Realistic ("a beginner should buy bread"), but see above.
+- **C. Leave the prices, keep the report.** The report stays as a check when new recipes are added; the ticket closes.
+
+After your answer an agent can build A in one sitting (data only, the bot and the explorer re-run, `meta.flex` re-checked).
+
+## Built (13 Nov 2026): option A, the parent said yes
+
+The rule speaks about what a merchant asks. Six numbers changed, all data:
+
+| What | Was | Now | Why |
+|---|---|---|---|
+| Steel, the guild merchant's price | 675 | 740 | between a master's cost (687) and a beginner's (795): a beginner buys, a master makes |
+| Glass, the guild merchant's price | 300 | 235 | the lowest the no-resale rule allows (1.3 × its worth of 180); making (198–225) still beats buying, so it stays a safety valve |
+| Rope, selling | 30 | 45 | rope from straw now pays for a master (40–45); rope from fibre (52–60) still does not |
+| Fine flour, selling | 135 | 178 | a master's cost exactly; 180 would push the golden honey cake out of its band |
+| Flatbread, selling (each) | 75 | 105 | two for 210, a master's cost is 208 |
+| Healer's chest, selling | 900 | 1150 | a master's cost is 1145 |
+
+**Left alone on purpose, still paying less than they cost** (15 recipes in the report): the composts, worm castings and ash (made for the
+farm, not for sale); deadwood and clay (gathered, priced against the raw-materials merchant); steel and glass as things to sell (a
+merchant sells them, so their worth must stay below 1/1.3 of his price, or buying to resell would pay); rope from fibre; and **fresh
+cheese (300, costs 401), cider (300, costs 383) and tomato sauce (350, costs 432): these three are Swiss prices (W9), so I did not
+touch them.** If they should pay, the way is cheaper recipes (fewer inputs), which belongs to the recipe audit `crops-and-items/03`.
+
+**Checks.** Report: 24 in the band (was 20), 15 never pay (was 19), 80 pay for everyone. Data checks 0 errors. Short golden identical
+(185 / 202 steps): chapters 1 to 3 do not feel it. Full golden differs from chapter 4 on (the guild merchant) and is recorded anew: 564 / 568
+steps (were 567 / 540). With dynamic difficulty: chapter 5 after 899 / 898 answers. Every system test green; the smoke test's old
+failure is `interface-feel/13`.
 
 ---
 

@@ -103,8 +103,16 @@ func _ready() -> void:
 	G.invalidate_caps()
 	_walk("into_forest", func(): return G.forest.inside(), "the farmer walks into the forest")
 	_walk("out_of_forest", func(): return not G.forest.inside(), "the farmer walks out of the forest")
-	st = G.S["step"]
-	_check(T.answered(T.next(), true, "home_from_village")["moved"] and int(G.S["step"]) == st + 1, "home_from_village is a purpose already (it only moves time for now)")
+	# the walk home from the village (money-market/04): the farmer stays on the square until a question is answered right at the first try
+	G.S["trip"] = {"phase": "square", "bought": 0.0}
+	G.S["bag"] = {"egg": 2.0}
+	var e_home: float = G.S["energy"]
+	_walk("home_from_village", func(): return G.trip.phase() == "" and G.S["bag"].is_empty(), "the farmer is home again and the bag is empty")
+	_check(is_equal_approx(G.S["energy"], e_home), "the walk home costs a question and no energy")
+	G.S["trip"] = {"phase": "square", "bought": 3.0}
+	G.timeq.answered(G.timeq.next(), false, "home_from_village")
+	G.timeq.answered(G.timeq.next(), false, "home_from_village")
+	_check(G.trip.at_square() and is_equal_approx(float(G.S["trip"]["bought"]), 3.0), "…after wrong answers the farmer is still on the square with what was bought")
 	print("TIMEQ %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])
 	get_tree().quit(1 if fails > 0 else 0)
 

@@ -76,6 +76,8 @@
     "lumber": ["woodlot", "lumbermill", "lumbermill_2"],
     "market": ["market_stall"]
   },
+  "placeArtNote": "A place's own picture is assets/map/<place>.png, used when nothing built there has a picture. Here a place can use another name instead. The market place is the signpost to the village: map/village_sign.png (made by tools/make_village_sign.gd from deco/signpost.png). The old map/market.png is no longer used. Once the Market Stall is built (artChains), its picture still takes over.",
+  "placeArt": {"market": "village_sign"},
   "plotChainsNote": "Places that lie flat on the ground (a fenced pen, a garden, the pond) have their picture in assets/plots/<id>.png; this lists the nodes that open each. Read by tools/make_layout_editor.py only (the pet corner's are the chapters' pets).",
   "plotChains": {
     "coop": ["coop_1", "coop_2"],

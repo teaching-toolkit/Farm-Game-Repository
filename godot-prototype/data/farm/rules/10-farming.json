@@ -19,7 +19,7 @@
       "brambles",
       "brambles and bindweed"
     ],
-    "note": "Weeds grow on every field patch every question, planted or not: ratePerQuestion × weed tier of the chapter × (1 + fertilizerFactor × fertilizer points the patch density needs) × weed multipliers (edging, borders, geese, goat, mulch…). One weeding tap clears weedsPerPull weeds; each weed costs 1 energy (less with hoes) and gives 1 fiber. Orchard spots grow half as many. The first freeDensity plants per patch need no fertilizer; each plant beyond needs 1 fertilizer point per planting.",
+    "note": "Weeds grow on every field patch every question, planted or not: ratePerQuestion × weed tier of the chapter × (1 + fertilizerFactor × fertilizer points the patch density needs) × weed multipliers (edging, borders, geese, goat, mulch…). Weeds do not slow growth; each whole weed on a patch takes a share of its harvest (see crowding) and lowers the grade. One weeding tap clears weedsPerPull weeds; each weed costs 1 energy (less with hoes) and gives 1 fiber. Orchard spots grow half as many. The first freeDensity plants per patch need no fertilizer; each plant beyond needs 1 fertilizer point per planting.",
     "diminishing": "Weeding has no floor: you can always 'Root out the weeds' (a polish) — the first time cuts regrowth most, every next time half as much and costs more energy, because the last weeds are harder to find."
   },
   "water": {
@@ -75,10 +75,15 @@
     },
     "barePatchFactor": 1.5,
     "capPerPatch": 6,
-    "slowPerStone": 0.04,
     "stonesPerPick": 2,
     "energyPerStone": 1,
-    "note": "In winter, frost lifts stones in every field patch (more in deep beds and bare beds). Stones slow growth a little (like weeds, together at most 50%). Picking them gives stones for walls, paths and buildings."
+    "note": "In winter, frost lifts stones in every field patch (more in deep beds and bare beds). Stones do not slow growth; like weeds each whole stone takes a share of the patch's harvest (see crowding) and lowers the grade. Picking them gives stones for walls, paths and buildings."
+  },
+  "crowding": {
+    "perThing": 0.04,
+    "max": 0.75,
+    "keepMain": 1,
+    "note": "Weeds and stones crowd a patch (rules 2026-10-30, crops-and-items/02): at harvest, every whole weed and every whole stone on the patch takes perThing (4 %) of the harvest, together at most max (75 %), and the main crop never drops below keepMain. What is lost is shown (the plants stand wilted and grey on the patch, and the lost crops fade away as grey ghosts at harvest). Pulling the weeds and picking the stones before the harvest gives it all back. Weeds and stones no longer slow growth. They also still lower the grade of the whole harvest (rules/47-quality.json)."
   },
   "rotation": {
     "sameCropGrow": 0.85,

@@ -360,6 +360,40 @@ func _landed(node: Control, sid: String) -> void:
 	if is_instance_valid(node): node.queue_free()
 	if slots.has(sid) and slots[sid].visible: slots[sid].bump()
 
+## The crops the weeds and stones took at a harvest (crops-and-items/02): one grey ghost of the crop per lost piece rises from the
+## patch, sways and fades away, where the weeds and stones still stand. pieces = [[emoji, texture or null], …], as for fly().
+func ghosts(from: Vector2, pieces: Array) -> void:
+	var delay := 0.3          # the crops that were kept start their flight first
+	for pc in pieces:
+		var node: Control
+		var tex: Texture2D = pc[1]
+		if tex:
+			var tr := TextureRect.new()
+			tr.texture = tex
+			tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			tr.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			tr.size = Vector2(34, 34)
+			node = tr
+		else:
+			node = UI.label(str(pc[0]), 24)
+			node.size = Vector2(34, 34)
+		node.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		node.pivot_offset = Vector2(17, 17)
+		var start := from + Vector2(randf_range(-26, 26), randf_range(-14, 8))
+		node.position = start - Vector2(17, 17)
+		node.modulate = Color(0.5, 0.52, 0.5, 0.0)       # grey: it did not make it
+		fx_layer.add_child(node)
+		var sway := randf_range(-26.0, 26.0)
+		var tw := create_tween()
+		tw.tween_interval(delay)
+		tw.tween_property(node, "modulate:a", 0.9, 0.12)
+		tw.tween_property(node, "position", start - Vector2(17 - sway, 17 + 70), 1.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		tw.parallel().tween_property(node, "rotation", sway * 0.02, 1.1)
+		tw.parallel().tween_property(node, "scale", Vector2(0.6, 0.6), 1.1)
+		tw.parallel().tween_property(node, "modulate:a", 0.0, 0.5).set_delay(0.7)
+		tw.tween_callback(node.queue_free)
+		delay += 0.12
+
 ## Rectangle of one patch (field f, patch k), in this map's coordinates.
 func patch_rect(f: int, k: int) -> Rect2:
 	if f < 0 or f >= fields.size(): return Rect2()

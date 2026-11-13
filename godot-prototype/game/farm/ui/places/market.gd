@@ -17,7 +17,7 @@ func _init(main: FarmMain) -> void:
 
 func part_market() -> void:
 	match G.trip.phase():
-		"square": _part_square()
+		"square": M.square.build_window()
 		"walk": _part_walk()
 		_: _part_signpost()
 
@@ -27,12 +27,12 @@ func part_market() -> void:
 func _part_signpost() -> void:
 	M.content.add_child(UI.label(tr("The village is a walk away. Pack what you want to sell or hand over, then go: it takes one Time Quiz question and some energy."), 17, UI.MUTED, true))
 	_bag_summary()
-	var ords := _orders()
+	var ords := orders()
 	if not ords.is_empty():
 		M.widgets.section(tr("📦 Orders to deliver"), tr("Hand them over in the village. What they need must be in your bag."))
 		for id in ords: M.content.add_child(_order_card(id, false))
 	var ck: Dictionary = G.actions.check("village_trip", G.actions.farmer)
-	var go := UI.button(tr("🚶 Go to the village  (−%d ⚡)") % int(ck["cost"]["energy"]), _go, ck["ok"], UI.GREEN, 22)
+	var go := UI.button(tr("🚶 Go to the village  (−%d ⚡)") % int(ck["cost"]["energy"]), _go, ck, UI.GREEN, 22)
 	go.custom_minimum_size = Vector2(0, 62)
 	M.content.add_child(go)
 	if not ck["ok"]: M.content.add_child(UI.label(str(ck["unmet"][0]["text"]), 15, UI.RED, true))
@@ -50,7 +50,7 @@ func _bag_summary() -> void:
 	M.content.add_child(head)
 
 ## The deliveries that can be made now (what they need from earlier goals is done).
-func _orders() -> Array:
+func orders() -> Array:
 	var out := []
 	for id in G.nodes:
 		var n: Dictionary = G.nodes[id]
@@ -71,13 +71,13 @@ func _order_card(id: String, at_square: bool) -> PanelContainer:
 	v.add_child(M.widgets.costs(cost))
 	if at_square:
 		var ok: bool = G.trip.bag_covers(cost) and G.S["energy"] + 0.0001 >= float(cost.get("energy", 0.0))
-		var b := UI.button(tr("🤝 Hand over"), M.widgets.do_unlock.bind(id), ok, UI.GREEN, 20)
+		var b := UI.button(tr("🤝 Hand over"), M.widgets.do_unlock.bind(id), {"ok": ok, "unmet": G.progression.can_unlock(id)["unmet"], "cost": cost}, UI.GREEN, 20)
 		b.custom_minimum_size = Vector2(0, 52)
 		v.add_child(b)
 		if not G.trip.bag_covers(cost): v.add_child(UI.label(tr("It is not all in your bag. Pack it next time."), 14, UI.MUTED, true))
 	else:
 		var can := G.trip.can_pack_cost(cost)
-		var b2 := UI.soft_button(tr("🎒 Pack what it needs"), G.trip.pack_cost.bind(cost), can, 18)
+		var b2 := UI.soft_button(tr("🎒 Pack what it needs"), G.trip.pack_cost.bind(cost), can, 18, tr("🎒 You need all of it in the store, and room for it in the bag."))
 		b2.custom_minimum_size = Vector2(0, 48)
 		v.add_child(b2)
 	return pc
@@ -92,53 +92,84 @@ func _part_walk() -> void:
 
 # ------------------------------------------------------------------ in the village
 
-## The village square: sell from the bag, hand over orders, buy within the room left, go home.
-func _part_square() -> void:
+## The market's stalls on the village square (ui/square.gd owns the scene and the window; this part owns what these stalls offer):
+## 🪙 selling from the bag, 🌱 the seeds, 🧺 the other traders (once one trades with the farm), 📦 the orders (while one can be handed over).
+## Above every stall: 🏠 Back home and the bag's two bars.
+func register_stalls(sq: FarmUiSquare) -> void:
+	sq.set_head(_square_head)
+	sq.add_stall("sell", _part_sell, Callable(), _has_sellable)
+	sq.add_stall("seeds", _part_seeds)
+	sq.add_stall("traders", _part_traders, func(): return not traders().is_empty())
+	sq.add_stall("orders", _part_orders, func(): return not orders().is_empty(), func(): return not orders().is_empty())
+
+func _square_head() -> void:
 	var home := UI.button(tr("🏠 Back home"), _back_home, true, UI.BLUE, 20)
 	home.custom_minimum_size = Vector2(0, 52)
 	M.content.add_child(home)
-	M.content.add_child(UI.label(tr("🎒 Room to carry things home: %s of %s") % [str(floori(G.trip.buy_room())), str(int(G.trip.capacity()))], 15, UI.MUTED, true))
-	# sell
+	_square_bars()
+
+## Is there something in the bag the market buys?
+func _has_sellable() -> bool:
+	for k in G.trip.contents():
+		if G.inventory.sellable(k): return true
+	return false
+
+func _part_sell() -> void:
 	var bag: Dictionary = G.trip.contents()
 	var sellable := bag.keys().filter(func(k): return G.inventory.sellable(k))
 	M.widgets.section(tr("🪙 Sell"), tr("Only what is in your bag. The market pays less for a pile of the same thing."))
 	if sellable.is_empty():
 		M.content.add_child(UI.label(tr("Nothing to sell in your bag."), 16, UI.MUTED, true))
-	else:
-		var sg := M.widgets.grid()
-		M.content.add_child(sg)
-		for k in sellable:
-			var q: int = int(G.trip.packed(k))
-			var em := G.iemoji(k)
-			var v := M.widgets.tile(M.widgets.pic(k), em, "%s\n%d" % [G.iname(k), q])
-			var row := HFlowContainer.new()
-			row.add_child(UI.soft_button("1 %s = %s" % [em, G.money(G.trade.sell_total(k, 1))], G.trade.sell.bind(k, 1.0), true, 17))
-			if q > 1: row.add_child(UI.soft_button("%d %s = %s" % [q, em, G.money(G.trade.sell_total(k, q))], G.trade.sell.bind(k, 999.0), true, 17))
-			v.add_child(row)
-			if G.trade.demand_factor(k) < 0.999: v.add_child(UI.label(tr("↓ lots sold lately"), 13, Color("b5562b"), true))
-			sg.add_child(v.get_meta("panel"))
-	# orders
-	var ords := _orders()
-	if not ords.is_empty():
-		M.widgets.section(tr("📦 Orders to deliver"))
-		for id in ords: M.content.add_child(_order_card(id, true))
-	# buy
-	_part_shops()
-	var home2 := UI.button(tr("🏠 Back home"), _back_home, true, UI.BLUE, 20)
-	home2.custom_minimum_size = Vector2(0, 52)
-	M.content.add_child(home2)
+		return
+	var sg := M.widgets.grid()
+	M.content.add_child(sg)
+	for k in sellable:
+		var q: int = int(G.trip.packed(k))
+		var em := G.iemoji(k)
+		var v := M.widgets.tile(M.widgets.pic(k), em, "%s\n%d" % [G.iname(k), q])
+		var row := HFlowContainer.new()
+		row.add_child(UI.soft_button("1 %s = %s" % [em, G.money(G.trade.sell_total(k, 1))], G.trade.sell.bind(k, 1.0), true, 17))
+		if q > 1: row.add_child(UI.soft_button("%d %s = %s" % [q, em, G.money(G.trade.sell_total(k, q))], G.trade.sell.bind(k, 999.0), true, 17))
+		v.add_child(row)
+		if G.trade.demand_factor(k) < 0.999: v.add_child(UI.label(tr("↓ lots sold lately"), 13, Color("b5562b"), true))
+		sg.add_child(v.get_meta("panel"))
 
+func _part_orders() -> void:
+	M.widgets.section(tr("📦 Orders to deliver"))
+	for id in orders(): M.content.add_child(_order_card(id, true))
+
+## The bag on the square is two bars that move with every sale, purchase and delivery (money-market/06): the 🎒 empties as things are sold or handed over,
+## the 🏠 fills as things are bought for the way home (the window is rebuilt on every change, so both are always current).
+func _square_bars() -> void:
+	var cap := str(int(G.trip.capacity()))
+	var box := UI.vbox(4)
+	box.add_child(_bag_row("🎒", tr("%s of %s room used") % [str(ceili(G.trip.load_now())), cap], G.trip.fill(), "sq_sell_bar"))
+	box.add_child(_bag_row("🏠", tr("Room to carry things home: %s of %s") % [str(floori(G.trip.buy_room())), cap], G.trip.home_fill(), "sq_home_bar"))
+	M.content.add_child(box)
+
+func _bag_row(icon: String, text: String, frac: float, bar_name: String) -> HBoxContainer:
+	var row := UI.hbox(8)
+	row.add_child(UI.label(icon, 26))
+	var v := UI.vbox(1)
+	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	v.add_child(UI.label(text, 15, UI.MUTED, true))
+	var b := UI.bar(frac, 240, 12, UI.AMBER if frac < 0.999 else UI.RED)
+	b.name = bar_name
+	v.add_child(b)
+	row.add_child(v)
+	return row
+
+## 🏠 Back home is a walk too (money-market/04): one Time Quiz question; a right first answer takes the farmer home and closes the square.
 func _back_home() -> void:
-	G.trip.leave()
-	M.sheets.close_sheet()
+	M.timequiz.show_home_question()
 
 
 ## Confirms the packed bag: the energy is taken and the one Time Quiz question on the way opens.
 func _go() -> void:
 	if G.actions.perform("village_trip", G.actions.farmer)["done"]: M.timequiz.show_trip_question()
 
-## The seed merchant and the other traders on the square: buying within the room left for the way home.
-func _part_shops() -> void:
+## The seed merchant on the square: buying within the room left for the way home.
+func _part_seeds() -> void:
 	M.widgets.section(tr("🌱 Seed merchant"), tr("Only seeds you have can be planted — buy them here."))
 	var rep := G.trust.reputation()
 	if rep > 0 or G.trust.reputation_max() > 0:
@@ -150,22 +181,33 @@ func _part_shops() -> void:
 		if n["type"] != "crop" or not G.done(cid) or n.has("seedItem"): continue
 		var v := M.widgets.tile(Art.tex("crops", cid), str(n.get("emoji", "")), "%s\n%s · 🌰 %d" % [n["name"], G.money_up(G.trade.seed_price(cid)), G.down(G.fields.seed_have(cid))])
 		var row := UI.hbox(6)
-		row.add_child(UI.soft_button("🛒 1", G.trade.buy_seeds.bind(cid, 1), G.S["coins"] + 0.001 >= G.trade.seed_price(cid) and G.trip.can_buy(G.inventory.seed_weight()) >= 1, 18))
-		row.add_child(UI.soft_button("🛒 5", G.trade.buy_seeds.bind(cid, 5), G.S["coins"] + 0.001 >= 5.0 * G.trade.seed_price(cid) and G.trip.can_buy(G.inventory.seed_weight()) >= 5, 18))
+		row.add_child(UI.soft_button("🛒 1", G.trade.buy_seeds.bind(cid, 1), G.S["coins"] + 0.001 >= G.trade.seed_price(cid) and G.trip.can_buy(G.inventory.seed_weight()) >= 1, 18, _buy_why(G.trade.seed_price(cid))))
+		row.add_child(UI.soft_button("🛒 5", G.trade.buy_seeds.bind(cid, 5), G.S["coins"] + 0.001 >= 5.0 * G.trade.seed_price(cid) and G.trip.can_buy(G.inventory.seed_weight()) >= 5, 18, _buy_why(5.0 * G.trade.seed_price(cid))))
 		v.add_child(row)
 		sg.add_child(v.get_meta("panel"))
+
+## The traders on the square that sell or swap something (the book cart comes to the farm instead).
+func traders() -> Array:
+	var out := []
 	for mid in G.nodes:
 		var mn: Dictionary = G.nodes[mid]
 		if mn["type"] != "merchant" or not G.done(mid) or mid == "book_cart": continue
 		if mn.get("sells", {}).is_empty() and mn.get("barter", {}).is_empty(): continue
+		out.append(mid)
+	return out
+
+## The other traders on the square: what each sells or swaps, within the room left for the way home.
+func _part_traders() -> void:
+	for mid in traders():
+		var mn: Dictionary = G.nodes[mid]
 		M.widgets.section("%s %s  %s" % [mn.get("emoji", ""), mn["name"], G.trust.hearts(mid)], str(mn.get("desc", "")))
 		var mg := M.widgets.grid()
 		M.content.add_child(mg)
 		for k in mn.get("sells", {}):
-			var v2 := M.widgets.tile(M.widgets.pic(k), G.iemoji(k), "%s\n%s" % [G.iname(k), G.money_up(G.trade.buy_price(mid, k))])
+			var v2 := M.widgets.tile(M.widgets.pic(k), G.iemoji(k), "%s\n%s" % [G.iname(k), G.money_up(G.trade.buy_price(mid, k))], UI.PAPER, k)
 			var row2 := UI.hbox(6)
-			row2.add_child(UI.soft_button("🛒 1", G.trade.buy_item.bind(mid, k, 1), G.trip.can_buy(G.inventory.weight_of(k)) >= 1, 18))
-			row2.add_child(UI.soft_button("🛒 5", G.trade.buy_item.bind(mid, k, 5), G.trip.can_buy(G.inventory.weight_of(k)) >= 5, 18))
+			row2.add_child(UI.soft_button("🛒 1", G.trade.buy_item.bind(mid, k, 1), G.trip.can_buy(G.inventory.weight_of(k)) >= 1, 18, _buy_why(0.0)))
+			row2.add_child(UI.soft_button("🛒 5", G.trade.buy_item.bind(mid, k, 5), G.trip.can_buy(G.inventory.weight_of(k)) >= 5, 18, _buy_why(0.0)))
 			v2.add_child(row2)
 			mg.add_child(v2.get_meta("panel"))
 		for k in mn.get("barter", {}):
@@ -176,6 +218,11 @@ func _part_shops() -> void:
 			row3.add_child(UI.rich("%s%s %s  for  %s" % ["%d × " % bq if bq > 1 else "", G.iemoji(k), G.iname(k), M.widgets.cost_bb(c)], 17))
 			row3.add_child(UI.soft_button("🤝", G.trade.barter.bind(mid, k), true, 20))
 			M.content.add_child(row3)
+
+## Why a 🛒 button is grey: not enough coins, or no room to carry that home (the rules are `G.trade` and `G.trip.can_buy`). Interface-feel/02.
+func _buy_why(price: float) -> String:
+	if G.S["coins"] + 0.001 < price: return tr("🪙 You do not have enough coins for that.")
+	return tr("🎒 No room to carry that home.")
 
 func part_bookcart() -> void:
 	if not G.done("book_cart"):
@@ -195,7 +242,7 @@ func part_bookcart() -> void:
 		pc.add_child(v)
 		var row := UI.hbox(6)
 		row.add_child(UI.label("%s %s — %s" % [bn.get("emoji", ""), bn["name"], bn.get("desc", "")], 16, UI.INK if ck["ok"] else UI.MUTED, true))
-		row.add_child(UI.button(tr("Buy"), M.widgets.do_unlock.bind(bid), ck["ok"], UI.GREEN, 16))
+		row.add_child(UI.button(tr("Buy"), M.widgets.do_unlock.bind(bid), ck, UI.GREEN, 16))
 		v.add_child(row)
 		v.add_child(M.widgets.costs(G.pace.node_cost(bid)))
 		if not ck["ok"] and not G.progression.missing_reqs(bid).is_empty(): v.add_child(UI.label(str(ck["why"]), 14, UI.MUTED, true))
@@ -251,7 +298,7 @@ func _card_tile(cid: String) -> PanelContainer:
 		"readable":
 			var rq: int = G.up(G.knowledge.read_needed(cid) * G.m("read"))
 			t.add_child(UI.label((tr("Reading takes %d question") if rq == 1 else tr("Reading takes %d questions")) % rq, 15, UI.MUTED, true))
-			M.widgets.tile_button(t, UI.button(tr("📖 Read"), _start_reading.bind(cid), G.S["reading"] == "", UI.BLUE, 20))
+			M.widgets.tile_button(t, UI.button(tr("📖 Read"), _start_reading.bind(cid), G.S["reading"] == "", UI.BLUE, 20, tr("📖 You are reading another card. Finish it first.")))
 		"prereq":
 			var miss := []
 			for r in n["requires"]:

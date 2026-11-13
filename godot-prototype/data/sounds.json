@@ -532,6 +532,14 @@
      "music/quizzes_for_now.ogg"
     ],
     "what": "Rest sums: calm, steady"
+   },
+   "frame": {
+    "file": "rest.ogg",
+    "volume": -18,
+    "from": [
+     "music/quizzes_for_now.ogg"
+    ],
+    "what": "the grandchildren's frame between the chapters (stand-in: the calm Rest music until the parent picks another, W8)"
    }
   },
   "play": {
@@ -542,7 +550,8 @@
     "winter": "farm_winter"
    },
    "quiz": "quiz",
-   "rest": "rest"
+   "rest": "rest",
+   "frame": "frame"
   }
  },
  "credits": [

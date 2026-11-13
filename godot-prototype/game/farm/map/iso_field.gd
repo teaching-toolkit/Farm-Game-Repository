@@ -146,7 +146,7 @@ func refresh(flick := false) -> void:
 	usable.resize(9)
 	for k in range(9):
 		var i := field_index * 9 + k
-		var spec := {"crop": "", "plants": 0, "stage": "", "ready": false, "weeds": 0, "stones": 0, "wild": "", "seed": hash([field_index, k])}
+		var spec := {"crop": "", "plants": 0, "crowded": 0, "stage": "", "ready": false, "weeds": 0, "stones": 0, "wild": "", "seed": hash([field_index, k])}
 		usable[k] = i < arr.size() and G.fields.patch_usable(area_name, i)
 		if not usable[k]:
 			var wi := _wild_info(i)
@@ -159,6 +159,7 @@ func refresh(flick := false) -> void:
 			if p["crop"] != "":
 				spec["crop"] = p["crop"]
 				spec["plants"] = clampi(G.fields.shown_plants(float(p["plants"])), 1, 9)
+				spec["crowded"] = G.fields.crowd_plants(p)       # the plants the weeds and stones take from the harvest stand wilted
 				var frac := float(p["growth"]) / maxf(0.01, G.fields.grow_target(p))
 				spec["stage"] = "ready" if p["ready"] else ("sprout" if frac < 0.5 else "grown")
 				spec["ready"] = p["ready"]
@@ -519,6 +520,22 @@ class IsoPatch extends Control:
 	var top: Control              # lives in the field's label layer (set by the field): plants, weeds, stones
 	var pitch := 156.0            # patch + gap (the borders run along the middle of the gaps)
 
+	static var _grey_pics := {}      # picture id -> its grey copy (plants the weeds and stones took)
+
+	## The same picture in grey (a see-through background stays see-through), made once per picture; the picture itself when it cannot be read.
+	static func grey_of(tex: Texture2D) -> Texture2D:
+		var id := tex.get_instance_id()
+		if not _grey_pics.has(id):
+			var im: Image = tex.get_image()
+			if im == null or im.is_empty():
+				_grey_pics[id] = tex
+			else:
+				if im.is_compressed(): im.decompress()
+				im.convert(Image.FORMAT_LA8)
+				im.convert(Image.FORMAT_RGBA8)
+				_grey_pics[id] = ImageTexture.create_from_image(im)
+		return _grey_pics[id]
+
 	## Kept for old callers: draws one side of a diamond (see UI.iso_side).
 	static func side(ci: CanvasItem, a: Vector2, b: Vector2, tex: Texture2D, look: Array, posts: bool) -> void:
 		UIc.iso_side(ci, a, b, tex, look, posts)
@@ -666,9 +683,10 @@ class IsoPatch extends Control:
 		else:
 			if spec["crop"] != "":
 				var cells: Array = FILL.slice(0, int(spec["plants"]))
-				for cell in cells:
-					var at2: Vector2 = dc + plant_at(cell)
-					things.append([at2.y, "plant", at2, int(cell)])
+				var wilted := int(spec.get("crowded", 0))       # the last ones to be planted stand limp and grey (crops-and-items/02)
+				for j in range(cells.size()):
+					var at2: Vector2 = dc + plant_at(cells[j])
+					things.append([at2.y, "wilted" if j >= cells.size() - wilted else "plant", at2, int(cells[j])])
 			for _i in range(int(spec["weeds"])):
 				var at3 := dc + _in_diamond(r.randf_range(0.08, 0.92), r.randf_range(0.08, 0.92))
 				things.append([at3.y, "weed", at3, r.randi()])
@@ -682,10 +700,10 @@ class IsoPatch extends Control:
 		var h := w * float(tex.get_height()) / float(tex.get_width())
 		ci.draw_texture_rect(tex, Rect2(at - Vector2(w / 2.0, h * 0.92), Vector2(w, h)), false, tint)
 
-	func _emoji(ci: Control, e: String, at: Vector2, fs: int) -> void:
+	func _emoji(ci: Control, e: String, at: Vector2, fs: int, tint := Color.WHITE) -> void:
 		var f: Font = ci.get_theme_font("font", "Label")
 		var sz := f.get_string_size(e, HORIZONTAL_ALIGNMENT_LEFT, -1, fs)
-		ci.draw_string(f, at - Vector2(sz.x / 2.0, fs * 0.15), e, HORIZONTAL_ALIGNMENT_LEFT, -1, fs)
+		ci.draw_string(f, at - Vector2(sz.x / 2.0, fs * 0.15), e, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, tint)
 
 	func _thing(ci: Control, kind: String, at: Vector2, v := 0) -> void:
 		match kind:
@@ -713,6 +731,16 @@ class IsoPatch extends Control:
 					return
 				if ct: _pic(ci, ct, at, w)
 				else: _emoji(ci, str(G_emoji(spec["crop"])), at, int(w * 0.72))
+			"wilted":
+				# crowded out by weeds and stones: small, grey and drooping, no glow, no sway
+				var wsprout := str(spec.get("stage", "grown")) == "sprout"
+				var wtex: Texture2D = Artc.tex("deco", "sprout") if wsprout else Artc.tex("crops", str(spec["crop"]))
+				var wgrey := Color(0.92, 0.95, 0.88, 0.92)
+				var wsize := tw * (0.11 if wsprout else 0.15)
+				ci.draw_set_transform(at, 0.4 if v % 2 == 0 else -0.4, Vector2.ONE)
+				if wtex: _pic(ci, grey_of(wtex), Vector2.ZERO, wsize, wgrey)
+				else: _emoji(ci, "🥀" if not wsprout else "🌱", Vector2.ZERO, int(wsize * 0.8), Color(0.7, 0.72, 0.68, 0.9))
+				ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 			"weed", "weeds":
 				var wt: Texture2D = Artc.first("deco", ["weed_%d" % (1 + absi(v) % 9), "weeds"])
 				var ww := tw * (0.13 if kind == "weed" else 0.17)

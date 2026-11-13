@@ -74,7 +74,7 @@ func _job_board(pid: String) -> void:
 	bx.add_theme_constant_override("h_separation", 6)
 	for j in jobs:
 		var on: bool = j["id"] == cur
-		bx.add_child(UI.button("%s%s %s" % ["✔ " if on else "", j["emoji"], tr(str(j["name"]))], G.pets.choose.bind(pid, j["id"]), not on, UI.GREEN if on else UI.AMBER, 16))
+		bx.add_child(UI.button("%s%s %s" % ["✔ " if on else "", j["emoji"], tr(str(j["name"]))], G.pets.choose.bind(pid, j["id"]), not on, UI.GREEN if on else UI.AMBER, 16, tr("✔ That is its job already.")))
 	M.content.add_child(bx)
 	if G.pets.level(pid) >= 3: _when_row(pid, 0, tr("WHEN"))
 	if G.pets.level(pid) >= 4:
@@ -84,7 +84,7 @@ func _job_board(pid: String) -> void:
 		bx2.add_child(UI.label(tr("OTHERWISE"), 15, UI.MUTED))
 		for j in jobs:
 			var on2: bool = j["id"] == cur2
-			bx2.add_child(UI.button("%s%s %s" % ["✔ " if on2 else "", j["emoji"], tr(str(j["name"]))], G.pets.set_second_job.bind(pid, j["id"]), not on2, UI.GREEN if on2 else UI.AMBER, 15))
+			bx2.add_child(UI.button("%s%s %s" % ["✔ " if on2 else "", j["emoji"], tr(str(j["name"]))], G.pets.set_second_job.bind(pid, j["id"]), not on2, UI.GREEN if on2 else UI.AMBER, 15, tr("✔ That is its other job already.")))
 		M.content.add_child(bx2)
 		_when_row(pid, 1, tr("WHEN"))
 	var last := G.pets.last(pid)
@@ -112,8 +112,8 @@ func _when_row(pid: String, rule: int, label: String) -> void:
 	row.add_child(UI.button(txt, G.pets.set_when.bind(pid, rule, nxt), true, UI.GREEN, 15))
 	if cur != "":
 		var step := float(c.get("step", 1))
-		row.add_child(UI.soft_button("−", G.pets.set_when.bind(pid, rule, cur, float(w["n"]) - step), float(w["n"]) - step >= float(c["min"]) - 0.001, 18))
-		row.add_child(UI.soft_button("+", G.pets.set_when.bind(pid, rule, cur, float(w["n"]) + step), float(w["n"]) + step <= float(c["max"]) + 0.001, 18))
+		row.add_child(UI.soft_button("−", G.pets.set_when.bind(pid, rule, cur, float(w["n"]) - step), float(w["n"]) - step >= float(c["min"]) - 0.001, 18, tr("That is as low as it goes.")))
+		row.add_child(UI.soft_button("+", G.pets.set_when.bind(pid, rule, cur, float(w["n"]) + step), float(w["n"]) + step <= float(c["max"]) + 0.001, 18, tr("That is as high as it goes.")))
 	M.content.add_child(row)
 
 func part_jobs() -> void:

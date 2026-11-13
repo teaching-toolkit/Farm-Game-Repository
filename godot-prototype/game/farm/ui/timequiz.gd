@@ -115,6 +115,12 @@ func answer_right() -> void:
 	if _shown.is_empty(): return
 	_answer_pressed(int(_shown[0]["correct"]), _shown[0], _shown[1], _shown[2], _shown[3], _shown[4])
 
+## Tests: the question on screen is picked wrong (the first answer that is not the right one); a later right pick then counts as a second try.
+func answer_wrong() -> void:
+	if _shown.is_empty(): return
+	var q: Dictionary = _shown[0]
+	_answer_pressed((int(q["correct"]) + 1) % (q["answers"] as Array).size(), q, _shown[1], _shown[2], _shown[3], _shown[4])
+
 func _answer_pressed(i: int, q: Dictionary, buttons: Array, feedback: Label, state: Dictionary, on_done: Callable) -> void:
 	if state["done"]: return
 	var b: Button = buttons[i]
@@ -160,6 +166,12 @@ func show_time_quiz(forced: Dictionary = {}) -> void:
 func show_trip_question() -> void:
 	ask("to_village", {"title": tr("🚶 On the way to the village"), "emoji": "🏘️",
 		"wrong": tr("⏸️ Not quite: only a right first answer gets you to the village. Try the next one."), "go": _to_square})
+
+## The one question on the way home from the village square (money-market/04; no energy, only the question). The farmer stays on the square until one is
+## answered right at the first try, also when the pop-up is closed first (the square is still there).
+func show_home_question() -> void:
+	ask("home_from_village", {"title": tr("🏠 On the way home"), "emoji": "🏠",
+		"wrong": tr("⏸️ Not quite: only a right first answer gets you home. Try the next one."), "go": _home_done})
 
 ## The one question on the way to a neighbour's farm: after a right first try the visit happens and shows its scene.
 func show_visit_question() -> void:
@@ -242,6 +254,10 @@ func _time_quiz_buttons(after: VBoxContainer) -> void:
 func _walk_done() -> void:
 	M.modals.close_modal()
 	M.sheets.open_sheet.call_deferred("forest")
+
+func _home_done() -> void:
+	M.modals.close_modal()
+	M.sheets.close_sheet()
 
 func _to_square() -> void:
 	M.modals.close_modal()

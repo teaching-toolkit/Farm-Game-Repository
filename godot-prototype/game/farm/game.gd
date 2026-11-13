@@ -17,6 +17,8 @@ signal ask_name(pet_id: String, default_name: String)
 ## got = {item: amount} that went into the store, lost = {item: amount} that did not fit (the store is full).
 ## The map lets the things fly to the store (one picture per piece); what did not fit bounces off.
 signal gained(source: String, got: Dictionary, lost: Dictionary)
+## Weeds and stones took part of a harvest: source = "patch:<area>:<i>", lost = {item: amount}. The map lets the lost crops fade away as grey ghosts.
+signal crowded_out(source: String, lost: Dictionary)
 signal paid(coins: float)     # coins fly from the purse to the trader (M3)
 signal sold(item: String, n: float, coins: float)   # coins fly to the purse (perk), a jingle
 signal celebrate(id: String)     # a new building, tool or helper: the big pop-up with confetti
@@ -83,7 +85,7 @@ var buying := false      # bought things are not "produced"
 var test_seed := -1
 ## The version of the save layout (kits/core/saves.gd). A save without a "version" is version 0. Every change to the layout of a save
 ## adds an upgrade step in save_steps() and raises this number; tests/fixtures/ keeps old saves that must still load.
-const SAVE_VERSION := 5
+const SAVE_VERSION := 6
 const TEST_CLOCK_START := 1800000000.0   # a fixed moment in 2027; one step of time counts as 10 minutes
 
 ## The systems: each owns one part of the rules and works on the farm's state G.S (see game/farm/systems/).
@@ -358,7 +360,19 @@ func save_steps() -> Array:
 		{"to": 2, "name": "quality: every batch of a thing that has a grade now says which (what was in the store is Proper)", "fn": upgrade_save_v1},
 		{"to": 3, "name": "skills: the uses counted per station become batches per skill family", "fn": upgrade_save_v2},
 		{"to": 4, "name": "money: coins are counted in bronze (one old coin = 15 bronze)", "fn": upgrade_save_v3},
-		{"to": 5, "name": "Time Quiz: recent questions and the retry are remembered by permanent id, not by position", "fn": timeq.upgrade_save_v4}]
+		{"to": 5, "name": "Time Quiz: recent questions and the retry are remembered by permanent id, not by position", "fn": timeq.upgrade_save_v4},
+		{"to": 6, "name": "nature/04: the stone of before is a big rock (what was carried for building stays usable; small stones come from patches and the forest edge)", "fn": upgrade_save_v5}]
+
+func upgrade_save_v5(save: Dictionary) -> void:
+	for key in ["inv", "bag"]:
+		var d: Dictionary = save.get(key, {})
+		if not d.has("stone"): continue
+		if key == "inv":
+			d["boulder"] = (d.get("boulder", []) as Array) + (d["stone"] as Array)   # batches: [season, qty(, grade)]
+		else:
+			d["boulder"] = float(d.get("boulder", 0.0)) + float(d["stone"])
+		d.erase("stone")
+	if save.get("seen", {}).has("stone"): save["seen"]["boulder"] = true
 
 func upgrade_save_v3(save: Dictionary) -> void:
 	save["coins"] = float(save.get("coins", 0.0)) * float(meta.get("currency", {}).get("factor", 15))

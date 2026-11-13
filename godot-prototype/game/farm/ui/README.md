@@ -13,12 +13,15 @@ Parts call each other as `M.<part>.<function>`. Functions with a leading `_` are
 | `sheets` | the sheet that slides up: open, close, fit, rebuild; `open_spot` (a tap on a place) |
 | `interiors` | the inside of the house, barn and workshop |
 | `modals` | the centred pop-up: open, size, close |
-| `notes` | toasts and the explanations of bars and buttons |
+| `notes` | toasts (the older hint toast is no longer used for bars) |
+| `info` | the short note on tap: a bar (energy, water, bag, coins, every `UI.explain` bar), an item (tile or a cost's picture), a greyed-out button (why, from the rule that greyed it); read aloud as the settings say |
 | `celebrations` | the big pop-up for something new |
 | `timequiz` | the Time Quiz question pop-up, read aloud |
 | `playback` | after the Time Quiz: the farm keeps its old look while the quiz is open, then a pause, rain, plants flicking through their stages, bars pulsing, pests, notes; a tap skips (J4) |
 | `story` | the story on screen: box with pages, speech bubbles that stay until tapped, the 📜 scroll; which piece is ready is `G.story` (5.2), when it shows is `interrupts` |
 | `interrupts` | what takes the screen next: sets up the interruption queue, watches the busy screens, hands it the waiting postcards and the story's next piece; `celebration`, `note`, `request` |
+| `frame_scene` | the grandchildren's frame (a story piece of kind `frame`, at the start and after each chapter's last beat): a full-screen black scene, only a picture and words, taps go on page by page, its own music; counts as a pop-up for the queue |
+| `square` | the village square as its own screen (money-market/07): while the farmer is in the village, a scene of the square stands where the farm was (stalls to tap: 🪙 selling, 🌱 seeds, 🧺 traders, 📦 orders, 📋 the notice board, 🏠 the walk home); the sheet below it (`spot:market`, no ✖, always 60 % high) shows the tapped stall. It owns the scene, which stall is open and the window's frame, and does not know what a stall offers: the part that owns a stall's things registers it (`square.add_stall(id, build, shown, wanted)`, listed in `main.gd` `_make_parts`: `market.register_stalls`, `placesheet.register_stalls`). **A new stall = one entry in `rules/49-trip.json` "square" (place, picture, symbol) + one `add_stall` line**; painted pictures need no code |
 | `rest` | Rest: start page and sums |
 | `feedback` | the farmer's acts, animal voices, sounds, coins landing |
 | `cards` | knowledge cards: page, quiz |

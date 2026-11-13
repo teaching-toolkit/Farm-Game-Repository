@@ -186,7 +186,7 @@ func buy_seeds(cid: String, q: int) -> bool:
 func buy_item(merchant: String, k: String, q: int) -> bool:
 	if not _at_square(): return false
 	var room := G.trip.can_buy(G.inventory.weight_of(k))
-	var shelf := int(floorf(G.needs.storage_cap() - G.inventory.count(k) + 0.0001))      # what the store at home can still take
+	var shelf := int(floorf(G.needs.storage_cap(k) - G.inventory.count(k) + 0.0001))      # what the store at home can still take
 	if shelf < q:
 		if shelf < 1: G.say(tr("🧺 Your store is full of that.")); return false
 		q = shelf

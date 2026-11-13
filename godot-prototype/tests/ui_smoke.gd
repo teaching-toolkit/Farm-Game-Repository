@@ -14,6 +14,7 @@ func _ready() -> void:
 	D.story_enabled(false)          # the story has its own section below; the rest of the test runs without its boxes
 	await _frames(3)
 	D.close_modal()
+	D.frame_close()                 # the new game's opening is the full-screen bedside frame (story/11), not a box
 	# O1-O3: what is shown when. A new game has no coin and no album picture: the purse and the album button wait for them.
 	var rv_hidden: bool = G.S["coins"] < 1.0 and not D.coins_shown() and not D.icon_shown("album") and not D.icon_shown("bag")
 	var rv_new := []
@@ -23,12 +24,12 @@ func _ready() -> void:
 	G.changed.emit()
 	await _frames(3)
 	var rv_shown: bool = D.coins_shown() and D.icon_shown("album") and rv_new.has("coins") and rv_new.has("album") and G.S["revealed"].has("coins")
-	G.inventory.add_item("stone", 3.0, true)       # the first packed thing shows the bag icon (and its thin bar)
-	G.trip.pack("stone", 2)
+	G.inventory.add_item("boulder", 3.0, true)       # the first packed thing shows the bag icon (and its thin bar)
+	G.trip.pack("boulder", 2)
 	await _frames(3)
 	var rv_bag: bool = D.icon_shown("bag") and rv_new.has("bag")
 	G.trip.unpack_all()
-	G.inventory.take("stone", 3.0)
+	G.inventory.take("boulder", 3.0)
 	G.S["coins"] = 0.0
 	G.changed.emit()
 	await _frames(3)
@@ -37,29 +38,29 @@ func _ready() -> void:
 	print("reveal: hidden at the start %s, shown with the first coin and picture %s (told: %s), stays %s" % [rv_hidden, rv_shown, rv_new, rv_stays])
 	if not (rv_hidden and rv_shown and rv_bag and rv_stays): print("FAIL reveal: see the line above")
 	# the store's tile panel: pack one with 🎒 +1, the panel shows again with the new numbers, take it out again
-	G.inventory.add_item("stone", 2.0, true)
+	G.inventory.add_item("boulder", 2.0, true)
 	D.open_spot("storage")
 	await _frames(2)
-	D.item_panel("stone")
+	D.item_panel("boulder")
 	await _frames(2)
 	var tp_open: bool = D.modal_visible() and _modal_has("🎒 +1")
 	_press_text("🎒 +1")
 	await _frames(2)
-	var tp_packed: bool = G.trip.packed("stone") == 1.0 and D.modal_visible() and _modal_has("↩ −1")
+	var tp_packed: bool = G.trip.packed("boulder") == 1.0 and D.modal_visible() and _modal_has("↩ −1")
 	_press_text("↩ −1")
 	await _frames(2)
-	var tp_back: bool = G.trip.packed("stone") == 0.0
+	var tp_back: bool = G.trip.packed("boulder") == 0.0
 	D.close_modal()
 	D.close_sheet()
-	G.inventory.take("stone", 2.0)
+	G.inventory.take("boulder", 2.0)
 	print("store panel: opens %s, packs %s, unpacks %s" % [tp_open, tp_packed, tp_back])
 	if not (tp_open and tp_packed and tp_back): print("FAIL store panel: see the line above")
 	# M4: every thing has a weight (hidden): classes, a total
-	var wt_ok: bool = G.inventory.weight_class("stone") == "heavy" and G.inventory.weight_of("stone") == 4.0 and G.inventory.weight_of("feather") == 0.1 and G.inventory.weight_class("straw") == "bulky"
+	var wt_ok: bool = G.inventory.weight_class("boulder") == "heavy" and G.inventory.weight_of("boulder") == 4.0 and G.inventory.weight_of("feather") == 0.1 and G.inventory.weight_class("straw") == "bulky"
 	var load0: float = G.inventory.total_load()
-	G.inventory.add_item("stone", 2.0, true)
+	G.inventory.add_item("boulder", 2.0, true)
 	var wt_add: bool = is_equal_approx(G.inventory.total_load() - load0, 8.0)
-	G.inventory.take("stone", 2.0)
+	G.inventory.take("boulder", 2.0)
 	print("weights: classes %s, two stones add 8 load units %s" % [wt_ok, wt_add])
 	if not (wt_ok and wt_add): print("FAIL weights: see the line above")
 	# interface-feel/09: the book box's sign (📖 a card to read, ❓ a card quiz) shows only for a card the library shows now
@@ -596,11 +597,99 @@ func _ready() -> void:
 	D.close_sheet()                                # closing the bag comes back to the square
 	await _frames(2)
 	var sq_back: bool = G.trip.at_square() and D.sheet_visible() and D.sheet_kind() == "spot:market"
+	# money-market/04: Back home is a walk, one Time Quiz question; only a right first answer takes the farmer home
+	D.playback_speed(0)
+	G.S["bag"] = {"egg": 1.0}
+	var hm_step0: int = G.S["step"]
 	var sq_home_pressed := _press_text("Back home")
 	await _frames(2)
-	var sq_home: bool = not G.trip.at_square() and not D.sheet_visible()
-	print("square: opens without ✖ %s, closing keeps the square %s, the bag's ✖ %s and back to the square %s, Back home goes home %s" % [sq_open, sq_stays, sq_bag, sq_back, sq_home])
-	if not (sq_open and sq_stays and sq_bag and sq_back and sq_home_pressed and sq_home): print("FAIL square: see the line above")
+	var hm_open: bool = D.modal_visible() and _modal_has("On the way home") and G.trip.at_square() and G.S["step"] == hm_step0
+	D.close_modal()                                # a pop-up closed without an answer leaves the farmer on the square
+	await _frames(2)
+	var hm_closed: bool = G.trip.at_square() and D.sheet_visible() and D.sheet_kind() == "spot:market" and not D.modal_visible()
+	_press_text("Back home")
+	await _frames(2)
+	D.answer_wrong()                               # a wrong pick, then the right one: not a first try
+	D.answer_right()
+	await _frames(2)
+	var hm_wrong: bool = G.trip.at_square() and G.S["step"] == hm_step0 and _modal_has("Next question") and _modal_has("gets you home")
+	_press_text("Next question")                   # the next question: a right first answer
+	await _frames(2)
+	D.answer_right()
+	await get_tree().create_timer(float(G.feel("playback.walkRight")) + 0.5).timeout     # the green answer shows, then the pop-up closes into the farm
+	var sq_home: bool = not G.trip.at_square() and not D.sheet_visible() and not D.modal_visible() and G.S["step"] == hm_step0 + 1 and G.S["bag"].is_empty()
+	print("square: opens without ✖ %s, closing keeps the square %s, the bag's ✖ %s and back to the square %s; Back home opens a question %s, a closed pop-up stays %s, a wrong first try stays %s, a right one goes home %s" % [sq_open, sq_stays, sq_bag, sq_back, hm_open, hm_closed, hm_wrong, sq_home])
+	if not (sq_open and sq_stays and sq_bag and sq_back and sq_home_pressed and hm_open and hm_closed and hm_wrong and sq_home): print("FAIL square: see the line above")
+	D.playback_speed(1.0)
+	# money-market/06: the square window has two bars, the bag's (to sell, hand over) and the way home's (bought); each follows every sale, purchase and delivery
+	D.close_modal()
+	D.close_sheet()
+	G.S["bag"] = {}
+	G.S["trip"] = {"phase": "square", "bought": 0.0}
+	G.S["coins"] = 500.0
+	G.S["lord"]["owed"] = 0.0                          # nothing owed to Pieter, so coins can buy
+	G.inventory.add_item("egg", 4.0, true)
+	G.trip.pack("egg", 4)
+	D.open_spot("market")
+	await _frames(2)
+	var b_sell0: float = D.square_bar("sell")
+	var b_home0: float = D.square_bar("home")
+	var hud0: float = D.bag_bar_value()
+	G.trade.sell("egg", 1.0)
+	await _frames(2)
+	var b_sell1: float = D.square_bar("sell")
+	var b_home1: float = D.square_bar("home")
+	var hud1: float = D.bag_bar_value()
+	var sq_bought: bool = G.trade.buy_seeds("crop_wheat", 2)
+	await _frames(2)
+	var b_sell2: float = D.square_bar("sell")
+	var b_home2: float = D.square_bar("home")
+	var hud2: float = D.bag_bar_value()
+	G.trade.sell("egg", 999.0)
+	await _frames(2)
+	var b_sell3: float = D.square_bar("sell")
+	var b_home3: float = D.square_bar("home")
+	var hud3: float = D.bag_bar_value()
+	var sq_bars: bool = b_sell0 > 0.0 and b_home0 == 0.0 and b_sell1 < b_sell0 and is_equal_approx(b_home1, b_home0) and sq_bought and is_equal_approx(b_sell2, b_sell1) and b_home2 > b_home1 and b_sell3 == 0.0 and is_equal_approx(b_home3, b_home2)
+	var hud_ok: bool = is_equal_approx(hud0, b_sell0 + b_home0) and hud1 < hud0 and hud2 > hud1 and is_equal_approx(hud2, b_sell2 + b_home2) and hud3 < hud2 and is_equal_approx(hud3, b_sell3 + b_home3)
+	print("square bars (to sell / way home, top bar): start %.2f/%.2f, %.2f; after a sale %.2f/%.2f, %.2f; after buying %.2f/%.2f, %.2f; after selling the rest %.2f/%.2f, %.2f" % [b_sell0, b_home0, hud0, b_sell1, b_home1, hud1, b_sell2, b_home2, hud2, b_sell3, b_home3, hud3])
+	if not (sq_bars and hud_ok): print("FAIL square bars: see the line above")
+	# money-market/07: the village square is its own screen: its scene stands where the farm was, a tap on a stall shows that stall in the window below
+	var vs_shown: bool = D.square_shown() and D.square_covers_farm()
+	var vs_stalls: Array = D.square_stalls()
+	var vs_has: bool = vs_stalls.has("sell") and vs_stalls.has("seeds") and vs_stalls.has("home")
+	var vs_tap: bool = D.square_tap("seeds")
+	await _frames(2)
+	var vs_seeds: bool = vs_tap and D.square_stall() == "seeds" and D.sheet_kind() == "spot:market" and _content_has("Seed merchant") and not _content_has("Nothing to sell") and D.square_bar("home") >= 0.0
+	var vs_height: bool = is_equal_approx(D.sheet_height(), D.screen_size().y * 0.6)
+	D.open_sheet("bag")                            # another window opens over the square, and closes back to the stall that was open
+	await _frames(2)
+	var vs_bag: bool = D.square_shown() and D.sheet_kind() == "bag"
+	D.close_sheet()
+	await _frames(2)
+	var vs_back: bool = D.square_shown() and D.sheet_kind() == "spot:market" and D.square_stall() == "seeds" and _content_has("Seed merchant")
+	D.square_tap("sell")
+	await _frames(2)
+	var vs_sell: bool = D.square_stall() == "sell" and _content_has("Nothing to sell") and not _content_has("Seed merchant")
+	var vs_orders: bool = D.square_orders()   # the cart for the orders stands there only while an order can be handed over
+	var vs_none: bool = vs_stalls.has("orders") == vs_orders and D.square_tap("orders") == vs_orders
+	await _frames(2)
+	if vs_orders: vs_none = vs_none and D.square_stall() == "orders" and _content_has("Hand over")
+	var vs_board: bool = D.square_tap("board") == vs_stalls.has("board") and vs_stalls.has("board") == (not D.mystery("board"))      # the notice board stands in the village too, with the farm board's jobs
+	await _frames(2)
+	if vs_stalls.has("board"): vs_board = vs_board and D.square_stall() == "board" and _content_has("Little jobs") and _press_text("Back home")
+	await _frames(2)
+	D.close_modal()
+	D.square_tap("home")                           # the sign is the walk home: the same question as 🏠 Back home
+	await _frames(2)
+	var vs_home: bool = D.modal_visible() and _modal_has("On the way home") and G.trip.at_square()
+	D.close_modal()
+	G.trip.leave()
+	D.close_sheet()
+	await _frames(2)
+	var vs_gone: bool = not D.square_shown()
+	print("village square: stands where the farm was %s, stalls %s; a tap shows the seeds %s, the window keeps its height %s, the bag opens over it %s and closes back to the stall %s, the selling stall %s, the orders only when there are some %s, the notice board %s, the sign asks the way home %s, gone at home %s" % [vs_shown, str(vs_stalls), vs_seeds, vs_height, vs_bag, vs_back, vs_sell, vs_none, vs_board, vs_home, vs_gone])
+	if not (vs_shown and vs_has and vs_seeds and vs_height and vs_bag and vs_back and vs_sell and vs_none and vs_board and vs_home and vs_gone): print("FAIL village square (money-market/07): see the line above")
 	# 5) visit every place on the map and every page
 	var n := 0
 	for sid in D.map().slots:
@@ -700,6 +789,117 @@ func _ready() -> void:
 	D.story_enabled(true)
 	print("interruptions: the story pump shows only story and leaves a celebration in line %s, which comes at the end of the frame %s" % [iq_story_only, iq_after])
 	if not (iq_story_only and iq_after): print("FAIL interruptions: see the line above")
+	# story/11 ---------------------------------------------------------------------------------------------------------------------------------
+	# the grandchildren's frame is a full-screen black scene through the interruption queue: it waits for a pop-up, the Time Quiz, Rest and a
+	# sheet, covers the whole screen (top bar included) with its own music, goes on with a tap page by page, shows Skip only from the second
+	# viewing, can be read again from the 📜 scroll, and the farm's music and the next box come back after it
+	D.story_enabled(true)
+	D.playback_speed(0.0)
+	D.close_modal()
+	D.close_sheet()
+	D.clear_toasts()
+	var snd11 = get_node("/root/Sound")
+	G.S["story_seen"].clear()
+	D.show_menu()                                # a pop-up is open while the frame and a beat get ready
+	await _frames(2)
+	G.D["story"] = {
+		"t_frame": {"kind": "frame", "chapter": 1, "when": [], "title": "Back in the room", "emoji": "🛏️", "pages": [{"text": "Frame one."}, {"text": "Frame two."}, {"text": "Frame three."}]},
+		"t_beat": {"kind": "beat", "chapter": 1, "when": [], "title": "Test beat", "text": "Beat text."}}
+	G.changed.emit()
+	D.interrupts_request()
+	await _frames(4)
+	var f11_popup: bool = not D.frame_open() and D.modal_visible() and not G.story.seen("t_frame")
+	D.close_modal()
+	await _frames(4)
+	var f11_open: bool = D.frame_open() and D.frame_id() == "t_frame" and not D.modal_visible() and G.story.seen("t_frame") and not G.story.seen("t_beat")
+	var f11_cover: bool = D.frame_covers_screen()
+	var f11_music: bool = snd11.playing_track() == "frame"
+	var f11_noskip: bool = D.frame_page() == 0 and not D.frame_skip_shown()
+	G.changed.emit()                             # the farm refreshes behind the scene: the farm's music must not come back
+	await _frames(3)
+	var f11_music_stays: bool = D.frame_open() and snd11.playing_track() == "frame"
+	D.frame_tap()
+	await _frames(2)
+	var f11_p2: bool = D.frame_open() and D.frame_page() == 1
+	D.frame_tap()
+	await _frames(2)
+	var f11_p3: bool = D.frame_open() and D.frame_page() == 2
+	D.frame_tap()                                # the last tap leaves; the next waiting box (the beat) comes, and the farm's music with it
+	await _frames(4)
+	var f11_closed: bool = not D.frame_open() and D.modal_visible() and _modal_has("Beat text") and snd11.playing_track().begins_with("farm_")
+	print("story/11 frame: waits for a pop-up %s, opens after it %s, covers the screen %s, own music %s (stays %s), no Skip the first time %s, tap goes on %s %s, last tap leaves, farm music and the beat follow %s" % [f11_popup, f11_open, f11_cover, f11_music, f11_music_stays, f11_noskip, f11_p2, f11_p3, f11_closed])
+	if not (f11_popup and f11_open and f11_cover and f11_music and f11_music_stays and f11_noskip and f11_p2 and f11_p3 and f11_closed): print("FAIL story/11 frame: see the line above")
+	D.close_modal()
+	await _frames(3)
+	# the Time Quiz, Rest and a sheet: the frame waits (read again: the same piece, seen already, comes back only from the scroll)
+	var f11_waits := []
+	for what in ["quiz", "rest", "sheet"]:
+		G.S["story_seen"].erase("t_frame")
+		G.S["story_seen"]["t_beat"] = 0
+		match what:
+			"quiz": D.show_time_quiz()
+			"rest": D.show_rest()
+			"sheet": D.open_sheet("scroll")
+		await _frames(2)
+		D.interrupts_request()
+		await _frames(4)
+		var held: bool = not D.frame_open()
+		match what:
+			"quiz", "rest": D.close_modal()
+			"sheet": D.close_sheet()
+		for _i in range(300):
+			if D.frame_open(): break
+			await _frames(1)
+		f11_waits.append(held and D.frame_open() and D.frame_covers_screen())
+		if D.frame_open():
+			D.frame_tap(); D.frame_tap(); D.frame_tap()
+		await _frames(3)
+		D.close_modal()
+		await _frames(2)
+	print("story/11 frame: waits for the Time Quiz, Rest and a sheet, then opens %s" % [f11_waits])
+	if f11_waits != [true, true, true]: print("FAIL story/11 frame: see the line above")
+	# read again from the 📜 scroll (a sheet is open: it is the child's own tap): Skip is there from the second viewing and leaves at once
+	D.open_sheet("scroll")
+	await _frames(2)
+	var f11_scroll := _press_text("Back in the room")
+	await _frames(3)
+	var f11_again: bool = D.frame_open() and D.frame_page() == 0 and D.frame_skip_shown() and snd11.playing_track() == "frame"
+	var f11_skip: bool = D.frame_press("Skip")
+	await _frames(3)
+	var f11_left: bool = f11_skip and not D.frame_open() and D.sheet_visible() and snd11.playing_track().begins_with("farm_")
+	print("story/11 frame: the scroll lists it %s, read again with Skip and its music %s, Skip leaves back to the sheet and the farm music %s" % [f11_scroll, f11_again, f11_left])
+	if not (f11_scroll and f11_again and f11_left): print("FAIL story/11 frame: see the line above")
+	D.close_sheet()
+	D.close_modal()
+	D.clear_toasts()
+	G.D["story"] = {}
+	G.S["story_seen"].clear()
+	D.story_enabled(false)
+	# crops-and-items/02: weeds and stones crowd a patch. The plants they take stand wilted and grey on the map, the sheet shows the share and
+	# the crops it costs, and at harvest the lost crops leave as grey ghosts beside the weeds and stones (no words on the map).
+	for _i in range(6):                        # whatever pop-up the story still has in line goes away first
+		D.close_modal()
+		await _frames(2)
+	D.close_sheet()
+	await _frames(2)
+	var cw: Dictionary = G.S["patches"][0]
+	cw["crop"] = "crop_wheat"; cw["plants"] = 4.0; cw["growth"] = 99.0; cw["ready"] = true; cw["weeds"] = 8.0; cw["stones"] = 4.0     # 12 things: 48 %, two of four plants
+	G.S["energy"] = 50.0
+	D.map().fields[0].refresh()
+	await _frames(2)
+	var cw_spec: Dictionary = D.map().fields[0].patches[0].spec
+	var cw_map: bool = int(cw_spec.get("plants", 0)) == 4 and int(cw_spec.get("crowded", 0)) == 2 and int(cw_spec.get("weeds", 0)) == 8
+	D.tap_patch("field", 0)
+	await _frames(3)
+	var cw_sheet: bool = _content_has("−48%") and _content_has("4%")
+	var cw_ghosts0 := _grey_pieces(D.map().fx_layer)
+	var cw_done: bool = G.actions.perform("harvest", G.actions.farmer, {"a": "field", "i": 0})["done"]
+	await _frames(3)
+	var cw_ghosts: int = _grey_pieces(D.map().fx_layer) - cw_ghosts0
+	var cw_weeds_stay: bool = int(G.S["patches"][0]["weeds"]) == 8 and int(G.S["patches"][0]["stones"]) == 4
+	print("crowding: wilted on the map %s, the sheet says the share %s, harvested %s, grey ghosts %d, weeds and stones stay %s" % [cw_map, cw_sheet, cw_done, cw_ghosts, cw_weeds_stay])
+	if not (cw_map and cw_sheet and cw_done and cw_ghosts >= 1 and cw_weeds_stay): print("FAIL crowding: see the line above")
+	await _interface_feel_01_02()
 	get_tree().quit()
 
 func _atext_ok(q: Dictionary) -> bool:
@@ -724,6 +924,20 @@ func _modal_has(t: String) -> bool:
 		if n is Button and n.text.contains(t): found = true
 		stack.append_array(n.get_children())
 	return found
+
+func _content_has(t: String) -> bool:      # the sheet's content shows a text
+	var stack: Array = [D.content()]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		if (n is Label or n is Button) and n.text.contains(t): return true
+		stack.append_array(n.get_children())
+	return false
+
+func _grey_pieces(layer: Node) -> int:      # the grey ghosts (crowded-out crops) on the map's effects layer
+	var k := 0
+	for c in layer.get_children():
+		if c is Control and c.modulate.r < 0.6 and c.modulate.g < 0.6: k += 1
+	return k
 
 func _press_text(t: String) -> bool:
 	var bs := []
@@ -773,3 +987,258 @@ func _toast_has(part: String) -> bool:
 	for t in D.toast_texts():
 		if str(t).contains(part): return true
 	return false
+
+# ------------------------------------------------------------------ interface-feel/01 and 02: the short note on tap
+## 01: a tap on an item or a bar opens a short note (name, words, numbers, what fills and drains it); read-aloud is respected.
+## 02: a tap on a greyed-out button says why it is grey and what it will need, from the very rule that greyed it: one reason per kind
+## (energy, item, season, unlock). Taps go through the real input path (press and release on the control), also on a disabled button.
+func _tap(c: Control, top := false) -> void:
+	D.info_close()                              # (an open note may cover what is tapped next)
+	for _i in range(40):                        # the sheet slides up for a fifth of a second: a tap on it would miss before
+		if D.sheet_settled(): break
+		await get_tree().create_timer(0.03).timeout
+	D.reveal(c)
+	await _frames(2)
+	if top: D.tap_at(c.get_global_rect().position + Vector2(c.size.x / 2.0, 12.0))      # the top of a tile: its button is at the bottom
+	else: D.tap(c)
+	await _frames(2)
+
+func _info_nodes(node: Node, out: Array) -> void:         # everything that gives a note when tapped (UI.info)
+	for c in node.get_children():
+		if c is Control and c.has_meta("info"): out.append(c)
+		_info_nodes(c, out)
+
+func _grey_buttons(node: Node, out: Array) -> void:
+	for c in node.get_children():
+		if c is Button and c.disabled and c.is_visible_in_tree(): out.append(c)
+		_grey_buttons(c, out)
+
+func _interface_feel_01_02() -> void:
+	const UI = preload("res://kits/ui/ui.gd")
+	G.reset_game()
+	D.close_modal()
+	D.close_sheet()
+	D.story_enabled(false)
+	D.playback_speed(0.0)
+	D.read_aloud("button")
+	G.S["coins"] = 235.0
+	G.S["energy"] = 7.0
+	G.inventory.add_item("boulder", 6.0, true)
+	G.inventory.add_item("wheat", 2.0, true, 2)
+	G.trip.pack("boulder", 1)                    # the first packed thing shows the bag icon, and with it the room things take
+	G.changed.emit()
+	await _frames(3)
+	# --- 01 an item: name, a few words, how many, the grades, the room it takes
+	D.info_item("boulder")
+	var it: Dictionary = D.info_note()
+	var it_ok: bool = it.get("title", "") == "Big rock" and it["lines"].has(str(G.items["boulder"]["desc"])) and it["lines"].has("You have %d." % G.down(G.inventory.count("boulder"))) and it["lines"].has("🎒 Takes 4 room in the bag.")
+	D.info_item("wheat")
+	var wh: Dictionary = D.info_note()
+	var it_grade: bool = wh.get("title", "") == "Wheat" and str(wh["lines"]).contains("⭐") and str(wh["lines"]).contains("You have %d." % G.down(G.inventory.count("wheat")))
+	D.open_spot("storage")
+	await _frames(3)
+	D.item_panel("boulder")
+	await _frames(2)
+	var it_panel: bool = _modal_has(str(G.items["boulder"]["desc"])) and _modal_has("Takes 4 room in the bag.")
+	D.close_modal()
+	await _frames(4)                          # (closing a pop-up redraws the sheet: add things to it afterwards)
+	# a cost's little picture is tappable: what it is and what it needs
+	var crow: Control = M.widgets.costs({"stick": 3.0})
+	D.content().add_child(crow)
+	await _frames(2)
+	await _tap(crow.get_child(0))
+	var cn: Dictionary = D.info_note()
+	var it_cost: bool = cn.get("title", "") == "Stick" and cn["lines"].has("It needs 3. You have %d." % G.down(G.inventory.count("stick")))
+	# a tile in the bag
+	D.open_sheet("bag")
+	await _frames(4)
+	var tiles := []
+	_info_nodes(D.content(), tiles)
+	var it_tile := false
+	for tl in tiles:
+		if tl.get_meta("info")[1] == "boulder":
+			await _tap(tl, true)
+			it_tile = D.info_note().get("title", "") == "Big rock"
+	D.close_sheet()
+	print("info/item: big rock %s, graded %s, store panel %s, a cost's picture %s, a tile in the bag %s  %s" % [it_ok, it_grade, it_panel, it_cost, it_tile, str(it.get("lines", []))])
+	if not (it_ok and it_grade and it_panel and it_cost and it_tile): print("FAIL interface-feel/01 item: see the line above")
+	# --- 01 a bar: energy, water, bag, coins, tapped like a finger would
+	var bars := {}
+	for which in ["energy", "water", "bag", "coins"]:
+		await _tap(D.bar_control(which))
+		bars[which] = D.info_note()
+	var cap_e: int = G.down(G.needs.energy_max())
+	var b_energy: bool = bars["energy"].get("title", "") == "Energy" and bars["energy"]["lines"][0] == "You have 7 of %d." % cap_e and bars["energy"]["action"] and bars["energy"]["extra"]
+	var b_water: bool = bars["water"].get("title", "") == "Water" and bars["water"]["lines"][0] == "You have %d of %d." % [G.down(G.S["water"]), G.down(G.needs.water_cap())] and bars["water"]["action"]
+	var b_bag: bool = bars["bag"].get("title", "") == "Your bag" and str(bars["bag"]["lines"][0]).begins_with("%d of %d room" % [ceili(G.trip.carry_fill() * G.trip.capacity() - 0.0001), int(G.trip.capacity())])
+	var b_coins: bool = bars["coins"].get("title", "") == "Your coins" and str(bars["coins"]["lines"][0]).contains("2 🟡 35 🟤")
+	var card: Control = D.info_card()
+	var vp := Rect2(Vector2.ZERO, D.screen_size()).grow(1.0)
+	var b_inside: bool = card != null and vp.encloses(card.get_global_rect())
+	G.trip.pack("boulder", 9999)                 # the bag is full: in the pop-up of a thing, 🎒 +1 is grey, and its note is above the pop-up
+	D.open_spot("storage")
+	await _frames(3)
+	D.item_panel("boulder")
+	await _frames(3)
+	var mg := []
+	_grey_buttons(M.modal_box, mg)
+	var full_btn: Button = null
+	for x in mg:
+		if str(x.text).begins_with("🎒"): full_btn = x
+	var b_above := false
+	var full_text := ""
+	if full_btn != null:
+		await _tap(full_btn)
+		var fn: Dictionary = D.info_note()
+		full_text = str(fn.get("lines", [""])[0])
+		b_above = D.modal_visible() and full_text == "The bag is full. Take something out first." and D.info_card().get_parent().get_index() > M.modal.get_index()
+	D.close_modal()
+	D.close_sheet()
+	G.trip.unpack_all()
+	D.tap_at(Vector2(D.screen_size().x / 2.0, D.screen_size().y - 40.0))      # a tap anywhere else sends it away
+	await _frames(2)
+	var b_gone: bool = D.info_note().is_empty()
+	G.meta["feel"]["notes"]["infoSecs"]["value"] = 0.1                          # and it leaves by itself
+	await _tap(D.bar_control("water"))
+	var b_open: bool = not D.info_note().is_empty()
+	await get_tree().create_timer(1.0).timeout
+	var b_fades: bool = b_open and D.info_note().is_empty()
+	G.meta["feel"]["notes"]["infoSecs"]["value"] = 8.0
+	print("info/bars: energy %s water %s bag %s coins %s, inside the screen %s, above a pop-up (the full bag's grey 🎒 +1, '%s') %s, a tap elsewhere closes it %s, fades by itself %s" % [b_energy, b_water, b_bag, b_coins, b_inside, full_text, b_above, b_gone, b_fades])
+	if not (b_energy and b_water and b_bag and b_coins and b_inside and b_above and b_gone and b_fades): print("FAIL interface-feel/01 bars: see the line above ", bars)
+	# --- 01 read aloud: off says nothing and has no 🔊, button has one and says it when pressed, auto says it by itself; no emoji is read
+	var ra := {}
+	for mode in ["off", "button", "auto"]:
+		D.read_aloud(mode)
+		D.info_forget_spoken()
+		await _tap(D.bar_control("energy"))
+		var has_btn := false
+		var bs := []
+		_buttons(D.info_card(), bs)
+		for x in bs:
+			if x.text == "🔊": has_btn = true
+		var before: String = D.info_spoken()
+		await _frames(2)
+		var auto: String = D.info_spoken()
+		if mode == "button" and has_btn:
+			for x in bs:
+				if x.text == "🔊": x.emit_signal("pressed")
+		ra[mode] = {"btn": has_btn, "before": before, "auto": auto, "after": D.info_spoken()}
+	var said: String = ra["button"]["after"]
+	var ra_ok: bool = not ra["off"]["btn"] and ra["off"]["auto"] == "" and ra["button"]["btn"] and ra["button"]["auto"] == "" and said.begins_with("Energy. You have") and not said.contains("⚡") and not said.contains("..") and ra["auto"]["btn"] and ra["auto"]["auto"].begins_with("Energy. You have")
+	D.read_aloud("button")
+	print("info/read aloud: off (no 🔊, silent) %s, button (🔊, silent until pressed, then '%s') %s, auto (🔊, speaks at once) %s" % [not ra["off"]["btn"] and ra["off"]["auto"] == "", said.substr(0, 40), ra["button"]["btn"] and ra["button"]["auto"] == "" and said != "", ra["auto"]["btn"] and ra["auto"]["auto"] != ""])
+	if not ra_ok: print("FAIL interface-feel/01 read aloud: see the line above ", ra)
+	# --- 02 energy: too tired. The button is grey because the chore's check says no, and the note is that check's own sentence
+	D.open_spot("storage")
+	await _frames(3)
+	G.S["energy"] = 0.0
+	var ck_e: Dictionary = G.actions.check("fetch_water", G.actions.farmer)
+	var pressed := [false]
+	var gb: Button = UI.button("🪣 test", func(): pressed[0] = true, ck_e, UI.BLUE, 20)
+	D.content().add_child(gb)
+	await _frames(2)
+	await _tap(gb)
+	var ge: Dictionary = D.info_note()
+	var ge_ok: bool = gb.disabled and not pressed[0] and not ck_e["ok"] and ge.get("kind", "") == "grey" and ge["icon"] == "⚡" and ge["lines"][0] == str(ck_e["unmet"][0]["text"]).substr(2) and ge["extra"]
+	print("grey/energy: disabled %s, nothing pressed %s, the note '%s' is the check's own %s, shows what it needs %s" % [gb.disabled, not pressed[0], str(ge.get("lines", [""])[0]), ge.get("lines", [""])[0] == str(ck_e["unmet"][0]["text"]).substr(2), ge.get("extra", false)])
+	if not ge_ok: print("FAIL interface-feel/02 energy: see the line above")
+	D.close_sheet()
+	# --- 02 season: winter wheat in spring (a real patch sheet)
+	G.S["energy"] = 20.0
+	G.S["unlocked"]["k_winter_wheat"] = true
+	G.S["unlocked"]["crop_winter_wheat"] = true
+	G.S["step"] = 0
+	G.changed.emit()
+	await _frames(3)
+	D.tap_patch("field", 0)
+	await _frames(4)
+	var gs := []
+	_grey_buttons(D.content(), gs)
+	var season_btn: Button = null
+	for x in gs:
+		var w = x.get_meta("grey", null)
+		if w is Dictionary and w["unmet"].size() > 0 and w["unmet"][0]["key"] == "season": season_btn = x
+	var sn_ok := false
+	var sn_text := ""
+	if season_btn != null:
+		await _tap(season_btn)
+		var sn: Dictionary = D.info_note()
+		sn_text = str(sn.get("lines", [""])[0])
+		sn_ok = sn.get("kind", "") == "grey" and sn_text.contains("Winter wheat is sown in autumn / winter")
+	print("grey/season: a greyed Plant button found %s, its note: '%s' %s" % [season_btn != null, sn_text, sn_ok])
+	if not sn_ok: print("FAIL interface-feel/02 season: see the line above")
+	D.close_sheet()
+	# --- 02 item and unlock: goals as cards (the same card the places show)
+	var miss_id := ""
+	var req_id := ""
+	for id in G.nodes:
+		var ck: Dictionary = G.progression.can_unlock(id)
+		if ck["ok"] or G.done(id): continue
+		if ck["unmet"][0]["key"] == "missing" and miss_id == "" and not (ck["cost"] as Dictionary).is_empty(): miss_id = id
+		if ck["unmet"][0]["key"] == "requires" and req_id == "" and G.nodes[id]["type"] in ["building", "tool", "station"]: req_id = id
+	D.open_spot("storage")
+	await _frames(3)
+	var gi_ok := false
+	var gi_text := ""
+	var gu_ok := false
+	var gu_text := ""
+	for pair in [[miss_id, "missing"], [req_id, "requires"]]:
+		if pair[0] == "": continue
+		var nr: Control = M.widgets.node_row(pair[0])
+		D.content().add_child(nr)
+		await _frames(2)
+		var nb := []
+		_grey_buttons(nr, nb)
+		if nb.is_empty(): continue
+		await _tap(nb[0])
+		var gn: Dictionary = D.info_note()
+		var want: String = str(G.progression.can_unlock(pair[0])["unmet"][0]["text"])
+		var is_same: bool = gn.get("kind", "") == "grey" and str(gn["lines"][0]) == want
+		if pair[1] == "missing": gi_ok = is_same and str(gn["lines"][0]).begins_with("Missing:"); gi_text = want
+		else: gu_ok = is_same and str(gn["lines"][0]).begins_with("Needs first:"); gu_text = want
+	print("grey/item: '%s' %s   grey/unlock: '%s' %s" % [gi_text, gi_ok, gu_text, gu_ok])
+	if not (gi_ok and gu_ok): print("FAIL interface-feel/02 item and unlock: see the line above (goals %s, %s)" % [miss_id, req_id])
+	D.close_sheet()
+	# --- 02 no silent grey: every greyed-out button on every place's sheet, the quest book and the bag, in a new game (at home, then on the
+	# village square) and in a chapter 3 farm, tired and without coins, carries a reason
+	var silent := []
+	var n_grey := 0
+	for state in ["home", "square", "chapter 3"]:
+		if state == "chapter 3": G.load_game("res://tests/fixtures/ch3-seed1.json")
+		G.S["energy"] = 0.0
+		G.S["coins"] = 0.0
+		if state == "square": G.trip.test_square()
+		G.changed.emit()
+		await _frames(3)
+		var pages := []
+		for sid in D.map().slots: pages.append("spot:" + sid)
+		pages.append_array(["goals", "bag"])
+		for pg in pages:
+			if pg.begins_with("spot:"): D.open_spot(pg.substr(5))
+			else: D.open_sheet(pg)
+			await _frames(2)
+			var gl := []
+			_grey_buttons(D.content(), gl)
+			_grey_buttons(M.modal_box, gl)
+			for x in gl:
+				n_grey += 1
+				var wy = x.get_meta("grey", null)
+				if wy == null or (wy is Dictionary and wy["unmet"].is_empty()) or str(wy) == "": silent.append("%s %s: %s" % [state, pg, x.text])
+			D.close_modal()
+		if state == "square":                      # every stall of the village square
+			D.open_spot("market")
+			for stl in D.square_stalls():
+				if not D.square_tap(stl): silent.append("square: no stall " + stl)
+				await _frames(2)
+				D.close_modal()                        # (the sign opens the question on the way home)
+				var gl2 := []
+				_grey_buttons(D.content(), gl2)
+				for x in gl2:
+					n_grey += 1
+					var wy2 = x.get_meta("grey", null)
+					if wy2 == null or (wy2 is Dictionary and wy2["unmet"].is_empty()) or str(wy2) == "": silent.append("square %s: %s" % [stl, x.text])
+		if state == "square": G.trip.leave()
+		D.close_sheet()
+	print("grey/no silent grey: %d greyed-out buttons over every place, the quest book and the bag (new game at home and in the village, a chapter 3 farm), without a reason: %s" % [n_grey, str(silent)])
+	if not (silent.is_empty() and n_grey > 20): print("FAIL interface-feel/02 silent grey: see the line above")

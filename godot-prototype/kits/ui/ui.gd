@@ -12,7 +12,7 @@ const AMBER := Color("c98a12")
 const BLUE := Color("3f7fb5")
 const SOIL := Color("8a5a2b")
 const LINE := Color("d9cfb8")
-## Tapping a bar shows a very short explanation of it: the game sets this (text -> shows it as a little note).
+## Tapping a bar shows a very short explanation of it: the game sets this (text, the tapped control -> shows it as a little note).
 static var explain_hook: Callable
 
 ## Makes a bar (or any small display) explain itself when tapped: a one-line note, and the same text as tooltip.
@@ -29,7 +29,46 @@ static func _explain_input(e: InputEvent, c: Control) -> void:
 	if e.pressed:
 		c.set_meta("explain_down", e.position)
 	elif e.position.distance_to(c.get_meta("explain_down", Vector2(-999, -999))) < 16.0 and explain_hook.is_valid():
-		explain_hook.call(str(c.get_meta("explain", "")))
+		explain_hook.call(str(c.get_meta("explain", "")), c)
+
+## Tapping something that is not a button (a bar, a tile, a cost's little picture) shows a short note about it: the game sets this
+## (kind, id, the tapped control) and shows the note (interface-feel/01). kind "item": id is an item; any other word is the game's own.
+static var info_hook: Callable
+## Tapping a greyed-out button says why it is grey (interface-feel/02): the game sets this (the button) and shows the note.
+## A disabled Button does not emit `pressed`, but it still gets `gui_input`: every button made here listens to it (see `grey`).
+static var grey_hook: Callable
+
+## Makes a control show a note about `kind`/`id` when it is tapped (a finger dragging over it still scrolls the list).
+static func info(c: Control, kind: String, id := "") -> Control:
+	if c.mouse_filter == Control.MOUSE_FILTER_IGNORE: c.mouse_filter = Control.MOUSE_FILTER_PASS
+	c.set_meta("info", [kind, id])
+	c.gui_input.connect(_info_input.bind(c))
+	return c
+
+static func _info_input(e: InputEvent, c: Control) -> void:
+	if _tapped(e, c, "info_down") and info_hook.is_valid():
+		var k: Array = c.get_meta("info")
+		info_hook.call(k[0], k[1], c)
+
+## Has the left button just been pressed and let go again at (nearly) the same place? (A drag is a scroll, not a tap.)
+static func _tapped(e: InputEvent, c: Control, key: String) -> bool:
+	if not (e is InputEventMouseButton) or e.button_index != MOUSE_BUTTON_LEFT: return false
+	if e.pressed:
+		c.set_meta(key, e.position)
+		return false
+	return e.position.distance_to(c.get_meta(key, Vector2(-999, -999))) < 16.0
+
+## Lets a button answer a tap while it is greyed out. `why` is what the game shows then: a String, or the Dictionary a rule gave
+## (`G.actions.check`, `G.progression.can_unlock`: "ok", "unmet": [{"key", "text"}], "cost"). Called by every button made here.
+static func grey(b: Button, why: Variant = null) -> Button:
+	if why != null and not (why is String and why == "") and not (why is Dictionary and why.is_empty()): b.set_meta("grey", why)
+	if not b.has_meta("grey_wired"):
+		b.set_meta("grey_wired", true)
+		b.gui_input.connect(_grey_input.bind(b))
+	return b
+
+static func _grey_input(e: InputEvent, b: Button) -> void:
+	if b.disabled and _tapped(e, b, "grey_down") and grey_hook.is_valid(): grey_hook.call(b)
 
 const SEASON_BG := {"spring": Color("e7f1d8"), "summer": Color("f4efc8"), "autumn": Color("f3e0c6"), "winter": Color("e6edf3")}
 
@@ -67,10 +106,14 @@ static func rich(bb: String, size := 16) -> RichTextLabel:
 	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return r
 
-static func button(text: String, cb: Callable, enabled := true, color := GREEN, size := 16) -> Button:
+## `enabled`: true or false, or what a rule answered (a Dictionary with "ok", like `G.actions.check`): then the button is grey exactly
+## when the rule says no, and a tap on it tells the rule's reasons. `why`: a sentence for a button greyed by a plain condition.
+static func button(text: String, cb: Callable, enabled: Variant = true, color := GREEN, size := 16, why := "") -> Button:
 	var b := Button.new()
 	b.text = text
-	b.disabled = not enabled
+	var rule: Dictionary = enabled if typeof(enabled) == TYPE_DICTIONARY else {}
+	b.disabled = not (bool(rule.get("ok", false)) if typeof(enabled) == TYPE_DICTIONARY else bool(enabled))
+	grey(b, rule if not rule.is_empty() else why)
 	b.focus_mode = Control.FOCUS_NONE
 	b.mouse_filter = Control.MOUSE_FILTER_PASS   # lets a finger drag scroll the list; a drag cancels the press
 	b.custom_minimum_size = Vector2(0, 40)
@@ -91,8 +134,8 @@ static func button(text: String, cb: Callable, enabled := true, color := GREEN, 
 static func _tap() -> void:
 	Sound.play("tap")
 
-static func soft_button(text: String, cb: Callable, enabled := true, size := 15) -> Button:
-	var b := button(text, cb, enabled, Color("e9dfc8"), size)
+static func soft_button(text: String, cb: Callable, enabled: Variant = true, size := 15, why := "") -> Button:
+	var b := button(text, cb, enabled, Color("e9dfc8"), size, why)
 	b.add_theme_color_override("font_color", INK)
 	b.add_theme_color_override("font_hover_color", INK)
 	b.add_theme_color_override("font_pressed_color", INK)
@@ -179,7 +222,7 @@ static func iso_side(ci: CanvasItem, a: Vector2, b: Vector2, tex: Texture2D, fal
 ## Colour of an item's cubes. An item in the data can set its own ("color": "#rrggbb").
 const ITEM_COLORS := {
 	"energy": "f2c230", "water": "4aa3df", "coins": "e0b13a", "fuel": "a0642c",
-	"stick": "9a6b3c", "log": "7a5230", "plank": "c99a5b", "hardwood": "6b4426", "stone": "9a9a92", "fiber": "7fae4a",
+	"stick": "9a6b3c", "log": "7a5230", "plank": "c99a5b", "hardwood": "6b4426", "stone": "9a9a92", "boulder": "7f7f78", "fiber": "7fae4a",
 	"rope": "c8a46a", "straw": "e3c565", "clay": "b8734a", "brick": "b5523b", "charcoal": "3d3a38", "iron_ore": "8a6f5f",
 	"iron": "7d8790", "nails": "a9b0b6", "steel": "9fb3c4", "sand": "e6d39a", "glass": "a8dcef", "ash": "b7b5b0",
 	"compost": "5e4128", "manure": "6b4a2b", "worm_castings": "4a3324", "wheat": "e8c24a", "oats": "d9c27a",
@@ -209,12 +252,12 @@ const WORD := {"gather": "Gather", "weed": "Pull", "field": "Clear", "plant": "P
 	"process": "Press", "textile": "Weave", "animal": "Collect", "errand": "Deliver"}   # i18n
 
 ## A green button with a picture and one word: "💪 Gather", "🤏 Twist", "🍲 Cook" (word "-" = the picture only).
-static func action_button(cat: String, cb: Callable, enabled := true, color := GREEN, emoji := "", word := "") -> Button:
+static func action_button(cat: String, cb: Callable, enabled: Variant = true, color := GREEN, emoji := "", word := "", why := "") -> Button:
 	var pic := emoji if emoji != "" else str(ACTION.get(cat, "💪"))
 	if word == "": word = str(WORD.get(cat, ""))
 	word = TranslationServer.translate(word)
 	if word == "-": word = ""
-	var b := button(pic + ("  " + word if word != "" else ""), cb, enabled, color, 22 if word != "" else 26)
+	var b := button(pic + ("  " + word if word != "" else ""), cb, enabled, color, 22 if word != "" else 26, why)
 	b.custom_minimum_size = Vector2(118 if word != "" else 72, 52)
 	return b
 
@@ -280,6 +323,8 @@ static func cost_row(c: Dictionary, base: Dictionary, have: Callable, emoji: Cal
 		if need <= 0.0: continue
 		var item := hbox(3)
 		item.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		item.set_meta("info_need", need)
+		info(item, "item", k)              # a tap: what it is, how much you have, what it needs (interface-feel/01)
 		var pic: Texture2D = icon.call(k) if icon.is_valid() else null
 		item.add_child(pic_or_emoji(pic, str(emoji.call(k)), 24.0, 18))
 		var cb := CubeBar.new()

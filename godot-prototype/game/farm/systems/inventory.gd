@@ -35,7 +35,7 @@ func have(k: String) -> float:
 ## (-1: Proper); batches of the same season and grade merge. Returns what went in.
 func add_item(k: String, q: float, quiet := false, grade := -1) -> float:
 	if q <= 0.0 or not G.items.has(k): return 0.0
-	var cap := G.needs.storage_cap()
+	var cap := G.needs.storage_cap(k)
 	var room := cap - count(k)
 	var put := q if (G.items[k].get("category", "") in ["keeper"]) else minf(q, maxf(0.0, room))
 	if put < q - 0.001:

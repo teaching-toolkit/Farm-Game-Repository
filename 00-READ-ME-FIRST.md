@@ -31,7 +31,7 @@ the parent play-tests with the child on the laptop. The person you work with is 
 | `.claude/skills/` | the project skills: `farm-game-session` (how to work), `farm-game-check` (Godot, checks, export), `farm-game-content` (questions, texts and German, numbers, sounds, pictures, layout) |
 | `CLAUDE.md` | a few lines Claude Code loads by itself |
 | `godot-prototype/` | **the game**: `kits/` (reusable parts), `game/farm/` (this game's rules and screens), `data/`, `assets/`, `tests/`, `tools/` |
-| `tools/` | project tools: `tracker.py` (frontier and queue), `check_docs.py` (links, tickets, log) |
+| `tools/` | project tools: `tracker.py` (frontier and queue), `check_docs.py` (links, tickets, log), `parallel/` (running several tickets as parallel agents, see its README) |
 | `story/` | **the story**, sorted by role (canon, outline, novella, game, archive); start at `story/README.md` |
 | `progression/` | the progression explorer with a copy of the data and the bot's pacing report |
 | `Update explorer.command` | double-click on the Mac to refresh the explorer (checks the data, lets the bot play ~3 min) |

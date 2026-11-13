@@ -88,6 +88,7 @@ func refresh() -> void:
 			icon_size = 26
 			txt = tr("Overgrown") if area_name == "field" else ""
 			b.disabled = true
+			UI.grey(b, tr("🌿 Overgrown. It has to be cleared before anything grows there."))      # a tap says why (interface-feel/02)
 			if Art.tex("deco", "overgrown_patch") != null:
 				# a bramble patch drawn on wild green ground
 				tex_key = ""

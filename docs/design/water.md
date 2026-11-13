@@ -4,7 +4,7 @@ Part of the game's design ([index](README.md)). It describes the game as built; 
 
 ### 5.2 Water 💧
 
-Water never comes by itself: **every drop is carried.** A trip (tap the water in the top bar, the pond or the well) costs
+Water never comes by itself: **every drop is carried.** A trip (tap the water in the top bar and then 🪣 Get water, or go to the pond or the well) costs
 1 ⚡; what improves is how much a trip brings and how much the store holds, so later on the player carries water less often.
 
 | Water source | Each trip | Holds |

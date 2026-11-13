@@ -16,6 +16,10 @@ func _init(main: FarmMain) -> void:
 
 # ------------------------------------------------------------------ what a place shows
 
+## The notice board stands on the village square too (ui/square.gd): the same favours and little jobs as the farm's board, once that is there.
+func register_stalls(sq: FarmUiSquare) -> void:
+	sq.add_stall("board", sheet_spot.bind("board"), func(): return not M.mapview.mystery("board"))
+
 ## A locked place with nothing within reach: only a weathered sign and a promise.
 func part_mystery() -> void:
 	M.content.add_child(UI.header(Art.first("deco", ["mystery_sign", "signpost"]), "🪧", 130))

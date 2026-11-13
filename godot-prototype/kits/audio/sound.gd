@@ -82,6 +82,10 @@ func music(situation: String, season := "") -> void:
 	if typeof(want) == TYPE_DICTIONARY: want = want.get(season, want.get("any", ""))
 	_switch(str(want))
 
+## The track that plays now ("" for silence: music off, or no file for it yet); the tests read it.
+func playing_track() -> String:
+	return _track
+
 func _switch(track: String) -> void:
 	var t: Dictionary = C.get("music", {}).get("tracks", {}).get(track, {})
 	var path := _path("music", str(t.get("file", ""))) if not t.is_empty() else ""

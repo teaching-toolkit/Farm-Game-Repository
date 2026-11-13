@@ -1,8 +1,9 @@
 {
   "stick": {"name": "Stick", "emoji": "🪵", "category": "material", "value": 0, "desc": "From clearing bushes and the Woodlot.", "chapter": 1},
-  "stone": {"name": "Stone", "emoji": "🪨", "category": "material", "value": 0, "desc": "From clearing rocky patches; cheap at the Raw Materials Merchant.", "chapter": 1},
+  "stone": {"name": "Small stone", "emoji": "🪨", "category": "material", "value": 0, "desc": "Picked up from the ground and out of the soil. For tools, fire rings and small things.", "chapter": 1},
+  "boulder": {"name": "Big rock", "emoji": "⛰️", "category": "material", "value": 0, "desc": "Dug out with a shovel or taken from old ruins. Heavy! For roads, walls and big buildings.", "chapter": 1},
   "fiber": {"name": "Plant Fiber", "emoji": "🌿", "category": "material", "value": 0, "desc": "Tough weed stems. Twisted into rope; compostable.", "chapter": 1},
-  "rope": {"name": "Rope", "emoji": "🪢", "category": "material", "value": 30, "desc": "3 fiber twisted together. Ties every early build.", "chapter": 1},
+  "rope": {"name": "Rope", "emoji": "🪢", "category": "material", "value": 45, "desc": "3 fiber twisted together. Ties every early build.", "chapter": 1},
   "straw": {"name": "Straw", "emoji": "🌾", "category": "byproduct", "value": 15, "tags": ["compostable"], "desc": "By-product of wheat and oats. Thatch, bedding, compost, beehive skeps. Nobody buys straw — use it.", "chapter": 1, "noSell": true},
   "log": {"name": "Log", "emoji": "🪵", "category": "material", "value": 15, "desc": "From stumps, the Woodlot and later the Lumbermill.", "chapter": 1},
   "plank": {"name": "Plank", "emoji": "🟫", "category": "material", "value": 15, "desc": "Split from logs (axe) — four times as many with a saw.", "chapter": 2},
@@ -56,7 +57,7 @@
   "yogurt_culture": {"name": "Yogurt Culture", "emoji": "🧫", "category": "keeper", "desc": "Bought once from the Culture Specialist; kept alive by every batch.", "chapter": 2, "value": 0},
   "cheese_culture": {"name": "Cheese Culture", "emoji": "🧫", "category": "keeper", "desc": "Bought once from the Culture Specialist (plant-based rennet).", "chapter": 2, "value": 0},
   "flour": {"name": "Flour", "emoji": "🌾", "category": "ingredient", "tags": ["flour"], "chapter": 1, "value": 100},
-  "fine_flour": {"name": "Fine Flour", "emoji": "✨", "category": "ingredient", "tags": ["flour"], "chapter": 6, "value": 135},
+  "fine_flour": {"name": "Fine Flour", "emoji": "✨", "category": "ingredient", "tags": ["flour"], "chapter": 6, "value": 178},
   "butter": {"name": "Butter", "emoji": "🧈", "category": "ingredient", "tags": ["dairy", "fat"], "chapter": 2, "value": 330},
   "honey": {"name": "Honey", "emoji": "🍯", "category": "ingredient", "tags": ["sweet", "sweetener"], "chapter": 2, "value": 150},
   "sugar": {"name": "Sugar", "emoji": "🧂", "category": "ingredient", "tags": ["sweet", "sweetener"], "chapter": 3, "value": 210},
@@ -89,7 +90,7 @@
   "rainbow_yarn": {"name": "Rainbow Yarn", "emoji": "🌈", "category": "textile", "chapter": 6, "value": 1185},
   "porridge": {"name": "Porridge", "emoji": "🥣", "category": "dish", "buff": {"energy": 0.9, "questions": 1}, "chapter": 1, "value": 60},
   "roast_carrots": {"name": "Roast Carrots", "emoji": "🥕", "category": "dish", "buff": {"energy": 0.9, "questions": 1}, "chapter": 1, "value": 105},
-  "flatbread": {"name": "Flatbread", "emoji": "🫓", "category": "dish", "tags": ["bread"], "buff": {"energy": 0.9, "questions": 1}, "chapter": 1, "value": 75},
+  "flatbread": {"name": "Flatbread", "emoji": "🫓", "category": "dish", "tags": ["bread"], "buff": {"energy": 0.9, "questions": 1}, "chapter": 1, "value": 105},
   "veg_soup": {"name": "Vegetable Soup", "emoji": "🍲", "category": "dish", "tags": ["soup"], "buff": {"energy": 0.8, "questions": 2}, "chapter": 1, "value": 105},
   "bunny_bowl": {"name": "Carrot-Clover Bowl", "emoji": "🥗", "category": "dish", "tags": ["pet-dish"], "chapter": 1, "value": 210},
   "stone_soup": {"name": "Stone Soup", "emoji": "🍲", "category": "dish", "tags": ["soup"], "buff": {"energy": 0.8, "questions": 2}, "chapter": 2, "value": 180},
@@ -179,6 +180,6 @@
   "marigold_salve": {"name": "Marigold salve", "emoji": "🫙", "category": "remedy", "value": 330, "tags": ["remedy"], "desc": "In the old days people used it like this. Today: ask a grown-up or a doctor.", "chapter": 5},
   "arnica_salve": {"name": "Arnica salve (skin only)", "emoji": "🫙", "category": "remedy", "value": 360, "tags": ["remedy"], "desc": "In the old days people used it like this. Today: ask a grown-up or a doctor.", "chapter": 5},
   "lavender_water": {"name": "Lavender water", "emoji": "💜", "category": "remedy", "value": 390, "tags": ["remedy"], "desc": "In the old days people used it like this. Today: ask a grown-up or a doctor.", "chapter": 5},
-  "healers_chest": {"name": "Healer's Chest", "emoji": "🧰", "category": "dish", "tags": ["pet-dish"], "desc": "A box with different remedies, each made from the right part of the right plant. The badger will want to see it.", "chapter": 5, "value": 900},
+  "healers_chest": {"name": "Healer's Chest", "emoji": "🧰", "category": "dish", "tags": ["pet-dish"], "desc": "A box with different remedies, each made from the right part of the right plant. The badger will want to see it.", "chapter": 5, "value": 1150},
   "tea_set": {"name": "Tea Set", "emoji": "🫖", "category": "pet-item", "desc": "A little pot and cups of fired clay. The badger's spine is: tea first.", "chapter": 5, "value": 0}
 }

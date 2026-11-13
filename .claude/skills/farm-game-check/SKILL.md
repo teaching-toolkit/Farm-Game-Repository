@@ -48,28 +48,36 @@ After any change to the game, run all three, and read the whole output:
 
 ```bash
 timeout 178 bash tests/check_all.sh      # smoke test + save fixtures + places and pets + golden run + translations in one go (~120 s)
-timeout 170 $G --headless --path . --audio-driver Dummy res://tests/ui_smoke.tscn
-timeout 170 $G --headless --path . --audio-driver Dummy res://tests/bot.tscn -- --chapter=5 --iters=1100
+timeout 170 $G --headless --path . --audio-driver Dummy res://tests/ui_smoke.tscn -- --seed=1
+timeout 170 $G --headless --path . --audio-driver Dummy res://tests/bot.tscn -- --chapter=5 --iters=1100 --seed=1
 timeout 170 $G --headless --path . --audio-driver Dummy -s res://tests/learn_sim.gd     # when Rest or the curriculum changed
 ```
+
+**On the parent's own Mac, never run the smoke test or the bot without `-- --seed=N`, and run every Godot test with a throwaway `HOME`**
+(`mkdir -p $S/home && HOME=$S/home $G …`). Without `--seed` they write their farm into Godot's user folder
+(`~/Library/Application Support/Godot/app_userdata/Hazelwood Harvest/`), which is where the parent's real saves live (9 Nov 2026: two
+unseeded smoke runs overwrote the `players/sean` save; restored from a backup taken just before). Take such a backup
+(`cp -R` of that folder) before the first test run of a session on the Mac. macOS has no `timeout`: use `perl -e 'alarm shift; exec @ARGV' 170 …`
+or just the tool's own time limit. The checks can also run on a copy in the scratchpad (`rsync -a --exclude .godot … $S/proj/`, then
+`--import` once); the docs check (`../tools/check_docs.py`) then needs the real folder.
 
 What a pass looks like:
 - **Smoke test:** prints its findings and reports no errors. "leaked" and audio-driver warnings at the end are harmless.
   If it prints **nothing** and stops at the timeout, a script has a parse error: find it with
   `$G --headless --path . --check-only -s res://<the script you changed>`. ("Identifier not found: Sound" from `--check-only`
   is expected.)
-- **Bot:** reaches chapter 3 after about 290–530 Time Quiz answers and chapter 5 after about 690–870 (with the first four
+- **Bot:** reaches chapter 3 after about 290–530 Time Quiz answers and chapter 5 after about 690–870 until 8 Nov 2026 and about 1070–1240 since (seeds 1–3: 1073, 1089, 1243, was 864, 986, 852: the walk home costs a question now, weeds and stones take harvest) (with the first four
   pets; the alpaca is chapter 5's own goal, which the bot stops before). A run takes about 30–75 seconds. It plays randomly
   (7 Oct 2026: 678, 715, 763, 774, 689, 793; 12 Oct 2026 on the Mac's Linux shell: chapter 5 at 686, 866, 850, 690, 771, 858,
   chapter 3 at 362, 526, 329, 326, 289, the spread is wider than first thought); if one run falls outside the range, run it twice more before concluding
   anything. If the change is meant to alter the pace, say by how much and update the numbers here and in the prototype README.
   A new mechanic needs the bot to learn it, or the bot no longer tests the game. `--trace=N` prints the first N questions;
   `--flex` plays with dynamic difficulty; `--accuracy=0.8` misses a share of first tries (the bot answers real questions through `G.timeq`, on the farm and on every walk).
-- **Golden run** (`tests/golden.sh`, part of `check_all.sh`): the bot plays seeds 1 and 2 to chapter 5 (636 and 771 steps since 3 Nov 2026,
+- **Golden run** (`tests/golden.sh`, part of `check_all.sh`): the bot plays seeds 1 and 2 to chapter 5 (564 and 568 steps since 13 Nov 2026, 567 and 540 since 10 Nov 2026,
   30 Oct 2026) and must match `tests/golden/` step by step. A restructuring that changes it changed the rules: find out why
   before going on. Only a change to rules or numbers made on purpose is recorded anew (`bash tests/golden.sh --record`), and
   the log says so. **Short or full:** golden runs do not need to run through all chapters every time. `bash tests/golden.sh --short`
-  (or `check_all.sh --short`) plays seeds 1 and 2 only to the end of chapter 2 (304 and 447 steps, ~70 s); use it after every slice. Run the full
+  (or `check_all.sh --short`) plays seeds 1 and 2 only to the end of chapter 2 (185 and 202 steps, ~60 s); use it after every slice. Run the full
   run when a slice touches a late system (the Lord's share from chapter 3, Wren's check and poisoning, forest trips, medicine and healing
   ranks, pets' blessings in free play, wellbeing parties and visits) and once before a feature is done. `--record` records the files of the same limit.
 - **Save fixtures** (`tests/fixtures_test.tscn`): every save in `tests/fixtures/` loads, plays on and saves unchanged.

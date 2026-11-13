@@ -16,7 +16,10 @@ well as a card review).
   waits with *Next question* and the question comes back after the next one, as on the farm. After a right answer on the way to the
   village, into the forest or out of it, the green answer shows for a moment (1.2 s, `playback.walkRight` in `rules/65-feel.json`) and
   the pop-up closes straight into the place (the square, the forest, the basket at the forest edge): no arrival line, no extra button
-  (the background will show where the farmer is). A visit keeps its little scene with the neighbour and its *Back to the farm* button. (The walk home from the village has its purpose name ready for `money-market/04`.)
+  (the background will show where the farmer is). A visit keeps its little scene with the neighbour and its *Back to the farm* button.
+  **The walk home from the village is a walk too** (purpose `home_from_village`, `money-market/04`): *🏠 Back home* on the village square opens one question
+  ("🏠 On the way home"); a right first answer takes the farmer home (the bag is emptied, the square closes into the farm), a wrong one waits with *Next question*,
+  and a pop-up closed without an answer leaves the farmer on the square. It costs the question and no energy.
 - **Questions have their own dice.** Which question comes, and the order of its answers, is decided by the quiz's own random source, so
   what the farm rolls (rain, pests, luck) never depends on which question came up. The retry and the recently asked questions are
   remembered by the question's id, so a pack can be added or switched off without mixing them up.

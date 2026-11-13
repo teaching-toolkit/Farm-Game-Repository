@@ -269,6 +269,23 @@ for f in TR.get("storeFilters", []):
 for c in {it.get("category", "") for it in ITEMS.values()}:
     if c and c not in _filter_cats and c not in ("seed",): warn("trip", f"items of category {c!r} are in no store filter (they show under All only)")
 
+# the village square's scene (money-market/07): every picture exists, the stalls are the known ones, every place is inside the scene
+SQ = TR.get("square", {})
+if not SQ: err("trip", "no 'square' in rules/49-trip.json (the village square's scene)")
+SQ_STALLS = ("sell", "seeds", "traders", "orders", "board", "home")      # the stalls the interface registers (ui/square.gd add_stall) and the sign home
+if SQ.get("first") not in SQ_STALLS[:-1]: err("trip", f"square: first ({SQ.get('first')!r}) must be one of the stalls")
+_sq_ids = [s.get("id") for s in SQ.get("stalls", [])]
+for need in SQ_STALLS:
+    if _sq_ids.count(need) != 1: err("trip", f"square: exactly one stall with id {need!r} is needed (found {_sq_ids.count(need)})")
+for e in SQ.get("deco", []) + SQ.get("stalls", []):
+    what = e.get("id", e.get("art", "?"))
+    if e.get("id") and e["id"] not in SQ_STALLS: err("trip", f"square: unknown stall id {e['id']!r}")
+    if e.get("art") and not any(os.path.exists(os.path.join(ROOT, "assets", e["art"] + ext)) for ext in (".png", ".webp")): err("trip", f"square: picture assets/{e['art']}.png does not exist ({what})")
+    if not e.get("art") and not e.get("id"): err("trip", "square: a deco entry without a picture")
+    if not (0 <= float(e.get("x", -1)) <= 1 and 0 <= float(e.get("y", -1)) <= 1 and 0 < float(e.get("w", 0)) <= 1): err("trip", f"square: {what}: x, y and w must be shares between 0 and 1")
+    if e.get("id") and not e.get("emoji"): err("trip", f"square: stall {e['id']} has no emoji (what it is for must be shown, not read)")
+if SQ.get("ground") and not os.path.exists(os.path.join(ROOT, "assets", SQ["ground"] + ".png")): err("trip", f"square: ground picture assets/{SQ['ground']}.png does not exist")
+
 # ---------------------------------------------------------------- the Lord's share (rules/53-lord.json)
 LD = META.get("lord", {})
 if not LD: warn("lord", "rules/53-lord.json is missing")
@@ -525,6 +542,9 @@ for parent, info in PLACES["interiors"].items():
 for sid, chain in PLACES["artChains"].items():
     if sid not in spots: err("artChains", f"{sid} is not a place")
     for nid in chain: node_id(f"artChains {sid}", nid, "chain")
+for sid, pic in PLACES.get("placeArt", {}).items():
+    if sid not in spots: err("placeArt", f"{sid} is not a place")
+    if not os.path.exists(os.path.join(ROOT, "assets", "map", pic + ".png")): warn("placeArt", f"{sid}: assets/map/{pic}.png does not exist (the place shows its emoji)")
 for sid, chain in PLACES["cornerArt"].items():
     for nid in chain: node_id(f"cornerArt {sid}", nid, "corner picture")
 for b in PLACES["bench"]:

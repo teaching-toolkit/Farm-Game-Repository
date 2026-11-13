@@ -27,7 +27,7 @@ until the prototype stands.
 ## Pictures
 
 - **Now:** nothing.
-- **Next (prototype):** the window pictures (`pictures/08` → `09`), the village sign (`pictures/11`), the village square and merchants
+- **Next (prototype):** the window pictures (`pictures/08` → `09`), the village square and merchants
   (`pictures/04`, `06`), straw, flour and hay (`pictures/01`), building stages (`pictures/05`), season pictures (`pictures/12`).
 
 ## Sounds

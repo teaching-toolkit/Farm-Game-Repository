@@ -25,6 +25,7 @@ layout = json.load(open(os.path.join(ROOT, "data", "map_layout.json"), encoding=
 places_data = json.load(open(os.path.join(ROOT, "data", "farm", "places.json"), encoding="utf-8"))
 titles = {sid: (p["name"], p["emoji"]) for sid, p in places_data["spots"].items()}
 chains = places_data["artChains"]
+place_art = places_data.get("placeArt", {})       # a place's own picture, if not named after it (the market place: village_sign)
 plot_chains = dict(places_data["plotChains"])
 hotspot_art = places_data["cornerArt"]
 interiors = {b: {"art": i["art"], "members": i["members"]} for b, i in places_data["interiors"].items()}
@@ -69,9 +70,10 @@ for sid, p in layout["places"].items():
         open_at_start = sid in always or any(n in start for n in plot_chains.get(sid, []))
     else:
         started = [n for n in chain if n in start]
-        start_pic = next((add_pic("map/" + n) for n in reversed(started) if exists("map/" + n)), None) or add_pic("map/" + sid)
-        final_pic = next((add_pic("map/" + n) for n in reversed(chain) if exists("map/" + n)), None) or add_pic("map/" + sid)
-        open_at_start = sid in always or bool(started) or (not chain and exists("map/" + sid) and sid in ("forest", "market", "board", "field"))
+        own = place_art.get(sid, sid)
+        start_pic = next((add_pic("map/" + n) for n in reversed(started) if exists("map/" + n)), None) or add_pic("map/" + own)
+        final_pic = next((add_pic("map/" + n) for n in reversed(chain) if exists("map/" + n)), None) or add_pic("map/" + own)
+        open_at_start = sid in always or bool(started) or (not chain and exists("map/" + own) and sid in ("forest", "market", "board", "field"))
     if sid == "home":
         title = "House"
         add_pic("plots/home", 320)

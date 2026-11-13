@@ -92,7 +92,7 @@ special dish and a comfort item, and each arrival ends a chapter. The farm is re
 2. **Look at the changed farm.** Ripe crops glow, things that came in fly to the store, pests peck and leave.
 3. **Do things on the farm** — gather, plant, harvest, weed, cook, craft, build, collect from animals. Every job costs
    **energy** (and often water, materials and coins).
-4. **Rest when tired.** Tap the energy bar and answer sums: each right sum gives energy back (more in a better home).
+4. **Rest when tired.** Tap the energy bar, then 😴 Rest, and answer sums: each right sum gives energy back (more in a better home).
 5. **Choose:** sell now, keep for a recipe, eat for a bonus, burn, compost, feed.
 6. **Reach goals** — a building, a tool, a delivery that opens a new merchant, a knowledge card, a favour for a neighbour,
    and in the end a pet. Each goal opens the next ones.
