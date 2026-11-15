@@ -14,7 +14,7 @@ func _ready() -> void:
 	G.invalidate_caps()
 	_check(F.open() and _go("forest_enter") and F.inside() and _go("forest_leave") and not F.inside(), "…and then it can be entered and left")
 	_go("forest_enter")
-	G.S["energy"] = 30.0
+	G.S["energy"] = 30.0; G.S["moments"] = 0
 	G.S["step"] = 40       # summer
 	_check(G.seasons.season() == "summer", "it is summer")
 	_check(_can("glade", "chamomile") and _can("clearing", "marigold"), "summer plants can be picked")
@@ -57,7 +57,7 @@ func _ready() -> void:
 	_check(G.inventory.count("bread") >= 1.0 and F.favour() == {"chore": "wren_water"}, "a dish dearer than her limit is not taken: the bucket instead")
 	# without a dish she asks for a bucket of water: energy and water, never coins
 	G.S["inv"].clear(); G.S["coins"] = 500.0; G.S["water"] = 20.0
-	G.S["energy"] = 30.0; G.S["step"] = 45; G.S["forest"]["rest"] = {}
+	G.S["energy"] = 30.0; G.S["moments"] = 0; G.S["step"] = 45; G.S["forest"]["rest"] = {}
 	_do("forest_find", "glade", "chamomile", {"option": "chamomile"})
 	_check(F.favour() == {"chore": "wren_water"}, "without a dish she asks for a bucket of water")
 	var e1 := float(G.S["energy"])
@@ -65,16 +65,16 @@ func _ready() -> void:
 	_check(float(G.S["coins"]) == 500.0 and float(G.S["water"]) == 20.0 - float(w["chore"]["water"]) and float(G.S["energy"]) < e1, "…which costs energy and water, never coins")
 	# without a dish or water she checks anyway
 	G.S["inv"].clear(); G.S["coins"] = 0.0; G.S["water"] = 0.0
-	G.S["energy"] = 30.0; G.S["step"] = 45; G.S["forest"]["rest"] = {}
+	G.S["energy"] = 30.0; G.S["moments"] = 0; G.S["step"] = 45; G.S["forest"]["rest"] = {}
 	_do("forest_find", "glade", "chamomile", {"option": "mayweed"})
 	_check(F.favour().is_empty() and F.check()["bad"] == ["mayweed"], "with nothing to give she still checks")
 	# unchecked: a bad unit is remembered; using it poisons (sooner or later)
 	G.S["step"] = 50; G.S["forest"]["rest"] = {}
-	G.S["energy"] = 30.0
+	G.S["energy"] = 30.0; G.S["moments"] = 0
 	_do("forest_find", "meadow", "yarrow", {"option": "hemlock"})
 	F.use_unchecked()
 	_check(G.inventory.count("yarrow") == 1.0 and int(G.S["forest"]["tainted"].get("yarrow", 0)) == 1, "unchecked, it goes into the store and the bad unit is remembered")
-	G.S["energy"] = 20.0; G.S["coins"] = 500.0
+	G.S["energy"] = 20.0; G.S["moments"] = 0; G.S["coins"] = 500.0
 	var hit: bool = F.poisons({"yarrow": 1.0})
 	_check(hit and G.S["energy"] == 0.0 and G.S["coins"] == 0.0, "using the only unit, which is the bad one, poisons: no energy, no coins")
 	_check(G.needs.buff_mult() == 2.0 and int(G.S["forest"]["poisoned"]) == 1, "every job costs double for a while")
@@ -84,17 +84,17 @@ func _ready() -> void:
 	_check(not F.poisons({"yarrow": 1.0}), "nothing bad left, nothing happens")
 	# a harmless look-alike does not poison
 	G.S["step"] = 55; G.S["forest"]["rest"] = {}
-	G.S["energy"] = 30.0
+	G.S["energy"] = 30.0; G.S["moments"] = 0
 	_do("forest_find", "glade", "chamomile", {"option": "mayweed"})
 	F.use_unchecked()
-	G.S["energy"] = 10.0
+	G.S["energy"] = 10.0; G.S["moments"] = 0
 	_check(not F.poisons({"chamomile": 1.0}) and G.S["energy"] == 10.0, "scentless mayweed is harmless")
 	# through the real recipe: a mixed batch poisons, a clean one does not
 	G.reset_game()
 	G.S["unlocked"]["ruins_stillroom"] = true
 	for id in ["mortar", "k_plant_parts"]: G.S["unlocked"][id] = true
 	G.invalidate_caps()
-	G.S["energy"] = 30.0
+	G.S["energy"] = 30.0; G.S["moments"] = 0
 	G.S["inv"]["yarrow"] = []
 	G.inventory.add_item("yarrow", 3.0, true)
 	G.S["forest"]["tainted"] = {"yarrow": 3}
@@ -102,7 +102,7 @@ func _ready() -> void:
 	_check(not made and int(G.S["forest"]["poisoned"]) == 1 and G.inventory.count("yarrow_paste") == 0.0, "a recipe with a bad plant does not happen: the farmer collapses")
 	G.S["inv"]["yarrow"] = []
 	G.inventory.add_item("yarrow", 3.0, true)
-	G.S["energy"] = 30.0
+	G.S["energy"] = 30.0; G.S["moments"] = 0
 	_check(_make("yarrow_paste") and G.inventory.count("yarrow_paste") >= 2.0, "a clean batch is made as usual")
 	# the remedies need the stations and the cards
 	_check(G.recipes["healers_chest"]["inputs"].size() == 6, "the Healer's Chest holds six different remedies")

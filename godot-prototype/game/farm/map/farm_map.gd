@@ -9,6 +9,7 @@ class_name FarmMap
 ## The road looks like what it is: a muddy track with puddles at first, then filled, gravel, cobbles, paved.
 
 signal spot_tapped(spot_id: String)
+signal loose_tapped(id: int)       # a stick or stone lying about was tapped (loose_things.gd)
 
 const Art = preload("res://kits/ui/art.gd")
 const UI = preload("res://kits/ui/ui.gd")
@@ -30,6 +31,10 @@ var critters: FarmMapCritters
 var farmcat: FarmMapCat
 var ground: FarmMapGround
 var walker: FarmMapWalker
+var merchant: FarmMapMerchant
+var visitor: FarmMapVisitor
+var piles: FarmMapPiles
+var loose: FarmMapLoose
 var design := Vector2(834, 1000)
 var tile := 88.0            # ground tile (footprints of the places)
 var patch := 144.0          # field patch width, and the gap between patches
@@ -67,6 +72,11 @@ func _make_parts() -> void:
 	farmcat = FarmMapCat.new(self)
 	ground = FarmMapGround.new(self)
 	walker = FarmMapWalker.new(self)
+	merchant = FarmMapMerchant.new(self)
+	visitor = FarmMapVisitor.new(self)
+	piles = FarmMapPiles.new(self)
+	loose = FarmMapLoose.new(self)
+	loose.loose_tapped.connect(func(id): loose_tapped.emit(id))
 
 func _ready() -> void:
 	_make_parts()
@@ -283,8 +293,9 @@ func patch_point(f: int, k: int) -> Vector2:
 
 ## Lets things fly from one place to another in an arc, growing and then shrinking: one picture per piece
 ## (3 carrots harvested = 3 carrots flying). pieces = [[emoji, texture or null], …]. The target bounces when they land.
+## to_sid is a place id, or "pile:<item>" for the pile of a bulky thing (sticks, stones, rocks).
 func fly(from: Vector2, to_sid: String, pieces: Array, bounce: Array = []) -> void:
-	var to := spot_point(to_sid)
+	var to := piles.point(to_sid.substr(5)) if to_sid.begins_with("pile:") else spot_point(to_sid)
 	var delay := 0.0
 	var all := []
 	for pc in pieces: all.append([pc, false])
@@ -333,6 +344,9 @@ func fly(from: Vector2, to_sid: String, pieces: Array, bounce: Array = []) -> vo
 
 ## The store shakes and shows that it is full.
 func _store_full(sid: String) -> void:
+	if sid.begins_with("pile:"):
+		piles.tumble(sid.substr(5))
+		return
 	if not slots.has(sid): return
 	var s = slots[sid]
 	var tw := create_tween()
@@ -358,7 +372,8 @@ func _fly_step(t: float, node: Control, a: Vector2, c: Vector2, b: Vector2) -> v
 
 func _landed(node: Control, sid: String) -> void:
 	if is_instance_valid(node): node.queue_free()
-	if slots.has(sid) and slots[sid].visible: slots[sid].bump()
+	if sid.begins_with("pile:"): piles.bump(sid.substr(5))
+	elif slots.has(sid) and slots[sid].visible: slots[sid].bump()
 
 ## The crops the weeds and stones took at a harvest (crops-and-items/02): one grey ghost of the crop per lost piece rises from the
 ## patch, sways and fades away, where the weeds and stones still stand. pieces = [[emoji, texture or null], …], as for fly().
@@ -453,34 +468,9 @@ func set_field_badge(text: String) -> void:
 	field_badge.size = s
 	if fields.size() > 0: field_badge.position = fields[0].position + Vector2(fields[0].size.x / 2.0 - s.x / 2.0, -s.y * 0.2)
 
-## The travelling merchant's cart stands at the gate while he is there (it rolls in from the road's far end); a tap on it opens the road's window.
-var gate_cart: TextureRect
-
-func set_gate(here: bool) -> void:
-	if not here:
-		if gate_cart != null:
-			gate_cart.queue_free()
-			gate_cart = null
-		return
-	if gate_cart != null: return
-	var tex: Texture2D = Art.first("map", ["bookcart"])
-	if tex == null: return
-	gate_cart = TextureRect.new()
-	gate_cart.texture = tex
-	gate_cart.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	gate_cart.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	gate_cart.size = Vector2(70, 70)
-	gate_cart.mouse_filter = Control.MOUSE_FILTER_STOP
-	gate_cart.gui_input.connect(func(e): if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT: spot_tapped.emit("road"))
-	var rd: Dictionary = L.get("ground", {}).get("road", {})
-	var from := spot_point("road") + Vector2(160, -60)
-	if rd.has("points"):
-		var pts := ground._pts(rd["points"])
-		from = pts[pts.size() - 1].clamp(Vector2.ZERO, design)
-	var at := spot_point("road") - gate_cart.size / 2.0 + Vector2(0, 10)
-	gate_cart.position = from - gate_cart.size / 2.0
-	critters.sort_in(gate_cart, at.y + gate_cart.size.y)
-	create_tween().tween_property(gate_cart, "position", at, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+## The travelling merchant stands at the gate with his cart while he is there: `map.merchant` (merchant.gd) does all of it.
+func set_gate(here: bool, fill: float) -> void:
+	merchant.sync(here, fill)
 
 ## Pieter the night watchman stands at the gate with his lantern while the Lord's share is owed; a tap on him opens the road's window.
 var collector: Label
@@ -566,6 +556,23 @@ func sort_in(node: Control, y: float) -> void:
 func _process(delta: float) -> void:
 	farmcat.tick(delta)
 	critters.tick(delta)
+
+## What the store holds of the bulky things, { item: amount }: the piles beside it grow to match.
+func set_piles(amounts: Dictionary) -> void:
+	piles.set_amounts(amounts)
+
+func pile_point(item: String) -> Vector2:
+	return piles.point(item)
+
+func pile_size(item: String) -> int:
+	return piles.size_shown(item)
+
+## The sticks and stones lying about, as the rules give them ([{"id", "k", "u", "v"}]).
+func set_loose(list: Array) -> void:
+	loose.set_loose(list)
+
+func loose_point(id: int) -> Vector2:
+	return loose.point(id)
 
 func set_perks(flags: Dictionary) -> void:
 	if perk_fx: perk_fx.set_on(flags)

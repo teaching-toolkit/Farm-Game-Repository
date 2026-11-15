@@ -46,13 +46,13 @@ Page 2. You read it twice. Then, from nowhere, an old tune comes back, and a lin
 ## c1_night · beat · The first night
 *When:* `step>=2`
 
-Page 1. The first night. The sky is huge. At the edge of the dark forest, white stones glow, very faintly.
+Page 1. The first night. The sky is huge, and so full of stars that the dark between them looks crowded. At the edge of the forest, a line of white stones glows, very faintly.
 
-> Die erste Nacht. Der Himmel ist riesig. Am Rand des dunklen Waldes leuchten weisse Steine, ganz schwach.
+> Die erste Nacht. Der Himmel ist riesig und so voller Sterne, dass das Dunkel dazwischen eng aussieht. Am Waldrand leuchtet eine Reihe weisser Steine, ganz schwach.
 
-Page 2. Somewhere, a tune. You do not know it. You find you are humming it anyway.
+Page 2. Somewhere, a tune: a few slow notes, going up and turning round. You find you are humming it. The stones get a little brighter. You stop and stand still, and they stay bright, until you shift your feet.
 
-> Irgendwo eine Melodie. Du kennst sie nicht. Und doch summst du sie mit.
+> Irgendwo eine Melodie, ein paar langsame Töne, die hinaufgehen und sich umdrehen. Du merkst, dass du sie summst. Die Steine werden ein wenig heller. Du hörst auf und stehst still, und sie bleiben hell, bis du die Füsse bewegst.
 
 ## c1_bells · discovery · A little bell
 *When:* `done:clear_thistles`
@@ -64,16 +64,16 @@ When the last thistle is out, you hear it: a tiny bell, high in the air. Then no
 ## c1_ledger · discovery · A burnt page
 *When:* `done:ruins_workshop`
 
-Under the black boards you find a page, burnt at the edges. A list of numbers. At the bottom, in red: “The Lord's share.” Every year the red number is bigger. You fold the page small and keep it.
+Under the black boards you find a page, burnt at the edges. At the bottom, in red: “The Lord's share.” One sack in ten. Then one in five. Then one in three. Then one in two, circled so hard the pen went through. You fold the page small, and then smaller, and keep it.
 
-> Unter den schwarzen Brettern findest du ein Blatt, an den Rändern verbrannt. Eine Liste mit Zahlen. Ganz unten, in Rot: „Der Anteil des Herrn.“ Jedes Jahr ist die rote Zahl grösser. Du faltest das Blatt klein und behältst es.
+> Unter den schwarzen Brettern findest du ein Blatt, an den Rändern verbrannt. Ganz unten, in Rot: „Der Anteil des Gutsherrn.“ Ein Sack von zehn. Dann einer von fünf. Dann einer von drei. Dann einer von zwei, so fest eingekreist, dass der Stift durchging. Du faltest das Blatt klein, dann noch kleiner, und behältst es.
 
 ## c1_seller · scene · The seller
 *When:* `done:d_porridge` · a scene since 3 Nov 2026 (`story/15`): it opens on the square right after *Hand over*. Picture: stand-in `map/market_stall` until `pictures/10` has the scene.
 
-Page 1. On the village square a seller sniffs the air. “Is that porridge?” You hand her a bowl. She eats it standing up, very fast.
+Page 1. On the track by your field a seller sniffs the air. “Is that porridge?” You hand her a bowl. She eats it standing up, very fast.
 
-> Auf dem Dorfplatz schnuppert eine Händlerin in der Luft. „Ist das Porridge?“ Du reichst ihr eine Schüssel. Sie isst im Stehen, ganz schnell.
+> An der Strasse bei deinem Feld schnuppert eine Händlerin in der Luft. „Ist das Porridge?“ Du reichst ihr eine Schüssel. Sie isst im Stehen, ganz schnell.
 
 Page 2. “You're from Moonedge, aren't you?” she says. “Good porridge, {player}. I'll tell everyone that somebody is cooking up here again.”
 
@@ -82,24 +82,24 @@ Page 2. “You're from Moonedge, aren't you?” she says. “Good porridge, {pla
 ## c1_board · discovery · The notice board
 *When:* `tap:board`
 
-A notice board, full of little papers. Somebody needs a basket. Somebody has lost a goat. You read every one twice, and keep your hat low.
+A notice board, full of little papers. Somebody needs a basket mended. Somebody has a pig for sale: “a good pig, a talker.” Somebody has lost a green glove, left hand. You read every paper twice, with your hat pulled low, because reading is something you can do without anyone talking to you.
 
-> Eine Anschlagtafel voller kleiner Zettel. Jemand braucht einen Korb. Jemand hat eine Ziege verloren. Du liest jeden zweimal und ziehst den Hut tief ins Gesicht.
+> Eine Anschlagtafel voller kleiner Zettel. Jemand braucht einen geflickten Korb. Jemand verkauft ein Schwein: „ein gutes Schwein, ein Schwätzer“. Jemand hat einen grünen Handschuh verloren, linke Hand. Du liest jeden Zettel zweimal, den Hut tief im Gesicht, denn Lesen kann man, ohne dass einen jemand anspricht.
 
 ## c1_bunny · beat · The bunny comes home
 *When:* `done:pet_bunny`
 
-Page 1. A bunny sits on the one green patch. She sits like someone who has always sat there.
+Page 1. A bunny sits on the one green patch. She is small and brown, and one ear will not stand up. She sits as if the whole patch was built round her, and she eats your carrot with great concentration and no thanks.
 
-> Ein Häschen sitzt auf dem einen grünen Beet. Es sitzt da, als hätte es dort schon immer gesessen.
+> Ein Häschen sitzt auf dem einen grünen Beet. Es ist klein und braun, und ein Ohr will nicht stehen bleiben. Es sitzt da, als wäre das ganze Beet um es herum gebaut, und frisst deine Karotte mit grosser Konzentration und ohne Dank.
 
 Page 2. Now you understand. The patch stayed green because somebody looked after it. The stalk was nibbled because somebody was hungry. And one grain was left for you.
 
 > Jetzt verstehst du es. Das Beet ist grün geblieben, weil jemand sich darum gekümmert hat. Der Halm war abgeknabbert, weil jemand Hunger hatte. Und ein Korn blieb für dich übrig.
 
-Page 3. Now the first line of the old rhyme makes sense: “Long ears sow the clover green.” You say it out loud. The bunny's ear twitches.
+Page 3. The bunny was Moonedge's, once. You remember now, the way you remember a dream: a brown back in a basket, a nose against your hand. “Long ears sow the clover green,” you say, and the crooked ear twitches. You wait for the next line. Nothing comes.
 
-> Jetzt ergibt die erste Zeile des alten Reims einen Sinn: „Lange Ohren säen den Klee so grün.“ Du sagst sie laut. Das Ohr des Häschens zuckt.
+> Das Häschen gehörte einmal zu Moonedge. Du erinnerst dich jetzt, wie man sich an einen Traum erinnert: ein brauner Rücken in einem Korb, eine Nase an deiner Hand. „Lange Ohren säen den Klee so grün“, sagst du, und das schiefe Ohr zuckt. Du wartest auf die nächste Zeile. Es kommt nichts.
 
 ## c1_bell_out · beat · Two soft rings
 *When:* `seen:c1_bunny + after:c1_bunny:1`

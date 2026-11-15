@@ -119,6 +119,26 @@ func foot_at(s: float, t: float) -> Vector2:
 	var p := foot_points()
 	return p[0] + (p[1] - p[0]) * s + (p[3] - p[0]) * t
 
+## The small sign on the place. Food going stale (🍂) shows the wilted-leaf picture when it exists (pictures/07); every other
+## sign is its emoji.
+func _set_badge(badge: String) -> void:
+	var leaf: Texture2D = Art.tex("ui", "stale_leaf") if badge == "🍂" else null
+	var pic := badge_box.get_node_or_null("badge_pic") as TextureRect
+	if leaf and pic == null:
+		pic = TextureRect.new()
+		pic.name = "badge_pic"
+		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		pic.custom_minimum_size = Vector2(26, 26)
+		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		badge_box.add_child(pic)
+	if pic:
+		pic.texture = leaf
+		pic.visible = leaf != null
+	badge_lbl.visible = leaf == null
+	badge_lbl.text = badge
+	badge_box.visible = badge != ""
+
 ## Called by the main screen whenever the game changes. pic_name picks the width from "ws" if it has one.
 ## st = style ("" = picture or emoji; see the top of this file), lk = its look.
 func set_state(title: String, emoji: String, tex: Texture2D, is_locked: bool, badge := "", pic_name := "", st := "", lk := {}) -> void:
@@ -140,8 +160,7 @@ func set_state(title: String, emoji: String, tex: Texture2D, is_locked: bool, ba
 	emo.modulate = Color(1, 1, 1, 0.5) if is_locked else Color.WHITE
 	name_lbl.text = title
 	name_box.visible = show_name and style != "ghost" and not is_locked
-	badge_lbl.text = badge
-	badge_box.visible = badge != ""
+	_set_badge(badge)
 	var plan := _earth_plan()
 	if plan[0] != earth_share or plan[1] != earth_salt:
 		earth_share = plan[0]

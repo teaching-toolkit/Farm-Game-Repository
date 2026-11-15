@@ -29,7 +29,7 @@ func part_water(sid: String) -> void:
 	var fr := UI.hbox(8)
 	var wq: Dictionary = G.actions.check("fetch_water", G.actions.farmer)
 	var room: float = G.needs.water_cap() - float(G.S["water"])
-	var fb := UI.button("🪣  %s" % "💧".repeat(clampi(int(round(minf(room, G.fields.fetch_amount()))), 1, 8)), _fetch_water, {"ok": room >= 0.5, "unmet": wq["unmet"], "cost": wq["cost"], "base": wq["base"]}, UI.BLUE, 22)
+	var fb := UI.button("🪣  %s" % "💧".repeat(clampi(int(round(minf(room, G.fields.fetch_amount()))), 1, 8)), _fetch_water, {"ok": room >= 0.5 and not G.actions.out_of_time(), "unmet": wq["unmet"], "cost": wq["cost"], "base": wq["base"]}, UI.BLUE, 22)
 	fb.custom_minimum_size = Vector2(0, 54)
 	fb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	fr.add_child(fb)

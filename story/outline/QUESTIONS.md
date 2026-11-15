@@ -1,5 +1,7 @@
 # Questions for the parent: one page
 
+> **Answered 14 Nov 2026:** every 💡 default accepted (question 4 with the literal rule: the garden page says "you"; question 10 overtaken, the parent has read the novella). See `../QUESTIONS-FOR-THE-PARENT.md`.
+
 24 Oct 2026. The story outline run is closed. Your answers of 24 Oct 2026 are built in (they are listed in `../canon/story-bible.md` §10); the old per-slice question blocks are kept in `archive/run-2026-10-23/pre-merge/QUESTIONS.md`. What is left is **ten questions**, each with a plain explanation and a 💡 default. If you do not answer, the 💡 default is what the outline assumes (nothing is built from the outline yet; all of it is easy to change).
 
 ## A. Please decide (these were open or needed an explanation)

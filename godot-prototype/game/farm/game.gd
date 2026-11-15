@@ -114,6 +114,8 @@ var well: FarmWell
 var nature: FarmNature
 var forest: FarmForest
 var trust: FarmTrust
+var people: FarmPeople
+var loose: FarmLoose
 
 func _init() -> void:
 	seasons = FarmSeasons.new(self)
@@ -141,6 +143,8 @@ func _init() -> void:
 	nature = FarmNature.new(self)
 	forest = FarmForest.new(self)
 	trust = FarmTrust.new(self)
+	people = FarmPeople.new(self)
+	loose = FarmLoose.new(self)
 	_register_words()
 	for sys in [seasons, fields, needs, progression, knowledge, rewards, trade, inventory, story, trip, skills, well, forest, lord, animals]: sys.register_words(conditions)
 	fields.register_chores()
@@ -149,6 +153,7 @@ func _init() -> void:
 	forest.register_chores()
 	trip.register_chores()
 	crafting.register_chores()
+	loose.register_chores()
 
 # ------------------------------------------------------------------ start, seed and clock
 
@@ -317,7 +322,7 @@ func save_defaults() -> Dictionary:
 ## Everything a save holds in a new game: the Game's keys and every system's.
 func all_save_defaults() -> Dictionary:
 	var d := save_defaults()
-	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, timeq, rewards, trade, reveal, skills, story, trip, gate, lord, pets, well, nature, forest]:
+	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, timeq, rewards, trade, reveal, skills, story, trip, gate, lord, pets, well, nature, forest, loose, actions]:
 		d.merge(sys.save_defaults())
 	return d
 
@@ -335,6 +340,7 @@ func new_game() -> void:
 	for i in range(mini(progression.plots(), S["patches"].size())):
 		S["patches"][i]["weeds"] = float(st.get("patchWeeds", 0)) + float(i % 2)
 		S["patches"][i]["stones"] = float(st.get("patchStones", 0))
+	loose.roll_start()
 	rewards.refill_jobs()
 	reveal.settle()
 	skills.settle()
@@ -573,12 +579,14 @@ func step_time() -> Dictionary:
 ## A new system registers here, after the one it must follow.
 func setup_clock() -> void:
 	clock.register("pace", pace.tick_pace)
+	clock.register("moments", actions.new_step)
 	clock.register("season", seasons.step_season)
 	clock.register("rain", seasons.step_rain)
 	clock.register("producers", inventory.step_producers)
 	clock.register("pets", pets.step)
 	clock.register("well", well.step)
 	clock.register("nature", nature.step)
+	clock.register("loose", loose.step)
 	clock.register("crops", fields.step_crops)
 	clock.register("weeds", fields.tick_weeds_stones)
 	clock.register("pests", fields.step_pests)

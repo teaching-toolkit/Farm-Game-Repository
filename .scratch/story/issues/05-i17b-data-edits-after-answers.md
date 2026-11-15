@@ -4,12 +4,12 @@
 
 **Blocked by:** `story/03` (I16): the parent's answers
 
-**Status:** ready-for-agent
+**Status:** done
 
 **Milestone:** story
 
-- [ ] Each of Q5–Q10 is applied as answered (F-022, F-053, F-074, F-076, F-077, F-084)
-- [ ] German through `tools/i18n.py`; checks and bot pass
+- [x] Each of Q5–Q10 is applied as answered (F-022, F-053, F-074, F-076, F-077, F-084)
+- [x] German through `tools/i18n.py`; checks and bot pass
 
 ---
 

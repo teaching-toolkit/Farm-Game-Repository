@@ -19,6 +19,8 @@
 
 Start with the three you meet in the prototype (the travelling merchant, the seed seller, the broker): an agent drafts a two-line character note and the prompts; you accept or change them, then generate.
 
+**14 Nov 2026:** the 💡 above is taken; generating, downloading and picking happen in the picture run `pictures/15`. This ticket is done when its pictures are imported.
+
 ---
 
 **Feature:** `pictures` · **Source:** the parent's notes of 23 October 2026 (`docs/sources/2026-10-23-parent-notes-playtest.md`), [#23.12]. Filed 23 October 2026.

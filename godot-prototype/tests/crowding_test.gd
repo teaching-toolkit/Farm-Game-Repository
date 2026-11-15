@@ -92,7 +92,7 @@ func _set_patch(weeds: float, stones: float, plants: float) -> void:
 	var p: Dictionary = G.S["patches"][0]
 	p["crop"] = "crop_wheat"; p["plants"] = plants; p["growth"] = 99.0; p["ready"] = true
 	p["weeds"] = weeds; p["stones"] = stones; p["soil"] = 1.0; p["quality"] = 1.0
-	G.S["energy"] = 99.0
+	G.S["energy"] = 99.0; G.S["moments"] = 0      # a fresh step for every harvest
 
 ## The mean wheat a harvest of this patch gives (in the store), over n harvests.
 func _harvest_mean(weeds: float, stones: float, plants: float, n: int) -> float:

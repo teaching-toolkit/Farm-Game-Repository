@@ -110,6 +110,7 @@ func _part_skills() -> void:
 		var v := UI.vbox(3)
 		pc.add_child(v)
 		v.add_child(UI.label("%s %s — %s" % [G.skills.family_emoji(f), tr(G.skills.family_name(f)), tr(G.skills.rank_name(G.skills.rank(f)))], 18, UI.INK, true))
+		if G.skills.rank(f) > 0: v.add_child(UI.label("%s %s" % ["🕰️".repeat(G.skills.rank(f)), tr("Quicker with every rank")], 15, UI.MUTED, true))      # the ranks' moments (rules/48-skills.json momentsPerRank), no numbers
 		var nx: Dictionary = G.skills.next_step(f)
 		if nx.is_empty():
 			v.add_child(UI.label(tr("✅ The highest rank."), 15, UI.GREEN_DARK, true))

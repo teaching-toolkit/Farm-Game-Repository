@@ -4,6 +4,7 @@ extends Node
 ##   --seed=N        the same game every time (the rules engine's random numbers, clock and learning record; see Game.now)
 ##   --golden=FILE   writes one fingerprint line per step of time; tests/golden.sh compares it with tests/golden/
 ##   --save-at=C:FILE  writes the save when chapter C is reached (test fixtures, tests/fixtures/)
+##   --nopetchores   the pets keep their blessings (the bot as it was before pets-automation/05: it sets chore jobs from level 2)
 ##   --report=FILE   writes the pacing of this run as JSON: per chapter the questions, Rest answers, card questions and actions, and the hours
 ##                   they take with the timing of meta.pacing (the progression explorer shows it; tools/update_explorer.sh makes it)
 var G
@@ -12,6 +13,7 @@ var max_iters := 900
 var target_chapter := 4
 var flex := false
 var noclear := false      # --noclear: do not pull weeds or pick stones before a harvest (the bot as it was before crops-and-items/02)
+var nopetchores := false  # --nopetchores: the pets keep their blessings (the bot as it was before pets-automation/05)
 var crowd := {}           # chapter -> [field harvests, with weeds or stones on the patch, sum of the share lost, sum of what the old rule slowed growth by]
 var accuracy := 1.0       # --accuracy=0.8: share of Time Quiz questions answered right at the first try (only those move time)
 var asked := 0           # Time Quiz questions asked (with accuracy < 1 more than the steps of time)
@@ -33,6 +35,7 @@ func _ready() -> void:
 		if a.begins_with("--chapter="): target_chapter = int(a.substr(10))
 		if a == "--flex": flex = true
 		if a == "--noclear": noclear = true
+		if a == "--nopetchores": nopetchores = true
 		if a == "--end": target_chapter = 7          # play to the end of the story (until the last pet is home)
 		if a.begins_with("--trace="): trace = int(a.substr(8))
 		if a.begins_with("--accuracy="): accuracy = clampf(float(a.substr(11)), 0.05, 1.0)
@@ -50,6 +53,8 @@ func _ready() -> void:
 	var t0 := Time.get_ticks_msec()
 	var it := 0
 	_begin_chapter()
+	G.changed.connect(_watch_moments)
+	G.step_done.connect(_count_pet_chores)
 	while it < max_iters and G.chapter() < target_chapter:
 		if target_chapter == 7 and G.pets.free_play(): break
 		it += 1
@@ -94,6 +99,8 @@ func _ready() -> void:
 		print("crowding ch%d: %d field harvests, %.1f%% of the harvest lost to weeds and stones on average (%d%% of the patches had some); the old rule slowed growth by %.1f%% at harvest" % [ch, cw[0], 100.0 * float(cw[2]) / maxf(1.0, float(cw[0])), int(round(100.0 * float(cw[1]) / maxf(1.0, float(cw[0])))), 100.0 * float(cw[3]) / maxf(1.0, float(cw[0]))])
 	print("DONE iters %d steps %d chapter %d unlocked %d cards %d goals %d coins %d ms %d" % [it, G.S["step"], G.chapter(), G.S["unlocked"].size(), G.progression.cards_learned(), G.S["goals"], int(G.S["coins"]), Time.get_ticks_msec() - t0])
 	_close_chapter(G.chapter() > int(_row["chapter"]))
+	for r in chapter_rows:      # the pacing of each chapter at a glance (the report file has it all)
+		print("chapter %d: %d steps, ran out of moments in %d (%.1f %%), %.2f hours, the pets did %d chores that saved %d moments" % [r["chapter"], r["steps"], r["ran_out"], 100.0 * float(r["ran_out"]) / maxf(1.0, float(r["steps"])), r["hours"], r["pet_chores"], r["pet_moments_saved"]])
 	if report_path != "": _write_report()
 	if golden_path != "":
 		var gf := FileAccess.open(golden_path, FileAccess.WRITE)
@@ -144,6 +151,13 @@ func _ready() -> void:
 	get_tree().quit()
 
 ## ------------------------------------------------------------------ the pacing report (--report=FILE)
+## Picks up one stick or stone lying about, when the farm is short of it and the recipe about to be done gives that thing (through the chore, like the child's tap).
+func _pick_loose_of(outputs: Dictionary) -> void:
+	for t in G.loose.things():
+		if outputs.has(str(t["k"])) and G.inventory.count(str(t["k"])) < 4.0:      # only when short of it: picking whenever the store has room cost the bot 15 % more steps (it spends its energy on things it does not need yet)
+			G.loose.pick(int(t["id"]))
+			return
+
 ## A child pulls the weeds and picks the stones of a ripe patch before harvesting it (each takes a share of the harvest, crops-and-items/02),
 ## when two or more stand on it and the energy allows. The rest of the clearing stays as it was (weeds from 3, stones from 2).
 func _clear_before_harvest(p: Dictionary, i: int) -> void:
@@ -168,8 +182,47 @@ func _note_crowding(p: Dictionary) -> void:
 	c[2] += loss
 	c[3] += 1.0 - maxf(0.5, 1.0 - 0.04 * float(p["weeds"]) - 0.04 * float(p["stones"]))
 
+## The moments a step ended with: every redraw notes the used moments; when the step counter has moved, the value seen last
+## (before the step reset it) is the one that closes the step it belongs to.
+var _m_step := 0
+var _m_used := 0
+func _watch_moments() -> void:
+	if int(G.S["step"]) != _m_step:
+		var bucket: int = mini(4, _m_used / 6) if _m_used < G.actions.moments_per_step() else 4
+		_row["moments_hist"][bucket] += 1
+		_row["moments_steps"].append(_m_used)
+		_row["steps"] += 1
+		if _m_used >= G.actions.moments_per_step(): _row["ran_out"] += 1
+		_m_step = int(G.S["step"])
+	_m_used = G.actions.moments_used()
+
+## The chores the pets did in a step (the step's report, info["pet_acts"]) and the moments the farmer would have used for them (pets-automation/05).
+func _count_pet_chores(info: Dictionary) -> void:
+	for act in info.get("pet_acts", []):
+		if not bool(act.get("ok", false)) or str(act.get("chore", "")) == "": continue
+		var args := {}
+		if act.has("idx"): args["i"] = int(act["idx"])
+		elif act.has("aid"): args["aid"] = str(act["aid"])
+		_row["pet_chores"] += 1
+		_row["pet_moments_saved"] += G.actions.moments_of(str(act["chore"]), G.actions.farmer, args)
+
+## The pets help with the farmer's chores (pets-automation/05), the way a child's taps set them: as soon as a pet's level and the buildings
+## allow, its first rule is the first of its chore jobs and (level 4) its second rule the second. The WHEN stays what `choose` set (the energy
+## card); a pet that reached level 3 after it was set gets it by choosing again. Idempotent and cheap: it acts only when a rule is not that yet
+## (a chore job that becomes available when a place is built changes the list).
+func _set_pet_chores() -> void:
+	if nopetchores: return
+	for pid in G.pet_ids:
+		var lv: int = G.pets.level(pid)
+		if lv < 2: continue
+		var chores: Array = G.pets.chore_jobs(pid)
+		if chores.is_empty(): continue
+		var first := str(chores[0]["id"])
+		if G.pets.job_id(pid) != first or (lv >= 3 and G.pets.when_of(pid, 0).is_empty()): G.pets.choose(pid, first)
+		if lv >= 4 and chores.size() > 1 and G.pets.second_job(pid) != str(chores[1]["id"]): G.pets.set_second_job(pid, str(chores[1]["id"]))
+
 func _begin_chapter() -> void:
-	_row = {"chapter": G.chapter(), "step0": int(G.S["step"]), "rest0": int(G.S["stats"]["rest"]),
+	_row = {"moments_hist": [0, 0, 0, 0, 0], "moments_steps": [], "ran_out": 0, "pet_chores": 0, "pet_moments_saved": 0, "steps": 0, "chapter": G.chapter(), "step0": int(G.S["step"]), "rest0": int(G.S["stats"]["rest"]),
 		"actions0": G.saves_requested - int(G.S["step"]), "know0": know_answers}
 
 ## Closes the row of the chapter that was being played. complete = its pet came home (the next chapter began).
@@ -182,7 +235,7 @@ func _close_chapter(complete: bool) -> void:
 	var sec: float = float(q) * float(t.get("secondsPerStep", 25)) + float(act) * float(t.get("secondsPerAction", 3)) \
 		+ float(rest) * float(t.get("secondsPerRest", 5)) + float(know) * float(t.get("secondsPerKnowledgeQuestion", 12))
 	chapter_rows.append({"chapter": int(_row["chapter"]), "pet": str(G.D["chapters"][int(_row["chapter"]) - 1].get("pet", "")), "complete": complete,
-		"questions": q, "restAnswers": rest, "knowledgeQuestions": know, "actions": act, "hours": snappedf(sec / 3600.0, 0.01)})
+		"moments_hist": _row["moments_hist"], "moments_steps": _row["moments_steps"], "ran_out": _row["ran_out"], "pet_chores": _row["pet_chores"], "pet_moments_saved": _row["pet_moments_saved"], "steps": _row["steps"], "questions": q, "restAnswers": rest, "knowledgeQuestions": know, "actions": act, "hours": snappedf(sec / 3600.0, 0.01)})
 
 func _write_report() -> void:
 	var t: Dictionary = G.meta.get("pacing", {})
@@ -434,6 +487,7 @@ var visits_done := 0     # visits to a friend who invited the farmer
 
 func _turn() -> void:
 	want_seeds = {}; want_buy = []; want_barter = []; want_sell = {}; want_grain = 0
+	_set_pet_chores()
 	if G.S["energy"] < 8: _rest()
 	# knowledge
 	for cid in G.card_ids:
@@ -546,6 +600,7 @@ func _turn() -> void:
 				for o in r["outputs"]:
 					if G.items[o].get("category", "") == "craft" and G.inventory.count(o) < 4.0 and G.inventory.value_of(o) >= 100.0: useful = true
 			if useful:
+				if gathering: _pick_loose_of(r["outputs"])      # a stick or stone lying about is picked up first (visible-work/03)
 				if G.crafting.recipe_fuel(rid) > float(G.S["woodpile"]) + 0.0001: G.crafting.stoke(G.crafting.recipe_fuel(rid))   # stoke the woodpile first
 				G.actions.perform("recipe", G.actions.farmer, {"rid": rid})
 	# money: sell surplus when coins are short for an open goal

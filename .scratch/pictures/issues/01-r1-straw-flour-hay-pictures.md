@@ -15,6 +15,8 @@
 - [ ] Straw, flour and hay each have their own picture or stand-in emoji
 - [ ] Imported and checked in the store and on the map
 
+**14 Nov 2026:** the 💡 above is taken; generating, downloading and picking happen in the picture run `pictures/15`. This ticket is done when its pictures are imported.
+
 ---
 
 **Id:** R1 · **Feature:** `pictures` · **Moved from** `archive/todo-2026-10.md` §5 on 23 October 2026; the notes below are unchanged. Status labels in them (✅ 💡 ❓) are notes, not the status above.

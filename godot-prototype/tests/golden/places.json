@@ -342,13 +342,6 @@
 			"w": 0.24
 		},
 		{
-			"id": "rock",
-			"pic": "stone_hammer",
-			"x": 0.5,
-			"y": 0.22,
-			"w": 0.26
-		},
-		{
 			"id": "stone_knife",
 			"pic": "flint_knife",
 			"x": 0.7,
@@ -733,7 +726,7 @@
 		"book_orchard": "library",
 		"book_colours": "library",
 		"book_master": "library",
-		"book_cart": "bookcart",
+		"book_cart": "market",
 		"library_box": "library",
 		"library_shelf": "library",
 		"library_bookcase": "library",
@@ -1080,7 +1073,8 @@
 			"d_fair_pies",
 			"d_fair_cheese",
 			"d_fair_preserves",
-			"d_fair_cloth"
+			"d_fair_cloth",
+			"book_cart"
 		],
 		"field": [
 			"land_start",
@@ -1426,9 +1420,6 @@
 			"sq_free_miller",
 			"sq_free_lark",
 			"sq_free_garden"
-		],
-		"bookcart": [
-			"book_cart"
 		],
 		"home": [
 			"tent",

@@ -41,7 +41,7 @@ Some stations are upgrades of another (Stove → iron top → Master Stove) and 
 
 ### 8.3 The long chains
 
-- **Grain:** wheat → hand quern, later the windmill → flour → flatbread, bread (oven, starter kept), pasta, cakes. Wheat and
+- **Grain:** wheat or winter wheat (any millable grain, `crops-and-items/03`) → hand quern, later the windmill → flour → flatbread, bread (oven, starter kept), pasta, cakes. Wheat and
   oats also give **straw** → rope, thatch, skeps, bedding, scarecrows, compost.
 - **Dairy:** clover → cow → milk → churn → butter; milk + culture → yogurt; milk + culture + salt → fresh cheese → the cellar
   → aged cheese → cheese boards, pesto.

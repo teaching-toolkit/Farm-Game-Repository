@@ -31,7 +31,7 @@ Status words: APPLIED (done in the files), SKIPPED (not done, with the reason), 
 | F-019 | APPLIED | c6_n_last: trigger now `cards>=87 + seen:c6_supper`; "It is empty."; the hand in the margin is "a hand you know so well by now" (no pencil) | c6_n_last |
 | F-020 | PARENT | Not changed (Q4). Berit's notes in bought books need an explanation | 21 of the 25 margin notes |
 | F-021 | APPLIED | c1_axe: "Your first tool" becomes "Your first axe" | c1_axe |
-| F-022 | PARENT | Not changed (Q5). The built c2_letter and c2_cottage say "before the frost" after the c1 winter pieces | c1_summer, c1_autumn, c1_winter, c1_hunger, c1_spring2 |
+| F-022 | APPLIED | Applied: "before the next frost". Not changed (Q5). The built c2_letter and c2_cottage say "before the frost" after the c1 winter pieces | c1_summer, c1_autumn, c1_winter, c1_hunger, c1_spring2 |
 | F-023 | APPLIED | c1_tower: "by the fence" becomes "at the edge of the field"; only a bell is heard, high and bright | c1_tower |
 | F-024 | APPLIED | c1_cleared: trigger now needs clear_weeds, clear_thistles, clear_rocks and clear_stumps | c1_cleared |
 | F-025 | APPLIED | c1_quern: trigger `done:quern + has:flour:1` | c1_quern |
@@ -62,7 +62,7 @@ Status words: APPLIED (done in the files), SKIPPED (not done, with the reason), 
 | F-050 | APPLIED | c6_board: "nearly all green" removed; "the old one, the lost glove"; "very funny" | c6_board |
 | F-051 | APPLIED | Use what was delivered: Agnes with tapenade, the orphanage with jam on bread, flags in red, yellow and blue, the poet is Kit with a scarf | c6_agnes, c6_orphanage, c6_flags, c6_poet |
 | F-052 | APPLIED | c6_k_alpaca: "seen more than she lets on" | c6_k_alpaca |
-| F-053 | PARENT | Robust edit: the three new notes name no writing material ("thin brown ink" only where the built game already says so). The docs now say ink (F-090). If the parent wants pencil, 4 pieces change (Q6) | c2_n_bread, c5_n_foxglove, c6_n_last |
+| F-053 | APPLIED | Applied: ink kept. Robust edit: the three new notes name no writing material ("thin brown ink" only where the built game already says so). The docs now say ink (F-090). If the parent wants pencil, 4 pieces change (Q6) | c2_n_bread, c5_n_foxglove, c6_n_last |
 | F-054 | NOT-NEEDED | Omens can be missed; accepted (a design call, not a defect). No merge | c1_hutch, c1_bowl, c5_tea_set, c2_tortoise_omen |
 | F-055 | APPLIED | {player} added in the four pieces named | c1_maud, c2_hilde, c3_pieter2, c4_pieter4 |
 | F-056 | APPLIED | Pieter's lantern is in the text, in daylight | c3_pieter2, c3_pieter3, c4_pieter4 |
@@ -81,19 +81,19 @@ Status words: APPLIED (done in the files), SKIPPED (not done, with the reason), 
 | F-069 | NOT-NEEDED | No piece change; story-delivery.md widened (F-100) | none |
 | F-070 | NOT-NEEDED | No change required | c1_trips20, c4_window, c1_n_fire |
 | F-071 | APPLIED | Via F-008 ("Berit's chin" is gone); the rest is generic | c1_maud |
-| F-072 | BUILD-STEP | chapel to village hall in the node, German and picture prompt (see list) | sq_chapel_roof |
-| F-073 | BUILD-STEP | German c2_greenstem without a gendered "die vom Mondrand" (see list) | c2_greenstem |
-| F-074 | PARENT | Not changed (Q7). Badger default name is Bramble, the goat's name | pet_badger, pet_alpaca |
-| F-075 | BUILD-STEP | Lord's share stays at a half after Quill's answer; one line of code (see list) | c6_quill_answer, lord.gd |
-| F-076 | PARENT | Not changed (Q8). c2_tortoise_omen was made pond-neutral so it works either way | pet_tortoise, c2_tortoise |
-| F-077 | PARENT | Not changed (Q9). The bot never drained the river meadow; the garden pieces fire at step 1069 and are never seen first | pet_alpaca, c6_free_garden, c6_ajar |
-| F-078 | BUILD-STEP | Add the two JSON-only pieces to texts/ch2.md (see list) | c2_berit_note, c2_k_rest |
-| F-079 | BUILD-STEP | "On the track by your field" (see list) | c1_seller |
-| F-080 | BUILD-STEP | "thatch" and German "Stroh" instead of "Ziegel" (see list) | c2_cottage |
-| F-081 | BUILD-STEP | trigger `+ seen:c2_walls` (see list) | c2_greenstem |
-| F-082 | BUILD-STEP | "your best field" (see list) | c4_no |
-| F-083 | BUILD-STEP | cut one line (see list) | c6_free_garden |
-| F-084 | PARENT | Not changed (Q10) | c6_free_miller |
+| F-072 | APPLIED | chapel to village hall in the node, German and picture prompt (see list) | sq_chapel_roof |
+| F-073 | APPLIED | German c2_greenstem without a gendered "die vom Mondrand" (see list) | c2_greenstem |
+| F-074 | APPLIED | Applied: Silverpaw, Pet 6. Not changed (Q7). Badger default name is Bramble, the goat's name | pet_badger, pet_alpaca |
+| F-075 | APPLIED | Lord's share stays at a half after Quill's answer; one line of code (see list) | c6_quill_answer, lord.gd |
+| F-076 | APPLIED | Applied: pond now required. Not changed (Q8). c2_tortoise_omen was made pond-neutral so it works either way | pet_tortoise, c2_tortoise |
+| F-077 | APPLIED | Applied: drain now required. Not changed (Q9). The bot never drained the river meadow; the garden pieces fire at step 1069 and are never seen first | pet_alpaca, c6_free_garden, c6_ajar |
+| F-078 | APPLIED | Add the two JSON-only pieces to texts/ch2.md (see list) | c2_berit_note, c2_k_rest |
+| F-079 | APPLIED | "On the track by your field" (see list) | c1_seller |
+| F-080 | APPLIED | "thatch" and German "Stroh" instead of "Ziegel" (see list) | c2_cottage |
+| F-081 | APPLIED | trigger `+ seen:c2_walls` (see list) | c2_greenstem |
+| F-082 | APPLIED | "your best field" (see list) | c4_no |
+| F-083 | APPLIED | cut one line (see list) | c6_free_garden |
+| F-084 | APPLIED | Applied: sails confirmed. Not changed (Q10) | c6_free_miller |
 | F-085 | NOT-NEEDED | No change | c3_frame3 |
 | F-086 | APPLIED | ladder.md row 2.1 now says the mother adds "Your cousin asks after you" (an early plant, repeated in chapter 3) | ladder.md |
 | F-087 | NOT-NEEDED | "Only on Sundays" is a weekday, not a religious word | quiz k_play |
@@ -106,7 +106,7 @@ Status words: APPLIED (done in the files), SKIPPED (not done, with the reason), 
 | F-094 | APPLIED | ladder.md 6.7: the "text or a tap" question deleted | ladder.md |
 | F-095 | APPLIED | ladder.md 2.7: the lid says "Feed the ground and it feeds you"; the Rest note is c2_berit_note | ladder.md |
 | F-096 | PARENT | The false "separated by the loom" claim deleted and the awe state told truthfully (9 tags). The choice between plans is the parent's (Q11); ladder.md:24 untouched | long-game.md |
-| F-097 | APPLIED | Snag table rewritten to match the texts; swing sentence added to c5_petals page 2. The c6_ajar light is a build step (list) | long-game.md, c5_petals |
+| F-097 | APPLIED | Snag table rewritten to match the texts; swing sentence added to c5_petals page 2. c6_ajar done | long-game.md, c5_petals |
 | F-098 | APPLIED | Invention lists corrected in long-game.md, book-file.md and the more-ch headers: yarrow, "Remarks: none" and Mei's partner struck; second hands, stool, rock tower, blanket, bookseller added | long-game.md, book-file.md, more-ch1-6 headers |
 | F-099 | APPLIED | Pieter row added to hazelwood-people.md | hazelwood-people.md |
 | F-100 | APPLIED | story-delivery.md: Scene triggers on a delivery or a favour | story-delivery.md |

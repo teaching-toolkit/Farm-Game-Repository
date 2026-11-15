@@ -44,6 +44,12 @@ grep -q "^STORY OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/trip_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^TRIP|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^TRIP OK/✔ trip and bag/; s/^TRIP FAILED/✘ trip and bag/'
 grep -q "^TRIP OK" "$LOG" || FAIL=1
+"$G" --headless --path . res://tests/piles_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
+grep -E "^PILES|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^PILES OK/✔ piles and loose things/; s/^PILES FAILED/✘ piles and loose things/'
+grep -q "^PILES OK" "$LOG" || FAIL=1
+"$G" --headless --path . res://tests/figures_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
+grep -E "^FIGURES|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^FIGURES OK/✔ people who stand, stroll and talk/; s/^FIGURES FAILED/✘ people who stand, stroll and talk/'
+grep -q "^FIGURES OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/gate_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^GATE|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^GATE OK/✔ travelling merchant/; s/^GATE FAILED/✘ travelling merchant/'
 grep -q "^GATE OK" "$LOG" || FAIL=1

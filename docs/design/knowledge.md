@@ -9,7 +9,7 @@ rope from fibres*, *Why bread rises*, *Smelting iron*, *Mixing colours* …). A 
 campfire, rope, the oven …), gives a lasting boost (✨, e.g. fuel −5 %), or both.
 
 **Learning a card:**
-1. Own its **book** (bought from the book cart, which comes with the travelling merchant).
+1. Own its **book** (bought from the book cart on the village square).
 2. Have **discovered** the thing it is about, if it names one (hold iron ore once before *Smelting iron*).
 3. **Read** it: the card's page (2–4 sentences, reading level of class 2–3, can be read aloud) stays open while the reading
    takes a few Time Quiz questions; a bigger library reads faster.

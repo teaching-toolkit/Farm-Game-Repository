@@ -1,6 +1,8 @@
 extends Node
 ## UI smoke test: clicks through the opening like a child would.
 const Spots = preload("res://game/farm/spots.gd")
+const Art = preload("res://kits/ui/art.gd")
+const SquareGround = preload("res://game/farm/ui/square_ground.gd")
 var G
 var M
 var D      # the UI test driver: the tests talk to the screen only through it (tests/ui_driver.gd)
@@ -37,6 +39,16 @@ func _ready() -> void:
 	G.S["album"].clear()
 	print("reveal: hidden at the start %s, shown with the first coin and picture %s (told: %s), stays %s" % [rv_hidden, rv_shown, rv_new, rv_stays])
 	if not (rv_hidden and rv_shown and rv_bag and rv_stays): print("FAIL reveal: see the line above")
+	# a window's picture (pictures/16): the key of the open window; a node only when the picture file exists
+	D.open_spot("storage")
+	await _frames(2)
+	var wk_store: bool = D.window_key() == "storage"
+	var wk_node: bool = D.content().has_node("WindowPicture") == (Art.first("windows", ["storage"]) != null)
+	D.open_sheet("bag")
+	await _frames(2)
+	var wk_bag: bool = D.window_key() == "bag"
+	var wk_none: bool = D.content().has_node("WindowPicture") == (Art.first("windows", ["bag"]) != null)
+	if not (wk_store and wk_node and wk_bag and wk_none): print("FAIL window picture: store %s node %s bag %s node %s" % [wk_store, wk_node, wk_bag, wk_none])
 	# the store's tile panel: pack one with 🎒 +1, the panel shows again with the new numbers, take it out again
 	G.inventory.add_item("boulder", 2.0, true)
 	D.open_spot("storage")
@@ -55,6 +67,24 @@ func _ready() -> void:
 	G.inventory.take("boulder", 2.0)
 	print("store panel: opens %s, packs %s, unpacks %s" % [tp_open, tp_packed, tp_back])
 	if not (tp_open and tp_packed and tp_back): print("FAIL store panel: see the line above")
+	# the store's fullness bar (interface-feel/14): there, and it rises with what is stored
+	D.open_spot("storage")
+	await _frames(2)
+	var sbar0: ProgressBar = D.content().find_child("store_bar", true, false) as ProgressBar
+	var sbar_v0: float = sbar0.value if sbar0 != null else -1.0
+	var sbar_had: bool = sbar0 != null
+	G.inventory.add_item("boulder", 3.0, true)
+	D.open_spot("storage")
+	await _frames(2)
+	var sbar1: ProgressBar = D.content().find_child("store_bar", true, false) as ProgressBar
+	var sbar_v1: float = sbar1.value if sbar1 != null else -1.0
+	var sbar_ok: bool = sbar_had and sbar1 != null and sbar_v1 > sbar_v0
+	var sbar_fill: float = G.inventory.fill()
+	D.close_sheet()
+	G.inventory.take("boulder", 3.0)
+	sbar_ok = sbar_ok and absf(sbar_v1 - sbar_fill) < 0.011
+	print("store bar: %s -> %s (fill %s) %s" % [sbar_v0, sbar_v1, sbar_fill, sbar_ok])
+	if not sbar_ok: print("FAIL store bar: see the line above")
 	# M4: every thing has a weight (hidden): classes, a total
 	var wt_ok: bool = G.inventory.weight_class("boulder") == "heavy" and G.inventory.weight_of("boulder") == 4.0 and G.inventory.weight_of("feather") == 0.1 and G.inventory.weight_class("straw") == "bulky"
 	var load0: float = G.inventory.total_load()
@@ -587,16 +617,71 @@ func _ready() -> void:
 	G.trip.test_square()
 	D.open_spot("market")
 	await _frames(2)
-	var sq_open: bool = D.sheet_visible() and D.sheet_kind() == "spot:market" and not D.sheet_close_shown()
+	var sq_open: bool = D.sheet_visible() and D.sheet_kind() == "spot:market" and D.sheet_close_shown()      # money-market/10: a stall window has its ✖
 	D.close_sheet()                                # the ✖ (hidden here) or any other way of closing the window
 	await _frames(2)
-	var sq_stays: bool = G.trip.at_square() and D.sheet_visible() and D.sheet_kind() == "spot:market"
+	var sq_stays: bool = G.trip.at_square() and not D.sheet_visible() and D.square_shown() and D.square_covers_farm() and D.square_scene_full()      # closed: the scene fills the screen
 	D.open_sheet("bag")
 	await _frames(2)
 	var sq_bag: bool = D.sheet_close_shown()
 	D.close_sheet()                                # closing the bag comes back to the square
 	await _frames(2)
-	var sq_back: bool = G.trip.at_square() and D.sheet_visible() and D.sheet_kind() == "spot:market"
+	var sq_back: bool = G.trip.at_square() and not D.sheet_visible() and D.square_shown()
+	var sq_sign: bool = D.square_tap("home")      # the 🏠 sign works with no window open
+	await _frames(2)
+	sq_sign = sq_sign and D.modal_visible() and _modal_has("On the way home")
+	D.close_modal()
+	D.square_tap("seeds")                          # a tap on a stall opens its window; a tap on the bare scene closes it
+	await _frames(2)
+	var sq_tapwin: bool = D.sheet_visible() and D.sheet_kind() == "spot:market" and not D.square_scene_full()
+	D.square_scene_tap()
+	await _frames(2)
+	sq_tapwin = sq_tapwin and not D.sheet_visible() and D.square_scene_full()
+	# people/06: the people stand on the square (two villagers and the sellers of the stalls that stand there); a tap on a seller says a line and opens no window; the stall still opens; nobody jumps back to their start
+	var pl_n: int = D.figures_here().size()
+	var pl_want: int = 2 + D.square_stalls().filter(func(s): return s in ["seeds", "traders", "books"]).size()      # the two villagers and the sellers of the stalls that stand there
+	M.figures.step(3.0)
+	var pl_rel0: Vector2 = D.figure_rel("village_boy")
+	D.figure_tap("seed_seller")
+	await _frames(2)
+	var pl_say: bool = D.figure_saying("seed_seller") != "" and not D.sheet_visible()
+	D.square_tap("seeds")
+	await _frames(2)
+	var pl_open: bool = D.sheet_visible() and D.sheet_kind() == "spot:market" and D.figures_here().size() == pl_want
+	var pl_rel1: Vector2 = D.figure_rel("village_boy")
+	D.figure_tap("old_woman")
+	await _frames(2)
+	pl_open = pl_open and D.sheet_visible()                 # a tap on a person does not close an open window
+	D.square_scene_tap()
+	await _frames(2)
+	print("people: %d on the square (want %d) %s, a seller says a line and opens no window %s, the stall opens its window and nobody left %s (%s -> %s)" % [pl_n, pl_want, pl_n == pl_want, pl_say, pl_open, pl_rel0, pl_rel1])
+	if not (pl_n == pl_want and pl_say and pl_open and pl_rel0.distance_to(pl_rel1) < 0.02): print("FAIL people: see the line above")
+	# people/01: the travelling merchant is a figure beside his cart exactly while he is at the gate (the walk and the cart's three pictures: figures_test)
+	var mg_was: Dictionary = G.S["gate"].duplicate()
+	G.S["gate"] = {"here": true, "until": 999, "cart": 0.0, "visits": 1}
+	D.refresh()
+	var mg_layer: Control = M.map.board.find_child("merchant_layer", true, false)
+	var mg_on: bool = M.map.merchant.cart != null and mg_layer != null and M.figures.ids(mg_layer) == ["merchant"]
+	G.S["gate"] = mg_was
+	D.refresh()
+	var mg_off: bool = M.map.merchant.cart == null
+	print("merchant at the gate: a figure and his cart while he is here %s, the cart gone when he is not %s" % [mg_on, mg_off])
+	if not (mg_on and mg_off): print("FAIL merchant at the gate: see the line above")
+	# people/01: a story visitor is a figure at the farmhouse door exactly while somebody visits (the walk, the tap and the seven: figures_test)
+	G.people.visit("maud")
+	D.refresh()
+	var vi_layer: Control = M.map.board.find_child("visitor_layer", true, false)
+	var vi_on: bool = vi_layer != null and M.figures.ids(vi_layer) == ["maud"] and M.map.visitor.here() == "maud"
+	G.S["step"] += int(G.people.data()["visitSteps"])        # two questions later the visit is over
+	D.refresh()
+	var vi_off: bool = M.map.visitor.here() == ""
+	G.S["step"] -= int(G.people.data()["visitSteps"])
+	G.people._visit_step = -99                               # (the step went back: make sure the visit stays over)
+	D.refresh()
+	print("visitor at the door: a figure while somebody visits %s, walking off when the visit is over %s" % [vi_on, vi_off])
+	if not (vi_on and vi_off): print("FAIL visitor at the door: see the line above")
+	D.open_spot("market")
+	await _frames(2)
 	# money-market/04: Back home is a walk, one Time Quiz question; only a right first answer takes the farmer home
 	D.playback_speed(0)
 	G.S["bag"] = {"egg": 1.0}
@@ -619,7 +704,7 @@ func _ready() -> void:
 	await get_tree().create_timer(float(G.feel("playback.walkRight")) + 0.5).timeout     # the green answer shows, then the pop-up closes into the farm
 	var sq_home: bool = not G.trip.at_square() and not D.sheet_visible() and not D.modal_visible() and G.S["step"] == hm_step0 + 1 and G.S["bag"].is_empty()
 	print("square: opens without ✖ %s, closing keeps the square %s, the bag's ✖ %s and back to the square %s; Back home opens a question %s, a closed pop-up stays %s, a wrong first try stays %s, a right one goes home %s" % [sq_open, sq_stays, sq_bag, sq_back, hm_open, hm_closed, hm_wrong, sq_home])
-	if not (sq_open and sq_stays and sq_bag and sq_back and sq_home_pressed and hm_open and hm_closed and hm_wrong and sq_home): print("FAIL square: see the line above")
+	if not (sq_open and sq_stays and sq_bag and sq_back and sq_sign and sq_tapwin and sq_home_pressed and hm_open and hm_closed and hm_wrong and sq_home): print("FAIL square: see the line above")
 	D.playback_speed(1.0)
 	# money-market/06: the square window has two bars, the bag's (to sell, hand over) and the way home's (bought); each follows every sale, purchase and delivery
 	D.close_modal()
@@ -690,6 +775,67 @@ func _ready() -> void:
 	var vs_gone: bool = not D.square_shown()
 	print("village square: stands where the farm was %s, stalls %s; a tap shows the seeds %s, the window keeps its height %s, the bag opens over it %s and closes back to the stall %s, the selling stall %s, the orders only when there are some %s, the notice board %s, the sign asks the way home %s, gone at home %s" % [vs_shown, str(vs_stalls), vs_seeds, vs_height, vs_bag, vs_back, vs_sell, vs_none, vs_board, vs_home, vs_gone])
 	if not (vs_shown and vs_has and vs_seeds and vs_height and vs_bag and vs_back and vs_sell and vs_none and vs_board and vs_home and vs_gone): print("FAIL village square (money-market/07): see the line above")
+	# money-market/09: one stall, one seller's things (the traders' window holds no seed merchant's section, the seeds' none of the traders')
+	G.trip.test_square()
+	for u in ["seed_1", "raw_1", "spice_1"]: G.S["unlocked"][u] = true
+	G.S["bag"] = {}
+	D.close_sheet()
+	D.square_arrive()                              # money-market/10: on arrival the scene fills the screen with no window (a stall's only if the farmer came for it)
+	await _frames(2)
+	var arr_ok: bool = D.square_shown() and (D.sheet_visible() == D.square_orders()) and (D.sheet_visible() or D.square_scene_full())
+	print("square arrival: no window unless an order waits %s" % arr_ok)
+	if not arr_ok: print("FAIL square arrival (money-market/10): see the line above")
+	# money-market/12: the square's ground is a map of diamond tiles from the scene's top edge (no sky): one control over the whole scene that nothing can tap; the same cell always looks the same
+	var sg_root: Control = M.square.root()
+	var sg_ground: Control = sg_root.get_node_or_null("ground")
+	var sg_sky: bool = sg_root.get_children().filter(func(c): return c is ColorRect).size() > 1 or sg_root.find_child("sky", true, false) != null      # only the colour under the scene may be a ColorRect
+	var sg_cover: bool = sg_ground != null and sg_ground.size.x > 100.0 and sg_ground.position == Vector2.ZERO and is_equal_approx(sg_ground.size.x, sg_root.size.x) and sg_ground.size.y >= sg_root.size.y - 1.0 and sg_ground.get_child_count() == 0 and sg_ground.mouse_filter == Control.MOUSE_FILTER_IGNORE
+	var sg_map: Dictionary = M.square.data().get("ground", {})
+	var sg_rows: Array = sg_map.get("rows", [])
+	var sg_same := not sg_rows.is_empty()
+	for sg_r in range(0, 60):
+		for sg_c in range(0, 10):
+			var sg_a: Dictionary = SquareGround.cell(sg_map, sg_c, sg_r)
+			sg_same = sg_same and not sg_a.is_empty() and sg_a == SquareGround.cell(sg_map, sg_c, sg_r)
+	var sg_first := str(sg_rows[0]).split(" ", false)
+	var sg_last := str(sg_rows[-1]).split(" ", false)
+	var sg_repeat: bool = SquareGround.cell(sg_map, 0, 0)["kind"] == sg_first[0] and SquareGround.cell(sg_map, 99, 0)["kind"] == sg_first[-1] and SquareGround.cell(sg_map, 0, 999)["kind"] == sg_last[0] and SquareGround.cell(sg_map, 99, 999)["kind"] == sg_last[-1]      # beyond the map the last row, beyond a row its last letter
+	print("square ground: no sky node %s, one ground control over the whole scene from its top left %s, the same cell the same picture %s, the map repeats its last row and letter %s" % [not sg_sky, sg_cover, sg_same, sg_repeat])
+	if not (not sg_sky and sg_cover and sg_same and sg_repeat): print("FAIL square ground (money-market/12): see the line above")
+	D.open_spot("market")
+	await _frames(2)
+	var st_only: bool = D.square_stalls().has("traders") and D.square_tap("seeds")
+	await _frames(2)
+	st_only = st_only and _content_has("Seed merchant") and _content_has("Seed Merchant") and not _content_has("Raw Materials") and not _content_has("Spice Merchant") and not _content_has("Nothing to sell")
+	st_only = st_only and D.square_tap("traders")
+	await _frames(2)
+	st_only = st_only and _content_has("Raw Materials") and _content_has("Spice Merchant") and not _content_has("Seed merchant") and not _content_has("Seed Merchant")
+	st_only = st_only and D.square_tap("sell")
+	await _frames(2)
+	st_only = st_only and not _content_has("Raw Materials") and not _content_has("Seed merchant") and not _content_has("Seed Merchant")
+	print("one stall, one seller's things: %s" % st_only)
+	if not st_only: print("FAIL one stall shows only its own things (money-market/09): see the line above")
+	# money-market/11: the book cart stands on the square for good once its requirements are met, and a book is bought there
+	G.S["unlocked"].erase("book_cart")
+	D.close_sheet()
+	await _frames(2)
+	var bc_before: bool = not D.square_stalls().has("books") and not D.square_tap("books")
+	G.S["unlocked"]["book_cart"] = true
+	G.S["coins"] = 5000.0
+	G.S["lord"]["owed"] = 0.0
+	D.open_spot("market")
+	await _frames(2)
+	var bc_there: bool = D.square_stalls().has("books") and D.square_tap("books")
+	await _frames(2)
+	var bc_books0: int = G.progression.books_owned()
+	bc_there = bc_there and D.square_stall() == "books" and _content_has("Books hold new cards") and not _content_has("Seed merchant") and _press_text("Buy")
+	await _frames(2)
+	var bc_bought: bool = G.progression.books_owned() == bc_books0 + 1
+	print("book cart on the square: not before %s, there after %s, a book bought %s" % [bc_before, bc_there, bc_bought])
+	if not (bc_before and bc_there and bc_bought): print("FAIL book cart on the square (money-market/11): see the line above")
+	G.trip.leave()
+	D.close_sheet()
+	await _frames(2)
 	# 5) visit every place on the map and every page
 	var n := 0
 	for sid in D.map().slots:
@@ -900,6 +1046,8 @@ func _ready() -> void:
 	print("crowding: wilted on the map %s, the sheet says the share %s, harvested %s, grey ghosts %d, weeds and stones stay %s" % [cw_map, cw_sheet, cw_done, cw_ghosts, cw_weeds_stay])
 	if not (cw_map and cw_sheet and cw_done and cw_ghosts >= 1 and cw_weeds_stay): print("FAIL crowding: see the line above")
 	await _interface_feel_01_02()
+	await _action_budget_ring()
+	await _pet_chores()
 	get_tree().quit()
 
 func _atext_ok(q: Dictionary) -> bool:
@@ -1046,6 +1194,13 @@ func _interface_feel_01_02() -> void:
 	var crow: Control = M.widgets.costs({"stick": 3.0})
 	D.content().add_child(crow)
 	await _frames(2)
+	var still := 0                             # the sheet slides up by the clock, not by frames: tap only when the row has stopped moving (interface-feel/13)
+	var was: Vector2 = crow.global_position
+	for _i in range(240):
+		await _frames(1)
+		still = still + 1 if crow.global_position.is_equal_approx(was) else 0
+		was = crow.global_position
+		if still >= 6: break
 	await _tap(crow.get_child(0))
 	var cn: Dictionary = D.info_note()
 	var it_cost: bool = cn.get("title", "") == "Stick" and cn["lines"].has("It needs 3. You have %d." % G.down(G.inventory.count("stick")))
@@ -1242,3 +1397,240 @@ func _interface_feel_01_02() -> void:
 		D.close_sheet()
 	print("grey/no silent grey: %d greyed-out buttons over every place, the quest book and the bag (new game at home and in the village, a chapter 3 farm), without a reason: %s" % [n_grey, str(silent)])
 	if not (silent.is_empty() and n_grey > 20): print("FAIL interface-feel/02 silent grey: see the line above")
+
+## action-budget/03: the ring of moments round the clock, the grey chores, and the spark to the clock.
+func _action_budget_ring() -> void:
+	const UI = preload("res://kits/ui/ui.gd")
+	# --- (a) the ring on its own: a clock of its own in the tree (the widget needs no game)
+	var ck := UI.ClockButton.new()
+	ck.custom_minimum_size = Vector2(92, 92)
+	add_child(ck)
+	await _frames(2)
+	var seg := []
+	for pair in [[0, 24], [1, 24], [2, 24], [3, 24], [11, 24], [12, 24], [24, 24]]:
+		ck.set_moments(pair[0], pair[1])
+		seg.append(ck.filled_segments)
+	var seg_ok: bool = seg == [0, 1, 1, 2, 6, 6, 12]
+	ck.set_moments(24, 24)
+	await _frames(2)
+	var rock_full: bool = ck.is_rocking
+	ck.set_moments(23, 24)
+	var rock_stops: bool = not ck.is_rocking and ck.filled_segments == 11                      # one moment is left: not rocking yet
+	ck.set_moments(21, 24)
+	var seg_21: int = ck.filled_segments
+	var amber11: bool = ck._ring_color(10) == UI.ClockButton.RING_AMBER and ck._ring_color(8) == UI.ClockButton.RING_GREEN and ck._ring_color(11) == UI.ClockButton.RING_AMBER
+	ck.set_moments(0, 24)
+	var rock_off: bool = not ck.is_rocking
+	ck.set_moments(5, 12)                                          # 12 moments a step: one moment, one segment
+	var seg_12: int = ck.filled_segments
+	ck.set_moments(24, 24)
+	ck.sweep()                                                     # a sweep empties the ring one segment after another (about half a second), then the number is the truth
+	ck.set_moments(0, 24)
+	await _frames(2)
+	var sw_mid: bool = ck._sweep_pos >= 0.0 and ck.filled_segments == 0 and not ck.is_rocking
+	await get_tree().create_timer(0.7).timeout
+	var sw_done: bool = ck._sweep_pos < 0.0 and ck.filled_segments == 0
+	ck.queue_free()
+	print("ring: segments for 0,1,2,3,11,12,24 of 24 -> %s (%s), full rocks %s, one left does not %s, 21 of 24 -> %d segments, amber from the 10th %s, empty stops it %s, 5 of 12 -> %d, sweep runs %s and ends %s" % [str(seg), seg_ok, rock_full, rock_stops, seg_21, amber11, rock_off, seg_12, sw_mid, sw_done])
+	if not (seg_ok and rock_full and rock_stops and seg_21 == 11 and amber11 and rock_off and seg_12 == 5 and sw_mid and sw_done): print("FAIL action-budget/03 ring: see the line above")
+	# --- (b) the game: no time left greys a chore button in an open window, with the reason; with moments left the same button works
+	G.reset_game()
+	D.close_modal()
+	D.close_sheet()
+	D.story_enabled(false)
+	D.playback_speed(0.0)
+	G.S["energy"] = 20.0
+	G.S["patches"][0]["snow"] = true                              # winter: a patch under snow has a chore button that asks the rules (clear_snow)
+	G.S["moments"] = 0
+	G.changed.emit()
+	await _frames(3)
+	D.tap_patch("field", 0)
+	await _frames(3)
+	var bs := []
+	_buttons(D.modal_box(), bs)
+	_buttons(D.content(), bs)
+	var chore_txt := ""
+	for b in bs:
+		if b.text.contains("snow") and not b.disabled: chore_txt = b.text; break
+	var ring_zero: bool = M.quiz_btn.filled_segments == 0 and not M.quiz_btn.is_rocking
+	G.S["moments"] = G.actions.moments_per_step()
+	G.changed.emit()
+	await _frames(4)
+	var ring_full: bool = M.quiz_btn.filled_segments == 12 and M.quiz_btn.is_rocking
+	D.close_modal()                                                 # (the patch's window shows what is true when it opens)
+	D.tap_patch("field", 0)
+	await _frames(3)
+	var gb: Button = null
+	var bs2 := []
+	_grey_buttons(D.modal_box(), bs2)                               # (greyed-out ones only)
+	_grey_buttons(D.content(), bs2)
+	for b in bs2:
+		if chore_txt != "" and b.text == chore_txt: gb = b; break
+	var gb_grey := false
+	if gb != null and gb.disabled:
+		var wy: Variant = gb.get_meta("grey", null)
+		if wy is Dictionary:
+			for u in wy.get("unmet", []):
+				if u.get("key", "") == "time": gb_grey = true
+	# --- (c) a tap on it: the reason note opens as always, and a spark flies to the clock
+	var sparks0: int = M.feedback.sparks_sent
+	var nodes0: int = M.get_child_count()
+	if gb != null: await _tap(gb)
+	var note_ok: bool = D.info_note().get("kind", "") == "grey"
+	var spark_ok: bool = M.feedback.sparks_sent == sparks0 + 1 and M.get_child_count() > nodes0
+	await get_tree().create_timer(0.6).timeout
+	var spark_gone: bool = M.get_child_count() <= nodes0
+	# the same button with time left works again
+	G.S["moments"] = 0
+	G.changed.emit()
+	await _frames(4)
+	D.close_modal()
+	D.tap_patch("field", 0)
+	await _frames(3)
+	var again := false
+	var bs3 := []
+	_buttons(D.modal_box(), bs3)
+	_buttons(D.content(), bs3)
+	for b in bs3:
+		if chore_txt != "" and b.text == chore_txt and not b.disabled: again = true
+	var ring_again: bool = M.quiz_btn.filled_segments == 0 and not M.quiz_btn.is_rocking
+	D.close_sheet()
+	# --- (d) a right first answer moves farm time: the ring empties with a sweep once the farm catches up (and with a new step the moments are fresh)
+	G.S["moments"] = G.actions.moments_per_step()
+	G.changed.emit()
+	await _frames(4)
+	var sweeps0: int = M.quiz_btn.sweeps
+	var step0: int = G.S["step"]
+	D.show_time_quiz()
+	await _frames(2)
+	await _click_through(func(): return G.S["step"] > step0, 250)
+	D.close_modal()
+	await _frames(10)
+	var sweep_hook: bool = M.quiz_btn.sweeps == sweeps0 + 1 and M.quiz_btn.filled_segments == 0 and not M.quiz_btn.is_rocking and int(G.S["moments"]) == 0
+	G.S["moments"] = 0                                             # a load or a new game sets the ring with no sweep
+	G.changed.emit()
+	await _frames(3)
+	print("ring sweep: one sweep after the right answer %s (sweeps %d -> %d, ring %d, moments %d); a plain refresh sweeps nothing %s" % [sweep_hook, sweeps0, M.quiz_btn.sweeps, M.quiz_btn.filled_segments, G.S["moments"], M.quiz_btn.sweeps == sweeps0 + 1])
+	if not (sweep_hook and M.quiz_btn.sweeps == sweeps0 + 1): print("FAIL action-budget/03 sweep: see the line above")
+	print("ring in the game: chore button '%s' (found %s), ring empty %s, no time left: ring full and rocking %s, button grey with reason 'time' %s, tap gives the note %s and a spark %s (gone after %s), with moments left the button works %s and the ring is empty %s" % [chore_txt, chore_txt != "", ring_zero, ring_full, gb_grey, note_ok, spark_ok, spark_gone, again, ring_again])
+	if not (chore_txt != "" and ring_zero and ring_full and gb_grey and note_ok and spark_ok and spark_gone and again and ring_again): print("FAIL action-budget/03 grey chore and spark: see the line above")
+
+# --- pets-automation/04: the pet's window offers its chores as a second group, a waiting pet says why, a pet works at a pen in the playback
+func _all_buttons(node: Node, out: Array) -> void:      # every button under a node, a greyed one too (the ✔ one is grey)
+	for c in node.get_children():
+		if c is Button: out.append(c)
+		_all_buttons(c, out)
+
+func _buttons_with(t: String) -> Array:      # the window's buttons whose text contains t, in the order they stand
+	var bs := []
+	_all_buttons(D.content(), bs)
+	return bs.filter(func(b): return b.text.contains(t))
+
+func _count_labels(t: String) -> int:
+	var k := 0
+	var stack: Array = [D.content()]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		if n is Label and n.text.contains(t): k += 1
+		stack.append_array(n.get_children())
+	return k
+
+func _pets_window() -> void:      # the pets' window, built fresh
+	D.close_sheet()
+	D.open_spot("pets")
+	await _frames(3)
+
+func _pet_chores() -> void:
+	G.reset_game()
+	D.close_modal()
+	D.close_sheet()
+	D.story_enabled(false)
+	D.playback_speed(0.0)
+	for pid in ["pet_goat", "pet_pony"]: G.S["unlocked"][pid] = true      # the pony came home after the goat: the goat is level 2
+	G.invalidate_caps()
+	G.changed.emit()
+	await _frames(3)
+	# --- (a) level 2: the heading, the chore whose place stands, none for the pen chore before the coop
+	await _pets_window()
+	var heading_one: bool = _count_labels("Helps with") == 1
+	var weed_ok: bool = _buttons_with("Weeding").size() == 1
+	var muck_none: bool = _buttons_with("Mucking out").is_empty()
+	G.S["unlocked"]["coop_1"] = true
+	G.invalidate_caps()
+	G.changed.emit()
+	await _pets_window()
+	var muck_one: bool = _buttons_with("Mucking out").size() == 1 and _buttons_with("Weeding").size() == 1
+	var no_numbers: bool = _buttons_with("Mucking out")[0].text == "🧹 Mucking out"      # emoji and a short name: no number, no cost
+	# --- (b) a press sets the pet's job and moves the ✔ (from a blessing to the chore)
+	var tick0: int = _buttons_with("✔").size()
+	_buttons_with("Mucking out")[0].emit_signal("pressed")
+	await _frames(3)
+	var job_set: bool = G.pets.job_id("pet_goat") == "helps_muck_out"
+	var mb: Button = _buttons_with("Mucking out")[0]
+	var tick_moved: bool = mb.text.begins_with("✔") and mb.disabled and _buttons_with("✔").size() == 1 and tick0 == 1 and not _buttons_with("Weeding")[0].text.begins_with("✔")
+	print("pet chores, level 2: one heading %s, Weeding there %s, no Mucking out before the coop %s, then there %s, plain text %s, pressed: job %s, the ✔ moved %s" % [heading_one, weed_ok, muck_none, muck_one, no_numbers, job_set, tick_moved])
+	if not (heading_one and weed_ok and muck_none and muck_one and no_numbers and job_set and tick_moved): print("FAIL pets-automation/04 level 2 window: see the line above")
+	# --- (c) level 4: the OTHERWISE rule has the group too; its press sets the second job; the energy card stops at the bar's size
+	G.reset_game()
+	D.close_modal()
+	D.story_enabled(false)
+	for pid in ["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony"]: G.S["unlocked"][pid] = true      # the bunny is level 4
+	G.invalidate_caps()
+	G.changed.emit()
+	await _frames(3)
+	await _pets_window()
+	var two_heads: bool = _count_labels("Helps with") == 4      # the bunny's two groups, the tortoise's (level 3) and the goat's (level 2); the pony is level 1: no board
+	var tidy: Array = _buttons_with("Tidying up")
+	var two_tidy: bool = tidy.size() == 2
+	tidy[1].emit_signal("pressed")
+	await _frames(3)
+	var second_set: bool = G.pets.second_job("pet_bunny") == "helps_pick_loose"
+	tidy = _buttons_with("Tidying up")
+	var second_tick: bool = tidy.size() == 2 and tidy[1].text.begins_with("✔") and not tidy[0].text.begins_with("✔")
+	var weed_first: Button = _buttons_with("Weeding")[0]
+	weed_first.emit_signal("pressed")
+	await _frames(3)
+	var energy_when: bool = str(G.pets.when_of("pet_bunny", 0).get("card", "")) == "energy" and _content_has("My energy")
+	var top: float = G.needs.energy_max()
+	G.pets.set_when("pet_bunny", 0, "energy", top)
+	await _pets_window()
+	var plus_stops: bool = _buttons_with("+")[0].disabled
+	G.pets.set_when("pet_bunny", 0, "energy", top - 1.0)
+	await _pets_window()
+	var plus_goes: bool = not _buttons_with("+")[0].disabled
+	print("pet chores, level 4: groups %s, Tidying up in both rules %s, press on the second sets it %s, ✔ on the second %s, a chore gets the energy WHEN %s, its + stops at the bar's size %d: %s, one below it goes %s" % [two_heads, two_tidy, second_set, second_tick, energy_when, int(top), plus_stops, plus_goes])
+	if not (two_heads and two_tidy and second_set and second_tick and energy_when and plus_stops and plus_goes): print("FAIL pets-automation/04 level 4 window: see the line above")
+	# --- (d) a pet that waited tired says so in words
+	G.S["pets"]["last"]["pet_bunny"] = {"job": "helps_weed", "ok": false, "why": "tired"}
+	await _pets_window()
+	var tired_text: bool = _content_has("waiting for you to rest")
+	G.S["pets"]["last"]["pet_bunny"] = {"job": "helps_weed", "ok": true, "why": ""}
+	await _pets_window()
+	var ran_name: bool = _content_has("Last question: Weeding") and not _content_has("waiting for you to rest")
+	print("pet chores, last question: tired says the words %s, a chore that ran shows its name %s" % [tired_text, ran_name])
+	if not (tired_text and ran_name): print("FAIL pets-automation/04 waiting pet: see the line above")
+	D.close_sheet()
+	# --- (e) the playback: a pet at a pen. The pen's place is found (the animal's spot, the coop's for an unknown animal); the pet visits it
+	G.S["unlocked"]["coop_1"] = true
+	G.S["unlocked"]["animal_chicken"] = true
+	G.invalidate_caps()
+	G.changed.emit()
+	await _frames(4)
+	var pen: Vector2 = M.feedback.pen_place("animal_chicken")
+	var pen_fallback: bool = pen == M.feedback.pen_place("no_such_animal") and pen != Vector2.ZERO and pen == M.feedback.pen_place("")
+	var water: Variant = M.feedback.act_place("water")
+	var water_ok: bool = water is Vector2 and water != Vector2.ZERO
+	var bunny: Control = null
+	for sid in M.map.critters.by_place:
+		for c in M.map.critters.by_place[sid]:
+			if is_instance_valid(c) and str(c.get_meta("pid", "")) == "pet_bunny": bunny = c
+	var kids0: int = bunny.get_child_count() if bunny != null else -1
+	M.playback._pet_acts = [{"pet": "pet_bunny", "emoji": "🧹", "ok": true, "place": "pen", "aid": "animal_chicken", "chore": "muck_out"}]
+	M.playback._play_pets()
+	var visited: bool = bunny != null and bool(bunny.get_meta("busy", false)) and bunny.get_child_count() == kids0 + 1 and (bunny.get_child(bunny.get_child_count() - 1) as Label).text == "🧹"
+	M.playback._pet_acts = [{"pet": "pet_bunny", "emoji": "💧", "ok": true, "place": "water", "chore": "fetch_water"}]
+	var kids1: int = bunny.get_child_count() if bunny != null else -1
+	M.playback._play_pets()
+	var visited_water: bool = bunny != null and bunny.get_child_count() == kids1 + 1
+	print("pet chores, playback: pen place found %s (%s), the well's place %s, the pet walks to the pen with the chore's emoji %s, and to the water %s" % [pen_fallback, pen, water_ok, visited, visited_water])
+	if not (pen_fallback and water_ok and visited and visited_water): print("FAIL pets-automation/04 playback: see the line above")

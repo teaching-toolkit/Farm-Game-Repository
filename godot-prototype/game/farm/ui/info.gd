@@ -277,6 +277,7 @@ func on_grey(b: Button) -> void:
 	for k in cost:
 		if M.widgets.have_any(str(k)) + 0.0001 < float(cost[k]): short = true
 	M.feedback.sfx("tired" if key == "energy" else "tap")
+	if key == "time": M.feedback.spark(b.get_global_rect().get_center(), M.quiz_btn)      # no time left: a spark flies to the clock
 	note(lead[0], "", lines, b, M.widgets.costs(cost, base) if short else null, "grey")
 
 ## The words for a reason that has none of its own (an unmet requirement with an empty text).

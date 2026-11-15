@@ -4,13 +4,17 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** needs-parent
+**Status:** done
 
 **Milestone:** story
 
-**Size:** short
+- [x] Each of Q1–Q11 has an answer recorded in `story/archive/consistency-fixes.md` §4
 
-- [ ] Each of Q1–Q11 has an answer recorded in `story/archive/consistency-fixes.md` §4
+**14 Nov 2026:** all the story's questions are on one page for the parent, `story/QUESTIONS-FOR-THE-PARENT.md`; an answer there answers this ticket.
+
+## ✅ Parent's answers (14 Nov 2026)
+
+Answered on the one page `story/QUESTIONS-FOR-THE-PARENT.md` (the answers are written there, and in `story/canon/story-bible.md` §10): Q1 the goat thread is answered in chapter 6 (the novella's version, not the extra page); Q2 the second hand is you as a child; Q3 nobody on the swing; Q4 the bookseller's line; Q5 "before the next frost"; Q6 ink; Q7 Silverpaw, and the alpaca is pet 6; Q8 the tortoise needs the pond; Q9 the alpaca needs the drained river meadow; Q10 sails; Q11 five awe moments. The data edits are `story/05`.
 
 ---
 

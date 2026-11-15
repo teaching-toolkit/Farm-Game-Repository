@@ -1,0 +1,9 @@
+{
+  "loose": {
+    "note": "Sticks and small stones lying about on the farm, picked up with a tap (feature visible-work, ticket 03). start = how many of each lie there in a new game; every = one new thing every so many steps of time; max = the most lying about at once (after the start; the start may be more); kinds = chosen in turn. Where one lies is rolled as a share u, v of the farm's area and saved; the map finds the free spot nearest to it. Picking one up is the chore pick_loose (rules/46-chores.json).",
+    "start": {"stick": 8, "stone": 6},
+    "every": 6,
+    "max": 10,
+    "kinds": ["stick", "stone"]
+  }
+}

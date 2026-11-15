@@ -1,146 +1,229 @@
-# Chapter 2: Roofs — more pieces (English only)
+# Chapter 2: Homestead: more pieces (English only)
 
-Round 6b, draft 1 (14 Oct 2026). Fills the quiet stretches of chapter 2 and adds first-time moments. Existing pieces: `ch2.md`. Format, registers and moves as in `more-ch1.md`. All 💡 until the parent has read them aloud. (The orchard swing is in `more-ch3.md` on purpose: it waits for chapter 3; the orchard node itself is a chapter 2 node.) Consistency pass of 14 Oct 2026 applied (`../consistency-fixes.md`). Invented here, to accept or overrule: the second hand in Berit's note about the bees (`c2_n_bees`, ❓ whose hand; the parent decides); Hilde finding it annoying that nobody in the lane has a bad word for you; the lantern hung on a post outside the new barn (`c2_barn_done`, a plant).
+Compressed from the novella on 14 Nov 2026 (`story/08`). German is in `godot-prototype/data/i18n/data-de.json`.
+
+## c2_reply_none · letter · One word
+*When:* `seen:c2_letter + after:c2_letter:1`
+
+Page 1. You write back. The first try has the whole farm in it: the field, the well, the hens, the bunny, the man on the fence. It is two pages long. You tear it up. The second has only the hens. You tear that up too.
+
+Page 2. The third has one word on it. You look at it for a long time. Then you fold it into your pocket, and nothing is sent at all. Mei goes back to her barge with empty hands. Jan keeps looking back.
+
+## c2_cow · moment · Someone with opinions
+*When:* `done:animal_cow`
+
+Page 1. The cow comes slowly down the plank, as if it were a red carpet not quite good enough for her. She looks at the burnt barn, the yard, you. She is not impressed by any of it.
+
+Page 2. Then she eats a mouthful of your best hay, very slowly, looking you straight in the eye. That is how you find out who is in charge.
+
+## c2_thumps · moment · Is the cow a hawk?
+*When:* `seen:c2_cow + after:c2_cow:2`
+
+Page 1. The bunny has a question about the cow. You think it is: is the cow a hawk? The cow is not a hawk. The cow is chewing. THUMP, at the cow's tail, which moved. THUMP, at the shine on the milk pail, which looked back.
+
+Page 2. Then a very small pad: a sorry thump. It means, you think, I may have been wrong about the pail. The cow chews through all of it.
+
+## c2_stones · discovery · Warm stones
+*When:* `tap:forest + seen:c2_letter + chapter<3`
+
+Page 1. By day the white stones at the forest edge are only stones, half sunk in the moss. An old oak stands there with faded ribbons round its lowest branch. You do not go past the stones. You put your hand on one.
+
+Page 2. It is warm. Not sun-warm; the trees are too thick for that. Warm the way a cat is warm when it has just got up. Your hand has been shaking ever since the letter. On the stone it stops.
 
 ## c2_kiln · moment · Clay learns to be a brick
-*When:* `done:kiln` · *Register:* W · *Move:* Reward
+*When:* `done:kiln`
 
 Page 1. You light the kiln and shut the little door. For a long while nothing happens. Then the cracks in the door glow orange, like the edge of a sunrise.
 
 Page 2. In the morning you open it, and the soft, sulky clay has become something that rings when you flick it. Clay can change its mind, it seems. It only needs a lot of fire.
 
-## c2_bench · moment · A table that is a table
-*When:* `done:carpenter_bench` · *Register:* G · *Move:* Level-up
+## c2_mark · visit · The chalk moon
+*When:* `seen:c2_greenstem + after:c2_greenstem:3`
 
-A proper bench, at last, with a vice, a dozen hooks and a groove for the pencil. You put a plank in the vice and it stays there. Nothing rolls away. Nothing needs a foot on it. You stand there for a moment feeling like a person who owns a vice.
+Page 1. Greenstem comes again with the sage. “Bread is dear because of the Mark,” he says. “Since the fire, every loaf in Hazelwood gets a thin chalk moon on it. For the farm that burnt. Nobody likes it.”
 
-## c2_stove · moment · Heat with a door
-*When:* `done:stove_1` · *Register:* W · *Move:* Reward
+Page 2. “Why?” you say. Greenstem shrugs. “The Lord still wants his share, the one the farm used to pay. The farm stopped paying, so everyone pays it now. A bit at a time. In bread.”
 
-The stove ticks as it warms up, the way a cat ticks when it is thinking. The smell of the cottage changes. Wood, and iron, and a pot that is nearly ready to be a soup. You do not have to eat standing up any more.
+Page 3. You would pay it. All of it, right now. You would pay it twice. There is nobody to pay. After that you see the chalk everywhere: on loaves, on sacks, on the mill gate. One thin moon after another, all for your farm.
+
+## c2_board · discovery · The notice in the square
+*When:* `tap:board + seen:c2_mark` · *Emoji:* 📌
+
+Page 1. On the notice board, between a recipe for parsnip jam and the lost green glove, a small paper is pinned very square: THE MARK STANDS UNTIL THE FARM GIVES AGAIN. You read it three times.
+
+Page 2. Gives again? You give. Porridge, soup, a basket, a whole field. You look around the square for someone to tell. Nobody looks back.
+
+## c2_skipping · scene · The skipping rhyme
+*When:* `seen:c2_mark + after:c2_mark:3`
+
+Page 1. Children are skipping in the lane. A little one stops in the middle of the rope and sings straight at you: “Chalk, chalk, chalk on the sack, who's to pay it? Moonedge back!” Her mother hushes her, fast.
+
+Page 2. The rope starts again, with a different rhyme. “Lightning in the night, lightning in the barn, the little one ran out, and nobody came to harm!” Slap, slap goes the rope. You walk all the way up the hill without noticing the hill.
+
+## c2_smile · moment · A face on the path
+*When:* `seen:c2_walls + after:c2_walls:5`
+
+Page 1. The weeds you pulled yesterday have been laid out on the path. Not in a pile. In a face. Two dock leaves for eyes, a long hairy root for a nose, and a smile of thistles right across the path.
+
+Page 2. The smile has gone wrong on one side, like a smile that is trying very hard. You do not touch it. You walk round it all day. By evening it has been straightened, just a little, on the side that went wrong.
+
+## c2_n_bread · discovery · In the margin
+*When:* `page:k_bread` · *Emoji:* 📝
+
+Beside the bread page, in thin brown ink: “Not so much yeast. Patience does the rest. (You will not listen. Nobody in this family has ever listened. — B.)” You laugh out loud, alone in the kitchen.
+
+## c2_appleby · scene · One for the loaf, one for the name
+*When:* `done:d_bread + seen:c2_mark`
+
+Page 1. You take your loaves to Mistress Appleby, the baker, flour to the elbows. Every loaf she sells is chalked on a board, and at week's end it has to balance, to the last crumb. She chalks a mark for each of your loaves.
+
+Page 2. Then, beside each one, a second mark. A thin moon. “One for the loaf,” says Appleby. “One for the name.” She counts the coins into your hand without looking up. “It's not mine to forgive,” she says, to the counter.
+
+Page 3. You understand. You take the coins. On the way out, Anna, who shapes the loaves at the back, slips a warm bun into your basket without a word and goes straight back to her dough.
+
+## c2_greenstem_hands · visit · Green hands
+*When:* `seen:c2_appleby + after:c2_appleby:2`
+
+Page 1. The boy with the herbs turns up as the loaf comes out, which is luck or a very good nose. You break it. He holds his half in both hands and breathes in, eyes shut. “Rosemary does that,” he says seriously, about nothing much.
+
+Page 2. He eats the whole half in four bites. “It is a good loaf,” he says, “for a person who built that wall.”
 
 ## c2_stall · moment · Your own stall
-*When:* `done:market_stall` · *Register:* G→W · *Move:* Arrival
+*When:* `done:market_stall`
 
-You set up the stall and stand behind it. It is very odd. Yesterday you were a person who walked up to the market. Today you are a person people walk up to. Somebody asks the price of a carrot, and you tell them, and your voice comes out a little higher than planned.
+You set up the stall and stand behind it. It is very odd. Yesterday you walked up to stalls. Today people walk up to you. Somebody asks the price of a carrot, and your voice comes out a good deal higher than planned.
+
+## c2_hilde · scene · The washing line
+*When:* `done:sq_washing_line`
+
+Hilde hangs the last sheet, and it flaps like a flag from a very small country. “I hear things about you in the lane, {player},” she says, not looking at you. “Good things. Nobody has one bad word. It is ruining the lane.”
+
+## c2_hay_note · discovery · Two hands in the margin
+*When:* `page:k_hay` · *Emoji:* 📝
+
+Page 1. On the hay page there are two hands in one margin. The first, firm and black: “Dry it, turn it. Lantern on the hook OUTSIDE, and never past the sill. — B.” Under it, smaller and rounder: “Yes, Mother. Yes, Mother. Yes, Mother. — T.”
+
+Page 2. You read it three times. T. Berit had a daughter, your aunt Tilda. You can almost remember her: a big laugh, from the other side of a kitchen. Then nothing else. You turn the page quickly.
 
 ## c2_bees · moment · The hive
-*When:* `done:animal_bees` · *Register:* T→G · *Move:* Complication
+*When:* `done:animal_bees`
 
 Page 1. You carry the hive to the sunny corner of the yard and set it down. A hum comes out of it, low and enormous, as if the box were holding a thought too big for itself. You step back.
 
 Page 2. Several thousand tiny creatures have just agreed to live here. They did not ask you. You did not ask them. It seems best to be polite.
 
-## c2_reply · letter · Mother writes back
-*When:* `after:c2_cottage:8` · *Register:* W · *Move:* Plant
+## c2_n_bees · discovery · In the margin
+*When:* `page:k_bees` · *Emoji:* 📝
 
-Page 1. The barge comes round the bend, and Mei nods as before, and hands over a letter. The writing is round and quick, and there is a lot more of it than last time.
-
-Page 2. “I am not going to say 'I told you so', because I never told you anything. Eat properly. The table is still long.” Under that, in smaller letters: “Ask Maud about the goat.” You do not know what that means. You put the letter with the other one.
-
-## c2_greenstem_hands · visit · Green hands
-*When:* `done:d_bread + seen:c2_greenstem + seen:c2_walls` · *Register:* G→W · *Move:* Reward
-
-Page 1. The boy with the herbs turns up as the loaf comes out, which is luck or a very good nose. You break it. He holds his half in both hands and breathes it in with his eyes shut. “Rosemary does that,” he says seriously, about nothing much.
-
-Page 2. He eats the whole half in four bites. “It is a good loaf,” he says, “for a person who built that wall.”
+Next to the bees: “Talk to them. It doesn't matter what about.” Under it, in a different pen: “I mean it. — B.” You wonder who had to be told twice. Then you go and tell the bees about the cow. At some length.
 
 ## c2_honey · moment · A spoon of summer
-*When:* `has:honey:1` · *Register:* A · *Move:* Reward
+*When:* `item:honey>=1 + chapter<3`
 
-You hold the first honey up to the window. It is gold, and slow, and the light goes into it and stays. A spoon of summer, whatever the weather outside. Somewhere in it is every flower the bees visited, and you can almost taste the list.
-
-## c2_pond · moment · The pond opens its eye
-*When:* `done:pond` · *Register:* A→G · *Move:* Reward
-
-Page 1. The last spadeful comes out, and the water arrives. It is slow about it. First a dark patch, then a shine, then a sky lying on the ground with clouds in it.
-
-Page 2. A frog appears at once and says nothing at all. It has the manner of someone who has been waiting for this for years.
-
-## c2_barn_frame · moment · Ribs
-*When:* `done:barn_frame` · *Register:* T→W · *Move:* Complication
-
-The frame of the new barn goes up, beam by beam. Against the evening it looks like the ribs of something very large, sleeping on its side. The old barn burned from the corner. You walk all the way round the new one anyway, just to check that every corner is only a corner.
-
-## c2_cow · moment · Someone with opinions
-*When:* `done:animal_cow` · *Register:* G · *Move:* Arrival
-
-The cow comes down the plank, looks at the barn, looks at the yard, looks at you. She does not seem impressed by any of it. Then she lowers her head and eats a mouthful of your best hay, slowly, while holding your eye. That is how you find out who is in charge.
-
-## c2_barn_done · beat · A lantern outside
-*When:* `done:barn_1` · *Register:* W→T · *Move:* Plant
-
-The barn is finished. It smells of new pine and fresh straw. You hang a lantern on a post outside, not on a hook inside, and stand back and nod. Hay and flame should live far apart. That is as far as you let yourself think.
-
-## c2_kitten · scene · Ginger stays
-*When:* `done:sq_stray_kitten` · *Register:* W · *Move:* Reward
-
-She sniffs the saucer. She sniffs the straw. She walks round the bed three times, sits in the middle, turns her back to you and begins to wash. This means yes. Nobody has said a word, and you stand very still so as not to spoil it.
+The first honey is gold and slow. You hold the jar up to the window, and the light goes into it and stays. A spoonful of summer, whatever the weather is doing outside.
 
 ## c2_jan · scene · A bowl for Old Jan
-*When:* `done:sq_sick_neighbour` · *Register:* W · *Move:* Reward
+*When:* `done:sq_sick_neighbour`
 
-Old Jan eats the tomato soup in small, serious spoonfuls, and by the third spoon his cheeks go pink. “This is the sort of soup,” he says, “that Berit made.” He taps the bowl. “And that goat could count, you know. Moonedge goat. Count to five, I swear.” Nobody believes him. You rather do.
+Page 1. Old Jan eats the tomato soup in small, serious spoonfuls, and by the third spoon his cheeks go pink. “This is the sort of soup,” he says, “that Berit made.”
 
-## c2_hilde · scene · The washing line
-*When:* `done:sq_washing_line` · *Register:* G · *Move:* Reward
-
-Hilde hangs the last sheet, and it flaps like a flag from a very small country. “I hear things about you in the lane, {player},” she says, not looking at you. “Good things. Nobody has one bad word. It is ruining the lane.”
+Page 2. He taps the bowl. “And that goat could count, you know. The Moonedge goat. Count to five, I swear.” Nobody else has ever believed him. You rather do.
 
 ## c2_otto · scene · The ferryman
-*When:* `done:sq_bridge` · *Register:* W→T · *Move:* Plant
+*When:* `done:sq_bridge`
 
 Page 1. Otto crosses the mended bridge slowly and stops in the middle, looking down at the water. “I used to ferry people over this,” he says. “With a pole.”
 
 Page 2. “The night your family left, I took you across. You were so small. You did not cry.” He looks at you, then at the water. “I never forgot.” You say nothing. Neither does he. The river says a good deal.
 
-## c2_snug · moment · Snow-light
-*When:* `season:winter + chapter:2 + done:cottage` · *Register:* W · *Move:* Reward
+## c2_hammer · beat · A very small hammer
+*When:* `done:cottage_roof`
 
-You wake in the cottage and the light is wrong. Too white, too quiet. At the window, the yard has gone soft. The roof you built is holding up a whole cold sky and not complaining. You stay under the blanket a little longer than is strictly necessary.
+Page 1. In the corner where the last bundle must go, there is a hammer. It is the size of your thumb. A real one, worn shiny, in exactly the wrong place, as if somebody very small wanted to help and did not know how.
 
-## c2_tortoise_omen · moment · A house for a shell
-*When:* `has:shell_house:1` · *Register:* W→G · *Move:* Omen · *Priority:* 65
+Page 2. You put the last bundle on the other side of it. The roof has a bump now, a round lump where the hammer is. You decide it is a feature.
 
-You set the little shell house down in the sunniest corner of the yard. It is exactly big enough for someone who carries their own roof. You step back and look at it. It looks back, empty and patient.
+## c2_stove · moment · Heat with a door
+*When:* `done:stove_1`
 
-## c2_n_bread · discovery · In the margin
-*When:* `page:k_bread` · *Register:* W · *Move:* Notice · *Emoji:* 📝
+The stove ticks as it warms, the way a cat ticks when it is thinking. The cottage smells of wood, iron, and a pot nearly ready to be soup. You do not have to eat standing up any more. You do, mostly. But not always.
 
-Beside the bread page, in a hand you have only just got to know: “Not so much yeast. Patience does the rest.”
+## c2_pieter · visit · A lantern in daylight
+*When:* `seen:c2_cottage + after:c2_cottage:2`
 
-## c2_n_bees · discovery · In the margin
-*When:* `page:k_bees` · *Register:* G · *Move:* Notice · *Emoji:* 📝
+Page 1. A lantern stops at your gate in broad daylight. It belongs to Pieter, the night watchman, a tall, stooped man with a book under his arm. He lights it by day so people can see him coming.
 
-Next to the bees, in the margin: “Talk to them. It doesn't matter what about.” Under it, in a different pen: “I mean it, B.” You wonder who had to be told.
+Page 2. He looks at your roof for a long time. He looks at the bump in the corner. He writes one line in his book. “Good thatch,” he says, and goes. You look up at your roof as if it might be counted.
+
+## c2_reply · letter · Mother writes back
+*When:* `after:c2_cottage:8`
+
+Page 1. The barge comes round the bend on Landing Day, and Mei waves a letter. The writing is round and quick, and there is a lot more of it than last time.
+
+Page 2. “I am not going to say ‘I told you so’, because I never told you anything. Eat properly. Sit down when you eat. The table is still long.” At the bottom: “Ask Maud about the goat.” You put the letter with the other one.
 
 ## c2_n_frost · discovery · In the margin
-*When:* `page:k_frost` · *Register:* T→W · *Move:* Notice · *Emoji:* 📝
+*When:* `page:k_frost` · *Emoji:* 📝
 
-Frost. Written beside it, small: “Cover the beans. Cover everything. Then cover Maud's.”
+Beside the frost page, small: “Cover the beans. Cover everything. Then go and cover Maud's.”
 
-## c2_n_play · discovery · In the margin
-*When:* `page:k_play` · *Register:* G · *Move:* Notice · *Emoji:* 📝
+## c2_snug · moment · Snow-light
+*When:* `season:winter + chapter<3 + done:cottage`
 
-On the page about play, a drawing in the margin: a goat balancing on a barrel. Under it: “Ten out of ten.”
+You wake in the cottage and the light is wrong. Too white, too quiet. Outside, the whole yard has gone soft and silver. Your roof is holding up a whole cold sky and not complaining. You stay under the blanket a little longer than necessary.
+
+## c2_longnight · scene · One true thing
+*When:* `seen:c2_snug + after:c2_snug:2`
+
+Page 1. On Longnight, Greenstem comes up the hill in the dark with a lantern. “You have to come down to the Hall,” he says. “Everyone goes.” “Nobody asked me.” “I'm asking you.”
+
+Page 2. The Hall is long and warm and full to the rafters. On Longnight anybody can stand up and say one true thing. Then the person nearest passes them a cup. Nobody claps. Nobody answers. They just pass a cup.
+
+Page 3. A man says, “I miss my brother.” A girl says, “I broke Mother's blue jug and blamed the cat.” You do not stand up. You take the ladle and serve soup instead. Somebody puts a cup in your hand anyway. You do not see who.
 
 ## c2_n_sleep · discovery · In the margin
-*When:* `page:k_sleep` · *Register:* W · *Move:* Notice · *Emoji:* 📝
+*When:* `page:k_sleep` · *Emoji:* 📝
 
 Beside the page about sleep, underlined twice: “You, too.”
 
-## c2_board · discovery · The board in the square
-*When:* `chapter:2 + sidequests>=1` · *Register:* G · *Move:* Arrival
+## c2_started_low · scene · It started low
+*When:* `seen:c2_barn + after:c2_barn:3`
 
-New notices have appeared on the board in the square. One is a recipe. One is a lost glove. One says, in large letters, “WHOEVER TOOK MY LADDER, THANK YOU, KEEP IT.” You decide that Hazelwood is a place that runs on notices.
+Page 1. Down in the village the children are skipping. You walk past with a sack on your shoulder. They are singing the lightning rhyme. “It started low,” you say. Not loudly, without meaning to.
+
+Page 2. The rope slaps down. The children look at you. You look at them. They swap to the chalk rhyme very fast.
+
+## c2_barn_frame · moment · Ribs
+*When:* `done:barn_frame`
+
+Page 1. The frame of the new barn goes up, beam by beam. Against the evening it looks like the ribs of something very large, asleep on its side.
+
+Page 2. The old barn burned from a corner. You walk all the way round the new one, to check that every corner is only a corner.
+
+## c2_barn_done · beat · A lantern outside
+*When:* `done:barn_1`
+
+The barn is finished. It smells of new pine and fresh straw. You hang a lantern on a post outside, not on a hook inside. Hay and flame should live far apart. That is as far as you let yourself think.
+
+## c2_pond · moment · The pond opens its eye
+*When:* `done:pond`
+
+Page 1. The last spadeful comes out, and the water arrives. It is slow about it. First a dark patch, then a shine, then a sky lying on the ground with clouds in it.
+
+Page 2. A frog appears at once and says nothing at all. It has the manner of someone who has been waiting for this for years.
+
+## c2_kitten · scene · Ginger stays
+*When:* `done:sq_stray_kitten`
+
+She sniffs the saucer. She sniffs the straw. She walks round the bed three times, sits in the middle, turns her back to you and begins to wash. This means yes. You stand very still so as not to spoil it.
 
 ## c2_k_spring · bark
-*When:* `season:spring + chapter:2 + chance:0.2`
+*When:* `season:spring + chapter>=2 + chapter<3 + chance:0.2`
 
 The soil smells different from last year. Less like ash. More like a promise.
 
 ## c2_k_hive · bark
-*When:* `has:honey:1 + chance:0.15`
+*When:* `item:honey>=1 + chapter<3 + chance:0.15`
 
 A bee lands on your sleeve, inspects the sleeve, finds it adequate, leaves.
 

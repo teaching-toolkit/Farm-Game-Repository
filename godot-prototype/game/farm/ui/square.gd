@@ -2,19 +2,21 @@ extends RefCounted
 class_name FarmUiSquare
 ## The village square as its own screen (money-market/07). While the farmer is in the village (G.trip.at_square()), a scene of the square stands
 ## where the farm was: nothing of the farm is seen or can be tapped. Its stalls are pictures to tap; the window below the scene (the sheet,
-## kind "spot:market", without ✖ and always the same height) shows the stall that was tapped. Other windows (the bag, the quest book) open
-## over the scene and close back to it.
+## kind "spot:market", closable, always the same height) opens over the scene when a stall is tapped (or on arrival, for the stall the farmer
+## came for); with no window the scene fills the screen. Other windows (the bag, the quest book) open over the scene and close back to it.
 ##
 ## This part owns the scene, which stall is open, and the window's frame. It does NOT know what a stall offers: the part that owns a
 ## stall's content registers it (`add_stall`: main.gd `_make_parts` lists them), so a new stall is one data entry (where it stands, its
 ## picture and symbol) and one `add_stall` line, and nothing here changes. The sign for the walk home ("home") is the square's own.
 ##   WHERE a stall stands and how it looks   rules/49-trip.json "square" (a mockup from pictures the game already has; a painted
-##                                           `backdrop` replaces sky, ground and deco at once, so painted pictures need no code)
+##                                           `backdrop` replaces ground and deco at once, so painted pictures need no code; the ground is a
+##                                           map of diamond tiles, ui/square_ground.gd)
 ##   WHAT a stall offers                     its owner's `build` (ui/places/market.gd: selling, seeds, traders, orders; placesheet: the board)
 ##   The rules                               G.trade, G.trip, G.progression
 
 const UI = preload("res://kits/ui/ui.gd")
 const Art = preload("res://kits/ui/art.gd")
+const Ground = preload("res://game/farm/ui/square_ground.gd")      # the ground's diamond tiles (money-market/12)
 const SHEET_SHARE := 0.6       # the window below the scene: this share of the screen's height (the most a sheet may take)
 
 var M: FarmMain   # the main screen: its widgets and the other parts
@@ -25,6 +27,9 @@ var _root: Control = null      # the scene (hidden at home)
 var _box := Vector2.ZERO       # the size the scene was laid out for
 var _sig := ""                 # which stalls stood there and which was picked, when it was laid out
 var _was_here := false
+var window := false             # the stall's window is wanted open (it comes back when the bag or the quest book closes)
+var _layer: Control = null     # the people (ui/figures.gd): their own layer over the stalls' pictures, which a redraw does not free
+var _fbox := Vector2.ZERO      # the size the people were placed for
 var _stall_nodes := {}         # id -> the stall's control
 var _stalls := {}              # id -> {"build": fills the window, "shown": does it stand there now, "wanted": did the farmer come for it}
 var _head := Callable()        # fills the top of the window, above every stall's things (the walk home, the bag's bars)
@@ -95,6 +100,7 @@ func pick(id: String) -> void:
 		return
 	if not (id in stalls()): return
 	stall = id
+	window = true
 	if M.sheet_kind != "spot:market": M.sheets.open_sheet("spot:market")
 	else:
 		M.sheet_scroll.scroll_vertical = 0
@@ -102,12 +108,25 @@ func pick(id: String) -> void:
 		M.sheets.fit_sheet.call_deferred()
 	sync()
 
+## The farmer has just arrived on the square: the scene fills the screen, unless a stall is the one he came for (its window then opens).
+func arrive() -> void:
+	sync()
+	var w := _wanted_stall()
+	if w != "": pick(w)
+	else: M.sheets.close_sheet()
+
+## The first stall the farmer most likely came for (its `wanted`), "" when none.
+func _wanted_stall() -> String:
+	for id in stalls():
+		if id == "home": continue
+		var wanted: Callable = _stalls[id]["wanted"]
+		if wanted.is_valid() and wanted.call(): return id
+	return ""
+
 ## The stall that is open on arrival: the first one the farmer most likely came for (its `wanted`), else the data's `first`, else the first there.
 func _first_stall() -> String:
 	var here := stalls().filter(func(id): return id != "home")
-	for id in here:
-		var wanted: Callable = _stalls[id]["wanted"]
-		if wanted.is_valid() and wanted.call(): return id
+	if _wanted_stall() != "": return _wanted_stall()
 	var first := str(data().get("first", ""))
 	if first in here: return first
 	return str(here[0]) if not here.is_empty() else ""
@@ -121,6 +140,8 @@ func sync() -> void:
 	_was_here = here
 	if not here:
 		if _root != null: _root.visible = false
+		if _layer != null: M.figures.clear(_layer)      # the farmer went home: nobody stays
+		_fbox = Vector2.ZERO
 		return
 	if not (stall in stalls()): stall = _first_stall()
 	if _root == null: _make_root()
@@ -133,18 +154,29 @@ func place() -> void:
 	var r: Rect2 = M.scroll.get_global_rect()
 	_root.position = r.position - M.get_global_rect().position
 	_root.size = r.size
-	var box := Vector2(r.size.x, maxf(120.0, M.size.y - sheet_height() - _root.position.y))
+	var box := r.size      # no window: the scene fills the screen
+	if M.sheet.visible: box = Vector2(r.size.x, maxf(120.0, M.size.y - sheet_height() - _root.position.y))      # a window: the scene above it
 	var sig := "%s|%s" % [",".join(PackedStringArray(stalls())), stall]
 	if box.is_equal_approx(_box) and sig == _sig: return
 	_box = box
 	_sig = sig
 	_draw(box)
 
+func _scene_tapped(e: InputEvent) -> void:
+	if e is InputEventMouseButton and e.pressed and e.button_index == MOUSE_BUTTON_LEFT and M.sheet.visible and M.sheet_kind == "spot:market":
+		M.sheets.close_sheet()
+
 func _make_root() -> void:
 	_root = Control.new()
 	_root.name = "VillageSquare"
 	_root.mouse_filter = Control.MOUSE_FILTER_STOP      # nothing of the farm behind it can be tapped
+	_root.gui_input.connect(_scene_tapped)      # a tap on the scene itself (no stall) closes the window
 	_root.clip_contents = true
+	_layer = Control.new()                         # the people stand here (mouse passes through the layer itself)
+	_layer.name = "people"
+	_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_layer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_root.add_child(_layer)
 	M.add_child(_root)
 	M.move_child(_root, M.scroll.get_parent().get_index() + 1)      # over the farm, under the clock, the windows and the pop-ups
 
@@ -153,6 +185,7 @@ func _make_root() -> void:
 ## Draws the scene into the upper `box` of the root (the window covers the rest).
 func _draw(box: Vector2) -> void:
 	for c in _root.get_children():
+		if c == _layer: continue
 		_root.remove_child(c)
 		c.queue_free()
 	_stall_nodes = {}
@@ -172,20 +205,7 @@ func _draw(box: Vector2) -> void:
 		p.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		_root.add_child(p)
 	else:
-		var hz := box.y * float(d.get("horizon", 0.4))
-		var sky := ColorRect.new()
-		sky.color = Color(str(d.get("sky", "bfe3f0")))
-		sky.size = Vector2(box.x, hz)
-		sky.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		_root.add_child(sky)
-		var ground := TextureRect.new()
-		ground.texture = _tex(str(d.get("ground", "")))
-		ground.stretch_mode = TextureRect.STRETCH_TILE
-		ground.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		ground.position = Vector2(0, hz)
-		ground.size = Vector2(box.x, _root.size.y - hz)
-		ground.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		_root.add_child(ground)
+		_root.add_child(_ground(d.get("ground", {}), Vector2(box.x, maxf(box.y, _root.size.y))))      # no sky: the ground reaches the top edge (the window covers the lower part)
 		for e in d.get("deco", []):
 			var t := _tex(str(e.get("art", "")))
 			if t == null: continue
@@ -232,6 +252,52 @@ func _draw(box: Vector2) -> void:
 		badge.add_child(UI.label(str(s.get("emoji", "")), 24))
 		b.add_child(badge)
 		badge.position = Vector2(r.size.x / 2.0 - 22.0, -18.0)
+	_draw_people(box, here)
+
+## The ground under the deco and the stalls: the diamonds of the data's `ground` map (ui/square_ground.gd; this part knows nothing else about
+## tiles). Data from before the map (`ground` is a picture's name, or missing) gets that one flat tile stretched over the scene, as it was.
+func _ground(g, size: Vector2) -> Control:
+	if g is Dictionary and Ground.usable(g): return Ground.build(size, g)
+	var flat := TextureRect.new()
+	flat.name = "ground"
+	flat.texture = _tex(g if g is String and g != "" else "tiles/path")
+	flat.stretch_mode = TextureRect.STRETCH_TILE
+	flat.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	flat.size = size
+	flat.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return flat
+
+## The people: each seller of a stall that stands here stands beside it, the villagers stand where they were and stroll (data: rules/58-people.json,
+## "seller" and "points" in rules/49-trip.json). On a redraw nobody jumps back to their start (`move_all`).
+func _draw_people(box: Vector2, here: Array) -> void:
+	if box.x < 2.0 or box.y < 2.0: return                # not laid out yet: villagers put now would stand at 0, 0 for good
+	_root.move_child(_layer, -1)                        # over the stalls' pictures
+	_layer.size = _root.size
+	if _fbox != Vector2.ZERO and not _fbox.is_equal_approx(box): M.figures.move_all(_layer, _fbox, box)
+	_fbox = box
+	var d := data()
+	var h := box.x * float(d.get("figureH", 0.13))      # a share of the scene's width, as the stalls' pictures are
+	var wanted := G.people.who("square")
+	for id in M.figures.ids(_layer):
+		if not (id in wanted): M.figures.take(id)
+	for id in wanted:
+		var sp: Dictionary = G.people.spot(id, "square")
+		if sp.has("stall"):
+			if not (str(sp["stall"]) in here):
+				M.figures.take(id)
+				continue
+			for s in d.get("stalls", []):
+				if str(s.get("id", "")) != str(sp["stall"]): continue
+				var off: Dictionary = s.get("seller", {})
+				M.figures.put(id, _layer, Vector2(box.x * (float(s.get("x", 0.5)) + float(off.get("dx", 0.0))), box.y * (float(s.get("y", 1.0)) + float(off.get("dy", 0.0)))), h)
+		elif sp.has("stroll") and not (id in M.figures.ids(_layer)):
+			var pts := []
+			for name in sp["stroll"]:
+				var q: Dictionary = d.get("points", {}).get(str(name), {})
+				if not q.is_empty(): pts.append(Vector2(box.x * float(q.get("x", 0.5)), box.y * float(q.get("y", 0.7))))
+			if pts.is_empty(): continue
+			M.figures.put(id, _layer, pts[0], h)
+			M.figures.stroll(id, pts)
 
 ## Where a picture stands: the middle of its lower edge at x, y of the box, `w` of the box wide, never taller than `maxH` of it
 ## (without a picture: an area of w x h of the box).

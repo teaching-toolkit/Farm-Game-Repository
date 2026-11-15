@@ -28,7 +28,7 @@ the parent play-tests with the child on the laptop. The person you work with is 
 | `docs/adr/` | lasting decisions (game, and those touching both areas) |
 | `docs/architecture-review-2026-10-22.md` | how the game is built (Part A) and the five deepening candidates (Part B) |
 | `docs/sources/` | the parent's notes and decision rounds word for word, the play-test notes of 23 Oct, the architecture plan, the price table |
-| `.claude/skills/` | the project skills: `farm-game-session` (how to work), `farm-game-check` (Godot, checks, export), `farm-game-content` (questions, texts and German, numbers, sounds, pictures, layout) |
+| `.claude/skills/` | the project skills: `farm-game-session` (how to work), `farm-game-check` (Godot, checks, export), `farm-game-content` (questions, texts and German, numbers, sounds, pictures, layout), `openart-pictures` (generating and downloading pictures with the OpenArt connector) |
 | `CLAUDE.md` | a few lines Claude Code loads by itself |
 | `godot-prototype/` | **the game**: `kits/` (reusable parts), `game/farm/` (this game's rules and screens), `data/`, `assets/`, `tests/`, `tools/` |
 | `tools/` | project tools: `tracker.py` (frontier and queue), `check_docs.py` (links, tickets, log), `parallel/` (running several tickets as parallel agents, see its README) |
@@ -43,10 +43,8 @@ the parent play-tests with the child on the laptop. The person you work with is 
 
 ## 3. The parent's standing rules
 
-- Do not try to get round blocked websites or downloads (for example `cdn.openart.ai`): the parent downloads OpenArt pictures into
-  `art-inbox/` by hand.
-- Never handle passwords, tokens or credentials. Ask before downloading files or deleting anything.
-- Pictures: OpenArt project "Farm Quiz Game", model **Nano Banana 2 Lite at 1K**, sprite sheets of several objects, **3 versions per
+- Pictures: Claude generates, downloads and picks them (skill `openart-pictures`); every version not picked stays in
+  `art-inbox/alternatives/` so the parent can swap. OpenArt project "Farm Quiz Game", model **Nano Banana 2 Lite at 1K**, sprite sheets of several objects, **3 versions per
   sheet**, with an earlier sheet as the style reference. Only about two generations run at a time.
 - No words on the map; whole numbers on screen (also with bronze and gold coins); short, simple texts; German with "ss", never "ß".
 - **Natural consequences, never stuck:** setbacks are allowed, last a while and can always be corrected; nothing is lost for good,
@@ -54,6 +52,12 @@ the parent play-tests with the child on the laptop. The person you work with is 
   ([ADR-0004](docs/adr/0004-natural-consequences.md); details in `story/game/game-design-round4.md` §C).
 - **Don't rely on the child reading** (parent, 30 Oct 2026): an effect the child should notice is *shown* (a picture, an animation, a
   number changing), and text only backs it up.
+- **The ask-matt flow stays the guide** for developing and expanding this project (parent, 14 Nov 2026): when unsure which step
+  comes next, ask `/ask-matt`. New features go `/grill-with-docs` → `/to-spec` → `/to-tickets` → `/tdd`; new work is built as
+  **deep modules** (a small interface, the owner registers, reuse; the `codebase-design` skill has the words). Details: the session
+  skill §3.
+- **Sub-agents:** Sonnet, one after the other, each with a short brief that names the few files to read and the one test to pass
+  (the pattern: `.scratch/wave-3-plan.md`).
 - **Use the glossary's words:** say *chore*, not *action*, in tickets, code and messages.
 - **Never act on a design until the parent confirms the shared understanding** (the grilling's summary); an easy-to-undo 💡 may be
   taken only as `.scratch/README.md` allows.

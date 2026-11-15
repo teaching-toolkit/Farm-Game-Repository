@@ -36,6 +36,7 @@ var placesheet: FarmUiPlaceSheet
 var questlog: FarmUiQuestLog
 var rest: FarmUiRest
 var sheets: FarmUiSheets
+var figures: FarmUiFigures   # people who stand, stroll and talk (people/04)
 var square: FarmUiSquare     # the village square as its own screen (money-market/07)
 var stations: FarmUiStations
 var story: FarmUiStory
@@ -66,7 +67,7 @@ var goal_btn: Button
 var quiz_btn          # UI.ClockButton: the Time Quiz (an old clock; its hand goes round once when tapped)
 var sheet: PanelContainer
 var sheet_title: Label
-var sheet_close: Button        # the sheet's ✖ (hidden on the village square: only 🏠 Back home leaves it)
+var sheet_close: Button        # the sheet's ✖ (on the village square it closes the stall's window, not the square)
 var sheet_scroll: ScrollContainer
 var content: VBoxContainer
 var sheet_kind := ""
@@ -113,6 +114,7 @@ func _make_parts() -> void:
 	questlog = FarmUiQuestLog.new(self)
 	rest = FarmUiRest.new(self)
 	sheets = FarmUiSheets.new(self)
+	figures = FarmUiFigures.new(self)
 	square = FarmUiSquare.new(self)
 	stations = FarmUiStations.new(self)
 	story = FarmUiStory.new(self)
@@ -153,6 +155,7 @@ func _ready() -> void:
 	G.celebrate.connect(celebrations.celebrate)
 	for fv in map.fields: fv.patch_pressed.connect(patches.on_patch)
 	map.spot_tapped.connect(sheets.open_spot)
+	map.loose_tapped.connect(mapview.on_loose_tapped)
 	resized.connect(_on_resized)
 	_parse_args()
 	refresh()
@@ -187,6 +190,8 @@ func _setup_theme() -> void:
 
 func _parse_args() -> void:
 	DevFlags.apply(self, G)     # test and screenshot flags: game/farm/dev/dev_flags.gd
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--moments="): G.S["moments"] = int(a.substr(10))      # screenshots: this many moments of the step used (24 = no time left; after --newgame)
 
 func _process(_d: float) -> void:
 	if shot_path != "":
@@ -309,17 +314,20 @@ func _build() -> void:
 	map = MAP_SCENE.instantiate()
 	map.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(map)
+	map.merchant.figures = figures          # the travelling merchant at the gate is a figure too (map/merchant.gd)
+	map.visitor.figures = figures           # …and so is a story visitor at the farmhouse door (map/visitor.gd)
 	scroll.resized.connect(func(): map.fit(scroll.size))
 	# --- the Time Quiz: a green round clock that hangs from the lower edge of the top bar in the right corner
 	quiz_holder = PanelContainer.new()
 	quiz_holder.add_theme_stylebox_override("panel", UI.box(UI.GREEN, 40, UI.LINE, 2, 4))
 	quiz_btn = UI.ClockButton.new()
-	quiz_btn.custom_minimum_size = Vector2(72, 72)
+	quiz_btn.custom_minimum_size = Vector2(92, 92)          # the face is about 72 of it; the ring of moments (action-budget/03) sits round the face
 	quiz_btn.tooltip_text = tr("Time Quiz: every right answer moves farm time one step.")
 	quiz_btn.pressed.connect(timequiz.show_time_quiz)
 	quiz_holder.add_child(quiz_btn)
 	add_child(quiz_holder)
 	hud.resized.connect(_place_quiz_button)
+	icon_buttons["settings"].item_rect_changed.connect(_place_quiz_button)      # the buttons are placed after the bar is sized
 	# --- the testing buttons: small, floating below the bar at the left; a grown-up setting shows or hides them
 	cheat_box = UI.vbox(4)
 	for c in [[tr("⏩ Cheat"), G.cheat_max, tr("Testing only: lets time pass until everything growing or cooking is done, then fills energy and water.")],
@@ -396,7 +404,10 @@ func _place_quiz_button() -> void:
 	if quiz_holder == null or hud_panel == null: return
 	var qs := quiz_holder.get_combined_minimum_size()
 	quiz_holder.size = qs
-	quiz_holder.position = Vector2(size.x - qs.x - 10.0, hud_panel.size.y - qs.y * 0.42)
+	var top := hud_panel.size.y - qs.y * 0.42
+	var sb: Control = icon_buttons.get("settings")      # on the short bar of the first days the ring would touch the ⚙️ button: it hangs lower then
+	if sb != null and sb.size.y > 0.0: top = maxf(top, sb.global_position.y - global_position.y + sb.size.y + 3.0)
+	quiz_holder.position = Vector2(size.x - qs.x - 10.0, top)
 
 func _on_resized() -> void:
 	_place_quiz_button()
@@ -454,6 +465,8 @@ func refresh() -> void:
 	var slen: int = G.seasons.season_len()
 	season_bar.set_state(G.seasons.season(), slen, slen - G.seasons.questions_left_in_season(), "→ " + nxt_emoji)
 	quiz_btn.show_time(float(slen - G.seasons.questions_left_in_season()) / float(slen))
+	if playback.flicking: quiz_btn.sweep()           # farm time moved after a right answer: the ring of moments empties with a sweep
+	quiz_btn.set_moments(G.actions.moments_used(), G.actions.moments_per_step())
 	lbl_info.text = tr("Chapter %d · question %d%s") % [G.chapter(), S["step"], "  🌧️" if S.get("rain", false) else ""]
 	# out of water: say so with a picture (once, when it runs out)
 	if _last_water >= 1.0 and float(S["water"]) < 1.0 and not modal.visible: patches.show_no_water.call_deferred()
@@ -476,10 +489,12 @@ func refresh() -> void:
 	goal_id = goalbar.next_goal()
 	for sid in map.slots: mapview.update_slot(sid)
 	map.set_road_badge(mapview.badge("road"))
-	map.set_gate(G.gate.here())
+	map.set_gate(G.gate.here(), G.gate.fill())
+	map.visitor.sync(G.people.visitor())
 	map.set_collector(G.lord.here())
 	map.set_field_badge(mapview.badge("field"))
 	map.critters.set_critters(mapview.critter_spec())
+	mapview.update_piles()
 	map.farmcat.set_cat(G.done("barn_cat") and FarmSeasonLook.critter_out(G, "farm_cat"))
 	goalbar.update_goal_bar()
 	square.sync()                  # in the village the square stands where the farm was

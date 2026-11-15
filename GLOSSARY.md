@@ -19,7 +19,7 @@ Something a pet gives the farm out of grace, for free, by its own effect (the pe
 _Avoid_: duty, job (a job is one of the child's little paid jobs), pet job
 
 **Automated chore**:
-A chore of the farmer that a pet does instead, at the farmer's effective cost, as if the farmer had done it. It is a different thing from a blessing. (Not built yet; the name is not final.)
+A chore of the farmer that a pet does instead, at the farmer's effective cost (energy, water, items) but using none of the farmer's moments, as if the farmer had done it. It is a different thing from a blessing. The word is for the builders; the child's text says "Helps with" (German "Hilft bei"). Built (`pets-automation/02`-`04`): a pet's rule is a blessing or an automated chore; from level 3 the chore has the WHEN card ⚡ "My energy ≥ n" (default a third of the bar). Specified in `.scratch/pets-automation/spec.md`.
 
 ### What a chore takes, and whether it can run
 
@@ -180,9 +180,32 @@ _Avoid_: idle
 The screen the farmer is on while in the village: a scene of the square instead of the farm, with stalls to tap. Selling, buying, barter and handing over orders happen only here (or with the merchant at the gate). It is reached by a trip and left by the walk home.
 _Avoid_: market window, market screen (the market is the place on the farm where a trip starts)
 
+**Square ground**:
+The diamond tiles the village square's floor is laid with (cobbles, pavement, soil, grass, flower beds), all the way up to the top of the screen. It is a map of letters in the data, so any part can be changed without code. One kind of tile has one or more pictures; which one a tile gets never changes between visits.
+_Avoid_: sky, background (the square has no sky)
+
 **Stall**:
 One thing to tap on the village square: the stall that buys what is in the bag, the seed merchant, the traders' cart, the cart for the orders, the notice board, the sign for the walk home. The window below the scene shows the stall that was tapped.
 _Avoid_: tab, shop
+
+**Person**:
+Somebody in the game who is not the farmer: a seller at a stall, a villager. A person is data (`rules/58-people.json`): a name, a look, three lines, where they are and when. `G.people.line(id)` alone decides what a tapped person says.
+_Avoid_: NPC, character (the story's word)
+
+**Figure**:
+A person as seen in a scene: it stands or strolls, and when tapped it turns to the farmer, waves and says a line in a speech bubble. Scenes ask the figures part (`ui/figures.gd`) by the person's id and never know how a figure is drawn.
+_Avoid_: sprite, avatar (the farmer's own figure)
+
+**Moment**:
+The unit of how much fits into one step of farm time. A step holds a fixed number (18, plus a few more in the later chapters); a chore takes 0 (free), 1, 2 or 4 of them; when they are used up no chore can be done until a right first Time Quiz answer moves time on. Separate from energy (what the body can do). The child sees it only as the ring round the clock, never as a number.
+_Avoid_: action points, time units, minutes
+
+**Pile**:
+The heap of one bulky thing (sticks, small stones, big rocks) beside the store; its size shows how much is stored.
+
+**Loose thing**:
+A stick or small stone lying about on the farm that a tap picks up (the chore `pick_loose`).
+_Avoid_: litter, debris
 
 ### Pacing and tools of the project
 

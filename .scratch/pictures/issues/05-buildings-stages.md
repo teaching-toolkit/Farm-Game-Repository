@@ -19,6 +19,8 @@
 
 Three stages per building (frame, walls, finished) as a rule, more only for the carpenter shed; an agent writes the prompts per building first, you generate and pick.
 
+**14 Nov 2026:** the 💡 above is taken; generating, downloading and picking happen in the picture run `pictures/15`. This ticket is done when its pictures are imported.
+
 ---
 
 **Feature:** `pictures` · **Source:** the parent's notes of 23 October 2026 (`docs/sources/2026-10-23-parent-notes-playtest.md`), [#23.5], [#23.6]. Filed 23 October 2026.

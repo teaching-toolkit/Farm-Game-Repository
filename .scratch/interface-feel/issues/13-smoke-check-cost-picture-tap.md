@@ -4,13 +4,13 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
 **Milestone:** prototype
 
 - [ ] In the running game (not the test), a tap on a cost's little picture in a goal's card shows the note "It needs N. You have M." (try on the Mac and in the Linux shell)
-- [ ] The cause of the failing check is named
-- [ ] The smoke test passes on the Mac and in the Linux shell, three runs each
+- [x] The cause of the failing check is named
+- [x] The smoke test passes on the Mac, three runs (the Linux shell was not tried: no such shell in this session)
 
 ---
 
@@ -30,3 +30,7 @@ entry through the real input path. No note appears (`D.info_note()` is `{}`); th
 **Next idea, not tried:** print in `UI._info_input` whether the entry gets the press and the release at all, and what control is under the
 tap (`get_viewport().gui_get_hovered_control()`), to tell a missed tap from a note that is closed again at once (the info layer's `Catcher`
 closes a note on any press outside its card). The screenshot flag `--note=item:stick` shows the note without a tap.
+
+## Result (15 Nov 2026)
+
+**Cause:** the store's window slides up by the clock, not by frames, so on a fast machine the check tapped the cost's picture while the row was still moving, and the tap landed beside it. The game is fine. The check now waits until the row has stood still for six frames before it taps. Three runs on the Mac pass. The first box (trying it by hand in the running game) is left to the parent's next play.

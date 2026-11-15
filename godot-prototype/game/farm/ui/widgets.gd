@@ -333,3 +333,16 @@ func tile_button(t: VBoxContainer, btn: Button) -> void:
 	btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	btn.custom_minimum_size = Vector2(0, maxf(btn.custom_minimum_size.y, 52))
 	t.add_child(btn)
+
+## An icon, a short label and a bar (the bag on the square, the store): amber, red when full.
+func fill_row(icon: String, text: String, frac: float, bar_name: String, warn := false) -> HBoxContainer:
+	var row := UI.hbox(8)
+	row.add_child(UI.label(icon, 26))
+	var v := UI.vbox(1)
+	v.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	v.add_child(UI.label(text, 15, UI.MUTED, true))
+	var b := UI.bar(frac, 240, 12, UI.AMBER if frac < 0.999 and not warn else UI.RED)
+	b.name = bar_name
+	v.add_child(b)
+	row.add_child(v)
+	return row

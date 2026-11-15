@@ -249,6 +249,24 @@ func total_load() -> float:
 	for c in G.S["seeds"]: t += seed_weight() * float(G.S["seeds"][c])
 	return t
 
+## The room of the shelves in use: every kind stored has the same room (storage_load), keepers have none.
+func shelf_room() -> float:
+	var kinds := 0
+	for k in G.S["inv"]:
+		if count(k) > 0.0 and G.items.get(k, {}).get("category", "") != "keeper": kinds += 1
+	return kinds * G.needs.storage_load()
+
+## How full the shelves in use are on average: everything stored over their room. 0 when nothing is stored.
+func fill() -> float:
+	var room := shelf_room()
+	return clampf(total_load() / room, 0.0, 1.0) if room > 0.0 else 0.0
+
+## True as soon as any one kind has filled its shelf.
+func any_full() -> bool:
+	for k in G.S["inv"]:
+		if G.items.get(k, {}).get("category", "") != "keeper" and count(k) >= G.needs.storage_cap(k) - 0.0001: return true
+	return false
+
 # ------------------------------------------------------------------ one Time Quiz answer
 
 ## Passive producers (woodlot, pets).

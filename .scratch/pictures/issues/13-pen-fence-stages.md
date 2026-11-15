@@ -16,5 +16,7 @@
 
 💡 Draw the fence as an add-on over the existing pen picture, so one sheet with three fence stages covers every pen.
 
+**14 Nov 2026:** the 💡 above is taken; generating, downloading and picking happen in the picture run `pictures/15`. This ticket is done when its pictures are imported.
+
 ---
 From `upgrades/02` (parent's answer, 30 Oct 2026).

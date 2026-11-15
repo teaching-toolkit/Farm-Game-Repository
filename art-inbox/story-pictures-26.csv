@@ -1,0 +1,41 @@
+piece_id,kind,chapter,brief,status,credits
+c6_free_miller,moment,6,"The village miller's old stone mill beside a quick stream: a big wooden WATER WHEEL starts to turn, no sails; the miller listens at the door.",done: v1 picked, water-wheel mill (ticket box 4; no mapped picture showed the miller's mill with sails),15
+c3_stream,moment,3,"The stream runs again: the village miller at his stone bridge in front of the water wheel (old picture of 12 Oct reused, the wheel is right)",done: old miller-bridge picture reused (water wheel); no new generation,0
+c1_box,beat,1,"Berit's open box in the tent: thin brown book, small tin pot with bent handle, shapeless green hat, dented bucket; a mitted hand reaches for the bucket.",done: v1 picked,15
+c1_well2,beat,1,"A spade has just uncovered a ring of old fitted stones: the dry old well, one notch worn smooth at child height; an empty crate beside it.",done: v1 picked,15
+c2_hammer,beat,2,"A real thumb-sized hammer, worn shiny, lies in the corner of the new barn where the last bundle must go; tiny footprints in the sawdust.",done: v1 picked,15
+c2_barn_done,beat,2,"The finished pine barn at dusk with a lantern hung on a post outside, well away from the barn door.",done: v1 picked,15
+c3_sails,beat,3,The farm's own windmill with four new sails groans and begins to turn in a strong wind.,done: v1 picked,15
+c4_receipt,beat,4,"A small paper slip with wavy lines and one tiny wavy line in the corner, held in mitts beside a scorched half-burnt page; a lit lantern on the gatepost behind.",done: v1 picked,15
+c6_barge,beat,6,The village waits wet in a squall on the Landing Steps for the family's barge; an old woman with a stick looks out.,done: v1 picked,15
+c6_tent,beat,6,"At the Fair tent, long-legged children run past towards the pony while Granny Maud presses a steaming bowl into a man's hands.",done: v1 picked,15
+c6_cloth_hum,beat,6,"The plain grey Fair cloth with tiny moons along its edge, the empty stool at its head; Elder Agnes guards it.",done: v1 picked,15
+c6_wipe,beat,6,A big chalk board covered with seven years of thin chalk moons stands on the Pie Table; the baker holds a wet cloth and nobody moves.,done: v1 picked,15
+c6_lantern,beat,6,"Fair evening: a lantern rolls away by the straw bales, the bunny's ears thump under the table, the alpaca hums, a mitted hand reaches for the lantern.",done: v1 picked,15
+c6_roll,beat,6,End of the Fair: Captain Mei stands on the end of the table calling the roll and the whole village shouts back.,done: v1 picked,15
+c1_maud_hat,visit,1,"A goat with no collar goes for the weed pile; Granny Maud stops short, staring at the green hat on the fence post.",done: v1 picked,15
+c1_rue,visit,1,"Rue the market seller at her cart on the dry road, flour sack on the tailboard, a bag of coins in her hand, a sly smile.",done: v1 picked,15
+c1_maud_bucket,visit,1,Dusk: a bucket of water on top of the burnt gatepost beside a row of small grey stones; an old woman and a goat walk away.,done: v1 picked,15
+c1_twins,visit,1,"Twin children, boy and girl with the same freckles, dare each other to touch the burnt gatepost; hungry and very brave.",done: v1 picked,15
+c1_tom,visit,1,Tom the shepherd boy shivers at the stick fence with nine sheep around his legs; a mitted hand passes a glowing log over the fence with tongs.,done: v1 picked,15
+c1_lark,visit,1,"Longnight: the village lights are out except the Hall; Lark sits on the farm fence with a lantern and a bowl, seen from behind.",done: v1 picked,15
+c2_mark,visit,2,A loaf with a thin chalk moon on its crust; Greenstem looks at it sadly with a bunch of sage.,done: v1 picked,15
+c2_greenstem_hands,visit,2,"Greenstem, eyes shut, holds half a fresh loaf in both hands and breathes the steam in.",done: v1 picked,15
+c3_lark_list,visit,3,A shaggy grey goat with one bent horn and no collar chews the list (wavy lines only) while Lark holds up a finger.,done: v1 picked,15
+c4_grafts,visit,4,"Thorne, the Lord's round brown gardener, comes up the road with a bundle of apple twigs tied with blank paper tags, glancing back.",done: v1 picked,15
+c4_flask,visit,4,"Pieter the night watchman sits on the fence in daylight, lantern still lit, holding out a small tin flask.",done: v1 picked,15
+c5_lark,visit,5,"At the forest edge, thyme bundles on a crate; Lark bows politely to a huge oak with a hollow and one tiny bell.",done: v1 picked,15
+c1_letter,letter,1,"First-person: mitted hands hold a scrap of sack with a burnt wheel mark and a folded note in round quick scribble, beside a loaf.","done: v2 picked (v1 note showed pseudo-words, one retry)",30
+c2_reply,letter,2,Landing Day: Mei waves a thick folded letter high from the barge deck.,done: v1 picked,15
+c4_jar,letter,4,"An empty clean pickle jar on a table with a pressed leaf, a brass button and a small folded paper in a round hand (wavy lines).",done: v1 picked,15
+c5_liv_letter,letter,5,"A folded letter on the kitchen table beside a honey jar, a sprig of thyme and a pot; a barge far off through the window.",done: v1 picked,15
+c2_barn_frame,moment,2,"The new barn's bare frame against an evening sky, like the ribs of something asleep.",done: v1 picked,15
+m_road_4,moment,3,"A cobbled road of round stones in the rain, water running into the ditch; Hazelwood far off; a cart parked.",done: v1 picked,15
+m_flatbread,moment,1,"First-person: mitted hands hold up a lopsided steaming flatbread, a bit burnt at one edge, beside the stone quern.",done: v1 picked,15
+c1_winter,moment,1,"Snow: the one green patch with prints three times round it, stopping at the forest edge.",done: v1 picked,15
+c4_greenhouse,moment,4,"Inside the greenhouse: warm green air, the first red tomato, the farmer's green hat hung beside it.",done: v1 picked,15
+c2_pond,moment,2,"The first water seeps into the new pond: dark patch, shine, a sky with clouds lying on the ground.",done: v1 picked,15
+c2_stones,discovery,2,"Forest edge by day: white stones half sunk in moss, an old oak with faded ribbons, a mitted hand resting on one stone.",done: v1 picked,15
+c5_petals,discovery,5,A small stream carries white paper-petalled flowers round a bend into the forest.,done: v1 picked,15
+c5_flowers,moment,5,"White paper-petalled flowers tied with thread on the still-room doorstep; Wren turns them over, puzzled.","done: v1 picked, book-cover title painted out (it read HERB LORE); no credits left for a retry",15
+m_windmill_2,moment,6,"Inside the farm windmill: two big grinding stones turn, flour soft as snow, flour dust in the air.",done: v1 picked,15

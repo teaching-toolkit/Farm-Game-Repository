@@ -13,7 +13,7 @@ front. Only a picture's visible pixels react to taps, so a tall roof never steal
 
 - **The forest** comes in diagonally from the top left (gathering, later the woodlot): its trees stand right on the meadow,
   with no darker forest floor; **the village road** from the top right
-  (the sign to the village with its arrow, book cart, notice board, later the Import Broker).
+  (the sign to the village with its arrow, notice board, later the Import Broker; the book cart stands on the village square, `money-market/11`).
 - **The three fields** stand in a column in the middle, edge to edge; animals and the pond on the left; workshop, bees, barn,
   orchard and greenhouse on the right; compost, scarecrow and broker in the pockets between.
 - **The house plot** (2×2) holds the tent, the book box and the campfire until the cottage stands; then the bed, the books and
@@ -87,6 +87,7 @@ the board, each with a 🔨 when there is something to do. The purse, the bag, t
   corners (bed · books · kitchen; cellar · crocks · hay · seed library; benches · kiln & forge · spinning · tools) open their own
   sheets. In the workshop a corner is drawn only once something of it is built or can be built now (its row in §13.2b); before that it
   is not there at all, not even as a faded symbol, and a station's "choice slot" names only choices that are built or can be built now.
+- **A pet's window** (the pet corner of the house): the pet's picture and name, then its job board: the blessings it can do as buttons with a ✔ on the chosen one, and **under them a group "⚡ Helps with"** ("⚡ Hilft bei") with the farmer's care chores it can do instead (weeding, tidying up, fetching water, clearing snow, stones, mucking out, collecting; a chore appears when its building stands); from level 3 the WHEN row, for a chore the energy card "⚡ My energy ≥ n" (− and + in whole energy cubes); at level 4 the same under the *OTHERWISE* rule; and a line for the last question (what it did, or 💤 nothing to do, 💤 waiting for you to rest, 📦 the store is full). No number of moments or cost is shown. After the Time Quiz the pet walks to where it worked and the chore's emoji shows over it (`pets-automation/04`, rules in `progression.md` §10.3).
 - **Signs on places:** 🔨 something to build, 🧺 animals ready, ❓ a card quiz, 📖 a card to read, 🍂 stale soon, ⏳ busy, 😴 tired.
 - **⬅️ Back to the farm** closes any window.
 
@@ -118,6 +119,14 @@ the board, each with a 🔨 when there is something to do. The purse, the bag, t
     with the cost's cubes (hollow = missing). A greyed-out button is never silent: the smoke test walks every place's sheet, the quest book and the bag and fails on a grey without a reason.
   - **Read aloud** as in the settings: "off" says nothing, "button" adds a 🔊, "auto" also reads the note as it opens; emojis are not read.
 - **Celebrations** for new buildings, tools, gear and helpers (§11.5); after the quiz the farm plays what changed (§4.1).
+
+**A window's painted picture** (`pictures/16`). A window (the sheet of a place, the bag, the goals book, the album, the scroll, the
+forest, the log) shows a painted picture across its top when the file `assets/windows/<key>.webp` exists; without a file it looks
+as before. The key comes from one function (`sheets.gd` `window_key()`): a place's own id (also for the corners of the house, the
+barn and the workshop), `patch` for any patch, `well_dashboard` for the well's dial, and the kind itself for the others. The
+picture is as wide as the window and 0.42 of that wide tall, and scrolls away with the content. The village square's window has
+none (the scene above it is the picture), nor has a place that is still a mystery (the picture would give it away). The picture's corners are rounded like the cards round it (`UI.round_picture`). Pop-ups that are not sheets (the quiz, Rest, the welcome, a card, settings) cannot show
+one yet. Pictures come in with `tools/import_window_pictures.py` (list: `tools/window_picture_files.json`).
 
 ### 13.5 The farmer
 

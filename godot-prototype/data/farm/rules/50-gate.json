@@ -1,12 +1,12 @@
 {
   "gate": {
-    "note": "The travelling merchant at the gate (TODO M7). He comes only where a cart can come (minRoad), with `chance` at the end of a question (+ perRoadLevel for each better road level), stays `stay` questions, buys the kinds in `cats` without a trip and without energy at the village price x `cut`, until his cart (base + perRoadLevel x (road level - 1) load units) is full. A new visit starts with an empty cart.",
+    "note": "The travelling merchant at the gate (TODO M7). He comes only where a cart can come (minRoad), with `chance` at the end of a question (+ perRoadLevel for each better road level), stays `stay` questions, buys the kinds in `cats` without a trip and without energy at the village price x `cut`, until his cart (base + perRoadLevel x (road level - 1) load units) is full. A new visit starts with an empty cart. On the map (game/farm/map/merchant.gd) the cart is one of three pictures assets/map/merchant_cart_1..3 by how full it is (thirds), pictureW wide as a share of the map's width, and the merchant stands beside it as a figure (rules/58-people.json).",
     "minRoad": 2,
     "chance": 0.07,
     "perRoadLevel": 0.03,
     "stay": 3,
     "cut": 0.85,
-    "cart": {"base": 30, "perRoadLevel": 15},
+    "cart": {"base": 30, "perRoadLevel": 15, "pictureW": 0.11},
     "barter": {
       "axle": {"cost": {"coins": 900, "wicker_basket": 2}, "gives": 1, "note": "An axle is expensive: nobody on the farm can make one yet (the first cart, D2)."}
     },

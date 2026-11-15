@@ -15,6 +15,8 @@
 - [ ] The delivery scenes in `story/game/story-delivery.md` §7 use it
 - [ ] The farmer is not in the painted picture
 
+**14 Nov 2026:** the 💡 above is taken; generating, downloading and picking happen in the picture run `pictures/15`. This ticket is done when its pictures are imported.
+
 ---
 
 **Id:** M9 · **Feature:** `pictures` · **Moved from** `archive/todo-2026-10.md` §7 on 23 October 2026; the notes below are unchanged. Status labels in them (✅ 💡 ❓) are notes, not the status above.
@@ -23,3 +25,7 @@
 
 - **M9. The market square picture** [#1]: one painted village square, used for trips and for the delivery scenes
   (`story/game/story-delivery.md` §7); a first look at it can be shown before the first trip.
+
+## Note (15 Nov 2026)
+
+The parent asked for the square's ground to be diamond tiles with no sky (`money-market/12`). That route builds the square from many small pictures instead of one painted one; this ticket stays as the alternative (a `backdrop` file still replaces the whole scene).

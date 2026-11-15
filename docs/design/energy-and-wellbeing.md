@@ -12,6 +12,8 @@ building, crafting, cooking, smithing, milking, errands. Every recipe and goal h
 `animal`, `errand`), and tools, gear, helpers, polish, skill ranks and meals lower the cost per category. Raw effort per
 goal grows about twelvefold from chapter 1 to 5; upgrades cut the late costs almost in half — tinkering pays.
 
+**Energy and moments are separate.** Energy is what the body can do (Rest refills it). **Moments** are what fits into one step of farm time (a ring round the clock, `docs/design/time-quiz.md` §4.1): a chore takes both, and either one running out greys the chore with its own reason (tired, or no time left).
+
 **One price everywhere.** Every farm chore (fetching water, planting, harvesting, weeding, stones, snow,
 cutting a tree, collecting and mucking out, the forest tasks and trips, the village trip, parties and visits, every recipe at a
 station) has one written base cost and is priced and done by one module, `G.actions`: *check* says what it costs now and what

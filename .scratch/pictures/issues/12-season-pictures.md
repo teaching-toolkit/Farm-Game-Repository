@@ -19,6 +19,8 @@
 
 One sheet of autumn leaves (four kinds) and spring flowers, then one sheet for the four season-change boxes; an agent writes the prompts first.
 
+**14 Nov 2026:** the 💡 above is taken; generating, downloading and picking happen in the picture run `pictures/15`. This ticket is done when its pictures are imported.
+
 ---
 
 **Feature:** `pictures` · **Source:** the parent's notes of 23 October 2026 (`docs/sources/2026-10-23-parent-notes-playtest.md`), [#23.1], [#23.7], [#23.8]. Filed 23 October 2026.

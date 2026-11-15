@@ -3,35 +3,36 @@
   "kind": "discovery",
   "chapter": 5,
   "when": [
-   "chapter:5",
-   "sidequests>=8"
+   "tap:board",
+   "chapter>=5",
+   "chapter<6"
   ],
   "priority": 60,
   "emoji": "🔎",
   "title": "The board, with a cough",
-  "text": "The notices on the board have changed. Fewer ladders, more spoons. “HONEY FOR A COUGH, ASK AT NUMBER 4.” “IF YOUR CHILD HAS A FEVER, SEND FOR WREN.” Someone has also written, smaller: “and please stop eating things you find.” It seems like good advice, and you take it."
+  "text": "The notices have changed. Fewer ladders, more spoons. “HONEY FOR A COUGH, ASK AT NUMBER 4.” “IF YOUR CHILD HAS A FEVER, SEND FOR WREN.” Underneath, in smaller letters: “and please stop eating things you find.” It seems like good advice. You take it."
  },
- "c5_dry": {
-  "kind": "moment",
+ "c5_quill": {
+  "kind": "scene",
   "chapter": 5,
   "when": [
-   "done:drying_rack"
+   "seen:c5_stillroom",
+   "after:c5_stillroom:2"
   ],
-  "priority": 50,
-  "emoji": "✨",
-  "title": "The drying rack",
-  "text": "You hang the first bunch of herbs to dry. In a week the still-room smells like a meadow that has gone indoors. Dried leaves crumble in your fingers, soft as old paper. A thing that was green and loud is now brown and quiet and exactly as useful as before. Perhaps more."
- },
- "c5_salve": {
-  "kind": "moment",
-  "chapter": 5,
-  "when": [
-   "done:salve_pot"
-  ],
-  "priority": 50,
-  "emoji": "✨",
-  "title": "A jar for a scrape",
-  "text": "The salve is thick, yellow-green and smells of the inside of a hedge. You dab a tiny bit on a scratch you have had for days. It stings for one breath, and then it just feels cool. Greenstem, who has been watching from the door, writes something down. Probably it says: “Works.”"
+  "priority": 70,
+  "emoji": "🧮",
+  "title": "Quill counts the shelves",
+  "pages": [
+   {
+    "text": "Quill is in your cottage, counting your shelves. He has been sent to. He stops with his pencil in the air. “I looked for the lease's twin,” he says. “I found a report instead, from the day after the fire. It was never shown to anyone.”"
+   },
+   {
+    "text": "“I have decided not to read it aloud. It names a child, eight years old, seen running from the barn.” He tucks his pencil behind his ear. “I count things. I do not like what this one counts.”"
+   },
+   {
+    "text": "He goes. You put the kettle on, and make a pot of tea, and drink none of it, and make another."
+   }
+  ]
  },
  "c5_lookalike": {
   "kind": "discovery",
@@ -42,7 +43,7 @@
   "priority": 60,
   "emoji": "🔎",
   "title": "Two of the same",
-  "text": "You lay two leaves side by side on the table. Same shape, same size, nearly the same green. One makes a good tea. The other would make a very bad day. You taste neither. You wrap them in a cloth and take them to someone who knows."
+  "text": "Two leaves lie side by side on the table. Same shape, nearly the same green. One makes a good tea for a cough. The other would make a very bad day. You taste neither. You wrap them up and take them to Wren, with a biscuit."
  },
  "c5_n_foxglove": {
   "kind": "discovery",
@@ -64,41 +65,201 @@
   "priority": 60,
   "emoji": "📝",
   "title": "In the margin",
-  "text": "“Ask. It is not a failure to ask. The best healer I know asks first.”"
+  "text": "“Ask. It is not a failure to ask. The best healer I ever knew asked first.”"
  },
- "c5_petals": {
-  "kind": "discovery",
-  "chapter": 5,
-  "when": [
-   "forest_trips>=7"
-  ],
-  "priority": 60,
-  "emoji": "🔎",
-  "title": "Petals on the stream",
-  "pages": [
-   {
-    "text": "Beside the path a small stream goes by with petals on it. White ones. They are not from any tree you know. You follow them with your eyes until they turn behind a bend, and then you do not follow them any further. There will be time."
-   },
-   {
-    "text": "On your way home, the swing in the orchard is moving, though there is no wind."
-   }
-  ]
- },
- "c5_lamp": {
+ "c5_pony_tail": {
   "kind": "scene",
   "chapter": 5,
   "when": [
-   "done:sq_lamp_maker"
+   "forest_trips>=4"
   ],
   "priority": 55,
-  "emoji": "🎭",
-  "title": "A lamp for the dark",
+  "emoji": "🐴",
+  "title": "Ponies do not pretend",
   "pages": [
    {
-    "text": "The lamp-maker pours your oil into a lamp and lights it. The light is round and yellow and steady."
+    "text": "The pony wants to carry everything to the still-room in one trip. She poses at the gate, head up, hoof forward, magnificent, loaded to the ears. But her tail is clamped tight between her legs."
    },
    {
-    "text": "“It's for the marsh road,” he says. “There is a very small light out there some nights, and it is no help at all. People shouldn't have to feel their way.” He says it lightly. He has clearly thought about it a great deal."
+    "text": "You look at the tail for a long moment. Then, without a word, you take one bundle off her back and carry it yourself. The tail loosens a notch. You take another. She walks on with her tail swinging. Ponies do not pretend."
+   }
+  ]
+ },
+ "c5_lark": {
+  "kind": "visit",
+  "chapter": 5,
+  "when": [
+   "forest_trips>=5"
+  ],
+  "priority": 50,
+  "emoji": "🎵",
+  "title": "What the tune is called",
+  "pages": [
+   {
+    "text": "At the forest edge you sort thyme into bundles of exactly twelve. You hum. Lark is talking politely to an oak. “Mr. Mumble? No? The Honourable Mumbles?” A very small silence comes out of the oak. “He's very good at it,” says Lark."
+   },
+   {
+    "text": "“What's that tune you're humming?” “I don't know. It hasn't got a name.” “Oh, dozens,” says Lark. “The Hedgehog Waltz. Get Up, You'll Be Late. But mostly it's called yours.” You stop humming, and you do not hum again all day."
+   },
+   {
+    "text": "Lark yawns, and is asleep on a white stone, snoring like a cat with a cold. “I'm thinking,” he says, eyes shut. “Much quicker.” When you look up, the stone is empty. On it lies a bundle of thyme, tied with string. You count it. Eleven."
+   }
+  ]
+ },
+ "c5_dry": {
+  "kind": "moment",
+  "chapter": 5,
+  "when": [
+   "done:drying_rack"
+  ],
+  "priority": 50,
+  "emoji": "✨",
+  "title": "The drying rack",
+  "text": "You hang the first bunch of herbs to dry. Soon the still-room smells like a meadow that has gone indoors. The leaves crumble in your fingers, soft as old paper. Green and loud has turned brown and quiet, and just as useful as before. Perhaps more."
+ },
+ "c5_salve": {
+  "kind": "moment",
+  "chapter": 5,
+  "when": [
+   "done:salve_pot"
+  ],
+  "priority": 50,
+  "emoji": "✨",
+  "title": "A jar for a scrape",
+  "text": "The salve is thick, yellow-green, and smells like the inside of a hedge. You dab a bit on a scratch. It stings for one breath, and then it just feels cool. Greenstem, who has been watching from the door, writes something down. Probably it says: “Works.”"
+ },
+ "c5_plantain": {
+  "kind": "moment",
+  "chapter": 5,
+  "when": [
+   "done:mortar",
+   "seen:c5_first_tea"
+  ],
+  "priority": 50,
+  "emoji": "🌿",
+  "title": "Leave two",
+  "pages": [
+   {
+    "text": "Greenstem is in the herb bed, stripping a plantain plant. He has been told it is good for a cough, so he is taking every leaf off it, as fast as he can. “Leave two,” you say."
+   },
+   {
+    "text": "It is Wren's voice, not yours. Greenstem looks up as if the herb had spoken. He leaves two. You walk on down the path, a little taller, and a little frightened of how it sounded."
+   }
+  ]
+ },
+ "c5_eleven_pots": {
+  "kind": "moment",
+  "chapter": 5,
+  "when": [
+   "seen:c5_first_tea",
+   "after:c5_first_tea:4"
+  ],
+  "priority": 50,
+  "emoji": "🫖",
+  "title": "One more pot",
+  "pages": [
+   {
+    "text": "You want one more pot of tea, for the Hewitts' baby, who has the cough worst. It is very late. You have made eleven pots today."
+   },
+   {
+    "text": "The bunny thumps. The third thump, the flat, cross one. “I am not tired,” you tell the rabbit, and pour. The bunny turns her back and sits facing the wall for the whole rest of the day."
+   }
+  ]
+ },
+ "c5_pieter": {
+  "kind": "scene",
+  "chapter": 5,
+  "when": [
+   "seen:c5_salve",
+   "after:c5_salve:3"
+  ],
+  "priority": 75,
+  "emoji": "🏮",
+  "title": "A quarter, no more",
+  "pages": [
+   {
+    "text": "Pieter comes up through a yard full of coughing children. Wren, in the lean-to, points at his lantern without looking round. “Hold that.” Pieter holds it exactly where she points, for a long time. He does not open his book once."
+   },
+   {
+    "text": "Then he finds you and speaks low. “The Book says a third. I will write what the till can bear: a quarter. The lease has a line at the bottom: Never so much that the table is bare. Nobody reads the bottom of the page.”"
+   },
+   {
+    "text": "You push your coins at him anyway. He pushes them back. You push again. He folds your fingers shut round them and holds your fist closed until you stop. It is the first gift you have taken since you came, and much harder than giving one."
+   }
+  ]
+ },
+ "c5_bowls": {
+  "kind": "scene",
+  "chapter": 5,
+  "when": [
+   "seen:c5_collapse",
+   "after:c5_collapse:2"
+  ],
+  "priority": 65,
+  "emoji": "🍲",
+  "title": "Fourteen bowls",
+  "pages": [
+   {
+    "text": "The village wants to feed you, and Wren forbids you to get up. So the bowls pile up in the yard: soup from the Hewitts, stew from Odinson, bread from Appleby with no chalk on it, a squashed pie from the Nest. Fourteen bowls in all."
+   },
+   {
+    "text": "The goat eats a doily off the top of one. You cannot give anything back. You have to lie there and be fed, which is the hardest work you have ever done."
+   }
+  ]
+ },
+ "c5_liv_letter": {
+  "kind": "letter",
+  "chapter": 5,
+  "when": [
+   "done:syrup_pan"
+  ],
+  "priority": 55,
+  "emoji": "✉️",
+  "title": "A letter from the river",
+  "pages": [
+   {
+    "text": "A letter comes from the river. Mei brings it up herself. “I heard there is a cough. My mother's recipe: honey, thyme, and the water from the second boiling. It works. I am not asking anything. Liv.”"
+   },
+   {
+    "text": "You look at the small, round writing for a long time. You have seen a hand like it, in the hay margin, under Berit's: Yes, Mother. Yes, Mother. Liv writes like her mother. You fold the letter very small and put it in your pocket."
+   }
+  ]
+ },
+ "c5_syrup": {
+  "kind": "scene",
+  "chapter": 5,
+  "when": [
+   "seen:c5_liv_letter",
+   "after:c5_liv_letter:3"
+  ],
+  "priority": 70,
+  "emoji": "🍯",
+  "title": "Honey and thyme",
+  "pages": [
+   {
+    "text": "Wren has found the folded letter in your pocket. She has read it and made the syrup exactly as written: honey, thyme, and the water from the second boiling. A whole cauldron. Greenstem runs down the hill with jars. By evening, the coughs are easing."
+   },
+   {
+    "text": "In Wren's own book, beside the recipe, she has written: “(from L. of Weir)”. “Who is L.?” says Wren. You look at the ceiling for a while. “My cousin,” you say. It is the first time you have said it out loud."
+   }
+  ]
+ },
+ "c5_flowers": {
+  "kind": "moment",
+  "chapter": 5,
+  "when": [
+   "seen:c5_bowls",
+   "after:c5_bowls:2"
+  ],
+  "priority": 70,
+  "emoji": "🌼",
+  "title": "White flowers",
+  "pages": [
+   {
+    "text": "On the doorstep lie small white flowers with petals like paper, tied once round the middle with a thread. Wren turns them over. “Not in my book, and I have the biggest book in three valleys. Do not eat them. Put them in water.”"
+   },
+   {
+    "text": "The next morning there are more. You put them in a cup with the others. Outside, very close, a very small bell rings twice. Ting. Ting. The flowers glow faintly in the dark kitchen, like the stones at the forest edge."
    }
   ]
  },
@@ -106,12 +267,34 @@
   "kind": "moment",
   "chapter": 5,
   "when": [
-   "has:tea_set:1"
+   "item:tea_set>=1"
   ],
   "priority": 65,
   "emoji": "✨",
   "title": "Two cups",
   "text": "The tea set came with two cups. Of course it did: it is a set. You pour one, and then, without deciding to, you put the other on the table too. Nobody comes. Nobody needs to. It feels better with two."
+ },
+ "c5_kettle": {
+  "kind": "scene",
+  "chapter": 5,
+  "when": [
+   "seen:c5_badger",
+   "after:c5_badger:1"
+  ],
+  "priority": 86,
+  "emoji": "☕",
+  "title": "He puts the kettle on",
+  "pages": [
+   {
+    "text": "A little Hewitt is carried into the yard, coughing so hard she cannot breathe in between. Everybody rushes. Her mother rushes. Wren rushes. Greenstem rushes and drops a jar. You are up before you know it."
+   },
+   {
+    "text": "The badger does not rush. He puts on his spectacles. He sniffs the child once, all over. He puts the kettle on. He gets out the cups. He waits for the kettle. The kettle boils. He pours. He sits down, and pats the floor beside him."
+   },
+   {
+    "text": "The panic runs out of breath before the tea runs out of the pot. Everybody sits: the mother, Wren, Greenstem on the jar he dropped, you. The child breathes, and sips. By the end of the second cup, she has stopped coughing."
+   }
+  ]
  },
  "c5_badger_job": {
   "kind": "moment",
@@ -123,7 +306,26 @@
   "priority": 50,
   "emoji": "✨",
   "title": "A job card",
-  "text": "Pinned to your door, held on by a thorn, is a card. On it, in careful claw-scratch: a basket, a bunch of leaves, and a cup. Underneath, a very small moon. You look into the dark yard. Two eyes look back, level, patient. You pin the card back up. It seems rude not to."
+  "text": "Pinned to your door by a thorn is a card. On it, in careful claw-scratch: a basket, leaves, a cup. Underneath, a very small moon. In the dark yard, two eyes look back, level, patient. You pin the card back up. It seems rude not to."
+ },
+ "c5_petals": {
+  "kind": "discovery",
+  "chapter": 5,
+  "when": [
+   "forest_trips>=7",
+   "seen:c5_flowers"
+  ],
+  "priority": 60,
+  "emoji": "🔎",
+  "title": "Petals on the stream",
+  "pages": [
+   {
+    "text": "A small stream goes by the path with white petals on it. They are not from any tree you know. You follow them with your eyes until they turn behind a bend. You do not follow them any further. There will be time."
+   },
+   {
+    "text": "On your way home, the swing in the orchard is moving, though there is no wind. You walk past it, slowly. You do not look back to see if it stops."
+   }
+  ]
  },
  "c5_k_still": {
   "kind": "bark",
@@ -141,13 +343,14 @@
   "kind": "bark",
   "chapter": 5,
   "when": [
-   "chapter:5",
+   "chapter>=5",
+   "chapter<6",
    "chance:0.2"
   ],
   "priority": 40,
   "emoji": "💬",
   "once": false,
-  "text": "Rain on the roof, steady, in no hurry. The kind that means *stay in and make something warm*."
+  "text": "Rain on the roof, steady, in no hurry. The kind that means stay in and make something warm."
  },
  "c5_k_wren": {
   "kind": "bark",
@@ -173,5 +376,17 @@
   "emoji": "💬",
   "once": false,
   "text": "The kettle clears its throat and begins to sing. Nothing could be more normal."
+ },
+ "c5_k_pony": {
+  "kind": "bark",
+  "chapter": 5,
+  "when": [
+   "seen:c5_pony_tail",
+   "chance:0.15"
+  ],
+  "priority": 40,
+  "emoji": "💬",
+  "once": false,
+  "text": "The pony takes the long way home from the square, so as to be seen. One child follows her. Then three. Then there is a drum."
  }
 }

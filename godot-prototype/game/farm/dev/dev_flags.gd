@@ -4,6 +4,7 @@ extends RefCounted
 ## main.gd calls DevFlags.apply(self, G) once in _ready; flags that open something wait until the screen is built.
 
 static func apply(main, G) -> void:
+	var petjob := ""      # the pet of --petjob (--petwhy talks about it)
 	for a in OS.get_cmdline_user_args():
 		if a.begins_with("--shot="): main.shot_path = a.substr(7)
 		elif a.begins_with("--demo="):
@@ -72,13 +73,25 @@ static func apply(main, G) -> void:
 			for kv in a.substr(7).split(","):
 				var parts2: PackedStringArray = kv.split(":")
 				G.trip.pack(parts2[0], int(parts2[1]) if parts2.size() > 1 else 1)
-		elif a == "--gate": G.S["gate"] = {"here": true, "until": 999, "cart": 12.0, "visits": 1}; G.S["unlocked"]["road_2"] = true; G.invalidate_caps()     # screenshots: the travelling merchant is at the gate
+		elif a == "--gate" or a.begins_with("--gate="):     # screenshots: the travelling merchant is at the gate (--gate=0.9: his cart 90% full)
+			G.S["gate"] = {"here": true, "until": 999, "cart": 12.0, "visits": 1}; G.S["unlocked"]["road_2"] = true; G.invalidate_caps()
+			if a.length() > 6: G.S["gate"]["cart"] = float(a.substr(7)) * G.gate.cart_size()      # (a one-line `if` at the end of this branch swallowed every flag below it)
+		elif a.begins_with("--visitor="): G.people.visit(a.substr(10))      # screenshots: a story visitor stands at the farmhouse door (--visitor=maud|greenstem|miller|wren|quill|lark|mei; after --newgame or --load)
 		elif a == "--pets":                        # screenshots: the first three pets are home (the bunny and the tortoise have jobs), the patches are weedy; the tortoise and the bunny have WHEN cards
 			for pid in ["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony"]: G.S["unlocked"][pid] = true
 			for i in range(mini(G.S["patches"].size(), 4)): G.S["patches"][i]["weeds"] = 4.0
 			G.invalidate_caps()
 			G.pets.set_when("pet_tortoise", 0, "water")
 			G.pets.set_when("pet_bunny", 0, "weeds", 5.0)
+		elif a.begins_with("--petjob="):           # screenshots: --petjob=pet_bunny:helps_weed (after --load, before --spot=pets): every pet is home (level 4) and this pet's first rule is that job; the farmer's energy is full; a chore gets the energy WHEN
+			var pj: PackedStringArray = a.substr(9).split(":")
+			for pid in G.pet_ids: G.S["unlocked"][pid] = true
+			G.invalidate_caps()
+			petjob = pj[0]
+			G.S["energy"] = G.needs.energy_max()      # so the chore can run (the energy WHEN) at the next question: use with --petstep
+			G.pets.choose(petjob, pj[1])
+		elif a.begins_with("--petwhy="): G.S["pets"]["last"][petjob] = {"job": G.pets.job_id(petjob), "ok": false, "why": a.substr(9)}     # screenshots: the --petjob pet waited last question for this reason (tired, idle, full, wait)
+		elif a == "--petstep": main.get_tree().create_timer(0.3).timeout.connect(_petstep.bind(main, G))     # screenshots: one question passes and the playback shows what the pets did (with --petjob and --shotframes=N)
 		elif a == "--crowded":                     # screenshots: the cleared patches are planted and crowded with weeds and stones (use with --unlock=clear_thistles,clear_weeds and --sheet=patch:field:0 or --spot=field)
 			for i in range(mini(G.S["patches"].size(), G.progression.plots())):
 				var cp = G.S["patches"][i]
@@ -117,12 +130,20 @@ static func apply(main, G) -> void:
 				"favour": G.progression.finish_unlock(w[1], false)
 				"party": G.well._party_effect(null, {}, {})
 		elif a.begins_with("--handover="): main.get_tree().create_timer(0.6).timeout.connect(func(): main.widgets.do_unlock(a.substr(11)))     # screenshots: tap Hand over on the square (--handover=d_porridge, with --square --pack --spot=market)
-		elif a == "--square": G.S["trip"] = {"phase": "square", "bought": 0.0}       # screenshots: standing on the village square (use with --give, --pack, --spot=market)
+		elif a == "--square":                      # screenshots: standing on the village square, its scene filling the screen (use with --give, --pack, --spot=market, --stall=)
+			G.S["trip"] = {"phase": "square", "bought": 0.0}
+			main.get_tree().create_timer(0.2).timeout.connect(main.square.sync)      # (at the first refresh the screen has no size yet, so the scene would stay 0 x 0 without this)
 		elif a.begins_with("--stall="): main.get_tree().create_timer(0.4).timeout.connect(main.square.pick.bind(a.substr(8)))     # screenshots: tap a stall on the square (--stall=seeds|traders|orders|sell, with --square --spot=market)
 		elif a == "--homeq": main.timequiz.show_home_question.call_deferred()      # screenshots: the question on the walk home (use with --square, --spot=market)
 		elif a == "--built":                       # screenshots: pretend house, barn and workshop stand
 			for b in ["cottage", "barn_1", "workshop_1"]: G.S["unlocked"][b] = true
 			G.invalidate_caps()
+
+## Screenshots (--petstep): one step of time, then the playback (the pets walk to where they worked).
+static func _petstep(main, G) -> void:
+	main.playback.begin()
+	G.step_time()
+	main.playback.play(Callable())
 
 ## Screenshots (--news): one step of time with rain, two pests chased off and a tenth of the crops eaten, then the playback.
 static func _news(main, G) -> void:

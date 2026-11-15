@@ -85,7 +85,7 @@ func sheet_patch(a: String, i: int) -> void:
 				t.add_child(UI.label("fewer: " + " ".join(why), 14, UI.MUTED))
 			if G.fields.seed_have(cid) < 1.0 and not n.has("seedItem"):
 				t.add_child(UI.soft_button(tr("🛒 Buy seeds"), M.widgets.go_spot.bind("market"), true, 15))
-			M.widgets.tile_button(t, UI.action_button("plant", _do_plant.bind(a, i, cid), {"ok": plants >= 1, "unmet": q["unmet"], "cost": c, "base": base}))
+			M.widgets.tile_button(t, UI.action_button("plant", _do_plant.bind(a, i, cid), {"ok": plants >= 1 and not G.actions.out_of_time(), "unmet": q["unmet"], "cost": c, "base": base}))
 			grid.add_child(t.get_meta("panel"))
 		if grid.get_child_count() > 0: M.content.add_child(grid)
 	else:
@@ -122,7 +122,7 @@ func sheet_patch(a: String, i: int) -> void:
 			var ys: String = _yield_icons(n2, p)[0]
 			M.content.add_child(UI.label(tr("Expect: %s") % G.quality.expect_text(G.quality.crop_expect(p)), 15, UI.MUTED, true))
 			var hr := UI.hbox(8)
-			var hb := UI.button(tr("🧺 Harvest   ") + ys, _do_harvest.bind(a, i), true, UI.GREEN, 20)
+			var hb := UI.button(tr("🧺 Harvest   ") + ys, _do_harvest.bind(a, i), G.actions.time_gate(), UI.GREEN, 20)
 			hb.custom_minimum_size = Vector2(0, 56)
 			hb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			hr.add_child(hb)
@@ -137,12 +137,12 @@ func sheet_patch(a: String, i: int) -> void:
 			wt.add_child(UI.explain(UI.stock_bar(float(p["weeds"]), maxf(6.0, ceilf(float(p["weeds"]))), UI.item_color("fiber"), 150), tr("🌿 Weeds steal from your plants: each one takes %d%% of the harvest. Pull them!") % int(round(G.fields.crowd_per_thing() * 100.0))))
 			var wq: Dictionary = G.actions.check("weed", G.actions.farmer, {"i": i})
 			wt.add_child(M.widgets.costs(wq["cost"], wq["base"]))
-			M.widgets.tile_button(wt, UI.action_button("weed", _do_weed.bind(i), true, UI.GREEN_DARK, "💪", tr("Pull")))
+			M.widgets.tile_button(wt, UI.action_button("weed", _do_weed.bind(i), wq, UI.GREEN_DARK, "💪", tr("Pull")))
 			wg.add_child(wt.get_meta("panel"))
 		if float(p["stones"]) >= 0.5:
 			var st := M.widgets.tile(Art.tex("deco", "stone"), "🪨", tr("Stones"))
 			st.add_child(UI.explain(UI.stock_bar(float(p["stones"]), maxf(6.0, ceilf(float(p["stones"]))), UI.item_color("stone"), 150), tr("🪨 Stones in the soil: each one takes %d%% of the harvest. Pick them out.") % int(round(G.fields.crowd_per_thing() * 100.0))))
-			M.widgets.tile_button(st, UI.action_button("field", _do_stones.bind(i), true, UI.SOIL, "🤏", tr("Pick")))
+			M.widgets.tile_button(st, UI.action_button("field", _do_stones.bind(i), G.actions.check("pick_stones", G.actions.farmer, {"i": i}), UI.SOIL, "🤏", tr("Pick")))
 			wg.add_child(st.get_meta("panel"))
 		if wg.get_child_count() > 0: M.content.add_child(wg)
 		M.placesheet.part_field_below()
@@ -195,7 +195,7 @@ func show_no_water() -> void:
 	box.add_child(l)
 	var fr := UI.hbox(8)
 	var wq: Dictionary = G.actions.check("fetch_water", G.actions.farmer)
-	var fb := UI.button("🪣  %s" % "💧".repeat(clampi(int(round(G.fields.fetch_amount())), 1, 8)), _fetch_and_close, true, UI.BLUE, 24)
+	var fb := UI.button("🪣  %s" % "💧".repeat(clampi(int(round(G.fields.fetch_amount())), 1, 8)), _fetch_and_close, wq, UI.BLUE, 24)
 	fb.custom_minimum_size = Vector2(0, 60)
 	fb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	fr.add_child(fb)
@@ -287,10 +287,10 @@ func part_whole_field() -> void:
 	var qa := HFlowContainer.new()
 	qa.add_theme_constant_override("h_separation", 8)
 	qa.add_theme_constant_override("v_separation", 8)
-	qa.add_child(UI.button("%s  %d" % [tr("🧺 Harvest all"), jobs["ready"]], harvest_field.bind(f), jobs["ready"] > 0, UI.GREEN, 17, tr("🌱 Nothing is ready yet. Plants need a few Time Quiz questions to grow.")))
-	qa.add_child(UI.button("%s  %d" % [tr("🌿 Pick all weeds"), jobs["weeds"]], weed_field.bind(f), jobs["weeds"] > 0, UI.GREEN_DARK, 17, tr("🌿 No weeds to pull right now.")))
-	qa.add_child(UI.button("%s  %d" % [tr("🪨 Pick all stones"), jobs["stones"]], stones_field.bind(f), jobs["stones"] > 0, UI.SOIL, 17, tr("🪨 No stones to pick right now.")))
-	if jobs["snow"] > 0: qa.add_child(UI.button("%s  %d" % [tr("❄️ Clear all snow"), jobs["snow"]], snow_field.bind(f), true, UI.SOIL, 17))
+	qa.add_child(UI.button("%s  %d" % [tr("🧺 Harvest all"), jobs["ready"]], harvest_field.bind(f), G.actions.time_gate(jobs["ready"] > 0, tr("🌱 Nothing is ready yet. Plants need a few Time Quiz questions to grow.")), UI.GREEN, 17))
+	qa.add_child(UI.button("%s  %d" % [tr("🌿 Pick all weeds"), jobs["weeds"]], weed_field.bind(f), G.actions.time_gate(jobs["weeds"] > 0, tr("🌿 No weeds to pull right now.")), UI.GREEN_DARK, 17))
+	qa.add_child(UI.button("%s  %d" % [tr("🪨 Pick all stones"), jobs["stones"]], stones_field.bind(f), G.actions.time_gate(jobs["stones"] > 0, tr("🪨 No stones to pick right now.")), UI.SOIL, 17))
+	if jobs["snow"] > 0: qa.add_child(UI.button("%s  %d" % [tr("❄️ Clear all snow"), jobs["snow"]], snow_field.bind(f), G.actions.time_gate(), UI.SOIL, 17))
 	M.content.add_child(qa)
 
 ## The pests line: how many there are, what they eat, what chases them off.
@@ -321,4 +321,4 @@ func part_area(a: String) -> void:
 	fv.custom_minimum_size = Vector2(0, 110 * int(ceil(arr.size() / 3.0)))
 	M.content.add_child(fv)
 	fv.patch_pressed.connect(on_patch)
-	M.content.add_child(UI.button(tr("🧺 Harvest all"), harvest_all.bind(a), ready_count(a) > 0, UI.GREEN, 18, tr("🌱 Nothing is ready yet. Plants need a few Time Quiz questions to grow.")))
+	M.content.add_child(UI.button(tr("🧺 Harvest all"), harvest_all.bind(a), G.actions.time_gate(ready_count(a) > 0, tr("🌱 Nothing is ready yet. Plants need a few Time Quiz questions to grow.")), UI.GREEN, 18))

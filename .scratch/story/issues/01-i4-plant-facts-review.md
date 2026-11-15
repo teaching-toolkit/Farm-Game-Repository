@@ -6,12 +6,14 @@
 
 **Status:** needs-parent
 
-**Milestone:** story
+**Milestone:** prototype
 
 **Size:** sitting
 
 - [ ] The parent has reviewed the plant facts (`story/game/texts/ch5.md`, the Healer's Herbal cards) and named corrections
 - [ ] Corrections are applied, EN and DE
+
+**14 Nov 2026 (parent):** "ok, put it in the user queue". Needed before chapter 5's pieces ship, not before.
 
 ---
 

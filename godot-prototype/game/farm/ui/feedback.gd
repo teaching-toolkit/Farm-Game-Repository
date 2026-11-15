@@ -40,6 +40,12 @@ func act_place(name: String):
 	if name.begins_with("spot:"): return M.map.stand_point(M.mapview.map_sid(name.substr(5)))
 	return null
 
+## Where a pet works at an animal's pen (a pen chore says `aid`, the animal): the spot the animal's pen stands at (the chickens' run, the barn, the
+## bees); the coop's spot when the animal belongs to no spot of the map.
+func pen_place(aid: String) -> Vector2:
+	var sid := Spots.spot_of(G, aid) if G.nodes.has(aid) else "field"
+	return M.map.stand_point(M.mapview.map_sid("coop" if sid == "field" else sid))
+
 ## What arrived tells what was done, and where: act it out there.
 func act_for_gain(source: String, kind: String) -> void:
 	var act: String = {"harvest": "harvest", "weed": "weed", "dig": "dig", "chop": "chop", "cook": "cook", "craft": "craft",
@@ -148,6 +154,60 @@ func _launch_coins(from: Vector2, to: Vector2, n: int, to_purse: bool) -> void:
 	cs.position = Vector2.ZERO
 	cs.size = M.size
 	cs.start(from, to, n, _coin_landed if to_purse else Callable())
+
+## A spark from a tapped, greyed-out chore button to the clock (no time left, action-budget/03): a bright dot with a short tail, 0.35 s;
+## when it arrives the clock gives one small knock. `sparks_sent` is for the tests.
+var sparks_sent := 0
+
+func spark(from: Vector2, to: Control) -> void:
+	sparks_sent += 1
+	var sp := Spark.new()
+	M.add_child(sp)
+	sp.position = Vector2.ZERO
+	sp.size = M.size
+	sp.start(from, to, M.size.x)
+
+## The spark itself: it flies along a small arch to wherever the target is, and frees itself on arrival. Sizes are shares of the screen's width.
+class Spark extends Control:
+	const FLIGHT := 0.35
+	var a := Vector2.ZERO
+	var target: Control
+	var width := 800.0
+	var t := 0.0
+	var trail: Array = []
+
+	func start(from: Vector2, to: Control, w: float) -> void:
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		a = from
+		target = to
+		width = w
+		set_process(true)
+
+	func _end() -> Vector2:
+		return target.get_global_rect().get_center() if is_instance_valid(target) else a
+
+	func _process(d: float) -> void:
+		t += d
+		var f := clampf(t / FLIGHT, 0.0, 1.0)
+		var e := f * f * (3.0 - 2.0 * f)
+		var b := _end()
+		var c := (a + b) / 2.0 + Vector2(0.0, -width * 0.08)
+		trail.append((a.lerp(c, e)).lerp(c.lerp(b, e), e))
+		if trail.size() > 9: trail.pop_front()
+		queue_redraw()
+		if f >= 1.0:
+			if is_instance_valid(target) and target.has_method("knock"): target.knock()
+			queue_free()
+
+	func _draw() -> void:
+		var r := maxf(4.0, width * 0.012)
+		var n := trail.size()
+		for i in range(n):
+			var k := float(i + 1) / float(n)
+			draw_circle(trail[i], r * k * 0.85, Color(1.0, 0.78, 0.2, 0.5 * k))
+		if n > 0:
+			draw_circle(trail[n - 1], r * 1.6, Color(1.0, 0.85, 0.35, 0.35))
+			draw_circle(trail[n - 1], r, Color(1.0, 0.97, 0.8))
 
 func _coin_landed() -> void:
 	M.lbl_coins.pivot_offset = M.lbl_coins.size / 2.0

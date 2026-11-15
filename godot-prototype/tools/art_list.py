@@ -14,6 +14,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import farmdata
+import emoji_report
 DATA = farmdata.load()
 NODES = DATA["nodes"]
 
@@ -177,9 +178,71 @@ for nid, n in NODES.items():
 for p, what in [("bird", "small sparrow pecking"), ("rabbit", "small wild rabbit nibbling"), ("slug", "garden slug"), ("caterpillar", "green caterpillar"), ("vole", "small field vole")]:
     add(3, 1, f"pests/{p}.png", "128 max", f"Pest on a patch: {p}", what + ", whole body, side view")
 # things in the store, the market and flying to the basket (emoji until drawn)
+_n_misfit = sum(1 for k in DATA["items"] if emoji_report.misfit(k))
+_misfits = []                      # items whose emoji does not show them (tools/emoji_report.py): own brief, grouped in sheets
 for k, it in DATA["items"].items():
     ch = int(it.get("chapter", 1))
-    add(5 if ch <= 2 else ch + 3, ch, f"items/{k}.png", "128 max", f"Item: {it['name']}", f"{it['name'].lower()}, single object icon")
+    why = emoji_report.misfit(k)
+    if why:
+        _misfits.append(k)
+        brief = emoji_report.HAND.get(k, ("", it["name"].lower()))[1]
+        add(5 if ch <= 2 else ch + 3, ch, f"items/{k}.png", "128 max",
+            f"Item: {it['name']} [emoji problem: {why}; {emoji_report.sheet_hint('items-emoji', len(_misfits) - 1, _n_misfit)}]", brief + ", single object icon")
+    else:
+        add(5 if ch <= 2 else ch + 3, ch, f"items/{k}.png", "128 max", f"Item: {it['name']}", f"{it['name'].lower()}, single object icon")
+# things the game shows by a picture of the node, when it has one (celebrations.gd: helpers/, interior/; cards.gd: cards/).
+# gear, helpers and tools share helpers/; stations that are not in a corner of a building come under interior/.
+# kinds with no code that shows them at all (books, polish, patch_*, deliveries, merchants) are not listed (emoji_report.NODE_FOLDERS)
+_listed = {r[2] for r in rows}
+def _wanted(nid, n):
+    folder = emoji_report.NODE_FOLDERS.get(n["type"])
+    return folder and nid not in emoji_report.SKIP_NODES and nid not in emoji_report.BENCH and not nid.startswith("ruins_") \
+        and "assets/%s/%s.png" % (folder, nid) not in _listed
+_total = {}
+for nid, n in NODES.items():
+    if _wanted(nid, n):
+        _k = n["type"] if emoji_report.NODE_FOLDERS[n["type"]] == "helpers" else emoji_report.NODE_FOLDERS[n["type"]]
+        _total[_k] = _total.get(_k, 0) + 1
+_count = {}
+for nid, n in NODES.items():
+    if not _wanted(nid, n):
+        continue
+    folder = emoji_report.NODE_FOLDERS[n["type"]]
+    ch = int(n.get("chapter", 1))
+    kind = n["type"] if folder == "helpers" else folder
+    _count[kind] = _count.get(kind, 0) + 1
+    sheet = emoji_report.sheet_hint(kind, _count[kind] - 1, _total[kind])
+    what = {"helpers": "Celebration picture", "interior": "Station picture", "cards": "Knowledge card picture"}[folder]
+    prio = {"helpers": 3 if ch == 1 else ch + 2, "interior": 4 if ch <= 2 else ch + 2, "cards": 4 if ch == 1 else ch + 3}[folder]
+    size = "384 max" if folder == "interior" else "256 max"
+    prompt = (n["name"].lower() + ": " + n.get("desc", "")).strip() if folder != "cards" else \
+        "small picture for a book page about: %s (%s), one clear thing, no text" % (n["name"].lower(), n.get("desc", "").split(".")[0].lower())
+    add(prio, ch, f"{folder}/{nid}.png", size, f"{what}: {n['name']} ({n['type']}; {sheet})", prompt)
+# the village square as one painted scene (rules/49-trip.json "square" backdrop); same painting as the 'square' window below
+_sq = json.load(open(os.path.join(ROOT, "data", "farm", "rules", "49-trip.json"), encoding="utf-8"))
+def _find(o, key):
+    if isinstance(o, dict):
+        if key in o: return o[key]
+        for v in o.values():
+            r = _find(v, key)
+            if r: return r
+_square = _find(_sq, "square")
+if _square and _square.get("backdrop"):
+    add(1, 1, _square["backdrop"] + ".png", "1920x1080 painted scene", "Village square backdrop (same painting as the 'square' window: draw once, use for both)",
+        "a small old village square with cobbles, a stone well, market stalls with striped awnings, half-timbered houses around, empty in front so stalls can be placed on top")
+# interface pictures: purse, clock, stale-food marks, and the piles of sticks, stones and boulders on the fields
+for f, what, prompt in [("ui/coin_gold.png", "Gold coin", "one gold coin seen from the front, shiny"), ("ui/diamond.png", "Diamond", "one cut blue diamond"),
+                        ("ui/clock_face.png", "Time Quiz clock face", "round clock face without numbers or hands"),
+                        ("ui/clock_hour.png", "Clock hour hand", "short clock hand pointing up, transparent background"),
+                        ("ui/clock_minute.png", "Clock minute hand", "long clock hand pointing up, transparent background"),
+                        ("ui/stale_leaf.png", "Mark: going stale (leafy things)", "one wilted brown leaf"),
+                        ("ui/stale_flower.png", "Mark: going stale (flowers)", "one wilted drooping flower")]:
+    add(1, 1, f, "128 max", what, prompt)
+for pile in ["stick", "stone", "boulder"]:
+    for i in range(1, 5):
+        add(1, 1, f"piles/{pile}_{i}.png", "256 max", f"Pile of {pile}s on the ground, size {i} of 4", f"a pile of {pile}s, size {i} of 4 (1 = a few, 4 = a big heap), on the ground")
+for i in range(1, 6):
+    add(2, 1, f"construction/stage_{i}.png", "512 max", f"Building site, stage {i} of 5", f"a building site, stage {i} of 5: from marked-out ground and a few stakes (1) to scaffolding almost finished (5)")
 # every window gets a painted full-bleed picture on top (pictures/08): the list, briefs and prompts are tools/window_pictures.json;
 # these prompts go after the WINDOW style prompt (second line of the CSV), not after the sprite style
 WINDOWS = json.load(open(os.path.join(ROOT, "tools", "window_pictures.json"), encoding="utf-8"))

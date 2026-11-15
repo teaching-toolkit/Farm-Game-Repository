@@ -1,5 +1,5 @@
 {
- "_comment": "Which object in which sheet becomes which picture (reading order: left to right, top to bottom). Sheets live in ../art-inbox/. Pictures are named after the FIRST stage they stand for (the farmhouse is map/cottage until the cottage gets its own picture). Run: python3 tools/import_art.py all",
+ "_comment": "Which object in which sheet becomes which picture (reading order: left to right, top to bottom). Sheets live in ../art-inbox/. Pictures are named after the FIRST stage they stand for (the farmhouse is map/cottage until the cottage gets its own picture). Run: python3 tools/import_art.py all albumSheets: sheets of full painted square pictures, imported with tools/import_album_sheet.py (not by import_art.py all).",
  "sheets": {
   "sheet1-chapter1-buildings.png": [
    "map/tent",
@@ -214,6 +214,56 @@
    "road/road_7",
    "road/road_8",
    "road/road_9"
+  ],
+  "sheet68-square-tiles.png": [
+   "square_tiles/grass_1",
+   "square_tiles/flowers_1",
+   "square_tiles/flowers_2",
+   "square_tiles/grass_2",
+   "square_tiles/cobbles_1",
+   "square_tiles/cobbles_2",
+   "square_tiles/pavement_1",
+   "square_tiles/pavement_2",
+   "square_tiles/edge_grass_1",
+   "square_tiles/edge_soil_1",
+   "square_tiles/soil_1",
+   "square_tiles/soil_2",
+   "square_tiles/edge_grass_2",
+   "square_tiles/edge_soil_2",
+   "square_tiles/soil_3",
+   "square_tiles/soil_4"
+  ],
+  "sheet69-square-tiles-2.png": [
+   "square_tiles/cobbles_3",
+   "square_tiles/cobbles_4",
+   "square_tiles/cobbles_5",
+   "square_tiles/cobbles_6",
+   "square_tiles/pavement_3",
+   "square_tiles/pavement_4",
+   "square_tiles/planks_1",
+   "square_tiles/pavement_5",
+   "square_tiles/edge_grass_3",
+   "square_tiles/edge_soil_3",
+   "square_tiles/edge_grass_soil_1",
+   "square_tiles/tulips_1",
+   "square_tiles/sand_1",
+   "square_tiles/leaves_1",
+   "square_tiles/lupins_1",
+   "square_tiles/seedlings_1"
+  ],
+  "sheet70-square-deco.png": [
+   "deco/water_mill",
+   "deco/barrels",
+   "deco/crates_produce",
+   "deco/hay_bales",
+   "deco/flower_tub",
+   "deco/street_lamp",
+   "deco/horse_trough",
+   "deco/fountain",
+   "deco/bunting",
+   "deco/wheelbarrow",
+   "deco/milk_churns",
+   "deco/picnic_table"
   ],
   "sheet21-cat.png": [
    "animals/cat_walk_1",
@@ -602,6 +652,164 @@
    "-",
    "items/relic",
    "items/honey_cake"
+  ],
+  "sheet54-piles.png": [
+   "piles/stick_1",
+   "piles/stick_2",
+   "piles/stick_3",
+   "piles/stick_4",
+   "piles/stone_1",
+   "piles/stone_2",
+   "piles/stone_3",
+   "piles/stone_4",
+   "piles/boulder_1",
+   "piles/boulder_2",
+   "piles/boulder_3",
+   "piles/boulder_4"
+  ],
+  "sheet55-cart-stale-loose.png": [
+   "map/merchant_cart_1",
+   "map/merchant_cart_2",
+   "map/merchant_cart_3",
+   "ui/stale_leaf",
+   "ui/stale_flower",
+   "deco/loose_stick_1",
+   "deco/loose_stick_2",
+   "deco/loose_stone_1",
+   "deco/loose_stone_2"
+  ],
+  "sheet56-items-10.png": [
+   "crops/crop_hay",
+   "crops/crop_winter_wheat",
+   "crops/crop_kale",
+   "items/hay",
+   "items/winter_wheat",
+   "items/kale",
+   "items/axle",
+   "items/boulder",
+   "items/clay_pot",
+   "items/wicker_basket",
+   "items/healers_chest",
+   "items/tea_set"
+  ],
+  "sheet57-herbs-fresh.png": [
+   "items/arnica",
+   "items/chamomile",
+   "items/elderflower",
+   "items/lavender",
+   "items/marigold",
+   "items/peppermint",
+   "items/sage",
+   "items/thyme",
+   "items/willow_bark",
+   "items/yarrow",
+   "items/plantain",
+   "items/hemlock"
+  ],
+  "sheet58-herbs-dried.png": [
+   "items/dried_arnica",
+   "items/dried_chamomile",
+   "items/dried_elderflower",
+   "-",
+   "items/dried_lavender",
+   "items/dried_marigold",
+   "items/dried_peppermint",
+   "items/dried_sage",
+   "items/dried_thyme",
+   "items/dried_willow_bark"
+  ],
+  "sheet59-remedies.png": [
+   "items/chamomile_tea",
+   "items/peppermint_tea",
+   "items/elder_tea",
+   "items/willow_tea",
+   "items/sage_gargle",
+   "items/thyme_syrup",
+   "items/plantain_paste",
+   "items/yarrow_paste",
+   "items/marigold_salve",
+   "items/arnica_salve",
+   "items/lavender_water",
+   "items/mayweed"
+  ],
+  "sheet60-friends-badger.png": [
+   "friends/sq_free_family",
+   "friends/sq_free_greenstem",
+   "friends/sq_free_lark",
+   "friends/sq_free_miller",
+   "friends/sq_free_quill",
+   "animals/pet_badger"
+  ],
+  "sheet62-interior-e.png": [
+   "interior/chopping_block",
+   "interior/prep_table_1",
+   "interior/prep_table_2",
+   "interior/oven_1",
+   "interior/oven_2",
+   "interior/oven_3",
+   "interior/quern",
+   "interior/food_processor",
+   "interior/mortar"
+  ],
+  "sheet63-interior-f.png": [
+   "interior/churn",
+   "interior/cheese_vat",
+   "interior/honey_extractor",
+   "interior/spindle",
+   "interior/drying_rack",
+   "interior/salve_pot",
+   "interior/syrup_pan",
+   "interior/tea_pot"
+  ],
+  "sheet64-interior-g.png": [
+   "interior/compost_bin",
+   "interior/compost_bin_2",
+   "interior/worm_bin",
+   "interior/clay_pit",
+   "interior/wild_edge",
+   "interior/pond_station"
+  ],
+  "sheet65-tools.png": [
+   "helpers/watering_can",
+   "helpers/bucket",
+   "helpers/shears",
+   "helpers/wheelbarrow",
+   "helpers/iron_hoe",
+   "helpers/iron_shovel",
+   "helpers/iron_knife",
+   "helpers/smiths_hammer",
+   "helpers/steel_hoe",
+   "helpers/steel_shovel",
+   "helpers/steel_knife",
+   "helpers/master_saw"
+  ],
+  "sheet66-wearables.png": [
+   "helpers/straw_sandals",
+   "helpers/wooden_clogs",
+   "helpers/hobnail_boots",
+   "helpers/waxed_boots",
+   "helpers/fiber_mitts",
+   "helpers/wool_gloves",
+   "helpers/waxed_gloves",
+   "helpers/felt_hat",
+   "helpers/linen_sunhat",
+   "helpers/linen_apron",
+   "helpers/canvas_apron",
+   "helpers/fiber_bag"
+  ],
+  "sheet67-gear.png": [
+   "helpers/clay_flask",
+   "helpers/stoneware_jug",
+   "helpers/glass_bottle",
+   "helpers/insulated_flask",
+   "helpers/wicker_pack",
+   "helpers/canvas_rucksack",
+   "helpers/frame_rucksack",
+   "helpers/drip_line",
+   "helpers/straw_pillow",
+   "helpers/feather_pillow",
+   "helpers/down_pillow",
+   "helpers/whetstone"
   ]
  },
  "tiles": {
@@ -616,5 +824,15 @@
   "interior-house.png": "interiors/house",
   "interior-barn.png": "interiors/barn",
   "interior-workshop.png": "interiors/workshop"
+ },
+ "albumSheets": {
+  "sheet61-album-ch6.png": [
+   "album/sq_free_family",
+   "album/sq_free_garden",
+   "album/sq_free_greenstem",
+   "album/sq_free_lark",
+   "album/sq_free_miller",
+   "album/sq_free_quill"
+  ]
  }
 }

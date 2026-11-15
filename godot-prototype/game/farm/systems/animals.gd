@@ -83,6 +83,33 @@ func feed_cost(aid: String) -> Dictionary:
 func register_chores() -> void:
 	G.actions.register("collect_animal", _collect_effect, _collect_requires, _collect_amount, _collect_extra)
 	G.actions.register("muck_out", _muck_out_effect, _muck_out_requires, _muck_amount)
+	G.actions.register_auto("muck_out", _auto_muck)
+	G.actions.register_auto("collect_animal", _auto_collect)
+
+## How a pet picks the target of these chores (G.actions.register_auto): the chore's args {"aid"} of the pen with the highest score, or {} when no pen
+## qualifies. Only a pen that has animals counts, and only one where the farmer could do the chore now apart from being tired, out of time
+## or short of water (the feed in the store, flowers for the bees): a pet does not wait for what cannot happen. Read-only.
+func _auto_pen(chore: String, score: Callable) -> Dictionary:
+	var best := {}
+	var top := 0.0
+	for aid in G.animal_ids:
+		var a: Dictionary = G.S["animals"].get(aid, {})
+		var s := float(score.call(a)) if int(a.get("count", 0)) >= 1 else 0.0
+		if s <= top: continue
+		var args := {"aid": aid}
+		var can := true
+		for u in G.actions.check(chore, G.actions.farmer, args)["unmet"]:
+			if not str(u["key"]) in ["energy", "time", "water"]: can = false
+		if can: top = s; best = args
+	return best
+
+## The pen with most muck (at least 0.5).
+func _auto_muck() -> Dictionary:
+	return _auto_pen("muck_out", func(a): return float(a.get("muck", 0.0)) if float(a.get("muck", 0.0)) >= 0.5 else 0.0)
+
+## The pen with the biggest haul that is ready now (the most animals; "ready" is the step it can be collected from).
+func _auto_collect() -> Dictionary:
+	return _auto_pen("collect_animal", func(a): return float(a.get("count", 0)) if int(G.S["step"]) >= int(a.get("ready", 0)) else 0.0)
 
 func _collect_amount(_who, args: Dictionary) -> float:
 	return float(G.nodes[args["aid"]].get("collectEnergy", 1)) * int(animal(args["aid"])["count"])

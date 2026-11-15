@@ -35,7 +35,7 @@ harvest. **In winter** only hardy crops (winter wheat, onions, beans, kale) can 
   gathering tap (🧺×2, ×3 …): more comes in per question, for the same energy per piece (`meta.carry`). A tap takes a
   smaller load when energy is short.
 - **The store** gives **each kind of thing** the same shelf, counted in load units (`storageLoad`, `money-market/08`): Basket 40 → Log Shed 100 → Warehouse 240 (the Deep Pockets gift adds 20). How many fit follows the weight of §5.5: the Basket holds 10 big rocks or logs (4 each), 20 planks or straw (2), 40 carrots (1), 80 sticks or small stones (0.5), 400 herbs (0.1). One kind never crowds out another, and the heavy things hold exactly what they held before. Tools and the like have no limit. A thing's pop-up shows how many fit. It opens from the
-  storage place on the map (the basket, later the log shed and the warehouse): on top *🧺 Harvest all*, then *What you have* as a grid of tiles (picture, name, the number, 🍂 when it goes stale
+  storage place on the map (the basket, later the log shed and the warehouse): on top a **bar of how full the store is** (`interface-feel/14`: everything stored against the room of the shelves in use, so how full the used shelves are on average; it turns red as soon as one kind of thing has filled its shelf), then *🧺 Harvest all*, then *What you have* as a grid of tiles (picture, name, the number, 🍂 when it goes stale
   soon, 🎒 and the number packed, and a coloured dot for each grade there is), with a filter row (All, Crops, Food, Crafts, Herbs,
   Materials; `storeFilters` in `rules/49-trip.json`), and the 🌱 *Seeds*. A tap on a tile opens the thing: how many of each grade
   (⭐⭐⭐ 2 ⭐⭐ 5), what goes stale, and its buttons: 😋 *Eat* (dishes), 🔥 *Fire* (wood for the woodpile), 🎒 +1 and *+ all that fits*,
@@ -45,6 +45,17 @@ harvest. **In winter** only hardy crops (winter wheat, onions, beans, kale) can 
 - **Every thing has a weight** (five classes: feather 0.1 · light 0.5 · normal 1 · bulky 2 · heavy 4 load units; seeds are feathers; straw is light but
   bulky, logs, big rocks and iron ore are heavy, a small stone is light; `data/farm/rules/45-weight.json`). It works from the start but is not shown and limits nothing until
   the first market trip (§5.3b), when carrying (backpack → basket → cart, the farmer's strength, the road) starts to matter.
+
+**Piles beside the store** (`visible-work/02`). Sticks, small stones and big rocks each have a pile beside the basket (later the
+store building): four sizes, shown from 1, 8, 20 and 40 stored (`rules/67-piles.json`: which things, where, the amounts). The
+pile changes at once when the amount does. Gathered sticks and stones fly to their pile, not to the store's sign; when the store
+has no room the top of the pile tumbles and the thing bounces back. A tap on a pile opens the store.
+
+**Sticks and stones lying about** (`visible-work/03`). A new farm has eight sticks and six small stones lying in free places
+(never on a building, a patch, a pen or the road); one more appears every six steps, at most ten at once
+(`rules/68-loose.json`). A tap picks one up: the chore `pick_loose` (1 ⚡ for a stick, 2 ⚡ for a stone, the same per thing as
+gathering), and it flies to its pile. With a full store it stays lying and bounces. Where each lies is rolled once with the
+farm's own random numbers and saved (key `loose`).
 
 ### 5.6 Fuel and the woodpile 🪵
 
@@ -64,7 +75,7 @@ Each batch in the store remembers the season it came in. At each **change of sea
 shelf life turns stale: plant food becomes 🥣 **feed mash** (animals eat it, compost takes it), eggs and dairy go to the
 compost. Shelf life in season changes: fresh greens, berries, tomatoes, eggs, dairy, juices and most dishes 1; roots, apples
 and beans 2; pumpkins 3; preserved things (flour, grain, honey, jam, pickles, aged cheese, oils, cider, vinegar, nuts) keep
-for ever. A **"stale soon" 🍂** badge warns one change ahead — sell it, eat it, or cook it into something that keeps. Cellar
+for ever. A **"stale soon" badge** (a wilted leaf, `pictures/07`; 🍂 where the picture is missing) on the store's tile and on the storage place's sign warns one change ahead — sell it, eat it, or cook it into something that keeps. Cellar
 racks, a card and a gift each add a season.
 
 ### 5.8 Numbers on screen

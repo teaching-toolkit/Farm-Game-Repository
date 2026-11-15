@@ -1,0 +1,49 @@
+{
+  "piles": {
+    "note": "The piles of bulky things beside the store (feature visible-work, ticket 02). Each thing has four sizes of picture (assets/piles/<art>_1 ... _4, 1 = smallest). steps = the stored amount from which size 1, 2, 3, 4 shows (below the first: no pile). dx, dy = where the pile's feet stand, from the store's standing point, in farm pixels; w = the width of the biggest size, scales = the width of each size as a share of w. Only looks: no rule reads this.",
+    "scales": [
+      0.6,
+      0.78,
+      0.92,
+      1.0
+    ],
+    "things": {
+      "stick": {
+        "art": "piles/stick",
+        "steps": [
+          1,
+          8,
+          20,
+          40
+        ],
+        "dx": -58,
+        "dy": 10,
+        "w": 50
+      },
+      "stone": {
+        "art": "piles/stone",
+        "steps": [
+          1,
+          8,
+          20,
+          40
+        ],
+        "dx": 54,
+        "dy": 12,
+        "w": 50
+      },
+      "boulder": {
+        "art": "piles/boulder",
+        "steps": [
+          1,
+          8,
+          20,
+          40
+        ],
+        "dx": 100,
+        "dy": 16,
+        "w": 56
+      }
+    }
+  }
+}

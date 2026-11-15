@@ -24,6 +24,8 @@ func part_pantry() -> void:
 	var hb := UI.button(tr("🧺 Harvest all  (%d ready)") % ready_n if ready_n > 0 else tr("🧺 Harvest all — nothing is ready yet"), _harvest_everything, ready_n > 0, UI.GREEN, 20, tr("🌱 Nothing is ready yet. Plants need a few Time Quiz questions to grow."))
 	hb.custom_minimum_size = Vector2(0, 58)
 	M.content.add_child(hb)
+	var room := str(int(G.inventory.shelf_room()))
+	M.content.add_child(M.widgets.fill_row("🧺", tr("%s of %s room used") % [str(ceili(G.inventory.total_load())), room], G.inventory.fill(), "store_bar", G.inventory.any_full()))
 	M.widgets.section(tr("🧺 What you have"), tr("Tap a thing to see what you can do with it. 🍂 = goes stale at the next change of season — sell it, eat it or cook it into something that keeps. 🎒 = packed for the trip."))
 	M.content.add_child(_filter_row())
 	var grid := GridContainer.new()
@@ -118,13 +120,28 @@ func _store_tile(k: String) -> Control:
 	nl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	v.add_child(nl)
 	var badges := "%d" % G.down(q) if not keeper else "✓"
-	if G.inventory.stale_soon(k) >= 1.0: badges += " 🍂"
+	var leaf: Texture2D = Art.tex("ui", "stale_leaf") if G.inventory.stale_soon(k) >= 1.0 else null
+	if G.inventory.stale_soon(k) >= 1.0 and leaf == null: badges += " 🍂"     # no picture: the emoji
 	var pk := int(G.trip.packed(k))
 	if pk > 0: badges += " 🎒%d" % pk
 	var cl := UI.label(badges, 15, UI.INK)
 	cl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	cl.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	v.add_child(cl)
+	if leaf != null:
+		var lr := UI.hbox(2)
+		lr.alignment = BoxContainer.ALIGNMENT_CENTER
+		lr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		lr.add_child(cl)
+		var lt := TextureRect.new()
+		lt.texture = leaf
+		lt.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		lt.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		lt.custom_minimum_size = Vector2(18, 18)
+		lt.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		lr.add_child(lt)
+		v.add_child(lr)
+	else:
+		v.add_child(cl)
 	if G.quality.graded(k):
 		var dots := ""
 		var gs: Dictionary = G.inventory.grades(k)

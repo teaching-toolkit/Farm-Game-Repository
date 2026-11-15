@@ -99,6 +99,7 @@ func is_bark(id: String) -> bool:
 func mark_seen(id: String) -> void:
 	G.S["story_seen"][id] = int(G.S["step"])
 	if RATIONED.has(str(piece(id).get("kind", ""))): G.S["story_last"] = int(G.S["step"])
+	if str(piece(id).get("kind", "")) == "visit" and piece(id).has("visitor"): G.people.visit(str(piece(id)["visitor"]))     # the visitor walks in (map/visitor.gd)
 	G.changed.emit()
 
 ## The player tapped something that has a story ("market", "board", "patch:weeds" …): story pieces with `tap:<place>` may now come.

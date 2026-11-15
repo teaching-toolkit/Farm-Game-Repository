@@ -11,6 +11,19 @@ of farm time.** It is the only thing that moves time. After a wrong first pick t
 and its "why" show, but time stays where it was, and that question comes back right after the next one (a pack question as
 well as a card review).
 
+- **Moments: how much fits into one step** (`action-budget`, rules in `rules/46-chores.json` `"moments"`). A step holds a fixed number of **moments** (18 in
+  chapter 1, 21 in chapter 2, 26 in chapter 3, 32 from chapter 4: `perStep` plus `chapterExtra`; a bigger farm has more to do in one step). Every chore takes
+  0 (free: looking, and walks, which already cost a question), 1 (light: one weed, one plant, one harvest), 2 or 4 (muck out, dig in the forest); a recipe's
+  moments come from its energy (up to 1 → 1, up to 3 → 2, more → 4), and each skill rank takes one moment off the middle and heavy chores of its family
+  (never below 1). When the step's moments are used up no chore can be started (every button and tile is grey, the reason is "No time left for that now.
+  Answer the clock's question.") until a right first answer moves time one step and gives a fresh set; a chore that needs more than is left can still be
+  started when at least one is left and uses up the rest. Counting is done by `G.actions` only (`moments_of`, `moments_used`, `moments_left`, the unmet
+  reason `time`; the save key `moments`, 0 in a new game and an old save, reset by the clock each step). **What the child sees:** a ring of 12 segments round the
+  clock fills as moments are used (green, the last three amber; it looks full only when none is left); at full the clock rocks, a tap on a grey chore
+  sends a spark to the clock and the usual reason note opens, and a right first answer empties the ring with a quick sweep. No number is ever shown.
+  The skill window carries a small 🕰️ per rank and "Quicker with every rank". The bot answers the Time Quiz when no moment is left, and its pacing
+  report has per chapter `moments_hist`, `moments_steps` and `ran_out`. The numbers were set so the bot (a worst case: it uses every moment) runs out in
+  about one step of five to four in chapters 1 and 2; a child will run out less often. Still to be confirmed by the parent's play-session (`action-budget/05`). **Helping pets** (`pets-automation/05`) take chores off the farmer without using moments; the bot now sets its pets to their chores (rows `pet_chores`, `pet_moments_saved`): they save about 1.3 moments a step (roughly 4 % of the budget), and the bot's ran-out stays at 26-28 %, so the help is a small gift, not a change of pace.
 - **The same question everywhere.** Every walk costs one question too: to the village, to a neighbour's farm, into the forest and out of
   it. Each is a *purpose* of the same rule: only a right first answer moves time and lets the walk happen; after a wrong one the walk
   waits with *Next question* and the question comes back after the next one, as on the farm. After a right answer on the way to the

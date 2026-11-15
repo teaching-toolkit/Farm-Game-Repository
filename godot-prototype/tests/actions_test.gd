@@ -9,12 +9,14 @@ var costs_seen := {}
 const FREE_CHORES := ["forest_look", "forest_enter", "forest_leave", "recipe"]   # no written cost: the forest walks cost no energy (the question each way is asked by the interface), a recipe is priced by recipes.json
 
 ## Every chore has a price-match (or, for the free ones, a requirements) test in this file; a new chore fails here until it is added.
-const COVERED := ["fetch_water", "clear_snow", "weed", "pick_stones", "plant", "harvest", "cut_tree", "collect_animal", "muck_out", "forest_find", "forest_pick", "forest_dig", "forest_look", "forest_enter", "forest_leave", "wren_water", "village_trip", "recipe", "throw_party", "visit_friend"]
+const COVERED := ["fetch_water", "clear_snow", "weed", "pick_stones", "pick_loose", "plant", "harvest", "cut_tree", "collect_animal", "muck_out", "forest_find", "forest_pick", "forest_dig", "forest_look", "forest_enter", "forest_leave", "wren_water", "village_trip", "recipe", "throw_party", "visit_friend"]
 
 func _ready() -> void:
 	G = get_node("/root/Game")
 	var A = G.actions
 	var who = A.farmer
+	var per_step: int = A.moments_per_step()
+	G.meta["moments"]["perStep"] = 100000     # the price-match below does thousands of chores in one step: out of moments is tested on its own (_moments)
 	# every chore in the data has an effect, and every registered chore has data
 	for chore in G.meta["chores"]:
 		if chore == "note": continue
@@ -49,6 +51,7 @@ func _ready() -> void:
 					_price_match_crops(label)
 					_price_match_animals(label)
 					_price_match_well(label)
+					_price_match_loose(label)
 					_price_match_trip(label)
 					if step == 30 and buff != 0.5: _price_match_recipes(label)
 					_price_match_forest(label)      # last: it unlocks the still-room and the shovel
@@ -63,6 +66,8 @@ func _ready() -> void:
 	_trip_requirements()
 	_recipe_requirements()
 	_pay_function()
+	G.meta["moments"]["perStep"] = per_step
+	_moments()
 	print("ACTIONS %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])
 	get_tree().quit(1 if fails > 0 else 0)
 
@@ -347,6 +352,28 @@ func _animal_requirements() -> void:
 	_check(not rep4["done"] and rep4["failed"] == "clean" and rep4["message"] != "" and G.S["energy"] == 10.0, "a clean pen is refused with a sentence")
 
 ## A party and a visit cost a fixed energy (no skill, tool or season changes it, as before); the party also takes dishes.
+## Picking up a loose stick or stone: the cost is the written base through skills and buffs like the gathering it replaces (a stick as
+## gather_sticks per stick, a stone as pick_stones at the forest edge), check = what perform takes, and it works with exactly that energy.
+func _price_match_loose(label: String) -> void:
+	var A = G.actions
+	var who = A.farmer
+	for kind in ["stick", "stone"]:
+		G.S["loose"] = {"things": [{"id": 1, "k": kind, "u": 0.5, "v": 0.5}], "next": 2}
+		var base: Dictionary = G.meta["chores"]["pick_loose"]["stone_base" if kind == "stone" else "base"]
+		var q: Dictionary = A.check("pick_loose", who, {"id": 1})
+		var written: float = float(base["energy"])
+		var expect: float = G.needs.ecost("gather", written, "")
+		_check(q["ok"] or q["unmet"][0]["key"] == "energy", "picking a loose %s can be asked (%s)" % [kind, label])
+		_check(is_equal_approx(float(q["cost"]["energy"]), expect) and q["base"]["energy"] == written, "a loose %s costs the written base through the usual modifiers (%s)" % [kind, label])
+		G.S["energy"] = float(q["cost"]["energy"]) - 0.01
+		var n0: float = G.inventory.count(kind)
+		var rep: Dictionary = A.perform("pick_loose", who, {"id": 1})
+		_check(not rep["done"] and rep["failed"] == "energy" and G.loose.count() == 1 and G.inventory.count(kind) == n0, "a hair too little energy picks nothing up (%s)" % label)
+		G.S["energy"] = float(q["cost"]["energy"])
+		rep = A.perform("pick_loose", who, {"id": 1})
+		_check(rep["done"] and G.S["energy"] < 0.001 and G.loose.count() == 0 and G.inventory.count(kind) == n0 + 1.0, "a pick takes exactly the energy check says and moves the thing into the store (%s)" % label)
+	G.S["loose"] = {"things": [], "next": 1}
+
 func _price_match_well(label: String) -> void:
 	var A = G.actions
 	var who = A.farmer
@@ -668,6 +695,100 @@ func _pay_function() -> void:
 	_check(G.pace.pay({"coins": 20.0}) and is_equal_approx(float(G.S["coins"]), 80.0) and seen.size() == n0 + 1 and is_equal_approx(float(seen[-1]), 20.0), "a cost with coins is paid through the pay function: coins taken, paid fires once")
 	_check(not G.pace.pay({"coins": 500.0}) and is_equal_approx(float(G.S["coins"]), 80.0), "too few coins: nothing taken")
 	G.paid.disconnect(on_paid)
+
+## The args that make each chore's check run (check reads the call; most of it is state this test does not need).
+const MOMENT_ARGS := {"weed": {"i": 0}, "pick_stones": {"i": 0}, "clear_snow": {"i": 0}, "pick_loose": {"id": 1}, "plant": {"a": "field", "i": 0, "cid": "crop_wheat"},
+	"harvest": {"a": "field", "i": 0}, "cut_tree": {"a": "orchard", "i": 0}, "collect_animal": {"aid": "animal_chicken"}, "muck_out": {"aid": "animal_chicken"},
+	"forest_find": {"spot": "glade", "tid": "chamomile", "option": "chamomile"}, "forest_pick": {"spot": "clearing", "tid": "marigold", "part": "flower"},
+	"forest_dig": {"spot": "stream", "tid": "clay"}, "forest_look": {"spot": "moonstone", "tid": "hum"}, "recipe": {"rid": "porridge"}}
+
+## The moments (action budget): what each chore takes is the data (after ranks), the step's last moments, a new step, an old save, the ranks.
+func _moments() -> void:
+	var A = G.actions
+	var who = A.farmer
+	var per: int = A.moments_per_step()
+	var extra: Array = G.meta["moments"].get("chapterExtra", [])
+	var want_per: int = int(G.meta["moments"]["perStep"]) + (0 if extra.is_empty() else int(extra[clampi(G.chapter(), 1, extra.size()) - 1]))
+	_check(per == want_per and per >= 4, "a step holds the written number of moments (perStep plus the chapter's extra)")
+	G.meta["moments"]["chapterExtra"] = [7]                     # one entry: it is added in every chapter (the last entry stays after the last listed chapter)
+	_check(A.moments_per_step() == int(G.meta["moments"]["perStep"]) + 7, "the chapter's extra is added to the step's moments")
+	G.meta["moments"]["chapterExtra"] = extra
+	G.reset_game()
+	_check(A.moments_used() == 0 and A.moments_left() == per, "a new game starts with every moment left")
+	G.S["orchard"] = [G.fields._blank_patch()]
+	G.S["orchard"][0]["crop"] = "crop_walnut"; G.S["orchard"][0]["plants"] = 1.0      # a tree to cut: its requirement reads the patch
+	for chore in COVERED:
+		var args: Dictionary = MOMENT_ARGS.get(chore, {})
+		var mv = G.meta["chores"][chore]["moments"]
+		var want := 0
+		if typeof(mv) == TYPE_STRING:
+			var e := float(G.recipes[args["rid"]]["energy"])
+			want = 1 if e <= 1.0 else (2 if e <= 3.0 else 4)
+		else:
+			want = int(mv)
+		G.S["moments"] = 0
+		var q: Dictionary = A.check(chore, who, args)
+		_check(A.moments_of(chore, who, args) == want and q["moments"] == want, "%s takes %d moments as written" % [chore, want])
+		var has_time := false
+		for u in q["unmet"]: has_time = has_time or u["key"] == "time"
+		_check(not has_time, "%s: with moments left there is no 'time' reason" % chore)
+		G.S["moments"] = per
+		q = A.check(chore, who, args)
+		has_time = false
+		for u in q["unmet"]: has_time = has_time or u["key"] == "time"
+		_check(has_time == (want > 0), "%s: with none left the 'time' reason is there exactly when it takes moments" % chore)
+		if want > 0: _check(q["unmet"][-1]["key"] == "time" and q["unmet"][-1]["text"] != "" and not q["ok"], "%s: 'time' is the last reason, with a sentence" % chore)
+		_check(A.moments_of(chore, A.Doer.new(G, "pet"), args) == 0, "%s: a chore of anyone else takes none" % chore)
+	# perform adds exactly moments_of: a light chore (fetch water), a middle-sized one is in the rank test below, a heavy one (muck out)
+	G.reset_game()
+	G.S["energy"] = G.needs.energy_max(); G.S["water"] = 0.0
+	var rep: Dictionary = A.perform("fetch_water", who)
+	_check(rep["done"] and A.moments_used() == A.moments_of("fetch_water", who), "perform fetch water adds exactly its moments")
+	_animal_state("animal_chicken", 6.0)
+	G.S["moments"] = 0
+	rep = A.perform("muck_out", who, {"aid": "animal_chicken"})
+	_check(rep["done"] and A.moments_used() == 4, "perform muck out adds its 4 moments (%s)" % str(rep["failed"]))
+	# a heavy chore with one moment left can be done and uses up the rest; with none left it is refused and takes nothing
+	_animal_state("animal_chicken", 6.0)
+	G.S["moments"] = per - 1
+	rep = A.perform("muck_out", who, {"aid": "animal_chicken"})
+	_check(rep["done"] and A.moments_left() == 0 and A.moments_used() == per, "a chore of 4 with 1 moment left is done and leaves none")
+	_animal_state("animal_chicken", 6.0)
+	var energy: float = G.S["energy"]
+	rep = A.perform("muck_out", who, {"aid": "animal_chicken"})
+	_check(not rep["done"] and rep["failed"] == "time" and G.S["energy"] == energy and A.moments_used() == per, "with none left a chore is refused for time and takes nothing")
+	var free: Dictionary = A.perform("forest_enter", who)
+	_check(free["failed"] != "time", "a free chore is not refused for time")
+	# a step of time sets them to 0
+	G.S["moments"] = per
+	G.step_time()
+	_check(A.moments_used() == 0 and A.moments_left() == per, "a step of time gives a fresh set of moments")
+	# an old save has no key: it loads with 0
+	var old: Dictionary = G.all_save_defaults().duplicate(true)
+	old.erase("moments")
+	G.Saves.fill(old, G.all_save_defaults())
+	_check(old["moments"] == 0, "an old save without the key loads with 0 moments used")
+	# ranks (the skills' own state: batches and the gates): a beginner and a master on a middle and a heavy chore (the forest's healing family)
+	G.reset_game()
+	var rm := 2
+	var mid_args: Dictionary = MOMENT_ARGS["forest_find"]
+	var heavy_args: Dictionary = MOMENT_ARGS["forest_dig"]
+	_check(G.skills.rank("healing") == 0 and A.moments_of("forest_find", who, mid_args) == rm and A.moments_of("forest_dig", who, heavy_args) == 4, "a beginner: middle 2, heavy 4")
+	var per_rank := int(G.meta["skills"]["momentsPerRank"])
+	_check(per_rank == 1, "each rank takes one moment off")
+	G.S["skills"]["healing"] = 1000
+	for r in range(1, G.skills.ranks().size()):
+		var node: String = G.skills.gate_node("healing", r)
+		if node != "": G.S["unlocked"][node] = true
+	G.invalidate_caps()
+	var rk: int = G.skills.rank("healing")
+	_check(rk == G.skills.ranks().size() - 1, "the master's rank is reached through the skills' own state")
+	_check(A.moments_of("forest_find", who, mid_args) == maxi(1, rm - rk) and A.moments_of("forest_dig", who, heavy_args) == maxi(1, 4 - rk), "a master: never below 1 (%d, %d)" % [A.moments_of("forest_find", who, mid_args), A.moments_of("forest_dig", who, heavy_args)])
+	G.S["skills"]["healing"] = int(G.skills.ranks()[1]["batches"])
+	G.S["unlocked"] = {}
+	G.invalidate_caps()
+	_check(G.skills.rank("healing") == 1 and A.moments_of("forest_dig", who, heavy_args) == 3 and A.moments_of("forest_find", who, mid_args) == 1 and A.moments_of("forest_look", who, MOMENT_ARGS["forest_look"]) == 0, "rank 1: heavy 3, middle 1, a free chore stays free")
+	_check(A.moments_of("weed", who, {"i": 0}) == 1, "a light chore is never changed by ranks")
 
 func _check(ok: bool, what: String) -> void:
 	checks += 1

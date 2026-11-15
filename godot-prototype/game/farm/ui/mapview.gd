@@ -213,18 +213,35 @@ func on_gained(source: String, got: Dictionary, lost: Dictionary = {}) -> void:
 		M.feedback.act_for_gain(source, kind)
 	var pieces := []
 	var bounce := []
+	var piled := {}                 # a bulky thing (stick, stone, rock) flies to its pile: item -> [pieces, bounce]
+	for k in M.map.piles.items(): piled[k] = [[], []]
 	for k in got:
 		var q := float(got[k])
 		if q < 0.01: continue
-		for _i in range(clampi(int(round(q)), 1, 12)): pieces.append([G.iemoji(k), Art.first("items", [k])])
+		for _i in range(clampi(int(round(q)), 1, 12)): (piled[k][0] if piled.has(k) else pieces).append([G.iemoji(k), Art.first("items", [k])])
 	for k in lost:
 		var q2 := float(lost[k])
 		if q2 < 0.01: continue
-		for _i in range(clampi(int(round(q2)), 1, 8)): bounce.append([G.iemoji(k), Art.first("items", [k])])
-	if pieces.is_empty() and bounce.is_empty(): return
-	var job := [_source_point(source), "well" if got.has("water") else "storage", pieces, bounce]
-	if M.modal.visible: _fx_queue.append(job)
-	else: M.map.fly(job[0], job[1], job[2], job[3])
+		for _i in range(clampi(int(round(q2)), 1, 8)): (piled[k][1] if piled.has(k) else bounce).append([G.iemoji(k), Art.first("items", [k])])
+	var from := _source_point(source)
+	var jobs := []
+	if not pieces.is_empty() or not bounce.is_empty(): jobs.append([from, "well" if got.has("water") else "storage", pieces, bounce])
+	for k in piled:
+		if not piled[k][0].is_empty() or not piled[k][1].is_empty(): jobs.append([from, "pile:" + str(k), piled[k][0], piled[k][1]])
+	for job in jobs:
+		if M.modal.visible: _fx_queue.append(job)
+		else: M.map.fly(job[0], job[1], job[2], job[3])
+
+## The piles beside the store show what the store holds, and the sticks and stones lying about are where the rules say (main.gd, on every refresh).
+func update_piles() -> void:
+	var amounts := {}
+	for k in M.map.piles.items(): amounts[k] = G.inventory.count(k)
+	M.map.set_piles(amounts)
+	M.map.set_loose(G.loose.things())
+
+## A stick or stone lying about was tapped: the chore (the usual "too tired" answer when the energy is short); a thing flies to its pile.
+func on_loose_tapped(id: int) -> void:
+	G.loose.pick(id)
 
 ## Weeds and stones took part of a harvest: the lost crops rise from the patch as grey ghosts (the map's ghosts()).
 func on_crowded(source: String, lost: Dictionary) -> void:
@@ -248,6 +265,7 @@ func _source_point(source: String) -> Vector2:
 			var st: String = G.recipes[parts[1]]["station"]
 			return M.map.spot_point(map_sid(Spots.spot_of(G, st)))
 		"water": return M.map.spot_point("pond")
+		"loose": return M.map.loose_point(int(parts[1]))
 		"node":
 			var nid: String = parts[1]
 			if G.nodes.has(nid) and G.nodes[nid].get("effects", {}).get("add", {}).has("plots"):

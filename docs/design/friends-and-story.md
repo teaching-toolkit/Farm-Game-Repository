@@ -4,6 +4,21 @@ Part of the game's design ([index](README.md)). It describes the game as built; 
 
 ## 11. Friends, rewards and surprises
 
+### 11.0 People and figures *(built: the village square, `people/04`, `people/06`; the merchant and the visitors on the farm, `people/01`)*
+
+Everybody who is not the farmer is a **person** in `rules/58-people.json`: a name (for now the trade, "The seed seller"; the
+story's names come later), a look (the farmer's slots plus an apron, a beard or a long skirt), three short lines in English and
+German, a condition for when they are there, and where: at a stall of the village square, or strolling between named points of
+it. A person on screen is a **figure**: it stands or strolls (walk to a point, stand two to five seconds, walk on), and a tap
+makes it stop, turn to the farmer, wave and say its next line in a speech bubble for about three seconds, with a small sound.
+What it says is decided in one place (`G.people.line`): today the three lines in turn; story lines and moods go there later.
+How a figure is drawn is hidden in the figures part (`ui/figures.gd`): today it is the farmer's own little 3D figure with
+another look, so everybody matches the farmer; the look trial (`people/05`) may change that one place. Nothing is saved and
+the game's random numbers are not used. On the square: the sellers of the seeds, raw materials and book stalls stand beside
+their stall while it stands there, and an old woman and a boy stroll between the tree, the well and the bench. A tap on a
+seller says a line; a tap on the stall opens its window. The farmer is not on the square (it is seen through the farmer's
+eyes). **On the farm** *(`people/01`)*: the travelling merchant is a figure beside his wagon while he is at the gate (he walks in from the left edge in about two seconds, off to the left when he leaves; the wagon's picture follows how full his stock is; a tap gives one of three lines). The story's **visitors** appear the same way: a visit piece with a `visitor` brings that person's figure (Maud, Greenstem, Lark, Quill, Wren; the miller and Captain Mei are made as persons but have no visit piece yet) to the door of the house (`scenes.door`), where it stands for two farm steps (`visitSteps`) and then walks off; a second visit replaces the first, a tap gives a line, nothing is saved. (The village miller's mill is water powered: only the farm's own mill has sails.)
+
 ### 11.1 Favours for neighbours (side quests)
 
 28 favours: 4–5 in chapters 1–4 and 11 in chapter 5 (Tom the shepherd boy is freezing, Granny Maud's goat ran off, porridge
@@ -76,7 +91,7 @@ harvest; a double-yolk egg, a honey flow, a thick fleece; a neighbour's gift bas
 
 ---
 
-### 11.6 The story *(built: the engine and chapter 1; the rest follows the chapters)*
+### 11.6 The story *(built: the engine and all six chapters, compressed from the novella on 14 Nov 2026)*
 
 The story reaches the child as **story pieces** (`godot-prototype/data/farm/story/`, one entry per piece; the canon, the people and the texts live in `story/`).
 Kinds: **frame** (the grandchildren at the bed, at the start and between chapters; a full-screen black scene, see below), **beat** (a plot step that hangs on a goal the child must do), **discovery**
@@ -91,6 +106,7 @@ after a pop-up, postcard, celebration, story box, bark), is one list in `data/fa
 real-time gating. A story box has a picture or an emoji, 2–4 short sentences, 🔊 like the cards, one big button, and from the second viewing a **Skip**.
 **Frames** (`story/11`): the grandchildren's bedside scene (the opening and one after each chapter's last beat, seven in all) is not a box but a **full-screen black scene**: only a picture (or the emoji) and the words, no top bar, no farm, no ✖. A tap anywhere goes on page by page (a breathing → says so, dots show the page, ✔ on the last one) and the last tap leaves; from the second viewing a quiet **⏭ Skip** at the top leaves at once, and 🔊 is there as in a box. Its own music plays (`Sound.music("frame")`, the track `frame` in `data/sounds.json`: the calm Rest track as a stand-in until the parent picks another, W8) and the farm's music returns when it closes. It is its own kind in the interruption queue (`frame`, `ui/framescene.gd`): it waits for the Time Quiz, Rest, a pop-up, a sheet, a postcard or celebration and for the farm to finish catching up after a quiz, while it is open it counts as a pop-up (everything else waits) and story boxes, news boxes and barks wait for it. **The frame closes its chapter:** nothing of a later chapter is ready until the frames of all earlier chapters have been shown (`G.story.frame_owed`), so the frame comes right after the chapter's last beat and before the next chapter's first beat. Every frame stays in the 📜 scroll and is read again there as the same scene.
 **News boxes** (`story/13`, `story/14`): a few events that deserve the child's attention are a box with a big picture, a title, a text and one button, not a note: a **change of season** (what changes now, what there is plenty of, and the market news, said once; the picture is `season_<name>`), a **golden acorn**, a **favour done** (its album picture) and a **party**. A news box waits in the save (`story_news`) for the same quiet moment as a story box and comes after it; a newer season box replaces one still waiting, at most `story.newsMax` (4) wait and the oldest goes. Until a painted picture exists the box shows the emoji. The 📜 scroll lists the seasons reached under *Seasons*, to read again. A **Scene** (the first feeding of the travelling merchant, `c1_seller`) opens over the village square right after the *Hand over* tap, before the square is left; other boxes wait for *Back home*.
+**Moment pieces** (`story/25`, `data/farm/story/40-moments.json`, source `story/game/texts/moments.md`): 22 short pieces, priority 45 (below the chapters' own pieces at 50), one paragraph of at most three short sentences each, for what the chapters' pieces do not cover: the 13 big builds without a piece (the road at its second and fourth step, the shed, the wattle fence, the rain barrel, the sheep pen, the press, the loft, the bookcase, the second forge, the warehouse, the third workshop, the second windmill) and nine other moments (first milk, first wool, first flatbread, first cheese, pests and their end, too tired, a skill rank, the first rain). A moment gets one piece, never two, and a moment piece never shares a trigger with a chapter piece nearby. Each has one page and a `picture` name that shows the build's own map picture until a painted picture `assets/story/<id>.png` exists (then the painted one wins). They are ordinary pieces: the same quiet-moment rule, one box at a time and one unprompted piece (moment, visit, letter) per three questions.
 The **📜 scroll** in the top bar appears with the first piece read and lists what was read, a chapter at a time; a tap reads a piece again. The opening of
 a new game is the bedside frame, then the nibbled stalk, then a short *How to play* hint (what the old welcome taught). German texts follow the English
 ones (the *Du* form, „ss“, no gendered word for the farmer). The bot never opens a box; the data checker knows every condition.

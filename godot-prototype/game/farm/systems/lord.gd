@@ -50,7 +50,7 @@ func pay_coins(amount: float, exempt := false) -> String:
 	return ""
 
 func fraction() -> float:
-	if bool(_s().get("eased", false)): return float(data().get("easedFraction", 0.1))
+	if bool(_s().get("eased", false)) or G.story.seen("c6_quill_answer"): return float(data().get("easedFraction", 0.1))
 	var f: Dictionary = data().get("fraction", {})
 	var best := 0.0
 	for k in f:

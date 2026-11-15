@@ -27,7 +27,18 @@ func square_covers_farm() -> bool: return M.square.active() and M.square.root().
 func square_stalls() -> Array: return M.square.stalls()      # the stalls that stand there now
 func square_stall() -> String: return M.square.stall         # the one whose things the window shows
 func square_orders() -> bool: return not M.market.orders().is_empty()      # an order can be handed over now (the cart for the orders stands on the square)
+func square_scene_full() -> bool: return M.square.active() and M.square._box.y >= M.square.root().size.y - 1.0      # the scene was laid out for the whole screen (no window)
+func square_arrive() -> void: M.square.arrive()
+func square_scene_tap() -> void:      # a tap on the bare scene (no stall)
+	var e := InputEventMouseButton.new()
+	e.button_index = MOUSE_BUTTON_LEFT
+	e.pressed = true
+	M.square._scene_tapped(e)
 func sheet_height() -> float: return M.sheet_h
+func figures_here() -> Array: return M.figures.ids(M.square._layer) if M.square._layer != null else []      # the people standing on the square (people/06)
+func figure_tap(id: String) -> void: M.figures._tapped(id)      # what a tap on a person calls
+func figure_saying(id: String) -> String: return M.figures.saying(id)
+func figure_rel(id: String) -> Vector2: return M.figures.feet(id) / M.square._fbox      # where the person stands, as a share of the scene
 func square_tap(id: String) -> bool:      # a tap on a stall's picture (false: it does not stand there)
 	var b = M.square.root().find_child("stall_" + id, true, false) if M.square.root() != null else null
 	if not (b is Button): return false
@@ -92,6 +103,7 @@ func tap_rest_walk() -> bool:      # a tap on the screen while the farmer walks 
 	return true
 func open_spot(spot: String) -> void: M.sheets.open_spot(spot)
 func open_sheet(kind: String) -> void: M.sheets.open_sheet(kind)
+func window_key() -> String: return M.sheets.window_key()
 func enter_corner(corner: String, parent: String) -> void: M.interiors.enter_corner(corner, parent)
 func press_goal() -> void: M.goalbar.goal_pressed()
 func show_menu() -> void: M.menu.show_menu()

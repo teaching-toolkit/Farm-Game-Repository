@@ -49,6 +49,7 @@
       "forge": "smithing", "anvil": "smithing",
       "compost_bin": "field", "worm_bin": "field", "pond_station": "field"
     },
-    "jobs": {"plant": "field", "harvest": "field", "animal": "animals"}
+    "jobs": {"plant": "field", "harvest": "field", "animal": "animals"},
+    "momentsPerRank": 1
   }
 }

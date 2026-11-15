@@ -4,13 +4,13 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
 **Milestone:** story
 
-- [ ] F-072, F-073, F-075, F-078, F-079, F-080, F-081, F-082, F-083 and F-097 are applied as worded in `story/archive/consistency-fixes.md` §5
-- [ ] German through `tools/i18n.py`; checks, smoke test and bot pass
-- [ ] Each fix is marked APPLIED in `story/archive/consistency-fixes.md`
+- [x] F-072, F-073, F-075, F-078, F-079, F-080, F-081, F-082, F-083 and F-097 are applied as worded in `story/archive/consistency-fixes.md` §5
+- [x] German through `tools/i18n.py`; checks, smoke test and bot pass
+- [x] Each fix is marked APPLIED in `story/archive/consistency-fixes.md`
 
 ---
 

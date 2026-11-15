@@ -261,4 +261,4 @@ func _home_done() -> void:
 
 func _to_square() -> void:
 	M.modals.close_modal()
-	M.sheets.open_spot.call_deferred("market")
+	M.square.arrive.call_deferred()

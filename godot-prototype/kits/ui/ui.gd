@@ -83,6 +83,28 @@ static func box(bg: Color, radius := 12, border := Color(0, 0, 0, 0), bw := 0, p
 	s.content_margin_top = pad * 0.6; s.content_margin_bottom = pad * 0.6
 	return s
 
+## A picture with rounded corners, like the cards round it: after the picture is drawn, the four corners are covered with the
+## background colour and a thin outline follows the edge (no clip_children in gl_compatibility, so no mask). `r` clips its contents.
+static func round_picture(r: Control, radius := 14.0, bg := PAPER, line := LINE) -> void:
+	r.draw.connect(func():
+		var w := r.size.x
+		var h := r.size.y
+		var rad := minf(radius, minf(w, h) / 2.0)
+		if rad < 2.0: return
+		var centres := [Vector2(w - rad, rad), Vector2(w - rad, h - rad), Vector2(rad, h - rad), Vector2(rad, rad)]     # top right, bottom right, bottom left, top left
+		var corners := [Vector2(w, 0), Vector2(w, h), Vector2(0, h), Vector2(0, 0)]
+		var ring := PackedVector2Array()
+		for c in 4:
+			var a0: float = -PI / 2.0 + c * PI / 2.0
+			var cap := PackedVector2Array([corners[c]])
+			for i in range(9):
+				var a: float = a0 + i * (PI / 2.0) / 8.0
+				cap.append(centres[c] + Vector2(cos(a), sin(a)) * (rad + 0.5))
+				ring.append(centres[c] + Vector2(cos(a), sin(a)) * (rad - 1.0))
+			r.draw_colored_polygon(cap, bg)
+		ring.append(ring[0])
+		r.draw_polyline(ring, line, 2.0, true))
+
 static func label(text: String, size := 17, color := INK, wrap := false) -> Label:
 	var l := Label.new()
 	l.text = text
@@ -631,9 +653,33 @@ class ClockButton extends Control:
 	var minute := 0.0
 	var spinning := false
 	var _down := Vector2.ZERO
+	# --- the ring of moments round the dial (action-budget/03): 12 segments, filled clockwise from 12 o'clock as the step's moments are used.
+	# Everything about it lives here: the rest of the game gives the clock one number (set_moments) and one event (sweep).
+	const RING_SEGS := 12
+	const RING_W := 0.075             # sizes are shares of the clock's own size
+	const RING_GAP := 0.02            # between the dial and the ring
+	const RING_EDGE := 0.012          # between the ring and the edge of the clock
+	const SEG_GAP := 0.26             # between two segments, as a share of one segment's angle
+	const RING_GREEN := Color("a6e07c")
+	const RING_AMBER := Color("f5a623")
+	const RING_TRACK := Color(0.18, 0.21, 0.18, 0.5)
+	const ROCK_ANGLE := 0.05          # radians each way
+	var filled_segments: int:         # read-only: how many segments are filled (what the ring says now)
+		get: return _filled
+	var is_rocking: bool:             # read-only: the clock rocks on its hanger (no moment is left)
+		get: return _rock_tw != null and _rock_tw.is_valid()
+	var sweeps := 0                   # read-only: how many sweeps have been started (for the tests)
+	var _filled := 0
+	var _pop_idx := -1                # the newest segment pops a little when it fills
+	var _pop_t := 0.0
+	var _sweep_n := 0                 # while sweeping: the segments that were filled, and how far the sweep has got
+	var _sweep_pos := -1.0
+	var _rock_tw: Tween
+	var _ring_tw: Tween
 
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_STOP
+		resized.connect(func(): pivot_offset = Vector2(size.x / 2.0, size.y * 0.03))      # it hangs from the top: it rocks and squeezes from there
 		face = Artc.tex("ui", "clock_face")
 		hour_tex = Artc.tex("ui", "clock_hour")
 		min_tex = Artc.tex("ui", "clock_minute")
@@ -650,6 +696,74 @@ class ClockButton extends Control:
 		minute = TAU * fmod(fraction * 12.0, 1.0)
 		queue_redraw()
 
+	## The ring shows how much of the step is used: a segment is per_step / 12 moments, a started segment counts as filled. No number is shown.
+	func set_moments(used: int, per_step: int) -> void:
+		var seg := maxf(1, per_step) / float(RING_SEGS)
+		var n := clampi(ceili(float(used) / seg - 0.0001), 0, RING_SEGS)
+		if used < per_step: n = mini(n, RING_SEGS - 1)                  # the ring is full only when no moment is left
+		if n > 0 and _sweep_pos >= 0.0: _end_sweep()             # a chore during a sweep: show what is true
+		if n > _filled and _sweep_pos < 0.0 and is_inside_tree(): _pop(n - 1)
+		_filled = n
+		_set_rocking(used >= per_step and per_step > 0)
+		queue_redraw()
+
+	## Farm time moved one step: the ring empties with a quick clockwise sweep (call it just before set_moments with the new, smaller number).
+	func sweep() -> void:
+		if _filled <= 0 or not is_inside_tree(): return
+		sweeps += 1
+		_set_rocking(false)
+		if _ring_tw: _ring_tw.kill()
+		_sweep_n = _filled
+		_sweep_pos = 0.0
+		_ring_tw = create_tween()
+		_ring_tw.tween_method(_sweep_step, 0.0, float(_sweep_n), 0.5)
+		_ring_tw.tween_callback(_end_sweep)
+
+	## One small knock (the spark has arrived).
+	func knock() -> void:
+		if not is_inside_tree(): return
+		var tw := create_tween()
+		tw.tween_property(self, "scale", Vector2(1.09, 1.09), 0.07).set_trans(Tween.TRANS_SINE)
+		tw.tween_property(self, "scale", Vector2.ONE, 0.14).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+	func _sweep_step(v: float) -> void:
+		_sweep_pos = v
+		queue_redraw()
+
+	func _end_sweep() -> void:
+		if _ring_tw: _ring_tw.kill()
+		_sweep_pos = -1.0
+		queue_redraw()
+
+	func _pop(idx: int) -> void:
+		if _ring_tw: _ring_tw.kill()
+		_pop_idx = idx
+		_ring_tw = create_tween()
+		_ring_tw.tween_method(_pop_step, 0.0, 1.0, 0.2)
+		_ring_tw.tween_callback(_pop_done)
+
+	func _pop_step(v: float) -> void:
+		_pop_t = v
+		queue_redraw()
+
+	func _pop_done() -> void:
+		_pop_idx = -1
+		queue_redraw()
+
+	func _set_rocking(on: bool) -> void:
+		if on == is_rocking: return
+		if _rock_tw: _rock_tw.kill()
+		_rock_tw = null
+		if on and is_inside_tree():
+			_rock_tw = create_tween().set_loops()
+			_rock_tw.tween_property(self, "rotation", ROCK_ANGLE, 0.7).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			_rock_tw.tween_property(self, "rotation", -ROCK_ANGLE, 1.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+			_rock_tw.tween_property(self, "rotation", 0.0, 0.7).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		elif is_inside_tree() and absf(rotation) > 0.001:
+			create_tween().tween_property(self, "rotation", 0.0, 0.2)
+		else:
+			rotation = 0.0
+
 	func _gui_input(e: InputEvent) -> void:
 		if e is InputEventMouseButton and e.button_index == MOUSE_BUTTON_LEFT:
 			if e.pressed:
@@ -661,7 +775,6 @@ class ClockButton extends Control:
 
 	func spin() -> void:
 		spinning = true
-		pivot_offset = size / 2.0
 		var tw := create_tween()
 		tw.tween_method(_spin_step.bind(hour), 0.0, 1.0, 0.9).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 		tw.tween_callback(_spin_done)
@@ -676,15 +789,23 @@ class ClockButton extends Control:
 		pressed.emit()
 
 	func _draw() -> void:
+		# the ring first, round the middle of the clock, then the face (its hanger ornament covers the top of the ring a little)
+		var s := minf(size.x, size.y)
 		var c := size / 2.0
-		var r := minf(size.x, size.y) / 2.0 - 2.0
+		var r_out := s / 2.0 - s * RING_EDGE
+		var r_in := r_out - s * RING_W
+		var r := r_in - s * RING_GAP          # the dial
 		if face:
 			var fs := Vector2(face.get_width(), face.get_height())
-			var k := minf(size.x / fs.x, size.y / fs.y)
-			draw_texture_rect(face, Rect2(c - fs * k / 2.0, fs * k), false)
-			c = c - fs * k / 2.0 + face_c * k
-			r = fs.x * k / 2.0 - 2.0
+			var k := minf(r / (fs.x / 2.0), (s / 2.0 - s * RING_EDGE) / maxf(1.0, face_c.y))        # the dial fits the ring; the ornament fits the clock
+			r = fs.x * k / 2.0
+			r_in = r + s * RING_GAP
+			r_out = r_in + s * RING_W
+			_draw_ring(c, r_in, r_out)
+			draw_texture_rect(face, Rect2(c - face_c * k, fs * k), false)
+			r -= 2.0
 		else:
+			_draw_ring(c, r_in, r_out)
 			draw_circle(c, r, Color("8a6a3a"))
 			draw_circle(c, r * 0.9, Color("f4ead2"))
 			for i in range(12):
@@ -694,6 +815,35 @@ class ClockButton extends Control:
 		_hand(c, minute, r * 0.74, min_tex, 2.0, min_hub)
 		_hand(c, hour, r * 0.5, hour_tex, 3.5, hour_hub)
 		draw_circle(c, r * 0.07, Color("3a2e22"))
+
+	## The colour of a filled segment: green, the last three of the ring amber.
+	func _ring_color(i: int) -> Color:
+		return RING_AMBER if i >= RING_SEGS - 3 else RING_GREEN
+
+	## The 12 segments: a faint track, the filled ones green (the last three amber), the newest popping, the sweep putting them out one by one.
+	func _draw_ring(c: Vector2, r_in: float, r_out: float) -> void:
+		var lo := 0
+		var hi := _filled
+		if _sweep_pos >= 0.0:
+			lo = int(_sweep_pos)
+			hi = _sweep_n
+		var step := TAU / RING_SEGS
+		var pad := step * SEG_GAP / 2.0
+		for i in range(RING_SEGS):
+			var a0 := -PI / 2.0 + i * step + pad
+			var a1 := -PI / 2.0 + (i + 1) * step - pad
+			var lit := i >= lo and i < hi
+			var col := RING_TRACK
+			var w := r_out - r_in
+			var mid := (r_in + r_out) / 2.0
+			if lit:
+				col = _ring_color(i)
+				var boost := 0.0
+				if i == _pop_idx: boost = sin(PI * _pop_t)
+				elif i == lo and _sweep_pos >= 0.0: boost = 0.8           # the head of the sweep flashes as it goes out
+				col = col.lightened(0.45 * boost)
+				w *= 1.0 + 0.35 * boost
+			draw_arc(c, mid, a0, a1, 10, col, w, true)
 
 	func _hand(c: Vector2, ang: float, length: float, tex: Texture2D, width: float, hub: Vector2) -> void:
 		if tex:

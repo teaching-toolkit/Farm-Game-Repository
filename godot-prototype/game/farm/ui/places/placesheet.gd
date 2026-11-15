@@ -60,7 +60,6 @@ func sheet_spot(sid: String) -> void:
 		"library": M.market.part_library()
 		"storage": M.pantry.part_pantry()
 		"market": M.market.part_market()
-		"bookcart": M.market.part_bookcart()
 		"board": M.home.part_jobs()
 		"orchard": M.patches.part_area("orchard")
 		"greenhouse": M.patches.part_area("gh")

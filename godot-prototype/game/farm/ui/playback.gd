@@ -126,6 +126,7 @@ func _play_pets() -> void:
 		elif a.has("place"):
 			var pl := str(a["place"])
 			if pl == "field": where = M.feedback.patch_place("field", 0)
+			elif pl == "pen": where = M.feedback.pen_place(str(a.get("aid", "")))      # a pen chore: the animal's pen
 			else: where = M.feedback.act_place(pl)
 		if where != null: M.map.critters.visit(str(a["pet"]), where, str(a["emoji"]))
 

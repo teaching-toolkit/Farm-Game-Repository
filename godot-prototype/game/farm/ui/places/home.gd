@@ -76,6 +76,7 @@ func _job_board(pid: String) -> void:
 		var on: bool = j["id"] == cur
 		bx.add_child(UI.button("%s%s %s" % ["✔ " if on else "", j["emoji"], tr(str(j["name"]))], G.pets.choose.bind(pid, j["id"]), not on, UI.GREEN if on else UI.AMBER, 16, tr("✔ That is its job already.")))
 	M.content.add_child(bx)
+	_chore_group(pid, 0, cur)
 	if G.pets.level(pid) >= 3: _when_row(pid, 0, tr("WHEN"))
 	if G.pets.level(pid) >= 4:
 		var cur2: String = G.pets.second_job(pid)
@@ -86,6 +87,7 @@ func _job_board(pid: String) -> void:
 			var on2: bool = j["id"] == cur2
 			bx2.add_child(UI.button("%s%s %s" % ["✔ " if on2 else "", j["emoji"], tr(str(j["name"]))], G.pets.set_second_job.bind(pid, j["id"]), not on2, UI.GREEN if on2 else UI.AMBER, 15, tr("✔ That is its other job already.")))
 		M.content.add_child(bx2)
+		_chore_group(pid, 1, cur2)
 		_when_row(pid, 1, tr("WHEN"))
 	var last := G.pets.last(pid)
 	if not last.is_empty():
@@ -95,8 +97,24 @@ func _job_board(pid: String) -> void:
 			match str(last.get("why", "")):
 				"full": txt = tr("   Last question: 📦 the store is full")
 				"wait": txt = tr("   Last question: ⏸️ waiting for its WHEN")
+				"tired": txt = tr("   Last question: 💤 waiting for you to rest")
 				_: txt = tr("   Last question: 💤 nothing to do")
 		M.content.add_child(UI.label(txt, 14, UI.MUTED, true))
+
+## The group "⚡ Helps with" under a rule's blessings: the pet's chores whose place stands, as buttons of the same look and the same ✔
+## (rule 0 = the first rule, 1 = the second). No number, no cost. Left out when the pet has no chore to offer yet.
+func _chore_group(pid: String, rule: int, cur: String) -> void:
+	var chores: Array = G.pets.chore_jobs(pid)
+	if chores.is_empty(): return
+	var bx := HFlowContainer.new()
+	bx.add_theme_constant_override("h_separation", 6)
+	bx.add_child(UI.label(tr("⚡ Helps with"), 15, UI.MUTED))
+	for j in chores:
+		var on: bool = j["id"] == cur
+		var pick: Callable = G.pets.choose.bind(pid, j["id"]) if rule == 0 else G.pets.set_second_job.bind(pid, j["id"])
+		var why := tr("✔ That is its job already.") if rule == 0 else tr("✔ That is its other job already.")
+		bx.add_child(UI.button("%s%s %s" % ["✔ " if on else "", j["emoji"], tr(str(j["name"]))], pick, not on, UI.GREEN if on else UI.AMBER, 16 if rule == 0 else 15, why))
+	M.content.add_child(bx)
 
 ## A WHEN card (level 3 and 4): tap the card to change it (the last choice is always), − and + set the number.
 func _when_row(pid: String, rule: int, label: String) -> void:
@@ -113,7 +131,9 @@ func _when_row(pid: String, rule: int, label: String) -> void:
 	if cur != "":
 		var step := float(c.get("step", 1))
 		row.add_child(UI.soft_button("−", G.pets.set_when.bind(pid, rule, cur, float(w["n"]) - step), float(w["n"]) - step >= float(c["min"]) - 0.001, 18, tr("That is as low as it goes.")))
-		row.add_child(UI.soft_button("+", G.pets.set_when.bind(pid, rule, cur, float(w["n"]) + step), float(w["n"]) + step <= float(c["max"]) + 0.001, 18, tr("That is as high as it goes.")))
+		var top := float(c["max"])
+		if cur == "energy": top = minf(top, G.needs.energy_max())      # the energy card stops at the bar's real size
+		row.add_child(UI.soft_button("+", G.pets.set_when.bind(pid, rule, cur, float(w["n"]) + step), float(w["n"]) + step <= top + 0.001, 18, tr("That is as high as it goes.")))
 	M.content.add_child(row)
 
 func part_jobs() -> void:

@@ -29,15 +29,32 @@ priority,chapter,file,size,what,prompt,status
 1,1,assets/map/village_sign.png,512 max,Sign to the village (market place: where the trip starts),wooden signpost with a blank board; the arrow is painted on afterwards by tools/make_village_sign.gd (from deco/signpost.png),done
 1,1,assets/map/well_1.png,256 max,Old bucket (water at the start),old dented tin bucket with a wire handle,done
 1,1,assets/map/workbench_empty.png,512 max,Empty workbench (what is made lies on it),rustic wooden workbench with an empty top,done
+1,1,assets/piles/boulder_1.png,256 max,"Pile of boulders on the ground, size 1 of 4","a pile of boulders, size 1 of 4 (1 = a few, 4 = a big heap), on the ground",done
+1,1,assets/piles/boulder_2.png,256 max,"Pile of boulders on the ground, size 2 of 4","a pile of boulders, size 2 of 4 (1 = a few, 4 = a big heap), on the ground",done
+1,1,assets/piles/boulder_3.png,256 max,"Pile of boulders on the ground, size 3 of 4","a pile of boulders, size 3 of 4 (1 = a few, 4 = a big heap), on the ground",done
+1,1,assets/piles/boulder_4.png,256 max,"Pile of boulders on the ground, size 4 of 4","a pile of boulders, size 4 of 4 (1 = a few, 4 = a big heap), on the ground",done
+1,1,assets/piles/stick_1.png,256 max,"Pile of sticks on the ground, size 1 of 4","a pile of sticks, size 1 of 4 (1 = a few, 4 = a big heap), on the ground",done
+1,1,assets/piles/stick_2.png,256 max,"Pile of sticks on the ground, size 2 of 4","a pile of sticks, size 2 of 4 (1 = a few, 4 = a big heap), on the ground",done
+1,1,assets/piles/stick_3.png,256 max,"Pile of sticks on the ground, size 3 of 4","a pile of sticks, size 3 of 4 (1 = a few, 4 = a big heap), on the ground",done
+1,1,assets/piles/stick_4.png,256 max,"Pile of sticks on the ground, size 4 of 4","a pile of sticks, size 4 of 4 (1 = a few, 4 = a big heap), on the ground",done
+1,1,assets/piles/stone_1.png,256 max,"Pile of stones on the ground, size 1 of 4","a pile of stones, size 1 of 4 (1 = a few, 4 = a big heap), on the ground",done
+1,1,assets/piles/stone_2.png,256 max,"Pile of stones on the ground, size 2 of 4","a pile of stones, size 2 of 4 (1 = a few, 4 = a big heap), on the ground",done
+1,1,assets/piles/stone_3.png,256 max,"Pile of stones on the ground, size 3 of 4","a pile of stones, size 3 of 4 (1 = a few, 4 = a big heap), on the ground",done
+1,1,assets/piles/stone_4.png,256 max,"Pile of stones on the ground, size 4 of 4","a pile of stones, size 4 of 4 (1 = a few, 4 = a big heap), on the ground",done
 1,1,assets/plots/pond_wild.png,512 max,Wild overgrown pond (before it is dug out),"small wild pond lying flat: murky water, reeds, duckweed, lily pads, muddy banks",done
 1,1,assets/ruins/stone_wall.png,512 max,Ruined stone wall side (locked stone buildings),"ruined low fieldstone wall segment, one straight side of an isometric diamond, lower left to upper right",done
 1,1,assets/ruins/wood_wall.png,512 max,Ruined wooden wall side (locked wooden buildings),"ruined burnt plank wall segment, one straight side of an isometric diamond, lower left to upper right",done
+1,1,assets/square/square.png,1920x1080 painted scene,"Village square backdrop (same painting as the 'square' window: draw once, use for both)","a small old village square with cobbles, a stone well, market stalls with striped awnings, half-timbered houses around, empty in front so stalls can be placed on top",missing
 1,1,assets/tiles/grass.png,512x512 seamless,Grass ground,"seamless tileable short meadow grass seen from above, no objects",done
 1,1,assets/tiles/overgrown.png,256x256 seamless,Wild growth on patches not cleared yet (drawn as a diamond),seamless tileable tangle of weeds and wild grass seen from above,done
 1,1,assets/tiles/path.png,512x512 seamless,Village road,seamless tileable sandy dirt path seen from above,done
 1,1,assets/ui/clock_face.png,512 max,Time Quiz button (old clock),antique clock face without hands / one clock hand pointing up,done
 1,1,assets/ui/clock_hour.png,512 max,Time Quiz button (old clock),antique clock face without hands / one clock hand pointing up,done
 1,1,assets/ui/clock_minute.png,512 max,Time Quiz button (old clock),antique clock face without hands / one clock hand pointing up,done
+1,1,assets/ui/coin_gold.png,128 max,Gold coin,"one gold coin seen from the front, shiny",done
+1,1,assets/ui/diamond.png,128 max,Diamond,one cut blue diamond,done
+1,1,assets/ui/stale_flower.png,128 max,Mark: going stale (flowers),one wilted drooping flower,done
+1,1,assets/ui/stale_leaf.png,128 max,Mark: going stale (leafy things),one wilted brown leaf,done
 1,1,assets/windows/bag.webp,768x512 full-bleed (window style),"Window: The bag (what you take to the village) — A woven bag half packed by the gate: carrots, a bowl of porridge wrapped in cloth, a clay pot, a wicker basket on top.","a woven shoulder bag standing half packed by a farm gate: carrots, a clay pot, a small bundle wrapped in cloth and a wicker basket peeking out, the road to the village beyond",missing
 1,1,assets/windows/field.webp,768x512 full-bleed (window style),"Window: The fields (the whole field, clearing, new land) — The fields seen from their edge: dug patches in rows, one with sprouts, one still overgrown with weeds and stones, a stick fence and a scarecrow. Work and growth side by side.","farm fields seen from their edge: rows of square dug patches of brown soil, one patch with small green sprouts, one still overgrown with weeds, stones and a stump, a rustic stick fence and a friendly straw scarecrow, a wooden rake leaning on the fence",missing
 1,1,assets/windows/forest.webp,768x512 full-bleed (window style),"Window: The forest edge (gathering, the woodpile) — Where the meadow meets the trees: fallen sticks, loose stones, a stump, tall weeds with fibre, a woodpile stacked against a tree. Everything you can gather is visible.","the sunny edge of a forest where a meadow meets tall pine and oak trees: fallen sticks and branches on the ground, loose grey stones, an old tree stump, a clump of tall wild weeds, a small stacked woodpile against a tree, a patch of muddy clay bank",missing
@@ -54,12 +71,17 @@ priority,chapter,file,size,what,prompt,status
 1,1,assets/windows/storage.webp,768x512 full-bleed (window style),"Window: The store (Storage: basket, log shed, warehouse) — A tidy farm store corner full of good things, without showing one building stage: baskets, sacks, crocks and crates, a few carrots, a jar of honey, a coil of rope, sticks and stones in neat piles.","a cosy farm storage corner against a wooden wall: woven baskets, burlap sacks, clay crocks and small crates in neat rows on the ground and on a low shelf, a few carrots and eggs in a basket, a coil of rope, a small pile of sticks and a few stones, warm light",missing
 1,1,assets/windows/well.webp,768x512 full-bleed (window style),"Window: The well (water) — Water to carry: a well with a bucket on a rope, a full bucket beside it, splashes. Fits the old bucket as well as the pump.","an old stone well with a wooden roof and a bucket on a rope, a second wooden bucket full of clear water on the ground beside it, a few splashes, a wooden yoke leaning on the well, wet stones and green moss",missing
 1,1,assets/windows/workshop.webp,768x512 full-bleed (window style),"Window: The workshop (workbench, carpenter's shed, smithy) — A workbench with tools and things half made: rope, a stone hammer, a basket being woven, wood shavings. Making things happens here.","a sturdy wooden workbench under a small roof: a coil of rope, a stone hammer, a flint knife, a half-woven wicker basket, a few planks and sticks, curly wood shavings on the ground, tools hanging on pegs",missing
+2,1,assets/construction/stage_1.png,512 max,"Building site, stage 1 of 5","a building site, stage 1 of 5: from marked-out ground and a few stakes (1) to scaffolding almost finished (5)",done
+2,1,assets/construction/stage_2.png,512 max,"Building site, stage 2 of 5","a building site, stage 2 of 5: from marked-out ground and a few stakes (1) to scaffolding almost finished (5)",done
+2,1,assets/construction/stage_3.png,512 max,"Building site, stage 3 of 5","a building site, stage 3 of 5: from marked-out ground and a few stakes (1) to scaffolding almost finished (5)",done
+2,1,assets/construction/stage_4.png,512 max,"Building site, stage 4 of 5","a building site, stage 4 of 5: from marked-out ground and a few stakes (1) to scaffolding almost finished (5)",done
+2,1,assets/construction/stage_5.png,512 max,"Building site, stage 5 of 5","a building site, stage 5 of 5: from marked-out ground and a few stakes (1) to scaffolding almost finished (5)",done
 2,1,assets/crops/crop_carrot.png,256 max,Carrot (one plant),"one ripe carrot plant growing out of the ground, no pot",done
 2,1,assets/crops/crop_clover.png,256 max,Clover (one plant),"one ripe clover plant growing out of the ground, no pot",done
-2,1,assets/crops/crop_hay.png,256 max,Meadow hay (one plant),"one ripe meadow hay plant growing out of the ground, no pot",missing
+2,1,assets/crops/crop_hay.png,256 max,Meadow hay (one plant),"one ripe meadow hay plant growing out of the ground, no pot",done
 2,1,assets/crops/crop_onion.png,256 max,Onion (one plant),"one ripe onion plant growing out of the ground, no pot",done
 2,1,assets/crops/crop_wheat.png,256 max,Wheat (one plant),"one ripe wheat plant growing out of the ground, no pot",done
-2,1,assets/crops/crop_winter_wheat.png,256 max,Winter wheat (one plant),"one ripe winter wheat plant growing out of the ground, no pot",missing
+2,1,assets/crops/crop_winter_wheat.png,256 max,Winter wheat (one plant),"one ripe winter wheat plant growing out of the ground, no pot",done
 2,1,assets/deco/debris_1.png,256 max,"Stones, twigs, roots on half-cleared patches","small stone, twig or clod",done
 2,1,assets/deco/debris_2.png,256 max,"Stones, twigs, roots on half-cleared patches","small stone, twig or clod",done
 2,1,assets/deco/debris_3.png,256 max,"Stones, twigs, roots on half-cleared patches","small stone, twig or clod",done
@@ -155,6 +177,23 @@ priority,chapter,file,size,what,prompt,status
 3,1,assets/friends/sq_lost_goat.png,256 max,Friend: Granny Maud (postcard stamp),"head-and-shoulders portrait of granny maud, friendly, looking at the viewer, in a round frame",done
 3,1,assets/friends/sq_miller_basket.png,256 max,"Friend: Ella, the miller's daughter (postcard stamp)","head-and-shoulders portrait of ella, the miller's daughter, friendly, looking at the viewer, in a round frame",done
 3,1,assets/friends/sq_twins_porridge.png,256 max,"Friend: Lotte and Linus, the twins (postcard stamp)","head-and-shoulders portrait of lotte and linus, the twins, friendly, looking at the viewer, in a round frame",done
+3,1,assets/helpers/brass_bell.png,256 max,Celebration picture: Ella's brass bell (helper; sheet helper-6),ella's brass bell: A little bell on the field gate: it jingles in the wind and the birds don't like it.,done
+3,1,assets/helpers/bucket.png,256 max,Celebration picture: Watering Scoop (tool; sheet tool-1),watering scoop: Waters the plants. Plants use their full water cost.,done
+3,1,assets/helpers/carrying_yoke.png,256 max,Celebration picture: Carrying Yoke (helper; sheet helper-1),"carrying yoke: Two buckets on a pole: +2 💧 every trip to the pond, and planting is easier.",missing
+3,1,assets/helpers/cooking_tripod.png,256 max,Celebration picture: Cooking Tripod (helper; sheet helper-7),cooking tripod: Hangs the pot right in the flames: the campfire uses 30% less fuel. (Choice slot: only one item per station works at a time — swap any time.),missing
+3,1,assets/helpers/fiber_bag.png,256 max,Celebration picture: Woven Bag (gear; sheet gear-2),"woven bag: Carry more per trip: gathering −10%, harvesting −5%.",done
+3,1,assets/helpers/fiber_mitts.png,256 max,Celebration picture: Fibre Mitts (gear; sheet gear-1),fibre mitts: No more thistle stings: weeding −10% energy.,done
+3,1,assets/helpers/fire_ring.png,256 max,Celebration picture: Stone Fire Ring (helper; sheet helper-1),"stone fire ring: Holds the heat: cooking −15% energy, and the campfire burns 20% less wood.",missing
+3,1,assets/helpers/gathering_basket.png,256 max,Celebration picture: Gathering Basket (helper; sheet helper-1),"gathering basket: Carry more per trip: gathering takes 2 loads per tap (2× energy), and −25% energy.",missing
+3,1,assets/helpers/hand_cart.png,256 max,Celebration picture: Hand Cart (helper; sheet helper-3),"hand cart: Two wheels on a real axle: the bag holds twice as much on the way to the village, and harvesting costs less energy.",missing
+3,1,assets/helpers/lucky_horseshoe.png,256 max,Celebration picture: Tom's lucky horseshoe (helper; sheet helper-6),tom's lucky horseshoe: Little Tom found an old horseshoe and nailed it over your door. Lucky things happen a little more often.,done
+3,1,assets/helpers/nest_boxes.png,256 max,Celebration picture: Nest Boxes (helper; sheet helper-1),nest boxes: Calm hens lay more: +25% eggs.,missing
+3,1,assets/helpers/perches.png,256 max,Celebration picture: Roosting Perches (helper; sheet helper-8),roosting perches: Hens sleep up high: 30% less muck in the coop. (Choice slot: only one item per station works at a time — swap any time.),missing
+3,1,assets/helpers/straw_bed.png,256 max,Celebration picture: Straw Bed (helper; sheet helper-1),straw bed: Sleep better: +1 energy per Rest answer.,missing
+3,1,assets/helpers/straw_hat.png,256 max,Celebration picture: Straw Hat (gear; sheet gear-1),straw hat: Shade from the sun: energy max +2.,done
+3,1,assets/helpers/straw_pillow.png,256 max,Celebration picture: Straw Pillow (gear; sheet gear-3),straw pillow: Better than a rolled-up coat: +0.5 energy per Rest answer.,done
+3,1,assets/helpers/straw_sandals.png,256 max,Celebration picture: Straw Sandals (gear; sheet gear-1),straw sandals: Your feet stop hurting: walking jobs −5% energy.,done
+3,1,assets/helpers/whetstone.png,256 max,Celebration picture: Whetstone (helper; sheet helper-1),"whetstone: Sharp blades: cutting and wood work −10% energy, and polish wears off a quarter slower.",done
 3,1,assets/pests/bird.png,128 max,Pest on a patch: bird,"small sparrow pecking, whole body, side view",done
 3,1,assets/pests/caterpillar.png,128 max,Pest on a patch: caterpillar,"green caterpillar, whole body, side view",done
 3,1,assets/pests/rabbit.png,128 max,Pest on a patch: rabbit,"small wild rabbit nibbling, whole body, side view",done
@@ -168,7 +207,7 @@ priority,chapter,file,size,what,prompt,status
 3,2,assets/crops/crop_apple.png,256 max,Apple Tree (one plant),"one ripe apple tree plant growing out of the ground, no pot",done
 3,2,assets/crops/crop_beans.png,256 max,Beans (one plant),"one ripe beans plant growing out of the ground, no pot",done
 3,2,assets/crops/crop_beet.png,256 max,Beet (one plant),"one ripe beet plant growing out of the ground, no pot",done
-3,2,assets/crops/crop_kale.png,256 max,Winter kale (one plant),"one ripe winter kale plant growing out of the ground, no pot",missing
+3,2,assets/crops/crop_kale.png,256 max,Winter kale (one plant),"one ripe winter kale plant growing out of the ground, no pot",done
 3,2,assets/crops/crop_lettuce.png,256 max,Lettuce (one plant),"one ripe lettuce plant growing out of the ground, no pot",done
 3,2,assets/crops/crop_potato.png,256 max,Potato (one plant),"one ripe potato plant growing out of the ground, no pot",done
 3,2,assets/crops/crop_tomato.png,256 max,Tomato (one plant),"one ripe tomato plant growing out of the ground, no pot",done
@@ -209,9 +248,29 @@ priority,chapter,file,size,what,prompt,status
 4,1,assets/album/sq_lost_goat.png,512 max,Album picture: Granny Maud's goat ran off,"Granny Maud laughing, hugging her muddy goat on the rope you found it with",done
 4,1,assets/album/sq_miller_basket.png,512 max,Album picture: The miller's daughter needs a basket,Ella twirling with your new basket full of flowers,done
 4,1,assets/album/sq_twins_porridge.png,512 max,Album picture: Porridge for the hungry twins,"The twins beaming, each holding a bowl of your porridge (some on their noses)",done
+4,1,assets/cards/k_ash.png,256 max,Knowledge card picture: Ash feeds the soil (knowledge; sheet cards-2),"small picture for a book page about: ash feeds the soil (wood ash from a fire contains minerals (like potassium) that plants need), one clear thing, no text",missing
+4,1,assets/cards/k_birds.png,256 max,"Knowledge card picture: Birds, seeds and scarecrows (knowledge; sheet cards-2)","small picture for a book page about: birds, seeds and scarecrows (birds love freshly sown seeds and rabbits nibble young plants), one clear thing, no text",missing
+4,1,assets/cards/k_chickens.png,256 max,Knowledge card picture: Keeping hens (knowledge; sheet cards-2),"small picture for a book page about: keeping hens (hens eat grain and seeds, drink water every day, need a dry coop with straw to sleep safe from foxes, and lay eggs), one clear thing, no text",missing
+4,1,assets/cards/k_fire.png,256 max,Knowledge card picture: A safe little fire (knowledge; sheet cards-1),"small picture for a book page about: a safe little fire (fire needs three things: fuel, air and heat (fire triangle)), one clear thing, no text",missing
+4,1,assets/cards/k_grinding.png,256 max,Knowledge card picture: Grinding grain into flour (knowledge; sheet cards-2),"small picture for a book page about: grinding grain into flour (flour is grain ground into powder between two stones (a quern, later a mill)), one clear thing, no text",missing
+4,1,assets/cards/k_hay.png,256 max,Knowledge card picture: Meadow hay (knowledge; sheet cards-10),"small picture for a book page about: meadow hay (grass, cut and dried, keeps for the whole winter), one clear thing, no text",missing
+4,1,assets/cards/k_market.png,256 max,Knowledge card picture: Fair prices (knowledge; sheet cards-2),"small picture for a book page about: fair prices (buying and selling: things that take more work or are rare cost more), one clear thing, no text",missing
+4,1,assets/cards/k_roots.png,256 max,Knowledge card picture: Roots you can eat (knowledge; sheet cards-1),"small picture for a book page about: roots you can eat (carrots and onions are plants whose roots/bulbs we eat), one clear thing, no text",missing
+4,1,assets/cards/k_rope.png,256 max,Knowledge card picture: Twisting rope from fibres (knowledge; sheet cards-1),"small picture for a book page about: twisting rope from fibres (rope is made by twisting plant fibres (from tough weed stems, flax, or straw) into strands and twisting the strands together the other way so the rope does not unwind), one clear thing, no text",missing
+4,1,assets/cards/k_seeds.png,256 max,Knowledge card picture: Saving seed (knowledge; sheet cards-10),"small picture for a book page about: saving seed (a grain you keep back is a seed you can sow again), one clear thing, no text",missing
+4,1,assets/cards/k_soil.png,256 max,"Knowledge card picture: Loose soil, happy roots (knowledge; sheet cards-1)","small picture for a book page about: loose soil, happy roots (roots need air and water in the soil), one clear thing, no text",missing
+4,1,assets/cards/k_tools.png,256 max,Knowledge card picture: Stone tools (knowledge; sheet cards-1),"small picture for a book page about: stone tools (the first tools: a sharp flake of stone becomes a knife), one clear thing, no text",missing
+4,1,assets/cards/k_water.png,256 max,Knowledge card picture: Water and the well (knowledge; sheet cards-1),"small picture for a book page about: water and the well (a well reaches water stored underground (groundwater) that came from rain soaking into the soil), one clear thing, no text",missing
+4,1,assets/cards/k_weeds.png,256 max,Knowledge card picture: Why weeds come back (knowledge; sheet cards-1),"small picture for a book page about: why weeds come back (weeds are wild plants that grow where we do not want them), one clear thing, no text",missing
+4,1,assets/cards/k_wheat.png,256 max,Knowledge card picture: Growing wheat (knowledge; sheet cards-1),"small picture for a book page about: growing wheat (opening the book), one clear thing, no text",missing
+4,1,assets/cards/k_winter_wheat.png,256 max,Knowledge card picture: Winter wheat (knowledge; sheet cards-10),"small picture for a book page about: winter wheat (some wheat is sown in autumn and ripens after the winter), one clear thing, no text",missing
 4,1,assets/interior/campfire.png,384 max,"Campfire (inside, kitchen)",campfire: First build. With the Tin Pot: porridge and soup.,done
+4,1,assets/interior/chopping_block.png,384 max,Station picture: Chopping Block (station; sheet interior-1),chopping block: A stump to cut on. Salads and bowls (needs a knife).,done
+4,1,assets/interior/clay_pit.png,384 max,Station picture: Clay Pit (station; sheet interior-3),clay pit: Always open: dig clay in the bank of the pond with a shovel. The clay comes at once; the pit fills up again slowly.,done
 4,1,assets/interior/library_box.png,384 max,"Book box in the tent (inside, library)",book box in the tent: Holds 2 books. The Little Farm Book was already in it.,done
+4,1,assets/interior/quern.png,384 max,Station picture: Hand Quern (station; sheet interior-1),hand quern: Two flat stones from the rocky patch grind wheat into flour. Hard work (2 ⚡).,done
 4,1,assets/interior/straw_bed.png,384 max,"Straw Bed (inside, living)",straw bed: Sleep better: +1 energy per Rest answer.,done
+4,1,assets/interior/wild_edge.png,384 max,Station picture: Field Edge & Woods (station; sheet interior-3),"field edge & woods: Always open: gather sticks, pick stones, pull wild weeds. What you gather comes at once; each spot refills after a Time Quiz question. Costs energy, never coins.",done
 4,1,assets/interior/workbench.png,384 max,"Workbench (inside, ws_bench)","workbench: Rope, stone tools, hutch, scarecrow.",done
 4,2,assets/animals/animal_bees.png,256 max,Bees (straw skeps),"bees (straw skeps), whole body, side view",done
 4,2,assets/animals/animal_cow.png,256 max,Cows,"cows, whole body, side view",done
@@ -221,10 +280,44 @@ priority,chapter,file,size,what,prompt,status
 4,2,assets/friends/sq_sick_neighbour.png,256 max,Friend: Old Jan (postcard stamp),"head-and-shoulders portrait of old jan, friendly, looking at the viewer, in a round frame",done
 4,2,assets/friends/sq_stray_kitten.png,256 max,Friend: Ginger the cat (postcard stamp),"head-and-shoulders portrait of ginger the cat, friendly, looking at the viewer, in a round frame",done
 4,2,assets/friends/sq_washing_line.png,256 max,Friend: Hilde the washerwoman (postcard stamp),"head-and-shoulders portrait of hilde the washerwoman, friendly, looking at the viewer, in a round frame",done
+4,2,assets/helpers/barn_cat.png,256 max,Celebration picture: Ginger the farm cat (helper; sheet helper-6),"ginger the farm cat: The kitten stayed! She prowls round the fields, chases off birds and mice — and naps a lot. Fewer pests come, and fewer of them stay.",missing
+4,2,assets/helpers/bee_smoker.png,256 max,Celebration picture: Bee Smoker (helper; sheet helper-2),bee smoker: Calm bees: +25% honeycomb.,missing
+4,2,assets/helpers/bird_feeder.png,256 max,Celebration picture: Otto's bird feeder (helper; sheet helper-6),otto's bird feeder: Songbirds come to the feeder and eat the caterpillars on your plants.,done
+4,2,assets/helpers/clay_flask.png,256 max,Celebration picture: Clay Water Flask (gear; sheet gear-2),clay water flask: A sip between jobs: +0.5 energy per Rest answer.,done
+4,2,assets/helpers/compost_fork.png,256 max,Celebration picture: Compost Fork (helper; sheet helper-2),compost fork: Turned heaps rot faster: compost −25% time.,missing
+4,2,assets/helpers/dough_trough.png,256 max,Celebration picture: Dough Trough & Rolling Pin (helper; sheet helper-1),dough trough & rolling pin: Prep work −15% energy.,missing
+4,2,assets/helpers/drain_gutter.png,256 max,Celebration picture: Barn Drain Gutter (helper; sheet helper-8),barn drain gutter: A stone gutter carries the wet away: 30% less muck in the barn. (Choice slot: only one item per station works at a time — swap any time.),missing
+4,2,assets/helpers/flower_strip.png,256 max,Celebration picture: Wildflower Strip (helper; sheet helper-8),"wildflower strip: Flowers all season: +15% honeycomb, a few pests fewer. (Choice slot: only one item per station works at a time — swap any time.)",missing
+4,2,assets/helpers/garden_bench.png,256 max,Celebration picture: Bench by the Pond (helper; sheet helper-5),bench by the pond: A place to sit and breathe: the farm feels less busy.,missing
+4,2,assets/helpers/glaze_shelf.png,256 max,Celebration picture: Extra Kiln Shelf (helper; sheet helper-7),extra kiln shelf: One more batch in the kiln. (Choice slot: only one item per station works at a time — swap any time.),missing
+4,2,assets/helpers/hay_rack.png,256 max,Celebration picture: Hay Rack (helper; sheet helper-2),hay rack: Less trampled fodder: cows and sheep eat 15% less.,missing
+4,2,assets/helpers/hearth.png,256 max,Celebration picture: Brick Hearth (helper; sheet helper-2),"brick hearth: A warm room: energy max +5, and the house needs 30% less firewood in winter.",missing
+4,2,assets/helpers/jans_donkey.png,256 max,Celebration picture: Old Jan's donkey (helper; sheet helper-6),old jan's donkey: Old Jan lends you his donkey. It carries the heavy part: the walk to the village costs less energy.,missing
+4,2,assets/helpers/lavender_bunch.png,256 max,Celebration picture: Wren's lavender (helper; sheet helper-6),wren's lavender: Healer Wren's dried lavender by the beds: slugs and caterpillars don't like the smell.,done
+4,2,assets/helpers/milking_stool.png,256 max,Celebration picture: Milking Stool & Pail (helper; sheet helper-2),milking stool & pail: Animal work −20% energy.,missing
+4,2,assets/helpers/oven_tray.png,256 max,Celebration picture: Second Baking Tray (helper; sheet helper-7),second baking tray: Bake two batches at once. (Choice slot: only one item per station works at a time — swap any time.),missing
+4,2,assets/helpers/pot_shelf.png,256 max,Celebration picture: Pot Shelf & Clay Pots (helper; sheet helper-1),pot shelf & clay pots: Everything in reach: cooking −15% energy.,missing
+4,2,assets/helpers/salt_lick.png,256 max,Celebration picture: Salt Lick (helper; sheet helper-2),salt lick: Healthy cows: +20% milk and manure.,missing
+4,2,assets/helpers/scaffolding.png,256 max,Celebration picture: Scaffolding (helper; sheet helper-2),scaffolding: Building −15% energy.,missing
+4,2,assets/helpers/tall_chimney.png,256 max,Celebration picture: Tall Kiln Chimney (helper; sheet helper-7),tall kiln chimney: Better draught: the kiln uses 30% less fuel. (Choice slot: only one item per station works at a time — swap any time.),missing
+4,2,assets/helpers/tool_rack.png,256 max,Celebration picture: Tool Rack (helper; sheet helper-3),"tool rack: No searching: crafting −10%, field work −5% energy.",missing
+4,2,assets/helpers/water_trough.png,256 max,Celebration picture: Water Trough (helper; sheet helper-2),water trough: No spilled buckets: animals use 20% less water.,missing
+4,2,assets/helpers/wheelbarrow.png,256 max,Celebration picture: Wheelbarrow (tool; sheet tool-1),wheelbarrow: Carry a whole harvest at once: harvesting costs less energy.,done
+4,2,assets/helpers/wicker_pack.png,256 max,Celebration picture: Wicker Pack Basket (gear; sheet gear-2),"wicker pack basket: On your back, hands free: +1 load per gathering tap, gathering −15%, harvesting −10%.",done
+4,2,assets/helpers/willow_whistle.png,256 max,Celebration picture: Willow Whistle (helper; sheet helper-5),willow whistle: A little tune after work: it makes you feel like playing.,missing
+4,2,assets/helpers/wind_chime.png,256 max,Celebration picture: Hilde's wind chime (helper; sheet helper-6),hilde's wind chime: Shells and sticks that clatter in the wind: rabbits stay away.,done
+4,2,assets/helpers/wooden_clogs.png,256 max,Celebration picture: Wooden Clogs (gear; sheet gear-1),wooden clogs: Dry feet in the mud: walking jobs −10% energy.,done
+4,2,assets/helpers/worm_starter.png,256 max,Celebration picture: Worm Starter (helper; sheet helper-8),worm starter: A handful of worms in the heap: +15% compost. (Choice slot: only one item per station works at a time — swap any time.),missing
 4,2,assets/interior/carpenter_bench.png,384 max,"Carpenter's Bench (inside, ws_bench)",carpenter's bench: Split logs into planks with the axe (1 log → 2 planks).,done
+4,2,assets/interior/churn.png,384 max,Station picture: Butter Churn (station; sheet interior-1),butter churn:,done
+4,2,assets/interior/compost_bin.png,384 max,Station picture: Compost Bin (station; sheet interior-1),"compost bin: Turns straw, fiber and manure into compost over a few questions.",done
+4,2,assets/interior/compost_bin_2.png,384 max,Station picture: Compost Heap (station; sheet interior-1),compost heap: Four batches at once.,done
 4,2,assets/interior/hay_rack.png,384 max,"Hay Rack (inside, barn_hay)",hay rack: Less trampled fodder: cows and sheep eat 15% less.,done
 4,2,assets/interior/kiln.png,384 max,"Kiln (inside, ws_fire)","kiln: Fires bricks and jars, burns charcoal.",done
 4,2,assets/interior/library_shelf.png,384 max,"Bookshelf (inside, library)",bookshelf: Holds 5 books. Reading 10% faster. Needs 5 cards learned.,done
+4,2,assets/interior/oven_1.png,384 max,Station picture: Oven (station; sheet interior-1),"oven: Bread, baked potatoes.",done
+4,2,assets/interior/pond_station.png,384 max,Station picture: Pond bank (station; sheet interior-2),pond bank: Dig clay; soak (ret) flax.,done
+4,2,assets/interior/prep_table_1.png,384 max,Station picture: Prep Table (station; sheet interior-1),"prep table: Replaces the chopping block. Salads, platters, dough.",done
 4,2,assets/interior/stove_1.png,384 max,"Stove (inside, kitchen)","stove: Replaces the campfire. Soups, stews, pancakes.",done
 4,2,assets/interior/tool_rack.png,384 max,"Tool Rack (inside, ws_tools)","tool rack: No searching: crafting −10%, field work −5% energy.",done
 4,2,assets/interior/water_trough.png,384 max,"Water Trough (inside, barn_hay)",water trough: No spilled buckets: animals use 20% less water.,done
@@ -256,20 +349,20 @@ priority,chapter,file,size,what,prompt,status
 4,3,assets/windows/ws_fire.webp,768x512 full-bleed (window style),"Window: The kiln and the forge — A glowing forge with an anvil, a kiln with pots, charcoal.","a glowing brick forge with an anvil and tongs in front, a clay kiln with fired pots beside it, a pile of charcoal, warm orange glow",missing
 4,3,assets/windows/ws_loom.webp,768x512 full-bleed (window style),"Window: Spinning and weaving — A spinning wheel, a loom with half-woven cloth, balls of yarn in colours.","a wooden spinning wheel and a loom with half-woven cloth, baskets of colourful balls of yarn and a skein of linen thread",missing
 5,1,assets/items/ash.png,128 max,Item: Wood Ash,"wood ash, single object icon",done
-5,1,assets/items/axle.png,128 max,Item: Axle,"axle, single object icon",missing
-5,1,assets/items/boulder.png,128 max,Item: Big rock,"big rock, single object icon",missing
+5,1,assets/items/axle.png,128 max,Item: Axle [emoji problem: shown as a gear; sheet items-emoji-2],"an axle: a straight round wooden rod with a wheel hub at each end, NOT a gear, single object icon",done
+5,1,assets/items/boulder.png,128 max,Item: Big rock [emoji problem: shown as mountains; sheet items-emoji-1],"one big grey boulder, a round lump of rock the size of a pumpkin crate, NOT a mountain, single object icon",done
 5,1,assets/items/bunny_bowl.png,128 max,Item: Carrot-Clover Bowl,"carrot-clover bowl, single object icon",done
 5,1,assets/items/carrot.png,128 max,Item: Carrot,"carrot, single object icon",done
-5,1,assets/items/clay.png,128 max,Item: Clay,"clay, single object icon",done
-5,1,assets/items/clay_pot.png,128 max,Item: Clay Pot,"clay pot, single object icon",missing
+5,1,assets/items/clay.png,128 max,Item: Clay [emoji problem: a brown dot; sheet items-emoji-1],"a lump of wet grey-brown clay with finger marks, single object icon",done
+5,1,assets/items/clay_pot.png,128 max,Item: Clay Pot,"clay pot, single object icon",done
 5,1,assets/items/clover.png,128 max,Item: Clover,"clover, single object icon",done
 5,1,assets/items/egg.png,128 max,Item: Egg,"egg, single object icon",done
 5,1,assets/items/feather.png,128 max,Item: Feather,"feather, single object icon",done
 5,1,assets/items/feed_mash.png,128 max,Item: Feed Mash,"feed mash, single object icon",done
 5,1,assets/items/fiber.png,128 max,Item: Plant Fiber,"plant fiber, single object icon",done
 5,1,assets/items/flatbread.png,128 max,Item: Flatbread,"flatbread, single object icon",done
-5,1,assets/items/flour.png,128 max,Item: Flour,"flour, single object icon",done
-5,1,assets/items/hay.png,128 max,Item: Hay,"hay, single object icon",missing
+5,1,assets/items/flour.png,128 max,Item: Flour [emoji problem: same wheat ear as the grain; sheet items-emoji-2],"a small cloth sack of white flour, loosely open, a little white dust, NOT a wheat ear, single object icon",done
+5,1,assets/items/hay.png,128 max,Item: Hay,"hay, single object icon",done
 5,1,assets/items/log.png,128 max,Item: Log,"log, single object icon",done
 5,1,assets/items/manure.png,128 max,Item: Manure,"manure, single object icon",done
 5,1,assets/items/onion.png,128 max,Item: Onion,"onion, single object icon",done
@@ -281,18 +374,46 @@ priority,chapter,file,size,what,prompt,status
 5,1,assets/items/salt.png,128 max,Item: Salt,"salt, single object icon",done
 5,1,assets/items/stick.png,128 max,Item: Stick,"stick, single object icon",done
 5,1,assets/items/stone.png,128 max,Item: Small stone,"small stone, single object icon",done
-5,1,assets/items/straw.png,128 max,Item: Straw,"straw, single object icon",done
+5,1,assets/items/straw.png,128 max,Item: Straw [emoji problem: same wheat ear as the grain; sheet items-emoji-1],"a golden bundle of dry straw tied with a string, NOT a wheat ear, single object icon",done
 5,1,assets/items/straw_hutch.png,128 max,Item: Straw Hutch,"straw hutch, single object icon",done
 5,1,assets/items/tin_pot.png,128 max,Item: Tin Pot,"tin pot, single object icon",done
 5,1,assets/items/veg_soup.png,128 max,Item: Vegetable Soup,"vegetable soup, single object icon",done
 5,1,assets/items/wheat.png,128 max,Item: Wheat,"wheat, single object icon",done
-5,1,assets/items/wicker_basket.png,128 max,Item: Wicker Basket,"wicker basket, single object icon",missing
-5,1,assets/items/winter_wheat.png,128 max,Item: Winter wheat,"winter wheat, single object icon",missing
+5,1,assets/items/wicker_basket.png,128 max,Item: Wicker Basket,"wicker basket, single object icon",done
+5,1,assets/items/winter_wheat.png,128 max,Item: Winter wheat,"winter wheat, single object icon",done
 5,2,assets/album/sq_bridge.png,512 max,Album picture: Mend the footbridge,Ferryman Otto waving a plank from your mended footbridge as children skip across,done
 5,2,assets/album/sq_healer_honey.png,512 max,Album picture: Honey for the healer,"Healer Wren smiling, holding a jar of your honey up to the light",done
 5,2,assets/album/sq_sick_neighbour.png,512 max,Album picture: Soup for a sick neighbour,"Old Jan sitting up in bed, cheeks pink, holding your bowl of tomato soup",done
 5,2,assets/album/sq_stray_kitten.png,512 max,Album picture: A stray kitten keeps visiting,The ginger kitten curled up asleep in the straw bed you made for her,done
 5,2,assets/album/sq_washing_line.png,512 max,Album picture: The washerwoman's line snapped,"Hilde smiling, holding the end of your new rope line full of flapping sheets",done
+5,2,assets/cards/k_bees.png,256 max,Knowledge card picture: Bees and flowers (knowledge; sheet cards-4),"small picture for a book page about: bees and flowers (bees collect nectar and pollen from flowers), one clear thing, no text",missing
+5,2,assets/cards/k_bread.png,256 max,Knowledge card picture: Why bread rises (knowledge; sheet cards-3),"small picture for a book page about: why bread rises (sourdough starter is flour and water where wild yeast lives), one clear thing, no text",missing
+5,2,assets/cards/k_building.png,256 max,Knowledge card picture: Walls and roofs (knowledge; sheet cards-3),"small picture for a book page about: walls and roofs (a building needs a strong base (foundation) so it doesn't sink, walls to carry the roof, and a sloped roof so rain runs off), one clear thing, no text",missing
+5,2,assets/cards/k_butter.png,256 max,Knowledge card picture: Cream into butter (knowledge; sheet cards-4),"small picture for a book page about: cream into butter (milk has cream (fat) that rises to the top), one clear thing, no text",missing
+5,2,assets/cards/k_calm.png,256 max,Knowledge card picture: Calm and breathing (knowledge; sheet cards-11),"small picture for a book page about: calm and breathing (a slow breath and a short break calm you down), one clear thing, no text",missing
+5,2,assets/cards/k_charcoal.png,256 max,Knowledge card picture: Charcoal (knowledge; sheet cards-3),"small picture for a book page about: charcoal (charcoal is wood heated with very little air so it does not burn up), one clear thing, no text",missing
+5,2,assets/cards/k_clay.png,256 max,Knowledge card picture: Clay and bricks (knowledge; sheet cards-2),"small picture for a book page about: clay and bricks (clay is very fine, sticky earth), one clear thing, no text",missing
+5,2,assets/cards/k_compost.png,256 max,Knowledge card picture: How compost works (knowledge; sheet cards-3),"small picture for a book page about: how compost works (compost is old plants, straw and manure broken down by tiny living things (bacteria, fungi, worms) into dark crumbly soil food), one clear thing, no text",missing
+5,2,assets/cards/k_cows.png,256 max,"Knowledge card picture: Cows: grass in, milk out (knowledge; sheet cards-3)","small picture for a book page about: cows: grass in, milk out (cows eat grass and clover and chew it again later (chewing the cud, ruminants with a stomach in four parts)), one clear thing, no text",missing
+5,2,assets/cards/k_feed.png,256 max,Knowledge card picture: What animals eat (knowledge; sheet cards-4),"small picture for a book page about: what animals eat (hens eat grain and seeds, cows and sheep eat grass, clover and hay), one clear thing, no text",missing
+5,2,assets/cards/k_food.png,256 max,Knowledge card picture: A colourful plate (knowledge; sheet cards-10),"small picture for a book page about: a colourful plate (different foods give your body different things), one clear thing, no text",missing
+5,2,assets/cards/k_friends.png,256 max,Knowledge card picture: Friends (knowledge; sheet cards-11),"small picture for a book page about: friends (helping others feels good, for them and for you), one clear thing, no text",missing
+5,2,assets/cards/k_frost.png,256 max,Knowledge card picture: Frost heave: stones that grow (knowledge; sheet cards-5),"small picture for a book page about: frost heave: stones that grow (water in the soil freezes and expands in winter, pushing stones upward a little each year (frost heave)), one clear thing, no text",missing
+5,2,assets/cards/k_honey.png,256 max,Knowledge card picture: From comb to honey (knowledge; sheet cards-4),"small picture for a book page about: from comb to honey (honeycomb is made of six-sided wax cells filled with honey), one clear thing, no text",missing
+5,2,assets/cards/k_kale.png,256 max,Knowledge card picture: Kale in the cold (knowledge; sheet cards-11),"small picture for a book page about: kale in the cold (some plants grow when it is cold), one clear thing, no text",missing
+5,2,assets/cards/k_mucking.png,256 max,Knowledge card picture: Muck and manure (knowledge; sheet cards-4),"small picture for a book page about: muck and manure (animals make dung), one clear thing, no text",missing
+5,2,assets/cards/k_play.png,256 max,Knowledge card picture: Play and music (knowledge; sheet cards-11),"small picture for a book page about: play and music (play, music and drawing are good for you), one clear thing, no text",missing
+5,2,assets/cards/k_pond.png,256 max,Knowledge card picture: Ponds and wetlands (knowledge; sheet cards-5),"small picture for a book page about: ponds and wetlands (a pond collects rain and keeps water for dry days), one clear thing, no text",missing
+5,2,assets/cards/k_regrow.png,256 max,Knowledge card picture: Take only what grows back (knowledge; sheet cards-11),"small picture for a book page about: take only what grows back (the forest gives, but it needs time to give again), one clear thing, no text",missing
+5,2,assets/cards/k_rotation.png,256 max,Knowledge card picture: Crop rotation (knowledge; sheet cards-4),"small picture for a book page about: crop rotation (growing the same crop in the same bed again and again tires the soil and invites its pests), one clear thing, no text",missing
+5,2,assets/cards/k_salt.png,256 max,Knowledge card picture: Salt keeps food (knowledge; sheet cards-4),"small picture for a book page about: salt keeps food (salt pulls water out of food, and the tiny germs that spoil food cannot grow without water), one clear thing, no text",missing
+5,2,assets/cards/k_seasons.png,256 max,Knowledge card picture: The four seasons (knowledge; sheet cards-5),"small picture for a book page about: the four seasons (the year has spring, summer, autumn and winter because the earth is tilted as it circles the sun), one clear thing, no text",missing
+5,2,assets/cards/k_sleep.png,256 max,Knowledge card picture: Sleep (knowledge; sheet cards-10),"small picture for a book page about: sleep (sleep lets body and mind recover), one clear thing, no text",missing
+5,2,assets/cards/k_stove.png,256 max,Knowledge card picture: Cooking on a stove (knowledge; sheet cards-3),"small picture for a book page about: cooking on a stove (a stove keeps the fire inside a box with a chimney, so heat goes into the pot and smoke goes outside), one clear thing, no text",missing
+5,2,assets/cards/k_strength.png,256 max,Knowledge card picture: Strong muscles (knowledge; sheet cards-10),"small picture for a book page about: strong muscles (muscles get stronger when you use them), one clear thing, no text",missing
+5,2,assets/cards/k_thatch.png,256 max,Knowledge card picture: Thatching with straw (knowledge; sheet cards-3),"small picture for a book page about: thatching with straw (thatch is a roof of tightly packed straw or reeds laid in thick layers on a steep roof so rain runs down the outside), one clear thing, no text",missing
+5,2,assets/cards/k_timber.png,256 max,"Knowledge card picture: Logs, planks and grain (knowledge; sheet cards-2)","small picture for a book page about: logs, planks and grain (a log can be split along the grain (the lines of the wood) into planks with an axe and wedges), one clear thing, no text",missing
+5,2,assets/cards/k_trees.png,256 max,Knowledge card picture: Planting trees (knowledge; sheet cards-5),"small picture for a book page about: planting trees (trees grow from seeds or young saplings and take years to grow), one clear thing, no text",missing
 5,2,assets/items/apple.png,128 max,Item: Apple,"apple, single object icon",done
 5,2,assets/items/baked_potato.png,128 max,Item: Baked Potato,"baked potato, single object icon",done
 5,2,assets/items/bean_stew.png,128 max,Item: Bean Stew,"bean stew, single object icon",done
@@ -314,13 +435,13 @@ priority,chapter,file,size,what,prompt,status
 5,2,assets/items/honey_porridge.png,128 max,Item: Honey Porridge,"honey porridge, single object icon",done
 5,2,assets/items/honeycomb.png,128 max,Item: Honeycomb,"honeycomb, single object icon",done
 5,2,assets/items/iron_ore.png,128 max,Item: Iron Ore,"iron ore, single object icon",done
-5,2,assets/items/kale.png,128 max,Item: Winter kale,"winter kale, single object icon",missing
+5,2,assets/items/kale.png,128 max,Item: Winter kale,"winter kale, single object icon",done
 5,2,assets/items/lettuce.png,128 max,Item: Lettuce,"lettuce, single object icon",done
 5,2,assets/items/mashed_potatoes.png,128 max,Item: Mashed Potatoes,"mashed potatoes, single object icon",done
 5,2,assets/items/milk.png,128 max,Item: Milk,"milk, single object icon",done
 5,2,assets/items/omelette.png,128 max,Item: Omelette,"omelette, single object icon",done
 5,2,assets/items/pancakes.png,128 max,Item: Pancakes,"pancakes, single object icon",done
-5,2,assets/items/plank.png,128 max,Item: Plank,"plank, single object icon",done
+5,2,assets/items/plank.png,128 max,Item: Plank [emoji problem: a brown square; sheet items-emoji-1],"two or three flat sawn wooden planks stacked, single object icon",done
 5,2,assets/items/potato.png,128 max,Item: Potato,"potato, single object icon",done
 5,2,assets/items/shell_house.png,128 max,Item: Warm Shell House,"warm shell house, single object icon",done
 5,2,assets/items/sourdough_starter.png,128 max,Item: Sourdough Starter,"sourdough starter, single object icon",done
@@ -334,14 +455,48 @@ priority,chapter,file,size,what,prompt,status
 5,3,assets/friends/sq_baby_blanket.png,256 max,Friend: Baby Lena's family (postcard stamp),"head-and-shoulders portrait of baby lena's family, friendly, looking at the viewer, in a round frame",done
 5,3,assets/friends/sq_chapel_roof.png,256 max,Friend: Ansel the bell-ringer (postcard stamp),"head-and-shoulders portrait of ansel the bell-ringer, friendly, looking at the viewer, in a round frame",done
 5,3,assets/friends/sq_harvest_dance.png,256 max,Friend: Rosa the fiddler (postcard stamp),"head-and-shoulders portrait of rosa the fiddler, friendly, looking at the viewer, in a round frame",done
+5,3,assets/helpers/bellows.png,256 max,Celebration picture: Bellows (helper; sheet helper-3),bellows: Hotter fire: the forge needs half the charcoal.,missing
+5,3,assets/helpers/canvas_rucksack.png,256 max,Celebration picture: Canvas Rucksack (gear; sheet gear-2),"canvas rucksack: Straps that don't cut in: +1 load per gathering tap, gathering −20%, harvesting −15%, errands −10%.",done
+5,3,assets/helpers/canvas_sails.png,256 max,Celebration picture: Linen Sails (helper; sheet helper-7),linen sails: Catch more wind: milling 20% faster. (Choice slot: only one item per station works at a time — swap any time.),missing
+5,3,assets/helpers/cheese_moulds.png,256 max,Celebration picture: Cheese Moulds (helper; sheet helper-3),cheese moulds: Less spilled curd: cheese needs 25% less milk.,missing
+5,3,assets/helpers/duck_house.png,256 max,Celebration picture: Duck House (helper; sheet helper-7),duck house: Ducks love slugs: removes 0.3 pests per question.,missing
+5,3,assets/helpers/feather_pillow.png,256 max,Celebration picture: Feather Pillow (gear; sheet gear-3),feather pillow: Soft and light: +1 energy per Rest answer.,done
+5,3,assets/helpers/felt_hat.png,256 max,Celebration picture: Felt Hat (gear; sheet gear-3),"felt hat: Warm in winter, shady in summer: energy max +4.",done
+5,3,assets/helpers/flying_shuttle.png,256 max,Celebration picture: Flying Shuttle (helper; sheet helper-8),flying shuttle: The shuttle shoots across by itself: weaving −20% energy. (Choice slot: only one item per station works at a time — swap any time.),missing
+5,3,assets/helpers/grindstone.png,256 max,Celebration picture: Grindstone (helper; sheet helper-3),grindstone: Replaces the whetstone: cutting and wood work −15% energy.,missing
+5,3,assets/helpers/hobnail_boots.png,256 max,Celebration picture: Hobnail Boots (gear; sheet gear-1),hobnail boots: Grip on every path: walking jobs −15% energy.,done
+5,3,assets/helpers/insect_hotel.png,256 max,Celebration picture: Insect Hotel (helper; sheet helper-4),"insect hotel: Wild bees and ladybirds move in: +20% honeycomb, weeds −5%, pests −10%.",missing
+5,3,assets/helpers/iron_hoe.png,256 max,Celebration picture: Iron Hoe (tool; sheet tool-2),"iron hoe: Thistles come out root and all: weeding −45% energy, and the weeds come back 20% slower.",done
+5,3,assets/helpers/iron_knife.png,256 max,Celebration picture: Iron Knife (tool; sheet tool-1),"iron knife: Fine dicing: sauces, pasta. Prep −20% energy.",done
+5,3,assets/helpers/iron_pans.png,256 max,Celebration picture: Iron Pans (helper; sheet helper-4),iron pans: Cooking −15% energy.,missing
+5,3,assets/helpers/iron_shovel.png,256 max,Celebration picture: Iron Shovel (tool; sheet tool-1),iron shovel: Needed for double-dug beds; field work −20% energy.,done
+5,3,assets/helpers/linen_apron.png,256 max,Celebration picture: Linen Apron (gear; sheet gear-3),linen apron: Pockets for everything: cooking and prep −10%.,done
+5,3,assets/helpers/oak_barrels.png,256 max,Celebration picture: Oak Barrels (helper; sheet helper-3),"oak barrels: Fermenting −25% time, aging −15% time.",missing
+5,3,assets/helpers/owl_box.png,256 max,Celebration picture: Owl Box (helper; sheet helper-7),owl box: An owl hunts mice at night: removes 0.4 pests per question.,done
+5,3,assets/helpers/quench_trough.png,256 max,Celebration picture: Quench Trough (helper; sheet helper-7),quench trough: Properly hardened tools stay sharp twice as long (polish wears off half as fast). (Choice slot: only one item per station works at a time — swap any time.),missing
+5,3,assets/helpers/retting_trough.png,256 max,Celebration picture: Retting Trough (helper; sheet helper-6),retting trough: A clay-lined trough next to the pond: soak two more batches of flax at once.,missing
+5,3,assets/helpers/sack_hoist.png,256 max,Celebration picture: Sack Hoist (helper; sheet helper-8),sack hoist: Grain goes up by rope: one more batch at a time. (Choice slot: only one item per station works at a time — swap any time.),missing
+5,3,assets/helpers/shearing_table.png,256 max,Celebration picture: Shearing Table (helper; sheet helper-3),shearing table: Cleaner fleeces: +25% wool.,missing
+5,3,assets/helpers/shears.png,256 max,Celebration picture: Shears (tool; sheet tool-1),shears: Needed to keep sheep.,done
+5,3,assets/helpers/sketchbook.png,256 max,Celebration picture: Sketchbook & Charcoal (helper; sheet helper-5),sketchbook & charcoal: Draw the farm on bark paper: a quiet kind of play.,missing
+5,3,assets/helpers/stoneware_jug.png,256 max,Celebration picture: Sealed Stoneware Jug (gear; sheet gear-2),sealed stoneware jug: Stays cool all day: +1 energy per Rest answer.,done
+5,3,assets/helpers/watering_can.png,256 max,Celebration picture: Watering Can (tool; sheet tool-1),"watering can: Water goes to the roots, not the path: plants need 25% less water.",done
+5,3,assets/helpers/weeder_geese.png,256 max,Celebration picture: Weeder Geese (helper; sheet helper-4),weeder geese: Geese graze between the rows: weeds −20%. (Farmers really did this long ago.),missing
+5,3,assets/helpers/wide_beam.png,256 max,Celebration picture: Wide Loom Beam (helper; sheet helper-8),wide loom beam: Wider cloth from the same yarn: +15% cloth. (Choice slot: only one item per station works at a time — swap any time.),missing
+5,3,assets/helpers/wool_gloves.png,256 max,Celebration picture: Wool Work Gloves (gear; sheet gear-1),"wool work gloves: Warm hands work faster: weeding −15%, building −5%.",done
+5,3,assets/helpers/wool_mattress.png,256 max,Celebration picture: Wool Mattress (helper; sheet helper-3),wool mattress: Replaces the straw bed: +2 energy per Rest answer.,missing
 5,3,assets/interior/anvil.png,384 max,"Anvil (inside, ws_fire)",anvil: Nails and iron tools.,done
 5,3,assets/interior/cellar.png,384 max,"Cellar Racks (inside, barn_cellar)","cellar racks: Aging station: vinegar, pickles, olives, cheese wait here — and everything in the pantry keeps one season longer.",done
+5,3,assets/interior/cheese_vat.png,384 max,Station picture: Cheese Vat & Press (station; sheet interior-1),cheese vat & press:,done
 5,3,assets/interior/fermenter.png,384 max,"Fermenting Crocks (inside, barn_ferment)",fermenting crocks: Yogurt and cider.,done
 5,3,assets/interior/forge.png,384 max,"Forge (inside, ws_fire)",forge: Smelts iron ore with charcoal.,done
 5,3,assets/interior/hand_loom.png,384 max,"Hand Loom (inside, ws_loom)","hand loom: Yarn → wool cloth, thread → linen.",done
+5,3,assets/interior/honey_extractor.png,384 max,Station picture: Honey Extractor (station; sheet interior-2),"honey extractor: Spins honey out of the comb: more honey, no crushing.",done
 5,3,assets/interior/library_bookcase.png,384 max,"Bookcase & reading chair (inside, library)",bookcase & reading chair: Holds 11 books. Reading 20% faster. Needs 15 cards learned.,done
+5,3,assets/interior/oven_2.png,384 max,Station picture: Oven · iron door (station; sheet interior-2),oven · iron door: Cakes and pies.,done
 5,3,assets/interior/press.png,384 max,"Wooden Press (inside, ws_bench)","wooden press: A big wooden screw: oil from seeds, juice from fruit and beets.",done
 5,3,assets/interior/sawbench.png,384 max,"Sawbench (inside, ws_bench)",sawbench: ,done
+5,3,assets/interior/spindle.png,384 max,Station picture: Hand Spindle (station; sheet interior-2),"hand spindle: Wool → yarn, flax fiber → linen thread. Slow (2 ⚡).",done
 5,3,assets/interior/stove_2.png,384 max,"Stove · iron top (inside, kitchen)","stove · iron top: Sauces, jam, sugar reduction.",done
 5,3,assets/interior/wool_mattress.png,384 max,"Wool Mattress (inside, living)",wool mattress: Replaces the straw bed: +2 energy per Rest answer.,done
 5,4,assets/crops/crop_berries.png,256 max,Berry Bush (one plant),"one ripe berry bush plant growing out of the ground, no pot",done
@@ -372,8 +527,24 @@ priority,chapter,file,size,what,prompt,status
 6,1,assets/windows/settings.webp,768x512 full-bleed (window style),"Window: Settings (music, sounds, language, the grown-up part) — A small shelf with a music box, a little bell and a key.","a small wooden shelf with an open music box, a little brass bell, an old key and a sprig of lavender, soft light",missing
 6,3,assets/album/sq_apprentice.png,512 max,Album picture: The smith's apprentice is short of nails,Apprentice Bo proudly holding up a gate made with your nails,done
 6,3,assets/album/sq_baby_blanket.png,512 max,Album picture: A blanket for the newborn,A happy new mum holding her baby wrapped in your wool blanket,done
-6,3,assets/album/sq_chapel_roof.png,512 max,Album picture: Fix the chapel roof,"Bell-ringer Ansel holding your last roof plank, waving from the dry chapel",done
+6,3,assets/album/sq_chapel_roof.png,512 max,Album picture: Fix the village hall roof,"Bell-ringer Ansel holding your last roof plank, waving from the dry village hall",done
 6,3,assets/album/sq_harvest_dance.png,512 max,Album picture: Cider for the harvest dance,Fiddler Rosa raising a mug of your cider at the harvest dance,done
+6,3,assets/cards/k_cellar.png,256 max,Knowledge card picture: The cool cellar (knowledge; sheet cards-7),"small picture for a book page about: the cool cellar (cold slows down the germs that spoil food), one clear thing, no text",missing
+6,3,assets/cards/k_cheese.png,256 max,Knowledge card picture: Making cheese (knowledge; sheet cards-7),"small picture for a book page about: making cheese (cheese: milk is thickened (curdled) with cultures and rennet into curds and whey), one clear thing, no text",missing
+6,3,assets/cards/k_double_dig.png,256 max,Knowledge card picture: Double digging (knowledge; sheet cards-7),"small picture for a book page about: double digging (double digging loosens the soil two spade-depths deep and mixes compost in, so roots go deeper and more plants fit), one clear thing, no text",missing
+6,3,assets/cards/k_ferment.png,256 max,Knowledge card picture: Friendly microbes (knowledge; sheet cards-6),"small picture for a book page about: friendly microbes (fermentation: tiny living things (yeasts and bacteria) change food), one clear thing, no text",missing
+6,3,assets/cards/k_flax.png,256 max,Knowledge card picture: Flax to linen (knowledge; sheet cards-6),"small picture for a book page about: flax to linen (flax is a plant with long fibres inside its stem), one clear thing, no text",missing
+6,3,assets/cards/k_iron.png,256 max,Knowledge card picture: Smelting iron (knowledge; sheet cards-5),"small picture for a book page about: smelting iron (iron ore is rock that contains iron), one clear thing, no text",missing
+6,3,assets/cards/k_irrigation.png,256 max,Knowledge card picture: Channels and irrigation (knowledge; sheet cards-6),"small picture for a book page about: channels and irrigation (irrigation brings water to crops through channels or pipes), one clear thing, no text",missing
+6,3,assets/cards/k_nails.png,256 max,Knowledge card picture: Nails and joints (knowledge; sheet cards-5),"small picture for a book page about: nails and joints (nails hold wooden boards together), one clear thing, no text",missing
+6,3,assets/cards/k_pests.png,256 max,Knowledge card picture: Pests and their enemies (knowledge; sheet cards-7),"small picture for a book page about: pests and their enemies (slugs, caterpillars, mice and birds eat crops), one clear thing, no text",missing
+6,3,assets/cards/k_pickling.png,256 max,Knowledge card picture: Pickling and vinegar (knowledge; sheet cards-7),"small picture for a book page about: pickling and vinegar (vinegar is made when bacteria turn cider into acid), one clear thing, no text",missing
+6,3,assets/cards/k_press.png,256 max,Knowledge card picture: Pressing oil and juice (knowledge; sheet cards-6),"small picture for a book page about: pressing oil and juice (a press squeezes fruit or seeds very hard with a big screw), one clear thing, no text",missing
+6,3,assets/cards/k_smithing.png,256 max,Knowledge card picture: Hammer and anvil (knowledge; sheet cards-5),"small picture for a book page about: hammer and anvil (a smith heats iron until it glows, then shapes it with a hammer on an anvil), one clear thing, no text",missing
+6,3,assets/cards/k_sugar.png,256 max,Knowledge card picture: Sugar from beets (knowledge; sheet cards-6),"small picture for a book page about: sugar from beets (sugar beets store sugar in their roots), one clear thing, no text",missing
+6,3,assets/cards/k_weaving.png,256 max,Knowledge card picture: Warp and weft (knowledge; sheet cards-6),"small picture for a book page about: warp and weft (cloth is woven on a loom: long threads (the warp) are stretched tight and another thread (the weft) goes over and under them, back and forth), one clear thing, no text",missing
+6,3,assets/cards/k_wind.png,256 max,Knowledge card picture: Wind power (knowledge; sheet cards-5),"small picture for a book page about: wind power (moving air (wind) pushes the sails of a windmill round), one clear thing, no text",missing
+6,3,assets/cards/k_wool.png,256 max,Knowledge card picture: Shearing and spinning (knowledge; sheet cards-6),"small picture for a book page about: shearing and spinning (sheep grow thick wool that is cut off (sheared) once a year, which doesn't hurt them), one clear thing, no text",missing
 6,3,assets/items/aged_cheese.png,128 max,Item: Aged Cheese,"aged cheese, single object icon",done
 6,3,assets/items/apple_crumble.png,128 max,Item: Apple Oat Crumble,"apple oat crumble, single object icon",done
 6,3,assets/items/apple_juice.png,128 max,Item: Apple Juice,"apple juice, single object icon",done
@@ -388,17 +559,17 @@ priority,chapter,file,size,what,prompt,status
 6,3,assets/items/hardwood.png,128 max,Item: Hardwood,"hardwood, single object icon",done
 6,3,assets/items/honey_cake.png,128 max,Item: Honey Cake,"honey cake, single object icon",done
 6,3,assets/items/honey_oat_cake.png,128 max,Item: Honey Oat Cake,"honey oat cake, single object icon",done
-6,3,assets/items/iron.png,128 max,Item: Iron Bar,"iron bar, single object icon",done
+6,3,assets/items/iron.png,128 max,Item: Iron Bar [emoji problem: material shown as a bolt; sheet items-emoji-1],"iron bar, single object icon",done
 6,3,assets/items/linen_cloth.png,128 max,Item: Linen Cloth,"linen cloth, single object icon",done
 6,3,assets/items/linen_thread.png,128 max,Item: Linen Thread,"linen thread, single object icon",done
 6,3,assets/items/linseed.png,128 max,Item: Linseed,"linseed, single object icon",done
 6,3,assets/items/linseed_oil.png,128 max,Item: Linseed Oil,"linseed oil, single object icon",done
-6,3,assets/items/nails.png,128 max,Item: Nails,"nails, single object icon",done
+6,3,assets/items/nails.png,128 max,Item: Nails [emoji problem: material shown as a pin; sheet items-emoji-1],"nails, single object icon",done
 6,3,assets/items/oats.png,128 max,Item: Oats,"oats, single object icon",done
 6,3,assets/items/oilcake.png,128 max,Item: Oilcake,"oilcake, single object icon",done
 6,3,assets/items/pickles.png,128 max,Item: Pickled Vegetables,"pickled vegetables, single object icon",done
 6,3,assets/items/saddle_blanket.png,128 max,Item: Saddle Blanket,"saddle blanket, single object icon",done
-6,3,assets/items/sand.png,128 max,Item: Sand,"sand, single object icon",done
+6,3,assets/items/sand.png,128 max,Item: Sand [emoji problem: an hourglass; sheet items-emoji-2],"a small heap of pale sand with a wooden scoop, single object icon",done
 6,3,assets/items/simple_cake.png,128 max,Item: Simple Cake,"simple cake, single object icon",done
 6,3,assets/items/sugar.png,128 max,Item: Sugar,"sugar, single object icon",done
 6,3,assets/items/sunflower.png,128 max,Item: Sunflower Seeds,"sunflower seeds, single object icon",done
@@ -413,11 +584,33 @@ priority,chapter,file,size,what,prompt,status
 6,4,assets/friends/sq_night_watch.png,256 max,Friend: Pieter the night watchman (postcard stamp),"head-and-shoulders portrait of pieter the night watchman, friendly, looking at the viewer, in a round frame",done
 6,4,assets/friends/sq_school_window.png,256 max,"Friend: Miss Ines, the teacher (postcard stamp)","head-and-shoulders portrait of miss ines, the teacher, friendly, looking at the viewer, in a round frame",done
 6,4,assets/friends/sq_wedding_cake.png,256 max,"Friend: Anna and Ben, the newlyweds (postcard stamp)","head-and-shoulders portrait of anna and ben, the newlyweds, friendly, looking at the viewer, in a round frame",done
+6,4,assets/helpers/canvas_apron.png,256 max,Celebration picture: Waxed Canvas Apron (gear; sheet gear-3),"waxed canvas apron: Splash-proof: cooking and prep −15%, dairy & press work −10%.",done
+6,4,assets/helpers/down_pillow.png,256 max,Celebration picture: Wool & Down Pillow (gear; sheet gear-3),wool & down pillow: Like sleeping on a cloud: +1.5 energy per Rest answer.,done
+6,4,assets/helpers/drip_line.png,256 max,Celebration picture: Drip Line (tool; sheet tool-2),drip line: Clay pipes drip water right at the roots: half the water.,done
+6,4,assets/helpers/fiddle.png,256 max,Celebration picture: Little Fiddle (helper; sheet helper-5),little fiddle: Music for the whole farm.,missing
+6,4,assets/helpers/frame_rucksack.png,256 max,Celebration picture: Frame Rucksack (gear; sheet gear-2),"frame rucksack: The frame carries the weight: +2 loads per gathering tap, gathering −25%, harvesting −20%, errands −15%.",done
+6,4,assets/helpers/glass_bottle.png,256 max,Celebration picture: Glass Bottle & Sling (gear; sheet gear-2),glass bottle & sling: Always with you: +1.5 energy per Rest answer.,done
+6,4,assets/helpers/lanterns.png,256 max,Celebration picture: Lanterns (helper; sheet helper-4),lanterns: Work into the evening: energy max +5.,missing
+6,4,assets/helpers/linen_bedding.png,256 max,Celebration picture: Linen Bedding (helper; sheet helper-4),linen bedding: Replaces the mattress: +3 energy per Rest answer.,missing
+6,4,assets/helpers/linen_sunhat.png,256 max,Celebration picture: Wide Linen Sunhat (gear; sheet gear-3),"wide linen sunhat: Cool head all summer: energy max +6, field work −10%.",done
+6,4,assets/helpers/master_saw.png,256 max,Celebration picture: Master Saw (tool; sheet tool-2),master saw: Fine joinery for looms and windmill gears. Wood work −40% energy.,done
+6,4,assets/helpers/mulch_spreader.png,256 max,Celebration picture: Straw Mulch (helper; sheet helper-5),"straw mulch: A straw blanket on every bed: weeds −15%, field water −5%.",missing
+6,4,assets/helpers/proofing_baskets.png,256 max,Celebration picture: Bread Peel & Proofing Baskets (helper; sheet helper-4),bread peel & proofing baskets: Cooking and baking −15% energy.,missing
+6,4,assets/helpers/rotary_churn.png,256 max,Celebration picture: Rotary Churn (helper; sheet helper-4),rotary churn: Butter needs 25% less milk.,missing
+6,4,assets/helpers/seed_drill.png,256 max,Celebration picture: Seed Drill (helper; sheet helper-4),seed drill: Sows a whole row in one pass: planting −40% energy.,missing
+6,4,assets/helpers/smiths_hammer.png,256 max,Celebration picture: Smith's Hammer (tool; sheet tool-2),"smith's hammer: Needed for the Farmhouse, Greenhouse and machines. Building −35% energy.",done
+6,4,assets/helpers/steel_hoe.png,256 max,Celebration picture: Steel Hoe (tool; sheet tool-2),steel hoe: Even brambles give up: weeding −60% energy.,done
+6,4,assets/helpers/steel_knife.png,256 max,Celebration picture: Steel Knife (tool; sheet tool-2),steel knife: Precision work: master dishes. Prep −35% energy.,done
+6,4,assets/helpers/steel_shovel.png,256 max,Celebration picture: Steel Shovel (tool; sheet tool-1),steel shovel: Needed for deep-worked beds; field work −30% energy.,done
+6,4,assets/helpers/waxed_boots.png,256 max,Celebration picture: Waxed Walking Boots (gear; sheet gear-1),"waxed walking boots: Light, tough and waterproof: walking jobs −20% energy.",done
+6,4,assets/helpers/waxed_gloves.png,256 max,Celebration picture: Waxed Linen Gloves (gear; sheet gear-1),"waxed linen gloves: Brambles can't get through: weeding −25%, building −10%.",done
+6,4,assets/interior/food_processor.png,384 max,Station picture: Grinding Mill (kitchen) (station; sheet interior-2),"grinding mill (kitchen): Once the windmill makes flour, the quern becomes a nut/olive grinder.",done
 6,4,assets/interior/forge_2.png,384 max,"Blast Forge (inside, ws_fire)",blast forge: Hot enough for steel.,done
 6,4,assets/interior/glass_kiln.png,384 max,"Glass Kiln (inside, ws_fire)",glass kiln: ,done
 6,4,assets/interior/kiln_2.png,384 max,"Brickworks (inside, ws_fire)","brickworks: Five chambers instead of two: bricks, jars and charcoal in bulk.",done
 6,4,assets/interior/library_room.png,384 max,"Library room (inside, library)","library room: A quiet room of your own: all 14 books, reading 30% faster, and a cosy chair (+0.5 energy per Rest answer). Needs 30 cards learned.",done
 6,4,assets/interior/linen_bedding.png,384 max,"Linen Bedding (inside, living)",linen bedding: Replaces the mattress: +3 energy per Rest answer.,done
+6,4,assets/interior/prep_table_2.png,384 max,Station picture: Prep Table · marble top (station; sheet interior-2),prep table · marble top:,done
 6,4,assets/interior/spinning_wheel.png,384 max,"Spinning Wheel (inside, ws_loom)",spinning wheel: Yarn and thread without the backache (1 ⚡).,done
 6,4,assets/interior/textile_loom.png,384 max,"Textile Loom (inside, ws_loom)",textile loom: Weaving moves from the hand loom to the workshop.,done
 6,5,assets/fences/hedge_row.png,512 max,Field fence side: trimmed hedgerow,"trimmed hedgerow, one straight side of an isometric diamond, running from lower left to upper right, rising 1 for every 2 across, posts at both ends",done
@@ -426,6 +619,16 @@ priority,chapter,file,size,what,prompt,status
 7,4,assets/album/sq_night_watch.png,512 max,Album picture: A lantern for the night watchman,Night watchman Pieter holding your glowing lantern on the town wall,done
 7,4,assets/album/sq_school_window.png,512 max,Album picture: The schoolroom window is broken,Teacher Ines and her pupils holding up your new glass pane,done
 7,4,assets/album/sq_wedding_cake.png,512 max,Album picture: A wedding needs a cake,"The bride and groom holding your cake between them, laughing",done
+7,4,assets/cards/k_deep_soil.png,256 max,Knowledge card picture: Deep soil and humus (knowledge; sheet cards-8),"small picture for a book page about: deep soil and humus (humus is the dark, rotted part of soil made from old plants), one clear thing, no text",missing
+7,4,assets/cards/k_glass.png,256 max,Knowledge card picture: Sand into glass (knowledge; sheet cards-7),"small picture for a book page about: sand into glass (glass is made by melting sand in a very hot furnace until it flows like honey, then shaping it and letting it cool slowly), one clear thing, no text",missing
+7,4,assets/cards/k_greenhouse.png,256 max,Knowledge card picture: Greenhouses (knowledge; sheet cards-8),"small picture for a book page about: greenhouses (sunlight shines through glass and warms the air and soil inside), one clear thing, no text",missing
+7,4,assets/cards/k_hardwood.png,256 max,Knowledge card picture: Hardwood and joinery (knowledge; sheet cards-8),"small picture for a book page about: hardwood and joinery (hardwoods like oak and beech come from broad-leaved trees that grow slowly), one clear thing, no text",missing
+7,4,assets/cards/k_masonry.png,256 max,Knowledge card picture: Brick houses (knowledge; sheet cards-8),"small picture for a book page about: brick houses (bricks are laid in rows with mortar between them, each row overlapping the joints below (a bond) so the wall is strong), one clear thing, no text",missing
+7,4,assets/cards/k_mulch.png,256 max,Knowledge card picture: Mulching (knowledge; sheet cards-9),"small picture for a book page about: mulching (mulch is a blanket of straw, leaves or wood chips on top of the soil), one clear thing, no text",missing
+7,4,assets/cards/k_olives.png,256 max,Knowledge card picture: Olives: oil and curing (knowledge; sheet cards-8),"small picture for a book page about: olives: oil and curing (olives straight from the tree are too bitter to eat), one clear thing, no text",missing
+7,4,assets/cards/k_orchard.png,256 max,Knowledge card picture: Caring for fruit trees (knowledge; sheet cards-8),"small picture for a book page about: caring for fruit trees (fruit trees are pruned in winter: cutting out old and crossing branches lets in light and air so the tree makes better fruit), one clear thing, no text",missing
+7,4,assets/cards/k_pasta.png,256 max,Knowledge card picture: Pasta and dough (knowledge; sheet cards-8),"small picture for a book page about: pasta and dough (pasta is flour and egg (or water) kneaded into a dough, rolled thin and cut), one clear thing, no text",missing
+7,4,assets/cards/k_steel.png,256 max,Knowledge card picture: From iron to steel (knowledge; sheet cards-7),"small picture for a book page about: from iron to steel (steel is iron with a tiny bit of carbon (from charcoal) mixed in), one clear thing, no text",missing
 7,4,assets/items/apple_carrot_cake.png,128 max,Item: Apple-Carrot Cake,"apple-carrot cake, single object icon",done
 7,4,assets/items/berries.png,128 max,Item: Berries,"berries, single object icon",done
 7,4,assets/items/berry_cake.png,128 max,Item: Berry Cake,"berry cake, single object icon",done
@@ -433,7 +636,7 @@ priority,chapter,file,size,what,prompt,status
 7,4,assets/items/cheese_board.png,128 max,Item: Cheese Board,"cheese board, single object icon",done
 7,4,assets/items/cured_olives.png,128 max,Item: Cured Olives,"cured olives, single object icon",done
 7,4,assets/items/fresh_pasta.png,128 max,Item: Fresh Pasta,"fresh pasta, single object icon",done
-7,4,assets/items/glass.png,128 max,Item: Glass,"glass, single object icon",done
+7,4,assets/items/glass.png,128 max,Item: Glass [emoji problem: material shown as a window; sheet items-emoji-2],"glass, single object icon",done
 7,4,assets/items/herbs.png,128 max,Item: Herbs,"herbs, single object icon",done
 7,4,assets/items/jam.png,128 max,Item: Berry Jam,"berry jam, single object icon",done
 7,4,assets/items/olive.png,128 max,Item: Olive,"olive, single object icon",done
@@ -445,15 +648,21 @@ priority,chapter,file,size,what,prompt,status
 7,4,assets/items/pumpkin_pie.png,128 max,Item: Pumpkin Pie,"pumpkin pie, single object icon",done
 7,4,assets/items/pumpkin_soup.png,128 max,Item: Pumpkin Soup,"pumpkin soup, single object icon",done
 7,4,assets/items/sandwich.png,128 max,Item: Farm Sandwich,"farm sandwich, single object icon",done
-7,4,assets/items/steel.png,128 max,Item: Steel Bar,"steel bar, single object icon",done
+7,4,assets/items/steel.png,128 max,Item: Steel Bar [emoji problem: shown as a gear; sheet items-emoji-1],"a steel bar: a shiny blue-grey ingot, NOT a gear, single object icon",done
 7,4,assets/items/tapenade.png,128 max,Item: Olive Tapenade,"olive tapenade, single object icon",done
 7,4,assets/items/tomato_sauce.png,128 max,Item: Tomato Sauce,"tomato sauce, single object icon",done
 7,4,assets/items/walnut.png,128 max,Item: Walnut,"walnut, single object icon",done
 7,4,assets/items/walnut_butter.png,128 max,Item: Walnut Butter,"walnut butter, single object icon",done
 7,4,assets/items/walnut_pesto.png,128 max,Item: Walnut Pesto,"walnut pesto, single object icon",done
 7,4,assets/items/yogurt_bowl.png,128 max,Item: Yogurt Berry Bowl,"yogurt berry bowl, single object icon",done
-7,5,assets/animals/pet_badger.png,256 max,Badger comes home,"badger comes home, whole body, side view",missing
+7,5,assets/animals/pet_badger.png,256 max,Badger comes home,"badger comes home, whole body, side view",done
 7,5,assets/friends/sq_lamp_maker.png,256 max,Friend: Ferdinand the lamp-maker (postcard stamp),"head-and-shoulders portrait of ferdinand the lamp-maker, friendly, looking at the viewer, in a round frame",done
+7,5,assets/helpers/copper_still.png,256 max,Celebration picture: Herb Drying Loft (helper; sheet helper-5),herb drying loft: Dried herbs on hand: cooking and prep −10% energy.,missing
+7,5,assets/interior/drying_rack.png,384 max,Station picture: Drying Rack (station; sheet interior-2),"drying rack: Bunches of plants hang here, in the shade, until they are dry.",done
+7,5,assets/interior/mortar.png,384 max,Station picture: Mortar and Pestle (station; sheet interior-2),mortar and pestle: Crushes fresh leaves into a paste.,done
+7,5,assets/interior/salve_pot.png,384 max,Station picture: Salve Pot (station; sheet interior-3),salve pot: Oil and beeswax with healing flowers: salves for the skin.,done
+7,5,assets/interior/syrup_pan.png,384 max,Station picture: Syrup Pan (station; sheet interior-3),syrup pan: Slowly stirred with honey: syrups.,done
+7,5,assets/interior/tea_pot.png,384 max,Station picture: Tea Pot Hearth (station; sheet interior-3),tea pot hearth: Hot water on dried plants: teas and gargles.,done
 7,6,assets/addons/bee_house.png,256 max,On bees: Bee Garden (appears when built),bee garden: Observation hive with a glass window.,done
 7,6,assets/addons/greenhouse_extension.png,256 max,On greenhouse: Greenhouse · extension (appears when built),greenhouse · extension:,done
 7,6,assets/addons/sunroom.png,256 max,On home: Farmhouse · sun room (appears when built),"farmhouse · sun room: Energy max 65, 9 energy per Rest answer.",done
@@ -468,49 +677,58 @@ priority,chapter,file,size,what,prompt,status
 7,6,assets/map/windmill_2.png,512 max,Windmill · stone grinders (windmill),windmill · stone grinders: Fine flour for master baking.,done
 8,5,assets/album/sq_healer_garden.png,512 max,Album picture: Herbs for the healer's garden,"Healer Wren kneeling in her new herb garden, holding a bunch of your herbs",done
 8,5,assets/album/sq_lamp_maker.png,512 max,Album picture: Oil for the old lamp-maker,"Old lamp-maker Ferdinand holding a lamp filled with your olive oil, glowing",done
-8,5,assets/items/arnica.png,128 max,Item: Arnica,"arnica, single object icon",missing
-8,5,assets/items/arnica_salve.png,128 max,Item: Arnica salve (skin only),"arnica salve (skin only), single object icon",missing
-8,5,assets/items/chamomile.png,128 max,Item: Chamomile,"chamomile, single object icon",missing
-8,5,assets/items/chamomile_tea.png,128 max,Item: Chamomile tea,"chamomile tea, single object icon",missing
-8,5,assets/items/dried_arnica.png,128 max,Item: Dried arnica,"dried arnica, single object icon",missing
-8,5,assets/items/dried_chamomile.png,128 max,Item: Dried chamomile,"dried chamomile, single object icon",missing
-8,5,assets/items/dried_elderflower.png,128 max,Item: Dried elderflower,"dried elderflower, single object icon",missing
-8,5,assets/items/dried_lavender.png,128 max,Item: Dried lavender,"dried lavender, single object icon",missing
-8,5,assets/items/dried_marigold.png,128 max,Item: Dried marigold,"dried marigold, single object icon",missing
-8,5,assets/items/dried_peppermint.png,128 max,Item: Dried peppermint,"dried peppermint, single object icon",missing
-8,5,assets/items/dried_sage.png,128 max,Item: Dried sage,"dried sage, single object icon",missing
-8,5,assets/items/dried_thyme.png,128 max,Item: Dried thyme,"dried thyme, single object icon",missing
-8,5,assets/items/dried_willow_bark.png,128 max,Item: Dried willow bark,"dried willow bark, single object icon",missing
-8,5,assets/items/elder_tea.png,128 max,Item: Elderflower tea,"elderflower tea, single object icon",missing
-8,5,assets/items/elderflower.png,128 max,Item: Elderflower,"elderflower, single object icon",missing
-8,5,assets/items/healers_chest.png,128 max,Item: Healer's Chest,"healer's chest, single object icon",missing
-8,5,assets/items/hemlock.png,128 max,Item: Hemlock,"hemlock, single object icon",missing
-8,5,assets/items/lavender.png,128 max,Item: Lavender,"lavender, single object icon",missing
-8,5,assets/items/lavender_water.png,128 max,Item: Lavender water,"lavender water, single object icon",missing
-8,5,assets/items/marigold.png,128 max,Item: Marigold,"marigold, single object icon",missing
-8,5,assets/items/marigold_salve.png,128 max,Item: Marigold salve,"marigold salve, single object icon",missing
-8,5,assets/items/mayweed.png,128 max,Item: Scentless mayweed,"scentless mayweed, single object icon",missing
-8,5,assets/items/peppermint.png,128 max,Item: Peppermint,"peppermint, single object icon",missing
-8,5,assets/items/peppermint_tea.png,128 max,Item: Peppermint tea,"peppermint tea, single object icon",missing
-8,5,assets/items/plantain.png,128 max,Item: Ribwort plantain,"ribwort plantain, single object icon",missing
-8,5,assets/items/plantain_paste.png,128 max,Item: Crushed plantain,"crushed plantain, single object icon",missing
-8,5,assets/items/sage.png,128 max,Item: Sage,"sage, single object icon",missing
-8,5,assets/items/sage_gargle.png,128 max,Item: Sage gargle,"sage gargle, single object icon",missing
-8,5,assets/items/tea_set.png,128 max,Item: Tea Set,"tea set, single object icon",missing
-8,5,assets/items/thyme.png,128 max,Item: Thyme,"thyme, single object icon",missing
-8,5,assets/items/thyme_syrup.png,128 max,Item: Thyme and honey syrup,"thyme and honey syrup, single object icon",missing
-8,5,assets/items/willow_bark.png,128 max,Item: Willow bark,"willow bark, single object icon",missing
-8,5,assets/items/willow_tea.png,128 max,Item: Willow-bark tea,"willow-bark tea, single object icon",missing
-8,5,assets/items/yarrow.png,128 max,Item: Yarrow,"yarrow, single object icon",missing
-8,5,assets/items/yarrow_paste.png,128 max,Item: Crushed yarrow,"crushed yarrow, single object icon",missing
+8,5,assets/cards/k_ask_grownup.png,256 max,Knowledge card picture: Ask first (knowledge; sheet cards-12),"small picture for a book page about: ask first (a good farmer asks before using a wild plant), one clear thing, no text",missing
+8,5,assets/cards/k_drying.png,256 max,Knowledge card picture: Drying and keeping (knowledge; sheet cards-11),"small picture for a book page about: drying and keeping (dried plants keep for months), one clear thing, no text",missing
+8,5,assets/cards/k_foxglove.png,256 max,Knowledge card picture: Foxglove (knowledge; sheet cards-12),"small picture for a book page about: foxglove (a medicine only doctors may use), one clear thing, no text",missing
+8,5,assets/cards/k_lookalikes.png,256 max,Knowledge card picture: Look-alikes (knowledge; sheet cards-12),"small picture for a book page about: look-alikes (some safe plants have poisonous twins), one clear thing, no text",missing
+8,5,assets/cards/k_plant_parts.png,256 max,Knowledge card picture: Which part of the plant? (knowledge; sheet cards-11),"small picture for a book page about: which part of the plant? (different parts of a plant are used in different ways), one clear thing, no text",missing
+8,5,assets/cards/k_skin_only.png,256 max,Knowledge card picture: Arnica: on the skin only (knowledge; sheet cards-12),"small picture for a book page about: arnica: on the skin only (some plants are only for the skin), one clear thing, no text",missing
+8,5,assets/cards/k_syrup_salve.png,256 max,Knowledge card picture: Syrups and salves (knowledge; sheet cards-12),"small picture for a book page about: syrups and salves (a syrup is sweet, a salve goes on the skin), one clear thing, no text",missing
+8,5,assets/cards/k_teas.png,256 max,Knowledge card picture: Tea from plants (knowledge; sheet cards-12),"small picture for a book page about: tea from plants (a tea is hot water on dried plants), one clear thing, no text",missing
+8,5,assets/cards/k_willow.png,256 max,Knowledge card picture: Willow and aspirin (knowledge; sheet cards-12),"small picture for a book page about: willow and aspirin (a medicine learned from a tree), one clear thing, no text",missing
+8,5,assets/items/arnica.png,128 max,Item: Arnica,"arnica, single object icon",done
+8,5,assets/items/arnica_salve.png,128 max,Item: Arnica salve (skin only),"arnica salve (skin only), single object icon",done
+8,5,assets/items/chamomile.png,128 max,Item: Chamomile,"chamomile, single object icon",done
+8,5,assets/items/chamomile_tea.png,128 max,Item: Chamomile tea,"chamomile tea, single object icon",done
+8,5,assets/items/dried_arnica.png,128 max,Item: Dried arnica,"dried arnica, single object icon",done
+8,5,assets/items/dried_chamomile.png,128 max,Item: Dried chamomile,"dried chamomile, single object icon",done
+8,5,assets/items/dried_elderflower.png,128 max,Item: Dried elderflower,"dried elderflower, single object icon",done
+8,5,assets/items/dried_lavender.png,128 max,Item: Dried lavender,"dried lavender, single object icon",done
+8,5,assets/items/dried_marigold.png,128 max,Item: Dried marigold,"dried marigold, single object icon",done
+8,5,assets/items/dried_peppermint.png,128 max,Item: Dried peppermint,"dried peppermint, single object icon",done
+8,5,assets/items/dried_sage.png,128 max,Item: Dried sage,"dried sage, single object icon",done
+8,5,assets/items/dried_thyme.png,128 max,Item: Dried thyme,"dried thyme, single object icon",done
+8,5,assets/items/dried_willow_bark.png,128 max,Item: Dried willow bark,"dried willow bark, single object icon",done
+8,5,assets/items/elder_tea.png,128 max,Item: Elderflower tea,"elderflower tea, single object icon",done
+8,5,assets/items/elderflower.png,128 max,Item: Elderflower,"elderflower, single object icon",done
+8,5,assets/items/healers_chest.png,128 max,Item: Healer's Chest,"healer's chest, single object icon",done
+8,5,assets/items/hemlock.png,128 max,Item: Hemlock,"hemlock, single object icon",done
+8,5,assets/items/lavender.png,128 max,Item: Lavender,"lavender, single object icon",done
+8,5,assets/items/lavender_water.png,128 max,Item: Lavender water,"lavender water, single object icon",done
+8,5,assets/items/marigold.png,128 max,Item: Marigold,"marigold, single object icon",done
+8,5,assets/items/marigold_salve.png,128 max,Item: Marigold salve,"marigold salve, single object icon",done
+8,5,assets/items/mayweed.png,128 max,Item: Scentless mayweed,"scentless mayweed, single object icon",done
+8,5,assets/items/peppermint.png,128 max,Item: Peppermint,"peppermint, single object icon",done
+8,5,assets/items/peppermint_tea.png,128 max,Item: Peppermint tea,"peppermint tea, single object icon",done
+8,5,assets/items/plantain.png,128 max,Item: Ribwort plantain,"ribwort plantain, single object icon",done
+8,5,assets/items/plantain_paste.png,128 max,Item: Crushed plantain [emoji problem: same leaf as the plant; sheet items-emoji-2],"a small clay pot of green crushed-leaf paste with a wooden spoon and a plantain leaf, single object icon",done
+8,5,assets/items/sage.png,128 max,Item: Sage,"sage, single object icon",done
+8,5,assets/items/sage_gargle.png,128 max,Item: Sage gargle,"sage gargle, single object icon",done
+8,5,assets/items/tea_set.png,128 max,Item: Tea Set,"tea set, single object icon",done
+8,5,assets/items/thyme.png,128 max,Item: Thyme,"thyme, single object icon",done
+8,5,assets/items/thyme_syrup.png,128 max,Item: Thyme and honey syrup,"thyme and honey syrup, single object icon",done
+8,5,assets/items/willow_bark.png,128 max,Item: Willow bark,"willow bark, single object icon",done
+8,5,assets/items/willow_tea.png,128 max,Item: Willow-bark tea,"willow-bark tea, single object icon",done
+8,5,assets/items/yarrow.png,128 max,Item: Yarrow,"yarrow, single object icon",done
+8,5,assets/items/yarrow_paste.png,128 max,Item: Crushed yarrow [emoji problem: same wheat ear as the grain; sheet items-emoji-2],"a small clay pot of green-grey herb paste with a wooden spoon and a few yarrow flowers, single object icon",done
 8,6,assets/animals/pet_alpaca.png,256 max,Alpaca comes home,"alpaca comes home, whole body, side view",done
 8,6,assets/friends/sq_elders_feast.png,256 max,Friend: Elder Agnes and the elders (postcard stamp),"head-and-shoulders portrait of elder agnes and the elders, friendly, looking at the viewer, in a round frame",done
 8,6,assets/friends/sq_festival_flags.png,256 max,Friend: Mayor Juno (postcard stamp),"head-and-shoulders portrait of mayor juno, friendly, looking at the viewer, in a round frame",done
-8,6,assets/friends/sq_free_family.png,256 max,Friend: Your cousin (postcard stamp),"head-and-shoulders portrait of your cousin, friendly, looking at the viewer, in a round frame",missing
-8,6,assets/friends/sq_free_greenstem.png,256 max,Friend: Greenstem (postcard stamp),"head-and-shoulders portrait of greenstem, friendly, looking at the viewer, in a round frame",missing
-8,6,assets/friends/sq_free_lark.png,256 max,Friend: Lark (postcard stamp),"head-and-shoulders portrait of lark, friendly, looking at the viewer, in a round frame",missing
-8,6,assets/friends/sq_free_miller.png,256 max,Friend: The old miller (postcard stamp),"head-and-shoulders portrait of the old miller, friendly, looking at the viewer, in a round frame",missing
-8,6,assets/friends/sq_free_quill.png,256 max,Friend: Quill the steward (postcard stamp),"head-and-shoulders portrait of quill the steward, friendly, looking at the viewer, in a round frame",missing
+8,6,assets/friends/sq_free_family.png,256 max,Friend: Your cousin (postcard stamp),"head-and-shoulders portrait of your cousin, friendly, looking at the viewer, in a round frame",done
+8,6,assets/friends/sq_free_greenstem.png,256 max,Friend: Greenstem (postcard stamp),"head-and-shoulders portrait of greenstem, friendly, looking at the viewer, in a round frame",done
+8,6,assets/friends/sq_free_lark.png,256 max,Friend: Lark (postcard stamp),"head-and-shoulders portrait of lark, friendly, looking at the viewer, in a round frame",done
+8,6,assets/friends/sq_free_miller.png,256 max,Friend: The old miller (postcard stamp),"head-and-shoulders portrait of the old miller, friendly, looking at the viewer, in a round frame",done
+8,6,assets/friends/sq_free_quill.png,256 max,Friend: Quill the steward (postcard stamp),"head-and-shoulders portrait of quill the steward, friendly, looking at the viewer, in a round frame",done
 8,6,assets/friends/sq_orphanage_jam.png,256 max,Friend: Matron Elsie and the children (postcard stamp),"head-and-shoulders portrait of matron elsie and the children, friendly, looking at the viewer, in a round frame",done
 8,6,assets/friends/sq_painter_saffron.png,256 max,Friend: Lucia the painter (postcard stamp),"head-and-shoulders portrait of lucia the painter, friendly, looking at the viewer, in a round frame",done
 8,6,assets/friends/sq_poet_scarf.png,256 max,"Friend: Kit, the little poet (postcard stamp)","head-and-shoulders portrait of kit, the little poet, friendly, looking at the viewer, in a round frame",done
@@ -518,19 +736,24 @@ priority,chapter,file,size,what,prompt,status
 8,6,assets/friends/sq_telescope.png,256 max,Friend: Vega the astronomer (postcard stamp),"head-and-shoulders portrait of vega the astronomer, friendly, looking at the viewer, in a round frame",done
 8,6,assets/friends/sq_theatre_cheese.png,256 max,Friend: The travelling theatre (postcard stamp),"head-and-shoulders portrait of the travelling theatre, friendly, looking at the viewer, in a round frame",done
 8,6,assets/friends/sq_village_well.png,256 max,Friend: Young Sami (postcard stamp),"head-and-shoulders portrait of young sami, friendly, looking at the viewer, in a round frame",done
+8,6,assets/helpers/insulated_flask.png,256 max,Celebration picture: Wool-wrapped Flask (gear; sheet gear-2),"wool-wrapped flask: Warm tea in winter, cool water in summer: +2 energy per Rest answer.",done
+8,6,assets/helpers/master_tool_chest.png,256 max,Celebration picture: Master Tool Chest (helper; sheet helper-5),"master tool chest: Crafting −15%, field and wood work −10% energy, and polish wears off a fifth slower.",missing
+8,6,assets/helpers/paved_yard.png,256 max,Celebration picture: Paved Yard (helper; sheet helper-5),paved yard: Dry feet everywhere: harvesting and animal work −10% energy.,missing
 8,6,assets/interior/cellar_2.png,384 max,"Cheese Cave (inside, barn_cellar)",cheese cave: Twice the aging space.,done
 8,6,assets/interior/dye_vat.png,384 max,"Dye Vat (inside, ws_loom)",dye vat: Plant dyes — and colour mixing.,done
 8,6,assets/interior/master_tool_chest.png,384 max,"Master Tool Chest (inside, ws_tools)","master tool chest: Crafting −15%, field and wood work −10% energy, and polish wears off a fifth slower.",done
+8,6,assets/interior/oven_3.png,384 max,Station picture: Master Oven (station; sheet interior-3),master oven:,done
 8,6,assets/interior/seed_library.png,384 max,"Seed Library (inside, barn_seeds)",seed library: Heirloom crops can be saved from your own harvest: 1 seed back per harvest.,done
 8,6,assets/interior/stove_3.png,384 max,"Master Stove (inside, kitchen)",master stove: ,done
+8,6,assets/interior/worm_bin.png,384 max,Station picture: Worm Bin (station; sheet interior-3),worm bin: Worms turn compost and straw into castings worth 4 fertilizer points.,done
 9,6,assets/album/sq_elders_feast.png,512 max,Album picture: A feast for the village elders,Elder Agnes holding up your tapenade bowl as the elders laugh around the table,done
 9,6,assets/album/sq_festival_flags.png,512 max,Album picture: Dye the festival flags,Mayor Juno holding a string of your dyed flags over the village square,done
-9,6,assets/album/sq_free_family.png,512 max,Album picture: A table for the family,"The whole family at the long table, your cousin passing you the bread",missing
-9,6,assets/album/sq_free_garden.png,512 max,Album picture: A bowl of milk for the night garden,A bowl of milk at the edge of the dark garden under the moon,missing
-9,6,assets/album/sq_free_greenstem.png,512 max,Album picture: A chest for Greenstem,"Greenstem and Wren side by side at the still-room door, a box of remedies between them",missing
-9,6,assets/album/sq_free_lark.png,512 max,Album picture: A name for the squirrel,"Lark on the fence with a squirrel on his shoulder, very proud of its name",missing
-9,6,assets/album/sq_free_miller.png,512 max,Album picture: Flour for the miller,"The old miller on his steps, white with flour, watching the sails turn",missing
-9,6,assets/album/sq_free_quill.png,512 max,Album picture: Everything to count for Quill,"Quill the steward counting your baskets one by one, his ledger open, smiling",missing
+9,6,assets/album/sq_free_family.png,512 max,Album picture: A table for the family,"The whole family at the long table, your cousin passing you the bread",done
+9,6,assets/album/sq_free_garden.png,512 max,Album picture: A bowl of milk for the night garden,A bowl of milk at the edge of the dark garden under the moon,done
+9,6,assets/album/sq_free_greenstem.png,512 max,Album picture: A chest for Greenstem,"Greenstem and Wren side by side at the still-room door, a box of remedies between them",done
+9,6,assets/album/sq_free_lark.png,512 max,Album picture: A name for the squirrel,"Lark on the fence with a squirrel on his shoulder, very proud of its name",done
+9,6,assets/album/sq_free_miller.png,512 max,Album picture: Flour for the miller,"The old miller on his steps, white with flour, watching the mill wheel turn",done
+9,6,assets/album/sq_free_quill.png,512 max,Album picture: Everything to count for Quill,"Quill the steward counting your baskets one by one, his ledger open, smiling",done
 9,6,assets/album/sq_orphanage_jam.png,512 max,Album picture: Jam for the orphanage,Matron Elsie holding your jam jar while the children cheer with sandwiches,done
 9,6,assets/album/sq_painter_saffron.png,512 max,Album picture: Golden paint for the painter,Painter Lucia holding a brush dipped in your golden saffron paint,done
 9,6,assets/album/sq_poet_scarf.png,512 max,Album picture: A rainbow scarf for the little poet,Little poet Kit reciting proudly in your rainbow scarf,done
@@ -538,8 +761,16 @@ priority,chapter,file,size,what,prompt,status
 9,6,assets/album/sq_telescope.png,512 max,Album picture: The astronomer's telescope,"Astronomer Vega holding your telescope, pointing happily at the stars",done
 9,6,assets/album/sq_theatre_cheese.png,512 max,Album picture: Cheese for the travelling theatre,The lead actor taking a bow while holding your cheese wheel high,done
 9,6,assets/album/sq_village_well.png,512 max,Album picture: Rebuild the village well,Young Sami holding a brimming bucket from the well you rebuilt,done
+9,6,assets/cards/k_colour_mixing.png,256 max,Knowledge card picture: Mixing colours (knowledge; sheet cards-9),"small picture for a book page about: mixing colours (primary dye colours red, yellow and blue mix into secondary colours: red + yellow = orange, yellow + blue = green, red + blue = purple), one clear thing, no text",missing
+9,6,assets/cards/k_dyes.png,256 max,Knowledge card picture: Dyes from plants (knowledge; sheet cards-9),"small picture for a book page about: dyes from plants (many plants give colour: beets and madder red, onion skins yellow, woad blue), one clear thing, no text",missing
+9,6,assets/cards/k_living_soil.png,256 max,Knowledge card picture: Living soil (knowledge; sheet cards-10),"small picture for a book page about: living soil (a spoonful of healthy soil holds billions of tiny living things — bacteria, fungi, worms), one clear thing, no text",missing
+9,6,assets/cards/k_master_baking.png,256 max,Knowledge card picture: Master baking (knowledge; sheet cards-9),"small picture for a book page about: master baking (fine flour is ground twice and sifted for light cakes), one clear thing, no text",missing
+9,6,assets/cards/k_saffron.png,256 max,"Knowledge card picture: Saffron, the precious spice (knowledge; sheet cards-9)","small picture for a book page about: saffron, the precious spice (saffron comes from the three red threads (stigmas) inside each crocus flower, picked by hand), one clear thing, no text",missing
+9,6,assets/cards/k_seed_saving.png,256 max,Knowledge card picture: Saving seeds (knowledge; sheet cards-9),"small picture for a book page about: saving seeds (heirloom plants grow true from their own seeds: let the best plants flower, collect the dry seeds, keep them cool and dry for next year), one clear thing, no text",missing
+9,6,assets/cards/k_wind_pump.png,256 max,Knowledge card picture: Pumping water with wind (knowledge; sheet cards-9),"small picture for a book page about: pumping water with wind (a wind pump uses the turning sails to move a pump rod up and down, lifting water from deep underground into a tank, day and night whenever the wind blows — without anyone pumping by hand), one clear thing, no text",missing
+9,6,assets/cards/k_worms.png,256 max,Knowledge card picture: Worms make soil (knowledge; sheet cards-9),"small picture for a book page about: worms make soil (earthworms eat dead leaves and compost and leave behind castings, the richest soil food), one clear thing, no text",missing
 9,6,assets/items/blue_dye.png,128 max,Item: Blue Dye,"blue dye, single object icon",done
-9,6,assets/items/fine_flour.png,128 max,Item: Fine Flour,"fine flour, single object icon",done
+9,6,assets/items/fine_flour.png,128 max,Item: Fine Flour [emoji problem: a sparkle; sheet items-emoji-2],"a small cloth sack of very fine white flour with a soft puff of dust, single object icon",done
 9,6,assets/items/golden_beet.png,128 max,Item: Golden Beet,"golden beet, single object icon",done
 9,6,assets/items/golden_beet_seed.png,128 max,Item: Golden Beet Seeds,"golden beet seeds, single object icon",done
 9,6,assets/items/golden_honey_cake.png,128 max,Item: Golden Honey Cake,"golden honey cake, single object icon",done
@@ -558,3 +789,6 @@ priority,chapter,file,size,what,prompt,status
 9,6,assets/items/woad_seed.png,128 max,Item: Woad Seeds,"woad seeds, single object icon",done
 9,6,assets/items/worm_castings.png,128 max,Item: Worm Castings,"worm castings, single object icon",done
 9,6,assets/items/yellow_dye.png,128 max,Item: Yellow Dye,"yellow dye, single object icon",done
+9,6,assets/square_tiles/*.png,272 wide,"Sheet 68: 16 diamond ground tiles for the village square (grass, flowers, cobbles, setts, brick, flagstones, edges, soil)","see art-inbox/alternatives/sheet68-square-tiles/prompt.txt (one version, 15 credits, money-market/12)",done
+9,6,assets/square_tiles/*.png,272 wide,"Sheet 69: 16 more diamond ground tiles for the village square (wet cobbles, straw cobbles, mossy cobbles, sandy fan cobbles, big slabs, worn path, wooden stage planks, dark brick, slab/grass, slab/soil and grass/soil edges, tulip bed, sand, autumn leaves, lupins, seedlings)","see art-inbox/alternatives/sheet69-square-tiles-2/prompt.txt (three versions, 45 credits, money-market/12)",done
+9,6,assets/deco/*.png,300 max,"Sheet 70: 12 village-square decorations (water mill, barrels, crates of produce, hay bales, flower tub, street lamp, horse trough, fountain, bunting, wheelbarrow, milk churns, picnic table)","see art-inbox/alternatives/sheet70-square-deco/prompt.txt (three versions, 45 credits, money-market/12; the white slab under each was taken out with tools/strip_footprint.py, the originals are in alternatives/sheet70-square-deco/cut-with-slab/)",done

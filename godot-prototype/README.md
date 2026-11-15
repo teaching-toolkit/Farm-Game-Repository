@@ -134,6 +134,9 @@ list's second line). Generate several objects at once as a sprite sheet on a whi
 `python3 tools/import_art.py sheet ../art-inbox/sheet.png map/tent map/well_1 …` (names in reading order, `-` skips one;
 `tile` mode makes a seamless ground texture). Needs Python with Pillow, numpy and scipy.
 `python3 tools/import_art.py all` cuts every sheet listed in `tools/art_sheets.json` again in one go.
+The 11 deco pictures of sheet 70 (`assets/deco/` barrels, crates_produce, hay_bales, flower_tub, street_lamp, horse_trough, fountain, bunting,
+wheelbarrow, milk_churns, picnic_table) come out of the cutter with the model's white paving slab under them: after a cut, run
+`python3 tools/strip_footprint.py ../art-inbox/alternatives/sheet70-square-deco/cut-with-slab assets/deco/<name>.png …` (Pillow, numpy, scipy).
 
 **Shadows.** The generator draws a light grey shadow (about `#b6b3b4`) under things, meant for a white page — on grass it looked like
 a pale smudge. While cutting, `import_art.py` finds the grey that touches the white background and turns it into a **see-through

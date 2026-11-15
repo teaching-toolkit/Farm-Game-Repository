@@ -1,0 +1,361 @@
+{
+ "m_road_2": {
+  "kind": "moment",
+  "chapter": 1,
+  "when": [
+   "done:road_2"
+  ],
+  "priority": 45,
+  "emoji": "🛤️",
+  "title": "Potholes",
+  "pages": [
+   {
+    "text": "The worst holes are full of stones now. A cart rolls over them and only rattles, like a spoon in a pot. The wheels leave two neat lines in the mud.",
+    "picture": "merchant_cart_1"
+   }
+  ]
+ },
+ "m_road_4": {
+  "kind": "moment",
+  "chapter": 3,
+  "when": [
+   "done:road_4"
+  ],
+  "priority": 45,
+  "emoji": "🛣️",
+  "title": "Cobbles",
+  "pages": [
+   {
+    "text": "The road is made of round stones now, and rain runs off it into the ditch. Your boots click on it. Somebody's wheel goes click-clack-click, and you can hear it coming from far away.",
+    "picture": "merchant_cart_2"
+   }
+  ]
+ },
+ "m_shed": {
+  "kind": "moment",
+  "chapter": 2,
+  "when": [
+   "done:shed"
+  ],
+  "priority": 45,
+  "emoji": "🏚️",
+  "title": "A shelf for everything",
+  "pages": [
+   {
+    "text": "The log shed has a door that nearly shuts. Inside, every thing has a shelf: logs, carrots, the good rope. The hens look in, decide it is a house, and wait to be let in.",
+    "picture": "shed"
+   }
+  ]
+ },
+ "m_wattle": {
+  "kind": "moment",
+  "chapter": 2,
+  "when": [
+   "done:wattle_fence"
+  ],
+  "priority": 45,
+  "emoji": "🧺",
+  "title": "A basket for a fence",
+  "pages": [
+   {
+    "text": "Willow sticks go over and under, over and under, until the fence looks like a giant basket. It smells of a wet riverbank. A bug walks along it, looking for a way in.",
+    "picture": "fence_stick"
+   }
+  ]
+ },
+ "m_rain_barrel": {
+  "kind": "moment",
+  "chapter": 3,
+  "when": [
+   "done:rain_barrel"
+  ],
+  "priority": 45,
+  "emoji": "🛢️",
+  "title": "Catching the sky",
+  "pages": [
+   {
+    "text": "A big barrel stands by the well with its mouth open to the sky. The next rain goes plink, plonk, and then a long happy drumming. In the morning there is a small cloud floating in it.",
+    "picture": "well_3"
+   }
+  ]
+ },
+ "m_sheep_pen": {
+  "kind": "moment",
+  "chapter": 3,
+  "when": [
+   "done:sheep_pen"
+  ],
+  "priority": 45,
+  "emoji": "🐑",
+  "title": "Room for the woolly ones",
+  "pages": [
+   {
+    "text": "The new pen has a low roof and a deep bed of straw. It smells like warm bread and wet wool. Even before anyone lives there, it looks like it is waiting for a sleepy sheep.",
+    "picture": "barn_2"
+   }
+  ]
+ },
+ "m_press": {
+  "kind": "moment",
+  "chapter": 3,
+  "when": [
+   "done:press"
+  ],
+  "priority": 45,
+  "emoji": "🍇",
+  "title": "The big screw",
+  "pages": [
+   {
+    "text": "A great wooden screw turns slowly, creak and creak. Out of it comes juice, drip by drip, and a sweet smell fills the yard. Every wasp in the valley suddenly has somewhere to be.",
+    "picture": "workshop_1"
+   }
+  ]
+ },
+ "m_loft": {
+  "kind": "moment",
+  "chapter": 3,
+  "when": [
+   "done:cottage_loft"
+  ],
+  "priority": 45,
+  "emoji": "🪜",
+  "title": "Up the ladder",
+  "pages": [
+   {
+    "text": "There is a second room under the roof now, reached by a ladder. The beams are close enough to touch. When rain taps on the tiles, it sounds as if it is tapping on your head.",
+    "picture": "cottage_loft"
+   }
+  ]
+ },
+ "m_bookcase": {
+  "kind": "moment",
+  "chapter": 3,
+  "when": [
+   "done:library_bookcase"
+  ],
+  "priority": 45,
+  "emoji": "📚",
+  "title": "A chair for reading",
+  "pages": [
+   {
+    "text": "A bookcase stands against the wall, and a chair beside it is just the right size for sitting still. The books lean on each other like sleepy friends. The chair creaks once, politely.",
+    "picture": "library_bookcase"
+   }
+  ]
+ },
+ "m_forge_2": {
+  "kind": "moment",
+  "chapter": 4,
+  "when": [
+   "done:forge_2",
+   "seen:c3_forge"
+  ],
+  "priority": 45,
+  "emoji": "🔥",
+  "title": "Hotter",
+  "pages": [
+   {
+    "text": "The new forge glows white instead of orange. You feel its warmth from the gate. Sparks jump up like tiny stars that have forgotten it is daytime.",
+    "picture": "workshop_2"
+   }
+  ]
+ },
+ "m_warehouse": {
+  "kind": "moment",
+  "chapter": 4,
+  "when": [
+   "done:warehouse"
+  ],
+  "priority": 45,
+  "emoji": "📦",
+  "title": "A very big room",
+  "pages": [
+   {
+    "text": "The warehouse is so big that your steps echo. Sacks, boxes and barrels stand in tidy rows, and there is still room left over. A single sparrow flies in and seems very pleased about the ceiling.",
+    "picture": "warehouse"
+   }
+  ]
+ },
+ "m_workshop_3": {
+  "kind": "moment",
+  "chapter": 4,
+  "when": [
+   "done:workshop_3"
+  ],
+  "priority": 45,
+  "emoji": "🔨",
+  "title": "The best bench",
+  "pages": [
+   {
+    "text": "Every tool hangs on its own hook, and every hook has a small painted outline so it goes back in the right place. The bench is long, smooth and wide. It smells of fresh sawdust and a little of oil.",
+    "picture": "workshop_3"
+   }
+  ]
+ },
+ "m_windmill_2": {
+  "kind": "moment",
+  "chapter": 6,
+  "when": [
+   "done:windmill_2"
+  ],
+  "priority": 45,
+  "emoji": "🌬️",
+  "title": "Stones that sing",
+  "pages": [
+   {
+    "text": "Two big grinding stones now turn inside the mill, and a low hum comes from the floor. The flour comes out soft as snow. You get a white nose just by standing there.",
+    "picture": "windmill_2"
+   }
+  ]
+ },
+ "m_milk": {
+  "kind": "moment",
+  "chapter": 2,
+  "when": [
+   "seen:c2_cow",
+   "item:milk>=1"
+  ],
+  "priority": 45,
+  "emoji": "🥛",
+  "title": "Still warm",
+  "pages": [
+   {
+    "text": "The first milk is in the pail, still warm. It is very white, and it smells of grass and a little of cow. A cat that nobody asked is sitting by the door, looking at the pail.",
+    "picture": "cows"
+   }
+  ]
+ },
+ "m_wool": {
+  "kind": "moment",
+  "chapter": 3,
+  "when": [
+   "seen:c3_sheep",
+   "item:wool>=1"
+  ],
+  "priority": 45,
+  "emoji": "🧶",
+  "title": "A cloud, taken off",
+  "pages": [
+   {
+    "text": "The first wool lies in your arms, soft and a bit greasy, and it smells of rain. The sheep, a lot lighter, trots away as if it just won a race. It looks very surprised at its own legs.",
+    "picture": "pets"
+   }
+  ]
+ },
+ "m_flatbread": {
+  "kind": "moment",
+  "chapter": 1,
+  "when": [
+   "seen:c1_quern",
+   "item:flatbread>=1"
+  ],
+  "priority": 45,
+  "emoji": "🫓",
+  "title": "Your own bread",
+  "pages": [
+   {
+    "text": "The flatbread came from flour you ground yourself. It is a bit lopsided and a bit burnt at one edge. It is also the best thing you have ever smelled.",
+    "picture": "stove_1"
+   }
+  ]
+ },
+ "m_cheese": {
+  "kind": "moment",
+  "chapter": 3,
+  "when": [
+   "item:fresh_cheese>=1"
+  ],
+  "priority": 45,
+  "emoji": "🧀",
+  "title": "Milk, made into more",
+  "pages": [
+   {
+    "text": "A pale, soft cheese sits on a cloth, and it wobbles when you poke it. Yesterday it was milk. You poke it one more time, to be sure.",
+    "picture": "market_stall"
+   }
+  ]
+ },
+ "m_pests": {
+  "kind": "moment",
+  "chapter": 1,
+  "when": [
+   "pests>=1"
+  ],
+  "priority": 45,
+  "emoji": "🐛",
+  "title": "Something is eating the leaves",
+  "pages": [
+   {
+    "text": "Small holes appear in the leaves, round as buttons. Somebody has been having supper on your field. You lean close and spot a very full, very green caterpillar, looking guilty.",
+    "picture": "field"
+   }
+  ]
+ },
+ "m_pests_gone": {
+  "kind": "moment",
+  "chapter": 1,
+  "when": [
+   "seen:m_pests",
+   "after:m_pests:4",
+   "pests<1"
+  ],
+  "priority": 45,
+  "emoji": "🌱",
+  "title": "All quiet",
+  "pages": [
+   {
+    "text": "The leaves are whole again, and nothing nibbles. A bird sits on the fence and looks proud, though nobody asked it. New leaves unroll as if nothing happened.",
+    "picture": "field"
+   }
+  ]
+ },
+ "m_tired": {
+  "kind": "moment",
+  "chapter": 1,
+  "when": [
+   "energy<2",
+   "step>=3"
+  ],
+  "priority": 45,
+  "emoji": "😴",
+  "title": "A big yawn",
+  "pages": [
+   {
+    "text": "Your arms feel heavy as wet sacks, and the yawn comes all by itself. The tent looks very soft. It is a good day to sit down and let a little rest do its work.",
+    "picture": "tent"
+   }
+  ]
+ },
+ "m_skill": {
+  "kind": "moment",
+  "chapter": 1,
+  "when": [
+   "skill_ranks>=1"
+  ],
+  "priority": 45,
+  "emoji": "⭐",
+  "title": "Better than before",
+  "pages": [
+   {
+    "text": "Something that used to be hard is easy now. Your hands know the way before you do. Even the tools look a little impressed.",
+    "picture": "workbench"
+   }
+  ]
+ },
+ "m_first_rain": {
+  "kind": "moment",
+  "chapter": 1,
+  "when": [
+   "rain"
+  ],
+  "priority": 45,
+  "emoji": "🌧️",
+  "title": "The first rain",
+  "pages": [
+   {
+    "text": "Drops land on the soil one by one, each leaving a tiny dark spot. Then the whole field drinks. The air smells like a wet stone, and an earthworm comes up to have a look.",
+    "picture": "field"
+   }
+  ]
+ }
+}

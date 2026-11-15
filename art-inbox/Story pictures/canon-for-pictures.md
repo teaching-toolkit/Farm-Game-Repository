@@ -62,7 +62,7 @@ grandchildren at the bedside.
 - ✅ **No church, chapel, priest or religion.** The bell belongs to the village hall. No crosses, no altars.
 - ✅ **The fire began low, in the hay corner of the barn.** The scorch marks start low. This is the clue (ch2 "Where the fire began").
 - ✅ **The Lord's seal** is a red wax seal. The **stag on the seal is not canon** (review): do not reuse it unless the parent accepts it.
-- 💡 **The mill:** a windmill with sails is in five pictures (the ch3 bell ruin, the ch6 sails, the three end-of-story views). A water wheel is in one
+- ✅ **The mill (parent, 14 Nov 2026):** the village miller's mill is water powered (a wheel on the stream); the windmill with sails is the farm's own mill. Pictures of the *miller's* mill with sails are wrong and are regenerated. Earlier note: 💡 a windmill with sails is in five pictures (the ch3 bell ruin, the ch6 sails, the three end-of-story views). A water wheel is in one
   (the miller-bridge picture) and in the lease document. **Undecided.** The review recommends the windmill. See the handoff.
 - 💡 **The conch (white spiral shell):** in the forest it is small and far off, and it does not move (the text says so). In Minena's hands at the end
   of the story (frame 6) it is not in the text; the review suggests removing it. ❓ parent's decision.

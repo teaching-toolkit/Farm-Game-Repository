@@ -3,7 +3,8 @@ class_name FarmUiSheets
 ## The sheet that slides up from the bottom when a place is tapped: opening, closing, fitting to the screen, rebuilding its content.
 
 const UI = preload("res://kits/ui/ui.gd")
-const Spots = preload("res://game/farm/spots.gd")
+const Art = preload("res://kits/ui/art.gd")
+const Spots =preload("res://game/farm/spots.gd")
 
 
 var M: FarmMain   # the main screen: its widgets and the other parts
@@ -75,6 +76,7 @@ func _set_slide(v: float) -> void:
 	_place_sheet()
 
 func close_sheet() -> void:
+	var was_stall := _on_square()
 	if M.sheet.visible: M.feedback.sfx("close")
 	M.sheet.visible = false
 	M.sheet_kind = ""
@@ -85,9 +87,15 @@ func close_sheet() -> void:
 		var p := M.interior_back
 		M.interior_back = ""
 		M.interiors.open_interior(p)
-	# on the village square, closing a window does not take the farmer home: the square comes back (only 🏠 Back home leaves it)
+	# on the village square, closing a window does not take the farmer home: the scene fills the screen (only 🏠 Back home leaves it);
+	# a stall's window that waited under the bag or the quest book comes back
 	if G.trip.at_square():
-		open_sheet_for("market")
+		if was_stall: M.square.window = false
+		if not was_stall and M.square.window:
+			open_sheet_for("market")
+			return
+		M.square.sync()
+		M.interrupts.request()
 		return
 	M.square.sync()               # back home: the farm is seen again
 	M.playback.farm_seen()        # a walk's news waits for the farm to be seen again
@@ -110,15 +118,52 @@ func _place_sheet() -> void:
 	M.sheet.size = Vector2(M.size.x, M.sheet_h)
 	M.sheet.position = Vector2(0, M.size.y - M.sheet_h + (1.0 - _slide) * M.sheet_h)
 
+## The picture key (assets/windows/<key>.webp, the ids of tools/window_pictures.json) of the window that is open now; "" for none.
+## A place's window is its place id (a corner inside a building has its own id, e.g. ws_loom, barn_hay); the others are named by their kind.
+func window_key() -> String:
+	var k := M.sheet_kind
+	if k == "" or _on_square() or k == "mystery": return ""
+	if k.begins_with("spot:"):
+		return "" if M.mapview.mystery(k.substr(5)) else k.substr(5)      # a mystery place gives nothing away
+	if k.begins_with("patch:"): return "patch"
+	if k == "well": return "well_dashboard"
+	return k      # bag, goals, album, scroll, forest, log
+
+## The painted picture across the top of the window (first thing in the scrolling content); none when the key has no file.
+func _window_picture() -> TextureRect:
+	var key := window_key()
+	if key == "": return null
+	var t := Art.first("windows", [key])
+	if t == null: return null
+	var w := maxf(M.size.x - 40.0, 200.0)
+	var r := TextureRect.new()
+	r.name = "WindowPicture"
+	r.texture = t
+	r.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	r.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	r.clip_contents = true
+	r.custom_minimum_size = Vector2(0, minf(w * 2.0 / 3.0, w * 0.42))
+	r.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	UI.round_picture(r)
+	return r
+
 func rebuild_sheet() -> void:
 	M.widgets.clear(M.content)
 	var k := M.sheet_kind
-	if M.sheet_close: M.sheet_close.visible = not _on_square()
 	M.square.sync()            # the scene of the village square comes and goes with the farmer
 	if _on_square():           # in the village: the window of the stall that was tapped (the scene above it is ui/square.gd)
 		M.sheet_title.text = tr("🏘️ The village")
+		M.square.window = true
 		M.square.build_window()
 		return
+	_build_content(k)
+	var pic := _window_picture()
+	if pic:
+		M.content.add_child(pic)
+		M.content.move_child(pic, 0)
+
+func _build_content(k: String) -> void:
 	if k.begins_with("spot:"):
 		var sid := k.substr(5)
 		if M.mapview.mystery(sid):

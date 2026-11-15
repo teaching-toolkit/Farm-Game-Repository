@@ -109,7 +109,6 @@
   "benchNote": "The workbench shows what has been made: a picture in assets/tools/ appears on the bench once its node is done (or, with item: true, once there is one in the store). x, y = where on the bench picture (fractions), w = width (fraction).",
   "bench": [
     {"id": "rope", "item": true, "pic": "rope", "x": 0.3, "y": 0.3, "w": 0.24},
-    {"id": "rock", "pic": "stone_hammer", "x": 0.5, "y": 0.22, "w": 0.26},
     {"id": "stone_knife", "pic": "flint_knife", "x": 0.7, "y": 0.3, "w": 0.2},
     {"id": "stone_axe", "pic": "stone_axe", "x": 0.44, "y": 0.38, "w": 0.28},
     {"id": "wooden_shovel", "pic": "wooden_shovel", "x": 0.64, "y": 0.4, "w": 0.34},
@@ -153,7 +152,7 @@
       "fence": "field",
       "field2": "field",
       "field3": "field",
-      "market": {"default": "market", "ids": {"bookcart": ["book_cart"], "broker": ["import_broker"]}},
+      "market": {"default": "market", "ids": {"broker": ["import_broker"]}},
       "road": "road",
       "special": {"default": "pond", "prefixes": {"orchard": "orchard", "greenhouse": "greenhouse"}},
       "field": {"default": "field", "ids": {"forest": ["wild_edge", "gathering_basket"]}, "prefixes": {"compost": "compost", "worm": "compost"}}

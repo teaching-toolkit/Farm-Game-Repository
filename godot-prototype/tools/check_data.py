@@ -239,6 +239,36 @@ for rid, r in META.get("reveal", {}).get("elements", {}).items():
     for expr in list(r.get("when", [])) + list(r.get("whenAny", [])): condition_ok(f"reveal {rid}", str(expr))
 
 # ---------------------------------------------------------------- weights (rules/45-weight.json)
+# people (people/04, 06): a name, exactly three lines, a valid condition, and a place that exists in the village square's data
+_SQ = META.get("trip", {}).get("square", {})
+_SQ_STALLS = {s.get("id") for s in _SQ.get("stalls", [])}
+for pid, p in META.get("people", {}).get("who", {}).items():
+    w = f"person {pid}"
+    if not str(p.get("name", "")).strip(): err(w, "needs a name (their trade in plain words)")
+    if not (isinstance(p.get("messages"), list) and len(p["messages"]) == 3 and all(str(m).strip() for m in p["messages"])): err(w, "needs exactly three messages")
+    for m in p.get("messages", []):
+        if len(str(m).split()) > 8: err(w, f"line {m!r} is longer than 8 words")
+    if not isinstance(p.get("look"), dict): err(w, "needs a look")
+    if str(p.get("when", "")) != "": condition_ok(w, str(p["when"]))
+    sc = p.get("scenes", {})
+    if not sc: err(w, "needs a scene")
+    for sname, sp in sc.items():
+        if sname == "gate":        # beside the travelling merchant's cart at the farm's gate (game/farm/map/merchant.gd): his size and place, as shares of the map's width
+            if not 0 < float(sp.get("figureH", 0)) <= 0.3: err(w, "scene 'gate': figureH must be a share of the map's width above 0 and at most 0.3")
+            continue
+        if sname == "door":        # one of the story's visitors at the farmhouse door (game/farm/map/visitor.gd): the optional figureH, dx and dy are shares of the map's width
+            if "figureH" in sp and not 0 < float(sp["figureH"]) <= 0.3: err(w, "scene 'door': figureH must be a share of the map's width above 0 and at most 0.3")
+            continue
+        if sname != "square": err(w, f"scene {sname!r} is not known (only 'square', 'gate' and 'door')"); continue
+        if "stall" in sp:
+            if sp["stall"] not in _SQ_STALLS: err(w, f"stall {sp['stall']!r} is not in the square's stalls")
+            elif not any(s.get("id") == sp["stall"] and "seller" in s for s in _SQ["stalls"]): err(w, f"stall {sp['stall']!r} has no 'seller' place in the square's data")
+        elif isinstance(sp.get("stroll"), list) and len(sp["stroll"]) >= 2:
+            for pt in sp["stroll"]:
+                if pt not in _SQ.get("points", {}): err(w, f"stroll point {pt!r} is not in the square's points")
+        else: err(w, "a scene entry needs a 'stall' or a 'stroll' of two points or more")
+if int(META.get("people", {}).get("visitSteps", 0)) < 1: err("people", "visitSteps (how many questions a visitor stays) must be 1 or more")
+_PEOPLE = META.get("people", {}).get("who", {})
 W = META.get("weights", {})
 classes = W.get("classes", {})
 if not classes: err("weights", "no classes in rules/45-weight.json")
@@ -272,7 +302,7 @@ for c in {it.get("category", "") for it in ITEMS.values()}:
 # the village square's scene (money-market/07): every picture exists, the stalls are the known ones, every place is inside the scene
 SQ = TR.get("square", {})
 if not SQ: err("trip", "no 'square' in rules/49-trip.json (the village square's scene)")
-SQ_STALLS = ("sell", "seeds", "traders", "orders", "board", "home")      # the stalls the interface registers (ui/square.gd add_stall) and the sign home
+SQ_STALLS = ("sell", "seeds", "traders", "orders", "board", "books", "home")      # the stalls the interface registers (ui/square.gd add_stall) and the sign home
 if SQ.get("first") not in SQ_STALLS[:-1]: err("trip", f"square: first ({SQ.get('first')!r}) must be one of the stalls")
 _sq_ids = [s.get("id") for s in SQ.get("stalls", [])]
 for need in SQ_STALLS:
@@ -284,7 +314,21 @@ for e in SQ.get("deco", []) + SQ.get("stalls", []):
     if not e.get("art") and not e.get("id"): err("trip", "square: a deco entry without a picture")
     if not (0 <= float(e.get("x", -1)) <= 1 and 0 <= float(e.get("y", -1)) <= 1 and 0 < float(e.get("w", 0)) <= 1): err("trip", f"square: {what}: x, y and w must be shares between 0 and 1")
     if e.get("id") and not e.get("emoji"): err("trip", f"square: stall {e['id']} has no emoji (what it is for must be shown, not read)")
-if SQ.get("ground") and not os.path.exists(os.path.join(ROOT, "assets", SQ["ground"] + ".png")): err("trip", f"square: ground picture assets/{SQ['ground']}.png does not exist")
+def square_ground_ok(g):      # the ground's map of diamond tiles (money-market/12, ui/square_ground.gd): rows of known letters, kinds with pictures that exist
+    rows, kinds = g.get("rows"), g.get("kinds")
+    if not (isinstance(rows, list) and rows and all(isinstance(r, str) and r.split() for r in rows)): err("trip", "square.ground: rows must be a list of strings, none empty (one letter per cell, separated by spaces)"); return
+    if not (isinstance(kinds, dict) and kinds): err("trip", "square.ground: kinds must say what each letter is"); return
+    for k, kd in kinds.items():
+        files = kd.get("files") if isinstance(kd, dict) else None
+        if not (isinstance(files, list) and files): err("trip", f"square.ground: kind {k!r} needs at least one file"); continue
+        for f in files:
+            if not os.path.exists(os.path.join(ROOT, "assets", str(f) + ".png")): err("trip", f"square.ground: kind {k!r}: picture assets/{f}.png does not exist")
+        if "flip" in kd and not isinstance(kd["flip"], bool): err("trip", f"square.ground: kind {k!r}: flip must be true or false")
+    for i, r in enumerate(rows):
+        for letter in r.split():
+            if letter not in kinds: err("trip", f"square.ground: row {i}: {letter!r} is not a kind")
+if isinstance(SQ.get("ground"), dict): square_ground_ok(SQ["ground"])
+elif SQ.get("ground") and not os.path.exists(os.path.join(ROOT, "assets", SQ["ground"] + ".png")): err("trip", f"square: ground picture assets/{SQ['ground']}.png does not exist")
 
 # ---------------------------------------------------------------- the Lord's share (rules/53-lord.json)
 LD = META.get("lord", {})
@@ -307,9 +351,14 @@ else:
         if pid not in N or N[pid].get("type") != "pet": err("pets", f"jobs: {pid} is not a pet")
         ids = [j.get("id") for j in jobs]
         if len(set(ids)) != len(ids): err(f"pets {pid}", "two jobs with the same id")
+        if sum(1 for j in jobs if j.get("kind") == "chore") > 2: err(f"pets {pid}", "more than two chore jobs (a pet helps with two chores)")
         for j in jobs:
             w = f"pets {pid} job {j.get('id')}"
-            if j.get("kind") not in ("weeds", "stones", "water", "pests", "makes"): err(w, f"kind {j.get('kind')!r} is not weeds, stones, water, pests or makes")
+            if j.get("kind") not in ("weeds", "stones", "water", "pests", "makes", "chore"): err(w, f"kind {j.get('kind')!r} is not weeds, stones, water, pests, makes or chore")
+            if j.get("kind") == "chore" and j.get("chore") not in META.get("chores", {}): err(w, f"chore {j.get('chore')!r} is not a chore of rules/46-chores.json")
+            if j.get("hidden") is not None and not isinstance(j.get("hidden"), bool): err(w, "hidden must be true or false")
+            if j.get("kind") == "chore" and j.get("chore") not in ("weed", "pick_stones", "pick_loose", "fetch_water", "clear_snow", "muck_out", "collect_animal"): err(w, f"chore {j.get('chore')!r} is not one of the care chores a pet can help with (pets-automation spec)")
+            if j.get("needs") is not None and j.get("needs") not in PLACES["spots"]: err(w, f"needs {j.get('needs')!r} is not a place of places.json spots")
             if j.get("kind") == "makes" and j.get("item") not in ITEMS: err(w, f"item {j.get('item')} is not an item")
             if j.get("kind") == "makes" and not float(j.get("rate", 0)) > 0: err(w, "makes needs a rate above 0")
             if not j.get("name") or not j.get("emoji"): err(w, "needs a name and an emoji")
@@ -320,6 +369,12 @@ else:
     for wc, w in PT.get("whens", {}).items():
         # its condition ('when' with {n}) is checked with the other conditions (pet WHEN card …)
         if not float(w.get("min", 0)) <= float(w.get("default", 0)) <= float(w.get("max", 99)): err(f"pets when {wc}", "default outside min..max")
+    # a rule is a blessing or a chore: the chore jobs are offered (none hidden) and each has the energy WHEN card to keep the farmer from being drained
+    if "energy" not in PT.get("whens", {}): err("pets", "the `energy` WHEN card is missing (a chore's default WHEN)")
+    for pid in PT.get("jobs", {}):
+        if "energy" not in PT.get("allowedWhens", {}).get(pid, []): err(f"pets {pid}", "allowedWhens must allow the `energy` card")
+        for j in PT["jobs"][pid]:
+            if j.get("kind") == "chore" and j.get("hidden"): err(f"pets {pid} job {j.get('id')}", "a chore job is no longer hidden (the window offers it as 'Helps with')")
     for pid, f in PT.get("first", {}).items():
         if pid not in N or N[pid].get("type") != "pet": err("pets", f"first: {pid} is not a pet")
         if not f.get("emoji") or not f.get("place") or int(f.get("every", 0)) < 1: err(f"pets {pid}", "first needs an emoji, a place and every >= 1")
@@ -499,6 +554,9 @@ for sid, pc in STORY.items():
     for expr in pc.get("when", []): condition_ok(w, str(expr))
     txt = " ".join([str(pc.get("text", ""))] + [str(pg.get("text", "")) for pg in pc.get("pages", [])])
     if "ß" in txt: err(w, "ß: German text uses ss")
+    if "visitor" in pc:        # the main person of a visit: one of the story's visitors, who walks in as a figure (people.gd, map/visitor.gd)
+        if pc.get("kind") != "visit": err(w, "only a visit has a visitor")
+        elif pc["visitor"] not in _PEOPLE or "door" not in _PEOPLE[pc["visitor"]].get("scenes", {}): err(w, f"visitor {pc['visitor']!r} is not a person of rules/58-people.json with a 'door' scene")
     if len(txt.split()) > 70 and pc.get("kind") not in ("frame", "scene"): warn(w, f"{len(txt.split())} words: boxes are 2-4 sentences, about 35-45 words")
 
 # ---------------------------------------------------------------- money (rules/40-economy.json currency; prices in bronze)
@@ -575,6 +633,38 @@ for path in sorted(glob.glob(os.path.join(ROOT, "data", "i18n", "*-*.json"))):
         if key == "_unused": continue                  # texts no longer in the code
         for lang_text in ([x for l, x in v.items() if l != "stale"] if isinstance(v, dict) else [v]):
             _design_talk(f"{os.path.basename(path)} {key}", lang_text)
+
+# ---------------------------------------------------------------- piles beside the store and loose sticks and stones (rules/67, 68)
+PL = META.get("piles", {}).get("things", {})
+if not PL: err("piles", "no 'piles' in rules/67-piles.json")
+for item, spec in PL.items():
+    if item not in ITEMS: err("piles", f"{item} is not an item")
+    st = spec.get("steps", [])
+    if len(st) != 4 or any(float(st[i]) >= float(st[i + 1]) for i in range(len(st) - 1)) or float(st[0]) <= 0: err("piles", f"{item}: steps must be four rising numbers above 0")
+    for n in range(1, 5):
+        if not os.path.exists(os.path.join(ROOT, "assets", f"{spec.get('art', '')}_{n}.png")): err("piles", f"{item}: picture assets/{spec.get('art', '')}_{n}.png does not exist")
+    if float(spec.get("w", 0)) <= 0: err("piles", f"{item}: w must be above 0")
+LS = META.get("loose", {})
+for key in ("every", "max"):
+    if float(LS.get(key, 0)) <= 0: err("loose", f"{key} must be above 0")
+for k, n in list(LS.get("start", {}).items()) + [(k, 1) for k in LS.get("kinds", [])]:
+    if k not in ITEMS or float(n) <= 0: err("loose", f"{k}: must be an item, with a number above 0")
+for k in LS.get("kinds", []) + list(LS.get("start", {})):
+    for n in (1, 2):
+        if not os.path.exists(os.path.join(ROOT, "assets", "deco", f"loose_{k}_{n}.png")): err("loose", f"picture assets/deco/loose_{k}_{n}.png does not exist")
+
+MO = META.get("moments", {})
+if int(MO.get("perStep", 0)) < 4: err("moments", "perStep must be at least 4")
+for _x in MO.get("chapterExtra", []):
+	if not isinstance(_x, int) or _x < 0: err("moments", "chapterExtra holds whole numbers of 0 or more")
+_prev = 0
+for b in MO.get("bands", []):
+    if float(b[0]) <= _prev or int(b[1]) not in (1, 2, 4): err("moments", f"bands must rise, with moments 1, 2 or 4: {b}")
+    _prev = float(b[0])
+for cid, c in META.get("chores", {}).items():
+    if cid == "note": continue
+    mv = c.get("moments")
+    if not (mv in (0, 1, 2, 4) or (mv == "energy" and MO.get("bands"))): err("chores", f"{cid}: moments must be 0, 1, 2 or 4 (or \"energy\" for a recipe)")
 
 print(f"data: {len(ITEMS)} items, {len(N)} nodes, {len(RECIPES)} recipes, {len(qids)} question ids, {chapters} chapters")
 for w in warnings: print("  warning:", w)

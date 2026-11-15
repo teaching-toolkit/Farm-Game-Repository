@@ -61,6 +61,9 @@ func _ready() -> void:
 	_check(L.owed() <= L.share_now() * float(L.data()["maxSeasons"]) + 0.01, "unpaid shares pile up to %d seasons' worth, not more (%d)" % [L.data()["maxSeasons"], L.owed()])
 	# the story eases it
 	var f0: float = L.fraction()
+	G.S["story_seen"]["c6_quill_answer"] = 0
+	_check(is_equal_approx(L.fraction(), float(L.data()["easedFraction"])), "after c6_quill_answer the share is the eased fraction")
+	G.S["story_seen"].erase("c6_quill_answer")
 	G.S["lord"]["eased"] = true
 	_check(L.fraction() < f0 or f0 <= float(L.data()["easedFraction"]), "once eased the fraction is lower")
 	# an old save without the key gets the defaults

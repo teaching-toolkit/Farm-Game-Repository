@@ -5,18 +5,22 @@ Phase 11 (13 Oct 2026). Source of `godot-prototype/data/farm/story/25-chapter-5.
 ## c5_cough · beat · A cough in Hazelwood
 *When:* `chapter:5`
 
-Page 1. Down in Hazelwood somebody is coughing. Then somebody else. The children first, as always, and nobody knows what to do.
+Page 1. Down in Hazelwood somebody is coughing. Then somebody else. A dry, barking cough, house after house, like dogs answering each other. The children first, as always. Half the school is empty.
 
-> Unten in Hazelwood hustet jemand. Dann noch jemand. Die Kinder zuerst, wie immer, und niemand weiss, was man tun soll.
+> Unten in Hazelwood hustet jemand. Dann noch jemand. Ein trockener, bellender Husten, Haus um Haus, wie Hunde, die einander antworten. Die Kinder zuerst, wie immer. Die halbe Schule ist leer.
 
-Page 2. Wren the healer comes up the road with a full basket. “I cannot do this alone, {player},” she says. “Berit's old still-room is behind your kitchen. Would you look?”
+Page 2. Wren the healer comes up the hill with a basket on each arm. “I cannot do this alone, {player},” she says, as if it costs her a tooth. “Berit had a still-room, behind your kitchen. Would you look?”
 
-> Wren, die Heilerin, kommt mit einem vollen Korb die Strasse herauf. „Allein schaffe ich das nicht, {player}“, sagt sie. „Berits alte Destillierstube liegt hinter deiner Küche. Schaust du sie dir an?“
+> Wren, die Heilerin, kommt den Hügel herauf, an jedem Arm einen Korb. „Allein schaffe ich das nicht, {player}“, sagt sie, als koste es sie einen Zahn. „Berit hatte eine Destillierstube, hinter deiner Küche. Schaust du sie dir an?“
 
 ## c5_stillroom · discovery · A torn page
 *When:* `done:ruins_stillroom`
 
-Under the last shelf lies a page, torn in two. The top half is in a tidy hand: “Tea first. Always tea first.” The bottom half is missing. Somebody was here before you, and cared.
+Page 1. Somebody has swept the still-room floor in small, careful circles, but never quite to the end. The footprints in the dust are wide, flat, patient-looking. The kettle on the hearth is cold, its lid off, as if somebody was about to make tea and was interrupted.
+
+> Jemand hat den Boden der Destillierstube in kleinen, sorgfältigen Kreisen gefegt, aber nie ganz bis zum Ende. Die Fussspuren im Staub sind breit, flach und sehen geduldig aus. Der Kessel auf dem Herd ist kalt, der Deckel ab, als hätte jemand Tee machen wollen und wäre unterbrochen worden.
+
+Page 2. Under the last shelf lies a page, torn in two. The top half is in a tidy hand: “Tea first. Always tea first.” The bottom half is missing. Somebody was here before you, and cared.
 
 > Unter dem letzten Regal liegt eine Seite, in der Mitte zerrissen. Die obere Hälfte ist in sauberer Schrift: „Zuerst Tee. Immer zuerst Tee.“ Die untere Hälfte fehlt. Jemand war vor dir hier, und es lag ihm etwas daran.
 
@@ -66,31 +70,47 @@ The chest is full. In its lid, rolled up, you find the other half of the torn pa
 ## c5_collapse · beat · You never stop
 *When:* `seen:c5_page + after:c5_page:2`
 
-You make one more tea, and one more, day and night. Then the pot tilts and the floor comes up. Wren finds you on the stone. “You never stop, do you?” she says, and carries you to the bench.
+Page 1. You make one more tea, and one more, day and night. Then the pot tilts and the floor comes up. Wren finds you on the stone. “You never stop, do you?” she says, and carries you to the bench.
 
 > Du machst noch einen Tee und noch einen, Tag und Nacht. Dann kippt der Topf, und der Boden kommt hoch. Wren findet dich auf dem Stein. „Du hörst nie auf, oder?“, sagt sie und trägt dich zur Bank.
+
+Page 2. Later, half awake, you say one thing. “The bucket's empty.” “What bucket?” says Wren. “By the door,” says Greenstem from the doorway. “Under the hook. It is always full.” Wren fills the dented bucket and sets it by your bench. She asks nothing at all.
+
+> Später, halb wach, sagst du nur einen Satz. „Der Eimer ist leer.“ „Welcher Eimer?“, fragt Wren. „Der an der Tür“, sagt Greenstem von der Schwelle. „Unter dem Haken. Er ist immer voll.“ Wren füllt den verbeulten Eimer und stellt ihn neben deine Bank. Sie fragt gar nichts.
 
 ## c5_badger · beat · Tea first
 *When:* `done:pet_badger`
 
-Page 1. At the door of the still-room sits a badger, with his back very straight. He looks at the chest. He looks at the tea set. Then he looks at you, and at your hands.
+Page 1. At the still-room door sits a badger, very upright, the way somebody sits who has come about something important. He is old and grey and striped, and he smells of dried herbs. On his nose are small, round spectacles.
 
-> An der Tür der Destillierstube sitzt ein Dachs mit ganz geradem Rücken. Er sieht die Truhe an. Er sieht das Teeservice an. Dann sieht er dich an, und deine Hände.
+> An der Tür der Destillierstube sitzt ein Dachs, ganz aufrecht, wie einer, der in einer wichtigen Sache gekommen ist. Er ist alt, grau und gestreift und riecht nach getrockneten Kräutern. Auf seiner Nase sitzt eine kleine, runde Brille.
 
-Page 2. He sets out two cups. “Tea first,” he seems to say. You sit down. For the first time in a long time, you do nothing at all. The badger pours.
+Page 2. He looks at the healer's chest. He looks at the tea set. He looks at your face, and at your hands, which are shaking a little. He sets the empty cup in front of you, pours, and sits down on the other side of the table.
 
-> Er stellt zwei Tassen hin. „Zuerst Tee“, scheint er zu sagen. Du setzt dich. Zum ersten Mal seit langem tust du gar nichts. Der Dachs schenkt ein.
+> Er sieht die Truhe an. Er sieht das Teeservice an. Er sieht dein Gesicht an, und deine Hände, die ein wenig zittern. Er stellt dir die leere Tasse hin, schenkt ein und setzt sich auf die andere Seite des Tisches.
+
+Page 3. Tea first, says the look. For once you do nothing at all. The steam goes up from two cups in two thin lines. A line of the old rhyme comes back: “Wise badger heals what aches and stings.” The badger lifts his cup a little. Yes. Obviously.
+
+> Zuerst Tee, sagt sein Blick. Diesmal tust du gar nichts. Der Dampf steigt aus zwei Tassen in zwei dünnen Linien auf. Eine Zeile des alten Reims fällt dir wieder ein: „Weiser Dachs heilt, was schmerzt und sticht.“ Der Dachs hebt seine Tasse ein klein wenig. Ja. Natürlich.
 
 ## c5_letter · beat · A letter with a seal
-*When:* `seen:c5_badger + after:c5_badger:1`
+*When:* `seen:c5_badger + after:c5_badger:6`
 
-A boy runs up the road with a letter. The seal is red wax, pressed with a heavy ring. “From the Lord,” he pants. You do not open it yet. The badger looks at it, and then at you, and says nothing.
+Page 1. Rain. A boy runs up the hill with a letter, dripping. The seal is red wax, pressed with a heavy ring. The face on the ring looks as if it has had a very long day. “From the Lord, from the Hurst,” he pants. “Right into your hand.”
 
-> Ein Junge rennt die Strasse herauf, einen Brief in der Hand. Das Siegel ist aus rotem Wachs, mit einem schweren Ring gedrückt. „Vom Herrn“, keucht er. Du öffnest ihn noch nicht. Der Dachs sieht ihn an, dann dich, und sagt nichts.
+> Regen. Ein Junge rennt tropfnass den Hügel herauf, einen Brief in der Hand. Das Siegel ist aus rotem Wachs, mit einem schweren Ring gedrückt. Das Gesicht auf dem Ring sieht aus, als hätte es einen sehr langen Tag gehabt. „Vom Gutsherrn, vom Hurst“, keucht er. „Direkt in deine Hand.“
+
+Page 2. You take it. You do not open it. You put it on the table. The badger looks at it over his spectacles. Then he looks at you. He says nothing. He puts the kettle on.
+
+> Du nimmst ihn. Du öffnest ihn nicht. Du legst ihn auf den Tisch. Der Dachs sieht ihn über seine Brille hinweg an. Dann sieht er dich an. Er sagt nichts. Er setzt den Kessel auf.
 
 ## c5_frame5 · frame · Back in the room
 *When:* `seen:c5_letter`
 
-“Did you get better?” asks Minena. “Badgers make very slow tea,” you say. “By the time it was ready, I was.” Somebody laughs. Somebody yawns. Somebody asks if badgers have teapots.
+Page 1. “Did you get better?” asks Minena. “Badgers make very slow tea,” you say. “By the time it was ready, I was.” Somebody laughs. Somebody yawns. Somebody asks if badgers have teapots.
 
 > „Bist du wieder gesund geworden?“, fragt Minena. „Dachse machen sehr langsamen Tee“, sagst du. „Als er fertig war, war ich es auch.“ Jemand lacht. Jemand gähnt. Jemand fragt, ob Dachse Teekannen haben.
+
+Page 2. “And the letter?” asks Minena. “From the Lord? What did it say?” You look at the window for a long time. “I did not open it,” you say. “Not that night.”
+
+> „Und der Brief?“, fragt Minena. „Vom Gutsherrn? Was stand drin?“ Du siehst lange zum Fenster. „Ich habe ihn nicht geöffnet“, sagst du. „Nicht in dieser Nacht.“

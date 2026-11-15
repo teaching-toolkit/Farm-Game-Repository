@@ -66,8 +66,8 @@ is only a child lock: the web build is public, so nothing secret goes there.
 
 ## Pictures
 
-- They are generated in OpenArt; the settings (project, model, sheets, versions) are the parent's rules in
-  `00-READ-ME-FIRST.md` §3. **Don't download from OpenArt yourself**: the parent puts the chosen files into `art-inbox/` by hand.
+- They are generated in OpenArt and downloaded by Claude: the project skill `openart-pictures` has the whole run (settings,
+  prompt, download, keeping every version in `art-inbox/alternatives/`, the pick). The parent's rules: `00-READ-ME-FIRST.md` §3.
 - What is still needed, with prompts: `python3 tools/art_list.py` writes `art-inbox/ART_LIST.csv`.
 - Import: `bash tools/setup_godot.sh --art` once (Pillow, numpy, scipy), add the sheet to `tools/art_sheets.json`, then run
   `python3 tools/import_art.py all` (or `sheet`, `one`, `tile` for single files; see the tool's header). Then import in Godot

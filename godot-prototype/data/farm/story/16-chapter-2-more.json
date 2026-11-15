@@ -1,0 +1,610 @@
+{
+ "c2_reply_none": {
+  "kind": "letter",
+  "chapter": 2,
+  "when": [
+   "seen:c2_letter",
+   "after:c2_letter:1"
+  ],
+  "priority": 55,
+  "emoji": "✉️",
+  "title": "One word",
+  "pages": [
+   {
+    "text": "You write back. The first try has the whole farm in it: the field, the well, the hens, the bunny, the man on the fence. It is two pages long. You tear it up. The second has only the hens. You tear that up too."
+   },
+   {
+    "text": "The third has one word on it. You look at it for a long time. Then you fold it into your pocket, and nothing is sent at all. Mei goes back to her barge with empty hands. Jan keeps looking back."
+   }
+  ]
+ },
+ "c2_cow": {
+  "kind": "moment",
+  "chapter": 2,
+  "when": [
+   "done:animal_cow"
+  ],
+  "priority": 50,
+  "emoji": "✨",
+  "title": "Someone with opinions",
+  "pages": [
+   {
+    "text": "The cow comes slowly down the plank, as if it were a red carpet not quite good enough for her. She looks at the burnt barn, the yard, you. She is not impressed by any of it."
+   },
+   {
+    "text": "Then she eats a mouthful of your best hay, very slowly, looking you straight in the eye. That is how you find out who is in charge."
+   }
+  ]
+ },
+ "c2_thumps": {
+  "kind": "moment",
+  "chapter": 2,
+  "when": [
+   "seen:c2_cow",
+   "after:c2_cow:2"
+  ],
+  "priority": 50,
+  "emoji": "✨",
+  "title": "Is the cow a hawk?",
+  "pages": [
+   {
+    "text": "The bunny has a question about the cow. You think it is: is the cow a hawk? The cow is not a hawk. The cow is chewing. THUMP, at the cow's tail, which moved. THUMP, at the shine on the milk pail, which looked back."
+   },
+   {
+    "text": "Then a very small pad: a sorry thump. It means, you think, I may have been wrong about the pail. The cow chews through all of it."
+   }
+  ]
+ },
+ "c2_stones": {
+  "kind": "discovery",
+  "chapter": 2,
+  "when": [
+   "tap:forest",
+   "seen:c2_letter",
+   "chapter<3"
+  ],
+  "priority": 60,
+  "emoji": "🔎",
+  "title": "Warm stones",
+  "pages": [
+   {
+    "text": "By day the white stones at the forest edge are only stones, half sunk in the moss. An old oak stands there with faded ribbons round its lowest branch. You do not go past the stones. You put your hand on one."
+   },
+   {
+    "text": "It is warm. Not sun-warm; the trees are too thick for that. Warm the way a cat is warm when it has just got up. Your hand has been shaking ever since the letter. On the stone it stops."
+   }
+  ]
+ },
+ "c2_kiln": {
+  "kind": "moment",
+  "chapter": 2,
+  "when": [
+   "done:kiln"
+  ],
+  "priority": 50,
+  "emoji": "✨",
+  "title": "Clay learns to be a brick",
+  "pages": [
+   {
+    "text": "You light the kiln and shut the little door. For a long while nothing happens. Then the cracks in the door glow orange, like the edge of a sunrise."
+   },
+   {
+    "text": "In the morning you open it, and the soft, sulky clay has become something that rings when you flick it. Clay can change its mind, it seems. It only needs a lot of fire."
+   }
+  ]
+ },
+ "c2_mark": {
+  "kind": "visit",
+  "visitor": "greenstem",
+  "chapter": 2,
+  "when": [
+   "seen:c2_greenstem",
+   "after:c2_greenstem:3"
+  ],
+  "priority": 50,
+  "emoji": "🚪",
+  "title": "The chalk moon",
+  "pages": [
+   {
+    "text": "Greenstem comes again with the sage. “Bread is dear because of the Mark,” he says. “Since the fire, every loaf in Hazelwood gets a thin chalk moon on it. For the farm that burnt. Nobody likes it.”"
+   },
+   {
+    "text": "“Why?” you say. Greenstem shrugs. “The Lord still wants his share, the one the farm used to pay. The farm stopped paying, so everyone pays it now. A bit at a time. In bread.”"
+   },
+   {
+    "text": "You would pay it. All of it, right now. You would pay it twice. There is nobody to pay. After that you see the chalk everywhere: on loaves, on sacks, on the mill gate. One thin moon after another, all for your farm."
+   }
+  ]
+ },
+ "c2_board": {
+  "kind": "discovery",
+  "chapter": 2,
+  "when": [
+   "tap:board",
+   "seen:c2_mark"
+  ],
+  "priority": 60,
+  "emoji": "📌",
+  "title": "The notice in the square",
+  "pages": [
+   {
+    "text": "On the notice board, between a recipe for parsnip jam and the lost green glove, a small paper is pinned very square: THE MARK STANDS UNTIL THE FARM GIVES AGAIN. You read it three times."
+   },
+   {
+    "text": "Gives again? You give. Porridge, soup, a basket, a whole field. You look around the square for someone to tell. Nobody looks back."
+   }
+  ]
+ },
+ "c2_skipping": {
+  "kind": "scene",
+  "chapter": 2,
+  "when": [
+   "seen:c2_mark",
+   "after:c2_mark:3"
+  ],
+  "priority": 55,
+  "emoji": "🎭",
+  "title": "The skipping rhyme",
+  "pages": [
+   {
+    "text": "Children are skipping in the lane. A little one stops in the middle of the rope and sings straight at you: “Chalk, chalk, chalk on the sack, who's to pay it? Moonedge back!” Her mother hushes her, fast."
+   },
+   {
+    "text": "The rope starts again, with a different rhyme. “Lightning in the night, lightning in the barn, the little one ran out, and nobody came to harm!” Slap, slap goes the rope. You walk all the way up the hill without noticing the hill."
+   }
+  ]
+ },
+ "c2_smile": {
+  "kind": "moment",
+  "chapter": 2,
+  "when": [
+   "seen:c2_walls",
+   "after:c2_walls:5"
+  ],
+  "priority": 50,
+  "emoji": "✨",
+  "title": "A face on the path",
+  "pages": [
+   {
+    "text": "The weeds you pulled yesterday have been laid out on the path. Not in a pile. In a face. Two dock leaves for eyes, a long hairy root for a nose, and a smile of thistles right across the path."
+   },
+   {
+    "text": "The smile has gone wrong on one side, like a smile that is trying very hard. You do not touch it. You walk round it all day. By evening it has been straightened, just a little, on the side that went wrong."
+   }
+  ]
+ },
+ "c2_n_bread": {
+  "kind": "discovery",
+  "chapter": 2,
+  "when": [
+   "page:k_bread"
+  ],
+  "priority": 60,
+  "emoji": "📝",
+  "title": "In the margin",
+  "text": "Beside the bread page, in thin brown ink: “Not so much yeast. Patience does the rest. (You will not listen. Nobody in this family has ever listened. — B.)” You laugh out loud, alone in the kitchen."
+ },
+ "c2_appleby": {
+  "kind": "scene",
+  "chapter": 2,
+  "when": [
+   "done:d_bread",
+   "seen:c2_mark"
+  ],
+  "priority": 55,
+  "emoji": "🎭",
+  "title": "One for the loaf, one for the name",
+  "pages": [
+   {
+    "text": "You take your loaves to Mistress Appleby, the baker, flour to the elbows. Every loaf she sells is chalked on a board, and at week's end it has to balance, to the last crumb. She chalks a mark for each of your loaves."
+   },
+   {
+    "text": "Then, beside each one, a second mark. A thin moon. “One for the loaf,” says Appleby. “One for the name.” She counts the coins into your hand without looking up. “It's not mine to forgive,” she says, to the counter."
+   },
+   {
+    "text": "You understand. You take the coins. On the way out, Anna, who shapes the loaves at the back, slips a warm bun into your basket without a word and goes straight back to her dough."
+   }
+  ]
+ },
+ "c2_greenstem_hands": {
+  "kind": "visit",
+  "visitor": "greenstem",
+  "chapter": 2,
+  "when": [
+   "seen:c2_appleby",
+   "after:c2_appleby:2"
+  ],
+  "priority": 50,
+  "emoji": "🚪",
+  "title": "Green hands",
+  "pages": [
+   {
+    "text": "The boy with the herbs turns up as the loaf comes out, which is luck or a very good nose. You break it. He holds his half in both hands and breathes in, eyes shut. “Rosemary does that,” he says seriously, about nothing much."
+   },
+   {
+    "text": "He eats the whole half in four bites. “It is a good loaf,” he says, “for a person who built that wall.”"
+   }
+  ]
+ },
+ "c2_stall": {
+  "kind": "moment",
+  "chapter": 2,
+  "when": [
+   "done:market_stall"
+  ],
+  "priority": 50,
+  "emoji": "✨",
+  "title": "Your own stall",
+  "text": "You set up the stall and stand behind it. It is very odd. Yesterday you walked up to stalls. Today people walk up to you. Somebody asks the price of a carrot, and your voice comes out a good deal higher than planned."
+ },
+ "c2_hilde": {
+  "kind": "scene",
+  "chapter": 2,
+  "when": [
+   "done:sq_washing_line"
+  ],
+  "priority": 55,
+  "emoji": "🎭",
+  "title": "The washing line",
+  "text": "Hilde hangs the last sheet, and it flaps like a flag from a very small country. “I hear things about you in the lane, {player},” she says, not looking at you. “Good things. Nobody has one bad word. It is ruining the lane.”"
+ },
+ "c2_hay_note": {
+  "kind": "discovery",
+  "chapter": 2,
+  "when": [
+   "page:k_hay"
+  ],
+  "priority": 60,
+  "emoji": "📝",
+  "title": "Two hands in the margin",
+  "pages": [
+   {
+    "text": "On the hay page there are two hands in one margin. The first, firm and black: “Dry it, turn it. Lantern on the hook OUTSIDE, and never past the sill. — B.” Under it, smaller and rounder: “Yes, Mother. Yes, Mother. Yes, Mother. — T.”"
+   },
+   {
+    "text": "You read it three times. T. Berit had a daughter, your aunt Tilda. You can almost remember her: a big laugh, from the other side of a kitchen. Then nothing else. You turn the page quickly."
+   }
+  ]
+ },
+ "c2_bees": {
+  "kind": "moment",
+  "chapter": 2,
+  "when": [
+   "done:animal_bees"
+  ],
+  "priority": 50,
+  "emoji": "✨",
+  "title": "The hive",
+  "pages": [
+   {
+    "text": "You carry the hive to the sunny corner of the yard and set it down. A hum comes out of it, low and enormous, as if the box were holding a thought too big for itself. You step back."
+   },
+   {
+    "text": "Several thousand tiny creatures have just agreed to live here. They did not ask you. You did not ask them. It seems best to be polite."
+   }
+  ]
+ },
+ "c2_n_bees": {
+  "kind": "discovery",
+  "chapter": 2,
+  "when": [
+   "page:k_bees"
+  ],
+  "priority": 60,
+  "emoji": "📝",
+  "title": "In the margin",
+  "text": "Next to the bees: “Talk to them. It doesn't matter what about.” Under it, in a different pen: “I mean it. — B.” You wonder who had to be told twice. Then you go and tell the bees about the cow. At some length."
+ },
+ "c2_honey": {
+  "kind": "moment",
+  "chapter": 2,
+  "when": [
+   "item:honey>=1",
+   "chapter<3"
+  ],
+  "priority": 50,
+  "emoji": "✨",
+  "title": "A spoon of summer",
+  "text": "The first honey is gold and slow. You hold the jar up to the window, and the light goes into it and stays. A spoonful of summer, whatever the weather is doing outside."
+ },
+ "c2_jan": {
+  "kind": "scene",
+  "chapter": 2,
+  "when": [
+   "done:sq_sick_neighbour"
+  ],
+  "priority": 55,
+  "emoji": "🎭",
+  "title": "A bowl for Old Jan",
+  "pages": [
+   {
+    "text": "Old Jan eats the tomato soup in small, serious spoonfuls, and by the third spoon his cheeks go pink. “This is the sort of soup,” he says, “that Berit made.”"
+   },
+   {
+    "text": "He taps the bowl. “And that goat could count, you know. The Moonedge goat. Count to five, I swear.” Nobody else has ever believed him. You rather do."
+   }
+  ]
+ },
+ "c2_otto": {
+  "kind": "scene",
+  "chapter": 2,
+  "when": [
+   "done:sq_bridge"
+  ],
+  "priority": 55,
+  "emoji": "🎭",
+  "title": "The ferryman",
+  "pages": [
+   {
+    "text": "Otto crosses the mended bridge slowly and stops in the middle, looking down at the water. “I used to ferry people over this,” he says. “With a pole.”"
+   },
+   {
+    "text": "“The night your family left, I took you across. You were so small. You did not cry.” He looks at you, then at the water. “I never forgot.” You say nothing. Neither does he. The river says a good deal."
+   }
+  ]
+ },
+ "c2_hammer": {
+  "kind": "beat",
+  "chapter": 2,
+  "when": [
+   "done:cottage_roof"
+  ],
+  "priority": 80,
+  "emoji": "📖",
+  "title": "A very small hammer",
+  "pages": [
+   {
+    "text": "In the corner where the last bundle must go, there is a hammer. It is the size of your thumb. A real one, worn shiny, in exactly the wrong place, as if somebody very small wanted to help and did not know how."
+   },
+   {
+    "text": "You put the last bundle on the other side of it. The roof has a bump now, a round lump where the hammer is. You decide it is a feature."
+   }
+  ]
+ },
+ "c2_stove": {
+  "kind": "moment",
+  "chapter": 2,
+  "when": [
+   "done:stove_1"
+  ],
+  "priority": 50,
+  "emoji": "✨",
+  "title": "Heat with a door",
+  "text": "The stove ticks as it warms, the way a cat ticks when it is thinking. The cottage smells of wood, iron, and a pot nearly ready to be soup. You do not have to eat standing up any more. You do, mostly. But not always."
+ },
+ "c2_pieter": {
+  "kind": "visit",
+  "chapter": 2,
+  "when": [
+   "seen:c2_cottage",
+   "after:c2_cottage:2"
+  ],
+  "priority": 50,
+  "emoji": "🚪",
+  "title": "A lantern in daylight",
+  "pages": [
+   {
+    "text": "A lantern stops at your gate in broad daylight. It belongs to Pieter, the night watchman, a tall, stooped man with a book under his arm. He lights it by day so people can see him coming."
+   },
+   {
+    "text": "He looks at your roof for a long time. He looks at the bump in the corner. He writes one line in his book. “Good thatch,” he says, and goes. You look up at your roof as if it might be counted."
+   }
+  ]
+ },
+ "c2_reply": {
+  "kind": "letter",
+  "chapter": 2,
+  "when": [
+   "after:c2_cottage:8"
+  ],
+  "priority": 55,
+  "emoji": "✉️",
+  "title": "Mother writes back",
+  "pages": [
+   {
+    "text": "The barge comes round the bend on Landing Day, and Mei waves a letter. The writing is round and quick, and there is a lot more of it than last time."
+   },
+   {
+    "text": "“I am not going to say ‘I told you so’, because I never told you anything. Eat properly. Sit down when you eat. The table is still long.” At the bottom: “Ask Maud about the goat.” You put the letter with the other one."
+   }
+  ]
+ },
+ "c2_n_frost": {
+  "kind": "discovery",
+  "chapter": 2,
+  "when": [
+   "page:k_frost"
+  ],
+  "priority": 60,
+  "emoji": "📝",
+  "title": "In the margin",
+  "text": "Beside the frost page, small: “Cover the beans. Cover everything. Then go and cover Maud's.”"
+ },
+ "c2_snug": {
+  "kind": "moment",
+  "chapter": 2,
+  "when": [
+   "season:winter",
+   "chapter<3",
+   "done:cottage"
+  ],
+  "priority": 50,
+  "emoji": "✨",
+  "title": "Snow-light",
+  "text": "You wake in the cottage and the light is wrong. Too white, too quiet. Outside, the whole yard has gone soft and silver. Your roof is holding up a whole cold sky and not complaining. You stay under the blanket a little longer than necessary."
+ },
+ "c2_longnight": {
+  "kind": "scene",
+  "chapter": 2,
+  "when": [
+   "seen:c2_snug",
+   "after:c2_snug:2"
+  ],
+  "priority": 55,
+  "emoji": "🎭",
+  "title": "One true thing",
+  "pages": [
+   {
+    "text": "On Longnight, Greenstem comes up the hill in the dark with a lantern. “You have to come down to the Hall,” he says. “Everyone goes.” “Nobody asked me.” “I'm asking you.”"
+   },
+   {
+    "text": "The Hall is long and warm and full to the rafters. On Longnight anybody can stand up and say one true thing. Then the person nearest passes them a cup. Nobody claps. Nobody answers. They just pass a cup."
+   },
+   {
+    "text": "A man says, “I miss my brother.” A girl says, “I broke Mother's blue jug and blamed the cat.” You do not stand up. You take the ladle and serve soup instead. Somebody puts a cup in your hand anyway. You do not see who."
+   }
+  ]
+ },
+ "c2_n_sleep": {
+  "kind": "discovery",
+  "chapter": 2,
+  "when": [
+   "page:k_sleep"
+  ],
+  "priority": 60,
+  "emoji": "📝",
+  "title": "In the margin",
+  "text": "Beside the page about sleep, underlined twice: “You, too.”"
+ },
+ "c2_started_low": {
+  "kind": "scene",
+  "chapter": 2,
+  "when": [
+   "seen:c2_barn",
+   "after:c2_barn:3"
+  ],
+  "priority": 55,
+  "emoji": "🎭",
+  "title": "It started low",
+  "pages": [
+   {
+    "text": "Down in the village the children are skipping. You walk past with a sack on your shoulder. They are singing the lightning rhyme. “It started low,” you say. Not loudly, without meaning to."
+   },
+   {
+    "text": "The rope slaps down. The children look at you. You look at them. They swap to the chalk rhyme very fast."
+   }
+  ]
+ },
+ "c2_barn_frame": {
+  "kind": "moment",
+  "chapter": 2,
+  "when": [
+   "done:barn_frame"
+  ],
+  "priority": 50,
+  "emoji": "✨",
+  "title": "Ribs",
+  "pages": [
+   {
+    "text": "The frame of the new barn goes up, beam by beam. Against the evening it looks like the ribs of something very large, asleep on its side."
+   },
+   {
+    "text": "The old barn burned from a corner. You walk all the way round the new one, to check that every corner is only a corner."
+   }
+  ]
+ },
+ "c2_barn_done": {
+  "kind": "beat",
+  "chapter": 2,
+  "when": [
+   "done:barn_1"
+  ],
+  "priority": 80,
+  "emoji": "📖",
+  "title": "A lantern outside",
+  "text": "The barn is finished. It smells of new pine and fresh straw. You hang a lantern on a post outside, not on a hook inside. Hay and flame should live far apart. That is as far as you let yourself think."
+ },
+ "c2_pond": {
+  "kind": "moment",
+  "chapter": 2,
+  "when": [
+   "done:pond"
+  ],
+  "priority": 50,
+  "emoji": "✨",
+  "title": "The pond opens its eye",
+  "pages": [
+   {
+    "text": "The last spadeful comes out, and the water arrives. It is slow about it. First a dark patch, then a shine, then a sky lying on the ground with clouds in it."
+   },
+   {
+    "text": "A frog appears at once and says nothing at all. It has the manner of someone who has been waiting for this for years."
+   }
+  ]
+ },
+ "c2_kitten": {
+  "kind": "scene",
+  "chapter": 2,
+  "when": [
+   "done:sq_stray_kitten"
+  ],
+  "priority": 55,
+  "emoji": "🎭",
+  "title": "Ginger stays",
+  "text": "She sniffs the saucer. She sniffs the straw. She walks round the bed three times, sits in the middle, turns her back to you and begins to wash. This means yes. You stand very still so as not to spoil it."
+ },
+ "c2_k_spring": {
+  "kind": "bark",
+  "chapter": 2,
+  "when": [
+   "season:spring",
+   "chapter>=2",
+   "chapter<3",
+   "chance:0.2"
+  ],
+  "priority": 40,
+  "emoji": "💬",
+  "once": false,
+  "text": "The soil smells different from last year. Less like ash. More like a promise."
+ },
+ "c2_k_hive": {
+  "kind": "bark",
+  "chapter": 2,
+  "when": [
+   "item:honey>=1",
+   "chapter<3",
+   "chance:0.15"
+  ],
+  "priority": 40,
+  "emoji": "💬",
+  "once": false,
+  "text": "A bee lands on your sleeve, inspects the sleeve, finds it adequate, leaves."
+ },
+ "c2_k_cow": {
+  "kind": "bark",
+  "chapter": 2,
+  "when": [
+   "done:animal_cow",
+   "chance:0.15"
+  ],
+  "priority": 40,
+  "emoji": "💬",
+  "once": false,
+  "text": "Somewhere behind the barn a cow sighs, a long, deep sigh like a door being shut on a bad day."
+ },
+ "c2_k_roof": {
+  "kind": "bark",
+  "chapter": 2,
+  "when": [
+   "done:cottage",
+   "season:autumn",
+   "chance:0.2"
+  ],
+  "priority": 40,
+  "emoji": "💬",
+  "once": false,
+  "text": "The first leaves tap on the roof, one by one, as if asking to be let in."
+ },
+ "c2_k_kitten": {
+  "kind": "bark",
+  "chapter": 2,
+  "when": [
+   "done:sq_stray_kitten",
+   "chance:0.15"
+  ],
+  "priority": 40,
+  "emoji": "💬",
+  "once": false,
+  "text": "Something small and ginger crosses the yard at speed, with no reason you can see, and vanishes."
+ }
+}

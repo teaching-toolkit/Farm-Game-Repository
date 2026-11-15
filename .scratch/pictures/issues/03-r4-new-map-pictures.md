@@ -17,6 +17,8 @@
 - [ ] Bare trees for winter, wired into the season look
 - [ ] A painted forest for the forest screen (the spots are tiles for now)
 
+**14 Nov 2026:** the travelling merchant's cart moved to `pictures/15` (prototype, [#14.8]); the rest stays here.
+
 ---
 
 **Id:** R4 · **Feature:** `pictures` · **Moved from** `archive/todo-2026-10.md` §5 on 23 October 2026; the notes below are unchanged. Status labels in them (✅ 💡 ❓) are notes, not the status above.

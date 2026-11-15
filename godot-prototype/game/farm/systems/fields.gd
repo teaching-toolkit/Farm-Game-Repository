@@ -381,8 +381,7 @@ func _weed_effect(_who, args: Dictionary, _cost: Dictionary) -> Dictionary:
 	G.S["stats"]["weeds"] = float(G.S["stats"]["weeds"]) + n
 	G.rewards.job_progress("weed", "", n)
 	G.rewards.weed_luck()
-	G.crafting.wear_polish("use:weed")
-	G.rewards.check_acorns()
+	G.rewards.check_acorns()   # the hoe's wear is the chore's own data (46-chores.json: wear), given only to the farmer
 	return {"gained": {"fiber": fib_got}}
 
 ## Pick the stones of one patch (up to stonesPerPick), a chore of the actions system.
@@ -433,6 +432,39 @@ func register_chores() -> void:
 	G.actions.register("plant", _plant_effect, _plant_requires, Callable(), _plant_extra)
 	G.actions.register("harvest", _harvest_effect, _harvest_requires)
 	G.actions.register("cut_tree", _cut_tree_effect, _cut_tree_requires)
+	G.actions.register_auto("weed", _auto_weed)
+	G.actions.register_auto("pick_stones", _auto_stones)
+	G.actions.register_auto("clear_snow", _auto_snow)
+	G.actions.register_auto("fetch_water", _auto_water)
+
+## How a pet picks the target of these chores (G.actions.register_auto): the chore's args, or {} when there is nothing to do. Read-only.
+## Each answers only where the chore's own requirement holds, so a pet never waits for a chore that cannot happen.
+## The patch of the field with most of `key` ("weeds", "stones"), at least 0.5 (as the chores want it); the first of equals.
+func _auto_most(key: String) -> Dictionary:
+	var best := -1
+	var most := 0.5 - 0.0001
+	for i in range(G.S["patches"].size()):
+		if patch_usable("field", i) and float(G.S["patches"][i][key]) > most: most = float(G.S["patches"][i][key]); best = i
+	return {"i": best} if best >= 0 else {}
+
+func _auto_weed() -> Dictionary:
+	return _auto_most("weeds")
+
+## The stoniest patch, unless the store has no room for stones (they would be lost).
+func _auto_stones() -> Dictionary:
+	if G.needs.storage_cap("stone") - G.inventory.count("stone") < 0.5: return {}
+	return _auto_most("stones")
+
+## The first snowy patch.
+func _auto_snow() -> Dictionary:
+	for i in range(G.S["patches"].size()):
+		if patch_usable("field", i) and patch_snow(i): return {"i": i}
+	return {}
+
+## Water has no patch (a patch has no wetness: the water is spent at planting): the chore takes no args, so the answer is where the pet goes,
+## {"place": "water"}, whenever the farmer's bucket has room.
+func _auto_water() -> Dictionary:
+	return {"place": "water"} if _fetch_water_requires(null, {}).is_empty() else {}
 
 func _fetch_water_requires(_who, _args: Dictionary) -> Array:
 	if G.needs.water_cap() - float(G.S["water"]) < 0.5: return [{"key": "water_full", "text": tr("💧 Your water is full.")}]

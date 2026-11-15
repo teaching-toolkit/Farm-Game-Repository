@@ -139,6 +139,39 @@ func _ready() -> void:
 	# the save keys
 	var save: Dictionary = G.S.duplicate(true)
 	_check(save.has("story_seen") and save.has("story_taps") and save.has("story_last") and save.has("story_bark"), "the story's save keys exist")
+	# story/25: a build's moment piece (data/farm/story/40-moments.json) waits for its node, then comes; its page names a picture that exists
+	G.reset_game()
+	G.D["story"] = JSON.parse_string(FileAccess.get_file_as_string("res://data/farm/story/40-moments.json"))      # earlier checks swapped in test pieces: use the real file
+	G.S["step"] = 10
+	_check(not ST.is_ready("m_road_2"), "the pothole moment is not ready before the road is mended")
+	G.S["unlocked"]["road_2"] = true
+	_check(ST.is_ready("m_road_2"), "…and is ready once it is mended")
+	var mpic := str(ST.pages("m_road_2")[0].get("picture", ""))
+	_check(mpic != "" and FileAccess.file_exists("res://assets/map/%s.png" % mpic), "…its page names a picture that exists (%s)" % mpic)
+	# people/01: showing a visit piece that has a `visitor` starts that person's visit (the figure walks in: figures_test); no other piece does
+	G.reset_game()
+	G.S["step"] = 5
+	G.D["story"]["tv_maud"] = {"kind": "visit", "visitor": "maud", "chapter": 1, "text": "x"}
+	G.D["story"]["tv_rue"] = {"kind": "visit", "chapter": 1, "text": "x"}
+	G.D["story"]["tv_beat"] = {"kind": "beat", "visitor": "lark", "chapter": 1, "text": "x"}
+	_check(G.people.visitor() == "", "nobody visits before a visit piece is shown")
+	ST.mark_seen("tv_rue")
+	ST.mark_seen("tv_beat")
+	_check(G.people.visitor() == "", "a visit piece without a visitor, and a piece of another kind, start no visit")
+	ST.mark_seen("tv_maud")
+	_check(G.people.visitor() == "maud", "showing a visit piece with a visitor starts that visit (%s)" % G.people.visitor())
+	G.S["step"] = 5 + int(G.people.data()["visitSteps"])
+	_check(G.people.visitor() == "", "…and it is over after visitSteps questions")
+	var visits := 0
+	var all_people := true
+	for f in DirAccess.get_files_at("res://data/farm/story"):         # the real data: every visitor is one of the people with a door
+		if not f.ends_with(".json"): continue
+		var pcs: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/farm/story/" + f))
+		for id in pcs:
+			if not pcs[id].has("visitor"): continue
+			visits += 1
+			all_people = all_people and str(pcs[id].get("kind", "")) == "visit" and G.people.person(str(pcs[id]["visitor"])).get("scenes", {}).has("door")
+	_check(visits >= 10 and all_people, "every visitor in the data (%d pieces) is a visit about one of the people with a door scene" % visits)
 	# determinism of chance
 	var a: bool = G.conditions.holds("chance:0.5")
 	_check(a == G.conditions.holds("chance:0.5"), "chance gives one answer per question")

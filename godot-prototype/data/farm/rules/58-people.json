@@ -1,0 +1,199 @@
+{
+  "people": {
+    "note": "The people who are not the farmer (people/04, people/06). who: id -> name (their trade in plain words), look (the same slots as data/avatar.json 'default', plus the optional parts apron {color}, beard {color}, skirt {color}), messages (exactly three short lines, said in turn when the person is tapped; read aloud to a child: at most 8 words, no numbers, no prices, no secrets), when (a condition; '' = always) and scenes: where they are. scenes.square.stall: a seller who stands at that stall of the village square (rules/49-trip.json, where beside the stall: its 'seller'); scenes.square.stroll: a villager who walks between those named points of the square's 'points'. scenes.gate: the travelling merchant, who stands beside his cart at the farm's gate while he is there (game/farm/map/merchant.gd; he is there when the gate says so, `when` is not used): figureH is his height as a share of the map's width, dx and dy where he stands, as shares of the map's width from the middle of the cart's lower edge. Only the lines are translated (i18n.py); what a tapped person says is decided in game/farm/systems/people.gd. scenes.door: one of the story's seven visitors (game/farm/map/visitor.gd): when a story piece of kind visit has a `visitor` (one of these ids), the figure walks in from the left to the farmhouse door, stands while the story box is open and for visitSteps more questions (farm steps), then walks off to the left; its height and place are the optional figureH, dx and dy (shares of the map's width), otherwise the defaults of visitor.gd.",
+    "visitSteps": 2,
+    "who": {
+      "seed_seller": {
+        "name": "The seed seller",
+        "look": {
+          "skin": "#f1c7a0",
+          "hair": {"style": "short", "color": "#9e9e9e"},
+          "shirt": {"style": "long", "color": "#7fae5a"},
+          "trousers": {"style": "trousers", "color": "#6b4a2b"},
+          "shoes": {"color": "#4a3320"},
+          "hat": {"style": "straw", "color": "#e9c46a", "band": "#5bb34a"},
+          "apron": {"color": "#fffaf0"}
+        },
+        "messages": ["Good soil, good seeds, good morning!", "Plant something small and be patient.", "Every big plant starts as a seed."],
+        "when": "",
+        "scenes": {"square": {"stall": "seeds"}}
+      },
+      "raw_trader": {
+        "name": "The raw materials trader",
+        "look": {
+          "skin": "#d9a17a",
+          "hair": {"style": "short", "color": "#2b1d14"},
+          "shirt": {"style": "tee", "color": "#a35dd8"},
+          "trousers": {"style": "overalls", "color": "#6b4a2b"},
+          "shoes": {"color": "#3a2a22"},
+          "hat": {"style": "cap", "color": "#4a6fa5"},
+          "beard": {"color": "#2b1d14"}
+        },
+        "messages": ["Strong wood and good stone, right here!", "A sturdy farm needs sturdy planks.", "Look, touch and take what you need."],
+        "when": "",
+        "scenes": {"square": {"stall": "traders"}}
+      },
+      "book_seller": {
+        "name": "The book cart seller",
+        "look": {
+          "skin": "#b97c54",
+          "hair": {"style": "long", "color": "#2b1d14"},
+          "shirt": {"style": "long", "color": "#3f8fd8"},
+          "trousers": {"style": "trousers", "color": "#4a6fa5"},
+          "shoes": {"color": "#6b4a2b"},
+          "hat": {"style": "none"},
+          "apron": {"color": "#f2b632"}
+        },
+        "messages": ["A good book is a quiet friend.", "Come and read something new today!", "Books help you grow wise and strong."],
+        "when": "",
+        "scenes": {"square": {"stall": "books"}}
+      },
+      "old_woman": {
+        "name": "The old woman",
+        "look": {
+          "skin": "#f6d7bd",
+          "hair": {"style": "bun", "color": "#e8e8e8"},
+          "shirt": {"style": "long", "color": "#ff8fb1"},
+          "trousers": {"style": "trousers", "color": "#8d5a3b"},
+          "shoes": {"color": "#4a3320"},
+          "hat": {"style": "none"},
+          "skirt": {"color": "#a35dd8"}
+        },
+        "messages": ["What a lovely day for a walk.", "The well has the sweetest water.", "Take your time, little farmer."],
+        "when": "",
+        "scenes": {"square": {"stroll": ["tree", "well", "middle", "bench"]}}
+      },
+      "village_boy": {
+        "name": "The village boy",
+        "look": {
+          "skin": "#d9a17a",
+          "hair": {"style": "short", "color": "#5a3519"},
+          "shirt": {"style": "tee", "color": "#f2b632"},
+          "trousers": {"style": "shorts", "color": "#3f8fd8"},
+          "shoes": {"color": "#ffffff"},
+          "hat": {"style": "cap", "color": "#e86a4a"}
+        },
+        "messages": ["Hello! I like running around here.", "I saw a frog by the well!", "Is it a good day for chores?"],
+        "when": "",
+        "scenes": {"square": {"stroll": ["bench", "well", "tree", "middle"]}}
+      },
+      "merchant": {
+        "name": "The travelling merchant",
+        "look": {
+          "skin": "#d9a17a",
+          "hair": {"style": "short", "color": "#5a3519"},
+          "shirt": {"style": "long", "color": "#c4564e"},
+          "trousers": {"style": "trousers", "color": "#6a483d"},
+          "shoes": {"color": "#4a3320"},
+          "hat": {"style": "straw", "color": "#e8d0ac", "band": "#c4564e"},
+          "beard": {"color": "#5a3519"}
+        },
+        "messages": ["Hello! Look at all my things!", "I travel far with my cart.", "What a nice farm you have!"],
+        "when": "",
+        "scenes": {"gate": {"figureH": 0.07, "dx": -0.065, "dy": -0.03}}
+      },
+      "maud": {
+        "name": "Granny Maud",
+        "look": {
+          "skin": "#f6d7bd",
+          "hair": {"style": "bun", "color": "#e8e8e8"},
+          "shirt": {"style": "long", "color": "#9c2f3c"},
+          "trousers": {"style": "trousers", "color": "#56627a"},
+          "shoes": {"color": "#3a2a22"},
+          "hat": {"style": "none"},
+          "skirt": {"color": "#56627a"}
+        },
+        "messages": ["Have you seen my goat, dear?", "Tea makes everything better, dear.", "Mind your hat. My goat loves hats."],
+        "when": "",
+        "scenes": {"door": {}}
+      },
+      "greenstem": {
+        "name": "Greenstem the herb gardener",
+        "look": {
+          "skin": "#f1c7a0",
+          "hair": {"style": "short", "color": "#b5651d"},
+          "shirt": {"style": "long", "color": "#2e7d4f"},
+          "trousers": {"style": "trousers", "color": "#6b4a2b"},
+          "shoes": {"color": "#4a3320"},
+          "hat": {"style": "none"}
+        },
+        "messages": ["I brought herbs. Smell them!", "Sage helps you feel better.", "Green things grow when you are kind."],
+        "when": "",
+        "scenes": {"door": {}}
+      },
+      "miller": {
+        "name": "The miller",
+        "look": {
+          "skin": "#d9a17a",
+          "hair": {"style": "short", "color": "#e8e8e8"},
+          "shirt": {"style": "long", "color": "#f4efe3"},
+          "trousers": {"style": "trousers", "color": "#d8d0bc"},
+          "shoes": {"color": "#6b4a2b"},
+          "hat": {"style": "cap", "color": "#f4efe3"},
+          "apron": {"color": "#cfc6ad"},
+          "beard": {"color": "#f0f0f0"}
+        },
+        "messages": ["Flour on my nose again!", "My wheel turns by the stream.", "Fresh bread starts with good flour."],
+        "when": "",
+        "scenes": {"door": {}}
+      },
+      "wren": {
+        "name": "Wren the herb woman",
+        "look": {
+          "skin": "#e2b48a",
+          "hair": {"style": "long", "color": "#5a3519"},
+          "shirt": {"style": "long", "color": "#2f9e9e"},
+          "trousers": {"style": "trousers", "color": "#4a3b2b"},
+          "shoes": {"color": "#4a3320"},
+          "hat": {"style": "none"},
+          "skirt": {"color": "#8a6a3a"}
+        },
+        "messages": ["Wash your hands before you pick.", "Every herb has its own job.", "Slowly, slowly. Plants do not hurry."],
+        "when": "",
+        "scenes": {"door": {}}
+      },
+      "quill": {
+        "name": "Master Quill",
+        "look": {
+          "skin": "#f1c7a0",
+          "hair": {"style": "short", "color": "#9e9e9e"},
+          "shirt": {"style": "long", "color": "#27345a"},
+          "trousers": {"style": "trousers", "color": "#2b2b33"},
+          "shoes": {"color": "#1e1e1e"},
+          "hat": {"style": "none"}
+        },
+        "messages": ["I like things neat and tidy.", "Everything goes in my big book.", "Good work. Keep it up."],
+        "when": "",
+        "scenes": {"door": {}}
+      },
+      "lark": {
+        "name": "Lark",
+        "look": {
+          "skin": "#e6c09a",
+          "hair": {"style": "long", "color": "#c9a86a"},
+          "shirt": {"style": "long", "color": "#94501f"},
+          "trousers": {"style": "trousers", "color": "#4a4a52"},
+          "shoes": {"color": "#2b1d14"},
+          "hat": {"style": "none"}
+        },
+        "messages": ["Hello! I always have another pocket.", "Books are heavy. Words are light.", "Nice day for a chat, farmer."],
+        "when": "",
+        "scenes": {"door": {}}
+      },
+      "mei": {
+        "name": "Captain Mei",
+        "look": {
+          "skin": "#f1c7a0",
+          "hair": {"style": "long", "color": "#2b1d14"},
+          "shirt": {"style": "long", "color": "#e8861c"},
+          "trousers": {"style": "trousers", "color": "#2f4a6a"},
+          "shoes": {"color": "#2b1d14"},
+          "hat": {"style": "cap", "color": "#1f3a5f"}
+        },
+        "messages": ["Ahoy! Fair winds to your farm!", "A good captain keeps a steady hand.", "I love the smell of the river."],
+        "when": "",
+        "scenes": {"door": {}}
+      }
+    }
+  }
+}

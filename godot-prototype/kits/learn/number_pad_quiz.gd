@@ -61,6 +61,7 @@ func _ready() -> void:
 	lvl_lbl = _label("", 17, col["ink"])
 	lr.add_child(lvl_lbl)
 	lvl_bar = _bar(120, 10, col["medal_bar"])
+	lvl_bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER      # level on the same line as its words, not hanging above them
 	lr.add_child(lvl_bar)
 	medal_lbl = _label("", 18, col["ink"])
 	lr.add_child(medal_lbl)
