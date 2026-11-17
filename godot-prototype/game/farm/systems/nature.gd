@@ -2,6 +2,8 @@ extends RefCounted
 class_name FarmNature
 ## What the forest edge and the clay pit at the pond give (TODO N1–N5, design document 5.9): sticks, loose stones and clay are pools that fall when gathered and grow
 ## back slowly; trees go round a cycle (tree → stump → sapling → tree). A tap yields less when its pool is low, never less than 1.
+## When the advice is ignored and a pool falls far below it, the Helper whose chore draws on that pool rests from it until the pool is back (N5):
+## `pause_of` is the one question the pets ask. Helpers never leave; the farmer is never stopped.
 ## Data: data/farm/rules/56-nature.json.
 
 var G: FarmGame   # the Game: the farm's state (G.S), its data and the other systems
@@ -11,7 +13,7 @@ func _init(game: FarmGame) -> void:
 
 ## The save keys this system owns, with their values in a new game (kits/core/saves.gd fills missing ones into older saves).
 func save_defaults() -> Dictionary:
-	return {"nature": {"pool": {}, "t": -1.0, "s": 0.0, "p": 0.0, "advice": {}}}
+	return {"nature": {"pool": {}, "t": -1.0, "s": 0.0, "p": 0.0, "advice": {}, "rest": {}}}
 
 func data() -> Dictionary:
 	return G.meta.get("nature", {})
@@ -83,6 +85,7 @@ func took(rid: String, n := 1.0) -> void:
 	else:
 		s["pool"][p] = maxf(0.0, level(p) - amount)
 	_advise(p)
+	_rest_check()
 
 func _advise(p: String) -> void:
 	if fill(p) >= float(data().get("adviceBelow", 0.35)): return
@@ -108,3 +111,28 @@ func step(_info := {}) -> void:
 		s["s"] = st - to_sapling
 		s["p"] = sa + to_sapling - to_tree
 		s["t"] = minf(pool_max("trees"), t + to_tree)
+	_rest_check()
+
+# ------------------------------------------------------------------ N5: a Helper rests
+
+## Is this pool over-used: it fell below `pauseBelow` (well past the advice) and has not yet come back to `pauseUntil`?
+func resting(p: String) -> bool:
+	return bool((G.S["nature"].get("rest", {}) as Dictionary).get(p, false))
+
+## Does a pool's rest pause this chore or blessing (entry id) of this pet? {"pool", "place"} (place: where the Helper sits, as in the pets' data) or {}.
+## The pool's data names the one job that draws on it (`pauses`: pet and entry); a pool with none never pauses anybody.
+func pause_of(pid: String, eid: String) -> Dictionary:
+	for p in pools():
+		var w: Dictionary = pools()[p].get("pauses", {})
+		if resting(p) and str(w.get("pet", "")) == pid and str(w.get("entry", "")) == eid: return {"pool": p, "place": str(w.get("place", ""))}
+	return {}
+
+## A pool begins its rest when it falls below `pauseBelow`, and ends it when it is back at `pauseUntil` (the old saves have no "rest" yet).
+func _rest_check() -> void:
+	var s: Dictionary = G.S["nature"]
+	if not s.has("rest"): s["rest"] = {}
+	for p in pools():
+		if not (pools()[p] as Dictionary).has("pauses"): continue
+		var f := fill(p)
+		if not resting(p) and f < float(data().get("pauseBelow", 0.2)): s["rest"][p] = true
+		elif resting(p) and f >= float(data().get("pauseUntil", 0.5)): s["rest"].erase(p)

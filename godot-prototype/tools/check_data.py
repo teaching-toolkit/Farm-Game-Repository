@@ -343,17 +343,17 @@ else:
     for k in ("patchValue", "buildingValue", "maxOfSales", "floor", "maxSeasons", "easedFraction"):
         if k not in LD: err("lord", f"{k} is missing")
 
-# ---------------------------------------------------------------- the pets' jobs (rules/54-pets.json)
+# ---------------------------------------------------------------- the pets' blessings and chores (rules/54-pets.json)
 PT = META.get("pets", {})
 if not PT: warn("pets", "rules/54-pets.json is missing")
 else:
-    for pid, jobs in PT.get("jobs", {}).items():
-        if pid not in N or N[pid].get("type") != "pet": err("pets", f"jobs: {pid} is not a pet")
-        ids = [j.get("id") for j in jobs]
-        if len(set(ids)) != len(ids): err(f"pets {pid}", "two jobs with the same id")
-        if sum(1 for j in jobs if j.get("kind") == "chore") > 2: err(f"pets {pid}", "more than two chore jobs (a pet helps with two chores)")
-        for j in jobs:
-            w = f"pets {pid} job {j.get('id')}"
+    for pid, entries in PT.get("entries", {}).items():
+        if pid not in N or N[pid].get("type") != "pet": err("pets", f"entries: {pid} is not a pet")
+        ids = [j.get("id") for j in entries]
+        if len(set(ids)) != len(ids): err(f"pets {pid}", "two entries with the same id")
+        if sum(1 for j in entries if j.get("kind") == "chore") > 2: err(f"pets {pid}", "more than two chores (a pet helps with two chores)")
+        for j in entries:
+            w = f"pets {pid} entry {j.get('id')}"
             if j.get("kind") not in ("weeds", "stones", "water", "pests", "makes", "chore"): err(w, f"kind {j.get('kind')!r} is not weeds, stones, water, pests, makes or chore")
             if j.get("kind") == "chore" and j.get("chore") not in META.get("chores", {}): err(w, f"chore {j.get('chore')!r} is not a chore of rules/46-chores.json")
             if j.get("hidden") is not None and not isinstance(j.get("hidden"), bool): err(w, "hidden must be true or false")
@@ -369,12 +369,12 @@ else:
     for wc, w in PT.get("whens", {}).items():
         # its condition ('when' with {n}) is checked with the other conditions (pet WHEN card …)
         if not float(w.get("min", 0)) <= float(w.get("default", 0)) <= float(w.get("max", 99)): err(f"pets when {wc}", "default outside min..max")
-    # a rule is a blessing or a chore: the chore jobs are offered (none hidden) and each has the energy WHEN card to keep the farmer from being drained
+    # a rule is a blessing or a chore: the chores are offered (none hidden) and each has the energy WHEN card to keep the farmer from being drained
     if "energy" not in PT.get("whens", {}): err("pets", "the `energy` WHEN card is missing (a chore's default WHEN)")
-    for pid in PT.get("jobs", {}):
+    for pid in PT.get("entries", {}):
         if "energy" not in PT.get("allowedWhens", {}).get(pid, []): err(f"pets {pid}", "allowedWhens must allow the `energy` card")
-        for j in PT["jobs"][pid]:
-            if j.get("kind") == "chore" and j.get("hidden"): err(f"pets {pid} job {j.get('id')}", "a chore job is no longer hidden (the window offers it as 'Helps with')")
+        for j in PT["entries"][pid]:
+            if j.get("kind") == "chore" and j.get("hidden"): err(f"pets {pid} entry {j.get('id')}", "a chore is no longer hidden (the window offers it as 'Helps with')")
     for pid, f in PT.get("first", {}).items():
         if pid not in N or N[pid].get("type") != "pet": err("pets", f"first: {pid} is not a pet")
         if not f.get("emoji") or not f.get("place") or int(f.get("every", 0)) < 1: err(f"pets {pid}", "first needs an emoji, a place and every >= 1")
@@ -506,6 +506,13 @@ for sid in Qd.get("stationBonus", {}): node_id("quality station bonus", sid, "st
 for rid, r in RECIPES.items():
     if any(ITEMS.get(k, {}).get("category") in Qd.get("categories", []) for k in r["outputs"]) and r["station"] not in Qd.get("stationBonus", {}):
         warn("quality", f"recipe {rid} makes something with a grade at {r['station']}, which has no stationBonus (it counts 0)")
+# a goal's "minGrade" (skills-quality/01): a grade above Lumpy that exists, on a goal whose price holds a thing that has a grade
+for nid, n in N.items():
+    if "minGrade" not in n: continue
+    w = f"node {nid}"
+    mg = n["minGrade"]
+    if not isinstance(mg, int) or isinstance(mg, bool) or not 1 <= mg < len(Qd.get("levels", [])): err(w, f"minGrade {mg!r} is not a grade above the lowest (1 .. {len(Qd.get('levels', [])) - 1})")
+    elif not any(ITEMS.get(k, {}).get("category") in Qd.get("categories", []) for k in n.get("cost", {})): err(w, "minGrade, but nothing in its cost has a grade")
 
 # ---------------------------------------------------------------- skills (rules/48-skills.json)
 Sk = META.get("skills", {})
@@ -652,6 +659,15 @@ for k, n in list(LS.get("start", {}).items()) + [(k, 1) for k in LS.get("kinds",
 for k in LS.get("kinds", []) + list(LS.get("start", {})):
     for n in (1, 2):
         if not os.path.exists(os.path.join(ROOT, "assets", "deco", f"loose_{k}_{n}.png")): err("loose", f"picture assets/deco/loose_{k}_{n}.png does not exist")
+
+TR = META.get("trodden", {})
+for key in ("walksForTrack", "cap", "showFrom", "alphaMin", "alphaMax", "tileCells"):
+    if float(TR.get(key, 0)) <= 0: err("trodden", f"{key} must be above 0 (rules/69-trodden.json)")
+if not 0 < float(TR.get("cap", 0)) < 1: err("trodden", "cap must be between 0 and 1 (a path never becomes a road)")
+if float(TR.get("showFrom", 0)) >= float(TR.get("cap", 0)): err("trodden", "showFrom must be below cap")
+if float(TR.get("alphaMin", 0)) > float(TR.get("alphaMax", 0)) or float(TR.get("alphaMax", 0)) > 1: err("trodden", "alphaMin must not be above alphaMax, and alphaMax at most 1")
+if float(TR.get("tileCells", 0)) < 2: err("trodden", "tileCells must be at least 2 (the patches must join up)")
+if float(TR.get("fadePerSeason", -1)) < 0: err("trodden", "fadePerSeason must be 0 or more")
 
 MO = META.get("moments", {})
 if int(MO.get("perStep", 0)) < 4: err("moments", "perStep must be at least 4")

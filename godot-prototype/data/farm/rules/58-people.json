@@ -1,11 +1,12 @@
 {
   "people": {
-    "note": "The people who are not the farmer (people/04, people/06). who: id -> name (their trade in plain words), look (the same slots as data/avatar.json 'default', plus the optional parts apron {color}, beard {color}, skirt {color}), messages (exactly three short lines, said in turn when the person is tapped; read aloud to a child: at most 8 words, no numbers, no prices, no secrets), when (a condition; '' = always) and scenes: where they are. scenes.square.stall: a seller who stands at that stall of the village square (rules/49-trip.json, where beside the stall: its 'seller'); scenes.square.stroll: a villager who walks between those named points of the square's 'points'. scenes.gate: the travelling merchant, who stands beside his cart at the farm's gate while he is there (game/farm/map/merchant.gd; he is there when the gate says so, `when` is not used): figureH is his height as a share of the map's width, dx and dy where he stands, as shares of the map's width from the middle of the cart's lower edge. Only the lines are translated (i18n.py); what a tapped person says is decided in game/farm/systems/people.gd. scenes.door: one of the story's seven visitors (game/farm/map/visitor.gd): when a story piece of kind visit has a `visitor` (one of these ids), the figure walks in from the left to the farmhouse door, stands while the story box is open and for visitSteps more questions (farm steps), then walks off to the left; its height and place are the optional figureH, dx and dy (shares of the map's width), otherwise the defaults of visitor.gd.",
+    "note": "The people who are not the farmer (people/04, people/06). who: id -> name (their trade in plain words), look (the same slots as data/avatar.json 'default', plus the optional parts apron {color}, beard {color}, skirt {color}; style: painted_face, the figure's painted look from people/05, plain = the rig's first look; a look without a style gets the one in avatar.json 'default'), messages (exactly three short lines, said in turn when the person is tapped; read aloud to a child: at most 8 words, no numbers, no prices, no secrets), when (a condition; '' = always) and scenes: where they are. scenes.square.stall: a seller who stands at that stall of the village square (rules/49-trip.json, where beside the stall: its 'seller'); scenes.square.stroll: a villager who walks between those named points of the square's 'points'. scenes.gate: the travelling merchant, who stands beside his cart at the farm's gate while he is there (game/farm/map/merchant.gd; he is there when the gate says so, `when` is not used): figureH is his height as a share of the map's width, dx and dy where he stands, as shares of the map's width from the middle of the cart's lower edge. Only the lines are translated (i18n.py); what a tapped person says is decided in game/farm/systems/people.gd. scenes.door: one of the story's seven visitors (game/farm/map/visitor.gd): when a story piece of kind visit has a `visitor` (one of these ids), the figure walks in from the left to the farmhouse door, stands while the story box is open and for visitSteps more questions (farm steps), then walks off to the left; its height and place are the optional figureH, dx and dy (shares of the map's width), otherwise the defaults of visitor.gd.",
     "visitSteps": 2,
     "who": {
       "seed_seller": {
         "name": "The seed seller",
         "look": {
+          "style": "painted_face",
           "skin": "#f1c7a0",
           "hair": {"style": "short", "color": "#9e9e9e"},
           "shirt": {"style": "long", "color": "#7fae5a"},
@@ -21,6 +22,7 @@
       "raw_trader": {
         "name": "The raw materials trader",
         "look": {
+          "style": "painted_face",
           "skin": "#d9a17a",
           "hair": {"style": "short", "color": "#2b1d14"},
           "shirt": {"style": "tee", "color": "#a35dd8"},
@@ -36,6 +38,7 @@
       "book_seller": {
         "name": "The book cart seller",
         "look": {
+          "style": "painted_face",
           "skin": "#b97c54",
           "hair": {"style": "long", "color": "#2b1d14"},
           "shirt": {"style": "long", "color": "#3f8fd8"},
@@ -51,6 +54,7 @@
       "old_woman": {
         "name": "The old woman",
         "look": {
+          "style": "painted_face",
           "skin": "#f6d7bd",
           "hair": {"style": "bun", "color": "#e8e8e8"},
           "shirt": {"style": "long", "color": "#ff8fb1"},
@@ -66,6 +70,7 @@
       "village_boy": {
         "name": "The village boy",
         "look": {
+          "style": "painted_face",
           "skin": "#d9a17a",
           "hair": {"style": "short", "color": "#5a3519"},
           "shirt": {"style": "tee", "color": "#f2b632"},
@@ -80,6 +85,7 @@
       "merchant": {
         "name": "The travelling merchant",
         "look": {
+          "style": "painted_face",
           "skin": "#d9a17a",
           "hair": {"style": "short", "color": "#5a3519"},
           "shirt": {"style": "long", "color": "#c4564e"},
@@ -95,6 +101,7 @@
       "maud": {
         "name": "Granny Maud",
         "look": {
+          "style": "painted_face",
           "skin": "#f6d7bd",
           "hair": {"style": "bun", "color": "#e8e8e8"},
           "shirt": {"style": "long", "color": "#9c2f3c"},
@@ -110,6 +117,7 @@
       "greenstem": {
         "name": "Greenstem the herb gardener",
         "look": {
+          "style": "painted_face",
           "skin": "#f1c7a0",
           "hair": {"style": "short", "color": "#b5651d"},
           "shirt": {"style": "long", "color": "#2e7d4f"},
@@ -124,6 +132,7 @@
       "miller": {
         "name": "The miller",
         "look": {
+          "style": "painted_face",
           "skin": "#d9a17a",
           "hair": {"style": "short", "color": "#e8e8e8"},
           "shirt": {"style": "long", "color": "#f4efe3"},
@@ -140,6 +149,7 @@
       "wren": {
         "name": "Wren the herb woman",
         "look": {
+          "style": "painted_face",
           "skin": "#e2b48a",
           "hair": {"style": "long", "color": "#5a3519"},
           "shirt": {"style": "long", "color": "#2f9e9e"},
@@ -155,6 +165,7 @@
       "quill": {
         "name": "Master Quill",
         "look": {
+          "style": "painted_face",
           "skin": "#f1c7a0",
           "hair": {"style": "short", "color": "#9e9e9e"},
           "shirt": {"style": "long", "color": "#27345a"},
@@ -169,6 +180,7 @@
       "lark": {
         "name": "Lark",
         "look": {
+          "style": "painted_face",
           "skin": "#e6c09a",
           "hair": {"style": "long", "color": "#c9a86a"},
           "shirt": {"style": "long", "color": "#94501f"},
@@ -183,6 +195,7 @@
       "mei": {
         "name": "Captain Mei",
         "look": {
+          "style": "painted_face",
           "skin": "#f1c7a0",
           "hair": {"style": "long", "color": "#2b1d14"},
           "shirt": {"style": "long", "color": "#e8861c"},

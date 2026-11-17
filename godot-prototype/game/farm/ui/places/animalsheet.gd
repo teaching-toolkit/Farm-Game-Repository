@@ -41,6 +41,8 @@ func animal_card(aid: String) -> PanelContainer:
 		ag.add_child(ct.get_meta("panel"))
 		if n.get("needsFlowers", false):
 			v.add_child(UI.label(tr("🌼 Flowers on the farm: %s") % ("yes" if G.animals.has_flowers() else tr("none — plant clover, flax or sunflowers")), 15, UI.GREEN_DARK if G.animals.has_flowers() else UI.RED, true))
+		if G.animals.fence_factor(aid) < 1.0:      # the broken fence (until the first pen upgrade); the picture of it comes with pictures/13
+			v.add_child(UI.label(tr("🪵 The fence is broken: mend it and they give more!"), 15, UI.RED, true))
 		if float(n.get("muck", 0.0)) > 0.0:
 			var mf: float = G.animals.muck_factor(aid)
 			var mt := M.widgets.tile(null, "💩", tr("Muck %d") % G.down(a["muck"]))

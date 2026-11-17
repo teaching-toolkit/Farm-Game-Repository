@@ -4,7 +4,7 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** needs-parent
+**Status:** done
 
 **Milestone:** prototype
 **Size:** quick
@@ -14,7 +14,7 @@
 - [x] C uses stand-in parts drawn in code or cut from an existing friend picture (no new generated pictures)
 - [x] A short note per look: what it costs per new person (pictures, data, code) and what it cannot do (gear, poses)
 - [x] Nothing in the game changes until the parent has picked; the trial lives in the tests folder
-- [ ] German through `i18n.py` for any new text; smoke test and `check_all.sh --short` pass; old saves load; the `docs/design/` file it changes is updated
+- [x] German through `i18n.py` for any new text; smoke test and `check_all.sh --short` pass; old saves load; the `docs/design/` file it changes is updated
 
 ---
 
@@ -44,3 +44,12 @@ Screenshot: `Claude outputs/screens/look-trial.png`. Scene: `godot-prototype/tes
 - Cost per new person: no pictures with the stand-in shapes (code only; the final version would want painted parts, about 10 pictures per figure style); data the same look entry; the code is already there.
 - Cannot: hold gear in the hands, do the chore poses (bend, kneel, reach), or turn to face the camera or away (only left/right mirroring); each extra pose needs new drawn parts.
 - Match: the flat, thick-outline look is the closest to the map pictures even as a stand-in: about 8 of 10 for looks, but the least able to act.
+
+## Progress
+
+**16 November 2026: look B taken (the parent is away; 💡 the parent's recommendation, easy to undo).** Look C is not taken.
+- Data: every look of the 13 people in `data/farm/rules/58-people.json` has `"style": "painted_face"`; `data/avatar.json` `default` has it too. That is the ONE default: `Avatar.set_look` starts from `default` and puts the look on top, so the farmer of a new game (no `S.look`) and an old save (colours, no style) are drawn `painted_face` without a new save key. `plain` and `painted` still work when a look says so; `kits/avatar/avatar.gd` got `style()` (what the figure is drawn in).
+- **To switch back:** for everybody at once, set `default.style` in `data/avatar.json` to `plain` (one line); to go back for one person, set that look's `style` (or remove the key from the people: they then take the default). The trial scene `tests/look_trial.tscn` is as it was, except that its "today" figure now says `"style": "plain"` itself (else it would have turned painted).
+- Test: `tests/figures_test.gd` `_style_checks` (data says it for all 13, every person is drawn so, the new-game farmer and an old save's look are `painted_face`, `plain`/`painted` still work). `figures_test` 60 checks OK, `saves_test` 89 OK, `ui_smoke` exit 0 with no FAIL, short golden identical for both seeds.
+- Seen (screenshots, farm, the square, `tests/pose_sheet.tscn`): the farmer and the village people show the painted face and a shirt pattern, and match the market stalls better than before. The `bend` pose is cut off at the right edge of the 200 px figure picture in the pose sheet; it is the same with `plain` (checked), so it is not new (in the game the farmer faces the work).
+- `check_all.sh --short` is left to the orchestrator.

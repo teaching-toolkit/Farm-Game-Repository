@@ -18,7 +18,11 @@ At each change of season, stale food turns (§5.7) and one box with the season's
 
 **The look of the season.** One shader lies over every picture on the map: in **winter** snow caps sit on every top edge (roofs, tree tops,
 fence rails) and the colours are muted and cooler; in **autumn** greens turn golden. Soil and plants keep their own look (muted in winter, no caps).
-**Snow**: in winter the rain is snow; every empty field patch is covered until the farmer clears it (a whole-field action, 1 ⚡ a patch) or spring melts it; nothing can be sown under snow. Outdoors in winter only **hardy** crops (winter wheat, onions, beans, winter kale) can be sown; every other crop's tile says *too cold to sow* (the greenhouse and the orchard do not mind). *(Planned: snow drawn on the ground, bare trees, a smooth change from one season to the next.)*
+The look **changes smoothly** *(built, nature/03)*: a new season does not jump. Over its first 10 questions (`season.fadeQuestions` in `rules/65-feel.json`)
+the snow caps, the muted or golden colours, the grass tint, the road's frost and the page colour behind the map fade from the last season's look to the new one's,
+eased (slow at the start and the end). `G.seasons.blend()` gives `{from, to, t}` from the question number alone, so a saved game shows the same
+look; the first spring has no season before it. In the middle of a season the look is fully the new one.
+**Snow**: in winter the rain is snow; every empty field patch is covered until the farmer clears it (a whole-field action, 1 ⚡ a patch) or spring melts it; nothing can be sown under snow. Outdoors in winter only **hardy** crops (winter wheat, onions, beans, winter kale) can be sown; every other crop's tile says *too cold to sow* (the greenhouse and the orchard do not mind). *(Planned: snow drawn on the ground, bare trees in winter: they need new pictures.)*
 
 **More of the season's look** *(built, season-look)*: **spring** is full of flowers in the grass (240; summer has 24, autumn and winter none); over the first 10 questions of a season their number moves from the last season's to the new one's, one flower at a time. In **autumn** about 20 leaves drift down over the farm, flipping from side to side (a drawn stand-in until the leaf pictures exist). In **winter** a thin frost sits on the top edge of the field patches and on the road, like the snow caps but lighter. Creatures show only in their seasons: no butterflies, fireflies, bees, slugs or caterpillars in winter (the pet tortoise and the other Helpers stay all year). Out of season only means *not drawn*: pests still eat, animals still give. All of it is look only (`rules/66-season-look.json`; frost strength in `rules/65-feel.json`).
 
@@ -37,5 +41,6 @@ The farm can over-use what it lives on, and the consequence is natural, lasts a 
 - **The soil** (§6.2): a patch remembers its last crop. The same crop again grows 15 % slower and is graded lower (*tired soil*);
   after beans or clover the next crop grows 10 % faster and is graded higher (*rested soil*). The patch's window says which.
 - **Water** is carried, never free (§5.2), and a hot summer needs more of it.
-- *(planned: water as a pool like the forest edge's, herbs in the forest edge's pools, and a Helper who pauses a job and gives the
-  farmer a look when advice is ignored: `nature/01`, `nature/02`.)*
+- **A Helper rests** *(built, `nature/02`)*: when advice is ignored and sticks or trees fall far below it, the pony's job that draws on
+  them pauses (a 🌱 at the forest) until the pool is back at a half. The Helper stays (§5.9).
+- *(planned: water as a pool like the forest edge's, and herbs in the forest edge's pools: `nature/01`.)*

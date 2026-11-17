@@ -4,14 +4,14 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** needs-parent
+**Status:** done
 
 **Milestone:** prototype
 
 **Size:** quick
 
-- [ ] The parent has struck out or starred ideas (or said "take your order")
-- [ ] Each kept idea is a ticket in this folder
+- [x] The parent has struck out or starred ideas (or said "take your order"): parent away: took order, ★ kept (16 Nov 2026)
+- [x] Each kept idea is a ticket in this folder: 1 → `02`, 2 → `03`, 7 → `04`, 8 → `05`, 12 → `06`, 14 → `07`, 17 → `08`
 
 ## 💡 The ideas (14 Nov 2026), cheapest first within each group
 
@@ -50,6 +50,21 @@ An agent checks first which of these the game already does. ★ = recommended fo
 22. **The notice board's notes come off** as orders are done.
 
 **Recommended order:** 1, 2 (the parent's own examples), then 7, 8, 12, 14, 17. Each is one small ticket; 1, 2, 12 and 14 need a few pictures (they join `pictures/15`), 7, 8 and 17 can be drawn from what exists.
+
+## Progress (16 Nov 2026)
+
+The parent was away and said "take your order": every ★ idea is kept. An agent checked the code for each before filing:
+
+| Idea | Does the game do it already? | Ticket |
+|---|---|---|
+| 1 piles, 2 loose sticks and stones | no, built before this check | `02`, `03` (done) |
+| 7 watered soil dark, dries pale | **no**: a patch has no wetness, the water is spent at planting; the soil picture was the same for every worked patch. Derived from the growth the patch already counts and from the rain flag, so no new save key. **Built.** | `04` (done) |
+| 8 stubble after the harvest | no (nothing says stubble or sheaf; a harvested patch is plain soil). Drawn in code, no pictures | `05` ready-for-agent |
+| 12 sheep woolly or shorn, clean or mucky pen, trough, eggs | no (one picture per animal, always the same). All state is saved already (`ready`, `muck`); needs one new picture, the shorn sheep | `06` needs-parent (picture via `pictures/15`; "stand-in is fine" makes it ready) |
+| 14 a station shows what it is doing | half: the ⏳ badge, and the tools made lie on the workbench. No smoke or glow. Smoke and glow drawn in code; the thing on the bench and herbs on the rack need pictures and are left out | `07` ready-for-agent |
+| 17 paths wear in | no; needs its own small save key (a count per grid cell) | `08` ready-for-agent |
+
+Idea 17 is a ★ of the recommended order too, so it got its ticket as well, though the order given to the agent named only 7, 8, 12 and 14. Only `04` was built; the others stay for the parent to order.
 
 ---
 

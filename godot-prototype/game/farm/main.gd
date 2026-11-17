@@ -162,9 +162,9 @@ func _ready() -> void:
 	if G.player == "" and shot_path == "" and DisplayServer.get_name() != "headless":
 		welcome.ask_player()
 	elif interrupts.waiting("postcard") > 0: interrupts.pump()
-	elif G.S["step"] == 0 and not G.done("k_wheat"):
-		if not story.pump(): welcome.show_welcome()
+	elif G.S["step"] == 0 and not G.done("k_wheat"): welcome.first_minutes()
 	else: story.queue_pump()
+	interrupts.restore()      # the celebrations the save kept (interruption-queue/05): back in line, after the story box that is ready
 
 ## Andika (a font made for children learning to read) with Noto Color Emoji as fallback, so every device shows the same emojis.
 func _setup_theme() -> void:
@@ -190,8 +190,6 @@ func _setup_theme() -> void:
 
 func _parse_args() -> void:
 	DevFlags.apply(self, G)     # test and screenshot flags: game/farm/dev/dev_flags.gd
-	for a in OS.get_cmdline_user_args():
-		if a.begins_with("--moments="): G.S["moments"] = int(a.substr(10))      # screenshots: this many moments of the step used (24 = no time left; after --newgame)
 
 func _process(_d: float) -> void:
 	if shot_path != "":
@@ -455,7 +453,7 @@ func refresh() -> void:
 	map.set_perks({"butterflies": G.rewards.perk_on("perk_butterflies") and FarmSeasonLook.critter_out(G, "butterflies"), "sparkles": G.rewards.perk_on("perk_sparkles"),
 		"rainbow": G.rewards.perk_on("perk_rainbow"), "breeze": G.rewards.perk_on("perk_breeze"),
 		"fireflies": G.rewards.perk_on("perk_fireflies") and FarmSeasonLook.critter_out(G, "fireflies"), "stars": G.rewards.perk_on("perk_stars")})
-	var lk: Dictionary = S.get("look", {})
+	var lk: Dictionary = G.people.farmer_look()
 	var ls := JSON.stringify(lk)
 	if ls != _look_sig and map.avatar:
 		_look_sig = ls
@@ -477,9 +475,9 @@ func refresh() -> void:
 	if G.rewards.luck() >= 0.2: st.append("🍀")
 	if G.S["reading"] != "": st.append(tr("📖 reading"))
 	lbl_status.text = "  ".join(st)
-	bg.color = UI.SEASON_BG.get(G.seasons.season(), UI.BG)
+	bg.color = FarmSeasonLook.mix(G.seasons.blend(), UI.SEASON_BG, UI.BG)
 	cheat_box.visible = G.cheats_visible()
-	map.ground.set_season(G.seasons.season(), mapview.fence_level(), FarmSeasonLook.flower_count(G))
+	map.ground.set_season(G.seasons.blend(), mapview.fence_level(), FarmSeasonLook.flower_count(G))
 	# fields, add-ons and the house yard
 	field_idx = clampi(field_idx, 0, maxi(0, G.fields.field_names().size() - 1))
 	map.refresh_fields(G, playback.flicking)

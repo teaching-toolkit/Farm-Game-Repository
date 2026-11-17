@@ -15,7 +15,7 @@ The farmer's animation that plays while a chore happens (walking to a patch, swi
 _Avoid_: action
 
 **Blessing**:
-Something a pet gives the farm out of grace, for free, by its own effect (the pet clears weeds, brings water, makes an item). A blessing is not a chore and costs the farmer nothing. The pets are gracious helpers, like small demi-gods, but the game does not call them that.
+Something a pet gives the farm out of grace, for free, by its own effect (the pet clears weeds, brings water, makes an item). A blessing is not a chore and costs the farmer nothing. The pets are gracious helpers, like small demi-gods, but the game does not call them that. German: "Segen". In the code: `G.pets.blessings_of`; the data `entries` of `rules/54-pets.json` lists a pet's blessings and chores. Only the save keys keep the old name `job` (`pets.job`, `pets.second.job`, `pets.last.job`), so that old saves load.
 _Avoid_: duty, job (a job is one of the child's little paid jobs), pet job
 
 **Automated chore**:
@@ -119,6 +119,9 @@ Where recipes are made.
 **Category**:
 The kind of work a cost belongs to (field work, cooking, building); upgrades lower costs per category.
 
+**Build**:
+Paying for a node that is a building, a station, a helper or the clearing of ruins (`rules/48-skills.json` `builds`); a tool, gear, a patch, a delivery or a card is not one. A paid build, or each paid step of one, counts a batch for woodwork and construction, and that skill's rank lowers what the next build uses up and its energy, never its coins (`G.skills.family_of_build`, priced in `G.pace.node_cost`). A build is not a chore of `G.actions`: nodes are priced by `pace.node_cost` and paid by `progression.unlock`.
+
 **Helper**:
 An optional upgrade that makes something cheaper or better for good. Helpers never leave.
 
@@ -127,6 +130,9 @@ Items the farmer wears or uses, in eight slots (bed, pillow, bottle, head, feet,
 
 **Polish**:
 An endless upgrade with diminishing returns.
+
+**Fence stage**:
+How good the fence round a pen of chickens, cows or sheep is: broken (every pen starts so; the pen gives about 10 % less), mended (the first upgrade: normal), sturdy and painted (the second, which replaces the first: a small bonus). The bees have no fence. The same numbers for every pen (`fence` in `rules/10-farming.json`).
 
 **Keeper**:
 An input that a recipe needs but does not use up.
@@ -196,6 +202,10 @@ _Avoid_: NPC, character (the story's word)
 A person as seen in a scene: it stands or strolls, and when tapped it turns to the farmer, waves and says a line in a speech bubble. Scenes ask the figures part (`ui/figures.gd`) by the person's id and never know how a figure is drawn.
 _Avoid_: sprite, avatar (the farmer's own figure)
 
+**Farmer's look**:
+What the child chose on the "make your farmer" screen at the start of a farm (`people/02`): skin, hair (style and colour), shirt, trousers and hat, from the lists in `data/avatar.json` "options". It is kept in the farm save under `look` (only once chosen; no key means the default look) and read through `G.people.farmer_look()`. The screen has no words, no name and no photo, and nothing says boy or girl. It is called a look (never "avatar" or "character") in the code and the text.
+_Avoid_: avatar, character
+
 **Moment**:
 The unit of how much fits into one step of farm time. A step holds a fixed number (18, plus a few more in the later chapters); a chore takes 0 (free), 1, 2 or 4 of them; when they are used up no chore can be done until a right first Time Quiz answer moves time on. Separate from energy (what the body can do). The child sees it only as the ring round the clock, never as a number.
 _Avoid_: action points, time units, minutes
@@ -206,6 +216,10 @@ The heap of one bulky thing (sticks, small stones, big rocks) beside the store; 
 **Loose thing**:
 A stick or small stone lying about on the farm that a tap picks up (the chore `pick_loose`).
 _Avoid_: litter, debris
+
+**Worn path**:
+The ground that turns to trodden earth where the farmer walks most (`G.trodden`, `visible-work/08`): a count of walks per cell of the walking grid, capped, fading a little each season; it only changes how the ground looks.
+_Avoid_: road (the village road is the story's, not worn in)
 
 ### Pacing and tools of the project
 

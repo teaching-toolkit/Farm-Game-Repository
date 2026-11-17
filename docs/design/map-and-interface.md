@@ -20,6 +20,16 @@ front. Only a picture's visible pixels react to taps, so a tall roof never steal
   the kitchen are inside the house.
 - **Pens** are fenced diamonds with no picture of their own; what is built there (a coop, nest boxes, hives, a salt lick)
   stands inside as **add-ons**, so every upgrade shows.
+- **Paths wear in where the farmer walks** *(visible-work/08; draw only: no rule reads it)*. Every walk the farmer's path-finder plans
+  (`walker.gd` `find_path`, the one place that tells `G.trodden.wear(cell)`) adds one walk to each cell of the walking grid it
+  crosses, once per walk; the ground draws the soft earth tile of the places under the worn cells (`ground.gd`, its own layer below the
+  road, the fields and everything that stands: never over a building, patch, pen or the road; the flat winter material mutes it like
+  the rest of the ground). The more worn, the less see-through; the patches are wider than a cell so they join up into a trodden track
+  between the places the child uses most, house, field, store and well. It is slow on purpose (about 40 walks over the same cell
+  before the first faint patch, 255 at the most, which is a clear but never road-like track) and it fades again: at every change of
+  season each cell forgets a few walks and is dropped at zero, so a track nobody walks any more goes back to grass. The numbers are
+  data (`rules/69-trodden.json`). One sparse save key `trodden` ("x,y" to a count) that does not exist until the first walk; an old
+  save loads with no wear. The bot never walks, so it never wears anything.
 - Where everything stands is data (`data/map_layout.json`), set by dragging in the **layout editor**
   (`godot-prototype/tools/layout-editor.html`; online as *Farm Map Layout*, https://claude.ai/artifact/U7XSKLW8GcAacyAx1Uh7uV).
 
@@ -87,7 +97,7 @@ the board, each with a 🔨 when there is something to do. The purse, the bag, t
   corners (bed · books · kitchen; cellar · crocks · hay · seed library; benches · kiln & forge · spinning · tools) open their own
   sheets. In the workshop a corner is drawn only once something of it is built or can be built now (its row in §13.2b); before that it
   is not there at all, not even as a faded symbol, and a station's "choice slot" names only choices that are built or can be built now.
-- **A pet's window** (the pet corner of the house): the pet's picture and name, then its job board: the blessings it can do as buttons with a ✔ on the chosen one, and **under them a group "⚡ Helps with"** ("⚡ Hilft bei") with the farmer's care chores it can do instead (weeding, tidying up, fetching water, clearing snow, stones, mucking out, collecting; a chore appears when its building stands); from level 3 the WHEN row, for a chore the energy card "⚡ My energy ≥ n" (− and + in whole energy cubes); at level 4 the same under the *OTHERWISE* rule; and a line for the last question (what it did, or 💤 nothing to do, 💤 waiting for you to rest, 📦 the store is full). No number of moments or cost is shown. After the Time Quiz the pet walks to where it worked and the chore's emoji shows over it (`pets-automation/04`, rules in `progression.md` §10.3).
+- **A pet's window** (the pet corner of the house): the pet's picture and name, then its rules: the blessings it can do as buttons with a ✔ on the chosen one, and **under them a group "⚡ Helps with"** ("⚡ Hilft bei") with the farmer's care chores it can do instead (weeding, tidying up, fetching water, clearing snow, stones, mucking out, collecting; a chore appears when its building stands); from level 3 the WHEN row, for a chore the energy card "⚡ My energy ≥ n" (− and + in whole energy cubes); at level 4 the same under the *OTHERWISE* rule; and a line for the last question (what it did, or 💤 nothing to do, 💤 waiting for you to rest, 📦 the store is full). No number of moments or cost is shown. After the Time Quiz the pet walks to where it worked and the chore's emoji shows over it (`pets-automation/04`, rules in `progression.md` §10.3).
 - **Signs on places:** 🔨 something to build, 🧺 animals ready, ❓ a card quiz, 📖 a card to read, 🍂 stale soon, ⏳ busy, 😴 tired.
 - **⬅️ Back to the farm** closes any window.
 
@@ -132,12 +142,26 @@ one yet. Pictures come in with `tools/import_window_pictures.py` (list: `tools/w
 
 A little farmer walks to wherever the player taps — on the grass, to a place (its sheet opens at once), to the edge of a field —
 and finds the way round buildings, pens, ponds and fields; tapped, it waves and hops. It is a small 3D figure made of simple
-shapes, toon-shaded and drawn into the 2D map (`kits/avatar/avatar.gd`); its look is data (`data/avatar.json`: skin, hair, shirt,
-trousers, shoes, hat). After each action the farmer goes there and acts it out — kneels and pulls weeds, fetches water at
+shapes, drawn into the 2D map (`kits/avatar/avatar.gd`); its look is data (`data/avatar.json`: skin, hair, shirt,
+trousers, shoes, hat). It is drawn in the **painted** look the parent picked in the look trial (`people/05`, look B): chunkier body and a bigger head, a soft dark-brown outline, painted warm/cool shading, a painted face (eyes, cheeks, a smile) and a small pattern on the shirt, all made in code from the look's colours, so a new person needs no picture. The key `style` in a look chooses it: `painted_face` (the default for a look without one, set once in `data/avatar.json` `default`, so new games and old saves get it), `painted` (no face or pattern) or `plain` (the first flat-toon figure); the trial scene `tests/look_trial.tscn` still shows all three, and a look can ask for `plain` any time. The face is on the front only (one smile for everybody, no turn that shows it from behind). After each action the farmer goes there and acts it out — kneels and pulls weeds, fetches water at
 the pond and sows, picks with a basket, chops, hammers, stirs the pot, reads, goes into the tent or house to rest (and comes out when Rest closes), cheers. The game has already
 counted the result; the farmer only catches up, and a new tap stops the act at once. Acts, poses and the props in the
-farmer's hands are data (`data/acts.json`), so new ones need no code. **(planned)** a "make your farmer" screen at the start, the look kept per player, gear visible on the
+farmer's hands are data (`data/acts.json`), so new ones need no code. **(planned)** gear visible on the
 farmer, merchants walking about.
+
+**Make your farmer** (`people/02`). At the very start of a new farm, after the child has said who is playing and before the story's opening or
+the welcome, one screen lets them make the farmer. It has **no words, no name and no photo** (the web build is public, so a child's name is not asked
+for), and nothing says boy or girl: hair and clothes are chosen one by one. The figure stands big on the left, drawn live by the same code as the
+farmer on the map, and changes at every tap; under it is a round green tick. On the right are five cards, one for each part, of round colour
+swatches and small figures to tap, with a ring round what is chosen: **skin** (6 colours); **hair** (5 styles: short, long, pigtails, bun, none; 7 colours);
+**shirt** (2 styles: short or long sleeves; 9 colours); **trousers** (3 styles: trousers, overalls, shorts; the same 9 colours); **hat** (none, straw, cap).
+It offers exactly what `data/avatar.json` `options` lists, so a new colour or style there needs no code. The default look is already chosen, so the tick alone
+is enough. There is no ✖: the tick is the one way on. It shows once: the tick keeps the look in the farm save (`look`, as the look has always been kept;
+only the chosen parts, never the drawing's style, eyes or shoes, so the data's `default` style still reaches every farmer) and the farmer on the map takes
+it at once. A farm that never asks keeps the default look and has no `look` key in its save: the bot, the tests, screenshots (flag `--farmer` shows the
+screen) and any save that has moved on past the first question. A farm that is at its very start but has no look (the app was closed before the tick) asks
+again. Changing the look later is not possible yet. The control is `kits/avatar/avatar_picker.gd` (no game logic; it says `changed(look)`), the screen
+is `ui/welcome.gd` `show_farmer`, and what is kept is `G.people.farmer_look()` / `set_farmer_look()` / `farmer_to_make()`.
 
 ### 13.6 For young readers
 

@@ -11,6 +11,17 @@ func _init(game: FarmGame) -> void:
 func save_defaults() -> Dictionary:
 	return {"luck_boosts": [], "gift_owned": [], "gift_shop": [], "gift_seen": [], "gift_pending": [], "gift_active": [], "jobs": [], "acorns": {}, "album": [], "postcards": [], "perks": {}}
 
+## The celebrations (ids of a building, a tool, a helper, "perk:…") that were still waiting for their turn when the farm was saved. The
+## interruption queue keeps this list (ui/interrupts.gd): after loading they go back in line. A sparse key, not in save_defaults():
+## it exists only while one waits, so a save without it simply has nothing waiting (no version bump, the new-game record stays).
+func celebrations_waiting() -> Array:
+	var l = G.S.get("celebrations_waiting", [])
+	return l.duplicate() if typeof(l) == TYPE_ARRAY else []
+
+func keep_celebrations(ids: Array) -> void:
+	if ids.is_empty(): G.S.erase("celebrations_waiting")
+	else: G.S["celebrations_waiting"] = ids.duplicate()
+
 # ------------------------------------------------------------------ luck
 
 func luck() -> float:

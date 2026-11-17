@@ -116,4 +116,20 @@ func find_path(from: Vector2, to: Vector2) -> PackedVector2Array:
 		while j > i + 1 and not _clear_line(pts[i], pts[j]): j -= 1
 		out.append(pts[j])
 		i = j
+	_wear(out)
 	return out
+
+## The walk is told to the worn paths (visible-work/08): `G.trodden.wear` for every cell the line crosses, once per walk; the ground draws
+## the result. Cosmetic: nothing in the rules reads it.
+func _wear(line: PackedVector2Array) -> void:
+	var g = (Engine.get_main_loop() as SceneTree).root.get_node_or_null("/root/Game")
+	if g == null or line.size() < 2: return
+	var seen := {}
+	for i in range(line.size() - 1):
+		var n := int(line[i].distance_to(line[i + 1]) / (CELL * 0.4)) + 1
+		for k in range(n + 1):
+			var c := _cell(line[i].lerp(line[i + 1], float(k) / float(n)))
+			if seen.has(c) or astar.is_point_solid(c): continue
+			seen[c] = true
+			g.trodden.wear(c)
+	map.ground.redraw_trodden()

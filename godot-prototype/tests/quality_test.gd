@@ -118,6 +118,7 @@ func _ready() -> void:
 	G.S["unlocked"]["oven_2"] = true
 	G.invalidate_caps()
 	_check(float(Q.data()["stationBonus"]["oven_2"]) > float(Q.data()["stationBonus"]["campfire"]), "a better oven has a higher bonus than a campfire")
+	_goal_grades()
 	print("QUALITY %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])
 	get_tree().quit(1 if fails > 0 else 0)
 
@@ -126,3 +127,56 @@ func _check(ok: bool, what: String) -> void:
 	if not ok:
 		fails += 1
 		print("FAIL ", what)
+
+## A goal can name a grade it takes at least (data key "minGrade", skills-quality/01): the Harvest Fair's pie table takes Proper pies, the badger (once the data
+## says so) a Fancy Healer's Chest. Refused: the grade below; accepted: that grade or better. The bag only counts pieces; the grade is taken from the store.
+func _goal_grades() -> void:
+	G.reset_game()
+	var P = G.pace
+	_check(P.node_min("d_fair_pies") == 1 and P.node_min("d_fair_cloth") == 1 and P.node_min("d_porridge") == 0, "data: the Fair tables ask for Proper, an early order for nothing")
+	# the inventory itself: only a grade or better, the lowest of those first; a thing without a grade ignores it
+	G.S["inv"].clear()
+	G.inventory.add_item("carrot", 2.0, true, 2)
+	G.inventory.add_item("carrot", 3.0, true, 1)
+	G.inventory.add_item("carrot", 4.0, true, 0)
+	G.inventory.add_item("stone", 5.0, true)
+	_check(G.inventory.have("carrot", 1) == 5.0 and G.inventory.have("carrot", 2) == 2.0 and G.inventory.have("carrot") == 9.0 and G.inventory.have("stone", 2) == 5.0, "have(item, grade) counts that grade or better; a raw material has no grade")
+	_check(not G.inventory.take("carrot", 3.0, 2) and G.inventory.count("carrot") == 9.0, "asking for more Fancy than there is: nothing taken")
+	_check(G.inventory.take("carrot", 4.0, 1) and is_equal_approx(float(G.inventory.grades("carrot").get(0, 0.0)), 4.0) and is_equal_approx(float(G.inventory.grades("carrot").get(2, 0.0)), 1.0) and not G.inventory.grades("carrot").has(1), "four of Proper or better: the three Proper first, then one Fancy; the Lumpy ones stay")
+	# the pie table (a delivery in the village): Lumpy pies are refused, Proper ones taken
+	G.S["unlocked"]["import_broker"] = true
+	G.S["energy"] = 50.0
+	G.S["inv"].clear()
+	G.inventory.add_item("pumpkin_pie", 2.0, true, 0)
+	G.inventory.add_item("apple_pie", 2.0, true, 0)
+	G.trip.test_square()
+	var cost: Dictionary = P.node_cost("d_fair_pies")
+	var ck: Dictionary = G.progression.can_unlock("d_fair_pies")
+	_check(not ck["ok"] and int(ck["min"]) == 1, "the pie table refuses Lumpy pies")
+	_check(str(ck["unmet"][0]["text"]).contains("⭐⭐") and not str(ck["unmet"][0]["text"]).contains("⭐⭐⭐"), "...and says what is missing with the grade as stars, no new words")
+	_check(P.missing_cost(cost).is_empty() and not P.missing_cost(cost, 1).is_empty() and P.missing_cost(cost, 1)[0].has("min"), "(the same pies would have covered a goal without a grade)")
+	G.inventory.add_item("pumpkin_pie", 1.0, true, 1)
+	G.inventory.add_item("apple_pie", 2.0, true, 1)
+	G.trip.test_square()
+	_check(not G.progression.can_unlock("d_fair_pies")["ok"], "one Proper pumpkin pie among Lumpy ones is not enough (two are asked)")
+	_check(not G.trip.can_pack_cost(cost, 1) or G.trip.packed("pumpkin_pie") >= 2.0, "(at home it could not be packed either: the store has too few Proper ones)")
+	G.inventory.add_item("pumpkin_pie", 1.0, true, 1)
+	G.trip.test_square()
+	_check(G.progression.can_unlock("d_fair_pies")["ok"], "two Proper pies of each kind: accepted")
+	_check(G.progression.unlock("d_fair_pies") and G.done("d_fair_pies"), "handed over")
+	var gp: Dictionary = G.inventory.grades("pumpkin_pie")
+	var ga: Dictionary = G.inventory.grades("apple_pie")
+	_check(is_equal_approx(float(gp.get(0, 0.0)), 2.0) and not gp.has(1) and is_equal_approx(float(ga.get(0, 0.0)), 2.0) and not ga.has(1), "it took the Proper pies and left the Lumpy ones")
+	# the badger: a Proper Healer's Chest is not enough, a Fancy one is. The data does not ask for Fancy yet (a beginner's made things can hardly be
+	# Fancy, skills-quality/01), so the key is set here in memory; the day the data names it, this test already covers it.
+	G.nodes["pet_badger"]["minGrade"] = 2
+	for id in ["pet_pony", "ruins_stillroom", "k_ask_grownup"]: G.S["unlocked"][id] = true
+	G.S["inv"].clear()
+	G.inventory.add_item("healers_chest", 1.0, true, 1)
+	G.inventory.add_item("tea_set", 1.0, true)
+	var bk: Dictionary = G.progression.can_unlock("pet_badger")
+	_check(not bk["ok"] and int(bk["min"]) == 2 and str(bk["unmet"][0]["text"]).contains("⭐⭐⭐"), "the badger refuses a Proper Healer's Chest and asks for ⭐⭐⭐ (the tea set has no grade and is no problem)")
+	G.inventory.add_item("healers_chest", 1.0, true, 2)
+	_check(G.progression.can_unlock("pet_badger")["ok"], "...and accepts a Fancy one")
+	_check(P.pay(P.node_cost("pet_badger"), 2) and G.inventory.count("tea_set") == 0 and G.inventory.grades("healers_chest").has(1) and not G.inventory.grades("healers_chest").has(2), "paying takes the Fancy chest and leaves the Proper one")
+	G.nodes["pet_badger"].erase("minGrade")

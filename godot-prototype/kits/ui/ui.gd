@@ -335,7 +335,8 @@ static func header(tex: Texture2D, emoji := "", h := 110.0, tint := Color.WHITE,
 ## `money` (optional): writes an amount of coins as text (the game's bronze, gold and diamonds); coin costs then show one cube per
 ## bronze under a gold, per gold from a gold, per diamond from a diamond (in that coin's colour), with the sum as words ("2 🟡 35 🟤").
 ## `icon` (optional): gives the item's small picture (a Texture2D, or null: then the emoji is shown).
-static func cost_row(c: Dictionary, base: Dictionary, have: Callable, emoji: Callable, items := {}, money := Callable(), icon := Callable()) -> HFlowContainer:
+## `badge` (optional): a small sign after the picture, from the key (the grade a delivery asks for: ⭐⭐); "" for none.
+static func cost_row(c: Dictionary, base: Dictionary, have: Callable, emoji: Callable, items := {}, money := Callable(), icon := Callable(), badge := Callable()) -> HFlowContainer:
 	var row := HFlowContainer.new()
 	row.add_theme_constant_override("h_separation", 14)
 	row.add_theme_constant_override("v_separation", 4)
@@ -349,6 +350,11 @@ static func cost_row(c: Dictionary, base: Dictionary, have: Callable, emoji: Cal
 		info(item, "item", k)              # a tap: what it is, how much you have, what it needs (interface-feel/01)
 		var pic: Texture2D = icon.call(k) if icon.is_valid() else null
 		item.add_child(pic_or_emoji(pic, str(emoji.call(k)), 24.0, 18))
+		var sign_text: String = str(badge.call(k)) if badge.is_valid() else ""
+		if sign_text != "":
+			var sl := label(sign_text, 12)
+			sl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			item.add_child(sl)
 		var cb := CubeBar.new()
 		cb.mode = "cost"
 		cb.need = need

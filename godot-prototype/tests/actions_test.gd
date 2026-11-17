@@ -9,7 +9,7 @@ var costs_seen := {}
 const FREE_CHORES := ["forest_look", "forest_enter", "forest_leave", "recipe"]   # no written cost: the forest walks cost no energy (the question each way is asked by the interface), a recipe is priced by recipes.json
 
 ## Every chore has a price-match (or, for the free ones, a requirements) test in this file; a new chore fails here until it is added.
-const COVERED := ["fetch_water", "clear_snow", "weed", "pick_stones", "pick_loose", "plant", "harvest", "cut_tree", "collect_animal", "muck_out", "forest_find", "forest_pick", "forest_dig", "forest_look", "forest_enter", "forest_leave", "wren_water", "village_trip", "recipe", "throw_party", "visit_friend"]
+const COVERED := ["fetch_water", "clear_snow", "weed", "pick_stones", "pick_loose", "plant", "harvest", "let_flower", "cut_tree", "collect_animal", "muck_out", "forest_find", "forest_pick", "forest_dig", "forest_look", "forest_enter", "forest_leave", "wren_water", "village_trip", "recipe", "throw_party", "visit_friend"]
 
 func _ready() -> void:
 	G = get_node("/root/Game")
@@ -49,6 +49,7 @@ func _ready() -> void:
 					_price_match(label)
 					for chore in ["clear_snow", "weed", "pick_stones"]: _price_match_patch(chore, label)
 					_price_match_crops(label)
+					_price_match_flower(label)
 					_price_match_animals(label)
 					_price_match_well(label)
 					_price_match_loose(label)
@@ -183,6 +184,32 @@ func _price_match_crops(label: String) -> void:
 		var crep: Dictionary = A.perform("cut_tree", who, cargs)
 		if hair: _check(not crep["done"] and pt2["crop"] == "crop_walnut", "a hair too little energy cuts nothing (%s)" % label)
 		else: _check(crep["done"] and pt2["crop"] == "" and G.S["energy"] < 0.001 and is_equal_approx(float(crep["spent"]["energy"]), cc), "cutting a tree takes exactly the cost (%s)" % label)
+
+## Let a ripe carrot flower (crops-and-items/01): the cost check returns is what perform takes; exactly the cost works, a hair less does not.
+func _price_match_flower(label: String) -> void:
+	var A = G.actions
+	var who = A.farmer
+	G.S["unlocked"]["k_seeds"] = true      # the card Saving seed is read
+	G.invalidate_caps()
+	var args := {"a": "field", "i": 0}
+	for hair in [false, true]:
+		G.S["patches"][0] = G.fields._blank_patch()
+		var pt: Dictionary = G.S["patches"][0]
+		pt["crop"] = "crop_carrot"; pt["plants"] = 1.0; pt["growth"] = 99.0; pt["ready"] = true
+		G.S["energy"] = G.needs.energy_max()
+		var snap := JSON.stringify(G.S)
+		var q: Dictionary = A.check("let_flower", who, args)
+		_check(JSON.stringify(G.S) == snap, "check changes nothing (let it flower, %s)" % label)
+		_check(q["ok"] and q["cost"]["energy"] > 0.0, "let it flower can be done (%s)" % label)
+		var cost: float = q["cost"]["energy"]
+		costs_seen[snappedf(cost, 0.001)] = true
+		G.S["energy"] = cost - 0.01 if hair else cost
+		var rep: Dictionary = A.perform("let_flower", who, args)
+		if hair: _check(not rep["done"] and rep["failed"] == "energy" and pt["ready"] and not G.fields.flowering(pt), "a hair too little energy lets nothing flower (%s)" % label)
+		else: _check(rep["done"] and G.S["energy"] < 0.001 and is_equal_approx(float(rep["spent"]["energy"]), cost) and G.fields.flowering(pt) and not pt["ready"], "let it flower takes exactly the cost (%s)" % label)
+	G.S["patches"][0] = G.fields._blank_patch()
+	G.S["unlocked"].erase("k_seeds")
+	G.invalidate_caps()
 
 ## Seeds (or the grain that is the seed) and water for a planting.
 func _stock(cid: String) -> void:
@@ -698,7 +725,7 @@ func _pay_function() -> void:
 
 ## The args that make each chore's check run (check reads the call; most of it is state this test does not need).
 const MOMENT_ARGS := {"weed": {"i": 0}, "pick_stones": {"i": 0}, "clear_snow": {"i": 0}, "pick_loose": {"id": 1}, "plant": {"a": "field", "i": 0, "cid": "crop_wheat"},
-	"harvest": {"a": "field", "i": 0}, "cut_tree": {"a": "orchard", "i": 0}, "collect_animal": {"aid": "animal_chicken"}, "muck_out": {"aid": "animal_chicken"},
+	"harvest": {"a": "field", "i": 0}, "let_flower": {"a": "field", "i": 0}, "cut_tree": {"a": "orchard", "i": 0}, "collect_animal": {"aid": "animal_chicken"}, "muck_out": {"aid": "animal_chicken"},
 	"forest_find": {"spot": "glade", "tid": "chamomile", "option": "chamomile"}, "forest_pick": {"spot": "clearing", "tid": "marigold", "part": "flower"},
 	"forest_dig": {"spot": "stream", "tid": "clay"}, "forest_look": {"spot": "moonstone", "tid": "hum"}, "recipe": {"rid": "porridge"}}
 

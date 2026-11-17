@@ -13,6 +13,7 @@
 - [ ] The current web build is published
 - [ ] The parent has played through the checklist per version (0.10 top bar and notifications, 0.11 quality, skills and money, 0.12 story, 0.13 market trip, 0.14 new chapter 1, 0.15 pets and the Lord's share, 0.16 wellbeing, 0.17 forest edge and winter, 0.18 medicine and forest, 0.19 pets' WHEN cards and free play)
 - [ ] The parent has read `story/game/texts/ch5.md`, the nine Healer's Herbal cards and the remedy descriptions: plant facts and safety wording are right for an 8-year-old
+  - the new cider line (later/04)
 - [ ] The Swiss prices in `docs/sources/price-table.md` are confirmed or corrected
 - [ ] Every finding is a ticket, a log decision, or a number changed in the data
 

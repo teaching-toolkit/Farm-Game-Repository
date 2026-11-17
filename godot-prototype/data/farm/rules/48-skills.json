@@ -1,6 +1,6 @@
 {
   "skills": {
-    "note": "Skills and ranks (TODO Y2). Eight families; every batch of a recipe at one of their stations, every planting and harvest of a patch, every collecting from animals counts one for its family. Five ranks by the number of batches; from Skilled on a rank also needs something the game already has: a knowledge card (Skilled), a tool (Expert), a station or building (Master), so that grinding cheap recipes cannot make a master early. Every rank brings fewer inputs (more for crafts than for food, none for farm jobs) and a bit better chances of a higher grade; Handy and up use less energy; Master is faster. It works from the start but is not shown until the first rank-up (design document 13.2b).",
+    "note": "Skills and ranks (TODO Y2). Eight families; every batch of a recipe at one of their stations, every planting and harvest of a patch, every collecting from animals counts one for its family. Five ranks by the number of batches; from Skilled on a rank also needs something the game already has: a knowledge card (Skilled), a tool (Expert), a station or building (Master), so that grinding cheap recipes cannot make a master early. Every rank brings fewer inputs (more for crafts than for food, none for farm jobs) and a bit better chances of a higher grade; Handy and up use less energy; Master is faster. Building is a job of its own: a building, a station, a helper or a clearing of ruins (the node types and cost categories under builds) trains woodwork and construction, one batch for every paid build or step of one, and its rank saves the same share of what the build uses up (materials, not coins) and of its energy as it does for a recipe. It works from the start but is not shown until the first rank-up (design document 13.2b).",
     "families": {
       "field":    {"name": "Planting and harvesting", "emoji": "🌱", "kind": "farm"},
       "animals":  {"name": "Animal tending", "emoji": "🐄", "kind": "farm"},
@@ -50,6 +50,7 @@
       "compost_bin": "field", "worm_bin": "field", "pond_station": "field"
     },
     "jobs": {"plant": "field", "harvest": "field", "animal": "animals"},
+    "builds": {"family": "wood", "types": ["building", "station", "helper"], "cats": ["build"]},
     "momentsPerRank": 1
   }
 }

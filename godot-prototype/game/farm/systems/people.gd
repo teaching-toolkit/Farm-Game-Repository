@@ -1,7 +1,8 @@
 extends RefCounted
 class_name FarmPeople
 ## The people who are not the farmer (people/04): who stands in which scene, how they look, and what a tapped person says. Everything
-## that is not derived is data (data/farm/rules/58-people.json); nothing is saved (the lines' counter and the visit live in memory only).
+## that is not derived is data (data/farm/rules/58-people.json); nothing of theirs is saved (the lines' counter and the visit live in memory only).
+## The one thing saved here is the farmer's own look (people/02, the "make your farmer" screen): `farmer_look()`, `set_farmer_look()`, `farmer_to_make()`.
 ## `line(id)` is the ONE place that decides what a tapped person says: today it cycles through their three lines; moods and story
 ## lines are added there later, never in a scene.
 ## `visit(id)` / `visitor()`: a story visitor (one of the seven, scene "door") comes to the farm when a story piece of kind visit about them is
@@ -57,3 +58,21 @@ func visitor() -> String:
 	var passed := int(G.S["step"]) - _visit_step
 	if _visitor == "" or passed < 0 or passed >= int(data().get("visitSteps", 2)): return ""
 	return _visitor
+
+# ------------------------------------------------------------------ the farmer's look (people/02)
+
+## The look the player made for the farmer (kept in the farm save under "look", only once it was made). {} = never made: the figure draws the
+## default look of data/avatar.json. A look is what kits/avatar/avatar_picker.gd offers: skin, hair, shirt, trousers, hat.
+func farmer_look() -> Dictionary:
+	return G.S.get("look", {})
+
+## Keeps the farmer's look in the farm save (so it is the player's own, on this device) and lets the screen draw it.
+func set_farmer_look(look: Dictionary) -> void:
+	G.S["look"] = look.duplicate(true)
+	G.save_game()
+	G.changed.emit()
+
+## Is the farmer still to be made: a farm at its very start whose look was never chosen. A farm that skipped it (tests, the bot, an old save
+## that has moved on) never asks and keeps the default look.
+func farmer_to_make() -> bool:
+	return not G.S.has("look") and int(G.S["step"]) == 0 and not G.done("k_wheat")

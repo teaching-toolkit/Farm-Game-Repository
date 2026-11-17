@@ -1,6 +1,6 @@
 extends Node
-## The pets' jobs (TODO S2): level 1 is the bonus, level 2 (when the next pet is home) is a job the child chooses and the pet does every
-## question; a job that cannot run waits. Rules only.
+## The pets' blessings and chores (TODO S2): level 1 is the bonus, level 2 (when the next pet is home) is a blessing the child chooses and the pet
+## does every question; one that cannot run waits. Rules only.
 ## Run:  godot --headless --path . res://tests/pets_test.tscn -- --seed=1
 var G
 var fails := 0
@@ -13,8 +13,8 @@ func _ready() -> void:
 	_check(P.level("pet_bunny") == 0, "a pet that is not home has no level")
 	G.S["unlocked"]["pet_bunny"] = true
 	G.invalidate_caps()
-	_check(P.level("pet_bunny") == 1 and P.job_id("pet_bunny") == "weeds", "at home it is level 1; its first job is the default")
-	_check(not P.choose("pet_bunny", "stones"), "…and it cannot be given a job yet")
+	_check(P.level("pet_bunny") == 1 and P.chosen("pet_bunny") == "weeds", "at home it is level 1; its first blessing is the default")
+	_check(not P.choose("pet_bunny", "stones"), "…and it cannot be given a blessing yet")
 	var info := {}
 	P.step(info)
 	_check(not info.has("pet_acts"), "a level 1 bunny does nothing on the farm")
@@ -38,7 +38,7 @@ func _ready() -> void:
 	P.step(info)
 	_check(not info["pet_acts"][0]["ok"] and info["pet_acts"][0]["emoji"] == "💤" and not P.last("pet_bunny")["ok"], "with no weeds it waits (💤)")
 	# stones: they go into the store
-	_check(P.choose("pet_bunny", "stones") and P.job_id("pet_bunny") == "stones", "the child chooses another job")
+	_check(P.choose("pet_bunny", "stones") and P.chosen("pet_bunny") == "stones", "the child chooses another blessing")
 	G.S["patches"][0]["stones"] = 3.0
 	var s0: float = G.inventory.count("stone")
 	info = {}
@@ -50,16 +50,16 @@ func _ready() -> void:
 	info = {}
 	P.step(info)
 	_check(info["pet_acts"][0]["emoji"] == "📦" and is_equal_approx(G.S["patches"][0]["stones"], 2.0), "with a full store it waits (📦) and nothing is lost")
-	# the tortoise brings water; the badger-like 'makes' jobs collect until a whole unit
-	_check(P.job_id("pet_tortoise") == "water", "the tortoise brings water")
+	# the tortoise brings water; the badger-like 'makes' blessings collect until a whole unit
+	_check(P.chosen("pet_tortoise") == "water", "the tortoise brings water")
 	G.S["unlocked"]["pet_goat"] = true
 	G.invalidate_caps()
 	G.S["water"] = 1.0
 	info = {}
 	P.step(info)
-	_check(P.level("pet_tortoise") == 2 and float(G.S["water"]) >= 2.0 - 0.001, "its job adds water (%s)" % G.S["water"])
+	_check(P.level("pet_tortoise") == 2 and float(G.S["water"]) >= 2.0 - 0.001, "its blessing adds water (%s)" % G.S["water"])
 	_check(P.choose("pet_tortoise", "stones") and P.choose("pet_tortoise", "water"), "a choice can be changed")
-	_check(P.job_id("pet_goat") == "weeds" and P.level("pet_goat") == 1, "the goat has no level 2 until the pony is home")
+	_check(P.chosen("pet_goat") == "weeds" and P.level("pet_goat") == 1, "the goat has no level 2 until the pony is home")
 	G.S["unlocked"]["pet_pony"] = true
 	G.invalidate_caps()
 	_check(P.choose("pet_goat", "compost"), "…then it can make compost")
@@ -69,7 +69,7 @@ func _ready() -> void:
 		info = {}
 		P.step(info)
 	_check(G.inventory.count("compost") - c0 >= 3.0, "compost arrives every other question (%d in 8)" % int(G.inventory.count("compost") - c0))
-	# the last pet has no job yet
+	# the last pet has no blessing yet
 	for pid in ["pet_badger", "pet_alpaca"]: G.S["unlocked"][pid] = true
 	G.invalidate_caps()
 	_check(P.level("pet_alpaca") == 4 and P.free_play(), "when the last pet is home (free play) every pet is level 4, the alpaca too")
@@ -79,7 +79,7 @@ func _ready() -> void:
 	G.S["unlocked"].erase("pet_badger")
 	G.invalidate_caps()
 	_check(P.level("pet_bunny") == 4 and P.level("pet_tortoise") == 3 and P.level("pet_goat") == 2 and P.level("pet_pony") == 1, "a pet's level is 1 + the pets that came home after it")
-	# WHEN: the job runs only when the condition holds
+	# WHEN: the blessing runs only when the condition holds
 	_check(not P.set_when("pet_goat", 0, "weeds"), "a level 2 pet cannot have a WHEN yet")
 	_check(P.set_when("pet_tortoise", 0, "water") and P.when_of("pet_tortoise", 0)["card"] == "water" and P.when_of("pet_tortoise", 0)["n"] == 8.0, "a level 3 pet gets a WHEN card with its default number")
 	_check(not P.set_when("pet_tortoise", 0, "pests"), "…but only the cards that fit the pet")
@@ -96,13 +96,13 @@ func _ready() -> void:
 	P.step(info)
 	_check(float(G.S["water"]) > 3.0, "…and brings water when it is low")
 	# the second rule (level 4): when the first WHEN does not hold, the second rule runs
-	_check(P.set_when("pet_bunny", 0, "weeds", 5.0) and P.set_second_job("pet_bunny", "stones") and P.set_when("pet_bunny", 1, ""), "level 4 rules can be set")
+	_check(P.set_when("pet_bunny", 0, "weeds", 5.0) and P.choose_second("pet_bunny", "stones") and P.set_when("pet_bunny", 1, ""), "level 4 rules can be set")
 	P.choose("pet_bunny", "weeds")
 	G.S["inv"]["stone"] = []
 	for i in range(G.S["patches"].size()): G.S["patches"][i]["stones"] = 0.0
 	G.S["patches"][0]["stones"] = 3.0
 	P.set_when("pet_bunny", 0, "weeds", 5.0)
-	P.set_second_job("pet_bunny", "stones")
+	P.choose_second("pet_bunny", "stones")
 	P.set_when("pet_bunny", 1, "")
 	var st0: float = G.S["patches"][0]["stones"]
 	for i in range(mini(G.progression.plots(), G.S["patches"].size())): G.S["patches"][i]["weeds"] = 0.0
@@ -123,7 +123,7 @@ func _ready() -> void:
 	_check(float(G.S["pests"]) < 3.0, "in free play the alpaca guards the fields")
 	_check(G.pets.save_defaults().has("pets"), "the save key has defaults")
 	_pickers()
-	_chore_jobs()
+	_pet_chores()
 	_chore_rules()
 	print("PETS %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])
 	get_tree().quit(1 if fails > 0 else 0)
@@ -144,11 +144,11 @@ func _pickers() -> void:
 	_check(all, "every chore of the spec's list has a picker (%s)" % str(reg))
 	var in_data := true
 	var two := true
-	for pid in G.pets.data().get("jobs", {}):
-		var mine: Array = G.pets.data()["jobs"][pid].filter(func(j): return j.get("kind", "") == "chore")
+	for pid in G.pets.data().get("entries", {}):
+		var mine: Array = G.pets.data()["entries"][pid].filter(func(j): return j.get("kind", "") == "chore")
 		two = two and mine.size() == 2
 		for j in mine: in_data = in_data and reg.has(j["chore"]) and CHORES.has(j["chore"])
-	_check(in_data and two, "every chore job in the data names a chore with a picker, and every pet has two")
+	_check(in_data and two, "every chore in the data names a chore with a picker, and every pet has two")
 	G.S["unlocked"]["clear_thistles"] = true
 	G.invalidate_caps()
 	G.S["energy"] = 999.0
@@ -219,21 +219,21 @@ func _pickers() -> void:
 	G.S["inv"]["wheat"] = []
 	G.S["inv"]["straw"] = []
 
-	# the chore jobs of a pet: one whose place is not built is not offered; jobs_of lists no chore job
+	# the chores of a pet: one whose place is not built is not offered; blessings_of lists no chore
 	var P = G.pets
 	var ids := []
-	for j in P.chore_jobs("pet_goat"): ids.append(j["id"])
-	_check(not G.done("coop_1") and ids == ["helps_weed"], "chore_jobs: the goat's muck chore is not offered before the pen is built (%s)" % str(ids))
+	for j in P.chores_of("pet_goat"): ids.append(j["id"])
+	_check(not G.done("coop_1") and ids == ["helps_weed"], "chores_of: the goat's muck chore is not offered before the pen is built (%s)" % str(ids))
 	G.S["unlocked"]["coop_1"] = true
 	ids = []
-	for j in P.chore_jobs("pet_goat"): ids.append(j["id"])
+	for j in P.chores_of("pet_goat"): ids.append(j["id"])
 	_check(ids == ["helps_weed", "helps_muck_out"], "…after the pen is built it is (%s)" % str(ids))
 	var none_listed := true
 	for pid in G.pet_ids:
-		for j in P.jobs_of(pid): none_listed = none_listed and j.get("kind", "") != "chore"
-	_check(none_listed and P.job("pet_goat", "helps_muck_out")["chore"] == "muck_out", "jobs_of still lists no chore job (all are hidden); job() finds them")
+		for j in P.blessings_of(pid): none_listed = none_listed and j.get("kind", "") != "chore"
+	_check(none_listed and P.entry("pet_goat", "helps_muck_out")["chore"] == "muck_out", "blessings_of still lists no chore; entry() finds them")
 
-# ---------------------------------------------------------------- a pet's job of kind "chore" (pets-automation/02)
+# ---------------------------------------------------------------- a pet's entry of kind "chore" (pets-automation/02)
 
 var _pick := {"i": 0}      # what the test's picker answers (the owners of the chores register the real ones in pets-automation/03)
 
@@ -245,19 +245,19 @@ func _act_of(info: Dictionary, pid: String) -> Dictionary:
 		if a["pet"] == pid and not a.get("first", false): return a
 	return {}
 
-func _chore_jobs() -> void:
+func _pet_chores() -> void:
 	G.reset_game()
 	var P = G.pets
 	var A = G.actions
 	G.S["unlocked"]["pet_bunny"] = true
 	G.S["unlocked"]["pet_tortoise"] = true
 	G.invalidate_caps()
-	# a hidden job is not offered, but it is there
+	# a hidden entry is not offered, but it is there
 	var ids := []
-	for j in P.jobs_of("pet_bunny"): ids.append(j["id"])
-	_check(not ids.has("helps_weed") and ids.has("weeds") and ids.has("stones"), "a hidden job is not in the list the child sees (%s)" % str(ids))
-	_check(not P.job("pet_bunny", "helps_weed").is_empty() and P.job("pet_bunny", "helps_weed")["kind"] == "chore", "…but job() finds it")
-	_check(P.level("pet_bunny") == 2 and P.choose("pet_bunny", "helps_weed") and P.job_id("pet_bunny") == "helps_weed", "…and it can be set through choose")
+	for j in P.blessings_of("pet_bunny"): ids.append(j["id"])
+	_check(not ids.has("helps_weed") and ids.has("weeds") and ids.has("stones"), "a hidden entry is not in the list the child sees (%s)" % str(ids))
+	_check(not P.entry("pet_bunny", "helps_weed").is_empty() and P.entry("pet_bunny", "helps_weed")["kind"] == "chore", "…but entry() finds it")
+	_check(P.level("pet_bunny") == 2 and P.choose("pet_bunny", "helps_weed") and P.chosen("pet_bunny") == "helps_weed", "…and it can be set through choose")
 	# the chore is done at the pets' step: the farmer pays, no moment is used, no practice, no wear
 	var pd = A.pet_doer("pet_bunny")
 	_check(pd == A.pet_doer("pet_bunny") and pd.id == "pet_bunny" and pd.id != A.farmer.id, "a pet's Doer is made once and is not the farmer")
@@ -336,19 +336,19 @@ func _chore_rules() -> void:
 	var A = G.actions
 	_fresh(["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony", "pet_badger", "pet_alpaca"])
 	var CHORES := ["weed", "pick_stones", "pick_loose", "fetch_water", "clear_snow", "muck_out", "collect_animal"]
-	# the chore jobs are no blessings: jobs_of lists none, chore_jobs lists them (a pen chore only with the coop built), job() finds them
+	# the chores are no blessings: blessings_of lists none, chores_of lists them (a pen chore only with the coop built), entry() finds them
 	var none_listed := true
 	var offered := {}
 	for pid in G.pet_ids:
-		for j in P.jobs_of(pid): none_listed = none_listed and j.get("kind", "") != "chore" and not j["id"].begins_with("helps_")
-		offered[pid] = P.chore_jobs(pid).size()
-		for j in P.data()["jobs"][pid]: if j.get("kind", "") == "chore": none_listed = none_listed and not j.has("hidden") and CHORES.has(j["chore"]) and not P.job(pid, j["id"]).is_empty()
-	_check(none_listed and P.jobs_of("pet_bunny").size() == 2, "jobs_of lists no chore job for any pet (and no chore job is hidden any more), job() finds them")
-	_check(not G.done("coop_1") and offered == {"pet_bunny": 2, "pet_tortoise": 2, "pet_goat": 1, "pet_pony": 2, "pet_badger": 1, "pet_alpaca": 0}, "chore_jobs: the pen chores are not offered before the coop is built (%s)" % str(offered))
+		for j in P.blessings_of(pid): none_listed = none_listed and j.get("kind", "") != "chore" and not j["id"].begins_with("helps_")
+		offered[pid] = P.chores_of(pid).size()
+		for j in P.data()["entries"][pid]: if j.get("kind", "") == "chore": none_listed = none_listed and not j.has("hidden") and CHORES.has(j["chore"]) and not P.entry(pid, j["id"]).is_empty()
+	_check(none_listed and P.blessings_of("pet_bunny").size() == 2, "blessings_of lists no chore for any pet (and no chore is hidden any more), entry() finds them")
+	_check(not G.done("coop_1") and offered == {"pet_bunny": 2, "pet_tortoise": 2, "pet_goat": 1, "pet_pony": 2, "pet_badger": 1, "pet_alpaca": 0}, "chores_of: the pen chores are not offered before the coop is built (%s)" % str(offered))
 	G.S["unlocked"]["coop_1"] = true
 	var all12 := 0
-	for pid in G.pet_ids: all12 += P.chore_jobs(pid).size()
-	_check(all12 == 12, "…all 12 chore jobs are offered once it is (%d)" % all12)
+	for pid in G.pet_ids: all12 += P.chores_of(pid).size()
+	_check(all12 == 12, "…all 12 chores are offered once it is (%d)" % all12)
 	# the energy card: one segment of the bar is one energy; the default leaves about a third of the chapter 3 bar (40); the card says "≥"
 	var c: Dictionary = P.whens().get("energy", {})
 	var all_allow := true
@@ -359,7 +359,7 @@ func _chore_rules() -> void:
 	# level 3 (the bunny, the tortoise and the goat are home): choosing a chore sets the energy WHEN at its default
 	_fresh(["pet_bunny", "pet_tortoise", "pet_goat"])
 	_check(P.level("pet_bunny") == 3 and P.when_of("pet_bunny", 0).is_empty(), "level 3 bunny: its WHEN is always")
-	_check(P.choose("pet_bunny", "helps_weed") and P.job_id("pet_bunny") == "helps_weed" and P.job("pet_bunny", P.job_id("pet_bunny"))["kind"] == "chore", "level 3: choose takes a chore, job_id keeps it")
+	_check(P.choose("pet_bunny", "helps_weed") and P.chosen("pet_bunny") == "helps_weed" and P.entry("pet_bunny", P.chosen("pet_bunny"))["kind"] == "chore", "level 3: choose takes a chore, chosen keeps it")
 	var w0: Dictionary = P.when_of("pet_bunny", 0)
 	_check(w0.get("card", "") == "energy" and is_equal_approx(float(w0.get("n", -1)), dflt), "…and its WHEN is the energy card at its default (%s)" % str(w0))
 	var pd = A.pet_doer("pet_bunny")
@@ -370,7 +370,7 @@ func _chore_rules() -> void:
 	var info := {}
 	P.step(info)
 	var act: Dictionary = _act_of(info, "pet_bunny")
-	_check(act.get("ok", false) and act.get("chore", "") == "weed" and act.get("area", "") == "field" and act.get("idx", -1) == 0 and act.get("emoji", "") == "🌿" and act.get("emoji", "") == P.job("pet_bunny", "helps_weed")["emoji"], "with energy above the number the chore runs, and the act carries the job's emoji (%s)" % str(act))
+	_check(act.get("ok", false) and act.get("chore", "") == "weed" and act.get("area", "") == "field" and act.get("idx", -1) == 0 and act.get("emoji", "") == "🌿" and act.get("emoji", "") == P.entry("pet_bunny", "helps_weed")["emoji"], "with energy above the number the chore runs, and the act carries the entry's emoji (%s)" % str(act))
 	_check(is_equal_approx(G.S["patches"][0]["weeds"], 5.0 - per_pull) and cost > 0.0 and is_equal_approx(G.S["energy"], dflt + 5.0 - cost) and A.moments_used() == m0, "…weeds fall, the farmer's energy falls by the cost, the moments are unchanged")
 	G.S["energy"] = dflt - 1.0
 	G.S["patches"][0]["weeds"] = 5.0
@@ -393,9 +393,9 @@ func _chore_rules() -> void:
 	G.S["unlocked"]["pet_pony"] = true
 	G.S["unlocked"]["pet_badger"] = true
 	G.invalidate_caps()
-	_check(P.level("pet_goat") == 3 and not P.choose("pet_goat", "helps_muck_out") and P.job_id("pet_goat") == "weeds" and P.when_of("pet_goat", 0).is_empty(), "…at level 3 too: it is false, the goat's rule and WHEN stay")
+	_check(P.level("pet_goat") == 3 and not P.choose("pet_goat", "helps_muck_out") and P.chosen("pet_goat") == "weeds" and P.when_of("pet_goat", 0).is_empty(), "…at level 3 too: it is false, the goat's rule and WHEN stay")
 	G.S["unlocked"]["coop_1"] = true
-	_check(P.choose("pet_goat", "helps_muck_out") and P.job_id("pet_goat") == "helps_muck_out" and P.when_of("pet_goat", 0).get("card", "") == "energy", "…and true once the pen is built")
+	_check(P.choose("pet_goat", "helps_muck_out") and P.chosen("pet_goat") == "helps_muck_out" and P.when_of("pet_goat", 0).get("card", "") == "energy", "…and true once the pen is built")
 	# the act of a pen chore: the place is the pen, with the animal
 	G.S["animals"]["animal_chicken"] = {"count": 2, "ready": 0, "muck": 3.0}
 	G.S["energy"] = dflt + 5.0
@@ -415,23 +415,23 @@ func _chore_rules() -> void:
 	# level 4: the second rule gets the same
 	_fresh(["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony"])
 	_check(P.level("pet_bunny") == 4 and P.choose("pet_bunny", "weeds") and P.set_when("pet_bunny", 0, "weeds", 5.0), "level 4: the first rule is a blessing with its own WHEN")
-	_check(P.set_second_job("pet_bunny", "helps_weed") and P.second_job("pet_bunny") == "helps_weed" and P.when_of("pet_bunny", 1) == {"card": "energy", "n": dflt} and P.when_of("pet_bunny", 0) == {"card": "weeds", "n": 5.0}, "…set_second_job takes a chore, keeps it, and its WHEN is the energy card at its default; rule 1 is untouched")
+	_check(P.choose_second("pet_bunny", "helps_weed") and P.second_chosen("pet_bunny") == "helps_weed" and P.when_of("pet_bunny", 1) == {"card": "energy", "n": dflt} and P.when_of("pet_bunny", 0) == {"card": "weeds", "n": 5.0}, "…choose_second takes a chore, keeps it, and its WHEN is the energy card at its default; rule 1 is untouched")
 	G.S["patches"][0]["weeds"] = 3.0      # under 5: the first rule does not hold, the second runs
 	G.S["energy"] = dflt + 5.0
 	info = {}
 	P.step(info)
 	act = _act_of(info, "pet_bunny")
-	_check(act.get("ok", false) and act.get("job", "") == "helps_weed" and G.S["patches"][0]["weeds"] < 3.0, "OTHERWISE the second rule, a chore, runs when the first WHEN does not hold")
+	_check(act.get("ok", false) and act.get("entry", "") == "helps_weed" and G.S["patches"][0]["weeds"] < 3.0, "OTHERWISE the second rule, a chore, runs when the first WHEN does not hold")
 	G.S["energy"] = dflt - 1.0
 	G.S["patches"][0]["weeds"] = 3.0
 	info = {}
 	P.step(info)
 	_check(not _act_of(info, "pet_bunny").get("ok", false) and P.last("pet_bunny")["why"] == "wait" and is_equal_approx(G.S["energy"], dflt - 1.0), "…and the pet waits when the energy is below the second rule's number")
-	_check(P.set_when("pet_bunny", 1, "weeds", 2.0) and P.set_second_job("pet_bunny", "helps_pick_loose") and P.when_of("pet_bunny", 1) == {"card": "weeds", "n": 2.0}, "a second rule's WHEN the child set stays when another chore is chosen")
-	_check(P.set_when("pet_bunny", 1, "") and P.set_second_job("pet_bunny", "helps_weed") and P.set_second_job("pet_bunny", "stones") and P.when_of("pet_bunny", 1).is_empty() and P.second_job("pet_bunny") == "stones", "a blessing as the second rule frees the default energy WHEN")
-	# level 4 and a pen chore with no coop: set_second_job is false
+	_check(P.set_when("pet_bunny", 1, "weeds", 2.0) and P.choose_second("pet_bunny", "helps_pick_loose") and P.when_of("pet_bunny", 1) == {"card": "weeds", "n": 2.0}, "a second rule's WHEN the child set stays when another chore is chosen")
+	_check(P.set_when("pet_bunny", 1, "") and P.choose_second("pet_bunny", "helps_weed") and P.choose_second("pet_bunny", "stones") and P.when_of("pet_bunny", 1).is_empty() and P.second_chosen("pet_bunny") == "stones", "a blessing as the second rule frees the default energy WHEN")
+	# level 4 and a pen chore with no coop: choose_second is false
 	_fresh(["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony", "pet_badger", "pet_alpaca"])
-	_check(P.level("pet_badger") == 4 and not P.set_second_job("pet_badger", "helps_muck_out") and P.second_job("pet_badger") == "compost" and P.set_second_job("pet_badger", "helps_pick_stones") and P.second_job("pet_badger") == "helps_pick_stones", "set_second_job of a pen chore with no pen is false, of another chore true")
+	_check(P.level("pet_badger") == 4 and not P.choose_second("pet_badger", "helps_muck_out") and P.second_chosen("pet_badger") == "compost" and P.choose_second("pet_badger", "helps_pick_stones") and P.second_chosen("pet_badger") == "helps_pick_stones", "choose_second of a pen chore with no pen is false, of another chore true")
 
 func _check(ok: bool, what: String) -> void:
 	checks += 1

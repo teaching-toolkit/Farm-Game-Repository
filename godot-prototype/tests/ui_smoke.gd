@@ -3,6 +3,8 @@ extends Node
 const Spots = preload("res://game/farm/spots.gd")
 const Art = preload("res://kits/ui/art.gd")
 const SquareGround = preload("res://game/farm/ui/square_ground.gd")
+const IsoField = preload("res://game/farm/map/iso_field.gd")
+const AvatarPicker = preload("res://kits/avatar/avatar_picker.gd")
 var G
 var M
 var D      # the UI test driver: the tests talk to the screen only through it (tests/ui_driver.gd)
@@ -473,6 +475,10 @@ func _ready() -> void:
 	av.walk_to(Vector2(330, 330))
 	await get_tree().create_timer(1.0).timeout
 	print("r7 farmer: at ", a0, " path to the barn side ", path.size(), " points, walked to ", av.feet, " moving ", av.moving, "  in objects: ", av.get_parent() == D.map().objects)
+	# visible-work/08: the planned walks wore the ground (draw only); the first walk is far from a track, so nothing is drawn yet
+	var worn_cells := 0
+	for k in G.S.get("trodden", {}): worn_cells += 1
+	if worn_cells == 0 or not G.trodden.worn().is_empty(): print("FAIL worn paths: %d cells counted, %d shown after two walks" % [worn_cells, G.trodden.worn().size()])
 	# 4h) round 8: quiz ids, 3-4 options, picture questions, translations; stoking; bigger loads; rooting out; dynamic prices
 	var ids := {}
 	var dup := 0
@@ -935,6 +941,66 @@ func _ready() -> void:
 	D.story_enabled(true)
 	print("interruptions: the story pump shows only story and leaves a celebration in line %s, which comes at the end of the frame %s" % [iq_story_only, iq_after])
 	if not (iq_story_only and iq_after): print("FAIL interruptions: see the line above")
+	# interruption-queue/05: a celebration still waiting when the game closes is in the save (a sparse key); after loading it is back in
+	# line, a story box that is ready comes first, it shows once and leaves the save; an old save without the key has nothing waiting
+	var iq5_path := "user://iq05_test.json"
+	var iq5_story = G.D["story"]
+	D.story_enabled(false)
+	D.show_menu()                                # a pop-up is open: the celebration waits (in line and in the save)
+	await _frames(2)
+	D.celebrate("stone_axe")
+	var iq5_kept: bool = G.S.get("celebrations_waiting", []) == ["stone_axe"] and D.celebrations() == ["stone_axe"]
+	G.Saves.write(iq5_path, G.S)                 # the game closes here …
+	D.clear_celebrations()
+	D.close_modal()
+	await _frames(3)
+	var iq5_lost: bool = not D.modal_visible()   # … and what was in line is gone with it
+	var iq5_loaded: bool = G.load_game(iq5_path) and G.S.get("celebrations_waiting", []) == ["stone_axe"]
+	D.show_menu()
+	await _frames(2)
+	D.restore_celebrations()
+	var iq5_back: bool = D.celebrations() == ["stone_axe"] and D.modal_visible()
+	D.close_modal()
+	await _frames(3)
+	var iq5_shown: bool = D.modal_visible() and D.celebrations().is_empty() and not G.S.has("celebrations_waiting")
+	D.close_modal()
+	await _frames(3)
+	D.restore_celebrations()
+	await _frames(3)
+	var iq5_once: bool = not D.modal_visible() and D.celebrations().is_empty()
+	print("interruptions/05: kept in the save while it waits %s, lost without it %s, back in line after loading %s %s, shows %s and leaves the save, once %s" % [iq5_kept, iq5_lost, iq5_loaded, iq5_back, iq5_shown, iq5_once])
+	if not (iq5_kept and iq5_lost and iq5_loaded and iq5_back and iq5_shown and iq5_once): print("FAIL interruptions/05: see the line above")
+	# an old save has no such key: nothing waits
+	var iq5_old: Dictionary = G.S.duplicate(true)
+	iq5_old.erase("celebrations_waiting")
+	G.Saves.write(iq5_path, iq5_old)
+	D.celebrate("stone_axe")                     # (something from another farm is in line: loading drops it)
+	var iq5_dropped: bool = G.load_game(iq5_path)
+	D.restore_celebrations()
+	await _frames(3)
+	var iq5_none: bool = iq5_dropped and D.celebrations().is_empty() and not G.S.has("celebrations_waiting")
+	D.close_modal()
+	# the story box that is ready on loading comes first, the celebration after it
+	G.S["story_seen"].clear()
+	G.D["story"] = {"t_beat": {"kind": "beat", "chapter": 1, "when": [], "title": "Test beat", "text": "Beat text."}}
+	G.S["celebrations_waiting"] = ["stone_axe"]
+	G.Saves.write(iq5_path, G.S)
+	G.S.erase("celebrations_waiting")
+	D.story_enabled(true)
+	G.load_game(iq5_path)
+	D.restore_celebrations()
+	await _frames(3)
+	var iq5_box: bool = D.modal_visible() and _modal_has("Beat text") and D.celebrations() == ["stone_axe"]
+	D.close_modal()
+	await _frames(3)
+	var iq5_then: bool = D.modal_visible() and not _modal_has("Beat text") and D.celebrations().is_empty() and not G.S.has("celebrations_waiting")
+	D.close_modal()
+	await _frames(2)
+	print("interruptions/05: an old save has nothing waiting %s, a ready story box comes first %s, the celebration after it %s" % [iq5_none, iq5_box, iq5_then])
+	if not (iq5_none and iq5_box and iq5_then): print("FAIL interruptions/05: see the line above")
+	G.D["story"] = iq5_story
+	G.S["story_seen"].clear()
+	DirAccess.remove_absolute(ProjectSettings.globalize_path(iq5_path))
 	# story/11 ---------------------------------------------------------------------------------------------------------------------------------
 	# the grandchildren's frame is a full-screen black scene through the interruption queue: it waits for a pop-up, the Time Quiz, Rest and a
 	# sheet, covers the whole screen (top bar included) with its own music, goes on with a tap page by page, shows Skip only from the second
@@ -1045,10 +1111,92 @@ func _ready() -> void:
 	var cw_weeds_stay: bool = int(G.S["patches"][0]["weeds"]) == 8 and int(G.S["patches"][0]["stones"]) == 4
 	print("crowding: wilted on the map %s, the sheet says the share %s, harvested %s, grey ghosts %d, weeds and stones stay %s" % [cw_map, cw_sheet, cw_done, cw_ghosts, cw_weeds_stay])
 	if not (cw_map and cw_sheet and cw_done and cw_ghosts >= 1 and cw_weeds_stay): print("FAIL crowding: see the line above")
+	await _seed_flowering()
+	await _seed_bag()
 	await _interface_feel_01_02()
 	await _action_budget_ring()
 	await _pet_chores()
+	await _patch_sheets_diamond()
+	await _make_your_farmer()
 	get_tree().quit()
+
+## crops-and-items/01 (U2): a ripe carrot gets the choice "Let it flower" once the card Saving seed is read; flowering shows a flower on the map and
+## the waiting look in the sheet; in spring the seed is ripe (a seed on the map, the seed on the harvest button).
+## pictures/02: the seed bag the game draws: a control of the asked size for a crop picture and for a missing one (emoji, or nothing), no crash
+func _seed_bag() -> void:
+	const SeedBag = preload("res://kits/ui/seed_bag.gd")
+	var pic: Texture2D = Art.icon("crops", ["crop_carrot"])
+	var with_pic: Control = SeedBag.make(pic, "🥕", 52.0)
+	var no_pic: Control = SeedBag.make(null, "🥕", 40.0)
+	var nothing: Control = SeedBag.make(null, "", 30.0)
+	for c in [with_pic, no_pic, nothing]: add_child(c)       # drawn once, as on a sheet
+	var sized: bool = with_pic.custom_minimum_size == Vector2(52, 52) and no_pic.custom_minimum_size == Vector2(40, 40) and nothing.custom_minimum_size == Vector2(30, 30)
+	var emoji_only: bool = with_pic.get_child_count() == 0 and no_pic.get_child_count() == 1 and nothing.get_child_count() == 0
+	for c in [with_pic, no_pic, nothing]: c.queue_free()
+	# on the village square, the seeds stall shows a bag per crop (carrot has a bought seed), and the store's seeds do too
+	D.close_modal()
+	D.close_sheet()
+	G.S["unlocked"]["crop_carrot"] = true
+	G.S["seeds"]["crop_carrot"] = 3.0
+	G.trip.test_square()
+	D.open_spot("market")
+	await _frames(2)
+	var on_stall: bool = D.square_tap("seeds")
+	await _frames(2)
+	var stall_bags: int = _bag_count(D.content())
+	D.close_sheet()
+	G.trip.leave()
+	D.open_spot("storage")
+	await _frames(3)
+	var store_bags: int = _bag_count(D.content())
+	D.close_sheet()
+	await _frames(2)
+	print("seed bag: carrot picture %s, sizes right %s, the emoji only when there is no picture %s, bags in the seeds stall %d, in the store %d" % [pic != null, sized, emoji_only, stall_bags, store_bags])
+	if not (pic != null and sized and emoji_only and on_stall and stall_bags >= 1 and store_bags >= 1): print("FAIL seed bag (pictures/02): see the line above")
+
+func _bag_count(node: Node) -> int:      # the seed bags below a node
+	var n := 1 if str(node.name).begins_with("SeedBag") else 0
+	for c in node.get_children(): n += _bag_count(c)
+	return n
+
+func _seed_flowering() -> void:
+	for _i in range(6):
+		D.close_modal()
+		await _frames(2)
+	D.close_sheet()
+	await _frames(2)
+	var p: Dictionary = G.S["patches"][0]
+	p["crop"] = "crop_carrot"; p["plants"] = 2.0; p["growth"] = 99.0; p["ready"] = true; p["weeds"] = 0.0; p["stones"] = 0.0; p.erase("seed_at")
+	G.S["energy"] = 50.0
+	G.S["moments"] = 0
+	G.S["unlocked"].erase("k_seeds")
+	D.tap_patch("field", 0)
+	await _frames(3)
+	var before: bool = not _content_has("Let it flower")
+	D.close_sheet()
+	await _frames(2)
+	G.S["unlocked"]["k_seeds"] = true
+	D.tap_patch("field", 0)
+	await _frames(3)
+	var offered: bool = _content_has("Let it flower")
+	var done: bool = G.actions.perform("let_flower", G.actions.farmer, {"a": "field", "i": 0})["done"]
+	await _frames(3)
+	D.map().fields[0].refresh()
+	await _frames(2)
+	var wait_look: bool = _content_has("🌼") and not _content_has("Harvest   ") and not _content_has("Let it flower")      # (the field's "Harvest all" stays)
+	var spec: Dictionary = D.map().fields[0].patches[0].spec
+	var map_flower: bool = bool(spec.get("flower", false)) and str(spec.get("stage", "")) == "grown" and int(spec.get("crowded", 0)) == 0
+	p["ready"] = true      # spring: the seed is ripe
+	G.changed.emit()
+	D.map().fields[0].refresh()
+	await _frames(3)
+	var spec2: Dictionary = D.map().fields[0].patches[0].spec
+	var ripe: bool = _content_has("🌰") and bool(spec2.get("flower", false)) and str(spec2.get("stage", "")) == "ready"
+	print("seed saving: no choice before the card %s, offered after %s, done %s, waiting look in the sheet %s, flower on the map %s, seed ripe %s" % [before, offered, done, wait_look, map_flower, ripe])
+	if not (before and offered and done and wait_look and map_flower and ripe): print("FAIL seed saving: see the line above")
+	G.actions.perform("harvest", G.actions.farmer, {"a": "field", "i": 0})
+	D.close_sheet()
+	await _frames(2)
 
 func _atext_ok(q: Dictionary) -> bool:
 	for a in q["answers"]:
@@ -1355,6 +1503,19 @@ func _interface_feel_01_02() -> void:
 	print("grey/item: '%s' %s   grey/unlock: '%s' %s" % [gi_text, gi_ok, gu_text, gu_ok])
 	if not (gi_ok and gu_ok): print("FAIL interface-feel/02 item and unlock: see the line above (goals %s, %s)" % [miss_id, req_id])
 	D.close_sheet()
+	# --- skills-quality/02: a build's card says why it costs less (the rank of woodwork and construction); a Beginner's card says nothing
+	D.open_spot("storage")
+	await _frames(3)
+	var why_none: bool = not _content_has(G.skills.build_note("workshop_1")) and G.skills.build_note("workshop_1") == ""
+	G.S["skills"]["wood"] = 10
+	var why_text: String = G.skills.build_note("workshop_1")
+	D.content().add_child(M.widgets.node_row("workshop_1"))
+	await _frames(2)
+	var why_ok: bool = why_text != "" and _content_has(why_text)
+	G.S["skills"]["wood"] = 0
+	print("build note: Beginner none %s, Handy '%s' on the card %s" % [why_none, why_text, why_ok])
+	if not (why_none and why_ok): print("FAIL skills-quality/02 build note: see the line above")
+	D.close_sheet()
 	# --- 02 no silent grey: every greyed-out button on every place's sheet, the quest book and the bag, in a new game (at home, then on the
 	# village square) and in a chapter 3 farm, tired and without coins, carries a reason
 	var silent := []
@@ -1561,16 +1722,16 @@ func _pet_chores() -> void:
 	await _pets_window()
 	var muck_one: bool = _buttons_with("Mucking out").size() == 1 and _buttons_with("Weeding").size() == 1
 	var no_numbers: bool = _buttons_with("Mucking out")[0].text == "🧹 Mucking out"      # emoji and a short name: no number, no cost
-	# --- (b) a press sets the pet's job and moves the ✔ (from a blessing to the chore)
+	# --- (b) a press sets the pet's rule and moves the ✔ (from a blessing to the chore)
 	var tick0: int = _buttons_with("✔").size()
 	_buttons_with("Mucking out")[0].emit_signal("pressed")
 	await _frames(3)
-	var job_set: bool = G.pets.job_id("pet_goat") == "helps_muck_out"
+	var rule_set: bool = G.pets.chosen("pet_goat") == "helps_muck_out"
 	var mb: Button = _buttons_with("Mucking out")[0]
 	var tick_moved: bool = mb.text.begins_with("✔") and mb.disabled and _buttons_with("✔").size() == 1 and tick0 == 1 and not _buttons_with("Weeding")[0].text.begins_with("✔")
-	print("pet chores, level 2: one heading %s, Weeding there %s, no Mucking out before the coop %s, then there %s, plain text %s, pressed: job %s, the ✔ moved %s" % [heading_one, weed_ok, muck_none, muck_one, no_numbers, job_set, tick_moved])
-	if not (heading_one and weed_ok and muck_none and muck_one and no_numbers and job_set and tick_moved): print("FAIL pets-automation/04 level 2 window: see the line above")
-	# --- (c) level 4: the OTHERWISE rule has the group too; its press sets the second job; the energy card stops at the bar's size
+	print("pet chores, level 2: one heading %s, Weeding there %s, no Mucking out before the coop %s, then there %s, plain text %s, pressed: rule %s, the ✔ moved %s" % [heading_one, weed_ok, muck_none, muck_one, no_numbers, rule_set, tick_moved])
+	if not (heading_one and weed_ok and muck_none and muck_one and no_numbers and rule_set and tick_moved): print("FAIL pets-automation/04 level 2 window: see the line above")
+	# --- (c) level 4: the OTHERWISE rule has the group too; its press sets the second rule; the energy card stops at the bar's size
 	G.reset_game()
 	D.close_modal()
 	D.story_enabled(false)
@@ -1584,7 +1745,7 @@ func _pet_chores() -> void:
 	var two_tidy: bool = tidy.size() == 2
 	tidy[1].emit_signal("pressed")
 	await _frames(3)
-	var second_set: bool = G.pets.second_job("pet_bunny") == "helps_pick_loose"
+	var second_set: bool = G.pets.second_chosen("pet_bunny") == "helps_pick_loose"
 	tidy = _buttons_with("Tidying up")
 	var second_tick: bool = tidy.size() == 2 and tidy[1].text.begins_with("✔") and not tidy[0].text.begins_with("✔")
 	var weed_first: Button = _buttons_with("Weeding")[0]
@@ -1609,6 +1770,11 @@ func _pet_chores() -> void:
 	var ran_name: bool = _content_has("Last question: Weeding") and not _content_has("waiting for you to rest")
 	print("pet chores, last question: tired says the words %s, a chore that ran shows its name %s" % [tired_text, ran_name])
 	if not (tired_text and ran_name): print("FAIL pets-automation/04 waiting pet: see the line above")
+	G.S["pets"]["last"]["pet_bunny"] = {"job": "helps_weed", "ok": false, "why": "rest"}      # nature/02: a Helper resting while the forest grows back says so
+	await _pets_window()
+	var rest_text: bool = _content_has("resting while the forest grows back")
+	print("pet rests (nature/02): the window says why %s" % rest_text)
+	if not rest_text: print("FAIL nature/02 resting pet: see the line above")
 	D.close_sheet()
 	# --- (e) the playback: a pet at a pen. The pen's place is found (the animal's spot, the coop's for an unknown animal); the pet visits it
 	G.S["unlocked"]["coop_1"] = true
@@ -1634,3 +1800,150 @@ func _pet_chores() -> void:
 	var visited_water: bool = bunny != null and bunny.get_child_count() == kids1 + 1
 	print("pet chores, playback: pen place found %s (%s), the well's place %s, the pet walks to the pen with the chore's emoji %s, and to the water %s" % [pen_fallback, pen, water_ok, visited, visited_water])
 	if not (pen_fallback and water_ok and visited and visited_water): print("FAIL pets-automation/04 playback: see the line above")
+
+# --- later/02 (Z3): the orchard and greenhouse sheets show their patches in diamond rows, like the fields
+func _patch_view() -> Control:      # the patch grid of the open orchard or greenhouse sheet
+	var stack: Array = [D.content()]
+	while stack.size() > 0:
+		var n: Node = stack.pop_back()
+		if n.has_signal("patch_pressed"): return n
+		stack.append_array(n.get_children())
+	return null
+
+func _diamond_rows(fv: Control, n: int) -> bool:      # n patches, in rows of ceil(sqrt n): each next one half a cell right and a quarter down, the next row half a cell left of the one above
+	if fv == null or fv.patches.size() != n: return false
+	var cols := ceili(sqrt(float(n)))
+	for k in range(n):
+		var p = fv.patches[k]
+		var here: Vector2 = p.position + p.dc
+		var side: Vector2 = here - (fv.patches[k - 1].position + fv.patches[k - 1].dc) if k % cols > 0 else Vector2(p.pitch * 0.5, p.pitch * 0.25)
+		var below: Vector2 = here - (fv.patches[k - cols].position + fv.patches[k - cols].dc) if k >= cols else Vector2(-p.pitch * 0.5, p.pitch * 0.25)
+		if side.distance_to(Vector2(p.pitch * 0.5, p.pitch * 0.25)) > 0.01 or below.distance_to(Vector2(-p.pitch * 0.5, p.pitch * 0.25)) > 0.01: return false
+	return true
+
+func _patch_sheets_diamond() -> void:
+	for id in ["orchard", "greenhouse"]: G.S["unlocked"][id] = true
+	G.invalidate_caps()
+	G.S["orchard"] = []
+	G.S["gh"] = []
+	G.fields.ensure_areas()
+	while G.S["orchard"].size() < 5: G.S["orchard"].append(G.fields._blank_patch())      # five spots: a full row of three and a short one
+	while G.S["gh"].size() < 4: G.S["gh"].append(G.fields._blank_patch())
+	G.S["orchard"][1]["crop"] = "crop_walnut"
+	G.S["orchard"][1]["plants"] = 1.0
+	G.changed.emit()
+	await _frames(3)
+	var f0 = M.map.fields[0]
+	var same_layout := true      # the field draws its 9 patches with the same layout function
+	for k in range(9): same_layout = same_layout and f0.patch_center(k).distance_to(IsoField.cell_center(k, 9, f0.patch, f0.gap)) < 0.01
+	var res := []
+	for sheet in [["orchard", 5], ["greenhouse", 4]]:
+		D.open_spot(sheet[0])
+		await _frames(4)
+		var fv := _patch_view()
+		var rows := _diamond_rows(fv, sheet[1])
+		var count: int = fv.patches.size() if fv != null else -1
+		var last: int = sheet[1] - 1
+		var crop_shown: bool = sheet[0] != "orchard" or (fv != null and fv.patches[1].spec.get("crop", "") == "crop_walnut" and fv.patches[0].spec.get("crop", "x") == "")
+		var tapped := false
+		if fv != null:
+			await _tap(fv.patches[last])
+			tapped = D.sheet_kind() == "patch:%s:%d" % ["orchard" if sheet[0] == "orchard" else "gh", last]
+		res.append([sheet[0], count, rows, tapped, crop_shown])
+		D.close_sheet()
+		await _frames(2)
+	var ok: bool = same_layout and res[0][1] == 5 and res[1][1] == 4
+	for r in res: ok = ok and r[2] and r[3] and r[4]
+	print("patch sheets in diamond rows (later/02): the field uses the shared layout %s; orchard (patches, diamond rows, tap on the last opens it, plant shown) %s; greenhouse %s" % [same_layout, res[0], res[1]])
+	if not ok: print("FAIL later/02 diamond rows: see the line above")
+
+## people/02: the "make your farmer" screen. Every list the look data offers is on it (and a tile for every value), a tap on a tile changes the
+## figure, the round tick keeps the look in the farm save and the farmer on the map takes it, and a farm that never asked (tests, the bot, an old
+## save) keeps the default look with no "look" key in the save.
+func _make_your_farmer() -> void:
+	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/avatar.json"))
+	var opts: Dictionary = data["options"]
+	var def_json := JSON.stringify(data["default"], "", true)
+	G.reset_game()
+	G.changed.emit()
+	await _frames(4)
+	D.close_modal()
+	D.frame_close()
+	# skipped: no screen, no key in the save, the default look on the map (and a farm with no named player goes straight on to the welcome)
+	var skip_ok: bool = not G.S.has("look") and G.people.farmer_look().is_empty() and G.people.farmer_to_make() and JSON.stringify(D.farmer_look(), "", true) == def_json
+	M.welcome.first_minutes()
+	await _frames(2)
+	var skip_welcome: bool = D.farmer_picker() == null and _modal_has("Ashes")
+	D.close_modal()
+	# a named player's new farm asks first (the name is put back at once: nothing is saved under it)
+	G.player = "Tess"
+	M.welcome.first_minutes()
+	G.player = ""
+	await _frames(3)
+	var picker = D.farmer_picker()
+	var asks: bool = picker != null and D.farmer_done() != null and not _modal_has("Ashes")
+	if picker == null:
+		print("FAIL make your farmer: the screen did not open")
+		return
+	# every list in the data is offered, every value has a tile, and nothing but the tiles and the tick can be pressed
+	var used := {}
+	for r in AvatarPicker.ROWS: used[r["options"]] = true
+	var lists_ok := true
+	var tiles := 0
+	for k in opts: lists_ok = lists_ok and used.has(k)
+	for id in picker.rows():
+		var row_opts: Array = opts[AvatarPicker.ROWS[picker.rows().find(id)]["options"]]
+		lists_ok = lists_ok and picker.offered(id) == row_opts
+		for v in row_opts:
+			lists_ok = lists_ok and picker.tile(id, v) != null
+			tiles += 1
+	var all_buttons := []
+	_all_buttons(picker, all_buttons)
+	var sizes_ok: bool = opts["skin"].size() == 6 and opts["hairStyle"].size() == 5 and opts["hairColor"].size() == 7 and opts["shirtStyle"].size() == 2 and opts["trousersStyle"].size() == 3 and opts["hatStyle"].size() == 3
+	var no_words := true
+	for b in all_buttons: no_words = no_words and b.text == ""
+	var offers_ok: bool = lists_ok and sizes_ok and tiles + 1 == all_buttons.size() and no_words      # the tiles and the tick
+	# a tap on a tile changes the figure: the last value of every row (a different one from the default)
+	var taps_ok := true
+	var before := JSON.stringify(picker.preview.look, "", true)
+	for id in picker.rows():
+		var v = picker.offered(id).back()
+		picker.tile(id, v).emit_signal("pressed")
+		taps_ok = taps_ok and str(picker.chosen(id)).to_lower() == str(v).to_lower()
+	await _frames(2)
+	var pl: Dictionary = picker.preview.look
+	var figure_ok: bool = JSON.stringify(pl, "", true) != before and pl["skin"] == opts["skin"].back() and pl["hair"]["style"] == opts["hairStyle"].back() \
+		and pl["hair"]["color"] == opts["hairColor"].back() and pl["shirt"]["style"] == opts["shirtStyle"].back() and pl["shirt"]["color"] == opts["clothes"].back() \
+		and pl["trousers"]["style"] == opts["trousersStyle"].back() and pl["trousers"]["color"] == opts["clothes"].back() and pl["hat"]["style"] == opts["hatStyle"].back()
+	# a style keeps the colour chosen for its part; the look holds only what can be chosen (not the drawing's style, eyes or shoes)
+	picker.tile("hairColor", opts["hairColor"][1]).emit_signal("pressed")
+	picker.tile("hairStyle", opts["hairStyle"][1]).emit_signal("pressed")
+	var keeps: bool = picker.look["hair"]["color"] == opts["hairColor"][1] and picker.look["hair"]["style"] == opts["hairStyle"][1] and not picker.look.has("style") and not picker.look.has("eyes")
+	picker.tile("hairStyle", opts["hairStyle"].back()).emit_signal("pressed")
+	picker.tile("hairColor", opts["hairColor"].back()).emit_signal("pressed")
+	var made: Dictionary = picker.look.duplicate(true)
+	# the tick keeps it in the farm save, closes the screen and goes on (the welcome here: the story is off); the farmer on the map takes the look
+	D.farmer_done().emit_signal("pressed")
+	await _frames(4)
+	var saved: bool = G.S.has("look") and JSON.stringify(G.S["look"], "", true) == JSON.stringify(made, "", true) and not G.people.farmer_to_make()
+	var closed_on: bool = D.farmer_picker() == null and _modal_has("Ashes")
+	D.close_modal()
+	var on_map: bool = D.farmer_look()["skin"] == opts["skin"].back() and D.farmer_look()["hat"]["style"] == opts["hatStyle"].back() and D.farmer_look()["style"] == data["default"]["style"]
+	# it is in the farm save file: written and read back it is the same, and the farm does not ask again
+	G.save_to("user://ui_smoke_look.json")
+	var back: bool = G.load_game("user://ui_smoke_look.json")
+	var kept: bool = back and JSON.stringify(G.people.farmer_look(), "", true) == JSON.stringify(made, "", true) and not G.people.farmer_to_make()
+	# the tick with nothing changed keeps the default look as the farmer's (and the farm does not ask again)
+	G.reset_game()
+	G.changed.emit()
+	await _frames(3)
+	D.close_modal()
+	D.frame_close()
+	M.welcome.show_farmer()
+	await _frames(3)
+	D.farmer_done().emit_signal("pressed")
+	await _frames(3)
+	D.close_modal()
+	var plain_ok: bool = G.S.has("look") and not G.people.farmer_to_make() and JSON.stringify(D.farmer_look(), "", true) == def_json
+	print("make your farmer (people/02): skipped %s (then the welcome %s), a named player's farm asks first %s, offers every list and value, no words %s (%d tiles), a tap changes the figure %s (%s), a style keeps its colour %s, the tick keeps it in the save %s and goes on %s, the farmer on the map takes it %s, kept in the save file %s, a plain tick keeps the default %s" % [skip_ok, skip_welcome, asks, offers_ok, tiles, taps_ok, figure_ok, keeps, saved, closed_on, on_map, kept, plain_ok])
+	if not (skip_ok and skip_welcome and asks and offers_ok and taps_ok and figure_ok and keeps and saved and closed_on and on_map and kept and plain_ok): print("FAIL make your farmer: see the line above")

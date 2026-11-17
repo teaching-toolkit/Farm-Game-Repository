@@ -4,6 +4,7 @@ class_name FarmUiWidgets
 
 const UI = preload("res://kits/ui/ui.gd")
 const Art = preload("res://kits/ui/art.gd")
+const SeedBag = preload("res://kits/ui/seed_bag.gd")
 const Spots = preload("res://game/farm/spots.gd")
 
 
@@ -64,6 +65,7 @@ func effect_text(e: Dictionary) -> String:
 			"heirloomSeedSaving": out.append(tr("seeds can be saved from every crop"))
 			_:
 				if k.begins_with("cap_"): out.append(tr("room for %d %s") % [int(v), k.substr(4)])
+				elif k.begins_with("fence:"): out.append(tr("the pen gives all it should") if int(v) <= 1 else tr("the pen gives a little more"))      # the pen's fence stage (animals.gd fence_stage)
 				else: out.append("%s %s" % [k, str(v)])
 	for k in e.get("add", {}):
 		var v2 := float(e["add"][k])
@@ -128,8 +130,11 @@ func cost_bb(c: Dictionary) -> String:
 	return "  ".join(parts)
 
 ## Costs as cube bars: filled = you have it, hollow = still missing, faint grey = saved by upgrades, practice and meals.
-func costs(c: Dictionary, base := {}) -> Control:
-	return UI.cost_row(c, base, have_any, _emoji_any, G.items, G.money, pic)
+## `min_grade` > 0 (a goal with a "minGrade"): the cubes fill only with things of that grade or better, and each graded thing shows the grade as stars (⭐⭐).
+func costs(c: Dictionary, base := {}, min_grade := 0) -> Control:
+	if min_grade <= 0: return UI.cost_row(c, base, have_any, _emoji_any, G.items, G.money, pic)
+	return UI.cost_row(c, base, func(k): return G.inventory.have(k, min_grade), _emoji_any, G.items, G.money, pic,
+		func(k): return G.quality.stars(min_grade) if G.inventory.min_applies(k) else "")
 
 ## The small picture of a thing (an item, or a tool such as the hand axe), cut and scaled once and kept (kits/ui/art.gd `icon`);
 ## null when it has none yet, and the emoji is shown instead (interface-feel/04). "tag:…" (any flour …) shows the same choice as its emoji.
@@ -242,7 +247,9 @@ func node_row(id: String, show_button := true, show_place := false, tile := fals
 	var c: Dictionary = G.pace.node_cost(id)
 	if not c.is_empty():
 		if n.get("perPatch", false): v.add_child(UI.label(tr("each patch:"), 13, UI.MUTED))
-		v.add_child(costs(c, G.pace.node_cost_base(id)))
+		v.add_child(costs(c, G.pace.node_cost_base(id), G.pace.node_min(id)))
+		var skill_why: String = G.skills.build_note(id)       # why the cubes are lighter: the rank of woodwork and construction
+		if skill_why != "": v.add_child(UI.label(skill_why, 14, UI.MUTED, true))
 	var d := str(n.get("desc", ""))
 	if d != "": v.add_child(UI.label(d, 15, UI.MUTED, true))
 	if G.pace.flex_on() and not c.is_empty():
@@ -301,14 +308,16 @@ func grid(cols := 3) -> GridContainer:
 	return g
 
 ## One tile of a grid: a picture (or emoji), a name, and room below for amounts and buttons. `item`: the thing it shows; a tap on the tile
-## (not on its buttons) then gives that item's note (interface-feel/01).
-func tile(pic: Texture2D, emoji: String, title: String, bg := UI.PAPER, item := "") -> VBoxContainer:
+## (not on its buttons) then gives that item's note (interface-feel/01). `bag`: the picture sits on a seed bag (kits/ui/seed_bag.gd).
+func tile(pic: Texture2D, emoji: String, title: String, bg := UI.PAPER, item := "", bag := false) -> VBoxContainer:
 	var pc := UI.card(bg)
 	pc.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var v := UI.vbox(3)
 	pc.add_child(v)
 	var top := UI.hbox(6)
-	if pic:
+	if bag:
+		top.add_child(SeedBag.make(pic, emoji, 48))
+	elif pic:
 		var tr := TextureRect.new()
 		tr.texture = pic
 		tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -324,6 +333,10 @@ func tile(pic: Texture2D, emoji: String, title: String, bg := UI.PAPER, item := 
 	v.set_meta("panel", pc)
 	if item != "": UI.info(pc, "item", item)
 	return v
+
+## A crop's seed as a tile: the seed bag with the crop's small picture (its emoji when it has none) on it (pictures/02).
+func seed_tile(cid: String, title: String) -> VBoxContainer:
+	return tile(Art.icon("crops", [cid]), str(G.nodes[cid].get("emoji", "")), title, UI.PAPER, "", true)
 
 ## The action button at the bottom of a tile: as wide as the tile, pushed to the bottom so the buttons of a row line up.
 func tile_button(t: VBoxContainer, btn: Button) -> void:

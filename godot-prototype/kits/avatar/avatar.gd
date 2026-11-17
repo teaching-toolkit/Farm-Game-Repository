@@ -43,7 +43,7 @@ var _sort_t := 0.0
 var _foot_px := Vector2(75, 180)
 var _outline: StandardMaterial3D
 var _pending := {}
-var _style := "plain"                  # look key "style": plain (default) | painted | painted_face (see _mat / set_look)
+var _style := "plain"                  # look key "style": painted_face | painted | plain; a look without one gets the data's default (data/avatar.json, painted_face); plain only when the data has none
 var _ramp: GradientTexture1D
 var _white: ImageTexture
 var _paint_shader: Shader
@@ -227,10 +227,14 @@ func _pivot(parent: Node3D, name: String, pos: Vector3) -> Node3D:
 	pivots[name] = n
 	return n
 
+## The style the figure is drawn in now (plain | painted | painted_face), after the default look was applied.
+func style() -> String:
+	return _style
+
 func _col(v, def: String) -> Color:
 	return Color(str(v)) if str(v) != "" else Color(def)
 
-## Builds the figure from a look (see data/avatar.json "default"). Missing parts fall back to the default look.
+## Builds the figure from a look (see data/avatar.json "default"). Missing parts, the style too, fall back to the default look.
 func set_look(lk: Dictionary) -> void:
 	if rig == null:
 		_pending = lk

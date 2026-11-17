@@ -4,7 +4,7 @@ extends Node
 ##   --seed=N        the same game every time (the rules engine's random numbers, clock and learning record; see Game.now)
 ##   --golden=FILE   writes one fingerprint line per step of time; tests/golden.sh compares it with tests/golden/
 ##   --save-at=C:FILE  writes the save when chapter C is reached (test fixtures, tests/fixtures/)
-##   --nopetchores   the pets keep their blessings (the bot as it was before pets-automation/05: it sets chore jobs from level 2)
+##   --nopetchores   the pets keep their blessings (the bot as it was before pets-automation/05: it sets chores from level 2)
 ##   --report=FILE   writes the pacing of this run as JSON: per chapter the questions, Rest answers, card questions and actions, and the hours
 ##                   they take with the timing of meta.pacing (the progression explorer shows it; tools/update_explorer.sh makes it)
 var G
@@ -207,19 +207,19 @@ func _count_pet_chores(info: Dictionary) -> void:
 		_row["pet_moments_saved"] += G.actions.moments_of(str(act["chore"]), G.actions.farmer, args)
 
 ## The pets help with the farmer's chores (pets-automation/05), the way a child's taps set them: as soon as a pet's level and the buildings
-## allow, its first rule is the first of its chore jobs and (level 4) its second rule the second. The WHEN stays what `choose` set (the energy
+## allow, its first rule is the first of its chores and (level 4) its second rule the second. The WHEN stays what `choose` set (the energy
 ## card); a pet that reached level 3 after it was set gets it by choosing again. Idempotent and cheap: it acts only when a rule is not that yet
-## (a chore job that becomes available when a place is built changes the list).
+## (a chore that becomes available when a place is built changes the list).
 func _set_pet_chores() -> void:
 	if nopetchores: return
 	for pid in G.pet_ids:
 		var lv: int = G.pets.level(pid)
 		if lv < 2: continue
-		var chores: Array = G.pets.chore_jobs(pid)
+		var chores: Array = G.pets.chores_of(pid)
 		if chores.is_empty(): continue
 		var first := str(chores[0]["id"])
-		if G.pets.job_id(pid) != first or (lv >= 3 and G.pets.when_of(pid, 0).is_empty()): G.pets.choose(pid, first)
-		if lv >= 4 and chores.size() > 1 and G.pets.second_job(pid) != str(chores[1]["id"]): G.pets.set_second_job(pid, str(chores[1]["id"]))
+		if G.pets.chosen(pid) != first or (lv >= 3 and G.pets.when_of(pid, 0).is_empty()): G.pets.choose(pid, first)
+		if lv >= 4 and chores.size() > 1 and G.pets.second_chosen(pid) != str(chores[1]["id"]): G.pets.choose_second(pid, str(chores[1]["id"]))
 
 func _begin_chapter() -> void:
 	_row = {"moments_hist": [0, 0, 0, 0, 0], "moments_steps": [], "ran_out": 0, "pet_chores": 0, "pet_moments_saved": 0, "steps": 0, "chapter": G.chapter(), "step0": int(G.S["step"]), "rest0": int(G.S["stats"]["rest"]),
@@ -298,13 +298,25 @@ func _deep_need(k: String, need: Dictionary) -> bool:
 			if G.recipes[rid]["outputs"].has(n) and G.recipes[rid].get("inputs", {}).has(k): return true
 	return false
 
+## The grade an open goal asks of a graded item (data key "minGrade" on the goal; 0 = any).
+func _min_of(k: String) -> int:
+	var m := 0
+	for id in G.nodes:
+		if G.pace.node_min(id) > m and G.pace.node_cost(id).has(k) and G.inventory.min_applies(k) and G.progression.is_open(id): m = G.pace.node_min(id)
+	return m
+
+## How many of an item the bot has *at the grade it is wanted*: a thing an open goal wants at least Proper or Fancy is not "in the store" until one of that grade
+## is (so the bot keeps making it, and the ingredients, until it has one).
+func _have(k: String) -> float:
+	return G.inventory.have(k, _min_of(k))
+
 ## The orders (deliveries) that are open, whose items the store holds.
 func _ready_orders() -> Array:
 	var out := []
 	for id in G.nodes:
 		if G.nodes[id]["type"] != "delivery" or G.done(id) or not G.progression.is_open(id): continue
 		if not G.progression.missing_reqs(id).is_empty(): continue
-		if G.pace.missing_cost(G.pace.node_cost(id)).is_empty(): out.append(id)
+		if G.pace.missing_cost(G.pace.node_cost(id), G.pace.node_min(id)).is_empty(): out.append(id)      # (an order with a minGrade: the store must hold it at that grade)
 	return out
 
 ## A market trip when there is something to do in the village: pack (orders first, then the surplus that sells best per load),
@@ -331,7 +343,7 @@ func _trip() -> void:
 	G.trip.unpack_all()
 	for id in orders:
 		var c: Dictionary = G.pace.node_cost(id)
-		if G.trip.can_pack_cost(c): G.trip.pack_cost(c)
+		if G.trip.can_pack_cost(c, G.pace.node_min(id)): G.trip.pack_cost(c, G.pace.node_min(id))
 	var ks: Array = want_sell.keys()
 	ks.sort_custom(func(a, b): return G.inventory.value_of(a) / maxf(0.05, G.inventory.weight_of(a)) > G.inventory.value_of(b) / maxf(0.05, G.inventory.weight_of(b)))
 	for k in ks: G.trip.pack(k, int(want_sell[k]))
@@ -423,7 +435,7 @@ func _expand_needs(need: Dictionary) -> void:
 				var opts: Array = G.tags.get(k.substr(4), [])
 				if opts.is_empty(): continue
 				item = opts[0]
-			if G.inventory.count(item) >= float(need[k]): continue
+			if _have(item) >= float(need[k]): continue
 			for root in G.crafting.stations():
 				for rid in G.crafting.station_recipes_for(root):
 					if not G.crafting.recipe_open(rid): continue
@@ -588,7 +600,7 @@ func _turn() -> void:
 			var r = G.recipes[rid]
 			var useful := false
 			for o in r["outputs"]:
-				if need.has(o) and G.inventory.count(o) < float(need[o]) + 1.0: useful = true
+				if need.has(o) and _have(o) < float(need[o]) + 1.0: useful = true
 				if G.items[o].has("fertilizer") and G.fields.fert_points_have() < 12: useful = true
 				for k in need:
 					if k.begins_with("tag:") and (G.items[o].get("tags", []) as Array).has(k.substr(4)): useful = true

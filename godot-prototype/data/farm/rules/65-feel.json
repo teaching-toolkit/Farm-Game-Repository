@@ -37,7 +37,8 @@
     "season": {
       "snowDepth": {"value": 0.05, "unit": "part of the picture's height", "note": "How far the winter snow caps reach down on roofs, tree tops and rails."},
       "frostDepth": {"value": 0.06, "unit": "part of the picture's height", "note": "How far the winter frost reaches down on the top edge of the field patches and the road tiles (season-look/04)."},
-      "frostStrength": {"value": 0.8, "unit": "0 to 1", "note": "How white that frost is: 1 is as white as the snow caps (season-look/04; the parent checks it in W9)."}
+      "frostStrength": {"value": 0.8, "unit": "0 to 1", "note": "How white that frost is: 1 is as white as the snow caps (season-look/04; the parent checks it in W9)."},
+      "fadeQuestions": {"value": 10, "unit": "questions", "note": "Over how many questions of a new season the map's colours and the snow caps fade from the last season's look to the new one's (nature/03: N7). The same length as the flowers' change in rules/66-season-look.json."}
     }
   },
   "interruptions": {

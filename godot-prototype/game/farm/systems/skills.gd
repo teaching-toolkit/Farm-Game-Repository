@@ -5,6 +5,8 @@ class_name FarmSkills
 ## and every collecting from animals counts one for its family; the batches give a rank (Beginner, Handy, Skilled, Expert, Master),
 ## and from Skilled on a rank also needs a card, a tool or a station. The numbers are data (data/farm/rules/48-skills.json).
 ## A rank brings fewer inputs, better chances of a higher grade (G.quality), less energy (Handy and up) and, for Masters, less time.
+## Building is a job too (rules/48-skills.json "builds"): every paid build or step of one counts for woodwork and construction, and that rank makes
+## the next build use up less (the same shares as a recipe: more for crafts than for food) and cost less energy. See family_of_build.
 ## Works from the start; shown from the first rank-up (G.reveal element "skills").
 
 var G: FarmGame   # the Game: the farm's state (G.S), its data and the other systems
@@ -36,6 +38,18 @@ func family_of_station(st: String) -> String:
 ## The family an energy category trains (plant, harvest, animal).
 func family_of_cat(cat: String) -> String:
 	return str(data().get("jobs", {}).get(cat, ""))
+
+## The family that does the building (woodwork and construction).
+func build_family() -> String:
+	return str(data().get("builds", {}).get("family", ""))
+
+## The family whose rank makes a node cheaper to build and that one paid build trains: "" when the node is not a build (a tool, a delivery, a card, a patch).
+## A build is a node of the types or the cost categories written under "builds": buildings, stations, helpers, the clearing of ruins.
+func family_of_build(id: String) -> String:
+	var b: Dictionary = data().get("builds", {})
+	if b.is_empty() or not G.nodes.has(id): return ""
+	if str(G.nodes[id].get("type", "")) in b.get("types", []) or G.progression.node_cat(id) in b.get("cats", []): return build_family()
+	return ""
 
 func batches(f: String) -> int:
 	return int(G.S["skills"].get(f, 0))
@@ -112,7 +126,7 @@ func check(f: String) -> void:
 	var was := int(G.S["skill_rank"].get(f, 0))
 	if r <= was: return
 	G.S["skill_rank"][f] = r
-	G.say(tr("🎖️ %s %s: %s") % [tr(rank_name(r)), tr("at %s") % tr(family_name(f)), effects_text(r)])
+	G.say(tr("🎖️ %s %s: %s") % [tr(rank_name(r)), tr("at %s") % tr(family_name(f)), effects_text(r, f)])
 	G.rank_up.emit(f, r)
 
 ## A new game or a loaded farm: the ranks it already has are not announced.
@@ -122,11 +136,12 @@ func settle() -> void:
 func step(_info: Dictionary) -> void:
 	for f in families(): check(f)
 
-## One line on what a rank brings, for the note and the skills list.
-func effects_text(r: int) -> String:
+## One line on what a rank brings, for the note and the skills list (`f`: the family, which adds what is special to it: building).
+func effects_text(r: int, f := "") -> String:
 	var parts := []
 	if r >= 1: parts.append(tr("less energy"))
 	if r >= 1: parts.append(tr("fewer things needed"))
+	if r >= 1 and f != "" and f == build_family(): parts.append(tr("cheaper building"))
 	parts.append(tr("better chances of Fancy"))
 	if r >= ranks().size() - 1: parts.append(tr("faster"))
 	return ", ".join(parts) + "."
@@ -140,6 +155,15 @@ func next_step(f: String) -> Dictionary:
 	var gate := gate_node(f, nxt)
 	if gate != "" and G.satisfied(gate): gate = ""
 	return {"rank": nxt, "name": rank_name(nxt), "batches": need, "gate": gate}
+
+## One line on why a build costs less now (the rank of woodwork and construction), for the build's card; "" when the rank saves nothing there
+## (a Beginner, something that is not a build, a price of coins only). The cubes show how much; this says why.
+func build_note(id: String) -> String:
+	var f := family_of_build(id)
+	if f == "" or rank(f) <= 0 or not G.reveal.shown("skills"): return ""
+	for k in G.progression.raw_cost(id):
+		if k != "coins" and k != "read": return tr("%s %s: building costs less now.") % [family_emoji(f), tr(rank_name(rank(f)))]
+	return ""
 
 # ------------------------------------------------------------------ condition words
 

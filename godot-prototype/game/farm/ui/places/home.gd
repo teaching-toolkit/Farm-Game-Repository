@@ -59,60 +59,61 @@ func part_pets() -> void:
 		row.add_child(UI.label("%s %s — %s" % [n.get("emoji", ""), G.S["pet_names"].get(pid, n.get("defaultName", "")), M.widgets.effect_text(n.get("effects", {}))], 17, UI.INK, true))
 		row.add_child(UI.soft_button(tr("✏️ Name"), M.welcome.show_name.bind(pid, str(G.S["pet_names"].get(pid, n.get("defaultName", "")))), true, 15))
 		M.content.add_child(row)
-		_job_board(pid)
+		_pet_rules(pid)
 	if not any: M.content.add_child(UI.label(tr("Your first pet, a bunny, comes home at the end of chapter 1."), 16, UI.MUTED, true))
 
-## A pet's job board (TODO S2): level 2 lets the child choose what the pet does every question; what it did last time, or why it could not.
-func _job_board(pid: String) -> void:
-	var jobs: Array = G.pets.jobs_of(pid)
-	if jobs.is_empty(): return
+## A pet's rules (TODO S2): level 2 lets the child choose what the pet does every question (a blessing or a chore); what it did last time, or why it could not.
+func _pet_rules(pid: String) -> void:
+	var blessings: Array = G.pets.blessings_of(pid)
+	if blessings.is_empty(): return
 	if G.pets.level(pid) < 2:
-		M.content.add_child(UI.label(tr("   Level 2: a job of its own comes when the next pet comes home."), 14, UI.MUTED, true))
+		M.content.add_child(UI.label(tr("   Level 2: a blessing of its own comes when the next pet comes home."), 14, UI.MUTED, true))
 		return
-	var cur := G.pets.job_id(pid)
+	var cur := G.pets.chosen(pid)
 	var bx := HFlowContainer.new()
 	bx.add_theme_constant_override("h_separation", 6)
-	for j in jobs:
+	for j in blessings:
 		var on: bool = j["id"] == cur
-		bx.add_child(UI.button("%s%s %s" % ["✔ " if on else "", j["emoji"], tr(str(j["name"]))], G.pets.choose.bind(pid, j["id"]), not on, UI.GREEN if on else UI.AMBER, 16, tr("✔ That is its job already.")))
+		bx.add_child(UI.button("%s%s %s" % ["✔ " if on else "", j["emoji"], tr(str(j["name"]))], G.pets.choose.bind(pid, j["id"]), not on, UI.GREEN if on else UI.AMBER, 16, tr("✔ That is its blessing already.")))
 	M.content.add_child(bx)
 	_chore_group(pid, 0, cur)
 	if G.pets.level(pid) >= 3: _when_row(pid, 0, tr("WHEN"))
 	if G.pets.level(pid) >= 4:
-		var cur2: String = G.pets.second_job(pid)
+		var cur2: String = G.pets.second_chosen(pid)
 		var bx2 := HFlowContainer.new()
 		bx2.add_theme_constant_override("h_separation", 6)
 		bx2.add_child(UI.label(tr("OTHERWISE"), 15, UI.MUTED))
-		for j in jobs:
+		for j in blessings:
 			var on2: bool = j["id"] == cur2
-			bx2.add_child(UI.button("%s%s %s" % ["✔ " if on2 else "", j["emoji"], tr(str(j["name"]))], G.pets.set_second_job.bind(pid, j["id"]), not on2, UI.GREEN if on2 else UI.AMBER, 15, tr("✔ That is its other job already.")))
+			bx2.add_child(UI.button("%s%s %s" % ["✔ " if on2 else "", j["emoji"], tr(str(j["name"]))], G.pets.choose_second.bind(pid, j["id"]), not on2, UI.GREEN if on2 else UI.AMBER, 15, tr("✔ That is its other blessing already.")))
 		M.content.add_child(bx2)
 		_chore_group(pid, 1, cur2)
 		_when_row(pid, 1, tr("WHEN"))
 	var last := G.pets.last(pid)
 	if not last.is_empty():
-		var jb: Dictionary = G.pets.job(pid, str(last.get("job", "")))
+		var jb: Dictionary = G.pets.entry(pid, str(last.get("job", "")))      # the saved key keeps its name `job`
 		var txt := tr("   Last question: %s") % tr(str(jb.get("name", "")))
 		if not last["ok"]:
 			match str(last.get("why", "")):
 				"full": txt = tr("   Last question: 📦 the store is full")
 				"wait": txt = tr("   Last question: ⏸️ waiting for its WHEN")
 				"tired": txt = tr("   Last question: 💤 waiting for you to rest")
+				"rest": txt = tr("   Last question: 🌱 resting while the forest grows back")
 				_: txt = tr("   Last question: 💤 nothing to do")
 		M.content.add_child(UI.label(txt, 14, UI.MUTED, true))
 
 ## The group "⚡ Helps with" under a rule's blessings: the pet's chores whose place stands, as buttons of the same look and the same ✔
 ## (rule 0 = the first rule, 1 = the second). No number, no cost. Left out when the pet has no chore to offer yet.
 func _chore_group(pid: String, rule: int, cur: String) -> void:
-	var chores: Array = G.pets.chore_jobs(pid)
+	var chores: Array = G.pets.chores_of(pid)
 	if chores.is_empty(): return
 	var bx := HFlowContainer.new()
 	bx.add_theme_constant_override("h_separation", 6)
 	bx.add_child(UI.label(tr("⚡ Helps with"), 15, UI.MUTED))
 	for j in chores:
 		var on: bool = j["id"] == cur
-		var pick: Callable = G.pets.choose.bind(pid, j["id"]) if rule == 0 else G.pets.set_second_job.bind(pid, j["id"])
-		var why := tr("✔ That is its job already.") if rule == 0 else tr("✔ That is its other job already.")
+		var pick: Callable = G.pets.choose.bind(pid, j["id"]) if rule == 0 else G.pets.choose_second.bind(pid, j["id"])
+		var why := tr("✔ It helps with that already.") if rule == 0 else tr("✔ It helps with that otherwise already.")
 		bx.add_child(UI.button("%s%s %s" % ["✔ " if on else "", j["emoji"], tr(str(j["name"]))], pick, not on, UI.GREEN if on else UI.AMBER, 16 if rule == 0 else 15, why))
 	M.content.add_child(bx)
 

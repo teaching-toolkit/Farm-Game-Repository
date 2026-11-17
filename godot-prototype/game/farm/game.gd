@@ -116,6 +116,7 @@ var forest: FarmForest
 var trust: FarmTrust
 var people: FarmPeople
 var loose: FarmLoose
+var trodden: FarmTrodden
 
 func _init() -> void:
 	seasons = FarmSeasons.new(self)
@@ -145,6 +146,7 @@ func _init() -> void:
 	trust = FarmTrust.new(self)
 	people = FarmPeople.new(self)
 	loose = FarmLoose.new(self)
+	trodden = FarmTrodden.new(self)
 	_register_words()
 	for sys in [seasons, fields, needs, progression, knowledge, rewards, trade, inventory, story, trip, skills, well, forest, lord, animals]: sys.register_words(conditions)
 	fields.register_chores()
@@ -322,7 +324,7 @@ func save_defaults() -> Dictionary:
 ## Everything a save holds in a new game: the Game's keys and every system's.
 func all_save_defaults() -> Dictionary:
 	var d := save_defaults()
-	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, timeq, rewards, trade, reveal, skills, story, trip, gate, lord, pets, well, nature, forest, loose, actions]:
+	for sys in [seasons, inventory, needs, progression, fields, animals, crafting, knowledge, timeq, rewards, trade, reveal, skills, story, trip, gate, lord, pets, well, nature, forest, loose, trodden, actions]:
 		d.merge(sys.save_defaults())
 	return d
 
@@ -603,6 +605,7 @@ func setup_clock() -> void:
 	clock.register("perks", rewards.check_perks)
 	clock.register("skills", skills.step)
 	clock.register("reveal", reveal.step)
+	clock.register("trodden", trodden.step)       # the worn paths forget a few walks at each new season (draw only)
 
 # ------------------------------------------------------------------ conditions ("when" in the data)
 

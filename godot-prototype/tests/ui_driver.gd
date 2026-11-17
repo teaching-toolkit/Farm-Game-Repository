@@ -93,6 +93,9 @@ func rest_go() -> void: M.rest.rest_go()
 func farmer_shown() -> bool: return M.map.avatar.visible and M.map.avatar.modulate.a > 0.99     # Rest: he is out of the tent or house
 func farmer_hidden() -> bool: return not M.map.avatar.visible                                   # … or inside it
 func farmer_feet() -> Vector2: return M.map.avatar.feet
+func farmer_look() -> Dictionary: return M.map.avatar.look      # the look the farmer on the map is drawn in now
+func farmer_picker(): return M.modal_box.find_child("FarmerPicker", true, false)      # the "make your farmer" screen's control (people/02), null when it is not open
+func farmer_done() -> Button: return M.modal_box.find_child("FarmerDone", true, false)      # its round tick
 func tap_rest_walk() -> bool:      # a tap on the screen while the farmer walks in or comes out (false: nothing caught it)
 	var c = M.rest._catcher
 	if c == null or not is_instance_valid(c): return false
@@ -136,6 +139,7 @@ func frame_press(text: String) -> bool:      # press a button of the scene (Skip
 			return true
 		stack.append_array(n.get_children())
 	return false
+func restore_celebrations() -> void: M.interrupts.restore()      # after loading a save: what it kept goes back in line
 func interrupts_request() -> void: M.interrupts.request()      # something waits for the screen: pump at the end of the frame
 func bubbles() -> int:      # sticky speech bubbles on the screen
 	var n := 0

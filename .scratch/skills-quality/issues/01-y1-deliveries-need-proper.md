@@ -4,15 +4,28 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
 **Milestone:** later
 
-- [ ] A delivery or goal can name a minimum grade in data, and the interface shows it
-- [ ] A handful of key deliveries are chosen and set (listed in this ticket when done)
-- [ ] The badger's medicine asks for Fancy
-- [ ] The bot makes the grade needed; a test covers refusal and acceptance
-- [ ] German through `tools/i18n.py`; the *(planned)* mark in the design document is removed
+- [x] A delivery or goal can name a minimum grade in data, and the interface shows it (`"minGrade"` on the node; ⭐ stars on each graded thing in the price)
+- [x] A handful of key deliveries are chosen and set (listed in this ticket when done): the four Harvest Fair tables, see Progress
+- [ ] The badger's medicine asks for Fancy (**not set on purpose**: with a beginner starting Lumpy, Fancy is out of reach, see Progress; the parent decides)
+- [x] The bot makes the grade needed; a test covers refusal and acceptance (`quality_test`: pie table refuses Lumpy and accepts Proper; the badger is tested with the key set in memory)
+- [x] German through `tools/i18n.py` (no new text: stars only; `--check` clean); the *(planned)* mark for the Proper deliveries is removed in the design document, kept for the badger's Fancy
+
+---
+
+## Progress
+
+**Built (Sonnet agent, 16 Nov 2026).** A node can carry `"minGrade": 1` (Proper) or `2` (Fancy). It takes only things of that grade or better, for the things in its price that have a grade (a tea set, a stick: none, always fine).
+- **Where it lives:** `pace.node_min(id)`, `missing_cost / cost_check / pay(cost, min_grade)` (`pace.gd`), `can_unlock` and `unlock` (`progression.gd`), `inventory.have / take / take_tag / count_tag (…, min_grade)` and `min_applies` (`inventory.gd`), `trip.can_pack_cost / pack_cost (cost, min_grade)` (the bag counts pieces, the grade is taken from the store at hand-over). Taking uses the **lowest grade that is good enough**, so the better ones stay for selling.
+- **What the child sees:** the existing ⭐ on each graded thing in the price (`ui.cost_row` badge, `widgets.costs`), the cubes fill only with good-enough goods, a refusal says "⭐⭐ 1 more", the grey-tap note shows the same. No new words.
+- **Bot / quest text:** `tests/bot.gd` counts only good-enough goods for a delivery's price (`_ready_orders`, `_trip`, `_have`/`_min_of` in the needs), so it keeps making the thing until it has the grade. The quest text is the same data, so check, bot and text agree.
+- **Which deliveries (💡, the ticket names none):** the four **Harvest Fair tables** in chapter 6 (`d_fair_pies`, `d_fair_cheese`, `d_fair_preserves`, `d_fair_cloth`): a judged ribbon, late in the story (chapter 6, the bot's golden runs stop when it is reached, so chapters 1 to 3 and both golden pairs stay untouched). `check_data.py` checks `minGrade` is 1 up to the top grade and the price has a graded thing.
+- **The badger's Fancy is NOT set (decision for the parent).** The Healer's Chest is made at a station, and since skills-quality/03 a beginner's made things start Lumpy (`madeStart` 0). Probe in the game: E about -0.1 to 0.0 for the chest; even with the best station, a Master and Fancy inputs the cap is E about 0.9, so P(Fancy) is about 6 %. A bot, and a child, would make chests for ages. 💡 Before asking Fancy: raise the weight of the inputs' grade above 0.6, or give ranks and stations bigger bonuses, or add a per-recipe bonus for medicine, then set `"minGrade": 2` on `pet_badger` (one line, the code and the test are ready: `quality_test` sets it in memory and checks that Proper is refused and Fancy accepted, and that paying takes the Fancy chest).
+- **The bot and the Fair tables (chapter 6):** the golden runs stop when chapter 6 is reached, so they never play the tables. A throwaway `--end --seed=1` run (not recorded) delivers all four tables with the bot making Proper dishes until it has them: it reaches the same 441 unlocked at step 2940, the same run without `minGrade` at step 2760, so about **+180 steps (about 12 % of chapter 6 so far)**. Neither run reaches the end of the story within 1500 iterations (the baseline does not either), so the end of the story was not compared. For a child: a beginner's pie is Proper only about 1 time in 7, so the table asks for a lot of baking: worth a play-test.
+- **Checked:** `quality_test` 48 checks, 0 failed (was 31); `trip_test` 58, `skills_test` 31, `market_test` 24, `crops_test` 21, `pets_test` 107 all 0 failed; `ui_smoke` no FAIL; short golden **and the full golden (to chapter 6), seeds 1 and 2, identical** (not recorded: nothing to re-record); `check_data` 0 errors; `i18n --check` clean.
 
 ---
 
@@ -29,3 +42,8 @@
   §C) is simply **Fancy**. ⚠️ Reverses the old decision "Quality stars: no" (log §2.4). Upgrade idea 12 in
   `progression/upgrade-benefits-ideas.md` becomes real.
   **Built 13 Oct 2026 (phase 4.3):** as in the plan above: `game/farm/systems/quality.gd`, `data/farm/rules/47-quality.json`; inventory batches `[season, qty, grade]` (`add_item(k, q, quiet, grade)`, `grades`, `best_first`, `take_best`, `peek_grades`, `count_min`); `SAVE_VERSION` 2 (`upgrade_save_v1`); harvests, batches and selling by grade; *Expect: ⭐⭐ Proper* on recipe tiles and ripe patches, the grades in the store tiles; German Naja / Tiptop / Picobello!. The station card's old practice stars (⭐⭐) now read *practice 2* until Y2 replaces them with ranks. `tests/quality_test.tscn` (31 checks, in `check_all.sh`); golden runs re-recorded on purpose (the bot reaches chapter 5 in 729 / 647 steps instead of 741 / 639). Not yet: *at least Proper* for deliveries.
+
+
+## Progress (16 Nov 2026, ask-matt pass)
+
+The mechanism (`minGrade` in node data, ⭐ on the things in the price, check, hand-over, packing, bot) and the four Harvest Fair tables (`minGrade` 1) are done. The badger's Fancy is **split off to `skills-quality/04`**: a beginner's medicine can hardly be Fancy (about 6 %), so asking for it would stop the child. Play-test note for the parent: a beginner's pie is Proper about 1 time in 7, so the Fair tables ask for a lot of baking; the number is data (`minGrade` per table).

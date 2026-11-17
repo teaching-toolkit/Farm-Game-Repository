@@ -19,6 +19,7 @@ static func apply(main, G) -> void:
 		elif a.begins_with("--act="): main.feedback.test_act.call_deferred(a.substr(6))   # screenshots: --act=weed@patch0, --act=cook@kitchen
 		elif a == "--restgo": main.rest.rest_go.call_deferred()              # screenshots: past the Rest start page (after --rest)
 		elif a == "--menu": main.menu.show_menu.call_deferred()            # screenshots: ⚙️ Settings
+		elif a == "--farmer": main.welcome.show_farmer.call_deferred()      # screenshots: the "make your farmer" screen (people/02)
 		elif a == "--grownup": main.menu.grownup_until = 1e12                # screenshots: grown-up settings open
 		elif a == "--password": main.menu.ask_password.call_deferred()     # screenshots: the grown-up password box
 		elif a.begins_with("--card="): main.cards.show_card.call_deferred(a.substr(7))
@@ -64,7 +65,16 @@ static func apply(main, G) -> void:
 		elif a.begins_with("--unlock="):           # screenshots: pretend these are done (--unlock=workbench,stone_axe)
 			for id in a.substr(9).split(","): G.S["unlocked"][id] = true
 			G.invalidate_caps()
+			G.fields.ensure_areas()      # the orchard's tree spots and the greenhouse's beds appear with their buildings
+		elif a.begins_with("--moments="): G.S["moments"] = int(a.substr(10))      # screenshots: this many moments of the step used (24 = no time left; after --newgame)
 		elif a.begins_with("--coins="): G.S["coins"] = float(a.substr(8))     # screenshots: the purse holds this many bronze (123456 = 1 💎 234 🟡 56 🟤)
+		elif a.begins_with("--cook="):             # screenshots: a batch is cooking at this station (--cook=oven_1,kiln; after --load or --unlock=...): smoke from the chimney, a glow at the fire
+			for st in a.substr(7).split(","):
+				for rid in G.recipes:
+					if G.recipes[rid]["station"] == st and G.crafting.recipe_time(rid) > 0.0:
+						G.S["running"][G.crafting.chain_root(st)] = [{"recipe": rid, "left": 9.0, "n": 1, "grade": -1}]
+						break
+			G.changed.emit()
 		elif a.begins_with("--give="):             # screenshots: --give=rope:2,stick:5
 			for kv in a.substr(7).split(","):
 				var parts: PackedStringArray = kv.split(":")
@@ -77,20 +87,20 @@ static func apply(main, G) -> void:
 			G.S["gate"] = {"here": true, "until": 999, "cart": 12.0, "visits": 1}; G.S["unlocked"]["road_2"] = true; G.invalidate_caps()
 			if a.length() > 6: G.S["gate"]["cart"] = float(a.substr(7)) * G.gate.cart_size()      # (a one-line `if` at the end of this branch swallowed every flag below it)
 		elif a.begins_with("--visitor="): G.people.visit(a.substr(10))      # screenshots: a story visitor stands at the farmhouse door (--visitor=maud|greenstem|miller|wren|quill|lark|mei; after --newgame or --load)
-		elif a == "--pets":                        # screenshots: the first three pets are home (the bunny and the tortoise have jobs), the patches are weedy; the tortoise and the bunny have WHEN cards
+		elif a == "--pets":                        # screenshots: the first three pets are home (the bunny and the tortoise have a blessing each), the patches are weedy; the tortoise and the bunny have WHEN cards
 			for pid in ["pet_bunny", "pet_tortoise", "pet_goat", "pet_pony"]: G.S["unlocked"][pid] = true
 			for i in range(mini(G.S["patches"].size(), 4)): G.S["patches"][i]["weeds"] = 4.0
 			G.invalidate_caps()
 			G.pets.set_when("pet_tortoise", 0, "water")
 			G.pets.set_when("pet_bunny", 0, "weeds", 5.0)
-		elif a.begins_with("--petjob="):           # screenshots: --petjob=pet_bunny:helps_weed (after --load, before --spot=pets): every pet is home (level 4) and this pet's first rule is that job; the farmer's energy is full; a chore gets the energy WHEN
+		elif a.begins_with("--petjob="):           # screenshots: --petjob=pet_bunny:helps_weed (after --load, before --spot=pets): every pet is home (level 4) and this pet's first rule is that blessing or chore (the flag keeps its old name `petjob`); the farmer's energy is full; a chore gets the energy WHEN
 			var pj: PackedStringArray = a.substr(9).split(":")
 			for pid in G.pet_ids: G.S["unlocked"][pid] = true
 			G.invalidate_caps()
 			petjob = pj[0]
 			G.S["energy"] = G.needs.energy_max()      # so the chore can run (the energy WHEN) at the next question: use with --petstep
 			G.pets.choose(petjob, pj[1])
-		elif a.begins_with("--petwhy="): G.S["pets"]["last"][petjob] = {"job": G.pets.job_id(petjob), "ok": false, "why": a.substr(9)}     # screenshots: the --petjob pet waited last question for this reason (tired, idle, full, wait)
+		elif a.begins_with("--petwhy="): G.S["pets"]["last"][petjob] = {"job": G.pets.chosen(petjob), "ok": false, "why": a.substr(9)}     # screenshots: the --petjob pet waited last question for this reason (tired, idle, full, wait)
 		elif a == "--petstep": main.get_tree().create_timer(0.3).timeout.connect(_petstep.bind(main, G))     # screenshots: one question passes and the playback shows what the pets did (with --petjob and --shotframes=N)
 		elif a == "--crowded":                     # screenshots: the cleared patches are planted and crowded with weeds and stones (use with --unlock=clear_thistles,clear_weeds and --sheet=patch:field:0 or --spot=field)
 			for i in range(mini(G.S["patches"].size(), G.progression.plots())):
@@ -110,6 +120,18 @@ static func apply(main, G) -> void:
 			G.S["nature"]["pool"] = {"sticks": 9.0, "stones": 4.0, "clay": 16.0}
 			G.S["nature"]["t"] = 5.0; G.S["nature"]["s"] = 6.0; G.S["nature"]["p"] = 3.0
 			G.invalidate_caps()
+		elif a == "--wet":                         # screenshots: potatoes were planted 0, 1, 2, 3 growth steps ago on the first patches (wet soil dries pale; use with --unlock=clear_thistles,clear_weeds,clear_rocks,clear_stumps and --nostory)
+			for i in range(mini(4, G.progression.plots())):
+				var wp = G.S["patches"][i]
+				wp["crop"] = "crop_potato"; wp["plants"] = 3.0; wp["ready"] = false; wp["growth"] = float(i)
+		elif a == "--stubble" or a == "--stubble=ripe":     # screenshots: the first patches hold wheat, carrots, oats, nothing; --stubble: harvested (stubble stays on the grain), --stubble=ripe: still ripe in the ground, to compare (use with --unlock=clear_thistles,clear_weeds,clear_rocks,clear_stumps and --nostory)
+			for i in range(mini(3, G.progression.plots())):
+				var sp = G.S["patches"][i]
+				var crop: String = ["crop_wheat", "crop_carrot", "crop_oats"][i]
+				if a == "--stubble": sp["last"] = crop
+				else: sp["crop"] = crop; sp["plants"] = 4.0; sp["ready"] = true; sp["growth"] = 99.0
+		elif a.begins_with("--worn="): _worn.call_deferred(main, G, int(a.substr(7)))     # screenshots: the farmer's path-finder plans the walks home - field - store - well N times, so the ground shows the worn paths (visible-work/08; 300 = fully worn)
+		elif a == "--rain": G.S["rain"] = true      # screenshots: it rains in this question (the worked patches are wet; use with --wet)
 		elif a == "--snow":                        # screenshots: winter, snow on the empty patches (use with --sheet=patch:field:0 or --spot=field)
 			G.S["step"] = 95; G.S["last_season"] = 3
 			G.fields.snowfall()
@@ -140,6 +162,13 @@ static func apply(main, G) -> void:
 			G.invalidate_caps()
 
 ## Screenshots (--petstep): one step of time, then the playback (the pets walk to where they worked).
+## visible-work/08: the walks the farmer makes most, planned `n` times through the map's own path-finder (which tells the worn paths).
+static func _worn(main, G, n: int) -> void:
+	var m = main.map
+	var stops := [m.stand_point("home"), m.patch_point(0, 4), m.stand_point("storage"), m.stand_point("well")]
+	for _i in range(n):
+		for k in range(stops.size()): m.find_path(stops[k], stops[(k + 1) % stops.size()])
+
 static func _petstep(main, G) -> void:
 	main.playback.begin()
 	G.step_time()

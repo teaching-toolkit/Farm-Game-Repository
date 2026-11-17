@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# All quick checks in one go (about 2 minutes): UI smoke test, save fixtures, save versions, core kit, data checks, places and pets, quality, skills, money, story, trip, gate, trust and season prices, the time question, the condition language, what takes the screen next, golden run, translations, project documents (../tools/check_docs.py).
+# All quick checks in one go (about 2 minutes): UI smoke test, save fixtures, save versions, core kit, data checks, places and pets, quality, skills, money, story, trip, gate, the pens' fences, trust and season prices, the time question, the condition language, what takes the screen next, golden run, translations, project documents (../tools/check_docs.py).
 # Run after every restructuring step:  bash tests/check_all.sh   (Godot as in tests/golden.sh)
 #   bash tests/check_all.sh --short   the same, but the golden run only to the end of chapter 2 (saves about 40 s); the options go to golden.sh
 set -uo pipefail
@@ -57,7 +57,7 @@ grep -q "^GATE OK" "$LOG" || FAIL=1
 grep -E "^LORD|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^LORD OK/✔ the Lord'"'"'s share/; s/^LORD FAILED/✘ the Lord'"'"'s share/'
 grep -q "^LORD OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/pets_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
-grep -E "^PETS|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^PETS OK/✔ the pets'"'"' jobs/; s/^PETS FAILED/✘ the pets'"'"' jobs/'
+grep -E "^PETS|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^PETS OK/✔ the pets'"'"' blessings and chores/; s/^PETS FAILED/✘ the pets'"'"' blessings and chores/'
 grep -q "^PETS OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/well_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^WELL|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^WELL OK/✔ wellbeing/; s/^WELL FAILED/✘ wellbeing/'
@@ -77,6 +77,9 @@ grep -q "^CROWDING OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/actions_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^ACTIONS|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^ACTIONS OK/✔ chores: check and perform/; s/^ACTIONS FAILED/✘ chores: check and perform/'
 grep -q "^ACTIONS OK" "$LOG" || FAIL=1
+"$G" --headless --path . res://tests/animals_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
+grep -E "^ANIMALS|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^ANIMALS OK/✔ the pens'"'"' fences/; s/^ANIMALS FAILED/✘ the pens'"'"' fences/'
+grep -q "^ANIMALS OK" "$LOG" || FAIL=1
 "$G" --headless --path . res://tests/market_test.tscn -- --seed=1 > "$LOG" 2>&1 || FAIL=1
 grep -E "^MARKET|^FAIL|SCRIPT ERROR" "$LOG" | sed 's/^MARKET OK/✔ trust and season prices/; s/^MARKET FAILED/✘ trust and season prices/'
 grep -q "^MARKET OK" "$LOG" || FAIL=1

@@ -32,6 +32,15 @@ func season_emoji() -> String:
 func questions_left_in_season() -> int:
 	return season_len() - (G.S["step"] % season_len())
 
+## How far the season's look has come (N7): {from: the season before, to: this season, t: 0..1}. t is 0 at the season's first question and
+## eases up to 1 over the first `season.fadeQuestions` questions (rules/65-feel.json); the map fades its colours and snow caps with it.
+## Made from the step alone (no clock, no save key), so a saved game and a test see the same. The first spring has no season before it.
+func blend() -> Dictionary:
+	var no := season_no()
+	if no == 0: return {"from": season(), "to": season(), "t": 1.0}
+	var q := float(int(G.S["step"]) % season_len())
+	return {"from": G.SEASON_NAMES[(no + 3) % 4], "to": season(), "t": smoothstep(0.0, maxf(1.0, G.feel("season.fadeQuestions")), q)}
+
 # ------------------------------------------------------------------ one Time Quiz answer
 
 func step_season(info: Dictionary) -> void:

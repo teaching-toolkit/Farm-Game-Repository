@@ -121,17 +121,18 @@ func can_unlock(id: String) -> Dictionary:
 	if G.done(id): return {"ok": false, "why": tr("already done"), "unmet": [{"key": "done", "text": tr("✔ Already done.")}], "cost": {}, "base": {}}
 	var mr := missing_reqs(id)
 	if not mr.is_empty(): return {"ok": false, "why": "needs " + ", ".join(mr), "unmet": [{"key": "requires", "text": tr("Needs first: ") + ", ".join(mr)}], "cost": {}, "base": {}}
+	var mn := G.pace.node_min(id)      # a goal can take only graded things of a grade or better (minGrade)
 	if G.nodes[id]["type"] == "delivery":      # handed over in the village, from the bag
 		if not G.trip.at_square(): return {"ok": false, "why": tr("Deliveries are handed over in the village."), "unmet": [{"key": "village", "text": tr("Deliveries are handed over in the village.")}], "cost": {}, "base": {}}
 		if not G.trip.bag_covers(G.pace.node_cost(id)): return {"ok": false, "why": tr("It is not all in your bag."), "unmet": [{"key": "bag", "text": tr("It is not all in your bag.")}], "cost": {}, "base": {}}
 	if step_wait_left(id) > 0: return {"ok": false, "why": "wait", "wait": step_wait_left(id), "unmet": [{"key": "wait", "text": tr("⏳ The next step needs a few Time Quiz questions.")}], "cost": {}, "base": {}}
 	var cost := G.pace.node_cost(id)
-	var mc := G.pace.missing_cost(cost)
+	var mc := G.pace.missing_cost(cost, mn)
 	if not mc.is_empty():
 		var parts := G.pace.missing_words(mc)
 		return {"ok": false, "why": "missing " + ", ".join(parts), "unmet": [{"key": "lord" if mc.any(func(x): return x["key"] == "lord") else "missing", "text": tr("Missing: ") + ", ".join(parts)}],
-			"cost": cost, "base": G.pace.node_cost_base(id)}
-	return {"ok": true, "why": "", "unmet": [], "cost": cost, "base": cost}
+			"cost": cost, "base": G.pace.node_cost_base(id), "min": mn}
+	return {"ok": true, "why": "", "unmet": [], "cost": cost, "base": cost, "min": mn}
 
 func patch_progress(id: String) -> int:
 	return int(G.S.get("patch_progress", {}).get(id, 0))
@@ -146,8 +147,8 @@ func unlock(id: String) -> bool:
 		if not G.S.has("patch_progress"): G.S["patch_progress"] = {}
 		var done_n := patch_progress(id)
 		var paid := 0
-		while done_n < plots() and G.pace.missing_cost(G.pace.node_cost(id)).is_empty():
-			G.pace.pay(G.pace.node_cost(id)); done_n += 1; paid += 1
+		while done_n < plots() and G.pace.missing_cost(G.pace.node_cost(id), G.pace.node_min(id)).is_empty():
+			G.pace.pay(G.pace.node_cost(id), G.pace.node_min(id)); done_n += 1; paid += 1
 		G.S["patch_progress"][id] = done_n
 		if done_n < plots():
 			G.say(tr("🟫 %s: %d of %d patches done.") % [G.nodes[id]["name"], done_n, plots()])
@@ -162,7 +163,8 @@ func unlock(id: String) -> bool:
 		if step_wait_left(id) > 0:
 			G.say((tr("⏳ %s: the next step can start in %d question.") if step_wait_left(id) == 1 else tr("⏳ %s: the next step can start in %d questions.")) % [G.nodes[id]["name"], step_wait_left(id)])
 			return false
-		G.pace.pay(G.pace.node_cost(id))
+		G.pace.pay(G.pace.node_cost(id), G.pace.node_min(id))
+		G.skills.practice(G.skills.family_of_build(id))      # a paid step of a build trains woodwork and construction (TODO Y2)
 		var got := {}
 		for k in st[i].get("gives", {}): got[k] = G.inventory.add_item(k, float(st[i]["gives"][k]), true)
 		if not G.S.has("step_progress"): G.S["step_progress"] = {}
@@ -181,7 +183,8 @@ func unlock(id: String) -> bool:
 			return true
 	else:
 		var dcost: Dictionary = G.pace.node_cost(id)
-		G.pace.pay(dcost)
+		G.pace.pay(dcost, G.pace.node_min(id))
+		G.skills.practice(G.skills.family_of_build(id))      # …and so does a whole build paid at once
 		if G.nodes[id]["type"] == "delivery": G.trip.spend_from_bag(dcost)
 	finish_unlock(id, false)
 	return true

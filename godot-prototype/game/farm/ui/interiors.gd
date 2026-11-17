@@ -62,6 +62,7 @@ func open_interior(parent: String) -> void:
 			key = M.mapview.first_key("map", keys)
 			tex = Art.tex("map", key) if key != "" else null
 		var open := M.mapview.is_open(m) or m in ["barn_build", "ws_build"] or G.reveal.rules().has(m)      # a corner with a reveal rule is drawn only once reached, and then never faded
+		s.working = G.crafting.place_state(m) == "working"      # the corner smokes and glows as the building does on the map
 		s.set_state(tr(Spots.name_of(m)), Spots.emoji_of(m), tex, not open, M.mapview.badge(m), key)
 		s.tapped.connect(enter_corner.bind(parent))
 	if parent == "workshop" and G.nodes.has("tool_rack") and G.done("tool_rack"):

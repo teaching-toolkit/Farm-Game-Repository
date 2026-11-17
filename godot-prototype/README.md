@@ -221,7 +221,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   a season breeze. Each can be switched off in the album.
 - **🧑‍🌾 The farmer** walks to wherever you tap — on the grass, to a place (its sheet opens at once) or to the edge of a field —
   around buildings, pens, fields and the forest; tap the farmer to get a wave. A little 3D figure (`kits/avatar/avatar.gd`) whose
-  look is data (`data/avatar.json`: skin, hair, shirt, trousers, shoes, hat), ready for a "make your farmer" screen. After
+  look is data (`data/avatar.json`: skin, hair, shirt, trousers, shoes, hat), made by the child on a start screen with no words (`kits/avatar/avatar_picker.gd`, `people/02`). After
   each action it acts it out (weeding, sowing, chopping, cooking …; `data/acts.json`); a new tap interrupts.
 - **🪙 Selling** — the store tiles say exactly what you get: `1 🥣 = 4 🪙`, `5 🥕 = 10 🪙`. Made things pay more than their
   ingredients (more for more different ingredients); the market pays a little less for a big pile of the same thing and
@@ -258,8 +258,8 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   it, its clock moves with the questions instead of the wall clock, and it neither reads nor writes saves or learning records
   on the device. The flags are read in `game/farm/dev/dev_flags.gd` (the screen) and `Game._test_args()` (the rules).
 - Screenshots and tests: `--player=Name`, `--newgame`, `--timestep=N`, `--season=autumn[:Q]`, `--spot=storage`, `--patch=K`, `--unlock=id,id`, `--load=res://tests/fixtures/ch3-seed1.json` (start from a saved farm),
-  `--give=item:5`, `--water=1` (carried water), `--menu` (⚙️ Settings), `--grownup` (its grown-up part open), `--password` (the password box), `--celebrate=id`, `--postcard`, `--perks=all` (or a list of perk ids), `--rainbow`, `--rest` (the Rest start page; add `--restgo` for the sums), `--gorest` (the farmer walks into the tent or house first; with `--shotframes=N`), `--qid=PIC-004`, `--answer` (the open question answered right, after `--quiz` or `--qid`), `--news` (the farm news plays: rain, the scarecrow, pests; with `--shotframes=N`)
-  (one Time Quiz question), `--lang=de` (quiz texts in German), `--toasts` (a stack of notification cards), `--nostory` (no story boxes or bubbles), `--pack=rope:2` (packs things for the trip), `--square` (stands on the village square), `--stall=seeds` (taps a stall there: `sell`, `seeds`, `traders`, `orders`; with `--square --spot=market`) and `--homeq` (the question on the walk home, with `--square --spot=market`), `--story=ID` (one story piece shown; a frame piece such as `c1_frame1` as the full-screen black scene; the opening frame of a new game opens by itself unless `--nostory` or `--seen=c1_frame0`), `--sheetscroll=N` (the open window scrolled down, 9999 = to the end; use with `--shotframes=100`), `--note=energy|water|bag|coins|item:stone|grey` (the short note on tap; `grey` = the first greyed-out button of the open sheet; use with `--shotframes=90`), `--pulse` (the energy bar's pulse and floating number), `--crowded` (the cleared patches planted and crowded with weeds and stones; with `--unlock=clear_thistles,clear_weeds`), `--shot=file.png`.
+  `--give=item:5`, `--water=1` (carried water), `--menu` (⚙️ Settings), `--farmer` (the "make your farmer" screen), `--grownup` (its grown-up part open), `--password` (the password box), `--celebrate=id`, `--postcard`, `--perks=all` (or a list of perk ids), `--rainbow`, `--rest` (the Rest start page; add `--restgo` for the sums), `--gorest` (the farmer walks into the tent or house first; with `--shotframes=N`), `--worn=N` (the farmer's walks home, field, store and well planned N times: the ground shows the worn paths; 300 = fully worn), `--qid=PIC-004`, `--answer` (the open question answered right, after `--quiz` or `--qid`), `--news` (the farm news plays: rain, the scarecrow, pests; with `--shotframes=N`)
+  (one Time Quiz question), `--lang=de` (quiz texts in German), `--toasts` (a stack of notification cards), `--nostory` (no story boxes or bubbles), `--moments=N` (N moments of the step already used, 24 = no time left; put it after `--newgame`; read in `game/farm/dev/dev_flags.gd` like all the others), `--cook=oven_1,kiln` (a batch is cooking at these stations: smoke and glow on their place; after `--load`), `--pack=rope:2` (packs things for the trip), `--square` (stands on the village square), `--stall=seeds` (taps a stall there: `sell`, `seeds`, `traders`, `orders`; with `--square --spot=market`) and `--homeq` (the question on the walk home, with `--square --spot=market`), `--story=ID` (one story piece shown; a frame piece such as `c1_frame1` as the full-screen black scene; the opening frame of a new game opens by itself unless `--nostory` or `--seen=c1_frame0`), `--sheetscroll=N` (the open window scrolled down, 9999 = to the end; use with `--shotframes=100`), `--note=energy|water|bag|coins|item:stone|grey` (the short note on tap; `grey` = the first greyed-out button of the open sheet; use with `--shotframes=90`), `--pulse` (the energy bar's pulse and floating number), `--crowded` (the cleared patches planted and crowded with weeds and stones; with `--unlock=clear_thistles,clear_weeds`), `--shot=file.png`.
 
 ## Changing content (no code needed)
 - **`data/farm/`** — the whole tree, split into files (since R8, 13 Oct 2026): `items.json`, `recipes.json`, `chapters.json`, `start.json`; `nodes/NN-theme.json` (the
@@ -355,7 +355,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
 - One scarecrow and one fence protect all fields; pests are counted for the whole farm.
 - Sound files are not in yet (`../sound-inbox/README.md`): until then the game makes a few little sounds itself and plays no
   music. Text-to-speech (🔊) works where the system has a voice (in the game's language).
-- The pixie chest mini-game is not in yet; the farmer is a first prototype (one look, no "make your farmer" screen yet).
+- The pixie chest mini-game is not in yet; the farmer's look can be made once at the start but not changed later.
 
 ## Files
 - `game/farm/game.gd` — the rules engine's front door (autoload `Game`): data, saves, the effects table, one step of time and the signals;
@@ -368,8 +368,7 @@ yard until the house is built). `addons` place the things built on a place (`dx`
   taps only on its pixels, draws its footprint until it has a picture); `game/farm/spots.gd` + `data/farm/places.json` — which place or corner each data node
   belongs to, the buildings with an inside (`interiors`), which pictures an upgrade chain uses, ruins, pens and the workbench (the rules are in the
   script, the tables are data); `game/farm/map/iso_field.gd` — a field at
-  an angle (diamond patches, pests, scarecrow looks, rain); `game/farm/ui/field_view.gd` — the square patch grid still used inside the
-  orchard and greenhouse sheets; `kits/ui/art.gd` — pictures with emoji fallback; `kits/ui/ui.gd` — styles.
+  an angle (diamond patches, pests, scarecrow looks, rain); `game/farm/ui/field_view.gd` — the orchard and greenhouse sheets' patches in diamond rows (the same layout, soil and plant pictures as the fields, no pests); `kits/ui/art.gd` — pictures with emoji fallback; `kits/ui/ui.gd` — styles.
 - `kits/avatar/avatar.gd` — the farmer (a 3D figure drawn into a picture on the map) + `data/avatar.json` (its look); `kits/avatar/actor.gd` — the farmer acting things out (`data/acts.json`; try
   `--act=weed@patch0`, poses side by side in `tests/pose_sheet.tscn`); `game/farm/fx.gd` —
   perk effects (sounds made in code, lightning, flying coins, butterflies, sparkles, rainbow, season breeze).

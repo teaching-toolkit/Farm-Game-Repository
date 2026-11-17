@@ -99,6 +99,36 @@ func field_water_mult() -> float:
 	if G.S.get("rain", false): return 0.0
 	return float(G.g("waterMult", 1.0)) * G.m("water:field") * float(G.seasons.smod("waterField", 1.0))
 
+## How light the soil of a patch looks: 1.0 is dry, less is freshly watered (visible-work/04; draw only, nothing is saved). A patch has no
+## wetness of its own: its water is spent when it is planted, so the soil is wet then and dries as the plants grow (the patch's own growth
+## steps since planting), by the curve of rules/10-farming.json "wetShade". While it rains every worked patch of the field and the orchard is
+## wet (the greenhouse stands under glass; in winter it snows instead). A ripe, regrowing or flowering patch, and a bare one, are dry.
+func soil_shade(a: String, p: Dictionary) -> float:
+	var curve: Array = G.meta.get("wetShade", {}).get("curve", [])
+	if curve.is_empty(): return 1.0
+	if a != "gh" and bool(G.S.get("rain", false)) and G.seasons.season() != "winter": return _curve_at(curve, 0.0)
+	if p["crop"] == "" or p["ready"] or flowering(p) or int(p.get("cycles", 0)) > 0: return 1.0
+	return _curve_at(curve, float(p["growth"]))
+
+## A line through [x, y] points (x rising): straight between two points, the first y before the first point, the last y after the last.
+func _curve_at(curve: Array, x: float) -> float:
+	if x <= float(curve[0][0]): return float(curve[0][1])
+	for j in range(1, curve.size()):
+		var x1 := float(curve[j][0])
+		if x <= x1:
+			var x0 := float(curve[j - 1][0])
+			return lerpf(float(curve[j - 1][1]), float(curve[j][1]), (x - x0) / maxf(0.0001, x1 - x0))
+	return float(curve[curve.size() - 1][1])
+
+## Does the patch stand in stubble (visible-work/05; draw only, nothing is saved)? The cut stalks of a grain crop (the crop node's "stubble" flag:
+## wheat, winter wheat, oats) stay on the patch after the harvest until it is sown again (a crop in the ground) or snow covers it. The patch
+## already saves it: "last" is the crop harvested there and "crop" is empty until the next sowing, so old saves show it too. A patch never
+## planted, a carrot's, and the orchard's and the greenhouse's (no grain grows there) have none.
+func has_stubble(p: Dictionary) -> bool:
+	var last := str(p.get("last", ""))
+	if p["crop"] != "" or last == "" or bool(p.get("snow", false)): return false
+	return bool(G.nodes.get(last, {}).get("stubble", false))
+
 ## A crop with "sowSeasons" can only be sown in those seasons (it can stay in the ground through the others).
 func sow_season_ok(n: Dictionary) -> bool:
 	var ss: Array = n.get("sowSeasons", [])
@@ -235,6 +265,71 @@ func grow_speed(a: String, p: Dictionary) -> float:
 	if G.seasons.season() == "winter": sg += G.g("winterGrow", 0.0)
 	return base * sg * float(p.get("soil", 1.0))
 
+# ------------------------------------------------------------------ seed from your own plants (crops-and-items/01, U2)
+
+## Carrots, onions and beets flower only in their second year (data: "seedYear"). A ripe patch of one can be left to flower (the chore
+## let_flower, after the card of rules/10-farming.json seedSaving is read): it stays in the ground through one whole winter and is ripe with
+## seed in the first spring after. The patch key "seed_at" is the step the seed is ripe; a normal patch has none (old saves need nothing).
+
+## Is this patch left to flower (waiting for its seed, or with the seed ripe)?
+func flowering(p: Dictionary) -> bool:
+	return p.has("seed_at")
+
+## Is something growing on this patch: planted, not ripe, and not just waiting for the winter to pass. Growth, pests and the map ask this.
+func growing(p: Dictionary) -> bool:
+	return p["crop"] != "" and not p["ready"] and not p.has("seed_at")
+
+## How many seeds the plants on this patch give when they have flowered (data: seedYield per plant).
+func seed_amount(n: Dictionary, p: Dictionary) -> int:
+	return maxi(1, shown_plants(float(p["plants"]))) * int(n.get("seedYield", 0))
+
+## The step the seed is ripe if the plants were left to flower now: the first spring after the next whole winter (a winter that is
+## already going on does not count: the plants did not stand through all of it).
+func seed_step_now() -> int:
+	var seasons: int = G.SEASON_NAMES.size()
+	var no := G.seasons.season_no()
+	var winter := no - no % seasons + G.SEASON_NAMES.find("winter")      # this year's winter
+	if winter <= no: winter += seasons                                    # winter is going on now: the next one
+	return (winter + 1) * G.seasons.season_len()
+
+## Time Quiz questions still to wait for the seed of a flowering patch (at least 1).
+func seed_left(p: Dictionary) -> int:
+	return maxi(1, int(p.get("seed_at", 0)) - int(G.S["step"]))
+
+## Can this crop be left to flower: it is a two-year crop and the card has been read?
+func seed_known(cid: String) -> bool:
+	return bool(G.nodes[cid].get("seedYear", false)) and G.done(str(G.meta.get("seedSaving", {}).get("card", "")))
+
+## Leave a ripe patch to flower, a chore of the actions system (args: a, i). The patch keeps its plants and gives seed in spring.
+func _let_flower_requires(_who, args: Dictionary) -> Array:
+	var a: String = args["a"]
+	var i: int = args["i"]
+	if not patch_usable(a, i): return [{"key": "nothing_to_do", "text": ""}]
+	var p: Dictionary = area(a)[i]
+	if p["crop"] == "" or not p["ready"] or flowering(p) or not bool(G.nodes[p["crop"]].get("seedYear", false)): return [{"key": "nothing_to_do", "text": ""}]
+	if not seed_known(p["crop"]): return [{"key": "card", "text": tr("📖 Read the card Saving seed first.")}]
+	return []
+
+func _let_flower_effect(_who, args: Dictionary, _cost: Dictionary) -> Dictionary:
+	var p: Dictionary = area(args["a"])[int(args["i"])]
+	p["seed_at"] = seed_step_now()
+	p["ready"] = false
+	G.say(tr("🌼 %s will flower. It stays through the winter and gives lots of seed in spring.") % G.nodes[p["crop"]]["name"])
+	return {"gained": {}}
+
+## What the flowering plants give when the seed is ripe and the patch is harvested (the harvest chore): seeds into the seed count, then the
+## patch is free. No weeds' share and no grade: seed is counted, not graded.
+func _harvest_seed(a: String, i: int) -> Dictionary:
+	var p: Dictionary = area(a)[i]
+	var cid: String = p["crop"]
+	var n: Dictionary = G.nodes[cid]
+	var got := seed_amount(n, p)
+	G.S["seeds"][cid] = float(G.S["seeds"].get(cid, 0.0)) + got
+	G.say(tr("🌰 Harvested %s seed: %d") % [n["name"], got])
+	p.erase("seed_at")
+	p["last"] = cid; p["crop"] = ""; p["plants"] = 0.0; p["growth"] = 0.0; p["ready"] = false
+	return {"gained": {}}
+
 # ------------------------------------------------------------------ weeds and stones crowd a patch (crops-and-items/02)
 
 ## How many weeds and stones stand on a patch: the whole ones, as the map draws them (a half weed is not drawn and cannot be pulled).
@@ -285,6 +380,7 @@ func _harvest_effect(_who, args: Dictionary, _cost: Dictionary) -> Dictionary:
 	var a: String = args["a"]
 	var i := int(args["i"])
 	var p = area(a)[i]
+	if flowering(p): return _harvest_seed(a, i)      # left to flower: the seed, not the crop (crops-and-items/01)
 	var n = G.nodes[p["crop"]]
 	var mult := 1.0
 	if G.rewards.roll(G.rewards.luck_event("double_harvest")): mult = 2.0; G.say(tr("🎉 Bumper crop: double harvest!"))
@@ -431,6 +527,7 @@ func register_chores() -> void:
 	G.actions.register("pick_stones", _stones_effect, _stones_requires, _stones_amount)
 	G.actions.register("plant", _plant_effect, _plant_requires, Callable(), _plant_extra)
 	G.actions.register("harvest", _harvest_effect, _harvest_requires)
+	G.actions.register("let_flower", _let_flower_effect, _let_flower_requires)
 	G.actions.register("cut_tree", _cut_tree_effect, _cut_tree_requires)
 	G.actions.register_auto("weed", _auto_weed)
 	G.actions.register_auto("pick_stones", _auto_stones)
@@ -485,6 +582,9 @@ func step_crops(_info: Dictionary) -> void:
 		for i in range(arr.size()):
 			var p = arr[i]
 			if p["crop"] == "" or p["ready"]: continue
+			if flowering(p):      # left to flower: it only waits for its spring, then the seed is ripe
+				if int(G.S["step"]) >= int(p["seed_at"]): p["ready"] = true
+				continue
 			p["growth"] = float(p["growth"]) + grow_speed(a, p)
 			if float(p["growth"]) + 0.0001 >= grow_target(p): p["ready"] = true
 
@@ -516,7 +616,7 @@ func plants_growing() -> float:
 	var t := 0.0
 	for i in range(G.S["patches"].size()):
 		var p = G.S["patches"][i]
-		if p["crop"] != "" and not p["ready"]: t += float(p["plants"])
+		if growing(p): t += float(p["plants"])
 	for p in G.S["orchard"]:
 		if p["crop"] != "": t += 0.5
 	return t
@@ -552,7 +652,7 @@ func _tick_pests() -> Dictionary:
 	if plants > 0.0 and share > 0.0:
 		for i in range(G.S["patches"].size()):
 			var p = G.S["patches"][i]
-			if p["crop"] == "" or p["ready"]: continue
+			if not growing(p): continue
 			var before := float(p["plants"])
 			var after := maxf(1.0, before * (1.0 - share))
 			p["plants"] = after

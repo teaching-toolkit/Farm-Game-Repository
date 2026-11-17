@@ -83,6 +83,70 @@ func _ready() -> void:
 	G.S["patches"][0]["growth"] = 99.0
 	G.actions.perform("harvest", G.actions.farmer, {"a": "field", "i": 0})
 	_check(K.batches("field") == pb + 2, "…and so does the harvest")
+	# the still-room's stations train healing: every recipe's station is in a family (but the gathering spots), and a remedy adds a batch
+	for st in ["cellar", "cellar_2", "fermenter", "drying_rack", "mortar", "tea_pot", "syrup_pan", "salve_pot"]:
+		_check(K.family_of_station(st) == "healing", "%s trains healing and preserving" % st)
+	var unmapped := []
+	for rid2 in G.recipes:
+		if K.family_of_station(str(G.recipes[rid2]["station"])) == "" and not str(G.recipes[rid2]["station"]) in unmapped: unmapped.append(str(G.recipes[rid2]["station"]))
+	unmapped.sort()
+	_check(unmapped == ["clay_pit", "wild_edge"], "only the gathering spots train nothing (%s)" % str(unmapped))
+	G.reset_game()
+	G.S["energy"] = 50.0
+	G.inventory.add_item("plantain", 6.0, true)
+	for n in ["mortar", "k_plant_parts"]: G.S["unlocked"][n] = true
+	G.invalidate_caps()
+	var hb: int = K.batches("healing")
+	var made: bool = G.actions.perform("recipe", G.actions.farmer, {"rid": "plantain_paste"})["done"]
+	_check(made and K.batches("healing") == hb + 1 and G.inventory.count("plantain_paste") > 0.0, "a remedy (crushed plantain at the mortar) counts a batch of healing and preserving")
+	G.inventory.add_item("chamomile", 2.0, true)
+	for n in ["drying_rack", "k_drying"]: G.S["unlocked"][n] = true
+	G.invalidate_caps()
+	made = G.actions.perform("recipe", G.actions.farmer, {"rid": "dry_chamomile"})["done"]
+	_check(made and K.batches("healing") == hb + 2, "…and so does drying herbs on the rack")
+	# building: woodwork and construction lower what a build uses up and its energy; one function (pace.node_cost) prices it, the price row reads it
+	G.reset_game()
+	var bid := "workshop_1"      # log 4, boulder 6, rope 2, coins 300, energy 8
+	var base_b: Dictionary = G.pace.node_cost_base(bid)
+	var full: Dictionary = G.pace.node_cost(bid)
+	var same := true
+	for k in base_b: same = same and is_equal_approx(float(full[k]), float(base_b[k]))
+	_check(K.family_of_build(bid) == "wood" and K.family_of_build("campfire") == "wood" and K.family_of_build("scaffolding") == "wood" and K.family_of_build("ruins_barn") == "wood", "a building, a station, a helper and a clearing of ruins are builds of woodwork and construction")
+	_check(K.family_of_build("stone_axe") == "" and K.family_of_build("patch_raised") == "" and K.family_of_build("k_timber") == "", "a tool, a patch and a card are not")
+	_check(same and K.build_note(bid) == "", "construction rank 0 (Beginner): full cost, and no line about a saving")
+	G.S["skills"]["wood"] = 10
+	var handy: Dictionary = G.pace.node_cost(bid)
+	_check(float(handy["log"]) < float(full["log"]) and is_equal_approx(float(handy["log"]), 4.0 * 0.96) and is_equal_approx(float(handy["boulder"]), 6.0 * 0.96), "a Handy builder uses up less for %s (log %.2f -> %.2f, boulder %.2f -> %.2f)" % [bid, float(full["log"]), float(handy["log"]), float(full["boulder"]), float(handy["boulder"])])
+	_check(is_equal_approx(float(handy["energy"]), float(full["energy"]) * 0.92) and float(handy["coins"]) == float(full["coins"]), "…and spends 8 % less energy, but the coins stay as written")
+	_check(G.pace.node_cost_base(bid)["log"] == base_b["log"] and K.build_note(bid) != "", "the price row's grey cubes keep the base; a line says why (%s)" % K.build_note(bid))
+	_check(is_equal_approx(float(G.pace.node_cost("stone_axe")["stick"]), float(G.pace.node_cost_base("stone_axe")["stick"])), "what is not a build (a stone axe) costs what it is written")
+	G.S["skills"]["wood"] = 30
+	G.S["unlocked"]["k_timber"] = true
+	var skilled: Dictionary = G.pace.node_cost(bid)
+	_check(K.rank("wood") == 2 and float(skilled["log"]) < float(handy["log"]), "a higher rank, a lower cost (Skilled: log %.2f)" % float(skilled["log"]))
+	# a cook does not build cheaper, and at the same rank saves less than a carpenter (food 4 % against crafts 8 % at Skilled)
+	G.S["skills"]["wood"] = 0
+	G.S["unlocked"].erase("k_timber")
+	G.S["skills"]["cooking"] = 30
+	G.S["unlocked"]["k_stove"] = true
+	_check(K.rank("cooking") == 2 and K.rank("wood") == 0 and is_equal_approx(float(G.pace.node_cost(bid)["log"]), float(full["log"])), "a Skilled cook pays the full price of a building")
+	G.S["skills"]["wood"] = 30
+	G.S["unlocked"]["k_timber"] = true
+	_check(K.rank("wood") == K.rank("cooking") and 1.0 - K.input_mult("cooking") > 0.0 and 1.0 - K.input_mult("cooking") < 1.0 - K.input_mult("wood"), "at the same rank cooking saves less than woodwork (%.2f < %.2f)" % [1.0 - K.input_mult("cooking"), 1.0 - K.input_mult("wood")])
+	# paying for a build trains woodwork and construction (one batch for a build, one for each step of one) and pays the lower price
+	G.reset_game()
+	G.S["energy"] = 50.0
+	G.S["coins"] = 5000.0
+	for k in ["stick", "stone", "fiber", "rope", "log"]: G.inventory.add_item(k, 9.0, true)
+	G.S["unlocked"]["k_fire"] = true
+	var wb: int = K.batches("wood")
+	var sticks: float = G.inventory.count("stick")
+	_check(G.progression.unlock("campfire") and K.batches("wood") == wb + 1, "building the campfire counts a batch of woodwork and construction (%s)" % str(G.progression.can_unlock("campfire")["why"]))
+	_check(is_equal_approx(sticks - G.inventory.count("stick"), 3.0), "…at the full price for a Beginner (3 sticks)")
+	G.S["skills"]["wood"] = 10
+	G.S["unlocked"].erase("campfire")
+	sticks = G.inventory.count("stick")
+	_check(G.progression.unlock("campfire") and is_equal_approx(sticks - G.inventory.count("stick"), 3.0 * 0.96), "a Handy builder is charged the lower price when paying (%.2f sticks)" % (sticks - G.inventory.count("stick")))
 	# old saves: the practice per station becomes batches per family
 	var old := {"practice": {"campfire": 12, "workbench": 5, "wild_edge": 3}, "skills": {}}
 	G.upgrade_save_v2(old)

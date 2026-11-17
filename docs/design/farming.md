@@ -43,6 +43,24 @@ Part of the game's design ([index](README.md)). It describes the game as built; 
 
 - **Planting** uses one seed, water and energy per plant; the patch sheet shows how many plants fit and why fewer (seeds,
   water, fertilizer). Each plant is drawn on the patch.
+- **Watered soil is dark and dries pale** *(visible-work/04; draw only, no number of the game changes and nothing is saved)*. A patch has
+  no wetness of its own: its water is spent when it is planted. The soil picture of a worked patch is tinted by one curve in
+  `rules/10-farming.json` (`wetShade`, `[growth steps, brightness]` points, 1 = the dry soil you know: now 0.55 at planting, 0.72 after one
+  growth step, 0.88 after two, dry after three). The patch's own `growth` is the clock (about one per question, a quarter of that in
+  winter, so the soil stays damp longer then); the rule is `Fields.soil_shade`, and the field map and the orchard and greenhouse sheets
+  only draw the number. **While it rains** every worked patch of the field and the orchard is dark (the greenhouse stands under
+  glass; in winter it snows instead), which matches "planting costs no water until the next question". A bare, a ripe, a regrowing
+  and a flowering patch are dry. The child reads from the ground which patch was done lately, without a symbol.
+- **A harvested grain patch keeps its stubble** *(visible-work/05; draw only, nothing is saved, no number of the game changes)*. After
+  wheat, winter wheat or oats is cut, a few short straw-coloured stalks stay standing on the soil until the patch is **sown again**
+  (or **snow covers it**; clearing the snow shows the stubble again). Carrots and the other crops leave plain soil, and so does a patch
+  never planted; the orchard and the greenhouse have none (no grain grows there, and a cut tree leaves a free spot). Which crops leave
+  stubble is data: the `"stubble": true` flag on the crop node. The rule is `Fields.has_stubble`: the patch is empty, `last` (the crop
+  harvested there, which the patch already saves for the rotation rule) is a crop with the flag, and no snow lies on it, so an old save
+  shows stubble on its harvested grain patches without any new key. `IsoField.patch_spec` carries it as `stubble`, and
+  `IsoPatch.draw_top` draws the tufts in code (the numbers and colours are the `STUBBLE_*` constants there), placed with the patch's own
+  seed like the weeds. The child sees at a glance which patches were harvested and wait for the next crop. Sheaves that stand until they
+  are carried in need a new picture and are not built (`pictures/15`).
 - **Growing** takes a number of Time Quiz questions per crop (2 for wheat, up to 14 for an olive tree), changed by the
   season, the cloches and **crop rotation**: the same crop twice in a row grows 15 % slower (tired soil); after beans or clover
   the next crop grows 10 % faster (rested soil). Weeds and stones do not slow growth any more (they take a share of the harvest, §6.3).
@@ -51,6 +69,15 @@ Part of the game's design ([index](README.md)). It describes the game as built; 
   per plant. Upgrades add to it (the bunny +1 carrot per harvest, autumn +40 % in the orchard). Then the **weeds and stones on the
   patch take their share** (§6.3).
 - **🧺 Harvest all** at the storage basket harvests every ripe patch at once.
+- **Seed of your own (carrot, onion, beet).** These flower only in their second year (`seedYear` in the crop's data). Once the card
+  *Saving seed* is read, a ripe patch of one of them shows a second choice next to *Harvest*: **🌼 Let it flower** (the chore
+  `let_flower`, 1 energy, 1 moment). The plants then stay in the ground through one whole winter (a winter that is already going on
+  does not count) and are ripe with seed in the first spring after it. The patch is taken meanwhile (the planting rule says
+  *occupied*; weeds, pests and growth are skipped; no waiting for harvest). In spring *Harvest* gives `seedYield` (6) seeds per plant
+  into the seed count, not graded and without a weeds' share, and the patch is free. The patch carries one key, `seed_at` (the step
+  the seed is ripe), **absent** on every other patch, so old saves load as they are. A grain needs none of this (its harvest is the
+  seed), and seed can still be bought. On the map a small 🌼 stands over the waiting plants and a 🌰 over the ripe ones. The bot
+  never leaves a plant to flower: it keeps buying seed.
 
 ### 6.3 Weeds and stones
 
@@ -100,6 +127,8 @@ Part of the game's design ([index](README.md)). It describes the game as built; 
   it cheaper.
 - **The greenhouse** (chapter 4: frame, then glass; extension in chapter 5) grows the heirlooms: saffron crocus (one small
   harvest after 8 questions, leaving corms behind), rainbow carrots and golden beets.
+- **In their windows** the tree spots and the beds stand in diamond rows, seen at an angle like the fields on the map (the same soil
+  and plant pictures; a ripe plant glows and sways); tap one to open it. No words on the patches, and no pests or fences there.
 
 ### 6.6 Crops
 

@@ -17,12 +17,47 @@ const ROAD_TILES := {1.0: [1, 2], 1.5: [2, 3], 2.0: [3, 4], 2.5: [4, 5], 3.0: [5
 var fence_level := 0
 var flowers := 0          # how many of the season's flowers stand in the grass (FarmSeasonLook.flower_count)
 var road_ci: CanvasItem   # where the road is drawn: the map's road layer (frost material), or the board itself
+var trodden_ci: CanvasItem   # where the worn paths are drawn: their own layer below the road (visible-work/08)
 
 ## The road's own layer: the first thing on the board, drawn with the frost material (season-look/04).
 func make_road_layer(layer: Control) -> void:
 	road_ci = layer
 	layer.material = FarmSeasonLook.frost_material()
 	layer.draw.connect(_draw_road)
+
+## The worn paths' own layer (visible-work/08): above the grass and the earth of the places, below the road, the fields and everything
+## that stands, so a worn path never lies over those. The flat season material mutes it in winter like the rest of the ground.
+func make_trodden_layer(layer: Control) -> void:
+	trodden_ci = layer
+	layer.material = FarmSeasonLook.flat_material()
+	layer.draw.connect(_draw_trodden)
+
+func redraw_trodden() -> void:
+	if trodden_ci: trodden_ci.queue_redraw()
+
+## Where the farmer has walked (`G.trodden.worn()`): the earth tile of the places laid on every worn cell, soft-edged, a little off the grid and
+## wider than a cell so the patches join up; the more worn, the less see-through (numbers: rules/69-trodden.json). Drawn back to front.
+func _draw_trodden() -> void:
+	var g = map.get_node_or_null("/root/Game")
+	var tiles: Array = Slot.earth_tiles()
+	if g == null or tiles.is_empty(): return
+	var worn: Dictionary = g.trodden.worn()
+	if worn.is_empty(): return
+	var d: Dictionary = g.trodden.data()
+	var from := float(d.get("showFrom", 0.12))
+	var cap := maxf(float(d.get("cap", 0.85)), from + 0.01)
+	var cell := FarmMapWalker.CELL
+	var cells := worn.keys()
+	cells.sort_custom(func(a, b): return a.y < b.y or (a.y == b.y and a.x < b.x))
+	var r := RandomNumberGenerator.new()
+	for c in cells:
+		r.seed = absi((c.x * 73856093) ^ (c.y * 19349663)) + 1      # the same look for the same cell, every time
+		var t: Texture2D = tiles[r.randi() % tiles.size()]
+		var w := cell * float(d.get("tileCells", 2.6)) * r.randf_range(0.9, 1.15)
+		var h := w * float(t.get_height()) / float(t.get_width())
+		var p := Vector2((c.x + 0.5) * cell, (c.y + 0.5) * cell) + Vector2(r.randf_range(-0.3, 0.3), r.randf_range(-0.15, 0.15)) * cell
+		var k := clampf((float(worn[c]) - from) / (cap - from), 0.0, 1.0)
+		trodden_ci.draw_texture_rect(t, Rect2(p - Vector2(w, h) / 2.0, Vector2(w, h)), false, Color(1, 1, 1, lerpf(float(d.get("alphaMin", 0.18)), float(d.get("alphaMax", 0.85)), k)))
 
 # ------------------------------------------------------------------ ground
 
@@ -101,7 +136,7 @@ func _draw_flowers() -> void:
 ## Ground shapes in farm coordinates: forest, road, the house yard, shadows and fences of the fields.
 func _draw_board() -> void:
 	var gr: Dictionary = map.L.get("ground", {})
-	var tint: Color = map.GRASS_TINT.get(map.season, Color.WHITE)
+	var tint: Color = FarmSeasonLook.mix(map.blend, map.GRASS_TINT)
 	# soft patches of the other grass pictures, so the meadow is not the same everywhere (fixed places on the farm)
 	var r := RandomNumberGenerator.new()
 	r.seed = 31
@@ -114,6 +149,7 @@ func _draw_board() -> void:
 	_draw_grass_bits()
 	_draw_flowers()
 	# the village road is drawn on its own layer just above the ground (road_ci), with the frost of the season shader (season-look/04)
+	redraw_trodden()
 	if road_ci != map.board: road_ci.queue_redraw()
 	else: _draw_road()
 	# the house yard (until the house is built): packed earth on the house's footprint
@@ -187,7 +223,7 @@ func _draw_road() -> void:
 		_draw_road_tiles(line, w, tl)
 		return
 	var path_tex := Art.tex("tiles", "path")
-	var winter := map.season == "winter"
+	var winter := FarmSeasonLook.share(map.blend, "winter")       # 0..1: it fades in and out with the season (N7)
 	var n := line.size()
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 4242
@@ -207,7 +243,7 @@ func _draw_road() -> void:
 		for i in range(9):
 			var t := rng.randf_range(0.42, 0.58) + (i - 4) * 0.012
 			var c := line[0].lerp(line[n - 1], t) + nrm * rng.randf_range(-0.3, 0.3) * w
-			_blob(c, rng.randf_range(10, 20), Color(0.36, 0.42, 0.45, 0.75) if not winter else Color(0.85, 0.92, 0.97, 0.9))
+			_blob(c, rng.randf_range(10, 20), Color(0.36, 0.42, 0.45, 0.75).lerp(Color(0.85, 0.92, 0.97, 0.9), winter))
 		return
 	var full := _band(line, w)
 	var tint := Color.WHITE
@@ -218,7 +254,7 @@ func _draw_road() -> void:
 		_: tint = Color(0.72, 0.72, 0.74)
 	if path_tex: _textured(full, path_tex, tint)
 	else: road_ci.draw_colored_polygon(full, Color("d8bf8e") * tint)
-	if winter: road_ci.draw_colored_polygon(full, Color(1, 1, 1, 0.25))
+	if winter > 0.0: road_ci.draw_colored_polygon(full, Color(1, 1, 1, 0.25 * winter))
 	var left := full.slice(0, n)
 	var right := full.slice(n)
 	var edge := Color(0, 0, 0, 0.12)
@@ -271,7 +307,8 @@ func _draw_road_tiles(line: PackedVector2Array, w: float, tl: Array) -> void:
 		var t: Texture2D = tl[rng.randi() % tl.size()]
 		var h := W * float(t.get_height()) / float(t.get_width())
 		road_ci.draw_texture_rect(t, Rect2(c - Vector2(W, h) / 2.0, Vector2(W, h)), false)
-	if map.season == "winter": road_ci.draw_colored_polygon(_band(line, w), Color(1, 1, 1, 0.22))
+	var snow := FarmSeasonLook.share(map.blend, "winter")
+	if snow > 0.0: road_ci.draw_colored_polygon(_band(line, w), Color(1, 1, 1, 0.22 * snow))
 
 func _blob(c: Vector2, r: float, col: Color) -> void:
 	var pts := PackedVector2Array()
@@ -344,12 +381,15 @@ func _textured(poly: PackedVector2Array, tex: Texture2D, tint: Color) -> void:
 	for p in poly: uvs.append(p / ts)
 	road_ci.draw_polygon(poly, PackedColorArray([tint]), uvs, tex)
 
-func set_season(s: String, fence: int, flower_n := -1) -> void:
+## `b` is `G.seasons.blend()`: the season now and the one before it, and how far the look has come from that one to this (N7).
+func set_season(b: Dictionary, fence: int, flower_n := -1) -> void:
+	var s: String = b["to"]
 	if map.perk_fx: map.perk_fx.set_season(s)
-	FarmSeasonLook.set_season(s)              # snow caps, muted or golden pictures (N7)
+	FarmSeasonLook.set_season(b)              # snow caps, muted or golden pictures, fading from the last season's look (N7)
 	if flower_n < 0: flower_n = flowers
-	if s != map.season or fence != fence_level or flower_n != flowers:
+	if s != map.season or b != map.blend or fence != fence_level or flower_n != flowers:
 		map.season = s
+		map.blend = b                         # the grass and the road's frost fade with it, drawn again at every step of the fade
 		fence_level = fence
 		flowers = flower_n
 		map.queue_redraw()

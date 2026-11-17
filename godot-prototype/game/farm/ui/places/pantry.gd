@@ -43,7 +43,7 @@ func part_pantry() -> void:
 		var sg := M.widgets.grid()
 		M.content.add_child(sg)
 		for cid in seeds:
-			var sv := M.widgets.tile(Art.tex("crops", cid), str(G.nodes[cid].get("emoji", "")), str(G.nodes[cid]["name"]))
+			var sv := M.widgets.seed_tile(cid, str(G.nodes[cid]["name"]))
 			sv.add_child(UI.explain(UI.stock_bar(float(G.S["seeds"][cid]), maxf(10.0, ceilf(float(G.S["seeds"][cid]))), Color("a3c26a"), 190), tr("🌰 Seeds you have to plant.")))
 			sg.add_child(sv.get_meta("panel"))
 

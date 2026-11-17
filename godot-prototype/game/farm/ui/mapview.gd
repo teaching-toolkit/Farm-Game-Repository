@@ -156,6 +156,7 @@ func update_slot(sid: String) -> void:
 	else:
 		st = "ghost"                                   # nothing there yet (the book cart has not come)
 	slot.overlays = _bench_things() if key == "workbench" else []
+	slot.working = G.crafting.place_state(sid) == "working"      # smoke and glow, where the picture has a chimney or a fire
 	slot.set_state(spot_title(sid), spot_emoji(sid), tex, not open, badge(sid), key, st, lk)
 
 ## How far a building at this place has come (1 … 5), or 0 when nothing is being built there.
@@ -315,10 +316,7 @@ func badge(sid: String) -> String:
 		if G.nodes[aid]["type"] == "animal" and G.S["animals"].has(aid):
 			var a: Dictionary = G.S["animals"][aid]
 			if int(a["count"]) > 0 and G.S["step"] >= int(a["ready"]): return "🧺"
-	var busy := 0
-	for root in G.S["running"]:
-		if Spots.in_spot(G, root, sid): busy += G.S["running"][root].size()
-	if busy > 0: return "⏳"
+	if G.crafting.place_state(sid) == "working": return "⏳"
 	return ""
 
 func critter_spec() -> Dictionary:

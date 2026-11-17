@@ -274,11 +274,12 @@ func on_grey(b: Button) -> void:
 	lines[0] = lead[1]
 	if lines.size() > 2: lines = lines.slice(0, 2)
 	var short := false
+	var mn := int(why.get("min", 0)) if why is Dictionary else 0      # a goal that takes a grade or better: ⭐⭐ on its things
 	for k in cost:
-		if M.widgets.have_any(str(k)) + 0.0001 < float(cost[k]): short = true
+		if (G.inventory.have(str(k), mn) if mn > 0 else M.widgets.have_any(str(k))) + 0.0001 < float(cost[k]): short = true
 	M.feedback.sfx("tired" if key == "energy" else "tap")
 	if key == "time": M.feedback.spark(b.get_global_rect().get_center(), M.quiz_btn)      # no time left: a spark flies to the clock
-	note(lead[0], "", lines, b, M.widgets.costs(cost, base) if short else null, "grey")
+	note(lead[0], "", lines, b, M.widgets.costs(cost, base, mn) if short else null, "grey")
 
 ## The words for a reason that has none of its own (an unmet requirement with an empty text).
 func _key_text(key: String) -> String:

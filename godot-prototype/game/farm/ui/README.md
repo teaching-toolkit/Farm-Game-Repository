@@ -38,6 +38,8 @@ Parts call each other as `M.<part>.<function>`. Functions with a leading `_` are
 notes after a pop-up) are interruptions. One queue decides when each shows: `kits/ui/interruptions.gd` (draws nothing, tested by
 `tests/interruption_test`), with the order of the kinds and what each waits for in `data/farm/rules/65-feel.json` ("interruptions").
 A part that wants the screen hands its interruption to the queue instead of checking whether a pop-up, a sheet or the playback is busy.
+A celebration that waits is also kept in the save (`G.rewards.celebrations_waiting`, a sparse key: only while one waits); `interrupts.restore()` puts
+what the save kept back in line after loading, a new game or a new player (a ready story box first), so a game that closes does not lose it.
 
 **Rules of the house:** a new screen or sheet is a new part (or a function in the part that owns that kind of place), not new lines in
 `main.gd`; a part never writes into `G.S` (it calls the systems); the tests reach the screen only through `tests/ui_driver.gd`, the dev

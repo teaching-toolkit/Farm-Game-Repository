@@ -217,10 +217,13 @@ func home_fill() -> float:
 	return clampf(float(G.S["trip"].get("bought", 0.0)) / cap, 0.0, 1.0) if cap > 0.0 else 0.0
 
 ## Packs what a cost asks for from the store (an order: *pack what it needs*). Whole units of the items; a kind ("tag:…") takes the cheapest first.
-func can_pack_cost(cost: Dictionary) -> bool:
+## `min_grade` > 0 (an order with a "minGrade"): the store must hold the amount at that grade or better (the bag only counts pieces; the
+## handing over takes the grade from the store).
+func can_pack_cost(cost: Dictionary, min_grade := 0) -> bool:
 	var room_left := room()
 	for k in cost:
 		if k in ["coins", "energy", "water"]: continue
+		if min_grade > 0 and G.inventory.have(k, min_grade) + 0.0001 < float(cost[k]): return false
 		var need := ceilf(float(cost[k]) - 0.0001) - in_bag(k)
 		if need <= 0.0: continue
 		var keys: Array = [k] if not k.begins_with("tag:") else G.inventory.tag_choices(k.substr(4))
@@ -233,8 +236,8 @@ func can_pack_cost(cost: Dictionary) -> bool:
 		if need > 0.0: return false
 	return room_left >= -0.0001
 
-func pack_cost(cost: Dictionary) -> void:
-	if not can_pack_cost(cost): return
+func pack_cost(cost: Dictionary, min_grade := 0) -> void:
+	if not can_pack_cost(cost, min_grade): return
 	for k in cost:
 		if k in ["coins", "energy", "water"]: continue
 		var need := int(ceilf(float(cost[k]) - 0.0001) - in_bag(k))

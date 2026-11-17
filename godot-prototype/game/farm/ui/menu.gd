@@ -264,6 +264,7 @@ func _toggle_category(id: String) -> void:
 
 func _reset() -> void:
 	G.reset_game()
+	M.interrupts.restore()      # nothing of the old farm waits for the new one
 	M.field_idx = 0
 	for f in range(M.map.fields.size()): M.map.fields[f].show_area("field", f)
 	M.sheets.close_sheet()

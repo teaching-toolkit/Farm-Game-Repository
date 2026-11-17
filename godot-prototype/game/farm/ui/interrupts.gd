@@ -3,7 +3,8 @@ class_name FarmUiInterrupts
 ## What takes the screen next on the farm (interruption-queue): sets up the interruption queue (kits/ui/interruptions.gd) with the
 ## order list in data/farm/rules/65-feel.json ("interruptions"), tells it how to ask whether a screen is busy, and hands it the lists
 ## kept elsewhere (the saved postcards, the story's next ready piece). Parts that want the screen hand their interruption over here (`celebration`, `note`) and
-## never check each other's state. `request()` pumps once at the end of the frame; `pump()` now.
+## never check each other's state. `request()` pumps once at the end of the frame; `pump()` now. A celebration that waits is also kept in
+## the save (G.rewards); `restore()` puts what the save kept back in line (after loading, a new game, a new player).
 
 const Interruptions = preload("res://kits/ui/interruptions.gd")
 
@@ -38,9 +39,30 @@ func _postcard() -> Dictionary:
 	if pc.is_empty(): return {}
 	return {"kind": "postcard", "key": "%s@%d" % [pc.get("from", ""), int(pc.get("step", 0))], "show": M.gifts.show_gift}
 
-## Something new was built or made: its big pop-up, once, in its turn.
+## Something new was built or made: its big pop-up, once, in its turn. While it waits it is in the save too (G.rewards), so a game that
+## closes first does not lose it.
 func celebration(id: String, show: Callable) -> void:
-	if q.submit("celebration", id, show): request()
+	if q.submit("celebration", id, _shown.bind(show)):
+		_keep()
+		request()
+
+## Its turn: it leaves the line and the save (saved at once: it shows once, also if the game closes now), then it shows.
+func _shown(show: Callable) -> void:
+	_keep()
+	G.save_game()
+	show.call()
+
+func _keep() -> void:
+	G.rewards.keep_celebrations(q.in_line("celebration"))
+
+## After loading a save (or starting a new game, or switching the player): what waits in line is what the save says. The celebrations it
+## kept go back in line and show once; a story box that is ready on loading comes before them. What waited for another farm is dropped.
+func restore() -> void:
+	q.clear("celebration")
+	var ids: Array = G.rewards.celebrations_waiting()
+	if not ids.is_empty(): pump_story()
+	for id in ids: M.celebrations.celebrate(str(id))      # an id the game does not know any more is dropped there
+	_keep()
 
 ## A short note for when the pop-up closes (a Rest medal …).
 func note(text: String) -> void:

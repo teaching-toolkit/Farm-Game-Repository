@@ -78,6 +78,11 @@ static func pen(sid: String) -> Dictionary:
 static func bench() -> Array:
 	return _data().get("bench", [])
 
+## Where the chimney and the fire stand on a picture, for the smoke and glow of a working place: {"smoke": [x, y], "glow": [x, y]}
+## in fractions of the picture ({} for a picture that shows nothing). `key` is "folder/name" as in assets/ ("map/cottage", "interior/kiln").
+static func fire(key: String) -> Dictionary:
+	return _data().get("fires", {}).get(key, {})
+
 # ------------------------------------------------------------------ which place a data node belongs to
 
 static func spot_of(G, id: String) -> String:

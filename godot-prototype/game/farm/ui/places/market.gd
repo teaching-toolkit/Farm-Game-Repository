@@ -3,7 +3,6 @@ class_name FarmUiMarket
 ## The market stall, the book cart and the library (reading cards).
 
 const UI = preload("res://kits/ui/ui.gd")
-const Art = preload("res://kits/ui/art.gd")
 
 
 var M: FarmMain   # the main screen: its widgets and the other parts
@@ -68,16 +67,17 @@ func _order_card(id: String, at_square: bool) -> PanelContainer:
 	v.add_child(UI.label("%s %s" % [n.get("emoji", "📦"), n["name"]], 18, UI.INK, true))
 	if str(n.get("desc", "")) != "": v.add_child(UI.label(str(n["desc"]), 14, UI.MUTED, true))
 	var cost: Dictionary = G.pace.node_cost(id)
-	v.add_child(M.widgets.costs(cost))
+	var mn: int = G.pace.node_min(id)      # the grade it takes at least (⭐⭐ on the thing), or 0
+	v.add_child(M.widgets.costs(cost, {}, mn))
 	if at_square:
-		var ok: bool = G.trip.bag_covers(cost) and G.S["energy"] + 0.0001 >= float(cost.get("energy", 0.0))
+		var ok: bool = G.trip.bag_covers(cost) and G.S["energy"] + 0.0001 >= float(cost.get("energy", 0.0)) and (mn <= 0 or G.pace.missing_cost(cost, mn).is_empty())
 		var b := UI.button(tr("🤝 Hand over"), M.widgets.do_unlock.bind(id), {"ok": ok, "unmet": G.progression.can_unlock(id)["unmet"], "cost": cost}, UI.GREEN, 20)
 		b.custom_minimum_size = Vector2(0, 52)
 		v.add_child(b)
 		if not G.trip.bag_covers(cost): v.add_child(UI.label(tr("It is not all in your bag. Pack it next time."), 14, UI.MUTED, true))
 	else:
-		var can := G.trip.can_pack_cost(cost)
-		var b2 := UI.soft_button(tr("🎒 Pack what it needs"), G.trip.pack_cost.bind(cost), can, 18, tr("🎒 You need all of it in the store, and room for it in the bag."))
+		var can := G.trip.can_pack_cost(cost, mn)
+		var b2 := UI.soft_button(tr("🎒 Pack what it needs"), G.trip.pack_cost.bind(cost, mn), can, 18, tr("🎒 You need all of it in the store, and room for it in the bag."))
 		b2.custom_minimum_size = Vector2(0, 48)
 		v.add_child(b2)
 	return pc
@@ -168,7 +168,7 @@ func _part_seeds() -> void:
 	for cid in G.nodes:
 		var n: Dictionary = G.nodes[cid]
 		if n["type"] != "crop" or not G.done(cid) or n.has("seedItem"): continue
-		var v := M.widgets.tile(Art.tex("crops", cid), str(n.get("emoji", "")), "%s\n%s · 🌰 %d" % [n["name"], G.money_up(G.trade.seed_price(cid)), G.down(G.fields.seed_have(cid))])
+		var v := M.widgets.seed_tile(cid, "%s\n%s · 🌰 %d" % [n["name"], G.money_up(G.trade.seed_price(cid)), G.down(G.fields.seed_have(cid))])
 		var row := UI.hbox(6)
 		row.add_child(UI.soft_button("🛒 1", G.trade.buy_seeds.bind(cid, 1), G.S["coins"] + 0.001 >= G.trade.seed_price(cid) and G.trip.can_buy(G.inventory.seed_weight()) >= 1, 18, _buy_why(G.trade.seed_price(cid))))
 		row.add_child(UI.soft_button("🛒 5", G.trade.buy_seeds.bind(cid, 5), G.S["coins"] + 0.001 >= 5.0 * G.trade.seed_price(cid) and G.trip.can_buy(G.inventory.seed_weight()) >= 5, 18, _buy_why(5.0 * G.trade.seed_price(cid))))

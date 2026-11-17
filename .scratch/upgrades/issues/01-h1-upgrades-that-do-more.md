@@ -4,14 +4,14 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** needs-parent
+**Status:** ready-for-agent
 
 **Milestone:** later
 
 **Size:** sitting
 
 - [ ] The parent has chosen a benefit for each of the 44 (or decided which to skip)
-- [ ] The new kinds (lucky finds, season help, helpers that work by themselves) are decided
+- [x] The new kinds (lucky finds, season help, helpers that work by themselves) are decided (later, after the play-test; see Decision)
 - [ ] The benefits are built as data with existing effect keys where possible
 - [ ] The bot and the explorer are re-run; the design document is updated
 
@@ -26,3 +26,10 @@
   does something else (a better basket carries more); later tiers do something visible. Next: go through the 48 energy-only upgrades
   together, now with quality (Y1), carrying (M5), skills (Y2) and the sleep parameter (L2) available as benefits.
   **Started 13 Oct 2026 (💡 until the parent has gone through the list):** four upgrades got a second benefit with effect keys that already exist, keeping their energy saving: Iron Hoe (weeds come back 20 % slower), Stone Fire Ring (the campfire burns 20 % less wood), Whetstone and Master Tool Chest (polish wears off slower). **Left for the parent** (a choice, and each moves the pace): the other 44 upgrades in `progression/upgrade-benefits-ideas.md`, above all the 🆕 kinds (lucky finds, season help, helpers that work by themselves).
+
+## Decision (17 Nov 2026, parent away, easy to undo)
+
+- [x] Take the ideas file as the choice, in batches, using only the kinds the game already has (the ✅ ones in `progression/upgrade-benefits-ideas.md`: more of the thing, faster, keeps longer, more at once, less wear or fuel, fewer pests, a new recipe, energy from rest, read faster). Why: it is data only, every upgrade keeps its energy saving, and a batch is undone by reverting its data.
+- [x] The 🆕 kinds (lucky finds, season help, helpers that work by themselves, card-review rewards, quality stars) wait: each needs new code, so they come after the parent's play-test (`waiting-on-parent/08`).
+- One batch is at most 12 upgrades, later tiers and helpers first (the first tier of a tool line stays as it is). After each batch: re-run the explorer and the bot; no chapter's hours may move more than 10 % against the run before the batch (trim the batch if they do); re-record the golden runs once; update the design document.
+- Mark the ticket done when the ✅ ideas for all 44 are in or deliberately skipped; list the skipped ones in a `## Progress` note.

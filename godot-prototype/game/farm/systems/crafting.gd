@@ -3,6 +3,8 @@ class_name FarmCrafting
 ## Stations and recipes: batches and what they make, fuel and the woodpile, the house's firewood, and polish (endless upgrades with
 ## diminishing returns) that wears with use.
 
+const Spots = preload("res://game/farm/spots.gd")   # which place a station belongs to (for place_state)
+
 var G: FarmGame   # the Game: the farm's state (G.S), its data and the other systems
 
 func _init(game: FarmGame) -> void:
@@ -267,6 +269,14 @@ func _recipe_out(rid: String, n := 1, grade := -1) -> void:
 ## Stations whose output comes at once (gathering at the field edge): each recipe then rests for its time.
 func output_now(root: String) -> bool:
 	return bool(G.nodes.get(root, {}).get("outputNow", false))
+
+## What a place is doing: "working" while a station there (or in one of its corners) has a batch cooking, baking, firing or forging
+## (or a gathering spot refilling: the same count as before), "idle" otherwise. A batch that is done goes to the store at once, so
+## there is no state in between. The ⏳ sign, and the smoke and glow on the map and inside the house and workshop, all ask this.
+func place_state(sid: String) -> String:
+	for root in G.S["running"]:
+		if (G.S["running"][root] as Array).size() > 0 and Spots.in_spot(G, root, sid): return "working"
+	return "idle"
 
 ## Questions until a recipe is ready (cooking) or its spot has refilled (gathering); 0 = not running.
 func recipe_left(rid: String) -> float:

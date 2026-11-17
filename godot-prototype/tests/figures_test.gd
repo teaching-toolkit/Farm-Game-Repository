@@ -1,6 +1,7 @@
 extends Node
 ## The people who are not the farmer (people/04): the rules (who stands in a scene, what a tap says) and the figures part
 ## (put, stroll, tap, take). Run:  godot --headless --path . res://tests/figures_test.tscn -- --seed=1
+const Avatar = preload("res://kits/avatar/avatar.gd")
 var G
 var fails := 0
 var _waited := 0.0     # how long the last `_wait_at` took (real seconds)
@@ -80,6 +81,7 @@ func _ready() -> void:
 	_check(F.ids(scene).is_empty(), "walk_to leave: taken out of the scene when it got there")
 	await _merchant_checks()
 	await _visitor_checks()
+	_style_checks()
 	print("FIGURES %s: %d checks, %d failed" % ["OK" if fails == 0 else "FAILED", checks, fails])
 	get_tree().quit(1 if fails > 0 else 0)
 
@@ -102,6 +104,33 @@ func _wait_at(F: FarmUiFigures, id: String, p: Vector2, max_s: float) -> bool:
 
 ## The travelling merchant on the farm map (game/farm/map/merchant.gd): a figure with his cart exactly while he is here, the cart's picture by thirds of
 ## its fill, he walks in from the left edge when he arrives and off to the left when he leaves, a tap on him gives a line.
+## The look the parent picked (people/05): every person in the data and the farmer (a new game, an old save) are drawn painted_face;
+## plain and painted still work when a look asks for them.
+func _style_checks() -> void:
+	var scene := Control.new()
+	add_child(scene)
+	var F := FarmUiFigures.new()
+	var who: Dictionary = G.meta["people"]["who"]
+	var in_data := who.size() >= 13
+	var drawn := true
+	for id in who:
+		in_data = in_data and str((who[id]["look"] as Dictionary).get("style", "")) == "painted_face"
+		var body = F.put(id, scene, Vector2(100, 100), 80.0).get_child(0)
+		drawn = drawn and body.style() == "painted_face"
+	_check(in_data, "style: every person in 58-people.json says painted_face (%d people)" % who.size())
+	_check(drawn, "style: every person is drawn painted_face")
+	var farmer = Avatar.new()                                # a new game: no look saved (S.look is {})
+	scene.add_child(farmer)
+	farmer.set_look({})
+	_check(farmer.style() == "painted_face", "style: the farmer of a new game is painted_face (%s)" % farmer.style())
+	farmer.set_look({"skin": "#d9a17a", "hair": {"style": "long", "color": "#2b1d14"}})   # an old save: colours, no style
+	_check(farmer.style() == "painted_face", "style: an old save's look without a style is painted_face (%s)" % farmer.style())
+	farmer.set_look({"style": "plain"})
+	var plain_ok: bool = farmer.style() == "plain"
+	farmer.set_look({"style": "painted"})
+	_check(plain_ok and farmer.style() == "painted", "style: plain and painted still work when a look asks for them")
+	scene.queue_free()
+
 func _merchant_checks() -> void:
 	G.reset_game()
 	var map: FarmMap = load("res://game/farm/map/farm_map.tscn").instantiate()

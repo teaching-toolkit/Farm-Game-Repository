@@ -28,6 +28,10 @@
     "note": "Water never comes by itself: every drop is carried. A trip with the old bucket brings fetchBase 💧 for fetchEnergy ⚡ (gathering upgrades make it cheaper). Wells, the yoke, the dug-out pond and more make each trip bring more and the store hold more, so later on you carry water less often. Rain waters the fields: planting costs no water until the next question.",
     "manual": true
   },
+  "wetShade": {
+    "curve": [[0, 0.55], [1, 0.72], [2, 0.88], [3, 1.0]],
+    "note": "How light the soil of a patch looks (1 = dry), by growth steps since it was watered (visible-work/04). A patch is watered when it is planted (the water is spent then), and every worked patch is while it rains; the soil then dries as the plants grow, in a straight line between these [steps, brightness] points, and stays at the last one. Only the picture changes: nothing is saved."
+  },
   "pests": {
     "ratePerPlant": 0.05,
     "tierByChapter": [
@@ -84,6 +88,10 @@
     "max": 0.75,
     "keepMain": 1,
     "note": "Weeds and stones crowd a patch (rules 2026-10-30, crops-and-items/02): at harvest, every whole weed and every whole stone on the patch takes perThing (4 %) of the harvest, together at most max (75 %), and the main crop never drops below keepMain. What is lost is shown (the plants stand wilted and grey on the patch, and the lost crops fade away as grey ghosts at harvest). Pulling the weeds and picking the stones before the harvest gives it all back. Weeds and stones no longer slow growth. They also still lower the grade of the whole harvest (rules/47-quality.json)."
+  },
+  "seedSaving": {
+    "card": "k_seeds",
+    "note": "Seed from your own plants (crops-and-items/01, U2). A crop with seedYear (carrot, onion, beet: they flower only in their second year) can be left to flower once the card named here is read: the chore let_flower. A ripe patch then stays in the ground through one whole winter (the winter that is half over does not count) and is ripe with seed in the first spring after; harvesting it gives seedYield (on the crop) seeds per plant. Grain is the seed already (seedItem) and needs none of this. Seeds can always be bought."
   },
   "rotation": {
     "sameCropGrow": 0.85,
@@ -234,6 +242,11 @@
     "slowAbove": 0.75,
     "slowAboveDouble": 0.5,
     "note": "Each collection leaves muck (hens 0.3, cows 1, sheep 0.6 per animal). Above thresholdPerAnimal × animals the animals give 25% less; above twice that, 50% less. Mucking out costs energyPerMuck per muck and gives manure (compost!)."
+  },
+  "fence": {
+    "broken": 0.9,
+    "sturdyBonus": 0.05,
+    "note": "The fence round a pen (hens, cows, sheep; bees have none; animal nodes with fenced: true) has three stages: broken at the start (the pen gives `broken` of its yield, about 10% less), mended (the first upgrade, pen_fence_<animal>_1: normal), sturdy and painted (the second, _2, which replaces the first: 1 + sturdyBonus, about 5% more). The same numbers for every fenced pen. The stage is the node effect set fence:<animal node> (1 or 2; no upgrade = 0)."
   },
   "fuel": {
     "values": {

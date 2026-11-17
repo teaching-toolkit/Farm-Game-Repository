@@ -46,6 +46,12 @@
       "wear": "use:harvest",
       "practice": "field"
     },
+    "let_flower": {
+      "moments": 1,
+      "base": {"energy": 1},
+      "cat": "field",
+      "mult": "energy:field"
+    },
     "cut_tree": {
       "moments": 2,
       "base": {"energy": 3},

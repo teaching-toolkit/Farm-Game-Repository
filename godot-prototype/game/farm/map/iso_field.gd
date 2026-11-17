@@ -5,7 +5,8 @@ extends Control
 ##
 ## No words on the field: every plant is shown one by one (2 seeds planted = 2 sprouts), and so is every weed, stone,
 ## rock and stump — they get fewer as you clear them. A patch that is not cleared yet is a diamond of wild growth with
-## what is in the way on it: weeds, rocks or stumps (the next field: scrub; the last one: marsh).
+## what is in the way on it: weeds, rocks or stumps (the next field: scrub; the last one: marsh). A harvested grain patch keeps its cut
+## stalks (stubble, drawn in code) until it is sown again.
 ## When pests eat, a bird (or rabbit, slug …) comes, eats the plant and leaves; harvested things fly to the store.
 ##
 ## Pictures (all optional — without them simple shapes or emojis are drawn):
@@ -69,14 +70,35 @@ func setup(patch_w: float, gap_w := 14.0) -> void:
 	patch = patch_w
 	gap = gap_w
 	pitch = patch + gap
-	var w := 3.0 * patch + 2.0 * gap
-	size = Vector2(w, w / 2.0)
+	size = grid_size(9, patch, gap)
+
+# The diamond layout: the one place that says where patches stand. A field uses it for its 9 patches; the orchard and
+# greenhouse sheets (game/farm/ui/field_view.gd) call the same functions with their own patch count.
+# n patches stand in rows of ceil(√n) (a field's 9 are 3×3); every next row is half a pitch to the left and a quarter pitch
+# down, so the square grid stands on its corner.
+
+## Patches per row for n patches.
+static func grid_cols(n: int) -> int:
+	return maxi(1, ceili(sqrt(float(maxi(1, n)))))
+
+## The box that holds n patches of width patch_w with gap_w between them (a patch is twice as wide as high).
+static func grid_size(n: int, patch_w: float, gap_w := 14.0) -> Vector2:
+	var cols := grid_cols(n)
+	var span := float(cols + ceili(float(n) / cols) - 2) * (patch_w + gap_w)
+	return Vector2(patch_w + span * 0.5, patch_w * 0.5 + span * 0.25)
+
+## Centre of patch k (row-major) of n, in the box of grid_size().
+static func cell_center(k: int, n: int, patch_w: float, gap_w := 14.0) -> Vector2:
+	var cols := grid_cols(n)
+	var rows := ceili(float(n) / cols)
+	var r := k / cols
+	var c := k % cols
+	var pitch_w := patch_w + gap_w
+	return Vector2(patch_w * 0.5 + (rows - 1 + c - r) * pitch_w * 0.5, patch_w * 0.25 + (c + r) * pitch_w * 0.25)
 
 ## Centre of patch k (0..8, row-major) in this control's coordinates.
 func patch_center(k: int) -> Vector2:
-	var r := k / 3
-	var c := k % 3
-	return Vector2(size.x / 2.0 + (c - r) * pitch * 0.5, patch * 0.25 + (c + r) * pitch * 0.25)
+	return cell_center(k, 9, patch, gap)
 
 func patch_rect(k: int) -> Rect2:
 	var ctr := patch_center(k)
@@ -146,23 +168,8 @@ func refresh(flick := false) -> void:
 	usable.resize(9)
 	for k in range(9):
 		var i := field_index * 9 + k
-		var spec := {"crop": "", "plants": 0, "crowded": 0, "stage": "", "ready": false, "weeds": 0, "stones": 0, "wild": "", "seed": hash([field_index, k])}
 		usable[k] = i < arr.size() and G.fields.patch_usable(area_name, i)
-		if not usable[k]:
-			var wi := _wild_info(i)
-			spec["wild"] = wi[0]
-			spec["clear"] = wi[1]
-		else:
-			var p = arr[i]
-			spec["weeds"] = mini(12, int(floor(float(p["weeds"]) + 0.001)))
-			spec["stones"] = mini(6, int(floor(float(p["stones"]) + 0.001)))
-			if p["crop"] != "":
-				spec["crop"] = p["crop"]
-				spec["plants"] = clampi(G.fields.shown_plants(float(p["plants"])), 1, 9)
-				spec["crowded"] = G.fields.crowd_plants(p)       # the plants the weeds and stones take from the harvest stand wilted
-				var frac := float(p["growth"]) / maxf(0.01, G.fields.grow_target(p))
-				spec["stage"] = "ready" if p["ready"] else ("sprout" if frac < 0.5 else "grown")
-				spec["ready"] = p["ready"]
+		var spec := patch_spec(G, area_name, i, hash([field_index, k]), [] if usable[k] else _wild_info(i))
 		if not (flick and _flick_patch(k, spec)): patches[k].show_state(spec)
 	# what stands round the field and in the gaps
 	var fence_on := ""
@@ -184,6 +191,29 @@ func refresh(flick := false) -> void:
 	borders.queue_redraw()
 	front.queue_redraw()
 	call_deferred("_sync_critters")
+
+## What patch i of an area looks like, as IsoPatch.show_state wants it: its plants, weeds and stones; wild = [kind, cleared 0..1]
+## (what is in the way, see Fields.patch_wild) for a patch that cannot be used yet. The fields and the orchard and greenhouse sheets draw from this.
+static func patch_spec(G, area: String, i: int, seed_v: int, wild := []) -> Dictionary:
+	var spec := {"crop": "", "plants": 0, "crowded": 0, "stage": "", "ready": false, "weeds": 0, "stones": 0, "wild": "", "seed": seed_v, "shade": 1.0, "stubble": false}
+	if not wild.is_empty():
+		spec["wild"] = wild[0]
+		spec["clear"] = wild[1]
+		return spec
+	var p = G.fields.area(area)[i]
+	spec["shade"] = G.fields.soil_shade(area, p)           # watered soil is dark and dries pale (visible-work/04)
+	spec["stubble"] = G.fields.has_stubble(p)              # the cut stalks of a harvested grain patch (visible-work/05)
+	spec["weeds"] = mini(12, int(floor(float(p["weeds"]) + 0.001)))
+	spec["stones"] = mini(6, int(floor(float(p["stones"]) + 0.001)))
+	if p["crop"] != "":
+		spec["crop"] = p["crop"]
+		spec["plants"] = clampi(G.fields.shown_plants(float(p["plants"])), 1, 9)
+		spec["crowded"] = 0 if G.fields.flowering(p) else G.fields.crowd_plants(p)       # the plants the weeds and stones take from the harvest stand wilted (seed loses nothing)
+		spec["flower"] = G.fields.flowering(p)           # left to flower (crops-and-items/01): a flower over the plants, a seed when it is ripe
+		var frac := float(p["growth"]) / maxf(0.01, G.fields.grow_target(p))
+		spec["stage"] = "ready" if p["ready"] else ("sprout" if frac < 0.5 else "grown")
+		spec["ready"] = p["ready"]
+	return spec
 
 ## A plant that moved on by more than the picture changes: show the stages in between, one after the other (true when it did).
 ## The patch keeps its old picture (weeds, stones too) until the first change; the last step is the new state.
@@ -280,7 +310,7 @@ func _growing_points() -> Array:
 		var i := field_index * 9 + k
 		if i >= arr.size() or not G.fields.patch_usable(area_name, i): continue
 		var p = arr[i]
-		if p["crop"] == "" or p["ready"]: continue
+		if not G.fields.growing(p): continue
 		out.append(patch_center(k))
 	return out
 
@@ -520,6 +550,13 @@ class IsoPatch extends Control:
 	var top: Control              # lives in the field's label layer (set by the field): plants, weeds, stones
 	var pitch := 156.0            # patch + gap (the borders run along the middle of the gaps)
 
+	## Stubble (visible-work/05): the cut stalks that stay on a grain patch after the harvest. How many and how they look: here, in one place.
+	const STUBBLE_TUFTS := 9           # tufts on one patch, spread over the soil with the patch's own seed (like the weeds)
+	const STUBBLE_STALKS := 4          # short stalks standing together in a tuft
+	const STUBBLE_LEN := 0.06          # the longest stalk, as a part of the patch's width (the stalks are cut short)
+	const STUBBLE_SPREAD := 0.022      # how far apart the stalks of one tuft stand, as a part of the patch's width
+	const STUBBLE_LOOK := [Color("e2c066"), Color("cfa650"), Color("edd488")]     # straw, a little darker, and pale
+
 	static var _grey_pics := {}      # picture id -> its grey copy (plants the weeds and stones took)
 
 	## The same picture in grey (a see-through background stays see-through), made once per picture; the picture itself when it cannot be read.
@@ -612,7 +649,8 @@ class IsoPatch extends Control:
 			var bottom := dc.y + tw * 0.25 + tw * 0.08
 			pic.position = Vector2(dc.x - w / 2.0, bottom - h)
 			pic.size = Vector2(w, h)
-			pic.modulate = Color(1.08, 1.04, 0.86) if s["ready"] else Color.WHITE
+			var shade := float(s.get("shade", 1.0))
+			pic.modulate = (Color(1.08, 1.04, 0.86) if s["ready"] else Color.WHITE) * Color(shade, shade, shade)
 			if s["wild"] != "" and not _soil_look(): pic.modulate = Color(1.06, 1.06, 1.0) if s["wild"] != "marsh" else Color(0.95, 1.02, 1.02)
 		queue_redraw()
 		if top: top.queue_redraw()
@@ -693,6 +731,10 @@ class IsoPatch extends Control:
 			for _i in range(int(spec["stones"])):
 				var at4 := dc + _in_diamond(r.randf_range(0.1, 0.9), r.randf_range(0.1, 0.9))
 				things.append([at4.y, "stone", at4, r.randi()])
+			if spec.get("stubble", false):             # after the weeds and stones, so that they keep their places
+				for _i in range(STUBBLE_TUFTS):
+					var at5 := dc + _in_diamond(r.randf_range(0.1, 0.9), r.randf_range(0.1, 0.9))
+					things.append([at5.y, "stubble", at5, r.randi()])
 		things.sort_custom(func(a, b): return a[0] < b[0])
 		for t in things: _thing(ci, t[1], t[2], int(t[3]) if t.size() > 3 else 0)
 
@@ -728,9 +770,11 @@ class IsoPatch extends Control:
 					if ct: _pic(ci, ct, Vector2.ZERO, w)
 					else: _emoji(ci, str(G_emoji(spec["crop"])), Vector2.ZERO, int(w * 0.72))
 					ci.draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+					if spec.get("flower", false): _emoji(ci, "🌰", at + Vector2(0, -w * 1.05), int(w * 0.6))      # the seed is ripe
 					return
 				if ct: _pic(ci, ct, at, w)
 				else: _emoji(ci, str(G_emoji(spec["crop"])), at, int(w * 0.72))
+				if spec.get("flower", false): _emoji(ci, "🌼", at + Vector2(0, -w * 1.05), int(w * 0.6))          # left to flower: waiting for spring
 			"wilted":
 				# crowded out by weeds and stones: small, grey and drooping, no glow, no sway
 				var wsprout := str(spec.get("stage", "grown")) == "sprout"
@@ -746,6 +790,14 @@ class IsoPatch extends Control:
 				var ww := tw * (0.13 if kind == "weed" else 0.17)
 				if wt: _pic(ci, wt, at, ww)
 				else: _emoji(ci, "🌿", at, int(ww * 0.8))
+			"stubble":
+				# a tuft of short straw-coloured stalks standing in the soil, leaning a little, cut off at different heights
+				var sr := RandomNumberGenerator.new()
+				sr.seed = v
+				for _j in range(STUBBLE_STALKS):
+					var foot := at + Vector2(sr.randf_range(-1.0, 1.0), sr.randf_range(-0.5, 0.5)) * tw * STUBBLE_SPREAD
+					var tip := foot + Vector2(sr.randf_range(-0.35, 0.35), -sr.randf_range(0.55, 1.0)) * tw * STUBBLE_LEN
+					ci.draw_line(foot, tip, STUBBLE_LOOK[sr.randi() % STUBBLE_LOOK.size()], 2.0, true)
 			"stone":
 				var st: Texture2D = Artc.first("deco", ["debris_%d" % (1 + absi(v) % 3), "stone"])
 				if st: _pic(ci, st, at, tw * 0.1)

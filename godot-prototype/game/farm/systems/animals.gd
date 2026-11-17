@@ -63,6 +63,21 @@ func muck_factor(aid: String) -> float:
 	if mk > th: return float(mu.get("slowAbove", 0.75))
 	return 1.0
 
+## The fence round a pen: 0 broken (how every pen starts), 1 mended, 2 sturdy and painted. The two upgrades pen_fence_<animal>_1 and _2 set it (the
+## second replaces the first), like any other upgrade; no upgrade, no key: 0. An animal without a fence (the bees) has no stage: 0, and no effect.
+func fence_stage(aid: String) -> int:
+	return int(round(G.g("fence:" + aid, 0.0)))
+
+## What the pen gives of its yield with the fence as it is (rules/10-farming.json "fence"): a broken fence a bit less (hens wander, wool snags),
+## a mended one the normal, a sturdy and painted one a bit more. The same for every fenced pen; 1.0 for animals that are not fenced (the bees).
+func fence_factor(aid: String) -> float:
+	if not G.nodes[aid].get("fenced", false): return 1.0
+	var fe: Dictionary = G.meta.get("fence", {})
+	match fence_stage(aid):
+		0: return float(fe.get("broken", 0.9))
+		1: return 1.0
+		_: return 1.0 + float(fe.get("sturdyBonus", 0.05))
+
 ## What the animals eat and drink for one collection, as written in the data (before the tools and upgrades that make it less) and after.
 func feed_cost(aid: String) -> Dictionary:
 	var n = G.nodes[aid]
@@ -140,7 +155,7 @@ func _collect_effect(_who, args: Dictionary, _cost: Dictionary) -> Dictionary:
 	var got := []
 	var arrived := {}
 	for k in n.get("produces", {}):
-		var q := float(n["produces"][k]) * int(a["count"]) * G.m("out:" + aid) * float(G.seasons.smod("out", {}).get(aid, 1.0)) * mf
+		var q := float(n["produces"][k]) * int(a["count"]) * G.m("out:" + aid) * float(G.seasons.smod("out", {}).get(aid, 1.0)) * mf * fence_factor(aid)
 		if k == "egg" and G.rewards.roll(G.rewards.luck_event("double_yolk")): q += 1.0; G.say(tr("🥚 A double-yolk egg!"))
 		if k == "honeycomb" and G.rewards.roll(G.rewards.luck_event("honey_flow")): q += 1.0; G.say(tr("🍯 A honey flow: extra comb!"))
 		if k == "wool" and G.rewards.roll(G.rewards.luck_event("thick_fleece")): q += 1.0; G.say(tr("🧶 An extra-thick fleece!"))

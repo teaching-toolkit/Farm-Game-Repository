@@ -17,13 +17,15 @@ func _init(main: FarmMain) -> void:
 func modal_w() -> float:
 	return minf(M.size.x - 36.0, 760.0)
 
-func open_modal(title: String) -> VBoxContainer:
+## `closable` false: no ✖ (a pop-up that has its own way out, like the "make your farmer" screen).
+func open_modal(title: String, closable := true) -> VBoxContainer:
 	M.widgets.clear(M.modal_box)
 	var h := UI.hbox(8)
 	var tl := UI.label(title, 24, UI.INK, true)
 	h.add_child(tl)
 	var close := UI.soft_button("✖", close_modal, true, 20)
 	close.custom_minimum_size = Vector2(52, 44)
+	close.visible = closable
 	h.add_child(close)
 	M.modal_box.add_child(h)
 	M.modal.visible = true

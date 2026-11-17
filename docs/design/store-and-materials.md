@@ -10,10 +10,11 @@ Part of the game's design ([index](README.md)). It describes the game as built; 
   data). Planting takes one from the store, so the child keeps some back before cooking or selling the rest (the card *Saving seed*,
   chapter 1). The game starts with **one wheat grain** in the store and one cleared patch: the first stalk is the start of the farm.
   If the grain runs out, the seed merchant sells sacks of wheat, hay and winter wheat (45, 25 and 60 🟤).
+  Carrots, onions and beets give seed another way: left to flower through one winter they give lots of seed in spring (`farming.md` §6.2).
 - **Seeds bought in the village.** Every other crop has a price per seed (`seedCost`, bronze: clover, lettuce and oats 15, kale 24,
   carrot, onion, beans, beet and flax 30, potato, sunflower, berries and herbs 45, tomato and pumpkin 60; saplings: apple 450, walnut
   600, olive 750). Seeds are bought on the square (§5.3b), 🛒 1 or 🛒 5 at a time; they weigh almost nothing (a feather), and the
-  store's 🌱 *Seeds* section shows how many of each you have. Trust and reputation make them cheaper (§5.3b), never dearer.
+  store's 🌱 *Seeds* section shows how many of each you have. A bought seed is drawn as one **seed bag**, a tied cloth pouch the game draws itself (`kits/ui/seed_bag.gd`), with the crop's small picture on its belly (its emoji when it has none), in the seeds stall and in the store; grain that is its own seed keeps its item picture (`pictures/02`). Trust and reputation make them cheaper (§5.3b), never dearer.
 
 **The seed merchant grows** from a seller on foot (carrots) to a cart (clover, onion), a stall (potato, lettuce, beans, beet, tomato,
 kale), a shop (sunflower, flax, oats, apple saplings) and a nursery (pumpkin, berries, herbs, walnut and olive saplings) (§10.4).

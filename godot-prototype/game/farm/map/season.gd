@@ -2,7 +2,7 @@ extends RefCounted
 class_name FarmSeasonLook
 ## The season over the pictures of the farm map (N7): one shader (kits/ui/season.gdshader) on every picture that stands on the farm:
 ## buildings, trees, fences, patches, add-ons. Words (names, badges) and the farmer, animals and the cat do not get it.
-## `set_season` is called when the season changes; `apply_tree` once, when the map is built; `shade` for pictures made later.
+## `set_season` is called with `G.seasons.blend()` at every question (the look fades over the first questions of a season); `apply_tree` once, when the map is built; `shade` for pictures made later.
 
 const SHADER = preload("res://kits/ui/season.gdshader")
 
@@ -64,10 +64,20 @@ static func flower_count(G) -> int:
 	var k := clampf(q / maxf(1.0, float(fl.get("changeQuestions", 1))), 0.0, 1.0)
 	return int(round(lerpf(before, now, k)))
 
-static func set_season(s: String) -> void:
+## How much of the season `nm` is in the look now, 0..1, from `G.seasons.blend()` ({from, to, t}): the season that ends fades out as t rises,
+## the new one fades in. Everything on the map that looks different by season asks this (or `mix`), so they all change together (N7).
+static func share(b: Dictionary, nm: String) -> float:
+	return (1.0 - float(b["t"])) * float(b["from"] == nm) + float(b["t"]) * float(b["to"] == nm)
+
+## A colour that belongs to each season (`table`: season name to colour), blended the same way.
+static func mix(b: Dictionary, table: Dictionary, d := Color.WHITE) -> Color:
+	return (table.get(b["from"], d) as Color).lerp(table.get(b["to"], d), float(b["t"]))
+
+## Puts the (blended) season on the shared materials: the shader fades winter and autumn in and out by their share.
+static func set_season(b: Dictionary) -> void:
 	for m in [material(), flat_material(), frost_material()]:
-		m.set_shader_parameter("winter", 1.0 if s == "winter" else 0.0)
-	material().set_shader_parameter("autumn", 1.0 if s == "autumn" else 0.0)
+		m.set_shader_parameter("winter", share(b, "winter"))
+	material().set_shader_parameter("autumn", share(b, "autumn"))
 
 ## A picture made after the map was built (the overlays on a workbench …).
 static func shade(n: CanvasItem) -> void:
@@ -78,7 +88,7 @@ static func shade(n: CanvasItem) -> void:
 ## and everything below it gets the flat material; a node with the meta "frost" (the soil picture of a field patch) gets the frost.
 static func apply_tree(root: Node, skip: Array = [], flat := false) -> void:
 	for c in root.get_children():
-		if c in skip or c is Label or c is Button or c is PanelContainer: continue
+		if c in skip or c is Label or c is Button or c is PanelContainer or c.get_meta("plain", false): continue      # "plain": smoke and glow keep their own colours
 		var f: bool = flat or bool(c.get_meta("flat", false))
 		if c is CanvasItem: c.material = frost_material() if c.get_meta("frost", false) else (flat_material() if f else material())
 		apply_tree(c, skip, f)

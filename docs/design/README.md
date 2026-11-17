@@ -62,7 +62,7 @@ The rule files are in `rules/`, one per system.
 | Weights, quality grades, skills | `rules/45-weight.json`, `rules/47-quality.json`, `rules/48-skills.json` |
 | The village trip and the bag; the gate; the Lord's share | `rules/49-trip.json`, `rules/50-gate.json`, `rules/53-lord.json` |
 | Luck, gift cards, jobs, acorns, perks, postcards | `rules/50-rewards.json` |
-| Pets' jobs, wellbeing, nature, the forest and Wren | `rules/54-pets.json`, `rules/55-well.json`, `rules/56-nature.json`, `rules/57-forest.json` |
+| Pets' blessings and chores, wellbeing, nature, the forest and Wren | `rules/54-pets.json`, `rules/55-well.json`, `rules/56-nature.json`, `rules/57-forest.json` |
 | What is shown when (reveal) | `rules/60-reveal.json` |
 | Goals, buildings, books, cards and their costs | `nodes/*.json` |
 | Item values, recipes, chapters, the start | `items.json`, `recipes.json`, `chapters.json`, `start.json` |

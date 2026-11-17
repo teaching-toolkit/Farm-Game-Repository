@@ -58,7 +58,9 @@ func _ready() -> void:
 	cap.position = Vector2(20, 745)
 	cap.add_theme_color_override("font_color", Color.BLACK)
 	stage.add_child(cap)
-	var plain = _avatar(farmer.duplicate(true), Vector2(60, 860), 1.0)
+	var today := farmer.duplicate(true)
+	today["style"] = "plain"                  # the figure before the trial (the game now defaults to painted_face, people/05)
+	var plain = _avatar(today, Vector2(60, 860), 1.0)
 	for g in 2:
 		var lk3 := farmer.duplicate(true)
 		lk3["style"] = "painted" if g == 0 else "painted_face"

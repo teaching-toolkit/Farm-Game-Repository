@@ -25,7 +25,7 @@ Everything about the content is data, so the game can be rebalanced without code
 | `data/quiz_packs/*.json` | Time Quiz packs |
 | `data/i18n/quiz-<lang>.json` | quiz texts by question id |
 | `data/settings.json` | the parent's settings (§4.4) |
-| `data/avatar.json` | the farmer's look |
+| `data/avatar.json` | the farmer's look; `default.style` is every figure's drawing style (`painted_face`; `painted` and `plain` still work) |
 | `data/acts.json` | what the farmer acts out: poses, props, acts |
 | `kits/learn/curriculum/math.json` | the maths curriculum |
 
@@ -38,7 +38,7 @@ value checks) and keeps a copy of the current data.
 |---|---|
 | `game/farm/game.gd` (autoload `Game`) and `game/farm/systems/` | the rules engine: the front door (state, data, saves, effects, one step of time) and one script per system: seasons, inventory, needs (energy, Rest), pace (dynamic difficulty), progression, fields (weeds, pests, water), animals, crafting (fuel, polish), trade, knowledge (cards), timeq (the Time Quiz question: next question, the first-try rule, walks as purposes, the one door for packs), rewards (luck, gifts, jobs, acorns, perks); `kits/core/` holds the shared parts (modifiers, conditions, rng, clock) |
 | `game/farm/main.gd` and `game/farm/ui/` | the interface: `main.gd` builds the screen (bars, map, sheet, pop-up) and refreshes it; one script per job in `ui/`: sheets, pop-ups, notes, the Time Quiz, Rest, cards, the places' sheets, inside windows, album, quest book, settings |
-| `game/farm/map/` (`farm_map.gd`, `slot.gd`, `iso_field.gd`), `game/farm/spots.gd` with `data/farm/places.json`, `game/farm/ui/field_view.gd` | the one-screen map, a place, a field, which data node belongs where (the places, their insides, picture chains, ruins, pens and the workbench are data), the patch grid |
+| `game/farm/map/` (`farm_map.gd`, `slot.gd`, `iso_field.gd`), `game/farm/spots.gd` with `data/farm/places.json`, `game/farm/ui/field_view.gd` | the one-screen map, a place, a field, which data node belongs where (the places, their insides, picture chains, ruins, pens and the workbench are data), the orchard and greenhouse patches (diamond rows, laid out by `iso_field.gd`) |
 | `game/farm/fx.gd`, `game/farm/dev/dev_flags.gd` | perk effects drawn over the farm; the test and screenshot flags |
 | `kits/ui/` (`art.gd`, `ui.gd`, `interruptions.gd`), `kits/avatar/` (`avatar.gd`, `actor.gd`), `kits/audio/` (`sound.gd`, `synth.gd`), `kits/i18n/i18n.gd` | pictures with emoji fallback, styles and explanations, the interruption queue (what takes the screen next: one order list in `rules/65-feel.json`, `interruption-queue`), the farmer, sound and music, languages (reusable parts, 12 Oct 2026) |
 | `kits/learn/` | the learning kit — learner record, spaced repetition, maths engine, quiz engine, timer, number pad; reusable in any Godot game |

@@ -41,6 +41,8 @@ var inside: Array = []       # things drawn inside a pen, back to front: [{"tex"
 var show_name := false       # the name pill under the place (off: the pictures speak for themselves)
 var overlays: Array = []     # pictures on top of the place's picture: [{"tex", "x", "y", "w"}] in fractions of it
 var _over_nodes: Array = []
+var working := false         # a batch is cooking, baking, firing or forging here (the map view sets it before set_state): smoke and glow, if the picture has a chimney or a fire
+var _work: FarmWorkFx        # the smoke and glow, on top of the picture
 
 var pic: TextureRect
 var emo: Label
@@ -89,6 +91,8 @@ func _ready() -> void:
 	pic.stretch_mode = TextureRect.STRETCH_SCALE
 	pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(pic)
+	_work = FarmWorkFx.new()
+	add_child(_work)
 	emo = UI.label("", 40)
 	emo.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	emo.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -149,6 +153,7 @@ func set_state(title: String, emoji: String, tex: Texture2D, is_locked: bool, ba
 	pic.texture = tex
 	_has_pic = tex != null
 	pic.visible = _has_pic
+	_work.show_for(tex, working)
 	emo.visible = not _has_pic and style == ""
 	emo.text = emoji
 	if _has_pic:
@@ -222,6 +227,8 @@ func _place() -> void:
 	pivot_offset = _o
 	pic.position = _o + pr.position
 	pic.size = pr.size
+	_work.position = pic.position
+	_work.size = pic.size
 	var fs := int(clampf(tile * (foot.x + foot.y) * 0.16, 26, 56))
 	emo.add_theme_font_size_override("font_size", fs)
 	emo.position = _o + er.position

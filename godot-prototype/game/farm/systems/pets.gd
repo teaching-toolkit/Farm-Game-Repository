@@ -1,10 +1,13 @@
 extends RefCounted
 class_name FarmPets
-## The pets' jobs (TODO S2). Level 1 is a pet's bonus from its node (always on). Level 2 opens when the next pet has come home: the child
-## chooses one of the pet's jobs on the job board, and the pet does it once every question. A job that cannot run just waits.
+## The pets' blessings and chores (TODO S2). Level 1 is a pet's bonus from its node (always on). Level 2 opens when the next pet has come home:
+## the child chooses one of the pet's blessings or chores for its rule, and the pet does it once every question. What cannot run just waits.
+## A pet's rule is a blessing (free, by its own effect) or a chore (one of the farmer's, at the farmer's cost): see GLOSSARY.md.
+## The data lists both under `entries` (a chore has "kind": "chore"). Save keys keep their old name `job` (pets.job, pets.second.job,
+## pets.last.job) so that old saves load.
 ## What happened goes into the step's report (info["pet_acts"]) for the farm to show. Data: data/farm/rules/54-pets.json.
 
-const Spots = preload("res://game/farm/spots.gd")   # which place a node belongs to (for chore_jobs)
+const Spots = preload("res://game/farm/spots.gd")   # which place a node belongs to (for chores_of)
 
 var G: FarmGame   # the Game: the farm's state (G.S), its data and the other systems
 
@@ -18,19 +21,19 @@ func save_defaults() -> Dictionary:
 func data() -> Dictionary:
 	return G.meta.get("pets", {})
 
-## The blessings a pet can do (level 2) that the child is offered. A rule is a blessing or a chore: the chore jobs are not in this list
-## (chore_jobs is the window's "Helps with" group). A job with "hidden": true is built but not offered (see job).
-func jobs_of(pid: String) -> Array:
+## The blessings a pet can do (level 2) that the child is offered. A rule is a blessing or a chore: the chores are not in this list
+## (chores_of is the window's "Helps with" group). An entry with "hidden": true is built but not offered (see entry).
+func blessings_of(pid: String) -> Array:
 	var out := []
-	for j in data().get("jobs", {}).get(pid, []):
+	for j in data().get("entries", {}).get(pid, []):
 		if str(j.get("kind", "")) != "chore" and not bool(j.get("hidden", false)): out.append(j)
 	return out
 
-## The chore jobs of a pet (kind "chore") whose place is built: the ones the pet's window offers as "Helps with".
-## A job with `needs` (a place id of data/farm/places.json) waits until that place is built; a job without it is always there.
-func chore_jobs(pid: String) -> Array:
+## The chores of a pet (kind "chore") whose place is built: the ones the pet's window offers as "Helps with".
+## A chore with `needs` (a place id of data/farm/places.json) waits until that place is built; one without it is always there.
+func chores_of(pid: String) -> Array:
 	var out := []
-	for j in data().get("jobs", {}).get(pid, []):
+	for j in data().get("entries", {}).get(pid, []):
 		if str(j.get("kind", "")) == "chore" and (not j.has("needs") or _built(str(j["needs"]))): out.append(j)
 	return out
 
@@ -40,17 +43,17 @@ func _built(place: String) -> bool:
 		if G.done(id) and str(G.nodes[id].get("type", "")) in ["building", "animal"]: return true
 	return false
 
-## A job by its id, a blessing or a chore, hidden ones too (a rule can hold any of them; only the lists the child sees leave some out).
-func job(pid: String, jid: String) -> Dictionary:
-	for j in data().get("jobs", {}).get(pid, []):
-		if j["id"] == jid: return j
+## A blessing or a chore of a pet by its id, hidden ones too (a rule can hold any of them; only the lists the child sees leave some out).
+func entry(pid: String, eid: String) -> Dictionary:
+	for j in data().get("entries", {}).get(pid, []):
+		if j["id"] == eid: return j
 	return {}
 
-## 0 = not home, 1 = its bonus, 2 = it also does a job of the child's choice, 3 = with a WHEN card, 4 = with a second rule.
+## 0 = not home, 1 = its bonus, 2 = it also does a blessing or chore of the child's choice, 3 = with a WHEN card, 4 = with a second rule.
 ## A pet's level is 1 + the pets that came home after it; when the last one is home (free play) every pet is level 4.
 func level(pid: String) -> int:
 	if not G.done(pid): return 0
-	if jobs_of(pid).is_empty(): return 1
+	if blessings_of(pid).is_empty(): return 1
 	if free_play(): return 4
 	var i := G.pet_ids.find(pid)
 	var after := 0
@@ -58,7 +61,7 @@ func level(pid: String) -> int:
 		if G.done(G.pet_ids[j]): after += 1
 	return clampi(1 + after, 1, 4)
 
-## The story is over (the last pet is home): the pets' job boards are fully open.
+## The story is over (the last pet is home): the pets' rules are fully open.
 func free_play() -> bool:
 	return not G.pet_ids.is_empty() and G.done(G.pet_ids[G.pet_ids.size() - 1])
 
@@ -75,9 +78,10 @@ func when_of(pid: String, rule: int) -> Dictionary:
 	if rule == 0: return G.S["pets"]["when"].get(pid, {})
 	return (G.S["pets"]["second"].get(pid, {}) as Dictionary).get("when", {})
 
-func second_job(pid: String) -> String:
+## The id of the blessing or chore in its second rule (level 4): the child's choice, or its second blessing.
+func second_chosen(pid: String) -> String:
 	var j := str((G.S["pets"]["second"].get(pid, {}) as Dictionary).get("job", ""))
-	return j if not job(pid, j).is_empty() else (str(jobs_of(pid)[1]["id"]) if jobs_of(pid).size() > 1 else "")
+	return j if not entry(pid, j).is_empty() else (str(blessings_of(pid)[1]["id"]) if blessings_of(pid).size() > 1 else "")
 
 ## Sets a rule's WHEN: card "" = always; n is kept inside the card's range.
 func set_when(pid: String, rule: int, card: String, n := -1.0) -> bool:
@@ -92,37 +96,38 @@ func set_when(pid: String, rule: int, card: String, n := -1.0) -> bool:
 	else:
 		var sec: Dictionary = G.S["pets"]["second"].get(pid, {})
 		sec["when"] = w
-		if not sec.has("job"): sec["job"] = second_job(pid)
+		if not sec.has("job"): sec["job"] = second_chosen(pid)
 		G.S["pets"]["second"][pid] = sec
 	G.save_game(); G.changed.emit()
 	return true
 
-func set_second_job(pid: String, jid: String) -> bool:
-	if level(pid) < 4 or not _can_set(pid, jid): return false
+## Puts a blessing or a chore into the pet's second rule (level 4), like choose does for the first.
+func choose_second(pid: String, eid: String) -> bool:
+	if level(pid) < 4 or not _can_set(pid, eid): return false
 	var sec: Dictionary = G.S["pets"]["second"].get(pid, {})
-	sec["job"] = jid
+	sec["job"] = eid
 	G.S["pets"]["second"][pid] = sec
-	if not _follow_when(pid, 1, jid): G.save_game(); G.changed.emit()
+	if not _follow_when(pid, 1, eid): G.save_game(); G.changed.emit()
 	return true
 
-## Can this job be set as a rule: it exists, and a chore's place is built (chore_jobs lists it).
-func _can_set(pid: String, jid: String) -> bool:
-	var j := job(pid, jid)
+## Can this blessing or chore be set as a rule: it exists, and a chore's place is built (chores_of lists it).
+func _can_set(pid: String, eid: String) -> bool:
+	var j := entry(pid, eid)
 	if j.is_empty(): return false
 	if str(j.get("kind", "")) != "chore": return true
-	for c in chore_jobs(pid):
-		if c["id"] == jid: return true
+	for c in chores_of(pid):
+		if c["id"] == eid: return true
 	return false
 
-## The WHEN of a rule follows the job the child has just put in it (only where the rule has a WHEN card: rule 0 from level 3, rule 1 at
+## The WHEN of a rule follows the blessing or chore the child has just put in it (only where the rule has a WHEN card: rule 0 from level 3, rule 1 at
 ## level 4). A chore with no WHEN gets the `energy` card at its default, so it never drains the farmer (a WHEN the child set stays). A
 ## blessing frees the rule from that default energy WHEN (one the child set to another number stays). True when it saved (set_when does).
-func _follow_when(pid: String, rule: int, jid: String) -> bool:
+func _follow_when(pid: String, rule: int, eid: String) -> bool:
 	if level(pid) < (3 if rule == 0 else 4) or not allowed_whens(pid).has("energy"): return false
 	var w := when_of(pid, rule)
 	var c: Dictionary = whens().get("energy", {})
 	if c.is_empty(): return false
-	if str(job(pid, jid).get("kind", "")) == "chore": return w.is_empty() and set_when(pid, rule, "energy")
+	if str(entry(pid, eid).get("kind", "")) == "chore": return w.is_empty() and set_when(pid, rule, "energy")
 	return w.get("card", "") == "energy" and is_equal_approx(float(w.get("n", -1)), clampf(float(c.get("default", 1)), float(c.get("min", 0)), float(c.get("max", 99)))) and set_when(pid, rule, "")
 
 ## Does a WHEN hold now? No card means always. The card's condition (rules/54-pets.json, `when` with `{n}`) gets the child's number,
@@ -141,21 +146,21 @@ static func card_condition(c: Dictionary, n: float) -> String:
 static func card_sign(c: Dictionary) -> String:
 	return "<" if str(c.get("when", "")).contains("<") else "≥"
 
-## The job it does now: the child's choice, or the first one.
-func job_id(pid: String) -> String:
-	var jobs := jobs_of(pid)
-	if jobs.is_empty(): return ""
-	var c := str(G.S["pets"]["job"].get(pid, ""))
-	return c if not job(pid, c).is_empty() else str(jobs[0]["id"])
+## The id of the blessing or chore in its first rule now: the child's choice, or its first blessing.
+func chosen(pid: String) -> String:
+	var blessings := blessings_of(pid)
+	if blessings.is_empty(): return ""
+	var c := str(G.S["pets"]["job"].get(pid, ""))      # the save key keeps its old name `job`
+	return c if not entry(pid, c).is_empty() else str(blessings[0]["id"])
 
-## Puts a job (a blessing or a chore) into the pet's first rule. False below level 2, for a job it does not have, and for a chore whose place is not built.
-func choose(pid: String, jid: String) -> bool:
-	if level(pid) < 2 or not _can_set(pid, jid): return false
-	G.S["pets"]["job"][pid] = jid
-	if not _follow_when(pid, 0, jid): G.save_game(); G.changed.emit()
+## Puts a blessing or a chore into the pet's first rule. False below level 2, for one it does not have, and for a chore whose place is not built.
+func choose(pid: String, eid: String) -> bool:
+	if level(pid) < 2 or not _can_set(pid, eid): return false
+	G.S["pets"]["job"][pid] = eid
+	if not _follow_when(pid, 0, eid): G.save_game(); G.changed.emit()
 	return true
 
-## What it did in the last question: {"job", "ok", "why"} or {}.
+## What it did in the last question: {"job", "ok", "why"} or {} ("job" is the saved key of the entry's id, kept so old saves load).
 func last(pid: String) -> Dictionary:
 	return G.S["pets"]["last"].get(pid, {})
 
@@ -167,9 +172,9 @@ func step(info: Dictionary) -> void:
 		var lv := level(pid)
 		if lv >= 2:
 			var a := {}
-			if holds(when_of(pid, 0) if lv >= 3 else {}): a = _work(pid, job(pid, job_id(pid)))
-			elif lv >= 4 and second_job(pid) != "" and holds(when_of(pid, 1)): a = _work(pid, job(pid, second_job(pid)))
-			else: G.S["pets"]["last"][pid] = {"job": job_id(pid), "ok": false, "why": "wait"}
+			if holds(when_of(pid, 0) if lv >= 3 else {}): a = _work(pid, entry(pid, chosen(pid)))
+			elif lv >= 4 and second_chosen(pid) != "" and holds(when_of(pid, 1)): a = _work(pid, entry(pid, second_chosen(pid)))
+			else: G.S["pets"]["last"][pid] = {"job": chosen(pid), "ok": false, "why": "wait"}
 			if not a.is_empty(): acts.append(a)
 		elif lv >= 1:
 			var f: Dictionary = data().get("first", {}).get(pid, {})
@@ -177,8 +182,15 @@ func step(info: Dictionary) -> void:
 				acts.append({"pet": pid, "emoji": f["emoji"], "ok": true, "place": f["place"], "first": true})
 	if not acts.is_empty(): info["pet_acts"] = acts
 
+## Does one blessing or chore (entry j) of a pet now, and returns what happened for the farm to show (see step).
 func _work(pid: String, j: Dictionary) -> Dictionary:
-	var act := {"pet": pid, "emoji": j.get("emoji", "🐾"), "ok": false, "why": "idle", "job": j["id"]}
+	var act := {"pet": pid, "emoji": j.get("emoji", "🐾"), "ok": false, "why": "idle", "entry": j["id"]}
+	var rest: Dictionary = G.nature.pause_of(pid, str(j["id"]))      # N5: over-used woods: this job rests until they are back
+	var was_resting: bool = str(last(pid).get("why", "")) == "rest" and str(last(pid).get("job", "")) == str(j["id"])
+	if not rest.is_empty(): return _rest(pid, act, rest, was_resting)
+	if was_resting:
+		G.say(tr("%s %s is helping again. The forest has grown back.") % [G.nodes[pid].get("emoji", "🐾"), pet_name(pid)])
+		G.S["pets"]["last"][pid] = {"job": j["id"], "ok": true, "why": ""}      # said once; a job that is still collecting (makes) writes no note
 	match str(j.get("kind", "")):
 		"weeds", "stones":
 			var key := "weeds" if j["kind"] == "weeds" else "stones"
@@ -219,7 +231,7 @@ func _work(pid: String, j: Dictionary) -> Dictionary:
 				return {}      # still collecting: nothing to show this question
 	return _note(pid, act)
 
-## A job of kind "chore": the pet does one of the farmer's chores (the one place that knows how). The target is the owner's picker
+## An entry of kind "chore": the pet does one of the farmer's chores (the one place that knows how). The target is the owner's picker
 ## (G.actions.register_auto); the farmer pays the chore's effective cost, no moment is used and nothing is practised or worn.
 ## Nothing to do or no picker: waits idle. A requirement unmet (too tired, ...): waits and says which, nothing is spent.
 func _work_chore(pid: String, j: Dictionary, act: Dictionary) -> Dictionary:
@@ -242,7 +254,19 @@ func _work_chore(pid: String, j: Dictionary, act: Dictionary) -> Dictionary:
 	else: act["place"] = str(args.get("place", "field"))     # a chore with no patch (fetching water) says where the pet goes
 	return act
 
+## The over-used woods are resting (G.nature.pause_of): the Helper does not do this job, spends nothing, shows a 🌱 at its place, and says so
+## once, when the rest begins. It stays and its other jobs go on (the rule is the child's: it is only waiting).
+func _rest(pid: String, act: Dictionary, rest: Dictionary, was_resting: bool) -> Dictionary:
+	act["why"] = "rest"
+	if str(rest["place"]) != "": act["place"] = rest["place"]
+	if not was_resting: G.say(tr("%s %s is taking a rest. The forest needs time to grow back.") % [G.nodes[pid].get("emoji", "🐾"), pet_name(pid)])
+	return _note(pid, act)
+
+## What the child calls the pet (the name chosen when it came home, else its own).
+func pet_name(pid: String) -> String:
+	return str(G.S["pet_names"].get(pid, G.nodes[pid].get("defaultName", "")))
+
 func _note(pid: String, act: Dictionary) -> Dictionary:
-	G.S["pets"]["last"][pid] = {"job": act.get("job", ""), "ok": act["ok"], "why": act.get("why", "")}
-	if not act["ok"]: act["emoji"] = "📦" if act.get("why", "") == "full" else "💤"
+	G.S["pets"]["last"][pid] = {"job": act.get("entry", ""), "ok": act["ok"], "why": act.get("why", "")}
+	if not act["ok"]: act["emoji"] = {"full": "📦", "rest": "🌱"}.get(str(act.get("why", "")), "💤")
 	return act

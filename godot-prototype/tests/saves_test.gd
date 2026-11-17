@@ -41,6 +41,7 @@ func _ready() -> void:
 		var v0: bool = G.Saves.version_of(raw) == 0
 		_check(G.load_game("res://tests/fixtures/" + f), f + " loads")
 		_check(int(G.S["version"]) == G.SAVE_VERSION, "%s is version %d after loading (was %d)" % [f, G.SAVE_VERSION, G.Saves.version_of(raw)])
+		_check(G.rewards.celebrations_waiting().is_empty(), "%s: an old save has no celebration waiting" % f)
 		n_fix += 1
 	_check(n_fix >= 2, "at least two fixtures (%d)" % n_fix)
 	# an old save: gift offers as arrays, no gift_active, keys missing that systems have added since
@@ -104,6 +105,36 @@ func _ready() -> void:
 	_check(G.load_game("user://saves_test.json") and not G.S["inv"].has("stone") and G.inventory.count("boulder") == 13.0 and G.inventory.count("stick") == 3.0, "a version 5 save: its stones are big rocks now (13 of them, sticks stay)")
 	_check(not G.S["bag"].has("stone") and float(G.S["bag"].get("boulder", 0.0)) == 2.0 and G.S["seen"].has("boulder"), "…also in the bag, and the big rock counts as seen")
 	_check(G.inventory.weight_class("stone") == "light" and G.inventory.weight_class("boulder") == "heavy", "a small stone is light, a big rock heavy")
+	# interruption-queue/05: a celebration still waiting when the game closes is a sparse key (not in a new game, so the new-game record
+	# and old saves stay as they are): a save keeps it, a save without it has nothing waiting
+	G.reset_game()
+	_check(not G.S.has("celebrations_waiting") and G.rewards.celebrations_waiting().is_empty(), "a new game has no celebration waiting (the key is sparse)")
+	var iq5: Dictionary = G.S.duplicate(true)
+	iq5["celebrations_waiting"] = ["stone_axe", "perk:fireflies"]
+	G.Saves.write("user://saves_test.json", iq5)
+	_check(G.load_game("user://saves_test.json") and G.rewards.celebrations_waiting() == ["stone_axe", "perk:fireflies"], "a save with celebrations waiting keeps them")
+	G.rewards.keep_celebrations(["barn"])
+	_check(G.S["celebrations_waiting"] == ["barn"], "…the list is replaced as the queue changes")
+	G.rewards.keep_celebrations([])
+	_check(not G.S.has("celebrations_waiting"), "…and the key is gone when none waits")
+	iq5.erase("celebrations_waiting")
+	G.Saves.write("user://saves_test.json", iq5)
+	_check(G.load_game("user://saves_test.json") and G.rewards.celebrations_waiting().is_empty() and not G.S.has("celebrations_waiting"), "a save without the key loads as nothing waiting (and no key is added)")
+	# people/02: the farmer's look is a sparse key too (the "make your farmer" screen at the start): a new game and every old save have none and
+	# draw the default look; a save keeps the look made; an old save that has moved on is never asked
+	G.reset_game()
+	_check(not G.S.has("look") and G.people.farmer_look().is_empty() and G.people.farmer_to_make(), "a new game has no look (the key is sparse) and the farmer is still to be made")
+	var lk5: Dictionary = G.S.duplicate(true)
+	lk5["look"] = {"skin": "#5e3b26", "hair": {"style": "bun", "color": "#2b1d14"}}
+	G.Saves.write("user://saves_test.json", lk5)
+	_check(G.load_game("user://saves_test.json") and G.people.farmer_look()["skin"] == "#5e3b26" and G.people.farmer_look()["hair"]["style"] == "bun" and not G.people.farmer_to_make(), "a save with a look keeps it and does not ask again")
+	lk5.erase("look")
+	lk5["step"] = 30
+	G.Saves.write("user://saves_test.json", lk5)
+	_check(G.load_game("user://saves_test.json") and not G.S.has("look") and G.people.farmer_look().is_empty() and not G.people.farmer_to_make(), "an old save with no look keeps the default look (no key is added) and is not asked")
+	G.reset_game()
+	G.people.set_farmer_look({"skin": "#f6d7bd"})
+	_check(G.S["look"] == {"skin": "#f6d7bd"} and not G.people.farmer_to_make(), "making the farmer writes the look to the save")
 	# a save from a newer game is kept as it is
 	var future: Dictionary = G.S.duplicate(true)
 	future["version"] = G.SAVE_VERSION + 5

@@ -128,17 +128,26 @@ func flex_tip(id: String) -> String:
 	return ""
 
 ## The cost of a node as {key: amount}, scaled for per-patch upgrades and energy upgrades.
-## A node done in steps costs what its next step costs.
+## A node done in steps costs what its next step costs. A build (a building, a station, a helper, ruins) uses up less and costs less energy as
+## woodwork and construction rises (G.skills.family_of_build); coins, water and the rest stay as written. The one place for it: the button, the
+## price row, the bot and unlock all read this cost.
 func node_cost(id: String) -> Dictionary:
 	var raw: Dictionary = G.progression.raw_cost(id)
 	var mul := 1.0   # per-patch upgrades are paid one patch at a time (see unlock)
+	var fam: String = G.skills.family_of_build(id)
+	var uses := G.skills.input_mult(fam)      # what the rank leaves to pay of what the build uses up (1 for a Beginner and for what is no build)
 	var out := {}
 	for k in raw:
 		if k == "read": continue
 		var v := float(raw[k]) * mul
-		if k == "energy": v = G.needs.ecost(G.progression.node_cat(id), v)
+		if k == "energy": v = G.needs.ecost(G.progression.node_cat(id), v, "", fam)
+		elif k != "coins" and k != "water": v *= uses
 		out[k] = v
 	return out
+
+## The lowest grade a goal takes of its graded things (data key "minGrade" on the goal: 1 Proper, 2 Fancy; 0 = any). Things without a grade ignore it.
+func node_min(id: String) -> int:
+	return int(G.nodes[id].get("minGrade", 0))
 
 ## The cost before any upgrade, practice star, meal or season makes it cheaper (the cube bars show what is saved).
 func node_cost_base(id: String) -> Dictionary:
@@ -148,13 +157,17 @@ func node_cost_base(id: String) -> Dictionary:
 		if k != "read": out[k] = float(raw[k])
 	return out
 
-func missing_cost(c: Dictionary) -> Array:
+## What of a price is missing, one {"key", "need", "have"} per kind. `min_grade` > 0: graded things count only at that grade or better
+## (and an entry for one has "min" too, for `missing_words`).
+func missing_cost(c: Dictionary, min_grade := 0) -> Array:
 	var miss := []
 	for k in c:
 		var need := float(c[k])
-		var h := G.inventory.have(k)
+		var h := G.inventory.have(k, min_grade)
 		if h + 0.0001 < need:
-			miss.append({"key": k, "need": need, "have": h})
+			var m := {"key": k, "need": need, "have": h}
+			if min_grade > 0 and G.inventory.min_applies(k): m["min"] = min_grade
+			miss.append(m)
 	if c.has("coins") and float(c["coins"]) > 0.0 and G.lord.coin_refusal(0.0) == "lord":      # the Lord's share comes first
 		miss.append({"key": "lord", "need": 1.0, "have": 0.0})
 	return miss
@@ -162,25 +175,25 @@ func missing_cost(c: Dictionary) -> Array:
 ## What is missing of a price in words, one entry per missing kind ("🪵 3 more", "🏮 the Lord's share first"), from `missing_cost`.
 func missing_words(mc: Array) -> Array:
 	var parts := []
-	for x in mc: parts.append(tr("🏮 the Lord's share first") if x["key"] == "lord" else tr("%s %d more") % [G.iemoji(x["key"]), G.up(float(x["need"]) - float(x["have"]))])
+	for x in mc: parts.append(tr("🏮 the Lord's share first") if x["key"] == "lord" else tr("%s %d more") % [G.iemoji(x["key"]) + (G.quality.stars(int(x["min"])) if x.has("min") else ""), G.up(float(x["need"]) - float(x["have"]))])
 	return parts
 
 ## `missing_cost` as the answer a chore's check gives ({"ok", "cost", "base", "unmet": [{"key", "text"}]}): a button that is grey because of a price
 ## shows these reasons when it is tapped (interface-feel/02), so the button and the note come from the same rule. Changes nothing.
-func cost_check(c: Dictionary) -> Dictionary:
-	var mc := missing_cost(c)
+func cost_check(c: Dictionary, min_grade := 0) -> Dictionary:
+	var mc := missing_cost(c, min_grade)
 	var unmet := []
 	if not mc.is_empty(): unmet.append({"key": "missing", "text": tr("Missing: ") + ", ".join(missing_words(mc))})
-	return {"ok": mc.is_empty(), "cost": c, "base": c, "unmet": unmet}
+	return {"ok": mc.is_empty(), "cost": c, "base": c, "unmet": unmet, "min": min_grade}
 
-func pay(c: Dictionary) -> bool:
-	if not missing_cost(c).is_empty(): return false
+func pay(c: Dictionary, min_grade := 0) -> bool:
+	if not missing_cost(c, min_grade).is_empty(): return false
 	for k in c:
 		var v := float(c[k])
 		if k == "energy": G.S["energy"] -= v
 		elif k == "water": G.S["water"] -= v
 		elif k == "coins": G.lord.pay_coins(v)
-		else: G.inventory.take(k, v)
+		else: G.inventory.take(k, v, min_grade)
 	return true
 
 func cost_text(c: Dictionary) -> String:

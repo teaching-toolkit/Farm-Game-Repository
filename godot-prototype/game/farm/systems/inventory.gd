@@ -19,17 +19,27 @@ func count(k: String) -> float:
 	for b in G.S["inv"].get(k, []): t += float(b[1])
 	return t
 
-func count_tag(t: String) -> float:
+func count_tag(t: String, min_grade := 0) -> float:
 	var s := 0.0
-	for k in G.tags.get(t, []): s += count(k)
+	for k in G.tags.get(t, []): s += have(k, min_grade)
 	return s
 
-func have(k: String) -> float:
-	if k.begins_with("tag:"): return count_tag(k.substr(4))
+## How much of a thing there is (coins, energy, water too). `min_grade` > 0: only of that grade or better, for things that have a
+## grade (the others ignore it); what a delivery with a "minGrade" asks for.
+func have(k: String, min_grade := 0) -> float:
+	if k.begins_with("tag:"): return count_tag(k.substr(4), min_grade)
 	if k == "coins": return G.S["coins"]
 	if k == "energy": return G.S["energy"]
 	if k == "water": return G.S["water"]
-	return count(k)
+	return count_min(k, min_grade) if min_grade > 0 and G.quality.graded(k) else count(k)
+
+## Does a minimum grade mean anything for this thing (or for any thing of this kind)? Only graded things have one.
+func min_applies(k: String) -> bool:
+	if k.begins_with("tag:"):
+		for item in G.tags.get(k.substr(4), []):
+			if G.quality.graded(item): return true
+		return false
+	return G.quality.graded(k)
 
 ## Puts q of an item into the store (what does not fit is told to the map). A graded item (G.quality.graded) comes in at `grade`
 ## (-1: Proper); batches of the same season and grade merge. Returns what went in.
@@ -64,25 +74,31 @@ func emit_gained(source: String, got: Dictionary) -> void:
 	G.overflow = {}
 	G.gained.emit(source, got, lost)
 
-func take(k: String, q: float) -> bool:
+## Takes q of an item. `min_grade` > 0: only units of that grade or better (the lowest of them first); things without a grade ignore it.
+func take(k: String, q: float, min_grade := 0) -> bool:
 	if q <= 0.0: return true
-	if k.begins_with("tag:"): return take_tag(k.substr(4), q)
+	if k.begins_with("tag:"): return take_tag(k.substr(4), q, min_grade)
 	if k == "coins":
 		if G.S["coins"] + 0.0001 < q: return false
 		G.S["coins"] -= q; return true
-	if count(k) + 0.0001 < q: return false
+	var gmin := min_grade if G.quality.graded(k) else 0
+	if (count(k) if gmin <= 0 else count_min(k, gmin)) + 0.0001 < q: return false
 	var arr: Array = G.S["inv"][k]
 	if G.quality.graded(k): _sort_for_use(arr)
 	var left := q
-	while left > 0.00001 and arr.size() > 0:
-		var b = arr[0]
+	var i := 0
+	while left > 0.00001 and i < arr.size():
+		var b = arr[i]
+		if batch_grade(b) < gmin:
+			i += 1
+			continue
 		var use := minf(float(b[1]), left)
 		if not _track.is_empty() and G.quality.graded(k):
 			_track["n"] = float(_track["n"]) + use
 			_track["sum"] = float(_track["sum"]) + use * float(batch_grade(b))
 		b[1] = float(b[1]) - use
 		left -= use
-		if float(b[1]) <= 0.00001: arr.pop_front()
+		if float(b[1]) <= 0.00001: arr.remove_at(i)
 	if arr.is_empty(): G.S["inv"].erase(k)
 	return true
 
@@ -185,14 +201,14 @@ func tag_choices(t: String) -> Array:
 	c.sort_custom(func(a, b): return float(G.items[a].get("value", 0)) < float(G.items[b].get("value", 0)))
 	return c
 
-func take_tag(t: String, q: float) -> bool:
-	if count_tag(t) + 0.0001 < q: return false
+func take_tag(t: String, q: float, min_grade := 0) -> bool:
+	if count_tag(t, min_grade) + 0.0001 < q: return false
 	var left := q
 	for k in tag_choices(t):
-		var h := count(k)
+		var h := have(k, min_grade)
 		if h <= 0.0: continue
 		var use := minf(h, left)
-		take(k, use); left -= use
+		take(k, use, min_grade); left -= use
 		if left <= 0.00001: break
 	return true
 

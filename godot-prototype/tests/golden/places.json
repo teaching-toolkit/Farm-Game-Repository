@@ -885,7 +885,13 @@
 		"polish_loom": "ws_loom",
 		"polish_hammer": "ws_tools",
 		"polish_shears": "ws_tools",
-		"polish_forge": "ws_fire"
+		"polish_forge": "ws_fire",
+		"pen_fence_chicken_1": "coop",
+		"pen_fence_chicken_2": "coop",
+		"pen_fence_cow_1": "cows",
+		"pen_fence_cow_2": "cows",
+		"pen_fence_sheep_1": "sheep",
+		"pen_fence_sheep_2": "sheep"
 	},
 	"nodes_at": {
 		"living": [
@@ -1183,7 +1189,9 @@
 			"coop_2",
 			"nest_boxes",
 			"perches",
-			"polish_coop"
+			"polish_coop",
+			"pen_fence_chicken_1",
+			"pen_fence_chicken_2"
 		],
 		"pets": [
 			"pet_bunny",
@@ -1216,7 +1224,9 @@
 			"salt_lick",
 			"cheese_moulds",
 			"rotary_churn",
-			"polish_brush"
+			"polish_brush",
+			"pen_fence_cow_1",
+			"pen_fence_cow_2"
 		],
 		"bees": [
 			"animal_bees",
@@ -1240,7 +1250,9 @@
 			"sheep_pen",
 			"animal_sheep",
 			"spindle",
-			"shearing_table"
+			"shearing_table",
+			"pen_fence_sheep_1",
+			"pen_fence_sheep_2"
 		],
 		"ws_loom": [
 			"hand_loom",

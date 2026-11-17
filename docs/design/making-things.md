@@ -20,6 +20,17 @@ workshop, the barn or the still-room.
 
 Some stations are upgrades of another (Stove → iron top → Master Stove) and keep its recipes.
 
+**A working station shows it.** While a batch is cooking, baking, firing or forging, its place shows it without the ⏳ sign:
+soft grey puffs of smoke rise slowly, straight up, from the chimney, and a warm glow breathes at the fire's mouth. It shows on the farm
+map (the house, the workshop, the campfire or stove of the yard) and, the same, on the corner inside the house or the workshop (the stove,
+the kiln, the forge). When the batch is done no new puff is made and the ones in the air finish their rise: the smoke thins out and
+stops; the finished thing is already in the store. Where the chimney and the fire stand on each picture is data
+(`data/farm/places.json` `fires`, fractions of the picture; a picture without an entry, like the thatched cottage, shows nothing).
+"Is something running at this place?" is asked in one place, `G.crafting.place_state(sid)` ("working" or "idle", from the saved
+`running` batches: no save key of its own); the ⏳ sign, the map and the inside all ask it. The smoke and glow are drawn by the place's
+slot (`game/farm/map/work_fx.gd`) from the clock alone, so nothing in the rules or the saves reads them. Not yet shown (they need a
+picture each): the thing being made lying on the bench, herbs hanging on the drying rack.
+
 ### 8.2 Recipes
 
 131 recipes. A recipe has inputs, outputs, energy, sometimes water and fuel, and a time in Time Quiz questions (0 = at once).
@@ -85,7 +96,12 @@ crafts and cloth have a grade; raw materials (sticks, stones, logs …), animal 
 - **What the player sees:** *Expect: ⭐⭐ Proper* on every recipe tile and on a ripe patch, with *· maybe ⭐⭐⭐* when another grade is a real chance
   (a quarter or more); the grade after each harvest and each batch ("✨ Porridge ready: 🥣1 ⭐⭐").
 - **Saves.** A store from before the grades counts as Proper.
-- *(planned)* Some key deliveries ask for at least Proper; the badger's "really good medicine" is simply Fancy.
+- **A goal can ask for a grade.** A goal or delivery with `"minGrade": 1` (Proper) or `2` (Fancy) in its data takes only things of that grade or better —
+  the things in its price that have a grade; a tea set or a stick has none and counts as always. The goal shows it with stars on each such thing in its
+  price (⭐⭐ = at least Proper; no new words), the cubes fill only with things of that grade, and a refusal says "⭐⭐ 1 more". Handing over takes the lowest grade
+  that is good enough, so the better ones stay. The bag only counts pieces; the grade is taken from the store. The four **Harvest Fair tables** (chapter 6)
+  ask for at least Proper (a judged ribbon). *(planned: the badger's "really good medicine", the Healer's Chest, as Fancy — not set yet: with a beginner
+  starting Lumpy a made thing can hardly reach Fancy, see the ticket skills-quality/01.)*
 
 ### 8.6 Skills and ranks
 
@@ -105,4 +121,13 @@ nothing). Practice is counted from the very first batch, even though it is not s
 Every rank also raises the **chance of a finer grade** (+0.05 on the expected grade per rank, §8.5). So grinding cheap recipes cannot make a master early,
 and it pays to **specialise**: a master carpenter saves more than a master cook, and what you do not master you buy.
 Farm jobs save no inputs. From the first rank-up on, the album lists the skills with what each next rank still asks for, and a station's card shows
-its family's rank. The still-room's stations train 🌿 healing. *(planned: construction jobs count for woodwork and save materials.)*
+its family's rank. The still-room's stations (the cellar, the fermenter, the drying rack, the mortar, the tea pot, the syrup pan, the salve pot) train 🌿
+healing, and so do the forest's gathering chores.
+
+**Building is a job of its own** (skills-quality/02). A building, a station, a helper or the clearing of ruins (`rules/48-skills.json` `builds`) counts one batch
+for 🪚 woodwork and construction for every paid build, or every paid step of one, and that rank lowers the next build: what it uses up (materials, not
+coins) by the same shares as a recipe of a craft (4 / 8 / 11 / 14 %), and its energy (−8 % from Handy). A cook's or a healer's rank does not make a
+build cheaper, so a carpenter saves more than they do. One function prices it: `G.pace.node_cost`, which the button, the price row, the bot and
+unlocking all read; the faint grey cubes of the price row show what the rank saved, a muted line on the card says why ("🪚 Handy: building costs less now."),
+and the rank-up note adds "cheaper building". Tools, gear, patches, deliveries and cards are not builds. About 250 paid builds and steps in the whole
+game, so a builder reaches Handy in chapter 1, and the higher ranks still need their card, tool and Master Workshop.

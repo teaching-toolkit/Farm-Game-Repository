@@ -103,11 +103,14 @@ func sheet_patch(a: String, i: int) -> void:
 			var wl := UI.label(plant_e.repeat(wilted), 20)
 			wl.modulate = Color(0.42, 0.48, 0.48, 0.8)
 			row2.add_child(wl)
-		if not p["ready"]:
+		if G.fields.flowering(p) and not p["ready"]:       # left to flower (crops-and-items/01): it waits for its spring, the patch is taken
+			row2.add_child(UI.explain(UI.label("🌼", 30), tr("🌼 Flowering: it stays in the ground through the winter and gives lots of seed in spring. Nothing else grows here meanwhile.")))
+			row2.add_child(UI.wait_button(G.fields.seed_left(p), M.timequiz.show_time_quiz))
+		elif not p["ready"]:
 			row2.add_child(UI.explain(UI.stock_bar(float(p["growth"]), ceilf(G.fields.grow_target(p)), Color("8cc63f"), 160), tr("🌱 Growing: a bit more with every Time Quiz question. Full = ready to harvest.")))
 			row2.add_child(UI.wait_button(M.widgets.grow_left(a, p), M.timequiz.show_time_quiz))
 		M.content.add_child(row2)
-		_crowd_note(p, n2)
+		if not G.fields.flowering(p): _crowd_note(p, n2)       # weeds and stones do not take a share of seed
 		if n2.has("regrow") and G.fields.crops_for(a).size() > 1:
 			# a tree stays for good, so one can be cut down to plant another kind
 			var cr2 := UI.hbox(8)
@@ -119,8 +122,9 @@ func sheet_patch(a: String, i: int) -> void:
 		if float(p.get("soil", 1.0)) < 0.99: M.content.add_child(UI.label(tr("😴 Tired soil: the same crop as last time grows slower. Swap crops next time (beans and clover rest the soil)."), 15, UI.MUTED, true))
 		elif float(p.get("soil", 1.0)) > 1.01: M.content.add_child(UI.label(tr("💚 Rested soil after beans or clover: grows faster."), 15, UI.GREEN_DARK, true))
 		if p["ready"]:
-			var ys: String = _yield_icons(n2, p)[0]
-			M.content.add_child(UI.label(tr("Expect: %s") % G.quality.expect_text(G.quality.crop_expect(p)), 15, UI.MUTED, true))
+			var seed_ripe: bool = G.fields.flowering(p)
+			var ys: String = ("🌰%d" % G.fields.seed_amount(n2, p)) if seed_ripe else _yield_icons(n2, p)[0]      # the seed of a flowered patch, not the crop
+			if not seed_ripe: M.content.add_child(UI.label(tr("Expect: %s") % G.quality.expect_text(G.quality.crop_expect(p)), 15, UI.MUTED, true))
 			var hr := UI.hbox(8)
 			var hb := UI.button(tr("🧺 Harvest   ") + ys, _do_harvest.bind(a, i), G.actions.time_gate(), UI.GREEN, 20)
 			hb.custom_minimum_size = Vector2(0, 56)
@@ -129,6 +133,14 @@ func sheet_patch(a: String, i: int) -> void:
 			var hq: Dictionary = G.actions.check("harvest", G.actions.farmer, {"a": a, "i": i})
 			hr.add_child(M.widgets.costs(hq["cost"], hq["base"]))
 			M.content.add_child(hr)
+			if not seed_ripe and G.fields.seed_known(str(p["crop"])):
+				# a two-year crop, once the card Saving seed is read: leave it to flower instead (seed of your own)
+				var fq: Dictionary = G.actions.check("let_flower", G.actions.farmer, {"a": a, "i": i})
+				var fr := UI.hbox(8)
+				fr.add_child(UI.explain(UI.label(tr("Want seed of your own?"), 15, UI.MUTED, true), tr("🌼 Let it flower: the plants stay in the ground through the winter and give lots of seed in spring. Nothing else grows on this patch meanwhile.")))
+				fr.add_child(M.widgets.costs(fq["cost"], fq["base"]))
+				fr.add_child(UI.action_button("field", _do_flower.bind(a, i), fq, UI.SOIL, "🌼", tr("Let it flower")))
+				M.content.add_child(fr)
 	if a == "field":
 		# weeds and stones on the patch: a tile each, with how many there are and the button to clear them
 		var wg := M.widgets.grid()
@@ -205,6 +217,9 @@ func show_no_water() -> void:
 
 func _fetch_and_close() -> void:
 	if G.actions.perform("fetch_water", G.actions.farmer)["done"] and float(G.S["water"]) + 0.5 >= G.needs.water_cap(): M.modals.close_modal()
+
+func _do_flower(a: String, i: int) -> void:
+	G.actions.perform("let_flower", G.actions.farmer, {"a": a, "i": i})
 
 func _do_harvest(a: String, i: int) -> void:
 	if G.actions.perform("harvest", G.actions.farmer, {"a": a, "i": i})["done"]: M.sheets.close_sheet()
@@ -318,7 +333,6 @@ func part_area(a: String) -> void:
 	if arr.is_empty(): return
 	var fv = FieldView.new()
 	fv.area_name = a
-	fv.custom_minimum_size = Vector2(0, 110 * int(ceil(arr.size() / 3.0)))
 	M.content.add_child(fv)
 	fv.patch_pressed.connect(on_patch)
 	M.content.add_child(UI.button(tr("🧺 Harvest all"), harvest_all.bind(a), G.actions.time_gate(ready_count(a) > 0, tr("🌱 Nothing is ready yet. Plants need a few Time Quiz questions to grow.")), UI.GREEN, 18))

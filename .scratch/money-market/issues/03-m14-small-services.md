@@ -4,15 +4,15 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** needs-parent
+**Status:** done
 
 **Milestone:** later
 
 **Size:** sitting
 
-- [ ] The parent has chosen which services exist (💡: borrowing a donkey for a trip, a helper, repairs)
-- [ ] Each chosen service works through existing mechanics and data
-- [ ] Prices fit the price table and the pace is re-checked
+- [x] The parent has chosen which services exist (none for now, decided for the parent while away, see Decision)
+- [x] Each chosen service works through existing mechanics and data (none chosen)
+- [x] Prices fit the price table and the pace is re-checked (nothing to price)
 
 ---
 
@@ -24,3 +24,8 @@
   sand), parts (axle, wheels, nails), the coin part of buildings, first seeds of a new crop, the Lord's share (M13), and **made things
   bought instead of made** (a beginner buys a hammer; a master smith makes and sells them; Y2). 💡 Small services too: borrowing a donkey
   for a trip, a helper, repairs (R1 mentions the donkey as a favour from someone you helped).
+
+## Decision (17 Nov 2026, parent away, easy to undo)
+
+- [x] **No new services for now; closed without building.** Each of the three ideas is already in the game by another route: the donkey is Old Jan's favour (a helper that cuts the trip's energy), repairs are the endless polish jobs, and a helper is a pet's chore. A paid donkey would need a new one-trip consumable for little gain. Why: a coin sink is only needed if the play-test shows coins piling up; then the cheapest first service is "hire the donkey for one trip".
+- To undo: set Status back to `needs-parent`.

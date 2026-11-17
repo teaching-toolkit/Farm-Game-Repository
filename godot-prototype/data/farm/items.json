@@ -68,7 +68,7 @@
   "yogurt": {"name": "Yogurt", "emoji": "🥣", "category": "ingredient", "tags": ["dairy"], "chapter": 3, "value": 120},
   "fresh_cheese": {"name": "Fresh Cheese", "emoji": "🧀", "category": "ingredient", "tags": ["dairy"], "chapter": 3, "value": 300},
   "aged_cheese": {"name": "Aged Cheese", "emoji": "🧀", "category": "ingredient", "tags": ["dairy"], "chapter": 3, "value": 800},
-  "cider": {"name": "Cider", "emoji": "🍶", "category": "ingredient", "chapter": 3, "value": 300},
+  "cider": {"name": "Cider", "emoji": "🍶", "category": "ingredient", "chapter": 3, "value": 300, "desc": "Fermented apple juice, an ingredient for vinegar. Not a drink."},
   "vinegar": {"name": "Vinegar", "emoji": "🍶", "category": "ingredient", "chapter": 3, "value": 250},
   "tomato_sauce": {"name": "Tomato Sauce", "emoji": "🥫", "category": "ingredient", "chapter": 4, "value": 350},
   "fresh_pasta": {"name": "Fresh Pasta", "emoji": "🍝", "category": "ingredient", "chapter": 4, "value": 135},

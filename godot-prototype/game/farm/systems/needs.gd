@@ -42,12 +42,13 @@ func buff_mult() -> float:
 	if int(b.get("until", 0)) <= G.S["step"]: return 1.0
 	return float(b.get("mult", 1.0))
 
-func ecost(cat: String, base: float, station_root := "") -> float:
+## `family`: the skill family whose rank counts when it is not the one of the station or category (a build: woodwork and construction).
+func ecost(cat: String, base: float, station_root := "", family := "") -> float:
 	if base <= 0.0: return 0.0
 	var c := base * G.m("energy:" + cat)
 	if G.seasons.season() == "winter" and cat in ["craft", "textile", "smith", "wood"]:
 		c *= float(G.seasons.smod("indoorEnergy", 1.0))
-	var fam: String = G.skills.family_of_station(station_root) if station_root != "" else G.skills.family_of_cat(cat)
+	var fam: String = family if family != "" else (G.skills.family_of_station(station_root) if station_root != "" else G.skills.family_of_cat(cat))
 	c *= G.skills.energy_mult(fam)          # Handy and up: less energy (TODO Y2)
 	return c * buff_mult()
 

@@ -1,0 +1,12 @@
+{
+  "trodden": {
+    "note": "Paths that wear in where the farmer walks (feature visible-work, ticket 08). Every walk the farmer's path-finder plans adds one to each cell of the walking grid it crosses (once per walk). walksForTrack = how many walks make a cell fully trodden (wear 1); cap = the most wear a cell ever reaches (below 1, so a path never becomes a road); showFrom = the wear from which the ground is drawn at all; fadePerSeason = how many walks a cell forgets at each change of season (a cell that nobody walks over for long gets lighter again and is dropped at zero). Drawing only: alphaMin / alphaMax = how see-through the earth under a cell is at showFrom and at the cap; tileCells = how wide one earth tile is, in cells of the grid (more than 2 so the patches join up). Slow on purpose: the first track shows after about a chapter of play. Nothing but the map's ground reads this.",
+    "walksForTrack": 300,
+    "cap": 0.85,
+    "showFrom": 0.12,
+    "fadePerSeason": 6,
+    "alphaMin": 0.3,
+    "alphaMax": 0.9,
+    "tileCells": 2.6
+  }
+}

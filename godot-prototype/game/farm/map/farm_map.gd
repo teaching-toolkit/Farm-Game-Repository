@@ -60,6 +60,7 @@ var pest_lbl: Label
 var slots := {}
 var addon_nodes: Array = [] # [{"node", "sid", "id", "until"}]
 var season := "spring"
+var blend := {"from": "spring", "to": "spring", "t": 1.0}      # G.seasons.blend(): the look fades from the last season to this one (N7)
 var usable_fields := 1
 var house_built := false
 var extra_bottom := 0.0
@@ -87,6 +88,7 @@ func _ready() -> void:
 	board.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	ground.road_ci = board
 	board.draw.connect(ground._draw_board)
+	ground.make_trodden_layer(_layer(board))    # the worn paths (visible-work/08): above the ground, below the road
 	ground.make_road_layer(_layer(board))       # the road, above the ground and below everything else, with frost in winter
 	ground_tap = GroundTap.new()
 	ground_tap.map = self
@@ -535,16 +537,16 @@ func _draw() -> void:
 	# grass everywhere (also around the farm on screens with another shape)
 	var full := Rect2(Vector2.ZERO, size)
 	var grass_tex := Art.tex("tiles", "grass")
-	var tint: Color = GRASS_TINT.get(season, Color.WHITE)
+	var tint: Color = FarmSeasonLook.mix(blend, GRASS_TINT)
 	if grass_tex:
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2(GRASS_SCALE, GRASS_SCALE))
 		draw_texture_rect(grass_tex, Rect2(Vector2.ZERO, size / GRASS_SCALE), true, tint)
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		# (the soft patches of the other grass pictures lie on the farm itself, see _draw_board: they must not move)
 	else:
-		draw_rect(full, GRASS.get(season, GRASS["spring"]))
-	if season == "winter":
-		draw_rect(full, Color(1, 1, 1, 0.12))
+		draw_rect(full, FarmSeasonLook.mix(blend, GRASS, GRASS["spring"]))
+	var winter := FarmSeasonLook.share(blend, "winter")
+	if winter > 0.0: draw_rect(full, Color(1, 1, 1, 0.12 * winter))
 
 ## What the avatar kit (kits/avatar/avatar.gd) asks of its map: a path around what stands there, and a place among the standing things.
 func find_path(from: Vector2, to: Vector2) -> PackedVector2Array:

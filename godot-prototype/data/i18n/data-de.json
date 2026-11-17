@@ -9923,6 +9923,54 @@
   "en": "Endless: the first time helps most, every next time helps half as much and costs a bit more. Wears off slowly.",
   "de": "Ohne Ende: Das erste Mal hilft am meisten, jedes weitere Mal hilft halb so viel und kostet ein bisschen mehr. Nutzt sich langsam ab."
  },
+ "nodes/pen_fence_chicken_1/name": {
+  "en": "Mend the Hen Fence",
+  "de": "Hühnerzaun flicken"
+ },
+ "nodes/pen_fence_chicken_1/desc": {
+  "en": "The old fence has gaps and the hens wander off. Mend it and they lay all their eggs at home.",
+  "de": "Der alte Zaun hat Löcher und die Hühner laufen davon. Flickst du ihn, legen sie alle Eier zu Hause."
+ },
+ "nodes/pen_fence_chicken_2/name": {
+  "en": "Sturdy Painted Hen Fence",
+  "de": "Starker bemalter Hühnerzaun"
+ },
+ "nodes/pen_fence_chicken_2/desc": {
+  "en": "Strong posts and a coat of paint: the hens feel safe and lay a few more eggs.",
+  "de": "Feste Pfosten und ein Farbanstrich: Die Hühner fühlen sich sicher und legen ein paar Eier mehr."
+ },
+ "nodes/pen_fence_cow_1/name": {
+  "en": "Mend the Cow Fence",
+  "de": "Kuhzaun flicken"
+ },
+ "nodes/pen_fence_cow_1/desc": {
+  "en": "The rails are loose and the cows push through. Mend them and the cows give all their milk.",
+  "de": "Die Latten sind locker und die Kühe drücken sich durch. Flickst du sie, geben die Kühe alle Milch."
+ },
+ "nodes/pen_fence_cow_2/name": {
+  "en": "Sturdy Painted Cow Fence",
+  "de": "Starker bemalter Kuhzaun"
+ },
+ "nodes/pen_fence_cow_2/desc": {
+  "en": "Strong planks and a coat of paint: calm cows give a little more milk.",
+  "de": "Feste Bretter und ein Farbanstrich: Ruhige Kühe geben etwas mehr Milch."
+ },
+ "nodes/pen_fence_sheep_1/name": {
+  "en": "Mend the Sheep Fence",
+  "de": "Schafzaun flicken"
+ },
+ "nodes/pen_fence_sheep_1/desc": {
+  "en": "Wool snags on the old wire. Mend it and the sheep keep all their wool.",
+  "de": "Die Wolle bleibt am alten Draht hängen. Flickst du ihn, behalten die Schafe ihre ganze Wolle."
+ },
+ "nodes/pen_fence_sheep_2/name": {
+  "en": "Sturdy Painted Sheep Fence",
+  "de": "Starker bemalter Schafzaun"
+ },
+ "nodes/pen_fence_sheep_2/desc": {
+  "en": "Smooth planks that nothing snags on, and a coat of paint: a little more wool.",
+  "de": "Glatte Bretter, an denen nichts hängen bleibt, und ein Farbanstrich: etwas mehr Wolle."
+ },
  "items/stick/name": {
   "en": "Stick",
   "de": "Stock"
@@ -10326,6 +10374,10 @@
  "items/cider/name": {
   "en": "Cider",
   "de": "Apfelmost"
+ },
+ "items/cider/desc": {
+  "en": "Fermented apple juice, an ingredient for vinegar. Not a drink.",
+  "de": "Vergorener Apfelsaft, eine Zutat für Essig. Kein Getränk."
  },
  "items/vinegar/name": {
   "en": "Vinegar",
@@ -15647,195 +15699,195 @@
   "en": "Dear {player}, I was so happy to hear about {news}. I hope this helps on the farm!",
   "de": "Hallo {player}, ich habe mich so gefreut, von {news} zu hören. Ich hoffe, das hilft dir auf dem Hof!"
  },
- "meta/pets/jobs/pet_bunny/0/name": {
+ "meta/pets/entries/pet_bunny/0/name": {
   "en": "Pull weeds",
   "de": "Unkraut zupfen"
  },
- "meta/pets/jobs/pet_bunny/0/desc": {
+ "meta/pets/entries/pet_bunny/0/desc": {
   "en": "Pulls a weed on the patch that has most.",
   "de": "Zupft ein Unkraut auf dem Beet, das am meisten hat."
  },
- "meta/pets/jobs/pet_bunny/1/name": {
+ "meta/pets/entries/pet_bunny/1/name": {
   "en": "Pick stones",
   "de": "Steine auflesen"
  },
- "meta/pets/jobs/pet_bunny/1/desc": {
+ "meta/pets/entries/pet_bunny/1/desc": {
   "en": "Picks a stone from the stoniest patch.",
   "de": "Liest einen Stein vom steinigsten Beet auf."
  },
- "meta/pets/jobs/pet_bunny/2/name": {
+ "meta/pets/entries/pet_bunny/2/name": {
   "en": "Weeding",
   "de": "Unkraut zupfen"
  },
- "meta/pets/jobs/pet_bunny/2/desc": {
+ "meta/pets/entries/pet_bunny/2/desc": {
   "en": "Pulls a weed for you. It uses your energy.",
   "de": "Zupft ein Unkraut für dich. Es braucht deine Energie."
  },
- "meta/pets/jobs/pet_bunny/3/name": {
+ "meta/pets/entries/pet_bunny/3/name": {
   "en": "Tidying up",
   "de": "Aufräumen"
  },
- "meta/pets/jobs/pet_bunny/3/desc": {
+ "meta/pets/entries/pet_bunny/3/desc": {
   "en": "Picks up the sticks and stones lying about. It uses your energy.",
   "de": "Liest die Stöcke und Steine auf, die herumliegen. Es braucht deine Energie."
  },
- "meta/pets/jobs/pet_tortoise/0/name": {
+ "meta/pets/entries/pet_tortoise/0/name": {
   "en": "Bring water",
   "de": "Wasser bringen"
  },
- "meta/pets/jobs/pet_tortoise/0/desc": {
+ "meta/pets/entries/pet_tortoise/0/desc": {
   "en": "Brings a little water every question.",
   "de": "Bringt bei jeder Frage ein wenig Wasser."
  },
- "meta/pets/jobs/pet_tortoise/1/name": {
+ "meta/pets/entries/pet_tortoise/1/name": {
   "en": "Pick stones",
   "de": "Steine auflesen"
  },
- "meta/pets/jobs/pet_tortoise/1/desc": {
+ "meta/pets/entries/pet_tortoise/1/desc": {
   "en": "Picks a stone from the stoniest patch.",
   "de": "Liest einen Stein vom steinigsten Beet auf."
  },
- "meta/pets/jobs/pet_tortoise/2/name": {
+ "meta/pets/entries/pet_tortoise/2/name": {
   "en": "Fetching water",
   "de": "Wasser holen"
  },
- "meta/pets/jobs/pet_tortoise/2/desc": {
+ "meta/pets/entries/pet_tortoise/2/desc": {
   "en": "Fetches water for you. It uses your energy.",
   "de": "Holt Wasser für dich. Es braucht deine Energie."
  },
- "meta/pets/jobs/pet_tortoise/3/name": {
+ "meta/pets/entries/pet_tortoise/3/name": {
   "en": "Clearing snow",
   "de": "Schnee räumen"
  },
- "meta/pets/jobs/pet_tortoise/3/desc": {
+ "meta/pets/entries/pet_tortoise/3/desc": {
   "en": "Clears the snow off the patches for you. It uses your energy.",
   "de": "Räumt den Schnee von den Beeten für dich. Es braucht deine Energie."
  },
- "meta/pets/jobs/pet_goat/0/name": {
+ "meta/pets/entries/pet_goat/0/name": {
   "en": "Graze weeds",
   "de": "Unkraut abweiden"
  },
- "meta/pets/jobs/pet_goat/0/desc": {
+ "meta/pets/entries/pet_goat/0/desc": {
   "en": "Eats the weeds on the patch that has most.",
   "de": "Frisst das Unkraut auf dem Beet, das am meisten hat."
  },
- "meta/pets/jobs/pet_goat/1/name": {
+ "meta/pets/entries/pet_goat/1/name": {
   "en": "Make compost",
   "de": "Kompost machen"
  },
- "meta/pets/jobs/pet_goat/1/desc": {
+ "meta/pets/entries/pet_goat/1/desc": {
   "en": "Leaves a little compost.",
   "de": "Lässt ein wenig Kompost fallen."
  },
- "meta/pets/jobs/pet_goat/2/name": {
+ "meta/pets/entries/pet_goat/2/name": {
   "en": "Weeding",
   "de": "Unkraut zupfen"
  },
- "meta/pets/jobs/pet_goat/2/desc": {
+ "meta/pets/entries/pet_goat/2/desc": {
   "en": "Pulls a weed for you. It uses your energy.",
   "de": "Zupft ein Unkraut für dich. Es braucht deine Energie."
  },
- "meta/pets/jobs/pet_goat/3/name": {
+ "meta/pets/entries/pet_goat/3/name": {
   "en": "Mucking out",
   "de": "Ausmisten"
  },
- "meta/pets/jobs/pet_goat/3/desc": {
+ "meta/pets/entries/pet_goat/3/desc": {
   "en": "Mucks out a pen for you. It uses your energy.",
   "de": "Mistet ein Gehege für dich aus. Es braucht deine Energie."
  },
- "meta/pets/jobs/pet_pony/0/name": {
+ "meta/pets/entries/pet_pony/0/name": {
   "en": "Haul logs",
   "de": "Baumstämme ziehen"
  },
- "meta/pets/jobs/pet_pony/0/desc": {
+ "meta/pets/entries/pet_pony/0/desc": {
   "en": "Drags a log in from the woodlot.",
   "de": "Zieht einen Baumstamm aus dem Holzlager heran."
  },
- "meta/pets/jobs/pet_pony/1/name": {
+ "meta/pets/entries/pet_pony/1/name": {
   "en": "Fetch sticks",
   "de": "Stöcke holen"
  },
- "meta/pets/jobs/pet_pony/1/desc": {
+ "meta/pets/entries/pet_pony/1/desc": {
   "en": "Fetches sticks.",
   "de": "Holt Stöcke."
  },
- "meta/pets/jobs/pet_pony/2/name": {
+ "meta/pets/entries/pet_pony/2/name": {
   "en": "Tidying up",
   "de": "Aufräumen"
  },
- "meta/pets/jobs/pet_pony/2/desc": {
+ "meta/pets/entries/pet_pony/2/desc": {
   "en": "Picks up the sticks and stones lying about. It uses your energy.",
   "de": "Liest die Stöcke und Steine auf, die herumliegen. Es braucht deine Energie."
  },
- "meta/pets/jobs/pet_pony/3/name": {
+ "meta/pets/entries/pet_pony/3/name": {
   "en": "Fetching water",
   "de": "Wasser holen"
  },
- "meta/pets/jobs/pet_pony/3/desc": {
+ "meta/pets/entries/pet_pony/3/desc": {
   "en": "Fetches water for you. It uses your energy.",
   "de": "Holt Wasser für dich. Es braucht deine Energie."
  },
- "meta/pets/jobs/pet_badger/0/name": {
+ "meta/pets/entries/pet_badger/0/name": {
   "en": "Gather herbs",
   "de": "Kräuter sammeln"
  },
- "meta/pets/jobs/pet_badger/0/desc": {
+ "meta/pets/entries/pet_badger/0/desc": {
   "en": "Finds herbs at the edge of the wood.",
   "de": "Findet Kräuter am Waldrand."
  },
- "meta/pets/jobs/pet_badger/1/name": {
+ "meta/pets/entries/pet_badger/1/name": {
   "en": "Make compost",
   "de": "Kompost machen"
  },
- "meta/pets/jobs/pet_badger/1/desc": {
+ "meta/pets/entries/pet_badger/1/desc": {
   "en": "Digs old leaves into compost.",
   "de": "Gräbt altes Laub zu Kompost um."
  },
- "meta/pets/jobs/pet_badger/2/name": {
+ "meta/pets/entries/pet_badger/2/name": {
   "en": "Stones",
   "de": "Steine"
  },
- "meta/pets/jobs/pet_badger/2/desc": {
+ "meta/pets/entries/pet_badger/2/desc": {
   "en": "Picks stones for you. It uses your energy.",
   "de": "Liest Steine für dich auf. Es braucht deine Energie."
  },
- "meta/pets/jobs/pet_badger/3/name": {
+ "meta/pets/entries/pet_badger/3/name": {
   "en": "Mucking out",
   "de": "Ausmisten"
  },
- "meta/pets/jobs/pet_badger/3/desc": {
+ "meta/pets/entries/pet_badger/3/desc": {
   "en": "Mucks out a pen for you. It uses your energy.",
   "de": "Mistet ein Gehege für dich aus. Es braucht deine Energie."
  },
- "meta/pets/jobs/pet_alpaca/0/name": {
+ "meta/pets/entries/pet_alpaca/0/name": {
   "en": "Guard the fields",
   "de": "Die Felder bewachen"
  },
- "meta/pets/jobs/pet_alpaca/0/desc": {
+ "meta/pets/entries/pet_alpaca/0/desc": {
   "en": "Chases a pest away from the fields.",
   "de": "Jagt einen Schädling von den Feldern."
  },
- "meta/pets/jobs/pet_alpaca/1/name": {
+ "meta/pets/entries/pet_alpaca/1/name": {
   "en": "Grow fleece",
   "de": "Vlies wachsen lassen"
  },
- "meta/pets/jobs/pet_alpaca/1/desc": {
+ "meta/pets/entries/pet_alpaca/1/desc": {
   "en": "Grows a little extra wool.",
   "de": "Lässt ein wenig zusätzliche Wolle wachsen."
  },
- "meta/pets/jobs/pet_alpaca/2/name": {
+ "meta/pets/entries/pet_alpaca/2/name": {
   "en": "Collecting",
   "de": "Einsammeln"
  },
- "meta/pets/jobs/pet_alpaca/2/desc": {
+ "meta/pets/entries/pet_alpaca/2/desc": {
   "en": "Collects from a pen for you. It uses your energy.",
   "de": "Sammelt für dich aus einem Gehege ein. Es braucht deine Energie."
  },
- "meta/pets/jobs/pet_alpaca/3/name": {
+ "meta/pets/entries/pet_alpaca/3/name": {
   "en": "Mucking out",
   "de": "Ausmisten"
  },
- "meta/pets/jobs/pet_alpaca/3/desc": {
+ "meta/pets/entries/pet_alpaca/3/desc": {
   "en": "Mucks out a pen for you. It uses your energy.",
   "de": "Mistet ein Gehege für dich aus. Es braucht deine Energie."
  },
